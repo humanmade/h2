@@ -1,0 +1,47 @@
+.messagelist,
+.postlist,
+.inlinecomments,
+.children {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.postlist {
+	position: relative;
+
+	.post {
+		position: relative;
+
+		&:after {
+			z-index: -1;
+			position: absolute;
+			content:'';
+			height: 100%;
+			bottom: 0;
+			left: -100%;
+			right: 0;
+			border-top: 1px solid $border_main;
+		}
+
+		&:last-child:after {
+			border-bottom: 1px solid $border_main;
+		}
+	}
+
+
+	.post {
+		padding-right: 45px;
+	}
+
+	.message {
+		padding: {
+			top: 1rem;
+			bottom: 1rem;
+		};
+	}
+}
+
+.children, .postlist .comment-form {
+	margin-left: $left-gutter;
+}

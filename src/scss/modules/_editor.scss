@@ -1,0 +1,12 @@
+.content-editor {
+	margin-bottom: 1.5rem;
+}
+
+.fk-editable {
+	outline: none;
+
+	// Requires https://github.com/FrontKit/FrontKit/issues/92
+	&.fk-empty::before {
+		font-style: normal;
+	}
+}

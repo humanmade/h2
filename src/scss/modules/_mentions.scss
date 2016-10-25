@@ -1,0 +1,17 @@
+a.mention {
+	background: $color_links;
+	color: $bg_light;
+	text-decoration: none;
+
+	padding: 2px 7px;
+	border-radius: 8px;
+
+	&.mention-current-user {
+		font-weight: bold;
+	}
+
+	&:hover {
+		background: $color_links_hover;
+		color: $bg_light;
+	}
+}

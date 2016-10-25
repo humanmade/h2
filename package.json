@@ -1,0 +1,25 @@
+{
+  "name": "h2",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "0.7.0"
+  },
+  "dependencies": {
+    "bourbon": "^4.2.7",
+    "node-normalize-scss": "^1.4.0",
+    "node-sass": "^3.10.1",
+    "normalize-scss": "^6.0.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
+    "redux": "^3.6.0",
+    "wordpress-rest-api-oauth-1": "^1.0.8"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

@@ -1,0 +1,169 @@
+.message {
+
+	padding-left: $left-gutter;
+
+	.message-thumb {
+		margin-left: (-1 * $left-gutter);
+		width: 35px;
+		height: auto;
+		float: left;
+		margin-top: .375rem;
+
+		img {
+			width: 100%;
+			height: auto;
+		}
+
+	}
+
+	&.message-thumb-large-title .message-thumb {
+		margin-top: 1rem;
+	}
+
+	.message-category {
+
+		@extend .uppercase;
+
+		color: $color_body_lt;
+
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+
+	}
+	.message-title, .fk-editable > h1:first-child {
+		@include alpha;
+		margin: 0;
+		font-weight: 900;
+		line-height: 1.2;
+		padding: 0.75rem 0;
+		a {
+			color: inherit;
+		}
+	}
+
+	.message-header {
+		display: flex;
+		align-items: center;
+
+		> p {
+			margin-bottom: 0;
+		}
+	}
+
+	.message-meta {
+		flex-grow: 1;
+
+		@extend .uppercase;
+		@extend small;
+		color: $color_body_lt;
+		font-weight: 200;
+		margin: 0 0 .75rem;
+
+		a,
+		abbr {
+			text-decoration: none;
+			border: none;
+			color: inherit;
+		}
+
+	}
+
+	.message-title + .message-header {
+		margin-top: -.75rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.message-content {
+		margin-bottom: 1.5rem;
+		overflow: hidden;
+	}
+
+	.message-footer {
+		@include small;
+	}
+
+	.message-content-fade {
+
+		display: none;
+		width: 100%;
+		padding: 1.5rem 0;
+		background: rgba(255,255,255,1);
+		position: absolute;
+		bottom: 0;
+
+		&:after {
+			content: ' ';
+			display: block;
+			position: absolute;
+			top: -6rem;
+			left: 0;
+			right: 0;
+			height: 6rem;
+			@include background-image( linear-gradient( rgba(255,255,255,0), rgba(255,255,255,.75) 50%, rgba(255,255,255,1) ) );
+		}
+
+	}
+
+	// .message-content-preview {
+
+	// 	max-height: 300px;
+	// 	position: relative;
+
+	// 	.message-content-fade {
+	// 		display: block;
+	// 	}
+
+	// }
+
+	.actions {
+		opacity: 0;
+		transition: 250ms opacity;
+		margin-left: 1rem;
+		text-align: right;
+		flex-shrink: 0;
+	}
+	&:hover .actions {
+		opacity: 1;
+	}
+
+	.actions a, .actions .btn {
+		@include button;
+		@include button-slim;
+
+		&:first-child {
+			margin-left: -10px;
+		}
+	}
+}
+
+.post.format-status {
+	color: $color_status;
+
+	&:after {
+		background-color: $bg_status;
+	}
+
+	.message-header {
+		color: $color_body;
+		margin-bottom: 0.25rem;
+	}
+
+	.message-content {
+		margin-bottom: 0;
+		font-size: 0.888888rem;
+	}
+}
+
+.comment > .message {
+	> .message-content {
+		margin-bottom: 0;
+	}
+}
+
+.message-content {
+	ul {
+		list-style-type: circle;
+	}
+}

@@ -1,0 +1,15 @@
+.gallery {
+
+	.gallery-item {
+		float: left;
+		text-align: center;
+	}
+
+	@for $i from 1 to 9 {
+		&.gallery-columns-#{$i} {
+			.gallery-item {
+				@include span( ( 24/$i ) of 24 );
+			}
+		}
+	}
+}

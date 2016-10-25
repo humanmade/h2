@@ -1,0 +1,142 @@
+/**
+ *
+ *	type.css Make sure everything is styled.
+ *
+ */
+
+// Must set the font size on the HTML so that REMS can be used.
+html {
+	font-size: $base-font-size;
+	line-height: $base-line-height;
+	font-weight: $base-font-weight;
+}
+
+body {
+	font-family: $body-font-family;
+	font-size: inherit;
+	line-height: inherit;
+	color: $color_body;
+	word-wrap: break-word;
+}
+
+@mixin alpha {
+	font-size: 2.5rem;
+	line-height: 1.666666667;
+	margin: 1rem 0 .5rem;
+}
+
+@mixin beta {
+	font-size: 2rem;
+	line-height: 1.333333333;
+	margin: 1rem 0 .5rem;
+}
+
+@mixin gamma {
+	font-size: 1.5rem;
+	line-height: 1.333333333;
+	margin: 1rem 0 .5rem;
+}
+
+@mixin delta {
+	font-size: 1.125rem;
+	line-height: 1.333333333;
+	margin: 1rem 0 .5rem;
+}
+
+@mixin epsilon {
+	font-size: 1rem;
+	line-height: $base-line-height;
+	margin: .75rem 0 .25rem;
+}
+
+@mixin zeta {
+	@include epsilon;
+}
+
+@mixin small {
+	// font-size: .888888889 * 1rem;
+	font-size: .777777778 * 1rem;
+	line-height: $base-line-height;
+}
+
+p {
+	margin-top: 0;
+	margin-bottom: .75rem;
+	&:empty {
+		display: none;
+	}
+}
+
+ul,
+ol {
+	list-style-position: inside;
+}
+
+ul,
+ol,
+dl,
+address {
+	margin: 0 0 .75rem;
+	padding: 0;
+
+	li {
+		margin: 0;
+	}
+
+}
+
+dl,
+dd {
+	margin-bottom: .5rem;
+}
+
+dt {
+	font-weight: bold;
+}
+
+strong {
+	font-weight: 600;
+}
+
+.heading,
+h1, h2, h3,
+h4, h5, h6 {
+	color: $color_body;
+	font-weight: bold;
+}
+
+.heading a,
+h1 a, h2 a, h3 a,
+h4 a, h5 a, h6 a {
+	color: inherit;
+	text-decoration: none;
+}
+
+h1, .alpha	  { @include alpha; }
+h2, .beta     { @include beta; }
+h3, .gamma    { @include gamma; }
+h4, .delta    { @include delta; }
+h5, .epsilon  { @include epsilon; }
+h6, .zeta     { @include zeta; }
+small, .small { @include small; }
+
+.uppercase {
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+}
+
+a,
+a:link {
+
+	color: $color_links;
+
+	&:visited {
+		color: $color_links_visited;
+	}
+
+	&:hover,
+	&:focus {
+		color: $color_links_hover;
+	}
+
+}
