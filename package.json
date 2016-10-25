@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "bourbon": "^4.2.7",
-    "node-normalize-scss": "^1.4.0",
     "node-sass": "^3.10.1",
     "normalize-scss": "^6.0.0",
     "react": "^15.3.2",
