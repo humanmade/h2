@@ -22,6 +22,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "watch-css": "./node_modules/node-sass/bin/node-sass -w --include-path src/scss --include-path node_modules/bourbon/app/assets/stylesheets/ --include-path node_modules/normalize-scss/sass/  src/scss/theme.scss public/main.css",
+    "css" : "./node_modules/node-sass/bin/node-sass --include-path src/scss --include-path node_modules/bourbon/app/assets/stylesheets/ --include-path node_modules/normalize-scss/sass/  src/scss/theme.scss public/main.css"
   }
 }
