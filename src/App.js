@@ -5,14 +5,11 @@ import PostsList from './components/PostsList'
 import Overview from './components/Overview'
 import Sidebar from './components/Sidebar'
 import Footer from './components/Footer'
-import { fetchPosts, fetchUsers, fetchSiteData, fetchTerms } from './actions'
+import { fetchPosts } from './actions'
 
 class App extends Component {
 	componentWillMount() {
-		this.props.dispatch( fetchPosts() )
-		// this.props.dispatch( fetchUsers() )
-		// this.props.dispatch( fetchTerms( { taxonomy}) )
-		// this.props.dispatch( fetchPosts() )
+		this.props.dispatch( fetchPosts({per_page: 1}) )
 	}
 	render() {
 		return <div className="App">

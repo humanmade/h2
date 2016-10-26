@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PostReactions from './PostReactions'
 import Avatar from './Avatar'
 import Comment from './Comment'
 
@@ -59,6 +60,7 @@ class Post extends Component {
 								})}
 							</p>
 						: null}
+						<PostReactions post={this.props.post} />
 					</div>
 				</div>
 
