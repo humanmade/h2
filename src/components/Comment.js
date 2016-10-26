@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import TimeAgo from 'react-timeago'
 import Avatar from './Avatar'
 
 class Comment extends Component {
@@ -21,7 +22,7 @@ class Comment extends Component {
 						<a href={user.link}>{user.name}</a>
 						&ndash;
 						<span className="meta">
-							<time dateTime={comment.date }>{comment.date}</time>
+							<time dateTime={comment.date }><TimeAgo date={comment.date} /></time>
 						</span>
 					</p>
 					// actions

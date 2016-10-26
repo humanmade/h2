@@ -15,9 +15,5 @@ export default function( { posts } ) {
 				</li>
 			: null }
 		</ul>
-		<div className="navigation">
-			<p className="nav-older">← Older posts</p>
-			<p className="nav-newer">Newer posts →</p>
-		</div>
 	</div>
 }

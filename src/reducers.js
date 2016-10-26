@@ -43,6 +43,21 @@ export default combineReducers({
 					state[ post.id ] = post
 				})
 				return {...state}
+			case 'POST_CREATED':
+				state[ action.payload.post.id ] = action.payload.post
+				return {...state}
+			default:
+				return state
+		}
+	},
+	newPost: ( state = { isSaving: false, error: null }, action ) => {
+		switch ( action.type ) {
+			case 'POST_CREATING':
+				return {...state, isSaving: true}
+			case 'POST_CREATED':
+				return {...state, isSaving: false, error: null}
+			case 'POST_CREATE_ERRORED':
+				return {...state, isSaving: false, error: action.payload.error}
 			default:
 				return state
 		}

@@ -13,7 +13,7 @@ export default class PostReactions extends Component {
 					<span className="count">reaction.count</span>
 					<span className="details">
 						{reaction.users.map( user => {
-							<span>@{user}</span>
+							return <span>@{user}</span>
 						})}
 					</span>
 				</a>

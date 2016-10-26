@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import TimeAgo from 'react-timeago'
 import PostReactions from './PostReactions'
 import Avatar from './Avatar'
 import Comment from './Comment'
@@ -42,7 +43,7 @@ class Post extends Component {
 								</a>
 								—
 								<span className="meta">
-									<time dateTime={post.date }>{post.date}</time>
+									<time dateTime={post.date }><TimeAgo date={post.date} /></time>
 								</span>
 							</p>
 							// post actions
