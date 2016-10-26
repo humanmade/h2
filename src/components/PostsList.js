@@ -1,7 +1,9 @@
 import React from 'react'
 import Post from './Post'
+import { values } from 'lodash'
 
 export default function( { posts } ) {
+	posts = values( posts )
 	return <div>
 		<ul className="postlist">
 			{posts.map( post => {
