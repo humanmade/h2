@@ -3,7 +3,8 @@ import Router from 'react-router-addons-controlled/ControlledBrowserRouter'
 import createBrowserHistory from 'history/createBrowserHistory'
 const history = createBrowserHistory()
 import { connect } from 'react-redux'
-import { values } from 'lodash'
+import { values, isEmpty } from 'lodash'
+import DocumentTitle from 'react-document-title'
 import Header from './components/Header'
 import PostsList from './components/PostsList'
 import Overview from './components/Overview'
@@ -26,6 +27,23 @@ class App extends Component {
 		// 	return
 		// }
 		this.props.dispatch( updateLocation( location ) ).then( () => this.props.dispatch( fetchPosts(this.props.postsFilter ) ) )
+	}
+	getDocumentTitle() {
+		let filter = this.props.postsFilter
+
+		if ( filter.category ) {
+			return this.props.categories[ filter.category ].name
+		}
+
+		if ( filter.id ) {
+			return this.props.posts[ filter.id ].title.rendered
+		}
+
+		if ( filter.author ) {
+			return this.props.users[ filter.author ].name
+		}
+
+		return 'H2'
 	}
 	render() {
 		let posts = values( this.props.posts ).filter( post => {
@@ -52,12 +70,13 @@ class App extends Component {
 			return true;
 		})
 		return <Router
-				history={history}
-				location={this.props.location}
-				action="PUSH"
-				onChange={( location, action) => this.onNavigate( location, action )}
-			>
-				<div className="App">
+			history={history}
+			location={this.props.location}
+			action="PUSH"
+			onChange={( location, action) => this.onNavigate( location, action )}
+		>
+			<div className="App">
+				<DocumentTitle title={this.getDocumentTitle()}><span></span></DocumentTitle>
 				<Header site={{name: 'h2'}} />
 				<div id="wrapper">
 					<div className="sleeve sleeve-main">

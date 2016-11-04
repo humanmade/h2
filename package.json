@@ -10,6 +10,7 @@
     "node-sass": "^3.10.1",
     "normalize-scss": "^6.0.0",
     "react": "^15.3.2",
+    "react-document-title": "^2.0.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
     "react-router": "^4.0.0-alpha.5",
