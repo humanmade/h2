@@ -1,4 +1,3 @@
-import fetchTerms from './fetchTerms'
 import fetchUsers from './fetchUsers'
 import fetchPosts from './fetchPosts'
 import fetchComments from './fetchComments'
@@ -9,6 +8,9 @@ import createPost from './createPost'
 import updatePost from './updatePost'
 import fetchSiteData from './fetchSiteData'
 import updateComment from './updateComment'
+import updateLocation from './updateLocation'
+import updatePostsFilter from './updatePostsFilter'
+import fetchCategories from './fetchCategories'
 
 export {
 	fetchUsers,
@@ -18,8 +20,10 @@ export {
 	createPost,
 	updatePost,
 	createComment,
-	fetchTerms,
 	fetchComments,
 	fetchSiteData,
 	updateComment,
+	updateLocation,
+	updatePostsFilter,
+	fetchCategories,
 }

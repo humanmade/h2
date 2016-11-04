@@ -32,6 +32,11 @@ export default combineReducers({
 					})
 				})
 				return {...state}
+			case 'CATEGORIES_UPDATED':
+				action.payload.categories.forEach( category => {
+					state[ category.id ] = category
+				} )
+				return {...state}
 			default:
 				return state
 		}
@@ -58,6 +63,47 @@ export default combineReducers({
 				return {...state, isSaving: false, error: null}
 			case 'POST_CREATE_ERRORED':
 				return {...state, isSaving: false, error: action.payload.error}
+			default:
+				return state
+		}
+	},
+	comments: ( state = { isSaving: false, error: null }, action ) => {
+		switch ( action.type ) {
+			case 'POST_CREATING':
+				return {...state, isSaving: true}
+			case 'COMMENT_CREATED':
+				state[ action.payload.comment.post ][ action.payload.comment.id ] = action.payload.comment
+				return {...state}
+			case 'POST_CREATE_ERRORED':
+				return {...state, isSaving: false, error: action.payload.error}
+			default:
+				return state
+		}
+	},
+	newComment: ( state = { isSaving: false, error: null }, action ) => {
+		switch ( action.type ) {
+			case 'COMMENT_CREATING':
+				return {...state, isSaving: true}
+			case 'COMMENT_CREATED':
+				return {...state, isSaving: false, error: null}
+			case 'COMMENT_CREATE_ERRORED':
+				return {...state, isSaving: false, error: action.payload.error}
+			default:
+				return state
+		}
+	},
+	location: ( state = {}, action ) => {
+		switch ( action.type ) {
+			case 'LOCATION_UPDATED':
+				return action.payload.location
+			default:
+				return state
+		}
+	},
+	postsFilter: ( state = {}, action ) => {
+		switch ( action.type ) {
+			case 'POSTS_FILTER_UPDATED':
+				return action.payload
 			default:
 				return state
 		}

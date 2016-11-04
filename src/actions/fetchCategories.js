@@ -8,20 +8,23 @@ import api from '../api'
  *
  * @param  object args The arguments for the endpoint.
  */
-export default function fetchUsers( args ) {
+export default function fetchCategories( args ) {
 	return ( dispatch, getStore ) => {
 		dispatch({
-			type: 'USERS_UPDATING',
+			type: 'CATEGORIES_UPDATING',
+			payload: {
+				taxonomy: args.taxonomy,
+			}
 		})
-		return api.get( '/wp/v2/users', args )
+		return api.get( '/wp/v2/categories', args )
 			.then( data => {
 				dispatch({
-					type: 'USERS_UPDATED',
+					type: 'CATEGORIES_UPDATED',
 					payload: {
-						users: data
+						categories: data
 					}
 				})
-				return data
+				return data;
 			})
 	}
 }

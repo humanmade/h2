@@ -128,7 +128,7 @@
 		opacity: 1;
 	}
 
-	.actions a, .actions .btn {
+	.actions button {
 		@include button;
 		@include button-slim;
 

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import FrontKit from 'frontkit'
 import Avatar from './Avatar'
 import { createPost } from '../actions'
 
@@ -25,10 +26,8 @@ class PostBox extends Component {
 				</a>
 				<div className="postcontent message-content">
 					<form id="new_post" onSubmit={e => this.onSubmit(e)}>
-						<textarea
-							value={this.state.text}
-							onChange={e => this.setState({text: e.target.value})}
-						/>
+
+						<FrontKit />
 						{this.props.newPost.error ?
 							<label className="post-error" htmlFor="content">{this.props.newPost.error.message}</label>
 						: null}

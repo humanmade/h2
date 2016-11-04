@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TimeAgo from 'react-timeago'
+import ReplyBox from './ReplyBox'
 import Avatar from './Avatar'
 
 class Comment extends Component {
@@ -13,7 +14,7 @@ class Comment extends Component {
 	render() {
 		const comment = this.props.comment
 		const user = this.props.users[ comment.author ]
-		const replies = []
+		const post = this.props.post[ comment.post ]
 		return <li className="comment">
 			<div className="message">
 				<Avatar user={user} />
@@ -33,7 +34,7 @@ class Comment extends Component {
 			<ul className="children">
 
 			</ul>
-			// reply form
+			<ReplyBox post={post} />
 		</li>
 	}
 }

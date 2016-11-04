@@ -2777,7 +2777,7 @@ img {
     flex-shrink: 0; }
   .message:hover .actions {
     opacity: 1; }
-  .message .actions a, .message .actions .btn {
+  .message .actions button {
     border: none;
     box-shadow: none;
     margin: 0;
@@ -2795,12 +2795,12 @@ img {
     display: inline-block;
     padding: .1875rem 10px;
     border-width: 1px; }
-    .message .actions a:hover, .message .actions .btn:hover {
+    .message .actions button:hover {
       background: #D94E3A;
       color: #fff; }
-    .message .actions a i:first-child, .message .actions .btn i:first-child {
+    .message .actions button i:first-child {
       margin-right: 0.3em; }
-    .message .actions a:first-child, .message .actions .btn:first-child {
+    .message .actions button:first-child {
       margin-left: -10px; }
 
 .post.format-status {

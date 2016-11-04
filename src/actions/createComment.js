@@ -1,4 +1,4 @@
-import httpapi from '../api'
+import api from '../api'
 
 /**
  * Create a comment via the api.
@@ -12,21 +12,21 @@ import httpapi from '../api'
 export default function createComment( comment ) {
 	return ( dispatch, getStore ) => {
 		dispatch({
-			type: 'COMMENTS_NEW_UPDATING',
-			payload: {
-				taxonomy: comment.taxonomy,
-			}
+			type: 'COMMENT_CREATING',
 		})
-
-		const store = getStore()
-		const site = store.sites[ store.activeSite.id ]
-		const api = new httpapi( site )
-
 		api.post( '/wp/v2/comments', comment )
 			.then( comment => {
 				dispatch({
-					type: 'COMMENTS_NEW_UPDATED',
+					type: 'COMMENT_CREATED',
 					payload: { comment },
+				})
+			})
+			.catch( err => {
+				dispatch({
+					type: 'COMMENT_CREATE_ERRORED',
+					payload: {
+						error: err,
+					},
 				})
 			})
 	}
