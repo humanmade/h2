@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { values } from 'lodash'
 import TimeAgo from 'react-timeago'
 import ReplyBox from './ReplyBox'
 import Avatar from './Avatar'
@@ -8,13 +9,14 @@ class Comment extends Component {
 	constructor() {
 		super()
 		this.state = {
-			showingComments: false
+			isReplying: false,
 		}
 	}
 	render() {
 		const comment = this.props.comment
 		const user = this.props.users[ comment.author ]
-		const post = this.props.post[ comment.post ]
+		const post = this.props.posts[ comment.post ]
+		const comments = this.props.comments[ post.id ] ? values( this.props.comments[ post.id ] ) : []
 		return <li className="comment">
 			<div className="message">
 				<Avatar user={user} />
@@ -26,17 +28,28 @@ class Comment extends Component {
 							<time dateTime={comment.date }><TimeAgo date={comment.date} /></time>
 						</span>
 					</p>
-					// actions
+					<p className="actions">
+						<button onClick={e => this.setState({isReplying: true})}>
+							<i className="fa fa-reply"></i>Reply
+						</button>
+					</p>
 				</div>
 				<div className="commentcontent message-content" dangerouslySetInnerHTML={{__html:comment.content.rendered}}></div>
 				<div className="message-footer"></div>
 			</div>
-			<ul className="children">
-
-			</ul>
-			<ReplyBox post={post} />
+			{comments.length ?
+				<ul className="children inlinecomments">
+					{comments.filter( c => c.parent === comment.id ).map( c => {
+						return <CommentConnected key={c.id} comment={c} />
+					})}
+				</ul>
+			: null}
+			{this.state.isReplying ?
+				<ReplyBox comment={comment} onPosted={() => this.setState({isReplying: false})} post={post} />
+			: null}
 		</li>
 	}
 }
-
-export default connect(s => s)(Comment)
+// Hack to allow using the connected component within this Component
+let CommentConnected
+export default CommentConnected = connect(s => s)(Comment)

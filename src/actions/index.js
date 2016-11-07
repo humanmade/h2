@@ -11,6 +11,7 @@ import updateComment from './updateComment'
 import updateLocation from './updateLocation'
 import updatePostsFilter from './updatePostsFilter'
 import fetchCategories from './fetchCategories'
+import processInitialData from './processInitialData'
 
 export {
 	fetchUsers,
@@ -26,4 +27,5 @@ export {
 	updateLocation,
 	updatePostsFilter,
 	fetchCategories,
+	processInitialData,
 }

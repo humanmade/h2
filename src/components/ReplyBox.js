@@ -7,7 +7,9 @@ import { createComment } from '../actions'
 class CommentBox extends Component {
 	static propTypes = {
 		post: PropTypes.object.isRequired,
+		comment: PropTypes.object,
 		user: PropTypes.object.isRequired,
+		onPosted: PropTypes.func.isRequired,
 	}
 	constructor() {
 		super()
@@ -20,7 +22,14 @@ class CommentBox extends Component {
 		this.props.dispatch( createComment({
 			content: this.state.text,
 			post: this.props.post.id,
-		}))
+			parent: this.props.comment ? this.props.comment.id : 0,
+		})).then( data  => {
+			this.props.onPosted( data )
+			return data
+		})
+	}
+	onChangeText(text) {
+		this.setState({text})
 	}
 	render() {
 		const user = this.props.user
@@ -36,8 +45,8 @@ class CommentBox extends Component {
 					</p>
 				</div>
 				<div className="commentcontent message-content">
-					<label for="content" className="assistive-text">Comment</label>
-					<FrontKit />
+					<label htmlFor="content" className="assistive-text">Comment</label>
+					<FrontKit onChange={(e) => this.onChangeText(e)} />
 				</div>
 				{this.props.newComment.error ?
 					<label className="post-error" htmlFor="content">{this.props.newComment.error.message}</label>

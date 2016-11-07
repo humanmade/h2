@@ -6,11 +6,11 @@ import api from '../api'
  * @param  object post   The post object.
  */
 export default function createPost( post ) {
-	return ( dispatch, getStore ) => {
+	return dispatch => {
 		dispatch({
 			type: 'POST_CREATING',
 		})
-		api.post( '/wp/v2/posts', post )
+		return api.post( '/wp/v2/posts', post )
 			.then( post => {
 				dispatch({
 					type: 'POST_CREATED',

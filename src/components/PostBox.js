@@ -7,6 +7,7 @@ import { createPost } from '../actions'
 class PostBox extends Component {
 	static propTypes = {
 		user: PropTypes.object.isRequired,
+		onPosted: PropTypes.func.isRequired,
 	}
 	constructor() {
 		super()
@@ -16,7 +17,13 @@ class PostBox extends Component {
 	}
 	onSubmit(e) {
 		e.preventDefault()
-		this.props.dispatch( createPost({ content: this.state.text }) )
+		this.props.dispatch( createPost({ content: this.state.text, status: 'publish' }) ).then( data => {
+			this.props.onPosted( data )
+			return data
+		})
+	}
+	onChangeText(text) {
+		this.setState({text})
 	}
 	render() {
 		return <div id="postbox" className="postlist active">
@@ -27,7 +34,7 @@ class PostBox extends Component {
 				<div className="postcontent message-content">
 					<form id="new_post" onSubmit={e => this.onSubmit(e)}>
 
-						<FrontKit />
+						<FrontKit defaultContent={this.state.text} onChange={(e) => this.onChangeText(e)} />
 						{this.props.newPost.error ?
 							<label className="post-error" htmlFor="content">{this.props.newPost.error.message}</label>
 						: null}

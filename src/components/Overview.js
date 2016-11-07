@@ -33,7 +33,7 @@ export default class Overview extends Component {
 				</div>
 			</div>
 			{this.state.showingPostBox ?
-				<PostBox user={this.props.user} />
+				<PostBox onPosted={() => this.setState({showingPostBox: false})} user={this.props.user} />
 			: null}
 		</div>
 	}

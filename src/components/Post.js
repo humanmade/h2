@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { values } from 'lodash'
+import { values, isEmpty } from 'lodash'
 import TimeAgo from 'react-timeago'
 import { Link } from 'react-router'
 import PostReactions from './PostReactions'
@@ -33,6 +33,9 @@ class Post extends Component {
 	render() {
 		const post = this.props.post
 		const user = this.props.users[ post.author ]
+		if ( ! user ) {
+			console.error( 'User is not found for post', post )
+		}
 		const comments = this.props.comments[ post.id ] ? this.props.comments[ post.id ] : {}
 		return <li className="post">
 			<div className="message">
@@ -45,7 +48,7 @@ class Post extends Component {
 				<Avatar user={user} />
 				<div className="postcontent message-content">
 					<h2 className="message-title">
-						<Link to={`/post/${post.slug}/`}>{post.title.rendered}</Link>
+						<Link to={`/post/${post.slug}/`}><span dangerouslySetInnerHTML={{__html: post.title.rendered}} /></Link>
 					</h2>
 					<div className="message-header">
 						<p className="message-meta">
@@ -90,16 +93,16 @@ class Post extends Component {
 				</p>
 			</div>
 
-			{this.state.showingComments && comments.length ?
+			{this.state.showingComments && ! isEmpty( comments ) ?
 				<ul className="children inlinecomments">
-					{values( comments ).map( comment => {
+					{values( comments ).filter( comment => comment.parent === 0 ).map( comment => {
 						return <Comment key={comment.id} comment={comment} />
 					})}
 				</ul>
 			: null}
 
 			{this.state.isReplying ?
-				<ReplyBox post={this.props.post} />
+				<ReplyBox onPosted={() => this.setState({isReplying: false})} post={this.props.post} />
 			: null}
 		</li>
 	}

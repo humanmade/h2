@@ -1,18 +1,29 @@
 import { combineReducers } from 'redux'
-const user = {"id":1,"name":"humanmade","url":"","description":"","link":"http:\/\/h2.hmn.dev\/author\/humanmade\/","slug":"humanmade","avatar_urls":{"24":"http:\/\/0.gravatar.com\/avatar\/f61a530df6549067e68ac84c9eb35881?s=24&d=mm&r=g","48":"http:\/\/0.gravatar.com\/avatar\/f61a530df6549067e68ac84c9eb35881?s=48&d=mm&r=g","96":"http:\/\/0.gravatar.com\/avatar\/f61a530df6549067e68ac84c9eb35881?s=96&d=mm&r=g"},"meta":{},"can":null,"_links":{"self":[{"href":"http:\/\/h2.hmn.dev\/wp-json\/wp\/v2\/users\/1"}],"collection":[{"href":"http:\/\/h2.hmn.dev\/wp-json\/wp\/v2\/users"}]}}
 
 export default combineReducers({
-	user: s => user,
+	user: ( state = {}, action ) => {
+		switch ( action.type ) {
+			case 'USER_UPDATED':
+				return action.payload.user
+			default:
+				return state
+		}
+	},
 	users: ( state = {}, action ) => {
 		switch ( action.type ) {
 			case 'POSTS_UPDATED':
 				action.payload.posts.forEach( post => {
-					if ( ! post._embedded['author'] ) {
+					if ( ! post._embedded || ! post._embedded['author'] ) {
 						return
 					}
 					const user = post._embedded['author'][0]
 					state[ user.id ] = user
 				})
+				return {...state}
+			case 'USERS_UPDATED':
+				action.payload.users.forEach( user => {
+					state[ user.id ] = user
+				} )
 				return {...state}
 			default:
 				return state
@@ -22,7 +33,7 @@ export default combineReducers({
 		switch ( action.type ) {
 			case 'POSTS_UPDATED':
 				action.payload.posts.forEach( post => {
-					if ( ! post._embedded['wp:term'] ) {
+					if ( ! post._embedded || ! post._embedded['wp:term'] ) {
 						return
 					}
 					post._embedded['wp:term'].forEach( rel => {
@@ -67,15 +78,37 @@ export default combineReducers({
 				return state
 		}
 	},
-	comments: ( state = { isSaving: false, error: null }, action ) => {
+	comments: ( state = {}, action ) => {
 		switch ( action.type ) {
-			case 'POST_CREATING':
-				return {...state, isSaving: true}
+			case 'POSTS_UPDATED':
+				action.payload.posts.forEach( post => {
+					if ( ! post._embedded || ! post._embedded['replies'] ) {
+						return
+					}
+					post._embedded['replies'].forEach( rel => {
+						rel.forEach( comment => {
+							if ( ! state[ comment.post ] ) {
+								state[ comment.post ] = {}
+							}
+							state[ comment.post ][ comment.id ] = comment
+						} )
+					})
+				})
+				return {...state}
+			case 'COMMENTS_UPDATED':
+				action.payload.comments.forEach( comment => {
+					if ( ! state[ comment.post ] ) {
+						state[ comment.post ] = {}
+					}
+					state[ comment.post ][ comment.id ] = comment
+				})
+				return {...state}
 			case 'COMMENT_CREATED':
+				if ( ! state[ action.payload.comment.post ] ) {
+					state[ action.payload.comment.post ] = {}
+				}
 				state[ action.payload.comment.post ][ action.payload.comment.id ] = action.payload.comment
 				return {...state}
-			case 'POST_CREATE_ERRORED':
-				return {...state, isSaving: false, error: action.payload.error}
 			default:
 				return state
 		}

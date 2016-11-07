@@ -10,11 +10,11 @@ import api from '../api'
  * @param  object comment The comment object.
  */
 export default function createComment( comment ) {
-	return ( dispatch, getStore ) => {
+	return dispatch => {
 		dispatch({
 			type: 'COMMENT_CREATING',
 		})
-		api.post( '/wp/v2/comments', comment )
+		return api.post( '/wp/v2/comments', comment )
 			.then( comment => {
 				dispatch({
 					type: 'COMMENT_CREATED',

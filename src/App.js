@@ -10,13 +10,14 @@ import PostsList from './components/PostsList'
 import Overview from './components/Overview'
 import Sidebar from './components/Sidebar'
 import Footer from './components/Footer'
-import { fetchPosts, updateLocation } from './actions'
+import { fetchPosts, updateLocation, processInitialData } from './actions'
 
 class App extends Component {
 	componentWillMount() {
-		this.props.dispatch( updateLocation( window.location ) ).then( () => {
-			this.props.dispatch( fetchPosts(this.props.postsFilter ) )
-		})
+		if ( window.h2InitialData ) {
+			this.props.dispatch( processInitialData( window.h2InitialData ) )
+		}
+		this.props.dispatch( updateLocation( window.location ) )
 	}
 	onNavigate( location, action ) {
 		if ( action !== 'PUSH' ) {
@@ -31,15 +32,15 @@ class App extends Component {
 	getDocumentTitle() {
 		let filter = this.props.postsFilter
 
-		if ( filter.category ) {
+		if ( filter.category && this.props.categories[ filter.category ] ) {
 			return this.props.categories[ filter.category ].name
 		}
 
-		if ( filter.id ) {
+		if ( filter.id && this.props.posts[ filter.id ] ) {
 			return this.props.posts[ filter.id ].title.rendered
 		}
 
-		if ( filter.author ) {
+		if ( filter.author && this.props.users[ filter.author ] ) {
 			return this.props.users[ filter.author ].name
 		}
 
@@ -68,7 +69,7 @@ class App extends Component {
 			}
 
 			return true;
-		})
+		}).slice().sort( ( a, b ) => a.date < b.date )
 		return <Router
 			history={history}
 			location={this.props.location}
