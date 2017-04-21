@@ -1,8 +1,7 @@
 .App {
   flex-direction: column;
   flex: 1; }
-
-.App .PostsList {
-  margin-left: 135px;
-  padding-top: 60px;
-  max-width: 800px; }
+  .App .PostsList {
+    margin-left: 135px;
+    padding-top: 60px;
+    max-width: 800px; }

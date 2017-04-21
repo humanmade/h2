@@ -17,3 +17,11 @@ export type User = {
 		'96': string,
 	},
 };
+
+export type Comment = {
+	id: number,
+	content: {
+		rendered: string,
+	},
+	author: number,
+};

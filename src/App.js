@@ -19,6 +19,7 @@ class App extends Component {
 				<PostsList
 					posts={Object.values(this.props.posts.byId)}
 					users={this.props.users.byId}
+					comments={this.props.comments.byId}
 				/>
 			</div>
 		);

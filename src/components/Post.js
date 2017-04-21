@@ -2,7 +2,8 @@
 import React from 'react';
 import './Post.css';
 import Avatar from './Avatar';
-import type { Post as PostType, User } from '../types';
+import CommentsList from './CommentsList';
+import type { Post as PostType, User, Comment } from '../types';
 
 export default function Post(
 	props: {
@@ -10,6 +11,7 @@ export default function Post(
 		post: PostType,
 	}
 ) {
+	console.log(props.post)
 	return (
 		<div className="Post">
 			<Avatar

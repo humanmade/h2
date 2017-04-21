@@ -1,3 +1,4 @@
+// @flow
 import api from 'wordpress-rest-api-oauth-1'
 
 var config = {

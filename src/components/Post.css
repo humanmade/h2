@@ -8,16 +8,13 @@
   font-family: "Proxima Nova";
   display: block;
   line-height: 33px; }
-
-.Post .content img {
-  max-width: 100%;
-  height: auto; }
-
-.Post .content .alignright {
-  float: right; }
-
-.Post .content > p:first-child {
-  margin-top: 0; }
+  .Post .content img {
+    max-width: 100%;
+    height: auto; }
+  .Post .content .alignright {
+    float: right; }
+  .Post .content > p:first-child {
+    margin-top: 0; }
 
 .Post h2 {
   font-family: "Chronicle Display";

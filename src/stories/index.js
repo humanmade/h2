@@ -9,6 +9,7 @@ import Avatar from '../components/Avatar';
 import Status from '../components/Status';
 import Post from '../components/Post';
 import PostsList from '../components/PostsList';
+import Comment from '../components/Comment';
 
 storiesOf('Components', module)
 	.add('Header', () => <Header><Logo /></Header>)
@@ -53,6 +54,23 @@ storiesOf('Components', module)
 				title: {
 					rendered: 'Exploring the idea of Platform',
 				},
+				content: {
+					rendered: 'Heading up to Oregon for my brother and sister-in-law’s birthday celebrations! I’ll be out May 4-7!',
+				},
+			}}
+		/>
+	))
+	.add('Comment', () => (
+		<Comment
+			author={{
+				name: 'Noel',
+				avatar_urls: {
+					'96': 'https://secure.gravatar.com/avatar/c57c8945079831fa3c19caef02e44614?s=300&d=mm&r=g',
+				},
+			}}
+			comment={{
+				id: 1,
+				author: 1,
 				content: {
 					rendered: 'Heading up to Oregon for my brother and sister-in-law’s birthday celebrations! I’ll be out May 4-7!',
 				},
