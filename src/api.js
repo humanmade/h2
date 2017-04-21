@@ -1,7 +1,7 @@
-import api from './wordpress-rest-api-oauth-1'
+import api from 'wordpress-rest-api-oauth-1'
 
 var config = {
-	url: 'https://poststatus.com/',
+	url: 'https://hmn.md/',
 }
 
 if ( window.wpApiSettings ) {

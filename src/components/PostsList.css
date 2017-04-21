@@ -1,0 +1,8 @@
+.PostsList {
+  flex-direction: column; }
+
+.PostsList .Status {
+  margin-bottom: 55px; }
+
+.PostsList .Post {
+  margin-bottom: 55px; }

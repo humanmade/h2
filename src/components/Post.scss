@@ -1,0 +1,30 @@
+.Post {
+	.Avatar {
+		margin-right: 35px;
+	}
+	.body {
+		flex-direction: column;
+	}
+	.content {
+		font-family: "Proxima Nova";
+		display: block;
+		line-height: 33px;
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+		.alignright {
+			float: right;
+		}
+		> p:first-child {
+			margin-top: 0;
+		}
+	}
+	h2 {
+		font-family: "Chronicle Display";
+		font-size: 48px;
+		margin: 0 0 35px;
+		line-height: 60px;
+	}
+
+}

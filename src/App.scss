@@ -1,0 +1,9 @@
+.App {
+	flex-direction: column;
+	flex: 1;
+	.PostsList {
+		margin-left: 135px;
+		padding-top: 60px;
+		max-width: 800px;
+	}
+}

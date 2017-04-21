@@ -1,0 +1,16 @@
+.Status .Avatar {
+  margin-right: 35px; }
+
+.Status .body {
+  font-family: "Proxima Nova";
+  display: block;
+  margin-top: 10px;
+  font-size: 18px;
+  line-height: 33px; }
+
+.Status .body p:first-of-type {
+  display: inline; }
+
+.Status .body img {
+  max-width: 100%;
+  height: auto; }

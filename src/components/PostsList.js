@@ -1,17 +1,29 @@
-import React from 'react'
-import Post from './Post'
+// @flow
+import React from 'react';
+import './PostsList.css';
+import Status from './Status';
+import PostComponent from './Post';
+import type { User, Post } from '../types';
 
-export default function( { posts } ) {
-	return <div>
-		<ul className="postlist">
-			{posts.map( post => {
-				return <Post key={post.id} post={post} />
-			})}
-			{posts.length === 0 ?
-				<li className="no-posts">
-					<h3>No posts yet!</h3>
-				</li>
-			: null }
-		</ul>
-	</div>
+export default function PostsList(
+	props: { posts: Array<Post>, users: { [userId: number]: User } }
+) {
+	return (
+		<div className="PostsList">
+			{props.posts.map(
+				post =>
+					(post.title.rendered === ''
+						? <Status
+								key={post.id}
+								post={post}
+								author={props.users[post.author]}
+							/>
+						: <PostComponent
+								key={post.id}
+								post={post}
+								author={props.users[post.author]}
+							/>)
+			)}
+		</div>
+	);
 }

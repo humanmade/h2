@@ -1,97 +1,28 @@
-import React, { Component } from 'react'
-import Router from 'react-router-addons-controlled/ControlledBrowserRouter'
-import createBrowserHistory from 'history/createBrowserHistory'
-const history = createBrowserHistory()
-import { connect } from 'react-redux'
-import { values, isEmpty } from 'lodash'
-import DocumentTitle from 'react-document-title'
-import Header from './components/Header'
-import PostsList from './components/PostsList'
-import Overview from './components/Overview'
-import Sidebar from './components/Sidebar'
-import Footer from './components/Footer'
-import { fetchPosts, updateLocation, processInitialData } from './actions'
+// @flow
+import React, { Component } from 'react';
+import { fetchPosts } from './actions';
+import { connect } from 'react-redux';
+import Header from './components/Header';
+import Logo from './components/Logo';
+import './App.css';
+
+import PostsList from './components/PostsList';
 
 class App extends Component {
 	componentWillMount() {
-		if ( window.h2InitialData ) {
-			this.props.dispatch( processInitialData( window.h2InitialData ) )
-		}
-		this.props.dispatch( updateLocation( window.location ) )
-	}
-	onNavigate( location, action ) {
-		if ( action !== 'PUSH' ) {
-			return;
-		}
-		// console.log( location.pathname )
-		// if ( location.pathname === this.props.location.pathname ) {
-		// 	return
-		// }
-		this.props.dispatch( updateLocation( location ) ).then( () => this.props.dispatch( fetchPosts(this.props.postsFilter ) ) )
-	}
-	getDocumentTitle() {
-		let filter = this.props.postsFilter
-
-		if ( filter.category && this.props.categories[ filter.category ] ) {
-			return this.props.categories[ filter.category ].name
-		}
-
-		if ( filter.id && this.props.posts[ filter.id ] ) {
-			return this.props.posts[ filter.id ].title.rendered
-		}
-
-		if ( filter.author && this.props.users[ filter.author ] ) {
-			return this.props.users[ filter.author ].name
-		}
-
-		return 'H2'
+		this.props.dispatch(fetchPosts({ _embed: true, per_page: 20 }));
 	}
 	render() {
-		let posts = values( this.props.posts ).filter( post => {
-			let filter = this.props.postsFilter
-
-			if ( filter.id && post.id !== filter.id ) {
-				return false;
-			}
-
-			if ( filter.category && post.categories.indexOf( filter.category ) === -1 ) {
-				return false;
-			}
-
-			if ( filter.search ) {
-				if ( post.content.rendered.search( RegExp( filter.search, 'i' ) ) === -1 ) {
-					return false
-				}
-			}
-
-			if ( filter.author && post.author !== filter.author ) {
-				return false;
-			}
-
-			return true;
-		}).slice().sort( ( a, b ) => a.date < b.date )
-		return <Router
-			history={history}
-			location={this.props.location}
-			action="PUSH"
-			onChange={( location, action) => this.onNavigate( location, action )}
-		>
+		return (
 			<div className="App">
-				<DocumentTitle title={this.getDocumentTitle()}><span></span></DocumentTitle>
-				<Header site={{name: 'h2'}} />
-				<div id="wrapper">
-					<div className="sleeve sleeve-main">
-						<div id="main">
-							<Overview user={this.props.user} />
-							<PostsList posts={posts} />
-						</div>
-					</div>
-					<Sidebar />
-				</div>
-				<Footer />
+				<Header><Logo /></Header>
+				<PostsList
+					posts={Object.values(this.props.posts.byId)}
+					users={this.props.users.byId}
+				/>
 			</div>
-		</Router>
+		);
 	}
 }
 
-export default connect(s => s)(App)
+export default connect(s => s)(App);
