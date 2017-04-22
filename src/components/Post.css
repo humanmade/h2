@@ -2,6 +2,7 @@
   margin-right: 35px; }
 
 .Post .body {
+  padding-top: 100px;
   flex-direction: column;
   font-family: 'Adelle Sans W01', serif; }
 
@@ -12,7 +13,7 @@
 
 .Post .content {
   display: block;
-  line-height: 1.8;
+  line-height: 1.9;
   font-size: 18px;
   font-weight: 100;
   letter-spacing: 0.01rem;
@@ -35,12 +36,14 @@
 .Post .content .alignleft {
   display: inline;
   float: left;
-  margin-right: 1.5em; }
+  margin-right: 1.5em;
+  margin-bottom: 1em; }
 
 .Post .content .alignright {
   display: inline;
   float: right;
-  margin-left: 1.5em; }
+  margin-left: 1.5em;
+  margin-bottom: 1em; }
 
 .Post .content .aligncenter {
   clear: both;

@@ -3,6 +3,7 @@
 		margin-right: 35px;
 	}
 	.body {
+    padding-top: 100px;
 		flex-direction: column;
     font-family: 'Adelle Sans W01', serif;
     > h2 {
@@ -13,7 +14,7 @@
 	}
 	.content {
 		display: block;
-		line-height: 1.8;
+		line-height: 1.9;
     font-size: 18px;
     font-weight: 100;
     letter-spacing: 0.01rem;
@@ -36,11 +37,13 @@
     	display: inline;
     	float: left;
     	margin-right: 1.5em;
+      margin-bottom: 1em;
     }
     .alignright {
     	display: inline;
     	float: right;
     	margin-left: 1.5em;
+      margin-bottom: 1em;
     }
     .aligncenter {
     	clear: both;
