@@ -9,8 +9,14 @@ export default function Header(props) {
     <div className="Header">
       <div className="Inner">
         <Logo />
-        <HeaderButton />
-        <HeaderButton />
+        <HeaderButton
+          title='+ New Post'
+          path='new-post'
+        />
+        <HeaderButton
+          title='+ New Status'
+          path='new-status'
+        />
       </div>
     </div>
   )
