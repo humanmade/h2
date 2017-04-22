@@ -10,8 +10,21 @@ coverage
 build
 
 # misc
-.DS_Store
+*.DS_Store
+.AppleDouble
+.LSOverride
 .env
 npm-debug.log
+
+# Thumbnails
+._*
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.yarn-integrity
 
 .css
