@@ -16,11 +16,13 @@ class App extends Component {
 		return (
 			<div className="App">
 				<Header><Logo /></Header>
-				<PostsList
-					posts={Object.values(this.props.posts.byId)}
-					users={this.props.users.byId}
-					comments={this.props.comments.byId}
-				/>
+        <div className="Inner">
+  				<PostsList
+  					posts={Object.values(this.props.posts.byId)}
+  					users={this.props.users.byId}
+  					comments={this.props.comments.byId}
+  				/>
+        </div>
 			</div>
 		);
 	}

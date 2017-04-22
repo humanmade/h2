@@ -8,13 +8,29 @@
   font-family: "Proxima Nova";
   display: block;
   line-height: 33px; }
-  .Post .content img {
-    max-width: 100%;
-    height: auto; }
-  .Post .content .alignright {
-    float: right; }
-  .Post .content > p:first-child {
-    margin-top: 0; }
+
+.Post .content img {
+  max-width: 100%;
+  height: auto; }
+
+.Post .content .alignleft {
+  display: inline;
+  float: left;
+  margin-right: 1.5em; }
+
+.Post .content .alignright {
+  display: inline;
+  float: right;
+  margin-left: 1.5em; }
+
+.Post .content .aligncenter {
+  clear: both;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+
+.Post .content > p:first-child {
+  margin-top: 0; }
 
 .Post h2 {
   font-family: "Chronicle Display";

@@ -16,7 +16,7 @@ export default function Post(
 		<div className="Post">
 			<Avatar
 				url={props.author ? props.author.avatar_urls['96'] : ''}
-				size={70}
+				size={60}
 			/>
 			<div className="body">
 				<h2 dangerouslySetInnerHTML={{ __html: props.post.title.rendered }} />
