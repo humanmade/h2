@@ -31,6 +31,8 @@
 	.body {
 		flex-direction: column;
 		font-family: 'Adelle Sans W01', serif;
+		word-wrap: break-word;
+		word-break: break-word;
 		> h2 {
 			font-family: 'Chronicle Display';
 			font-size: 42px;
