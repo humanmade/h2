@@ -3,6 +3,7 @@ import React from 'react';
 import './Comment.css';
 import type { User, Comment as CommentType } from '../types';
 import Avatar from './Avatar';
+import PostContent from './PostContent';
 
 export default function Comment(
 	props: { comment: CommentType, author: ?User }
@@ -15,10 +16,7 @@ export default function Comment(
 			/>
 			<div className="body">
 				<strong>{props.author ? props.author.name : ''}</strong>
-				<div
-					className="content"
-					dangerouslySetInnerHTML={{ __html: props.comment.content.rendered }}
-				/>
+				<PostContent html={props.comment.content.rendered} />
 			</div>
 		</div>
 	);

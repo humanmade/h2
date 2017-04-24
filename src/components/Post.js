@@ -3,6 +3,7 @@ import React from 'react';
 import './Post.css';
 import Avatar from './Avatar';
 import CommentsList from './CommentsList';
+import PostContent from './PostContent'
 import type { Post as PostType, User, Comment } from '../types';
 
 export default function Post(
@@ -21,12 +22,7 @@ export default function Post(
 				/>
 				<div className="body">
 					<h2 dangerouslySetInnerHTML={{ __html: props.post.title.rendered }} />
-					<div
-						className="content"
-						dangerouslySetInnerHTML={{
-							__html: `${props.post.content.rendered}`,
-						}}
-					/>
+					<PostContent html={props.post.content.rendered} />
 				</div>
 			</div>
 			{props.children}
