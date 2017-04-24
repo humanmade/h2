@@ -13,7 +13,7 @@ class ConnectedComment extends Component {
 	render() {
 		const comment = this.props.comment;
 		const post = this.props.posts.byId[comment.post];
-		const author = this.props.users.byId[post.author];
+		const author = this.props.users.byId[comment.author];
 		return <Comment author={author} comment={this.props.comment} post={post}>{this.props.chidren}</Comment>;
 	}
 }

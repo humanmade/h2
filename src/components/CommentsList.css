@@ -1,6 +1,5 @@
 .CommentsList {
   flex-direction: column;
   margin-left: 75px; }
-
-.CommentsList .Comment {
-  margin-bottom: 40px; }
+  .CommentsList .Comment {
+    margin-bottom: 40px; }

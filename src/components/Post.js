@@ -14,7 +14,7 @@ export default function Post(
 ) {
 	return (
 		<div className="Post">
-			<div class="post">
+			<div>
 				<Avatar
 					url={props.author ? props.author.avatar_urls['96'] : ''}
 					size={70}
