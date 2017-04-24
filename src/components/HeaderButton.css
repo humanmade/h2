@@ -11,7 +11,6 @@
   margin-left: 35px;
   cursor: pointer;
   transition: 180ms linear all; }
-
-.HeaderButton:hover {
-  color: #818181;
-  background: #F1F2EE; }
+  .HeaderButton:hover {
+    color: #818181;
+    background: #F1F2EE; }

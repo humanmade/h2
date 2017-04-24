@@ -1,13 +1,12 @@
 .Avatar {
   position: relative;
   padding-top: 100px; }
-
-.Avatar:after {
-  position: absolute;
-  content: '';
-  background: #F1F2EE;
-  left: 27px;
-  top: 0;
-  height: 100px;
-  width: 6px;
-  z-index: -1; }
+  .Avatar:after {
+    position: absolute;
+    content: '';
+    background: #F1F2EE;
+    left: 27px;
+    top: 0;
+    height: 100px;
+    width: 6px;
+    z-index: -1; }
