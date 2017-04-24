@@ -9,24 +9,27 @@ export default function Post(
 	props: {
 		author: ?User,
 		post: PostType,
+		children: ?any,
 	}
 ) {
-	console.log(props.post)
 	return (
 		<div className="Post">
-			<Avatar
-				url={props.author ? props.author.avatar_urls['96'] : ''}
-				size={60}
-			/>
-			<div className="body">
-				<h2 dangerouslySetInnerHTML={{ __html: props.post.title.rendered }} />
-				<div
-					className="content"
-					dangerouslySetInnerHTML={{
-						__html: `${props.post.content.rendered}`,
-					}}
+			<div class="post">
+				<Avatar
+					url={props.author ? props.author.avatar_urls['96'] : ''}
+					size={70}
 				/>
+				<div className="body">
+					<h2 dangerouslySetInnerHTML={{ __html: props.post.title.rendered }} />
+					<div
+						className="content"
+						dangerouslySetInnerHTML={{
+							__html: `${props.post.content.rendered}`,
+						}}
+					/>
+				</div>
 			</div>
+			{props.children}
 		</div>
 	);
 }

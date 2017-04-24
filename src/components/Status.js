@@ -8,6 +8,7 @@ export default function Status(
 	props: {
 		author: ?User,
 		post: Post,
+		children: ?any,
 	}
 ) {
 	return (
@@ -22,6 +23,7 @@ export default function Status(
 					__html: `<strong>${props.author ? props.author.name : ''} says</strong>  ${props.post.content.rendered}`,
 				}}
 			/>
+			{props.children}
 		</div>
 	);
 }

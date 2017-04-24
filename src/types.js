@@ -24,4 +24,5 @@ export type Comment = {
 		rendered: string,
 	},
 	author: number,
+	post: number,
 };

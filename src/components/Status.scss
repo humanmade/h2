@@ -1,6 +1,19 @@
 .Status {
+	position: relative;
+	min-height: 100px;
+	&:before {
+		position: absolute;
+		content: '';
+		background: #F1F2EE;
+		left: 32px;
+		top: 0;
+		height: 100px;
+		width: 6px;
+		z-index: -1;
+	}
 	.Avatar {
 		margin-right: 35px;
+		margin-left: 10px;
 	}
 	.body {
 		font-family: "Proxima Nova";

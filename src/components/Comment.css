@@ -1,0 +1,12 @@
+.Comment {
+  position: relative; }
+
+.Comment:before {
+  position: absolute;
+  content: '';
+  background: #F1F2EE;
+  left: 23px;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  z-index: -1; }

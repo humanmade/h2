@@ -1,0 +1,14 @@
+.PostsList {
+  flex-direction: column;
+  position: relative;
+  padding-top: 100px; }
+
+.PostsList:before {
+  position: absolute;
+  content: '';
+  background: #F1F2EE;
+  left: 32px;
+  height: 100px;
+  top: 0;
+  width: 5px;
+  z-index: -1; }

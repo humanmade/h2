@@ -27,6 +27,15 @@ export default new WPAPIRedux({
 					object: 'comments',
 				},
 			},
+			parseObject: object => {
+				if ( object._embedded && object._embedded.replies ) {
+					object._embedded.replies[0] = object._embedded.replies[0].map( comment => {
+						comment.post = object.id
+						return comment
+					})
+				}
+				return object;
+			}
 		},
 		users: {
 			route: '/wp/v2/users',

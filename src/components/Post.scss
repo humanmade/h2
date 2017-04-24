@@ -1,64 +1,89 @@
 .Post {
+	flex-direction: column;
+	position: relative;
+	padding-bottom: 20px;
+	min-height: 144px;
+	&:before {
+		position: absolute;
+		content: '';
+		left: 32px;
+		top: 60px;
+	    height:40px;
+	    width: 40px;
+	    border-radius: 0 0 0 40px;
+		border-left: 5px solid #F1F2EE;
+		border-bottom: 5px solid #F1F2EE;
+	}
+	&:after {
+		position: absolute;
+		content: '';
+		left: 32px;
+		bottom: 0px;
+	    height:60px;
+	    width: 60px;
+	    border-radius: 60px 0 0 0;
+		border-top: 5px solid #F1F2EE;
+		border-left: 5px solid #F1F2EE;
+	}
 	.Avatar {
-		margin-right: 35px;
+		margin-right: 30px;
 	}
 	.body {
-    padding-top: 100px;
 		flex-direction: column;
-    font-family: 'Adelle Sans W01', serif;
-    > h2 {
-      font-family: 'Chronicle Display';
-      font-size: 42px;
-      margin-top: 5px;
-    }
+		font-family: 'Adelle Sans W01', serif;
+		> h2 {
+			font-family: 'Chronicle Display';
+			font-size: 42px;
+			margin-top: 5px;
+		}
 	}
 	.content {
 		display: block;
 		line-height: 1.9;
-    font-size: 18px;
-    font-weight: 100;
-    letter-spacing: 0.01rem;
-    color: #636462;
-    a {
-      text-decoration: none;
-      padding-left: 2px;
-      padding-right: 2px;
-      font-weight: 200;
-      box-shadow: inset 0 17px 0 0 #fff, inset 0 -15px 0 0 fade-out(#7DC3CC, 0.9);
-    }
-    strong {
-      font-weight: 300;
-    }
+		font-size: 18px;
+		font-weight: 100;
+		letter-spacing: 0.01rem;
+		color: #636462;
+		a {
+			text-decoration: none;
+			padding-left: 2px;
+			padding-right: 2px;
+			font-weight: 200;
+			box-shadow: inset 0 17px 0 0 #fff, inset 0 -15px 0 0 fade-out(#7DC3CC, 0.9);
+		}
+		strong {
+			font-weight: 300;
+		}
 		img {
 			max-width: 100%;
 			height: auto;
 		}
-    .alignleft {
-    	display: inline;
-    	float: left;
-    	margin-right: 1.5em;
-      margin-bottom: 1em;
-    }
-    .alignright {
-    	display: inline;
-    	float: right;
-    	margin-left: 1.5em;
-      margin-bottom: 1em;
-    }
-    .aligncenter {
-    	clear: both;
-    	display: block;
-    	margin-left: auto;
-    	margin-right: auto;
-    }
+		.alignleft {
+			display: inline;
+			float: left;
+			margin-right: 1.5em;
+			margin-bottom: 1em;
+		}
+		.alignright {
+			display: inline;
+			float: right;
+			margin-left: 1.5em;
+			margin-bottom: 1em;
+		}
+		.aligncenter {
+			clear: both;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+		}
 		> p:first-child {
 			margin-top: 0;
 		}
-    h2 {
-      font-size: 32px;
-      font-weight: 500;
-      margin: 0 0 35px;
-      line-height: 60px;
-    }
+		h2 {
+			font-size: 32px;
+			font-weight: 500;
+			margin: 0 0 35px;
+			line-height: 60px;
+		}
 	}
 }
