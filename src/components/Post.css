@@ -17,13 +17,15 @@
     position: absolute;
     content: '';
     left: 32px;
-    bottom: 0px;
+    bottom: -40px;
     height: 60px;
     width: 60px;
     border-radius: 60px 0 0 0;
     border-top: 5px solid #F1F2EE;
     border-left: 5px solid #F1F2EE; }
-  .Post .Avatar {
+  .Post > div > .Avatar {
     margin-right: 30px; }
-  .Post .body {
+  .Post > div > .body {
     flex-direction: column; }
+  .Post .CommentsList {
+    margin-left: 75px; }

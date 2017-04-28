@@ -2,12 +2,14 @@
   "name": "h2",
   "version": "0.0.1",
   "private": true,
+  "homepage": "http://make.hmn.md/h2",
   "devDependencies": {
     "@kadira/storybook": "^2.21.0",
     "flow-bin": "^0.44.2",
     "react-scripts": "0.9.5"
   },
   "dependencies": {
+    "@humanmade/frontkit": "^0.3.0",
     "bourbon": "^4.2.7",
     "node-sass": "^3.10.1",
     "normalize-scss": "^6.0.0",

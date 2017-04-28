@@ -1,0 +1,8 @@
+.Button {
+  background: none;
+  border: none;
+  color: #cb4b3c;
+  font-size: 14px;
+  outline: none; }
+  .Button:active {
+    outline: 1px solid #cb4b3c; }

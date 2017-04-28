@@ -9,3 +9,10 @@
     bottom: 0;
     width: 5px;
     z-index: -1; }
+  .Comment header {
+    height: 50px;
+    line-height: 50px; }
+  .Comment > .body {
+    flex-direction: column; }
+  .Comment > .Avatar {
+    margin-right: 30px; }

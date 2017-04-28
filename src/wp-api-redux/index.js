@@ -7,6 +7,7 @@ import createFetchRelatedObjectActionCreator
 import createFetchObjectActionCreator from './createFetchObjectActionCreator';
 import createUpdateObjectActionCreator from './createUpdateObjectActionCreator';
 import createDeleteObjectActionCreator from './createDeleteObjectActionCreator';
+import createCreateObjectActionCreator from './createCreateObjectActionCreator';
 import createUpdateObjectWindowFilterActionCreator
   from './createUpdateObjectWindowFilterActionCreator';
 
@@ -41,6 +42,12 @@ class WordPress_REST_API_Redux {
         api,
         options
       ),
+	  create: createCreateObjectActionCreator(
+		  objectName,
+          options.route,
+          api,
+          options
+	  ),
       delete: createDeleteObjectActionCreator(
         objectName,
         options.route,

@@ -4,7 +4,7 @@ import './Header.css';
 import HeaderButton from './HeaderButton';
 import Logo from './Logo';
 
-export default function Header(props) {
+export default function Header() {
 	return (
     <div className="Header">
       <div className="Inner">

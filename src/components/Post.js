@@ -2,15 +2,14 @@
 import React from 'react';
 import './Post.css';
 import Avatar from './Avatar';
-import CommentsList from './CommentsList';
 import PostContent from './PostContent'
-import type { Post as PostType, User, Comment } from '../types';
+import type { Post as PostType, User } from '../types';
 
 export default function Post(
 	props: {
 		author: ?User,
 		post: PostType,
-		children: ?any,
+		children?: any,
 	}
 ) {
 	return (

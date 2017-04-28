@@ -1,3 +1,4 @@
+//@flow
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
@@ -8,7 +9,7 @@ import App from './App';
 import './index.css';
 import reducers from './reducers';
 
-let store = createStore(reducers, applyMiddleware(thunk, createLogger()));
+let store = createStore(reducers, applyMiddleware(thunk, createLogger({collapsed: true})));
 
 ReactDOM.render(
 	<Provider store={store}>

@@ -8,7 +8,7 @@ export default function Status(
 	props: {
 		author: ?User,
 		post: Post,
-		children: ?any,
+		children?: any,
 	}
 ) {
 	return (

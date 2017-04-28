@@ -1,4 +1,4 @@
-.Comment {
+.WriteComment {
 	position: relative;
 
 	&:before {
@@ -17,10 +17,22 @@
 		line-height: 50px;
 	}
 
-	> .body {
-		flex-direction: column;
+	textarea {
+		border: 1px solid #f6f6f6;
+		padding: 10px;
+		font-size: 15px;
+		outline: none;
+		margin-bottom: 10px;
+		width: 100%;
 	}
 	> .Avatar {
 		margin-right: 30px;
+	}
+	.body {
+		flex-direction: column;
+		flex: 1;
+	}
+	.buttons {
+		margin-bottom: 10px;
 	}
 }

@@ -15,3 +15,5 @@
     margin-left: 10px; }
   .Status .PostContent p:first-of-type {
     display: inline; }
+  .Status .body {
+    display: block; }

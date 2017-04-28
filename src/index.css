@@ -9,3 +9,12 @@ div {
 a {
   text-decoration: none;
   color: #7DC3CC; }
+
+.fk-root {
+  display: block; }
+  .fk-root div {
+    display: block; }
+  .fk-root .fk-bubble.fk-bubble-inline {
+    display: flex; }
+  .fk-root .fk-bubble {
+    display: flex; }

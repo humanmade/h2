@@ -1,15 +1,19 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import type { Comment as CommentType } from '../types';
+import type { Comment as CommentType, PostsState, UsersState } from '../types';
 import Comment from '../components/Comment';
-import Status from '../components/Status';
+
+
+type props = {
+	posts: PostsState,
+	users: UsersState,
+	comment: CommentType,
+	chidren: ?any,
+}
 
 class ConnectedComment extends Component {
-	props: {
-		comment: CommentType,
-		chidren: ?any,
-	}
+	props: props
 	render() {
 		const comment = this.props.comment;
 		const post = this.props.posts.byId[comment.post];

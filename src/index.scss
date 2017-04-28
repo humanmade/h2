@@ -10,3 +10,16 @@ a {
 	text-decoration: none;
 	color: #7DC3CC;
 }
+
+.fk-root {
+	display: block;
+	div {
+		display: block;
+	}
+	.fk-bubble.fk-bubble-inline {
+		display: flex;
+	}
+	.fk-bubble {
+		display: flex;
+	}
+}

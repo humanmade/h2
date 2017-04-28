@@ -1,9 +1,8 @@
 // @flow
 import React from 'react';
 import './PostsList.css';
-import Status from './Status';
 import PostComponent from '../containers/Post';
-import type { User, Post, Comment } from '../types';
+import type { Post } from '../types';
 
 export default function PostsList(
 	props: {

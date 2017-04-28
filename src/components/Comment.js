@@ -15,7 +15,9 @@ export default function Comment(
 				size={50}
 			/>
 			<div className="body">
-				<strong>{props.author ? props.author.name : ''}</strong>
+				<header>
+					<strong>{props.author ? props.author.name : ''}</strong>
+				</header>
 				<PostContent html={props.comment.content.rendered} />
 			</div>
 		</div>

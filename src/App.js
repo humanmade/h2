@@ -12,7 +12,7 @@ class App extends Component {
 	componentWillMount() {
 		api.restoreCredentials().authorize().then(() => {
 			api.saveCredentials();
-			this.props.dispatch(fetchPosts({ _embed: true, per_page: 20 }));
+			this.props.dispatch(fetchPosts({ _embed: true, per_page: 1 }));
 			this.props.dispatch(fetchUsers({per_page: 100}));
 		});
 	}
