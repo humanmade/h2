@@ -2,4 +2,13 @@
 	background: #F1F2EE;
 	height: 60px;
 	flex: 1;
+
+	.Inner {
+		flex-direction: row;
+	}
+
+	.CurrentUserDropDown {
+		margin-left: auto;
+		align-self: center;
+	}
 }

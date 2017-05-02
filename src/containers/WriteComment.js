@@ -10,7 +10,7 @@ class ConnectedWriteComment extends Component {
 	props: {
 		post: Post,
 		posts: PostsState,
-		users: UsersState,
+		user: UsersState,
 		comment: Comment,
 		chidren: ?any,
 		dispatch: Dispatch,
@@ -41,7 +41,7 @@ class ConnectedWriteComment extends Component {
 	}
 	render() {
 		const post = this.props.post;
-		const author = this.props.users.byId[post.author];
+		const author = Object.values(this.props.user.byId)[0];
 		return (
 			<WriteComment
 				author={author}

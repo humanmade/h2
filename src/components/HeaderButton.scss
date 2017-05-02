@@ -1,19 +1,22 @@
 .HeaderButton {
-  display: block;
+	display: block;
 	background: #EAECE6;
-  color: #BDC0B6;
+	color: #BDC0B6;
 	height: 60px;
 	width: 180px;
-  text-transform: uppercase;
-  font-weight: 600;
-  line-height: 60px;
-  text-align: center;
-  margin-left: 35px;
-  cursor: pointer;
-  transition: 180ms linear all;
+	text-transform: uppercase;
+	font-weight: 600;
+	line-height: 60px;
+	text-align: center;
+	margin-left: 35px;
+	border: none;
+	font-size: inherit;
+	cursor: pointer;
+	transition: 180ms linear all;
+	outline: none;
 
-  &:hover {
-    color: #818181;
-    background: #F1F2EE;
-  }
+	&:hover {
+		color: #818181;
+		background: #F1F2EE;
+	}
 }

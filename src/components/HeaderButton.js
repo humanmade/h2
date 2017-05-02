@@ -2,10 +2,12 @@
 import React from 'react';
 import './HeaderButton.css';
 
-export default function HeaderButton(props: { title: string }) {
+export default function HeaderButton(
+	props: { title: string, onClick: () => void }
+) {
 	return (
-		<div className="HeaderButton" onClick="">
+		<button onClick={props.onClick} className="HeaderButton">
 			{props.title}
-		</div>
+		</button>
 	);
 }

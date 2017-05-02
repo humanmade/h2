@@ -1,7 +1,7 @@
-.Post {
+.WritePost {
 	flex-direction: column;
 	position: relative;
-	padding-bottom: 20px;
+	padding-bottom: 40px;
 	min-height: 144px;
 	&:before {
 		position: absolute;
@@ -18,7 +18,7 @@
 		position: absolute;
 		content: '';
 		left: 32px;
-		bottom: -40px;
+		bottom: 0px;
 	    height:60px;
 	    width: 60px;
 	    border-radius: 60px 0 0 0;
@@ -29,6 +29,7 @@
 		margin-right: 30px;
 	}
 	> div > .body {
+		flex: 1;
 		flex-direction: column;
 
 		> h2 {
@@ -41,7 +42,12 @@
 		}
 	}
 
-	.CommentsList {
-		margin-left: 75px;
+	input {
+		font-weight: inherit;
+		font-size: inherit;
+		border: none;
+		padding: 0;
+		width: 100%;
+		outline: none;
 	}
 }

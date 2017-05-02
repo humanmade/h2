@@ -2,12 +2,16 @@
 export type Post = {
 	title: {
 		rendered: string,
+		edited?: string,
 	},
 	content: {
 		rendered: string,
+		raw?: string,
+		edited?: string,
 	},
 	author: number,
 	id: number,
+	date_gmt: string,
 	related: {
 		comments: {
 			items: Array<number>,
@@ -37,7 +41,7 @@ export type Comment = {
 
 export type Action = {
 	type: string,
-	payload: any,
+	payload?: any,
 };
 
 type objectState = {
@@ -53,6 +57,11 @@ export type WriteCommentsState = {
 		isShowing: boolean,
 		comment: Comment,
 	},
+};
+
+export type WritePostState = {
+	isShowing: boolean,
+	post: Post,
 };
 
 export type PostsState = {

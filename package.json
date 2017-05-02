@@ -16,6 +16,7 @@
     "react": "^15.3.2",
     "react-document-title": "^2.0.2",
     "react-dom": "^15.3.2",
+    "react-intl": "^2.2.3",
     "react-redux": "^4.4.5",
     "react-router": "^4.0.0-alpha.5",
     "react-router-dom": "^4.1.1",

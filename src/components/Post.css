@@ -27,5 +27,11 @@
     margin-right: 30px; }
   .Post > div > .body {
     flex-direction: column; }
+    .Post > div > .body > h2 {
+      margin-bottom: 0; }
+    .Post > div > .body > .date {
+      margin-bottom: 15px;
+      color: #bbb;
+      font-size: 11.5px; }
   .Post .CommentsList {
     margin-left: 75px; }

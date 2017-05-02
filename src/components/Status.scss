@@ -1,6 +1,8 @@
 .Status {
 	position: relative;
 	min-height: 100px;
+	flex-direction: column;
+
 	&:before {
 		position: absolute;
 		content: '';
@@ -11,7 +13,7 @@
 		width: 6px;
 		z-index: -1;
 	}
-	.Avatar {
+	> div > .Avatar {
 		margin-right: 35px;
 		margin-left: 10px;
 	}
@@ -22,5 +24,8 @@
 	}
 	.body {
 		display: block;
+	}
+	.CommentsList {
+		margin-left: 65px;
 	}
 }

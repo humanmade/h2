@@ -2,12 +2,17 @@
   font-family: 'Proxima-Nova', sans-serif;
   flex-direction: column;
   flex: 1; }
-  .App .PostsList {
-    max-width: 800px; }
+
+.App .PostsList {
+  max-width: 800px; }
+
+.App .WritePost {
+  margin-top: 100px; }
 
 .Inner {
   margin: 0 auto;
-  width: 1200px; }
+  width: 1200px;
+  flex-direction: column; }
 
 /*
 * {

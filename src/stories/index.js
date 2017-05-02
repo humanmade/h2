@@ -15,6 +15,7 @@ import WriteComment from '../components/WriteComment';
 const comment = {
 	id: 1,
 	post: 1,
+	date_gmt: new Date().toISOString(),
 	author: 1,
 	content: {
 		rendered: 'Heading up to Oregon for my brother and sister-in-law’s birthday celebrations! I’ll be out May 4-7!',
@@ -24,6 +25,7 @@ const comment = {
 
 const post = {
 	id: 1,
+	date_gmt: new Date().toISOString(),
 	author: 1,
 	title: {
 		rendered: 'Exploring the idea of Platform',
@@ -36,8 +38,8 @@ const post = {
 			items: [],
 			isLoading: false,
 			hasLoaded: false,
-		}
-	}
+		},
+	},
 };
 
 const user = {
@@ -48,7 +50,9 @@ const user = {
 };
 
 storiesOf('Components', module)
-	.add('Header', () => <Header><Logo /></Header>)
+	.add('Header', () => (
+		<Header onWritePost={() => {}} onWriteStatus={() => {}}><Logo /></Header>
+	))
 	.add('Logo', () => <Logo />)
 	.add('Avatar', () => (
 		<Avatar

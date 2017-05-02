@@ -1,7 +1,9 @@
 .PostsList {
 	flex-direction: column;
 	position: relative;
-	padding-top: 100px;
+	&:first-child {
+		padding-top: 100px;
+	}
 	&:before {
 		position: absolute;
 		content: '';

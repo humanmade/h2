@@ -5,14 +5,7 @@ import type { Action, WriteCommentsState } from './types';
 import FrontKit from '@humanmade/frontkit';
 
 export default combineReducers({
-	user: (state = {}, action) => {
-		switch (action.type) {
-			case 'USER_UPDATED':
-				return action.payload.user;
-			default:
-				return state;
-		}
-	},
+	user: store.reducers.user,
 	users: store.reducers.users,
 	categories: store.reducers.categories,
 	posts: store.reducers.posts,
@@ -80,8 +73,60 @@ export default combineReducers({
 							author: 0,
 							id: 0,
 						},
-					}
-				}
+					},
+				};
+			default:
+				return state;
+		}
+	},
+	writePost: (
+		state = {
+			isShowing: false,
+			post: {
+				title: {
+					rendered: '',
+					edited: '',
+				},
+				id: 0,
+				content: { rendered: '', raw: '', edited: FrontKit.content() },
+				date_gmt: new Date().toISOString(),
+			},
+		},
+		action: Action
+	) => {
+		switch (action.type) {
+			case 'SHOW_WRITE_POST':
+				return {
+					...state,
+					isShowing: true,
+				};
+			case 'WRITE_POST_CANCELLED':
+				return {
+					...state,
+					isShowing: false,
+				};
+			case 'WRITE_POST_UPDATED':
+				return {
+					...state,
+					post: {
+						...state.post,
+						...action.payload.post,
+					},
+				};
+			case 'WP_API_REDUX_CREATE_POSTS_UPDATED':
+				return {
+					...state,
+					isShowing: false,
+					post: {
+						title: {
+							rendered: '',
+							edited: '',
+						},
+						id: 0,
+						content: { rendered: '', raw: '', edited: FrontKit.content() },
+						date_gmt: new Date().toISOString(),
+					},
+				};
 			default:
 				return state;
 		}

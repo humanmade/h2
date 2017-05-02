@@ -4,6 +4,7 @@ import './Post.css';
 import Avatar from './Avatar';
 import PostContent from './PostContent'
 import type { Post as PostType, User } from '../types';
+import { FormattedRelative } from 'react-intl';
 
 export default function Post(
 	props: {
@@ -21,6 +22,9 @@ export default function Post(
 				/>
 				<div className="body">
 					<h2 dangerouslySetInnerHTML={{ __html: props.post.title.rendered }} />
+					<div className="date">
+						<FormattedRelative value={props.post.date_gmt} />
+					</div>
 					<PostContent html={props.post.content.rendered} />
 				</div>
 			</div>

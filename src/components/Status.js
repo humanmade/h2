@@ -13,16 +13,18 @@ export default function Status(
 ) {
 	return (
 		<div className="Status">
-			<Avatar
-				url={props.author ? props.author.avatar_urls['96'] : ''}
-				size={50}
-			/>
-			<div
-				className="body"
-				dangerouslySetInnerHTML={{
-					__html: `<strong>${props.author ? props.author.name : ''} says</strong>  ${props.post.content.rendered}`,
-				}}
-			/>
+			<div>
+				<Avatar
+					url={props.author ? props.author.avatar_urls['96'] : ''}
+					size={50}
+				/>
+				<div
+					className="body"
+					dangerouslySetInnerHTML={{
+						__html: `<strong>${props.author ? props.author.name : ''} says</strong>  ${props.post.content.rendered}`,
+					}}
+				/>
+		</div>
 			{props.children}
 		</div>
 	);
