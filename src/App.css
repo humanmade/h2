@@ -2,12 +2,10 @@
   font-family: 'Proxima-Nova', sans-serif;
   flex-direction: column;
   flex: 1; }
-
-.App .PostsList {
-  max-width: 800px; }
-
-.App .WritePost {
-  margin-top: 100px; }
+  .App .PostsList {
+    max-width: 800px; }
+  .App .WritePost {
+    margin-top: 100px; }
 
 .Inner {
   margin: 0 auto;

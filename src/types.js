@@ -28,6 +28,13 @@ export type User = {
 	},
 };
 
+export type WindowState = {
+	items: Array<number>,
+	totalObjects: number,
+	totalPages: number,
+	isLoading: Boolean,
+};
+
 export type Comment = {
 	id: number,
 	content: {
@@ -69,6 +76,9 @@ export type PostsState = {
 		[number]: Post,
 	},
 	isLoading: boolean,
+	windows: {
+		[string]: WindowState,
+	},
 };
 
 export type UsersState = {

@@ -25,7 +25,6 @@ export default function WritePost(
 					size={70}
 				/>
 				<div className="body">
-					<h2><input onChange={e => props.onChange({ title: { edited: e.target.value } })} value={props.post.title.edited} placeholder="Enter title..." /></h2>
 					<div className="date">
 						<FormattedRelative value={props.post.date_gmt} />
 					</div>

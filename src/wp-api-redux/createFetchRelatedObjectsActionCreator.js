@@ -14,7 +14,7 @@ export default function createFetchRelatedObjectsActionCreator(
 				},
 			});
 			dispatch({
-				type: `WP_API_REDUX_FETCH_OBJECTS_RELATED_TO_${objectName.toUpperCase()}_UPDATING`,
+				type: `WP_API_REDUX_FETCH_${relatedObjectName.toUpperCase()}_RELATED_TO_${objectName.toUpperCase()}_UPDATING`,
 				payload: {
 					objectName,
 					relatedObjectName,

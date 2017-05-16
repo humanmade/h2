@@ -1,11 +1,11 @@
 // @flow
 import api from 'wordpress-rest-api-oauth-1';
 
-var url = window.location.href.split("?")[0];
+var url = window.location.href.split('?')[0];
 var config = {
-	url: 'http://localhost:8080/',
+	//url: 'http://localhost:8080/',
 	//url: 'https://updates.hmn.md/',
-	//url: 'https://demo.wp-api.org/',
+	url: 'https://demo.wp-api.org/',
 	callbackURL: url,
 };
 

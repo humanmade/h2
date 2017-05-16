@@ -14,19 +14,33 @@ export default function createFetchObjectsActionCreator(
 				},
 			});
 			return api
-				.get(path, filter)
-				.then( objects => options.singular ? [objects] : objects )
-				.then(
-					objects =>
-						(options.parseObject ? objects.map(options.parseObject) : objects)
-				)
-				.then(objects => {
+				.get(path, { ...filter, _envelope: true })
+				.then(response => {
+					if (response.status >= 400) {
+						throw new Error(response.body.message);
+					}
+					if (options.singular) {
+						response.body = [response.body];
+					}
+					if (options.parseObject) {
+						response.body = response.body.map(options.parseObject);
+					}
+					return response;
+				})
+				.then(response => {
+					const objects = response.body;
 					dispatch({
 						type: `WP_API_REDUX_FETCH_${objectName.toUpperCase()}_UPDATED`,
 						payload: {
 							objectName,
 							objects,
 							filter,
+							totalObjects: response.headers['X-WP-Total']
+								? response.headers['X-WP-Total']
+								: null,
+							totalPages: response.headers['X-WP-TotalPages']
+								? response.headers['X-WP-TotalPages']
+								: null,
 						},
 					});
 
@@ -38,7 +52,7 @@ export default function createFetchObjectsActionCreator(
 							Object.entries(
 								options.relations
 							).forEach(([relationName, relationOptions]) => {
-								if ( ! object._embedded[relationOptions.uri] ) {
+								if (!object._embedded[relationOptions.uri]) {
 									return;
 								}
 								dispatch({
@@ -50,7 +64,7 @@ export default function createFetchObjectsActionCreator(
 									},
 								});
 								dispatch({
-									type: `WP_API_REDUX_FETCH_OBJECTS_RELATED_TO_${objectName.toUpperCase()}_UPDATED`,
+									type: `WP_API_REDUX_FETCH_${relationName.toUpperCase()}_RELATED_TO_${objectName.toUpperCase()}_UPDATED`,
 									payload: {
 										objectName,
 										relatedObjectName: relationName,
@@ -65,6 +79,14 @@ export default function createFetchObjectsActionCreator(
 					});
 
 					return objects;
+				})
+				.catch(error => {
+					dispatch({
+						type: `WP_API_REDUX_FETCH_${objectName.toUpperCase()}_ERRORED`,
+						payload: {
+							error,
+						},
+					});
 				});
 		};
 	};

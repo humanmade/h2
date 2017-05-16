@@ -6,21 +6,16 @@ export default new WPAPIRedux({
 	objects: {
 		posts: {
 			route: '/wp/v2/posts',
+			windows: {
+				feed: {
+
+				}
+			},
 			relations: {
 				author: {
 					uri: 'author',
 					singular: true,
 					object: 'users',
-				},
-				categories: {
-					uri: 'wp:term',
-					object: 'categories',
-					filter: relation => relation.taxonomy === 'category',
-				},
-				tags: {
-					uri: 'wp:term',
-					object: 'tags',
-					filter: relation => relation.taxonomy === 'tag',
 				},
 				comments: {
 					uri: 'replies',
@@ -61,12 +56,6 @@ export default new WPAPIRedux({
 		},
 		users: {
 			route: '/wp/v2/users',
-		},
-		tags: {
-			route: '/wp/v2/tags',
-		},
-		categories: {
-			route: '/wp/v2/categories',
 		},
 		comments: {
 			route: '/wp/v2/comments',

@@ -1,5 +1,10 @@
 .PostsList {
-	flex-direction: column;
+	>div {
+		flex:1;
+	}
+	.infinite-scroll-component {
+		flex-direction: column;
+	}
 	position: relative;
 	&:first-child {
 		padding-top: 100px;

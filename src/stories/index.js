@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { storiesOf, action, linkTo } from '@kadira/storybook';
+import { IntlProvider } from 'react-intl';
 import scss from '../index.css';
 import Header from '../components/Header';
 import Logo from '../components/Logo';
@@ -11,6 +12,7 @@ import Post from '../components/Post';
 import PostsList from '../components/PostsList';
 import Comment from '../components/Comment';
 import WriteComment from '../components/WriteComment';
+import WritePost from '../components/WritePost';
 
 const comment = {
 	id: 1,
@@ -50,6 +52,9 @@ const user = {
 };
 
 storiesOf('Components', module)
+	.addDecorator(story => {
+		return <IntlProvider locale="en">{story()}</IntlProvider>;
+	})
 	.add('Header', () => (
 		<Header onWritePost={() => {}} onWriteStatus={() => {}}><Logo /></Header>
 	))
@@ -67,6 +72,15 @@ storiesOf('Components', module)
 		<WriteComment
 			author={user}
 			comment={comment}
+			post={post}
+			onChange={() => {}}
+			onSave={() => {}}
+			onCancel={() => {}}
+		/>
+	))
+	.add('WritePost', () => (
+		<WritePost
+			author={user}
 			post={post}
 			onChange={() => {}}
 			onSave={() => {}}

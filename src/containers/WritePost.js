@@ -1,11 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import type {
-	UsersState,
-	Dispatch,
-	WritePostState,
-} from '../types';
+import type { UsersState, Dispatch, WritePostState } from '../types';
 import WritePost from '../components/WritePost';
 import store from '../store';
 import FrontKit from '@humanmade/frontkit';
@@ -23,9 +19,17 @@ class ConnectedWritePost extends Component {
 		});
 	}
 	onSave() {
+		const fkContent = this.props.writePost.post.content.edited;
+		var title = '';
+		if (
+			fkContent.getCurrentContent().getBlockMap().first().getType() ===
+			'header-one'
+		) {
+			title = fkContent.getCurrentContent().getBlockMap().first().getText();
+		}
 		const newPost = {
 			content: FrontKit.export(this.props.writePost.post.content.edited),
-			title: this.props.writePost.post.title.edited,
+			title: title,
 			status: 'publish',
 		};
 		this.props.dispatch(store.actions.posts.create(newPost));

@@ -13,12 +13,9 @@ a {
 .fk-root {
   display: block;
   min-height: 100px; }
-
-.fk-root div {
-  display: block; }
-
-.fk-root .fk-bubble.fk-bubble-inline {
-  display: flex; }
-
-.fk-root .fk-bubble {
-  display: flex; }
+  .fk-root div {
+    display: block; }
+  .fk-root .fk-bubble.fk-bubble-inline {
+    display: flex; }
+  .fk-root .fk-bubble {
+    display: flex; }
