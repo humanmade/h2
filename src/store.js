@@ -20,6 +20,23 @@ export default new WPAPIRedux({
 				comments: {
 					uri: 'replies',
 					object: 'comments',
+					reducer: (related, action, postId) => {
+						switch (action.type) {
+							case 'WP_API_REDUX_CREATE_COMMENTS_UPDATED':
+								if (String(action.payload.object.post) === postId) {
+									return {
+										...related,
+										items: [
+											...related.items,
+											action.payload.object.id
+										]
+									};
+								}
+								return related;
+							default:
+								return related;
+						}
+					},
 				},
 			},
 			parseObject: object => {
@@ -33,26 +50,7 @@ export default new WPAPIRedux({
 				}
 				return object;
 			},
-			reducer: (post, action) => {
-				switch (action.type) {
-					case 'WP_API_REDUX_CREATE_COMMENTS_UPDATED':
-						if (action.payload.object.post === post.id) {
-							return {
-								...post,
-								related: {
-									...post.related,
-									comments: {
-										...post.related.comments,
-										items: [...post.related.comments.items, action.payload.object.id],
-									},
-								},
-							};
-						}
-						return post;
-					default:
-						return post;
-				}
-			},
+
 		},
 		users: {
 			route: '/wp/v2/users',

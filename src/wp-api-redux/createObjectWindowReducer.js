@@ -45,19 +45,11 @@ export default function createObjectWindowReducer(objectName, options) {
 					],
 				};
 			case `WP_API_REDUX_${objectName.toUpperCase()}_WINDOW_FILTER_UPDATED`:
-				state = {
+				return {
 					...state,
 					filter: action.payload.filter,
-					items: Object.values(state.byId)
-						.filter(object =>
-							options.windows[action.payload.window].filter(
-								object,
-								action.payload.filter
-							)
-						)
-						.map(object => object.id),
+					items: [],
 				};
-				break;
 			default:
 				return state;
 		}

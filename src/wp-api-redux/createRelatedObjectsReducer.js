@@ -1,29 +1,48 @@
 export default function createRelatedObjectsReducer(objectName, options) {
-	const defaultState = {
-		isLoading: false,
-		hasLoaded: false,
-		items: [],
-		item: null,
-	};
-
-	return (state = defaultState, action) => {
+	return (state = {}, action) => {
 		switch (action.type) {
 			case `WP_API_REDUX_FETCH_${options.relation.toUpperCase()}_RELATED_TO_${objectName.toUpperCase()}_UPDATING`:
 				return {
 					...state,
-					isLoading: true,
+					[action.payload.objectId]: {
+						...[action.payload.objectId],
+						isLoading: true,
+					},
 				};
 			case `WP_API_REDUX_FETCH_${options.relation.toUpperCase()}_RELATED_TO_${objectName.toUpperCase()}_UPDATED`:
 				return {
 					...state,
-					isLoading: false,
-					hasLoaded: true,
-					items: action.payload.objects.map(object => object.id),
-					item: action.payload.objects.length > 0
-						? action.payload.objects[0].id
-						: null,
+					[action.payload.objectId]: {
+						isLoading: false,
+						hasLoaded: true,
+						items: action.payload.objects.map(object => object.id),
+						item: action.payload.objects.length > 0
+							? action.payload.objects[0].id
+							: null,
+					},
 				};
+			case `WP_API_REDUX_FETCH_${objectName.toUpperCase()}_UPDATED`:
+				const objects = action.payload.objects.forEach(o => {
+					state[o.id] = {
+						isLoading: false,
+						hasLoaded: false,
+						items: [],
+						item: null,
+					};
+				});
+				return { ...state };
 			default:
+				if (options.reducer) {
+					Object.entries(state).forEach(([id, object]) => {
+						const newObject = options.reducer(object, action, id);
+						if (newObject !== object) {
+							state = {
+								...state,
+								[id]: newObject,
+							};
+						}
+					});
+				}
 				return state;
 		}
 	};

@@ -8,7 +8,7 @@ import type {
 	UsersState,
 	Dispatch,
 	CommentsState,
-	WriteCommentsState
+	WriteCommentsState,
 } from '../types';
 import Status from '../components/Status';
 import CommentsList from '../components/CommentsList';
@@ -33,7 +33,7 @@ class ConnectedPost extends Component {
 	render() {
 		const post = this.props.post;
 		const author = this.props.users.byId[post.author];
-		const comments = post.related.comments.items.map(
+		const comments = this.props.posts.relations.comments[post.id].items.map(
 			commentId => this.props.comments.byId[commentId]
 		);
 

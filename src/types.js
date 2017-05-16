@@ -79,6 +79,13 @@ export type PostsState = {
 	windows: {
 		[string]: WindowState,
 	},
+	relations: {
+		[number]: {
+			items: Array<number>,
+			isLoading: Boolean,
+			hasLoaded: Boolean,
+		}
+	}
 };
 
 export type UsersState = {

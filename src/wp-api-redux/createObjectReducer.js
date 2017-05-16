@@ -11,6 +11,7 @@ export default function createObjectReducer(objectName, options = {}) {
 		windows: {},
 		totalObjects: null,
 		totalPages: null,
+		relations: {},
 	};
 	if (options.windows) {
 		Object.entries(options.windows).forEach(([window, opts]) => {
@@ -22,6 +23,12 @@ export default function createObjectReducer(objectName, options = {}) {
 				totalPages: null,
 				totalObjects: null,
 			};
+		});
+	}
+
+	if (options.relations) {
+		Object.entries(options.relations).forEach(([relationName, opts]) => {
+			initialState.relations[relationName] = {};
 		});
 	}
 
@@ -40,17 +47,20 @@ export default function createObjectReducer(objectName, options = {}) {
 	}
 
 	function updateRelated(state, action, options) {
-		const related = { ...state.related };
-		// find any windows that match this filter and update those too
-		Object.entries(related).forEach(([relatedName, r]) => {
-			const opts = options.related[relatedName];
-			opts.relation = relatedName;
-			const reducer = createRelatedObjectsReducer(objectName, opts);
-			related[relatedName] = reducer(r, action);
+		if (!options.relations) {
+			return state;
+		}
+		// find any relations that match this filter and update those too
+		Object.entries(options.relations).forEach(([relationName, relation]) => {
+			relation.relation = relationName;
+			const reducer = createRelatedObjectsReducer(objectName, relation);
+			state.relations[relationName] = reducer(
+				state.relations[relationName],
+				action
+			);
 		});
 		return {
 			...state,
-			related,
 		};
 	}
 
@@ -65,7 +75,7 @@ export default function createObjectReducer(objectName, options = {}) {
 			case `WP_API_REDUX_FETCH_${objectName.toUpperCase()}_UPDATED`:
 				const objects = { ...state.byId };
 				action.payload.objects.forEach(o => {
-					objects[o.id] = parseObject(o, options, action);
+					objects[o.id] = o;
 				});
 				state = {
 					...state,
@@ -105,21 +115,4 @@ export default function createObjectReducer(objectName, options = {}) {
 		}
 		return state;
 	};
-}
-
-function parseObject(object, options, action) {
-	if (options.relations) {
-		object.related = {};
-		Object.entries(
-			options.relations
-		).forEach(([relatedObjectName, relatedObjectOptions]) => {
-			object.related[relatedObjectName] = {
-				isLoading: false,
-				hasLoaded: false,
-				items: [],
-				item: null,
-			};
-		});
-	}
-	return object;
 }

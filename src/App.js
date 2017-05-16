@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Header from './components/Header';
 import WritePost from './containers/WritePost';
 import api from './api';
+import store from './store';
 import './App.css';
 import PostsList from './containers/PostsList';
 
@@ -42,6 +43,16 @@ class App extends Component {
 			type: 'SHOW_WRITE_POST',
 		});
 	}
+	onSearch(search) {
+		this.props.dispatch(
+			store.actions.posts.windows.feed.updateFilter({ search })
+		);
+		setTimeout( () => {
+			this.props.dispatch(
+				store.actions.posts.fetch(this.props.posts.windows.feed.filter)
+			);
+		}, 100 )
+	}
 	render() {
 		const currentUser = Object.values(this.props.user.byId).length > 0
 			? Object.values(this.props.user.byId)[0]
@@ -52,6 +63,8 @@ class App extends Component {
 					currentUser={currentUser}
 					onWriteStatus={() => this.onWriteStatus()}
 					onWritePost={() => this.onWritePost()}
+					onSearch={search => this.onSearch(search)}
+					searchValue={this.props.posts.windows.feed.filter.search}
 				/>
 				<div className="Inner">
 					{this.props.writePost.isShowing ? <WritePost /> : null}

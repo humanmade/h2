@@ -5,12 +5,15 @@ import HeaderButton from './HeaderButton';
 import Logo from './Logo';
 import type { User } from '../types';
 import CurrentUserDropDown from './CurrentUserDropDown';
+import SearchInput from './SearchInput';
 
 export default function Header(
 	props: {
 		currentUser?: User,
 		onWritePost: () => void,
 		onWriteStatus: () => void,
+		onSearch: Function,
+		searchValue: string,
 	}
 ) {
 	return (
@@ -22,11 +25,7 @@ export default function Header(
 					title="+ New Post"
 					path="new-post"
 				/>
-				<HeaderButton
-					onClick={props.onWriteStatus}
-					title="+ New Status"
-					path="new-status"
-				/>
+				<SearchInput onSearch={props.onSearch} value={props.searchValue} />
 				{props.currentUser
 					? <CurrentUserDropDown user={props.currentUser} />
 					: null}
