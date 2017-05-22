@@ -15,19 +15,19 @@ export default function Post(
 ) {
 	return (
 		<div className="Post">
-			<div>
+			<header>
 				<Avatar
 					url={props.author ? props.author.avatar_urls['96'] : ''}
 					size={70}
 				/>
-				<div className="body">
+				<div>
 					<h2 dangerouslySetInnerHTML={{ __html: props.post.title.rendered }} />
 					<div className="date">
 						<FormattedRelative value={props.post.date_gmt} />
 					</div>
-					<PostContent html={props.post.content.rendered} />
 				</div>
-			</div>
+			</header>
+			<PostContent html={props.post.content.rendered} />
 			{props.children}
 		</div>
 	);
