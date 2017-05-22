@@ -15,11 +15,22 @@ let store = createStore(
 	applyMiddleware(thunk, createLogger({ collapsed: true }))
 );
 
-ReactDOM.render(
-	<Provider store={store}>
-		<IntlProvider locale="en">
-			<App />
-		</IntlProvider>
-	</Provider>,
-	document.getElementById('root')
-);
+const render = Main => {
+	ReactDOM.render(
+		<Provider store={store}>
+			<IntlProvider locale="en">
+				<Main />
+			</IntlProvider>
+		</Provider>,
+		document.getElementById('root')
+	);
+};
+
+render( App );
+
+if (module.hot) {
+	module.hot.accept('./App', () => {
+		const NextApp = require('./App').default;
+		render( NextApp );
+	});
+}
