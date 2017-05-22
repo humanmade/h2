@@ -33,9 +33,9 @@ class ConnectedPost extends Component {
 	render() {
 		const post = this.props.post;
 		const author = this.props.users.byId[post.author];
-		const comments = this.props.posts.relations.comments[post.id].items.map(
-			commentId => this.props.comments.byId[commentId]
-		);
+		const comments = this.props.posts.relations.comments[post.id].items
+			.map(commentId => this.props.comments.byId[commentId])
+			.sort((a, b) => (a.date > b.date ? 1 : -1));
 
 		const commentsList = (
 			<CommentsList

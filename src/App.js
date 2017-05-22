@@ -47,11 +47,14 @@ class App extends Component {
 		this.props.dispatch(
 			store.actions.posts.windows.feed.updateFilter({ search })
 		);
-		setTimeout( () => {
+		setTimeout(() => {
 			this.props.dispatch(
-				store.actions.posts.fetch(this.props.posts.windows.feed.filter)
+				store.actions.posts.fetch({
+					...this.props.posts.windows.feed.filter,
+					_embed: true,
+				})
 			);
-		}, 100 )
+		}, 100);
 	}
 	render() {
 		const currentUser = Object.values(this.props.user.byId).length > 0
