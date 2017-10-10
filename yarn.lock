@@ -6787,9 +6787,9 @@ react-icons@^2.2.5:
   dependencies:
     react-icon-base "2.1.0"
 
-react-infinite-scroll-component@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/react-infinite-scroll-component/-/react-infinite-scroll-component-2.2.2.tgz#0ed01bbf5b9fc92d56ef327b471ffa5d77293e23"
+react-infinite-scroll-component@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/react-infinite-scroll-component/-/react-infinite-scroll-component-2.4.0.tgz#b00e757a65db4e3cc6784d97ece6f3a4ee5310f6"
 
 react-inspector@^2.2.0:
   version "2.2.0"
