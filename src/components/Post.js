@@ -20,9 +20,10 @@ export default function Post(
 					url={props.author ? props.author.avatar_urls['96'] : ''}
 					size={70}
 				/>
-				<div>
+				<div className="byline">
 					<h2 dangerouslySetInnerHTML={{ __html: props.post.title.rendered }} />
 					<div className="date">
+						{props.author.name},&nbsp;
 						<FormattedRelative value={props.post.date_gmt} />
 					</div>
 				</div>

@@ -41,8 +41,9 @@
 		> .Avatar {
 			margin-right: 30px;
 		}
-		> div {
+		> .byline {
 			flex-direction: column;
+			flex-grow: 1;
 			> h2 {
 				margin-bottom: 0;
 			}
