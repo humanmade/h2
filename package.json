@@ -9,7 +9,7 @@
     "react-scripts": "^1.0.14"
   },
   "dependencies": {
-    "@humanmade/frontkit": "^0.3.0",
+    "@humanmade/frontkit": "^0.4.0",
     "bourbon": "^4.2.7",
     "draft-js-plugins-editor": "2.0.0-beta10",
     "node-sass": "^3.10.1",
