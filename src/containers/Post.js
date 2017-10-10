@@ -50,7 +50,7 @@ class ConnectedPost extends Component {
 		);
 		return post.title.rendered === ''
 			? <Status author={author} post={post}>{commentsList}</Status>
-			: <Post author={author} post={post}>{commentsList}</Post>;
+			: <Post author={author} post={post} onComment={() => this.onComment()}>{commentsList}</Post>;
 	}
 }
 

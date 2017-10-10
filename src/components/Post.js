@@ -2,6 +2,7 @@
 import React from 'react';
 import './Post.css';
 import Avatar from './Avatar';
+import Button from './Button';
 import PostContent from './PostContent'
 import type { Post as PostType, User } from '../types';
 import { FormattedRelative } from 'react-intl';
@@ -26,6 +27,9 @@ export default function Post(
 						{props.author.name},&nbsp;
 						<FormattedRelative value={props.post.date_gmt} />
 					</div>
+				</div>
+				<div className="actions">
+					<Button onClick={props.onComment}>Reply</Button>
 				</div>
 			</header>
 			<PostContent html={props.post.content.rendered} />
