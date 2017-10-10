@@ -40,15 +40,13 @@ class ConnectedWritePost extends Component {
 	render() {
 		const post = this.props.writePost.post;
 		const author = Object.values(this.props.user.byId)[0];
-		return (
-			<WritePost
-				author={author}
-				post={post}
-				onCancel={() => this.onCancel()}
-				onChange={post => this.onChange(post)}
-				onSave={() => this.onSave()}
-			/>
-		);
+		return <WritePost
+			author={author}
+			post={post}
+			onCancel={() => this.onCancel()}
+			onChange={post => this.onChange(post)}
+			onSave={() => this.onSave()}
+		/>;
 	}
 }
 

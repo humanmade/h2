@@ -22,34 +22,32 @@ export default class WriteComment extends React.Component {
 	}
 
 	render() {
-		return (
-			<div className="WriteComment" ref={ ref => this.container = ref }>
-				<Avatar
-					url={this.props.author ? this.props.author.avatar_urls['96'] : ''}
-					size={50}
-				/>
-				<div className="body">
-					<header>
-						<strong>{this.props.author ? this.props.author.name : ''}</strong>
-					</header>
-					<FrontKit
-						placeholder="Start writing..."
-						ref={ ref => this.editor = ref }
-						value={this.props.comment.content.edited}
-						onChange={edited => this.props.onChange({ content: { edited } })}
-					>
-						<plugins.Bubble />
-						<plugins.InlineBubble />
-						<plugins.Dots />
-						<plugins.MarkdownShortcuts />
-					</FrontKit>
-					<span className="buttons">
-						<Button onClick={this.props.onCancel}>Cancel</Button>
-						<Button onClick={this.props.onSave}>Save</Button>
-					</span>
-				</div>
+		return <div className="WriteComment" ref={ ref => this.container = ref }>
+			<Avatar
+				url={this.props.author ? this.props.author.avatar_urls['96'] : ''}
+				size={50}
+			/>
+			<div className="body">
+				<header>
+					<strong>{this.props.author ? this.props.author.name : ''}</strong>
+				</header>
+				<FrontKit
+					placeholder="Start writing..."
+					ref={ ref => this.editor = ref }
+					value={this.props.comment.content.edited}
+					onChange={edited => this.props.onChange({ content: { edited } })}
+				>
+					<plugins.Bubble />
+					<plugins.InlineBubble />
+					<plugins.Dots />
+					<plugins.MarkdownShortcuts />
+				</FrontKit>
+				<span className="buttons">
+					<Button onClick={this.props.onCancel}>Cancel</Button>
+					<Button onClick={this.props.onSave}>Save</Button>
+				</span>
 			</div>
-		);
+		</div>;
 	}
 }
 

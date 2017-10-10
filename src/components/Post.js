@@ -10,28 +10,26 @@ import { Post as PostType, User } from '../shapes';
 import './Post.css';
 
 export default function Post( props ) {
-	return (
-		<div className="Post">
-			<header>
-				<Avatar
-					url={props.author ? props.author.avatar_urls['96'] : ''}
-					size={70}
-				/>
-				<div className="byline">
-					<h2 dangerouslySetInnerHTML={{ __html: props.post.title.rendered }} />
-					<div className="date">
-						{props.author.name},&nbsp;
-						<FormattedRelative value={props.post.date_gmt} />
-					</div>
+	return <div className="Post">
+		<header>
+			<Avatar
+				url={props.author ? props.author.avatar_urls['96'] : ''}
+				size={70}
+			/>
+			<div className="byline">
+				<h2 dangerouslySetInnerHTML={{ __html: props.post.title.rendered }} />
+				<div className="date">
+					{props.author.name},&nbsp;
+					<FormattedRelative value={props.post.date_gmt} />
 				</div>
-				<div className="actions">
-					<Button onClick={props.onComment}>Reply</Button>
-				</div>
-			</header>
-			<PostContent html={props.post.content.rendered} />
-			{props.children}
-		</div>
-	);
+			</div>
+			<div className="actions">
+				<Button onClick={props.onComment}>Reply</Button>
+			</div>
+		</header>
+		<PostContent html={props.post.content.rendered} />
+		{props.children}
+	</div>;
 }
 
 Post.propTypes = {

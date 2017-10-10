@@ -10,29 +10,27 @@ import { User } from '../shapes';
 import './Header.css';
 
 export default function Header( props ) {
-	return (
-		<div className="Header">
-			<div className="Inner">
-				<Logo />
+	return <div className="Header">
+		<div className="Inner">
+			<Logo />
+			<HeaderButton
+				onClick={props.onWritePost}
+				title="+ New Post"
+				path="new-post"
+			/>
+			<SearchInput onSearch={props.onSearch} value={props.searchValue} />
+			{props.currentUser
+				? <CurrentUserDropDown user={props.currentUser} />
+				: null}
+			{ props.currentUser ?
 				<HeaderButton
-					onClick={props.onWritePost}
-					title="+ New Post"
-					path="new-post"
+					onClick={ props.onLogOut }
+					title="Log Out"
+					path="log-out"
 				/>
-				<SearchInput onSearch={props.onSearch} value={props.searchValue} />
-				{props.currentUser
-					? <CurrentUserDropDown user={props.currentUser} />
-					: null}
-				{ props.currentUser ?
-					<HeaderButton
-						onClick={ props.onLogOut }
-						title="Log Out"
-						path="log-out"
-					/>
-				: null }
-			</div>
+			: null }
 		</div>
-	);
+	</div>;
 }
 
 Header.defaultProps = {

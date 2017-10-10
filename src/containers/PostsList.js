@@ -27,17 +27,15 @@ class ConnectedPostsList extends Component {
 		const posts = this.props.posts.windows.feed.items
 			.map(id => this.props.posts.byId[id])
 			.sort((a, b) => (a.date_gmt > b.date_gmt ? -1 : 1));
-		return (
-			<PostsList
-				hasMore={
-					!this.props.posts.windows.feed.totalObjects ||
-						this.props.posts.windows.feed.totalObjects >
-							this.props.posts.windows.feed.items.length
-				}
-				onLoadMore={() => this.onLoadMore()}
-				posts={posts}
-			/>
-		);
+		return <PostsList
+			hasMore={
+				!this.props.posts.windows.feed.totalObjects ||
+					this.props.posts.windows.feed.totalObjects >
+						this.props.posts.windows.feed.items.length
+			}
+			onLoadMore={() => this.onLoadMore()}
+			posts={posts}
+		/>;
 	}
 }
 

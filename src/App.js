@@ -70,24 +70,22 @@ class App extends Component {
 		const currentUser = Object.values(this.props.user.byId).length > 0
 			? Object.values(this.props.user.byId)[0]
 			: null;
-		return (
-			<div className="App">
-				<Header
-					currentUser={currentUser}
-					onLogOut={ () => this.onLogOut() }
-					onWriteStatus={() => this.onWriteStatus()}
-					onWritePost={() => this.onWritePost()}
-					onSearch={search => this.onSearch(search)}
-					searchValue={this.props.posts.windows.feed.filter.search}
-				/>
-				<div className="Inner">
-					{this.props.writePost.isShowing ? <WritePost /> : null}
-					{this.props.posts.windows.feed.lastError
-						? this.props.posts.windows.feed.lastError.message
-						: <PostsList />}
-				</div>
+		return <div className="App">
+			<Header
+				currentUser={currentUser}
+				onLogOut={ () => this.onLogOut() }
+				onWriteStatus={() => this.onWriteStatus()}
+				onWritePost={() => this.onWritePost()}
+				onSearch={search => this.onSearch(search)}
+				searchValue={this.props.posts.windows.feed.filter.search}
+			/>
+			<div className="Inner">
+				{this.props.writePost.isShowing ? <WritePost /> : null}
+				{this.props.posts.windows.feed.lastError
+					? this.props.posts.windows.feed.lastError.message
+					: <PostsList />}
 			</div>
-		);
+		</div>;
 	}
 }
 

@@ -4,12 +4,10 @@ import React from 'react';
 import './PostContent.css';
 
 export default function Post( props ) {
-	return (
-		<div
-			className="PostContent"
-			dangerouslySetInnerHTML={{ __html: props.html }}
-		/>
-	);
+	return <div
+		className="PostContent"
+		dangerouslySetInnerHTML={{ __html: props.html }}
+	/>;
 }
 
 Post.propTypes = {

@@ -4,11 +4,9 @@ import React from 'react';
 import './HeaderButton.css';
 
 export default function HeaderButton( props ) {
-	return (
-		<button onClick={props.onClick} className="HeaderButton">
-			{props.title}
-		</button>
-	);
+	return <button onClick={props.onClick} className="HeaderButton">
+		{props.title}
+	</button>;
 }
 
 HeaderButton.propTypes = {

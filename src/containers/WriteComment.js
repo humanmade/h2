@@ -35,16 +35,14 @@ class ConnectedWriteComment extends Component {
 	render() {
 		const post = this.props.post;
 		const author = Object.values(this.props.user.byId)[0];
-		return (
-			<WriteComment
-				author={author}
-				comment={this.props.comment}
-				post={post}
-				onCancel={() => this.onCancel()}
-				onChange={comment => this.onChange(comment)}
-				onSave={() => this.onSave()}
-			/>
-		);
+		return <WriteComment
+			author={author}
+			comment={this.props.comment}
+			post={post}
+			onCancel={() => this.onCancel()}
+			onChange={comment => this.onChange(comment)}
+			onSave={() => this.onSave()}
+		/>;
 	}
 }
 

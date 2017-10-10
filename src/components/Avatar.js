@@ -9,19 +9,17 @@ export default function Avatar( props ) {
 		height: props.size,
 		borderRadius: props.size / 2,
 	};
-	return (
-		<div className="Avatar">
-			<img
-				style={style}
-				alt="User Avatar"
-				src={
-					props.url === ''
-						? 'https://www.timeshighereducation.com/sites/default/files/byline_photos/default-avatar.png'
-						: props.url
-				}
-			/>
-		</div>
-	);
+	return <div className="Avatar">
+		<img
+			style={style}
+			alt="User Avatar"
+			src={
+				props.url === ''
+					? 'https://www.timeshighereducation.com/sites/default/files/byline_photos/default-avatar.png'
+					: props.url
+			}
+		/>
+	</div>;
 }
 
 Avatar.propTypes = {

@@ -9,19 +9,17 @@ import { Comment, Post } from '../shapes';
 import './CommentsList.css';
 
 export default function CommentsList( props ) {
-	return (
-		<div className="CommentsList">
-			{props.comments.map(comment => (
-				<CommentComponent key={comment.id} comment={comment} />
-			))}
-			{props.showWriteComment
-				? <WriteComment post={props.post} comment={props.writingComment} />
-				: <div className="post-reply">
-						<Button onClick={props.onComment}>Reply</Button>
-					</div>}
+	return <div className="CommentsList">
+		{props.comments.map(comment => (
+			<CommentComponent key={comment.id} comment={comment} />
+		))}
+		{props.showWriteComment
+			? <WriteComment post={props.post} comment={props.writingComment} />
+			: <div className="post-reply">
+					<Button onClick={props.onComment}>Reply</Button>
+				</div>}
 
-		</div>
-	);
+	</div>;
 }
 
 CommentsList.propTypes = {
