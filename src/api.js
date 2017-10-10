@@ -1,4 +1,3 @@
-// @flow
 import api from 'wordpress-rest-api-oauth-1';
 
 var url = window.location.href.split('?')[0];

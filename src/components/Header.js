@@ -1,22 +1,15 @@
-// @flow
+import PropTypes from 'prop-types';
 import React from 'react';
-import './Header.css';
+
+import CurrentUserDropDown from './CurrentUserDropDown';
 import HeaderButton from './HeaderButton';
 import Logo from './Logo';
-import type { User } from '../types';
-import CurrentUserDropDown from './CurrentUserDropDown';
 import SearchInput from './SearchInput';
+import { User } from '../shapes';
 
-export default function Header(
-	props: {
-		currentUser?: User,
-		onLogOut: () => void,
-		onWritePost: () => void,
-		onWriteStatus: () => void,
-		onSearch: Function,
-		searchValue: string,
-	}
-) {
+import './Header.css';
+
+export default function Header( props ) {
 	return (
 		<div className="Header">
 			<div className="Inner">
@@ -41,3 +34,16 @@ export default function Header(
 		</div>
 	);
 }
+
+Header.defaultProps = {
+	searchValue: '',
+};
+
+Header.propTypes = {
+	currentUser: User,
+	searchValue: PropTypes.string,
+	onLogOut: PropTypes.func.isRequired,
+	onWritePost: PropTypes.func.isRequired,
+	onWriteStatus: PropTypes.func.isRequired,
+	onSearch: PropTypes.func.isRequired,
+};

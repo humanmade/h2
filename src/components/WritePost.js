@@ -1,22 +1,16 @@
-// @flow
-import React from 'react';
-import './WritePost.css';
-import '@humanmade/frontkit/dist/style.css';
-import type { User, Post } from '../types';
-import Avatar from './Avatar';
-import Button from './Button';
 import FrontKit, { plugins } from '@humanmade/frontkit';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { FormattedRelative } from 'react-intl';
 
-export default function WritePost(
-	props: {
-		post: Post,
-		author: ?User,
-		onChange: Object => mixed,
-		onCancel: () => mixed,
-		onSave: () => mixed,
-	}
-) {
+import Avatar from './Avatar';
+import Button from './Button';
+import { User, Post } from '../shapes';
+
+import '@humanmade/frontkit/dist/style.css';
+import './WritePost.css';
+
+export default function WritePost( props ) {
 	return (
 		<div className="WritePost">
 			<div>
@@ -47,3 +41,11 @@ export default function WritePost(
 		</div>
 	);
 }
+
+WritePost.propTypes = {
+	author: User,
+	post: Post.isRequired,
+	onCancel: PropTypes.func.isRequired,
+	onChange: PropTypes.func.isRequired,
+	onSave: PropTypes.func.isRequired,
+};

@@ -1,13 +1,12 @@
-// @flow
 import React from 'react';
-import './Comment.css';
-import type { User, Comment as CommentType } from '../types';
+
 import Avatar from './Avatar';
 import PostContent from './PostContent';
+import { User, Comment as CommentShape } from '../shapes';
 
-export default function Comment(
-	props: { comment: CommentType, author: ?User }
-) {
+import './Comment.css';
+
+export default function Comment( props ) {
 	return (
 		<div className="Comment">
 			<Avatar
@@ -23,3 +22,8 @@ export default function Comment(
 		</div>
 	);
 }
+
+Comment.propTypes = {
+	author: User,
+	comment: CommentShape.isRequired,
+};

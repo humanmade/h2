@@ -1,17 +1,13 @@
-// @flow
+import PropTypes from 'prop-types';
 import React from 'react';
-import './PostsList.css';
-import PostComponent from '../containers/Post';
-import type { Post } from '../types';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-export default function PostsList(
-	props: {
-		posts: Array<Post>,
-		hasMore: Boolean,
-		onLoadMore: () => void,
-	}
-) {
+import PostComponent from '../containers/Post';
+import { Post } from '../shapes';
+
+import './PostsList.css';
+
+export default function PostsList( props ) {
 	return (
 		<div className="PostsList">
 			<InfiniteScroll
@@ -26,3 +22,9 @@ export default function PostsList(
 		</div>
 	);
 }
+
+PostsList.propTypes = {
+	hasMore: PropTypes.bool.isRequired,
+	posts: PropTypes.arrayOf( Post ).isRequired,
+	onLoadMore: PropTypes.func.isRequired,
+};

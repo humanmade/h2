@@ -1,13 +1,14 @@
-// @flow
 import React, { Component } from 'react';
-import { fetchPosts, fetchUsers, fetchUser } from './actions';
 import { connect } from 'react-redux';
-import Header from './components/Header';
-import WritePost from './containers/WritePost';
+
+import { fetchPosts, fetchUsers, fetchUser } from './actions';
 import api from './api';
 import store from './store';
-import './App.css';
+import Header from './components/Header';
 import PostsList from './containers/PostsList';
+import WritePost from './containers/WritePost';
+
+import './App.css';
 
 class App extends Component {
 	componentWillMount() {

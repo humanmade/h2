@@ -1,8 +1,9 @@
-// @flow
+import PropTypes from 'prop-types';
 import React from 'react';
+
 import './Avatar.css';
 
-export default function Avatar(props: { url: string, size: number }) {
+export default function Avatar( props ) {
 	const style = {
 		width: props.size,
 		height: props.size,
@@ -22,3 +23,8 @@ export default function Avatar(props: { url: string, size: number }) {
 		</div>
 	);
 }
+
+Avatar.propTypes = {
+	size: PropTypes.number.isRequired,
+	url: PropTypes.string.isRequired,
+};

@@ -1,14 +1,11 @@
-// @flow
 import React from 'react';
-import './CurrentUserDropDown.css';
-import type { User } from '../types';
-import Avatar from './Avatar';
 
-export default function CurrentUserDropDown(
-	props: {
-		user: User,
-	}
-) {
+import Avatar from './Avatar';
+import { User } from '../shapes';
+
+import './CurrentUserDropDown.css';
+
+export default function CurrentUserDropDown( props ) {
 	return (
 		<div className="CurrentUserDropDown">
 			<span>{props.user.name}</span>
@@ -16,3 +13,7 @@ export default function CurrentUserDropDown(
 		</div>
 	);
 }
+
+CurrentUserDropDown.propTypes = {
+	user: User.isRequired,
+};

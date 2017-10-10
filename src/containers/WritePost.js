@@ -1,18 +1,13 @@
-// @flow
+import FrontKit from '@humanmade/frontkit';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import type { UsersState, Dispatch, WritePostState } from '../types';
+
 import WritePost from '../components/WritePost';
+import { UsersState, Dispatch, WritePostState } from '../shapes';
 import store from '../store';
-import FrontKit from '@humanmade/frontkit';
 
 class ConnectedWritePost extends Component {
-	props: {
-		writePost: WritePostState,
-		user: UsersState,
-		chidren: ?any,
-		dispatch: Dispatch,
-	};
 	onCancel() {
 		this.props.dispatch({
 			type: 'WRITE_POST_CANCELLED',
@@ -56,5 +51,12 @@ class ConnectedWritePost extends Component {
 		);
 	}
 }
+
+ConnectedWritePost.propTypes = {
+	children: PropTypes.any,
+	dispatch: Dispatch.isRequired,
+	user: UsersState.isRequired,
+	writePost: WritePostState.isRequired,
+};
 
 export default connect(s => s)(ConnectedWritePost);

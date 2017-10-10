@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import { storiesOf, action, linkTo } from '@storybook/react';
 import { IntlProvider } from 'react-intl';

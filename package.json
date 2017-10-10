@@ -5,7 +5,6 @@
   "homepage": "http://make.hmn.md/h2",
   "devDependencies": {
     "@storybook/react": "3.2.12",
-    "flow-bin": "^0.44.2",
     "react-scripts": "^1.0.14"
   },
   "dependencies": {
@@ -39,7 +38,6 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "storybook": "npm run watch-css & start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public",
-    "flow": "flow"
+    "build-storybook": "build-storybook -s public"
   }
 }

@@ -1,19 +1,14 @@
-// @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
+import { fetchPosts } from '../actions';
 import PostsList from '../components/PostsList';
-import type {
+import {
 	PostsState,
 	Dispatch,
-} from '../types';
-import { fetchPosts } from '../actions';
+} from '../shapes';
 
 class ConnectedPostsList extends Component {
-	props: {
-		posts: PostsState,
-		dispatch: Dispatch,
-	};
-
 	onLoadMore() {
 		if (this.props.posts.isLoading) {
 			return;
@@ -45,5 +40,10 @@ class ConnectedPostsList extends Component {
 		);
 	}
 }
+
+ConnectedPostsList.propTypes = {
+	dispatch: Dispatch.isRequired,
+	posts: PostsState.isRequired,
+};
 
 export default connect(s => s)(ConnectedPostsList);

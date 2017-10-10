@@ -1,16 +1,12 @@
-// @flow
+import PropTypes from 'prop-types';
 import React from 'react';
-import './Status.css';
-import Avatar from './Avatar';
-import type { Post, User } from '../types';
 
-export default function Status(
-	props: {
-		author: ?User,
-		post: Post,
-		children?: any,
-	}
-) {
+import Avatar from './Avatar';
+import { Post, User } from '../shapes';
+
+import './Status.css';
+
+export default function Status( props ) {
 	return (
 		<div className="Status">
 			<div>
@@ -29,3 +25,9 @@ export default function Status(
 		</div>
 	);
 }
+
+Status.propTypes = {
+	author: User,
+	children: PropTypes.any,
+	post: Post.isRequired,
+};

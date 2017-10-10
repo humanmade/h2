@@ -1,13 +1,9 @@
-// @flow
+import PropTypes from 'prop-types';
 import React from 'react';
+
 import './SearchInput.css';
 
-export default function Post(
-	props: {
-		onSearch: Function,
-		value: string,
-	}
-) {
+export default function Post( props ) {
 	return (
 		<form
 			className="SearchInput"
@@ -20,3 +16,8 @@ export default function Post(
 		</form>
 	);
 }
+
+Post.propTypes = {
+	onSearch: PropTypes.func.isRequired,
+	value: PropTypes.string.isRequired,
+};

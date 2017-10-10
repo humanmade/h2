@@ -1,24 +1,16 @@
-// @flow
+import FrontKit, { plugins } from '@humanmade/frontkit';
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './WriteComment.css';
-import '@humanmade/frontkit/dist/style.css';
-import type { User, Post, Comment } from '../types';
 import Avatar from './Avatar';
 import Button from './Button';
-import FrontKit, { plugins } from '@humanmade/frontkit';
+import { User, Post, Comment } from '../shapes';
+
+import '@humanmade/frontkit/dist/style.css';
+import './WriteComment.css';
 
 export default class WriteComment extends React.Component {
-	props: {
-		post: Post,
-		author: ?User,
-		comment: Comment,
-		onChange: Object => mixed,
-		onCancel: () => mixed,
-		onSave: () => mixed,
-	};
-
 	componentDidMount() {
 		if ( this.container && this.editor ) {
 			this.editor.focus();
@@ -60,3 +52,12 @@ export default class WriteComment extends React.Component {
 		);
 	}
 }
+
+WriteComment.propTypes = {
+	author: User,
+	comment: Comment.isRequired,
+	post: Post.isRequired,
+	onCancel: PropTypes.func.isRequired,
+	onChange: PropTypes.func.isRequired,
+	onSave: PropTypes.func.isRequired,
+};

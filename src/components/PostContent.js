@@ -1,12 +1,9 @@
-// @flow
+import PropTypes from 'prop-types';
 import React from 'react';
+
 import './PostContent.css';
 
-export default function Post(
-	props: {
-		html: string,
-	}
-) {
+export default function Post( props ) {
 	return (
 		<div
 			className="PostContent"
@@ -14,3 +11,7 @@ export default function Post(
 		/>
 	);
 }
+
+Post.propTypes = {
+	html: PropTypes.string.isRequired,
+};

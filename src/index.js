@@ -1,14 +1,15 @@
-//@flow
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { IntlProvider } from 'react-intl';
+import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-import { IntlProvider } from 'react-intl';
-import { Provider } from 'react-redux';
+
 import App from './App';
-import './index.css';
 import reducers from './reducers';
+
+import './index.css';
 
 let store = createStore(
 	reducers,

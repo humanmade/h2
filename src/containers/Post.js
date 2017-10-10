@@ -1,27 +1,19 @@
-// @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
+import CommentsList from '../components/CommentsList';
 import Post from '../components/Post';
-import type {
-	Post as PostType,
+import Status from '../components/Status';
+import {
+	Post as PostShape,
 	PostsState,
 	UsersState,
 	Dispatch,
 	CommentsState,
 	WriteCommentsState,
-} from '../types';
-import Status from '../components/Status';
-import CommentsList from '../components/CommentsList';
+} from '../shapes';
 
 class ConnectedPost extends Component {
-	props: {
-		post: PostType,
-		posts: PostsState,
-		users: UsersState,
-		comments: CommentsState,
-		dispatch: Dispatch,
-		writeComments: WriteCommentsState,
-	};
 	onComment() {
 		this.props.dispatch({
 			type: 'SHOW_REPLY_TO_POST',
@@ -53,5 +45,14 @@ class ConnectedPost extends Component {
 			: <Post author={author} post={post} onComment={() => this.onComment()}>{commentsList}</Post>;
 	}
 }
+
+ConnectedPost.propTypes = {
+	dispatch: Dispatch.isRequired,
+	comments: CommentsState.isRequired,
+	post: PostShape.isRequired,
+	posts: PostsState.isRequired,
+	users: UsersState.isRequired,
+	writeComments: WriteCommentsState.isRequired,
+};
 
 export default connect(s => s)(ConnectedPost);

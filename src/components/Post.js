@@ -1,19 +1,15 @@
-// @flow
+import PropTypes from 'prop-types';
 import React from 'react';
-import './Post.css';
+import { FormattedRelative } from 'react-intl';
+
 import Avatar from './Avatar';
 import Button from './Button';
 import PostContent from './PostContent'
-import type { Post as PostType, User } from '../types';
-import { FormattedRelative } from 'react-intl';
+import { Post as PostType, User } from '../shapes';
 
-export default function Post(
-	props: {
-		author: ?User,
-		post: PostType,
-		children?: any,
-	}
-) {
+import './Post.css';
+
+export default function Post( props ) {
 	return (
 		<div className="Post">
 			<header>
@@ -37,3 +33,9 @@ export default function Post(
 		</div>
 	);
 }
+
+Post.propTypes = {
+	author: User,
+	children: PropTypes.any,
+	post: PostType.isRequired,
+};

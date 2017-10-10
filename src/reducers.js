@@ -1,8 +1,7 @@
-// @flow
-import { combineReducers } from 'redux';
-import store from './store';
-import type { Action, WriteCommentsState } from './types';
 import FrontKit from '@humanmade/frontkit';
+import { combineReducers } from 'redux';
+
+import store from './store';
 
 export default combineReducers({
 	user: store.reducers.user,
@@ -11,7 +10,8 @@ export default combineReducers({
 	posts: store.reducers.posts,
 	tags: store.reducers.tags,
 	comments: store.reducers.comments,
-	writeComments: (state: WriteCommentsState = {}, action: Action) => {
+	// state: WriteCommentsState = {}, action: Action
+	writeComments: (state, action) => {
 		switch (action.type) {
 			case 'WP_API_REDUX_FETCH_POSTS_UPDATED':
 				const s = { ...state };
@@ -79,6 +79,7 @@ export default combineReducers({
 				return state;
 		}
 	},
+	// action: Action
 	writePost: (
 		state = {
 			isShowing: false,
@@ -92,7 +93,7 @@ export default combineReducers({
 				date_gmt: new Date().toISOString(),
 			},
 		},
-		action: Action
+		action
 	) => {
 		switch (action.type) {
 			case 'SHOW_WRITE_POST':

@@ -1,21 +1,14 @@
-// @flow
+import PropTypes from 'prop-types';
 import React from 'react';
-import './CommentsList.css';
-import type { Comment, Post } from '../types';
-import CommentComponent from '../containers/Comment';
-import WriteComment from '../containers/WriteComment';
 
 import Button from './Button';
+import CommentComponent from '../containers/Comment';
+import WriteComment from '../containers/WriteComment';
+import { Comment, Post } from '../shapes';
 
-export default function CommentsList(
-	props: {
-		comments: Array<Comment>,
-		showWriteComment: boolean,
-		onComment: () => mixed,
-		post: Post,
-		writingComment: Comment,
-	}
-) {
+import './CommentsList.css';
+
+export default function CommentsList( props ) {
 	return (
 		<div className="CommentsList">
 			{props.comments.map(comment => (
@@ -30,3 +23,11 @@ export default function CommentsList(
 		</div>
 	);
 }
+
+CommentsList.propTypes = {
+	comments: PropTypes.arrayOf( Comment ).isRequired,
+	post: Post.isRequired,
+	showWriteComment: PropTypes.bool.isRequired,
+	writingComment: Comment.isRequired,
+	onComment: PropTypes.func.isRequired,
+};
