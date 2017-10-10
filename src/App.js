@@ -37,12 +37,20 @@ class App extends Component {
 			this.props.dispatch(fetchUsers({ per_page: 100 }));
 		}
 	}
+
+	onLogOut() {
+		api.removeCredentials();
+		window.location.reload();
+	}
+
 	onWriteStatus() {}
+
 	onWritePost() {
 		this.props.dispatch({
 			type: 'SHOW_WRITE_POST',
 		});
 	}
+
 	onSearch(search) {
 		this.props.dispatch(
 			store.actions.posts.windows.feed.updateFilter({ search })
@@ -56,6 +64,7 @@ class App extends Component {
 			);
 		}, 100);
 	}
+
 	render() {
 		const currentUser = Object.values(this.props.user.byId).length > 0
 			? Object.values(this.props.user.byId)[0]
@@ -64,6 +73,7 @@ class App extends Component {
 			<div className="App">
 				<Header
 					currentUser={currentUser}
+					onLogOut={ () => this.onLogOut() }
 					onWriteStatus={() => this.onWriteStatus()}
 					onWritePost={() => this.onWritePost()}
 					onSearch={search => this.onSearch(search)}

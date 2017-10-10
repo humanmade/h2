@@ -10,6 +10,7 @@ import SearchInput from './SearchInput';
 export default function Header(
 	props: {
 		currentUser?: User,
+		onLogOut: () => void,
 		onWritePost: () => void,
 		onWriteStatus: () => void,
 		onSearch: Function,
@@ -29,6 +30,13 @@ export default function Header(
 				{props.currentUser
 					? <CurrentUserDropDown user={props.currentUser} />
 					: null}
+				{ props.currentUser ?
+					<HeaderButton
+						onClick={ props.onLogOut }
+						title="Log Out"
+						path="log-out"
+					/>
+				: null }
 			</div>
 		</div>
 	);
