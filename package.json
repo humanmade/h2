@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "http://make.hmn.md/h2",
   "devDependencies": {
-    "@kadira/storybook": "^2.21.0",
+    "@storybook/react": "3.2.12",
     "flow-bin": "^0.44.2",
     "react-scripts": "^1.0.14"
   },

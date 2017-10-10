@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { storiesOf, action, linkTo } from '@kadira/storybook';
+import { storiesOf, action, linkTo } from '@storybook/react';
 import { IntlProvider } from 'react-intl';
 import scss from '../index.css';
 import Header from '../components/Header';
