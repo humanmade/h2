@@ -1,5 +1,5 @@
 .Header {
-	background: #F4EFE6;
+	background: var(--hm-beige);
 	flex: 1;
 }
 
