@@ -9,8 +9,6 @@ import createLogger from 'redux-logger';
 import App from './App';
 import reducers from './reducers';
 
-import './index.css';
-
 let store = createStore(
 	reducers,
 	applyMiddleware(thunk, createLogger({ collapsed: true }))

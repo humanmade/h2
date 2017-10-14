@@ -15,7 +15,8 @@ export default function Header( props ) {
 			<Logo />
 			<HeaderButton
 				onClick={props.onWritePost}
-				title="+ New Post"
+				title="New Post"
+				icon="icon icon--plus-alt"
 				path="new-post"
 			/>
 			<SearchInput onSearch={props.onSearch} value={props.searchValue} />
