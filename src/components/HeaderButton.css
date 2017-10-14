@@ -1,10 +1,31 @@
 .HeaderButton {
+	display: block;
+	background: rgba(0,0,0,0.05);
+	color: rgba(0,0,0,0.5);
+	height: 60px;
+	width: 180px;
+	text-transform: uppercase;
+	font-weight: 600;
+	line-height: 60px;
+	text-align: center;
+	margin-left: 35px;
+	border: none;
+	font-size: inherit;
+	cursor: pointer;
+	transition: 180ms linear all;
+	outline: none;
 }
 
 .HeaderButton .icon {
 	margin-right: 10px;
+	opacity: 0.5;
+	vertical-align: middle;
+}
+
+.HeaderButton:hover  {
+	color: var( --hm-dark-grey );
 }
 
 .HeaderButton:hover .icon {
-	/* Make it red */
+	opacity: 1;
 }
