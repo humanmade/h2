@@ -1,0 +1,11 @@
+.Logo {
+	background-color: var(--hm-red);
+	padding: .5rem 0;
+	height: 60px;
+	display: inline-block;
+}
+
+.Logo .hm-logo {
+	width: 1.5rem;
+	height: 1.5rem;
+}
