@@ -1,0 +1,14 @@
+.Header {
+	background: #F1F2EE;
+	height: 60px;
+	flex: 1;
+}
+
+.Header .Inner {
+	flex-direction: row;
+}
+
+.Header .CurrentUserDropDown {
+	margin-left: auto;
+	align-self: center;
+}

@@ -4,7 +4,8 @@
 	color: #cb4b3c;
 	font-size: 14px;
 	outline: none;
-	&:active {
-		outline: 1px solid #cb4b3c;
-	}
+}
+
+.Button:active {
+	outline: 1px solid #cb4b3c;
 }
