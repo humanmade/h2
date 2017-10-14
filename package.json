@@ -29,7 +29,7 @@
     "wordpress-rest-api-oauth-1": "^1.1.6"
   },
   "scripts": {
-    "build-css": "node-sass src/ -o src",
+    "build-css": "node-sass src/ -o src --output-style expanded --indent-type tab --indent-width 1",
     "watch-css": "npm run build-css && node-sass src/ -o src --watch",
     "start": "npm run watch-css & react-scripts start",
     "build": "npm run build-css && react-scripts build",
