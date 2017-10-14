@@ -1,7 +1,7 @@
 .HeaderButton {
 	display: block;
-	background: #EAECE6;
-	color: #BDC0B6;
+	background: rgba(0,0,0,0.05);
+	color: rgba(0,0,0,0.5);
 	height: 60px;
 	width: 180px;
 	text-transform: uppercase;
@@ -16,7 +16,16 @@
 	outline: none;
 }
 
-.HeaderButton:hover {
-	color: #818181;
-	background: #F1F2EE;
+.HeaderButton .icon {
+	margin-right: 10px;
+	opacity: 0.5;
+	vertical-align: middle;
+}
+
+.HeaderButton:hover  {
+	color: var( --hm-dark-grey );
+}
+
+.HeaderButton:hover .icon {
+	opacity: 1;
 }

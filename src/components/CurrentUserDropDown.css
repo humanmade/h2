@@ -1,5 +1,6 @@
 .CurrentUserDropDown {
 	align-items: center;
+	display: flex;
 }
 
 .CurrentUserDropDown .Avatar {
