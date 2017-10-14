@@ -1,11 +1,11 @@
-.comments-list {
-  flex-direction: column;
+.CommentsList {
+	flex-direction: column;
 }
 
-.comments-list .comment {
-  margin-bottom: 40px;
+.CommentsList .Comment {
+	margin-bottom: 40px;
 }
 
-.comments-list .post-reply {
-  align-self: flex-end;
+.CommentsList .post-reply {
+	align-self: flex-end;
 }

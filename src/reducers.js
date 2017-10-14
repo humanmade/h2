@@ -1,4 +1,3 @@
-import FrontKit from '@humanmade/frontkit';
 import { combineReducers } from 'redux';
 
 import store from './store';
@@ -23,7 +22,7 @@ export default combineReducers({
 							content: {
 								rendered: '',
 								raw: '',
-								edited: FrontKit.content(),
+								// edited: '',
 							},
 							author: 0,
 							id: 0,
@@ -68,7 +67,7 @@ export default combineReducers({
 							content: {
 								rendered: '',
 								raw: '',
-								edited: FrontKit.content(),
+								// edited: FrontKit.content(),
 							},
 							author: 0,
 							id: 0,
@@ -89,7 +88,7 @@ export default combineReducers({
 					edited: '',
 				},
 				id: 0,
-				content: { rendered: '', raw: '', edited: FrontKit.content() },
+				content: { rendered: '', raw: '', /*edited: FrontKit.content()*/ },
 				date_gmt: new Date().toISOString(),
 			},
 		},
@@ -124,7 +123,7 @@ export default combineReducers({
 							edited: '',
 						},
 						id: 0,
-						content: { rendered: '', raw: '', edited: FrontKit.content() },
+						content: { rendered: '', raw: '', /*edited: FrontKit.content()*/ },
 						date_gmt: new Date().toISOString(),
 					},
 				};
