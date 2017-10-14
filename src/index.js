@@ -9,6 +9,8 @@ import createLogger from 'redux-logger';
 import App from './App';
 import reducers from './reducers';
 
+import './hm-pattern-library/assets/styles/juniper.css';
+
 let store = createStore(
 	reducers,
 	applyMiddleware(thunk, createLogger({ collapsed: true }))
