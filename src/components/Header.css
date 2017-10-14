@@ -1,11 +1,11 @@
 .Header {
-	background: #F1F2EE;
-	height: 60px;
+	background: var(--hm-beige);
 	flex: 1;
 }
 
 .Header .Inner {
 	flex-direction: row;
+	display: flex;
 }
 
 .Header .CurrentUserDropDown {
