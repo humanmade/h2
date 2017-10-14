@@ -1,0 +1,11 @@
+.comments-list {
+  flex-direction: column;
+}
+
+.comments-list .comment {
+  margin-bottom: 40px;
+}
+
+.comments-list .post-reply {
+  align-self: flex-end;
+}
