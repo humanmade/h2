@@ -11,7 +11,7 @@ export default combineReducers({
 	tags: store.reducers.tags,
 	comments: store.reducers.comments,
 	// state: WriteCommentsState = {}, action: Action
-	writeComments: (state, action) => {
+	writeComments: (state = {}, action) => {
 		switch (action.type) {
 			case 'WP_API_REDUX_FETCH_POSTS_UPDATED':
 				const s = { ...state };
