@@ -10,6 +10,7 @@
   "dependencies": {
     "bourbon": "^4.2.7",
     "draft-js-plugins-editor": "2.0.0-beta10",
+    "marked": "^0.3.6",
     "prop-types": "^15.6.0",
     "react": "^15.3.2",
     "react-document-title": "^2.0.2",
