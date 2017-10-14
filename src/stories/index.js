@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf, action, linkTo } from '@storybook/react';
 import { IntlProvider } from 'react-intl';
-import scss from '../index.css';
+
 import Header from '../components/Header';
 import Logo from '../components/Logo';
 import Avatar from '../components/Avatar';
@@ -11,6 +11,8 @@ import PostsList from '../components/PostsList';
 import Comment from '../components/Comment';
 import WriteComment from '../components/WriteComment';
 import WritePost from '../components/WritePost';
+
+import '../hm-pattern-library/assets/styles/juniper.css';
 
 const comment = {
 	id: 1,
