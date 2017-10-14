@@ -1,0 +1,52 @@
+.reactions {
+	position: relative;
+	width: 100%;
+	display: flex;
+	margin-bottom: 30px;
+}
+
+.reactions .emoji-mart {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 100;
+}
+
+.reactions .emoji-mart-title-label {
+	display: none;
+}
+
+.reactions .emoji-mart input[type="text"] {
+	width: 100%;
+	margin-bottom: 0;
+	border-width: 1px;
+	margin-bottom: 5px;
+}
+
+.reactions .reactions__emoji {
+	display: inline-block;
+	margin-left: .1em;
+	margin-right: .25em;
+	position: relative;
+	top: 2.5px;
+}
+
+.reactions .reactions__count {
+	margin-right: .1em;
+	margin-left: .25em;
+	font-size: 14px;
+	color: #AAA;
+}
+
+.reactions .btn--active {
+	background: #DFDFDF;
+}
+
+.reactions .btn--active .reactions__count {
+	color: #504C4C;
+}
+
+.reactions .btn--active:hover .reactions__count,
+.reactions .btn--active:focus .reactions__count {
+	color: #FFF;
+}

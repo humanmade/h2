@@ -10,6 +10,8 @@
   "dependencies": {
     "bourbon": "^4.2.7",
     "draft-js-plugins-editor": "2.0.0-beta10",
+    "emoji-mart": "^2.1.1",
+    "postcss-loader": "^2.0.8",
     "prop-types": "^15.6.0",
     "react": "^15.3.2",
     "react-document-title": "^2.0.2",
