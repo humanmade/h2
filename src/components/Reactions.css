@@ -12,10 +12,6 @@
 	z-index: 100;
 }
 
-.reactions .emoji-mart-title-label {
-	display: none;
-}
-
 .reactions .emoji-mart input[type="text"] {
 	width: 100%;
 	margin-bottom: 0;

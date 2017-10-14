@@ -49,6 +49,7 @@ export default class Reaction extends Component {
 						this.setState( { isOpen: false } );
 						this.toggleReaction( data.native );
 					}}
+					title={ false }
 				/>
 			)}
 		</div>;
