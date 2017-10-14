@@ -1,0 +1,26 @@
+.PostsList {
+	position: relative;
+}
+
+.PostsList > div {
+	flex: 1;
+}
+
+.PostsList .infinite-scroll-component {
+	flex-direction: column;
+}
+
+.PostsList:first-child {
+	padding-top: 100px;
+}
+
+.PostsList:before {
+	position: absolute;
+	content: '';
+	background: #F1F2EE;
+	left: 32px;
+	height: 100px;
+	top: 0;
+	width: 5px;
+	z-index: -1;
+}

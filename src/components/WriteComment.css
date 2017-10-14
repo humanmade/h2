@@ -1,0 +1,41 @@
+.WriteComment {
+	position: relative;
+}
+
+.WriteComment:before {
+	position: absolute;
+	content: '';
+	background: #F1F2EE;
+	left: 23px;
+	top: 0;
+	bottom: 0;
+	width: 5px;
+	z-index: -1;
+}
+
+.WriteComment header {
+	height: 50px;
+	line-height: 50px;
+}
+
+.WriteComment textarea {
+	border: 1px solid #f6f6f6;
+	padding: 10px;
+	font-size: 15px;
+	outline: none;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.WriteComment > .Avatar {
+	margin-right: 30px;
+}
+
+.WriteComment .body {
+	flex-direction: column;
+	flex: 1;
+}
+
+.WriteComment .buttons {
+	margin-bottom: 10px;
+}

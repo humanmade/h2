@@ -1,0 +1,33 @@
+.Status {
+	position: relative;
+	min-height: 100px;
+	flex-direction: column;
+}
+
+.Status:before {
+	position: absolute;
+	content: '';
+	background: #F1F2EE;
+	left: 32px;
+	top: 0;
+	height: 100px;
+	width: 6px;
+	z-index: -1;
+}
+
+.Status > div > .Avatar {
+	margin-right: 35px;
+	margin-left: 10px;
+}
+
+.Status .PostContent p:first-of-type {
+	display: inline;
+}
+
+.Status .body {
+	display: block;
+}
+
+.Status .CommentsList {
+	margin-left: 65px;
+}

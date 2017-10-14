@@ -1,0 +1,11 @@
+.CommentsList {
+	flex-direction: column;
+}
+
+.CommentsList .Comment {
+	margin-bottom: 40px;
+}
+
+.CommentsList .post-reply {
+	align-self: flex-end;
+}
