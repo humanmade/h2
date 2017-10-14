@@ -13,7 +13,7 @@ export default combineReducers({
 	writeComments: (state = {}, action) => {
 		switch (action.type) {
 			case 'WP_API_REDUX_FETCH_POSTS_UPDATED':
-                const s = { ...state };
+				const s = { ...state };
 				action.payload.objects.forEach(post => {
 					s[post.id] = {
 						isShowing: false,
