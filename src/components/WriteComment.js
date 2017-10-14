@@ -1,4 +1,3 @@
-import FrontKit, { plugins } from '@humanmade/frontkit';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -7,7 +6,6 @@ import Avatar from './Avatar';
 import Button from './Button';
 import { User, Post, Comment } from '../shapes';
 
-import '@humanmade/frontkit/dist/style.css';
 import './WriteComment.css';
 
 export default class WriteComment extends React.Component {
@@ -31,17 +29,6 @@ export default class WriteComment extends React.Component {
 				<header>
 					<strong>{this.props.author ? this.props.author.name : ''}</strong>
 				</header>
-				<FrontKit
-					placeholder="Start writing..."
-					ref={ ref => this.editor = ref }
-					value={this.props.comment.content.edited}
-					onChange={edited => this.props.onChange({ content: { edited } })}
-				>
-					<plugins.Bubble />
-					<plugins.InlineBubble />
-					<plugins.Dots />
-					<plugins.MarkdownShortcuts />
-				</FrontKit>
 				<span className="buttons">
 					<Button onClick={this.props.onCancel}>Cancel</Button>
 					<Button onClick={this.props.onSave}>Save</Button>

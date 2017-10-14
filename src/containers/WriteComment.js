@@ -1,4 +1,3 @@
-import FrontKit from '@humanmade/frontkit';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -19,7 +18,7 @@ class ConnectedWriteComment extends Component {
 	onSave() {
 		const newComment = {
 			post: this.props.comment.post,
-			content: FrontKit.export(this.props.comment.content.edited),
+			// content: FrontKit.export(this.props.comment.content.edited),
 		};
 		this.props.dispatch(store.actions.comments.create(newComment));
 	}

@@ -1,4 +1,3 @@
-import FrontKit from '@humanmade/frontkit';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -23,7 +22,7 @@ class ConnectedWritePost extends Component {
 			title = fkContent.getCurrentContent().getBlockMap().first().getText();
 		}
 		const newPost = {
-			content: FrontKit.export(this.props.writePost.post.content.edited),
+			// content: FrontKit.export(this.props.writePost.post.content.edited),
 			title: title,
 			status: 'publish',
 		};
