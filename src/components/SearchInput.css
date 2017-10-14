@@ -1,8 +1,9 @@
 .SearchInput {
-	margin: 7px 0 7px 20px;
+	margin: 7px 20px;
 	flex: 1;
 }
 
-.SearchInput input {
-	margin: 0 !important;
+.SearchInput input[type=search] {
+	margin: 0;
+	width: 100%;
 }
