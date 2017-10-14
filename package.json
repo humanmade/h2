@@ -10,7 +10,6 @@
   "dependencies": {
     "bourbon": "^4.2.7",
     "draft-js-plugins-editor": "2.0.0-beta10",
-    "node-sass": "^3.10.1",
     "normalize-scss": "^6.0.0",
     "prop-types": "^15.6.0",
     "react": "^15.3.2",
@@ -29,14 +28,12 @@
     "wordpress-rest-api-oauth-1": "^1.1.6"
   },
   "scripts": {
-    "build-css": "node-sass src/ -o src",
-    "watch-css": "npm run build-css && node-sass src/ -o src --watch",
-    "start": "npm run watch-css & react-scripts start",
-    "build": "npm run build-css && react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "deploy": "npm run build && aws s3 sync ./build s3://make.hmn.md/h2 --acl public-read",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "storybook": "npm run watch-css & start-storybook -p 9009 -s public",
+    "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   }
 }
