@@ -29,7 +29,7 @@ export default class Reaction extends Component {
 			>
 				Add reaction
 			</button>
-			<div class="reactions" key="reactions">
+			<div key="reactions">
 				{ Object.entries( reactions ).map( ( [ emoji, count ] ) => {
 					let isActive = reactions[ emoji ].indexOf( userId ) >= 0 ? true : false;
 					return <button
