@@ -26,9 +26,9 @@ class ConnectedPost extends Component {
 	}
 	render() {
 		const post = this.props.post;
-        const author = this.props.users.byId[post.author];
-		let comments = Object.values( this.props.comments.byId )
-			.filter( comment => comment.post === post.id );
+        const author = this.props.users.byId[ post.author ];
+        let comments = Object.values( this.props.comments.byId )
+            .filter( comment => comment.post === post.id );
 
         comments = threadComments( comments );
 

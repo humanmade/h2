@@ -13,8 +13,8 @@ export default class CommentsList extends Component {
 	displayedComments = [];
 
     /**
-	 * Recursively render threaded comments
-	 *
+     * Recursively render threaded comments
+     *
      * @param comments
      */
 	renderThreadedComments = ( comments ) => {
