@@ -18,6 +18,7 @@ class App extends Component {
 				this.props.dispatch(
 					fetchPosts({
 						per_page: 5,
+						page:3,
 						order_by: 'date_gmt',
 						order: 'desc',
 					})

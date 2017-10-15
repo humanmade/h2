@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import CommentsList from '../components/CommentsList';
 import Post from '../components/Post';
+import { threadComments } from '../lib/comments';
 import Status from '../components/Status';
 import {
 	Post as PostShape,
@@ -12,6 +13,7 @@ import {
 	CommentsState,
 	WriteCommentsState,
 } from '../shapes';
+
 
 class ConnectedPost extends Component {
 	onComment() {
@@ -25,8 +27,10 @@ class ConnectedPost extends Component {
 	render() {
 		const post = this.props.post;
         const author = this.props.users.byId[post.author];
-		const comments = Object.values( this.props.comments.byId )
+		let comments = Object.values( this.props.comments.byId )
 			.filter( comment => comment.post === post.id );
+
+        comments = threadComments( comments );
 
 		const commentsList = (
 			<CommentsList
