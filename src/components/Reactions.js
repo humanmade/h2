@@ -38,11 +38,11 @@ export default class Reaction extends Component {
 						onClick={ () => this.toggleReaction( emoji ) }
 						key={ emoji }
 					>
-						<span className="reactions__emoji">{ emoji }</span>
-						<span className="reactions__count">{ users.length }</span>
-						<span className="reactions__users">
+						<span className="reactions__emoji" key="emoji">{ emoji }</span>
+						<span className="reactions__count" key="count">{ users.length }</span>
+						<span className="reactions__users" key="users">
 							{ users.map( userId => {
-								return <UserDisplayName userId={ userId } />
+								return <UserDisplayName userId={ userId } key="{ userId }" />
 							})}
 						</span>
 					</button>
@@ -56,6 +56,8 @@ export default class Reaction extends Component {
 						this.toggleReaction( data.native );
 					}}
 					title={ false }
+					emoji=":upside_down_face:"
+					native={ true }
 				/>
 			)}
 		</div>;
