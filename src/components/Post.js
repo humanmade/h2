@@ -10,6 +10,8 @@ import { Post as PostType, User } from '../shapes';
 
 import './Post.css';
 
+// import api from './api';
+
 export default class Post extends Component {
 	constructor( props ) {
 		super( props );
@@ -40,14 +42,14 @@ export default class Post extends Component {
 				</div>
 			</header>
 			<PostContent html={props.post.content.rendered} />
-			{props.children}
-
 			<Reactions
 				reactions={ this.state.reactions }
 				onChangeReactions={ newReactions => {
 					this.setState({ reactions: newReactions })
 				} }
 			/>
+			{props.children}
+
 		</div>;
 	}
 }
