@@ -5,6 +5,10 @@
 	margin-bottom: 30px;
 }
 
+.reactions .btn {
+	white-space: nowrap;
+}
+
 .reactions .emoji-mart {
 	position: absolute;
 	top: 100%;
