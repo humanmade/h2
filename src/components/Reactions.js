@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Picker } from 'emoji-mart'
+import UserDisplayName from '../containers/UserDisplayName';
 
 import 'emoji-mart/css/emoji-mart.css';
 import './Reactions.css';
@@ -30,7 +31,7 @@ export default class Reaction extends Component {
 				Add reaction
 			</button>
 			<div key="reactions">
-				{ Object.entries( reactions ).map( ( [ emoji, count ] ) => {
+				{ Object.entries( reactions ).map( ( [ emoji, users ] ) => {
 					let isActive = reactions[ emoji ].indexOf( userId ) >= 0 ? true : false;
 					return <button
 						className={ 'btn btn--small btn--tertiary' + ( isActive ? ' btn--active' : '' ) }
@@ -38,7 +39,12 @@ export default class Reaction extends Component {
 						key={ emoji }
 					>
 						<span className="reactions__emoji">{ emoji }</span>
-						<span className="reactions__count">{ count.length }</span>
+						<span className="reactions__count">{ users.length }</span>
+						<span className="reactions__users">
+							{ users.map( userId => {
+								return <UserDisplayName userId={ userId } />
+							})}
+						</span>
 					</button>
 				})}
 			</div>

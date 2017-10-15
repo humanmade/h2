@@ -8,6 +8,8 @@
 .reactions .btn {
 	white-space: nowrap;
 	margin-bottom: 0;
+	height: 31px;
+	position: relative;
 }
 
 .reactions .emoji-mart {
@@ -51,3 +53,26 @@
 .reactions .btn--active:focus .reactions__count {
 	color: #FFF;
 }
+
+.reactions__users {
+	display: none;
+	position: absolute;
+	top: calc( 100% + 5px );
+	left: 0;
+	background: rgba(0,0,0,0.6);
+	padding: 5px 10px 0;
+	border-radius: 3px;
+	font-size: 14px;
+	z-index: 50;
+	text-align: left;
+}
+
+.reactions .btn:hover .reactions__users,
+.reactions .btn:focus .reactions__users {
+	display: block;
+}
+.reactions__user {
+	display: block;
+	color: white;
+}
+
