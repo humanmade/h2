@@ -20,7 +20,7 @@ export default class CommentsList extends Component {
 	renderThreadedComments = ( comments ) => {
         return comments.map( ( comment ) => {
         	if ( this.displayedComments.indexOf( comment.id ) !== -1 ) {
-        		return;
+        		return null;
 			}
 
         	const childrenIds = comment.children;
