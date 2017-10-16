@@ -23,6 +23,7 @@ export const Post = PropTypes.shape( {
 } );
 
 export const User = PropTypes.shape( {
+	id: PropTypes.number.isRequired,
 	name: PropTypes.string.isRequired,
 	avatar_urls: PropTypes.shape( {
 		'96': PropTypes.string.isRequired,
