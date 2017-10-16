@@ -1,7 +1,9 @@
 .Editor-header {
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 0;
+	margin-bottom: -2px;
+	z-index: 2;
+	position: relative;
 }
 
 .Editor-tabs {
@@ -64,16 +66,24 @@
 
 .Editor-editor {
 	margin-top: 0;
-
 	min-height: 5rem;
 	max-height: 30rem;
 	resize: vertical;
-
 	border-top-left-radius: 0;
+	border: 2px solid #d9d9d9;
+	background-color: #fff;
+}
+
+.Editor-preview {
+	background-color: #fff;
+	border: 2px solid #d9d9d9;
+	padding: 0 20px;
+	margin-bottom: 1.66667rem;
 }
 
 .Editor-submit {
-	padding: 0 7px 7px;
+	padding-left: 5px;
+	margin: 0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;

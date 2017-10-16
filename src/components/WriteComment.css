@@ -1,30 +1,17 @@
 .WriteComment {
-	position: relative;
+	background-color: var( --hm-light-grey );
+	padding: 20px;
 }
 
-.WriteComment:before {
-	position: absolute;
-	content: '';
-	background: #F1F2EE;
-	left: 23px;
-	top: 0;
-	bottom: 0;
-	width: 5px;
-	z-index: -1;
-}
-
-.WriteComment header {
+.WriteComment > header {
 	height: 50px;
 	line-height: 50px;
+	display: flex;
+	margin-bottom: 30px;
 }
 
-.WriteComment > .Avatar {
-	margin-right: 30px;
-}
-
-.WriteComment .body {
-	flex-direction: column;
-	flex: 1;
+.WriteComment > header > .Avatar {
+	margin-right: 10px;
 }
 
 .WriteComment .buttons {
