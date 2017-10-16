@@ -2,7 +2,9 @@
 	flex-direction: column;
 	position: relative;
 	padding-bottom: 20px;
+	margin-bottom: 35px;
 	min-height: 144px;
+	border-bottom: 5px solid #F1F2EE;
 }
 
 .Post > header {
