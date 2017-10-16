@@ -22,19 +22,23 @@
 	/*color: inherit;*/
 }
 
-.Editor-tabs label span {
-	display: inline-block;
-	padding: 7.5px;
+.Editor-tabs li:first-child label span {
+	margin-right: 0;
+	border-right: 0;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
 
-	border: 2px solid transparent;
-	border-bottom-style: none;
-	border-radius: 4px 4px 0 0;
+.Editor-tabs li:last-child label span {
+	margin-right: 0;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
 }
 
 .Editor-tabs label input:checked + span {
-	background: #fff;
-	border-color: #d9d9d9;
-	color: var(--hm-red-dark);
+    color: #fff;
+    background: #504C4C;
+    border: 1px solid #504C4C;
 }
 
 .Editor-toolbar {
@@ -44,13 +48,27 @@
 	margin: 0;
 }
 
-.Editor-toolbar button {
-	background: transparent;
-	border: none;
-	font: inherit;
-	cursor: pointer;
-	padding: 0.25rem 0.25rem;
-	margin: -0.25rem 0;
+.Editor-toolbar button {}
+.Editor-toolbar button:first-child:not(:last-child ) {
+	margin-right: 0;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	border-right: none;
+}
+
+.Editor-toolbar button + button:not(:last-child ) {
+	border-radius: 0;
+	margin-right: 0;
+	border-right: none;
+}
+
+.Editor-toolbar button:last-child:not(:first-child) {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.Editor-toolbar button:last-child {
+	margin-right: 0;
 }
 
 .Editor-toolbar button:hover,
@@ -64,21 +82,21 @@
 
 .Editor-editor {
 	margin-top: 0;
-
+	margin-bottom: .833335rem;
 	min-height: 5rem;
 	max-height: 30rem;
 	resize: vertical;
 
-	border-top-left-radius: 0;
+	/*border-top-left-radius: 0;*/
 }
 
 .Editor-submit {
-	padding: 0 7px 7px;
+	margin-top: .833335rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 
-.Editor-submit-buttons .Button {
-	margin-left: 0.5rem;
+.Editor-submit .btn:last-child {
+	margin-right: 0;
 }

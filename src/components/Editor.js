@@ -23,7 +23,7 @@ const BUTTONS = {
 		title: 'Add italic text',
 		apply: text => apply( text, "*", "*" ),
 	},
-	sep1: { separator: true },
+	// sep1: { separator: true },
 	quote: {
 		icon: 'editor-quote',
 		title: 'Add blockquote',
@@ -124,7 +124,7 @@ class Editor extends React.PureComponent {
 								value="edit"
 								onChange={ e => this.setState({ mode: e.target.value }) }
 							/>
-							<span>Write</span>
+							<span className="btn btn--small btn--tertiary">Write</span>
 						</label>
 					</li>
 					<li>
@@ -136,7 +136,7 @@ class Editor extends React.PureComponent {
 								value="preview"
 								onChange={ e => this.setState({ mode: e.target.value }) }
 							/>
-							<span>Preview</span>
+							<span className="btn btn--small btn--tertiary">Preview</span>
 						</label>
 					</li>
 				</ul>
@@ -152,6 +152,7 @@ class Editor extends React.PureComponent {
 								onClick={ e => this.onButton( e, BUTTONS[ type ].apply ) }
 								title={ BUTTONS[ type ].title }
 								type="button"
+								className="btn btn--small btn--tertiary"
 							>
 								{/*<span className={`dashicons dashicons-${ BUTTONS[ type ].icon }`} />*/}
 								{ type }
@@ -186,7 +187,7 @@ class Editor extends React.PureComponent {
 					{ this.props.onCancel ?
 						<Button onClick={ this.props.onCancel }>Cancel</Button>
 					: null }
-					<Button submit>{ this.props.submitText }</Button>
+					<Button submit type="primary">{ this.props.submitText }</Button>
 				</span>
 			</p>
 		</form>;
