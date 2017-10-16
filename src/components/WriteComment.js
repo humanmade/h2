@@ -22,7 +22,6 @@ export default class WriteComment extends React.Component {
 
 	render() {
 		return <div className="WriteComment" ref={ ref => this.container = ref }>
-
 			<header>
 				<Avatar
 					url={this.props.author ? this.props.author.avatar_urls['96'] : ''}
