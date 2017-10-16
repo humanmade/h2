@@ -4,6 +4,7 @@ import { FormattedRelative } from 'react-intl';
 
 import Avatar from './Avatar';
 import Button from './Button';
+import Editor from './Editor';
 import { User, Post } from '../shapes';
 
 import './WritePost.css';
@@ -19,10 +20,11 @@ export default function WritePost( props ) {
 				<div className="date">
 					<FormattedRelative value={props.post.date_gmt} />
 				</div>
-				<span className="buttons">
-					<Button onClick={props.onCancel}>Cancel</Button>
-					<Button onClick={props.onSave}>Publish</Button>
-				</span>
+				<Editor
+					submitText="Publish"
+					onCancel={props.onCancel}
+					onSubmit={props.onSave}
+				/>
 			</div>
 		</div>
 	</div>;
