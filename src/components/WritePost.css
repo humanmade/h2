@@ -47,12 +47,3 @@
 	color: #bbb;
 	font-size: 11.5px;
 }
-
-.WritePost input {
-	font-weight: inherit;
-	font-size: inherit;
-	border: none;
-	padding: 0;
-	width: 100%;
-	outline: none;
-}
