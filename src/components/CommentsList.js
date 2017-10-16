@@ -18,8 +18,9 @@ export default class CommentsList extends Component {
      * @param comments
      */
 	renderThreadedComments = ( comments ) => {
-        return comments.map( ( comment ) => {
-        	if ( this.displayedComments.indexOf( comment.id ) !== -1 ) {
+		const displayedComments = [];
+        const renderer = ( comment ) => {
+        	if ( displayedComments.indexOf( comment.id ) !== -1 ) {
         		return null;
 			}
 
@@ -31,15 +32,14 @@ export default class CommentsList extends Component {
 				return this.props.comments[ childCommentId ];
 			});
 
-        	const c = <div className="CommentThread">
+			displayedComments.push( comment.id );
+
+        	return <div className="CommentThread" key={ comment.id }>
 				<CommentComponent key={comment.id} comment={comment}/>
-                {hasChildren ? this.renderThreadedComments( children ) : null}
+                {hasChildren ? children.map( renderer ) : null}
 			</div>;
-
-            this.displayedComments.push( comment.id );
-
-            return c;
-        });
+        };
+        return comments.map( renderer );
 	};
 	render() {
         return <div className="CommentsList">
