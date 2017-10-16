@@ -1,10 +1,11 @@
 import React from 'react';
-import { storiesOf, action, linkTo } from '@storybook/react';
+import { storiesOf, action } from '@storybook/react';
 import { IntlProvider } from 'react-intl';
 
 import Header from '../components/Header';
 import Logo from '../components/Logo';
 import Avatar from '../components/Avatar';
+import Editor from '../components/Editor';
 import Status from '../components/Status';
 import Post from '../components/Post';
 import PostsList from '../components/PostsList';
@@ -74,7 +75,7 @@ storiesOf('Components', module)
 			comment={comment}
 			post={post}
 			onChange={() => {}}
-			onSave={() => {}}
+			onSave={ action( 'save' ) }
 			onCancel={() => {}}
 		/>
 	))
@@ -86,4 +87,7 @@ storiesOf('Components', module)
 			onSave={() => {}}
 			onCancel={() => {}}
 		/>
+	))
+	.add('Editor', () => (
+		<Editor onSubmit={ action( 'submit' ) } />
 	));

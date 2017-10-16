@@ -15,10 +15,10 @@ class ConnectedWriteComment extends Component {
 			},
 		});
 	}
-	onSave() {
+	onSave( content ) {
 		const newComment = {
+			content,
 			post: this.props.comment.post,
-			// content: FrontKit.export(this.props.comment.content.edited),
 		};
 		this.props.dispatch(store.actions.comments.create(newComment));
 	}
@@ -40,7 +40,7 @@ class ConnectedWriteComment extends Component {
 			post={post}
 			onCancel={() => this.onCancel()}
 			onChange={comment => this.onChange(comment)}
-			onSave={() => this.onSave()}
+			onSave={ comment => this.onSave( comment ) }
 		/>;
 	}
 }
