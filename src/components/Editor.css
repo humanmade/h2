@@ -66,12 +66,10 @@
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
 }
-	/*background: transparent;
-	border: none;
-	font: inherit;
-	cursor: pointer;
-	padding: 0.25rem 0.25rem;
-	margin: -0.25rem 0;*/
+
+.Editor-toolbar button:last-child {
+	margin-right: 0;
+}
 
 .Editor-toolbar button:hover,
 .Editor-toolbar button:active {
