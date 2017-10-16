@@ -11,6 +11,7 @@
     "bourbon": "^4.2.7",
     "draft-js-plugins-editor": "2.0.0-beta10",
     "emoji-mart": "^2.1.1",
+    "marked": "^0.3.6",
     "postcss-loader": "^2.0.8",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
