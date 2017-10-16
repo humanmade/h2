@@ -23,7 +23,7 @@ class App extends Component {
 					})
 				).then( ( response ) => {
 					response.map( ( post ) => {
-                        this.props.dispatch(
+                        return this.props.dispatch(
                             fetchReplies({
                                 per_page: 100,
                                 post: post.id
