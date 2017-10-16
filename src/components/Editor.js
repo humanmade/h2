@@ -1,6 +1,8 @@
+import { emojiIndex } from 'emoji-mart';
 import marked from 'marked';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Button from './Button';
 
@@ -42,7 +44,7 @@ Preview.propTypes = {
 	children: PropTypes.string.isRequired,
 };
 
-export default class Editor extends React.PureComponent {
+class Editor extends React.PureComponent {
 	constructor( props ) {
 		super( props );
 
@@ -66,6 +68,24 @@ export default class Editor extends React.PureComponent {
 		if ( desired > height ) {
 			this.setState({ height: desired });
 		}
+	}
+
+	updateTextarea( ref ) {
+		if ( ref === this.textarea ) {
+			return;
+		}
+
+		this.textarea = ref;
+		window.jQuery( ref ).atwho({
+			at: "@",
+			data: Object.values( this.props.users ).map( user => user.slug ),
+		});
+		window.jQuery( ref ).atwho({
+			at: ":",
+			data: Object.values( emojiIndex.emojis ),
+			displayTpl: item => `<li>${ item.native } ${ item.colons } </li>`,
+			insertTpl: item => item.native,
+		});
 	}
 
 	onSubmit( e ) {
@@ -145,7 +165,7 @@ export default class Editor extends React.PureComponent {
 				<Preview>{ content || "*Nothing to preview*" }</Preview>
 			) : (
 				<textarea
-					ref={ el => this.textarea = el }
+					ref={ el => this.updateTextarea( el ) }
 					className="Editor-editor"
 					placeholder="Write a comment..."
 					style={{ height }}
@@ -182,3 +202,5 @@ Editor.propTypes = {
 	onCancel: PropTypes.func,
 	onSubmit: PropTypes.func.isRequired,
 };
+
+export default connect( state => ( { users: state.users.byId } ) )( Editor );
