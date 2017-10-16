@@ -6,6 +6,9 @@
 	outline: none;
 }
 
+.Button:focus {
+	outline: 1px solid var( --hm-dark-grey );
+}
 .Button:active {
-	outline: 1px solid #cb4b3c;
+	outline: 1px solid var( --hm-red );
 }
