@@ -67,7 +67,11 @@ export default class Reaction extends Component {
 		const { reactions, onChangeReactions, userId } = this.props;
 
 		if ( ! ( emoji in reactions ) ) {
-			reactions[ emoji ] = [ userId ];
+			if ( Object.keys( reactions ).length >= 5 ) {
+				alert( 'Each post can only have a maximum of 5 different reactions. Sorry!' )
+			} else {
+				reactions[ emoji ] = [ userId ];
+			}
 		} else if ( reactions[ emoji ].indexOf( userId ) < 0 ) {
 			reactions[ emoji ].push( userId );
 		} else {
