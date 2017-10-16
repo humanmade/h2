@@ -7,7 +7,7 @@ export default function Button( props ) {
 	return <button
 		className="Button"
 		type={ props.submit ? "submit" : "button" }
-		onClick={ props.onClick }
+		onClick={ props.onClick || undefined }
 	>
 		{props.children}
 	</button>;
@@ -16,5 +16,5 @@ export default function Button( props ) {
 Button.propTypes = {
 	children: PropTypes.any,
 	submit: PropTypes.bool.isRequired,
-	onClick: PropTypes.func.isRequired,
+	onClick: PropTypes.func,
 };
