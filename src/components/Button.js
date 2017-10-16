@@ -4,12 +4,17 @@ import React from 'react';
 import './Button.css';
 
 export default function Button( props ) {
-	return <button onClick={props.onClick} className="Button">
+	return <button
+		className="Button"
+		type={ props.submit ? "submit" : "button" }
+		onClick={ props.onClick || undefined }
+	>
 		{props.children}
 	</button>;
 }
 
 Button.propTypes = {
 	children: PropTypes.any,
-	onClick: PropTypes.func.isRequired,
+	submit: PropTypes.bool.isRequired,
+	onClick: PropTypes.func,
 };

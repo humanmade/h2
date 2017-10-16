@@ -18,15 +18,6 @@
 	line-height: 50px;
 }
 
-.WriteComment textarea {
-	border: 1px solid #f6f6f6;
-	padding: 10px;
-	font-size: 15px;
-	outline: none;
-	margin-bottom: 10px;
-	width: 100%;
-}
-
 .WriteComment > .Avatar {
 	margin-right: 30px;
 }

@@ -2,7 +2,8 @@
 
 ## Set Up
 ```
-yarn install
+git submodule update --init
+yarn
 yarn start
 ```
 

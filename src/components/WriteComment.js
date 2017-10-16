@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 
 import Avatar from './Avatar';
 import Button from './Button';
+import Editor from './Editor';
 import { User, Post, Comment } from '../shapes';
 
 import './WriteComment.css';
@@ -29,10 +30,10 @@ export default class WriteComment extends React.Component {
 				<header>
 					<strong>{this.props.author ? this.props.author.name : ''}</strong>
 				</header>
-				<span className="buttons">
-					<Button onClick={this.props.onCancel}>Cancel</Button>
-					<Button onClick={this.props.onSave}>Save</Button>
-				</span>
+				<Editor
+					onCancel={this.props.onCancel}
+					onSubmit={this.props.onSave}
+				/>
 			</div>
 		</div>;
 	}

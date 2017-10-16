@@ -1,0 +1,84 @@
+.Editor-header {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 0;
+}
+
+.Editor-tabs {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+}
+
+.Editor-tabs input {
+	display: none;
+}
+
+.Editor-tabs label {
+	all: unset;
+	cursor: pointer;
+	/*font: inherit;*/
+	/*color: inherit;*/
+}
+
+.Editor-tabs label span {
+	display: inline-block;
+	padding: 7.5px;
+
+	border: 2px solid transparent;
+	border-bottom-style: none;
+	border-radius: 4px 4px 0 0;
+}
+
+.Editor-tabs label input:checked + span {
+	background: #fff;
+	border-color: #d9d9d9;
+	color: var(--hm-red-dark);
+}
+
+.Editor-toolbar {
+	display: flex;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.Editor-toolbar button {
+	background: transparent;
+	border: none;
+	font: inherit;
+	cursor: pointer;
+	padding: 0.25rem 0.25rem;
+	margin: -0.25rem 0;
+}
+
+.Editor-toolbar button:hover,
+.Editor-toolbar button:active {
+	color: #00a0d2;
+}
+
+.Editor-toolbar .separator {
+	margin-left: 0.5rem;
+}
+
+.Editor-editor {
+	margin-top: 0;
+
+	min-height: 5rem;
+	max-height: 30rem;
+	resize: vertical;
+
+	border-top-left-radius: 0;
+}
+
+.Editor-submit {
+	padding: 0 7px 7px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.Editor-submit-buttons .Button {
+	margin-left: 0.5rem;
+}
