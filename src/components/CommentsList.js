@@ -12,41 +12,41 @@ export default class CommentsList extends Component {
 
 	displayedComments = [];
 
-    /**
-     * Recursively render threaded comments
-     *
-     * @param comments
-     */
+	/**
+	 * Recursively render threaded comments
+	 *
+	 * @param comments
+	 */
 	renderThreadedComments = ( comments ) => {
 		const displayedComments = [];
-        const renderer = ( comment ) => {
-        	if ( displayedComments.indexOf( comment.id ) !== -1 ) {
-        		return null;
+		const renderer = ( comment ) => {
+			if ( displayedComments.indexOf( comment.id ) !== -1 ) {
+				return null;
 			}
 
-        	const childrenIds = comment.children;
-        	const hasChildren = childrenIds.length;
+			const childrenIds = comment.children;
+			const hasChildren = childrenIds.length;
 
-        	// Get the real children objects
+			// Get the real children objects
 			const children = childrenIds.map( ( childCommentId ) => {
 				return this.props.comments[ childCommentId ];
 			});
 
 			displayedComments.push( comment.id );
 
-        	return <div className="CommentThread" key={ comment.id }>
+			return <div className="CommentThread" key={ comment.id }>
 				<CommentComponent key={comment.id} comment={comment}/>
-                {hasChildren ? children.map( renderer ) : null}
+				{hasChildren ? children.map( renderer ) : null}
 			</div>;
-        };
-        return comments.map( renderer );
+		};
+		return comments.map( renderer );
 	};
 	render() {
-        return <div className="CommentsList">
+		return <div className="CommentsList">
 			{ this.renderThreadedComments( this.props.comments ) }
-            {this.props.showWriteComment
-                ? <WriteComment post={this.props.post} comment={this.props.writingComment} />
-                : <div className="post-reply">
+			{this.props.showWriteComment
+				? <WriteComment post={this.props.post} comment={this.props.writingComment} />
+				: <div className="post-reply">
 					<Button onClick={this.props.onComment}>Reply</Button>
 				</div>}
 
