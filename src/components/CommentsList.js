@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Component } from 'react';
 
 import Button from './Button';
 import CommentComponent from '../containers/Comment';
@@ -8,18 +8,50 @@ import { Comment, Post } from '../shapes';
 
 import './CommentsList.css';
 
-export default function CommentsList( props ) {
-	return <div className="CommentsList">
-		{props.comments.map(comment => (
-			<CommentComponent key={comment.id} comment={comment} />
-		))}
-		{props.showWriteComment
-			? <WriteComment post={props.post} comment={props.writingComment} />
-			: <div className="post-reply">
-					<Button onClick={props.onComment}>Reply</Button>
+export default class CommentsList extends Component {
+
+	displayedComments = [];
+
+    /**
+     * Recursively render threaded comments
+     *
+     * @param comments
+     */
+	renderThreadedComments = ( comments ) => {
+        return comments.map( ( comment ) => {
+        	if ( this.displayedComments.indexOf( comment.id ) !== -1 ) {
+        		return null;
+			}
+
+        	const childrenIds = comment.children;
+        	const hasChildren = childrenIds.length;
+
+        	// Get the real children objects
+			const children = childrenIds.map( ( childCommentId ) => {
+				return this.props.comments[ childCommentId ];
+			});
+
+        	const c = <div className="CommentThread">
+				<CommentComponent key={comment.id} comment={comment}/>
+                {hasChildren ? this.renderThreadedComments( children ) : null}
+			</div>;
+
+            this.displayedComments.push( comment.id );
+
+            return c;
+        });
+	};
+	render() {
+        return <div className="CommentsList">
+			{ this.renderThreadedComments( this.props.comments ) }
+            {this.props.showWriteComment
+                ? <WriteComment post={this.props.post} comment={this.props.writingComment} />
+                : <div className="post-reply">
+					<Button onClick={this.props.onComment}>Reply</Button>
 				</div>}
 
-	</div>;
+		</div>;
+	}
 }
 
 CommentsList.propTypes = {
