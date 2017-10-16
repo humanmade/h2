@@ -71,7 +71,7 @@ export default class Editor extends React.PureComponent {
 	onSubmit( e ) {
 		e.preventDefault();
 
-		this.props.onSubmit( this.state.content );
+		this.props.onSubmit( marked( this.state.content ) );
 	}
 
 	onButton( e, apply ) {
