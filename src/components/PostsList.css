@@ -1,5 +1,6 @@
 .PostsList {
 	position: relative;
+	padding: 0 20px;
 }
 
 .PostsList > div {
@@ -18,7 +19,7 @@
 	position: absolute;
 	content: '';
 	background: #F1F2EE;
-	left: 32px;
+	left: 52px;
 	height: 100px;
 	top: 0;
 	width: 5px;

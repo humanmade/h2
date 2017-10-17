@@ -1,5 +1,6 @@
 .CommentsList {
 	flex-direction: column;
+	margin-left: 100px;
 }
 
 .CommentsList .Comment {
@@ -8,4 +9,8 @@
 
 .CommentsList .post-reply {
 	align-self: flex-end;
+}
+
+.CommentThread {
+	margin-left: 60px;
 }
