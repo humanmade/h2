@@ -45,8 +45,9 @@ export default class Reaction extends Component {
 				className="btn btn--small btn--tertiary"
 				onClick={ value => this.setState({ isOpen: ! this.state.isOpen  } ) }
 				key="button"
+				title="Add reaction"
 			>
-				Add reaction
+				☺︎ +
 			</button>
 			{ this.state.isOpen && (
 				<Picker
