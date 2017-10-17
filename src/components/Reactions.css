@@ -12,6 +12,10 @@
 	position: relative;
 }
 
+.reactions .reactions-new {
+	opacity: 0.4;
+}
+
 .reactions .emoji-mart {
 	position: absolute;
 	top: 100%;
