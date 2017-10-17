@@ -109,6 +109,14 @@ class Editor extends React.PureComponent {
 		this.setState({ content: nextParts.join( '' ) });
 	}
 
+	focus() {
+		if ( ! this.textarea ) {
+			return;
+		}
+
+		this.textarea.focus();
+	}
+
 	render() {
 		const { content, height, mode } = this.state;
 
@@ -203,4 +211,4 @@ Editor.propTypes = {
 	onSubmit: PropTypes.func.isRequired,
 };
 
-export default connect( state => ( { users: state.users.byId } ) )( Editor );
+export default connect( state => ( { users: state.users.byId } ), null, null, { withRef: true } )( Editor );
