@@ -38,7 +38,7 @@ const BUTTONS = {
 
 const Preview = props => {
 	const compiled = marked( props.children );
-	return <div dangerouslySetInnerHTML={{ __html: compiled }} />;
+	return <div className="Editor-preview" dangerouslySetInnerHTML={{ __html: compiled }} />;
 };
 Preview.propTypes = {
 	children: PropTypes.string.isRequired,

@@ -72,6 +72,7 @@
 }
 
 .Editor-toolbar button:hover,
+.Editor-toolbar button:focus,
 .Editor-toolbar button:active {
 	color: #00a0d2;
 }
