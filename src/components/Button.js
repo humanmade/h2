@@ -15,6 +15,6 @@ export default function Button( props ) {
 
 Button.propTypes = {
 	children: PropTypes.any,
-	submit: PropTypes.bool.isRequired,
+	submit: PropTypes.bool,
 	onClick: PropTypes.func,
 };
