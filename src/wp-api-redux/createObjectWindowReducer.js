@@ -1,15 +1,15 @@
-export default function createObjectWindowReducer(objectName, options) {
+export default function createObjectWindowReducer( objectName, options ) {
 	const defaultWindow = {
-		items: [],
-		isLoading: false,
-		filter: {},
-		lastError: null,
-		totalPages: null,
+		items:        [],
+		isLoading:    false,
+		filter:       {},
+		lastError:    null,
+		totalPages:   null,
 		totalObjects: null,
 	};
 
-	return (state = defaultWindow, action) => {
-		switch (action.type) {
+	return ( state = defaultWindow, action ) => {
+		switch ( action.type ) {
 			case `WP_API_REDUX_FETCH_${objectName.toUpperCase()}_UPDATING`: {
 				return {
 					...state,
@@ -19,8 +19,8 @@ export default function createObjectWindowReducer(objectName, options) {
 			case `WP_API_REDUX_FETCH_${objectName.toUpperCase()}_ERRORED`: {
 				return {
 					...state,
-					isLoading: false,
-					lastError: action.payload.error,
+					isLoading:    false,
+					lastError:    action.payload.error,
 					totalObjects: action.payload.totalObjects
 						? action.payload.totalObjects
 						: state.totalObjects,
@@ -37,18 +37,18 @@ export default function createObjectWindowReducer(objectName, options) {
 						...action.payload.objects
 							.filter(
 								object =>
-									(options.filter
-										? options.filter(object, window.filter)
-										: true)
+									( options.filter
+										? options.filter( object, window.filter )
+										: true )
 							)
-							.map(object => object.id),
+							.map( object => object.id ),
 					],
 				};
 			case `WP_API_REDUX_${objectName.toUpperCase()}_WINDOW_FILTER_UPDATED`:
 				return {
 					...state,
 					filter: action.payload.filter,
-					items: [],
+					items:  [],
 				};
 			default:
 				return state;

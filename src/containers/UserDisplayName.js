@@ -5,7 +5,7 @@ const mapStateToProps = ( state, props ) => {
 	let user = state.users.byId[ props.userId ];
 
 	return {
-		userId: user ? user.id : 0,
+		userId:   user ? user.id : 0,
 		userName: user ? user.name : '',
 	}
 };

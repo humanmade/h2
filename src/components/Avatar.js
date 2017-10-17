@@ -5,8 +5,8 @@ import './Avatar.css';
 
 export default function Avatar( props ) {
 	const style = {
-		width: props.size,
-		height: props.size,
+		width:        props.size,
+		height:       props.size,
 		borderRadius: props.size / 2,
 	};
 	return <div className="Avatar">
@@ -24,5 +24,5 @@ export default function Avatar( props ) {
 
 Avatar.propTypes = {
 	size: PropTypes.number.isRequired,
-	url: PropTypes.string.isRequired,
+	url:  PropTypes.string.isRequired,
 };

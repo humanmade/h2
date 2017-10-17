@@ -4,9 +4,7 @@ import Reactions from '../components/Reactions';
 const mapStateToProps = state => {
 	let user = state.user.byId[ Object.keys( state.user.byId )[0] ];
 
-	return {
-	    userId: user.id,
-	}
+	return { userId: user.id }
 };
 
 export default connect( mapStateToProps )( Reactions );

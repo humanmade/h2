@@ -12,6 +12,4 @@ export default function CurrentUserDropDown( props ) {
 	</div>;
 }
 
-CurrentUserDropDown.propTypes = {
-	user: User.isRequired,
-};
+CurrentUserDropDown.propTypes = { user: User.isRequired };

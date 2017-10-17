@@ -1,14 +1,14 @@
 import api from 'wordpress-rest-api-oauth-1';
 
-var url = window.location.href.split('?')[0];
-var config = {
-	url: 'http://localhost:8080/',
+let url = window.location.href.split( '?' )[0];
+let config = {
+	url:         'http://localhost:8080/',
 	//url: 'https://updates.hmn.md/',
 	//url: 'https://demo.wp-api.org/',
 	callbackURL: url,
 };
 
-if (config.url === 'https://updates.hmn.md/') {
+if ( config.url === 'https://updates.hmn.md/' ) {
 	config.credentials = {
 		client: {
 			public: '1ndRXh0MJMg6',
@@ -17,7 +17,7 @@ if (config.url === 'https://updates.hmn.md/') {
 	};
 }
 
-if (config.url === 'http://localhost:8080/') {
+if ( config.url === 'http://localhost:8080/' ) {
 	config.credentials = {
 		client: {
 			public: 'NAqxuXe8BDtl',
@@ -26,11 +26,11 @@ if (config.url === 'http://localhost:8080/') {
 	};
 }
 
-if (window.wpApiSettings) {
+if ( window.wpApiSettings ) {
 	config = {
 		rest_url: window.wpApiSettings.root,
-		nonce: window.wpApiSettings.nonce,
+		nonce:    window.wpApiSettings.nonce,
 	};
 }
 
-export default new api(config);
+export default new api( config );

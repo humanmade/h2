@@ -15,10 +15,10 @@ class ConnectedComment extends Component {
 }
 
 ConnectedComment.propTypes = {
-	posts: PostsState.isRequired,
-	users: UsersState.isRequired,
+	posts:   PostsState.isRequired,
+	users:   UsersState.isRequired,
 	comment: CommentShape.isRequired,
 	chidren: PropTypes.any,
 };
 
-export default connect(s => s)(ConnectedComment);
+export default connect( s => s )( ConnectedComment );

@@ -5,21 +5,21 @@
  *
  * @return {Array} Top-level comments.
  */
-export const threadComments = ( comments ) => {
+export const threadComments = comments => {
     // Group comments by key.
-    const keyed = [];
-    comments.forEach( comment => {
-        keyed[ comment.id ] = Object.assign( {}, comment, { children: [] } );
-    } );
+	const keyed = [];
+	comments.forEach( comment => {
+		keyed[ comment.id ] = Object.assign( {}, comment, { children: [] } );
+	} );
 
     // Add children to comments.
-    comments.forEach( comment => {
-        if ( ! comment.parent ) {
-            return;
-        }
+	comments.forEach( comment => {
+		if ( ! comment.parent ) {
+			return;
+		}
 
-        keyed[ comment.parent ].children.push( comment.id );
-    } );
+		keyed[ comment.parent ].children.push( comment.id );
+	} );
 
-    return keyed;
+	return keyed;
 };

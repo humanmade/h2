@@ -8,7 +8,7 @@ export default function Post( props ) {
 		className="SearchInput"
 		onSubmit={e => {
 			e.preventDefault();
-			props.onSearch(e.target.querySelector('input').value);
+			props.onSearch( e.target.querySelector( 'input' ).value );
 		}}
 	>
 		<input type="search" placeholder="Search..." />
@@ -17,5 +17,5 @@ export default function Post( props ) {
 
 Post.propTypes = {
 	onSearch: PropTypes.func.isRequired,
-	value: PropTypes.string.isRequired,
+	value:    PropTypes.string.isRequired,
 };

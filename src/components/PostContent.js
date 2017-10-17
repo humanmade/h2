@@ -10,6 +10,4 @@ export default function Post( props ) {
 	/>;
 }
 
-Post.propTypes = {
-	html: PropTypes.string.isRequired,
-};
+Post.propTypes = { html: PropTypes.string.isRequired };

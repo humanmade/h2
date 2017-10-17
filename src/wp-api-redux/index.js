@@ -10,17 +10,17 @@ import createUpdateObjectWindowFilterActionCreator
 	from './createUpdateObjectWindowFilterActionCreator';
 
 class WordPress_REST_API_Redux {
-	constructor(config) {
+	constructor( config ) {
 		this.config = config;
 		this.reducers = {};
 		this.actions = {};
 		const objects = { ...config.objects };
-		Object.entries(objects).forEach(([objectName, options]) => {
-			this.addObjectConfig(objectName, options, config.api);
-		});
+		Object.entries( objects ).forEach( ( [ objectName, options ] ) => {
+			this.addObjectConfig( objectName, options, config.api );
+		} );
 	}
-	addObjectConfig(objectName, options, api) {
-		this.reducers[objectName] = createObjectReducer(objectName, options);
+	addObjectConfig( objectName, options, api ) {
+		this.reducers[objectName] = createObjectReducer( objectName, options );
 		this.actions[objectName] = {
 			fetch: createFetchObjectsActionCreator(
 				objectName,
@@ -52,23 +52,23 @@ class WordPress_REST_API_Redux {
 				api,
 				options
 			),
-			windows: {},
+			windows:      {},
 			fetchRelated: {},
 		};
-		if (options.windows) {
-			Object.entries(options.windows).forEach(([window, opts]) => {
+		if ( options.windows ) {
+			Object.entries( options.windows ).forEach( ( [ window, opts ] ) => {
 				this.actions[objectName].windows[window] = {
 					updateFilter: createUpdateObjectWindowFilterActionCreator(
 						objectName,
 						window
 					),
 				};
-			});
+			} );
 		}
-		if (options.relations) {
+		if ( options.relations ) {
 			Object.entries(
 				options.relations
-			).forEach(([relatedObjectName, relatedObjectOptions]) => {
+			).forEach( ( [ relatedObjectName, relatedObjectOptions ] ) => {
 				this.actions[objectName].related = this.actions[objectName].related
 					? this.actions[objectName].related
 					: {};
@@ -81,7 +81,7 @@ class WordPress_REST_API_Redux {
 					api,
 					options
 				);
-			});
+			} );
 		}
 	}
 }

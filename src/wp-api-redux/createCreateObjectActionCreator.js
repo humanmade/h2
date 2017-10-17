@@ -4,36 +4,34 @@ export default function createCreateObjectActionCreator(
 	api,
 	options = {}
 ) {
-	return function actionCreator(data) {
-		return (dispatch, getStore) => {
-			dispatch({
-				type: `WP_API_REDUX_CREATE_${objectName.toUpperCase()}_UPDATING`,
-				payload: {
-					data,
-				},
-			});
+	return function actionCreator( data ) {
+		return ( dispatch, getStore ) => {
+			dispatch( {
+				type:    `WP_API_REDUX_CREATE_${objectName.toUpperCase()}_UPDATING`,
+				payload: { data },
+			} );
 			return api
-				.post(`${path}`, data)
+				.post( `${path}`, data )
 				.then(
-					object => (options.parseObject ? options.parseObject(object) : object)
+					object => ( options.parseObject ? options.parseObject( object ) : object )
 				)
-				.then(object => {
-					dispatch({
-						type: `WP_API_REDUX_FETCH_${objectName.toUpperCase()}_UPDATED`,
+				.then( object => {
+					dispatch( {
+						type:    `WP_API_REDUX_FETCH_${objectName.toUpperCase()}_UPDATED`,
 						payload: {
 							objectName,
-							objects: [object],
+							objects: [ object ],
 						},
-					});
-					dispatch({
-						type: `WP_API_REDUX_CREATE_${objectName.toUpperCase()}_UPDATED`,
+					} );
+					dispatch( {
+						type:    `WP_API_REDUX_CREATE_${objectName.toUpperCase()}_UPDATED`,
 						payload: {
 							objectName,
 							object,
 						},
-					});
+					} );
 					return object;
-				});
+				} );
 		};
 	};
 }

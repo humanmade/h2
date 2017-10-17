@@ -34,15 +34,13 @@ export default function Header( props ) {
 	</div>;
 }
 
-Header.defaultProps = {
-	searchValue: '',
-};
+Header.defaultProps = { searchValue: '' };
 
 Header.propTypes = {
-	currentUser: User,
-	searchValue: PropTypes.string,
-	onLogOut: PropTypes.func.isRequired,
-	onWritePost: PropTypes.func.isRequired,
+	currentUser:   User,
+	searchValue:   PropTypes.string,
+	onLogOut:      PropTypes.func.isRequired,
+	onWritePost:   PropTypes.func.isRequired,
 	onWriteStatus: PropTypes.func.isRequired,
-	onSearch: PropTypes.func.isRequired,
+	onSearch:      PropTypes.func.isRequired,
 };
