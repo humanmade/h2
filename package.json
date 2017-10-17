@@ -5,6 +5,14 @@
   "homepage": "http://make.hmn.md/h2",
   "devDependencies": {
     "@storybook/react": "3.2.12",
+    "babel-eslint": "^7.2.3",
+    "eslint": "^3.19.0",
+    "eslint-config-humanmade": "^0.2.0",
+    "eslint-config-react-app": "^0.5.2",
+    "eslint-plugin-flowtype": "^2.39.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.10.3",
     "react-scripts": "^1.0.14"
   },
   "dependencies": {
@@ -31,6 +39,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "deploy": "npm run build && aws s3 sync ./build s3://make.hmn.md/h2 --acl public-read",
+    "lint" : "eslint src/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
