@@ -18,7 +18,10 @@
 	line-height: 50px;
 	display: flex;
 	margin-left: -60px;
-	margin-bottom: 30px;
+	margin-bottom: 10px;
+	position: sticky;
+	top: 110px;
+	background: #fff;
 }
 
 .Comment > header > .Avatar {
