@@ -33,7 +33,7 @@ export default class Post extends Component {
 				<div className="byline">
 					<h2 dangerouslySetInnerHTML={{ __html: props.post.title.rendered }} />
 					<div className="date">
-						{props.author.name},&nbsp;
+						{props.author ? props.author.name : ''},&nbsp;
 						<FormattedRelative value={props.post.date_gmt} />
 					</div>
 				</div>

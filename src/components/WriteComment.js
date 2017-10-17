@@ -31,6 +31,7 @@ export default class WriteComment extends React.Component {
 			</header>
 			<div className="body">
 				<Editor
+					ref={editor => this.editor = editor ? editor.getWrappedInstance() : null}
 					onCancel={this.props.onCancel}
 					onSubmit={this.props.onSave}
 				/>
