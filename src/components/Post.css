@@ -16,6 +16,7 @@
 	background: #fff;
 	display: flex;
 	align-items: center;
+	height: 110px;
 }
 
 .Post > header > .Avatar {
