@@ -3,7 +3,6 @@ import React from 'react';
 import { FormattedRelative } from 'react-intl';
 
 import Avatar from './Avatar';
-import Button from './Button';
 import Editor from './Editor';
 import { User, Post } from '../shapes';
 

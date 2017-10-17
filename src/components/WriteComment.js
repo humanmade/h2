@@ -3,7 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Avatar from './Avatar';
-import Button from './Button';
 import Editor from './Editor';
 import { User, Post, Comment } from '../shapes';
 
