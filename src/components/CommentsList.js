@@ -44,12 +44,9 @@ export default class CommentsList extends Component {
 	render() {
 		return <div className="CommentsList">
 			{ this.renderThreadedComments( this.props.comments ) }
-			{this.props.showWriteComment
-				? <WriteComment post={this.props.post} comment={this.props.writingComment} />
-				: <div className="post-reply">
-					<Button onClick={this.props.onComment}>Reply</Button>
-				</div>}
-
+			{this.props.showWriteComment &&
+				<WriteComment post={this.props.post} comment={this.props.writingComment} />
+			}
 		</div>;
 	}
 }
