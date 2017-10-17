@@ -8,14 +8,14 @@ import './Comment.css';
 
 export default function Comment( props ) {
 	return <div className="Comment">
-		<Avatar
-			url={props.author ? props.author.avatar_urls['96'] : ''}
-			size={50}
-		/>
+		<header>
+			<Avatar
+				url={props.author ? props.author.avatar_urls['96'] : ''}
+				size={50}
+			/>
+			<strong>{props.author ? props.author.name : ''}</strong>
+		</header>
 		<div className="body">
-			<header>
-				<strong>{props.author ? props.author.name : ''}</strong>
-			</header>
 			<PostContent html={props.comment.content.rendered} />
 		</div>
 	</div>;

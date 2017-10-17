@@ -28,7 +28,10 @@ export default function createObjectReducer(objectName, options = {}) {
 
 	if (options.relations) {
 		Object.entries(options.relations).forEach(([relationName, opts]) => {
-			initialState.relations[relationName] = {};
+			initialState.relations[relationName] = {
+				isLoading: true,
+				hasLoaded: false,
+			};
 		});
 	}
 

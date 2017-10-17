@@ -5,7 +5,7 @@ import './Button.css';
 
 export default function Button( props ) {
 	return <button
-		className="Button"
+		className="btn btn--secondary btn--small"
 		type={ props.submit ? "submit" : "button" }
 		onClick={ props.onClick || undefined }
 	>
@@ -15,6 +15,6 @@ export default function Button( props ) {
 
 Button.propTypes = {
 	children: PropTypes.any,
-	submit: PropTypes.bool.isRequired,
+	submit: PropTypes.bool,
 	onClick: PropTypes.func,
 };

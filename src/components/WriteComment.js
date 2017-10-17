@@ -22,14 +22,14 @@ export default class WriteComment extends React.Component {
 
 	render() {
 		return <div className="WriteComment" ref={ ref => this.container = ref }>
-			<Avatar
-				url={this.props.author ? this.props.author.avatar_urls['96'] : ''}
-				size={50}
-			/>
+			<header>
+				<Avatar
+					url={this.props.author ? this.props.author.avatar_urls['96'] : ''}
+					size={50}
+				/>
+				<strong>{this.props.author ? this.props.author.name : ''}</strong>
+			</header>
 			<div className="body">
-				<header>
-					<strong>{this.props.author ? this.props.author.name : ''}</strong>
-				</header>
 				<Editor
 					onCancel={this.props.onCancel}
 					onSubmit={this.props.onSave}
