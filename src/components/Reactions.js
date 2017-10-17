@@ -42,7 +42,7 @@ export default class Reaction extends Component {
 				})}
 			</div>
 			<button
-				className="btn btn--small btn--tertiary"
+				className="reactions-new btn btn--small btn--tertiary"
 				onClick={ value => this.setState({ isOpen: ! this.state.isOpen  } ) }
 				key="button"
 				title="Add reaction"
