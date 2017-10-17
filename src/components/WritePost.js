@@ -30,9 +30,9 @@ export default function WritePost( props ) {
 }
 
 WritePost.propTypes = {
-	author: User,
-	post: Post.isRequired,
+	author:   User,
+	post:     Post.isRequired,
 	onCancel: PropTypes.func.isRequired,
 	onChange: PropTypes.func.isRequired,
-	onSave: PropTypes.func.isRequired,
+	onSave:   PropTypes.func.isRequired,
 };

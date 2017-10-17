@@ -16,9 +16,7 @@ export default class Post extends Component {
 	constructor( props ) {
 		super( props );
 
-		this.state = {
-			reactions: {}
-		}
+		this.state = { reactions: {} }
 	}
 
 	render() {
@@ -45,7 +43,7 @@ export default class Post extends Component {
 			<Reactions
 				reactions={ this.state.reactions }
 				onChangeReactions={ newReactions => {
-					this.setState({ reactions: newReactions })
+					this.setState( { reactions: newReactions } )
 				} }
 			/>
 			{props.children}
@@ -55,7 +53,7 @@ export default class Post extends Component {
 }
 
 Post.propTypes = {
-	author: User,
+	author:   User,
 	children: PropTypes.any,
-	post: PostType.isRequired,
+	post:     PostType.isRequired,
 };

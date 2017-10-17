@@ -2,35 +2,36 @@ import { combineReducers } from 'redux';
 
 import store from './store';
 
-export default combineReducers({
-	user: store.reducers.user,
-	users: store.reducers.users,
-	categories: store.reducers.categories,
-	posts: store.reducers.posts,
-	tags: store.reducers.tags,
-	comments: store.reducers.comments,
+export default combineReducers( {
+	user:          store.reducers.user,
+	users:         store.reducers.users,
+	categories:    store.reducers.categories,
+	posts:         store.reducers.posts,
+	tags:          store.reducers.tags,
+	comments:      store.reducers.comments,
 	// state: WriteCommentsState = {}, action: Action
-	writeComments: (state = {}, action) => {
-		switch (action.type) {
-			case 'WP_API_REDUX_FETCH_POSTS_UPDATED':
+	writeComments: ( state = {}, action ) => {
+		switch ( action.type ) {
+			case 'WP_API_REDUX_FETCH_POSTS_UPDATED': {
 				const s = { ...state };
-				action.payload.objects.forEach(post => {
+				action.payload.objects.forEach( post => {
 					s[post.id] = {
 						isShowing: false,
-						comment: {
-							post: post.id,
+						comment:   {
+							post:    post.id,
 							content: {
 								rendered: '',
-								raw: '',
+								raw:      '',
 								// edited: '',
 							},
 							author: 0,
-							id: 0,
+							id:     0,
 						},
 					};
-				});
+				} );
 				return s;
-			case 'SHOW_REPLY_TO_POST':
+			}
+			case 'SHOW_REPLY_TO_POST': {
 				return {
 					...state,
 					[action.payload.postId]: {
@@ -38,7 +39,8 @@ export default combineReducers({
 						isShowing: true,
 					},
 				};
-			case 'WRITE_COMMENT_CANCELLED':
+			}
+			case 'WRITE_COMMENT_CANCELLED': {
 				return {
 					...state,
 					[action.payload.postId]: {
@@ -46,7 +48,8 @@ export default combineReducers({
 						isShowing: false,
 					},
 				};
-			case 'WRITE_COMMENT_UPDATED':
+			}
+			case 'WRITE_COMMENT_UPDATED': {
 				return {
 					...state,
 					[action.payload.postId]: {
@@ -57,44 +60,47 @@ export default combineReducers({
 						},
 					},
 				};
-			case 'WP_API_REDUX_CREATE_COMMENTS_UPDATED':
+			}
+			case 'WP_API_REDUX_CREATE_COMMENTS_UPDATED': {
 				return {
 					...state,
 					[action.payload.object.post]: {
 						isShowing: false,
-						comment: {
-							post: action.payload.object.post,
+						comment:   {
+							post:    action.payload.object.post,
 							content: {
 								rendered: '',
-								raw: '',
+								raw:      '',
 								// edited: FrontKit.content(),
 							},
 							author: 0,
-							id: 0,
+							id:     0,
 						},
 					},
 				};
-			default:
+			}
+			default: {
 				return state;
+			}
 		}
 	},
 	// action: Action
 	writePost: (
 		state = {
 			isShowing: false,
-			post: {
+			post:      {
 				title: {
 					rendered: '',
-					edited: '',
+					edited:   '',
 				},
-				id: 0,
-				content: { rendered: '', raw: '', /*edited: FrontKit.content()*/ },
+				id:       0,
+				content:  { rendered: '', raw: '' /*edited: FrontKit.content()*/ },
 				date_gmt: new Date().toISOString(),
 			},
 		},
 		action
 	) => {
-		switch (action.type) {
+		switch ( action.type ) {
 			case 'SHOW_WRITE_POST':
 				return {
 					...state,
@@ -117,13 +123,13 @@ export default combineReducers({
 				return {
 					...state,
 					isShowing: false,
-					post: {
+					post:      {
 						title: {
 							rendered: '',
-							edited: '',
+							edited:   '',
 						},
-						id: 0,
-						content: { rendered: '', raw: '', /*edited: FrontKit.content()*/ },
+						id:       0,
+						content:  { rendered: '', raw: '' /*edited: FrontKit.content()*/ },
 						date_gmt: new Date().toISOString(),
 					},
 				};
@@ -131,4 +137,4 @@ export default combineReducers({
 				return state;
 		}
 	},
-});
+} );

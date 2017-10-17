@@ -22,6 +22,6 @@ export default function Comment( props ) {
 }
 
 Comment.propTypes = {
-	author: User,
+	author:  User,
 	comment: CommentShape.isRequired,
 };

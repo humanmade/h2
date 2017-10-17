@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import Button from './Button';
 import CommentComponent from '../containers/Comment';
 import WriteComment from '../containers/WriteComment';
 import { Comment, Post } from '../shapes';
@@ -10,16 +9,14 @@ import './CommentsList.css';
 
 export default class CommentsList extends Component {
 
-	displayedComments = [];
-
 	/**
 	 * Recursively render threaded comments
 	 *
 	 * @param comments
 	 */
-	renderThreadedComments = ( comments ) => {
+	renderThreadedComments( comments ) {
 		const displayedComments = [];
-		const renderer = ( comment ) => {
+		const renderer = comment => {
 			if ( displayedComments.indexOf( comment.id ) !== -1 ) {
 				return null;
 			}
@@ -28,9 +25,9 @@ export default class CommentsList extends Component {
 			const hasChildren = childrenIds.length;
 
 			// Get the real children objects
-			const children = childrenIds.map( ( childCommentId ) => {
+			const children = childrenIds.map( childCommentId => {
 				return this.props.comments[ childCommentId ];
-			});
+			} );
 
 			displayedComments.push( comment.id );
 
@@ -40,7 +37,8 @@ export default class CommentsList extends Component {
 			</div>;
 		};
 		return comments.map( renderer );
-	};
+	}
+
 	render() {
 		return <div className="CommentsList">
 			{ this.renderThreadedComments( this.props.comments ) }
@@ -52,9 +50,9 @@ export default class CommentsList extends Component {
 }
 
 CommentsList.propTypes = {
-	comments: PropTypes.arrayOf( Comment ).isRequired,
-	post: Post.isRequired,
+	comments:         PropTypes.arrayOf( Comment ).isRequired,
+	post:             Post.isRequired,
 	showWriteComment: PropTypes.bool.isRequired,
-	writingComment: Comment.isRequired,
-	onComment: PropTypes.func.isRequired,
+	writingComment:   Comment.isRequired,
+	onComment:        PropTypes.func.isRequired,
 };

@@ -15,14 +15,14 @@ export default function PostsList( props ) {
 			loader={<h4>Loading...</h4>}
 			style={{ overflow: 'inherit' }}
 		>
-			{props.posts.map(post => <PostComponent key={post.id} post={post} />)}
+			{props.posts.map( post => <PostComponent key={post.id} post={post} /> )}
 		</InfiniteScroll>
 
 	</div>;
 }
 
 PostsList.propTypes = {
-	hasMore: PropTypes.bool.isRequired,
-	posts: PropTypes.arrayOf( Post ).isRequired,
+	hasMore:    PropTypes.bool.isRequired,
+	posts:      PropTypes.arrayOf( Post ).isRequired,
 	onLoadMore: PropTypes.func.isRequired,
 };

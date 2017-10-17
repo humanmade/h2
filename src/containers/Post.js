@@ -14,15 +14,12 @@ import {
 	WriteCommentsState,
 } from '../shapes';
 
-
 class ConnectedPost extends Component {
 	onComment() {
-		this.props.dispatch({
-			type: 'SHOW_REPLY_TO_POST',
-			payload: {
-				postId: this.props.post.id,
-			},
-		});
+		this.props.dispatch( {
+			type:    'SHOW_REPLY_TO_POST',
+			payload: { postId: this.props.post.id },
+		} );
 	}
 	render() {
 		const post = this.props.post;
@@ -49,12 +46,12 @@ class ConnectedPost extends Component {
 }
 
 ConnectedPost.propTypes = {
-	dispatch: Dispatch.isRequired,
-	comments: CommentsState.isRequired,
-	post: PostShape.isRequired,
-	posts: PostsState.isRequired,
-	users: UsersState.isRequired,
+	dispatch:      Dispatch.isRequired,
+	comments:      CommentsState.isRequired,
+	post:          PostShape.isRequired,
+	posts:         PostsState.isRequired,
+	users:         UsersState.isRequired,
 	writeComments: WriteCommentsState.isRequired,
 };
 
-export default connect(s => s)(ConnectedPost);
+export default connect( s => s )( ConnectedPost );

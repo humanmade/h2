@@ -4,31 +4,31 @@ export default function createFetchObjectActionCreator(
 	api,
 	options = {}
 ) {
-	return function actionCreator(objectId, data) {
-		return (disaptch, getStore) => {
-			disaptch({
-				type: 'WP_API_REDUX_UPDATE_OBJECT_UPDATING',
+	return function actionCreator( objectId, data ) {
+		return ( disaptch, getStore ) => {
+			disaptch( {
+				type:    'WP_API_REDUX_UPDATE_OBJECT_UPDATING',
 				payload: {
 					objectName,
 					objectId,
 				},
-			});
+			} );
 			return api
-				.post(`${path}/${objectId}`, data)
+				.post( `${path}/${objectId}`, data )
 				.then(
-					object => (options.parseObject ? options.parseObject(object) : object)
+					object => ( options.parseObject ? options.parseObject( object ) : object )
 				)
-				.then(object => {
-					disaptch({
-						type: 'WP_API_REDUX_UPDATE_OBJECT_UPDATED',
+				.then( object => {
+					disaptch( {
+						type:    'WP_API_REDUX_UPDATE_OBJECT_UPDATED',
 						payload: {
 							objectName,
 							object,
 							objectId,
 						},
-					});
+					} );
 					return object;
-				});
+				} );
 		};
 	};
 }

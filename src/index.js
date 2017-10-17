@@ -13,7 +13,7 @@ import './hm-pattern-library/assets/styles/juniper.css';
 
 let store = createStore(
 	reducers,
-	applyMiddleware(thunk, createLogger({ collapsed: true }))
+	applyMiddleware( thunk, createLogger( { collapsed: true } ) )
 );
 
 const render = Main => {
@@ -23,15 +23,15 @@ const render = Main => {
 				<Main />
 			</IntlProvider>
 		</Provider>,
-		document.getElementById('root')
+		document.getElementById( 'root' )
 	);
 };
 
 render( App );
 
-if (module.hot) {
-	module.hot.accept('./App', () => {
-		const NextApp = require('./App').default;
+if ( module.hot ) {
+	module.hot.accept( './App', () => {
+		const NextApp = require( './App' ).default;
 		render( NextApp );
-	});
+	} );
 }

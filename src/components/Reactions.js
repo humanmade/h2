@@ -10,9 +10,7 @@ export default class Reaction extends Component {
 	constructor( props ) {
 		super( props );
 
-		this.state = {
-			isOpen: false
-		}
+		this.state = { isOpen: false }
 	}
 
 	render() {
@@ -36,14 +34,14 @@ export default class Reaction extends Component {
 						<span className="reactions__users" key="users">
 							{ users.map( userId => {
 								return <UserDisplayName userId={ userId } key="{ userId }" />
-							})}
+							} )}
 						</span>
 					</button>
-				})}
+				} )}
 			</div>
 			<button
 				className="reactions-new btn btn--small btn--tertiary"
-				onClick={ value => this.setState({ isOpen: ! this.state.isOpen  } ) }
+				onClick={ value => this.setState( { isOpen: ! this.state.isOpen  } ) }
 				key="button"
 				title="Add reaction"
 			>
@@ -78,7 +76,7 @@ export default class Reaction extends Component {
 		} else {
 			let index = reactions[ emoji ].indexOf( userId );
 			if ( index > -1 ) {
-	 			reactions[ emoji ].splice( index, 1 );
+				reactions[ emoji ].splice( index, 1 );
 			}
 
 			if ( reactions[ emoji ].length < 1 ) {
@@ -90,12 +88,9 @@ export default class Reaction extends Component {
 	}
 }
 
-
 Reaction.propTypes = {
 	onChangeReactions: PropTypes.func.isRequired,
-	reactions: PropTypes.object.isRequired,
+	reactions:         PropTypes.object.isRequired,
 };
 
-Reaction.defaultProps = {
-	userId: 0,
-}
+Reaction.defaultProps = { userId: 0 }

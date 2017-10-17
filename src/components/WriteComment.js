@@ -40,10 +40,10 @@ export default class WriteComment extends React.Component {
 }
 
 WriteComment.propTypes = {
-	author: User,
-	comment: Comment.isRequired,
-	post: Post.isRequired,
+	author:   User,
+	comment:  Comment.isRequired,
+	post:     Post.isRequired,
 	onCancel: PropTypes.func.isRequired,
 	onChange: PropTypes.func.isRequired,
-	onSave: PropTypes.func.isRequired,
+	onSave:   PropTypes.func.isRequired,
 };

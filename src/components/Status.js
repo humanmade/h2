@@ -15,9 +15,7 @@ export default function Status( props ) {
 			/>
 			<div
 				className="body"
-				dangerouslySetInnerHTML={{
-					__html: `<strong>${props.author ? props.author.name : ''} says</strong>  ${props.post.content.rendered}`,
-				}}
+				dangerouslySetInnerHTML={{ __html: `<strong>${props.author ? props.author.name : ''} says</strong>  ${props.post.content.rendered}` }}
 			/>
 		</div>
 
@@ -26,7 +24,7 @@ export default function Status( props ) {
 }
 
 Status.propTypes = {
-	author: User,
+	author:   User,
 	children: PropTypes.any,
-	post: Post.isRequired,
+	post:     Post.isRequired,
 };
