@@ -22,6 +22,12 @@ export default class Post extends Component {
 	render() {
 		const props = this.props;
 
+		// Scale title down slightly for longer titles.
+		const headerStyle = {};
+		if ( props.post.title.rendered.length > 22 ) {
+			headerStyle.fontSize = '1.333333333rem';
+		}
+
 		return <div className="Post">
 			<header>
 				<Avatar
@@ -29,7 +35,10 @@ export default class Post extends Component {
 					size={70}
 				/>
 				<div className="byline">
-					<h2 dangerouslySetInnerHTML={{ __html: props.post.title.rendered }} />
+					<h2
+						dangerouslySetInnerHTML={{ __html: props.post.title.rendered }}
+						style={ headerStyle }
+					/>
 					<span className="date">
 						{props.author ? props.author.name : ''},&nbsp;
 						<FormattedRelative value={props.post.date_gmt} />
