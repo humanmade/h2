@@ -26,10 +26,14 @@
 .Post > header > .byline {
 	flex-direction: column;
 	flex-grow: 1;
+	min-width: 0;
 }
 
 .Post > header > .byline > h2 {
 	margin: 0;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .Post > header > .byline > .date {
