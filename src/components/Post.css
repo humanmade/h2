@@ -37,6 +37,19 @@
 	font-size: 14px;
 }
 
+.Post > header > .byline > .categories {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: inline;
+	font-size: 14px;
+}
+
+.Post > header > .byline > .categories > li {
+	display: inline-block;
+	margin-left: 10px;
+}
+
 .Post > .PostContent {
 	margin-left: 100px;
 }

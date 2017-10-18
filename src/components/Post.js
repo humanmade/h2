@@ -6,7 +6,7 @@ import Avatar from './Avatar';
 import Button from './Button';
 import PostContent from './PostContent'
 import Reactions from '../containers/Reactions'
-import { Post as PostType, User } from '../shapes';
+import { Post as PostType, User, Category } from '../shapes';
 
 import './Post.css';
 
@@ -30,10 +30,17 @@ export default class Post extends Component {
 				/>
 				<div className="byline">
 					<h2 dangerouslySetInnerHTML={{ __html: props.post.title.rendered }} />
-					<div className="date">
+					<span className="date">
 						{props.author ? props.author.name : ''},&nbsp;
 						<FormattedRelative value={props.post.date_gmt} />
-					</div>
+					</span>
+					{props.categories.length > 0 &&
+						<ul className="categories">
+							{props.categories.map( category => (
+								<li key={category.id}><a href={category.link}>{category.name}</a></li>
+							) )}
+						</ul>
+					}
 				</div>
 				<div className="actions">
 					<Button onClick={props.onComment}>Reply</Button>
@@ -53,7 +60,8 @@ export default class Post extends Component {
 }
 
 Post.propTypes = {
-	author:   User,
-	children: PropTypes.any,
-	post:     PostType.isRequired,
+	author:     User,
+	categories: PropTypes.arrayOf( Category ).isRequired,
+	children:   PropTypes.any,
+	post:       PostType.isRequired,
 };

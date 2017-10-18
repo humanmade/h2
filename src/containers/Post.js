@@ -11,6 +11,7 @@ import {
 	Dispatch,
 	CommentsState,
 	WriteCommentsState,
+	CategoriesState,
 } from '../shapes';
 
 class ConnectedPost extends Component {
@@ -26,6 +27,7 @@ class ConnectedPost extends Component {
 		let comments = Object.values( this.props.comments.byId )
 			.filter( comment => comment.post === post.id );
 		comments = threadComments( comments );
+		const categories = post.categories.map( id => this.props.categories.byId[ id ] ).filter( category => !! category )
 
 		const commentsList = (
 			<CommentsList
@@ -38,13 +40,14 @@ class ConnectedPost extends Component {
 				writingComment={this.props.writeComments[this.props.post.id].comment}
 			/>
 		);
-		return <Post author={author} post={post} onComment={() => this.onComment()}>{commentsList}</Post>
+		return <Post author={author}  categories={categories} post={post} onComment={() => this.onComment()}>{commentsList}</Post>
 	}
 }
 
 ConnectedPost.propTypes = {
 	dispatch:      Dispatch.isRequired,
 	comments:      CommentsState.isRequired,
+	categories:    CategoriesState.isRequired,
 	post:          PostShape.isRequired,
 	posts:         PostsState.isRequired,
 	users:         UsersState.isRequired,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchPosts, fetchUsers, fetchUser, fetchReplies } from './actions';
+import { fetchPosts, fetchUsers, fetchUser, fetchReplies, fetchCategories } from './actions';
 import api from './api';
 import store from './store';
 import Header from './components/Header';
@@ -33,6 +33,7 @@ class App extends Component {
 				} );
 				this.props.dispatch( fetchUser( null ) );
 				this.props.dispatch( fetchUsers( { per_page: 100 } ) );
+				this.props.dispatch( fetchCategories( { per_page: 100 } ) );
 			} );
 		} else {
 			this.props.dispatch(
