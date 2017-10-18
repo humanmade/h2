@@ -28,22 +28,12 @@ class App extends Component {
 								per_page: 100,
 								post:     post.id,
 							} )
-                        );
+						);
 					} );
 				} );
 				this.props.dispatch( fetchUser( null ) );
 				this.props.dispatch( fetchUsers( { per_page: 100 } ) );
 			} );
-		} else {
-			this.props.dispatch(
-				fetchPosts( {
-					_embed:   true,
-					per_page: 5,
-					order_by: 'date_gmt',
-					order:    'desc',
-				} )
-			);
-			this.props.dispatch( fetchUsers( { per_page: 100 } ) );
 		}
 	}
 
