@@ -32,10 +32,10 @@ class App extends Component {
 					} );
 					response.map( post => {
 						return this.props.dispatch(
-							fetchReactions({
+							fetchReactions( {
 								per_page: 100,
-								post:     post.id
-							})
+								post:     post.id,
+							} )
 						);
 					});
 

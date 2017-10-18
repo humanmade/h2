@@ -10,9 +10,7 @@ export default class Reaction extends Component {
 	constructor( props ) {
 		super( props );
 
-		this.state = {
-			isOpen: false
-		}
+		this.state = { isOpen: false }
 	}
 
 	render() {
@@ -25,7 +23,7 @@ export default class Reaction extends Component {
 		return <div className="reactions">
 			<button
 				className="btn btn--small btn--tertiary"
-				onClick={ value => this.setState({ isOpen: ! this.state.isOpen  } ) }
+				onClick={ value => this.setState( { isOpen: ! this.state.isOpen  } ) }
 				key="button"
 			>
 				<span className="icon icon--smiley-wink">Add reaction</span>
@@ -47,7 +45,7 @@ export default class Reaction extends Component {
 									userId={ reactionAuthorId }
 									key={ this.props.postId + reactionAuthorId }
 								/>
-							})}
+							} ) }
 						</span>
 					</button>
 				})}
@@ -82,13 +80,11 @@ export default class Reaction extends Component {
 }
 
 Reaction.propTypes = {
-	userId: PropTypes.number,
-	postId: PropTypes.number.isRequired,
-	reactions: PropTypes.object.isRequired,
-	onAddReaction: PropTypes.func.isRequired,
+	userId:           PropTypes.number,
+	postId:           PropTypes.number.isRequired,
+	reactions:        PropTypes.object.isRequired,
+	onAddReaction:    PropTypes.func.isRequired,
 	onRemoveReaction: PropTypes.func.isRequired,
 };
 
-Reaction.defaultProps = {
-	userId: 0,
-}
+Reaction.defaultProps = { userId: 0 }

@@ -3,12 +3,12 @@ import { combineReducers } from 'redux';
 import store from './store';
 
 export default combineReducers( {
-	user:          store.reducers.user,
-	users:         store.reducers.users,
-	categories:    store.reducers.categories,
-	posts:         store.reducers.posts,
-	tags:          store.reducers.tags,
-	comments:      store.reducers.comments,
+	user:       store.reducers.user,
+	users:      store.reducers.users,
+	categories: store.reducers.categories,
+	posts:      store.reducers.posts,
+	tags:       store.reducers.tags,
+	comments:   store.reducers.comments,
 	reactions: ( state = {}, action ) => {
 		const s = { ...state };
 		switch ( action.type )  {
@@ -18,13 +18,13 @@ export default combineReducers( {
 				}
 				action.payload.objects.forEach( reaction => {
 					s.byId[reaction.id] = {
-						author: reaction.author,
-						id: reaction.id,
-						postId: reaction.post,
-						type: reaction.type,
+						author:   reaction.author,
+						id:       reaction.id,
+						postId:   reaction.post,
+						type:     reaction.type,
 						typeName: reaction.type_name,
 					};
-				});
+				} );
 				return s;
 			case 'WP_API_REDUX_DELETE_REACTIONS_UPDATED' :
 				delete s.byId[ action.payload.objectId ];

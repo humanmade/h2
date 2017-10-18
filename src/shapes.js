@@ -93,14 +93,14 @@ export const CommentsState = PropTypes.shape( {
 } );
 
 export const Reaction = PropTypes.shape( {
-	id: PropTypes.number,
-	type: PropTypes.string.isRequired,
+	id:     PropTypes.number,
+	type:   PropTypes.string.isRequired,
 	author: PropTypes.number.isRequired,
 	postId: PropTypes.number.isRequired,
 } );
 
 export const ReactionsState = PropTypes.shape( {
-	byId: PropTypes.objectOf( Reaction ).isRequired,
+	byId:      PropTypes.objectOf( Reaction ).isRequired,
 	isLoading: PropTypes.bool.isRequired,
 } );
 

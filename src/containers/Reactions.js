@@ -12,25 +12,24 @@ const mapStateToProps = ( state, props ) => {
 			if ( parseInt( props.postId, 10 ) === parseInt( reaction.postId, 10 ) ) {
 				reactions.push( reaction );
 			}
-		});
+		} );
 	}
 
 	return {
-		userId: user ? user.id : 0,
+		userId:    user ? user.id : 0,
 		reactions: reactions,
 	}
 };
-
 
 class ConnectedReactions extends Component {
 
 	onAddReaction( emoji ) {
 		return this.props.dispatch(
-			createReaction({
+			createReaction( {
 				post: this.props.postId,
 				type: emoji,
-			})
-		)
+			} )
+		);
 	}
 
 	onRemoveReaction( emoji ) {
@@ -41,7 +40,7 @@ class ConnectedReactions extends Component {
 				reaction.author === this.props.userId &&
 				reaction.type === emoji
 			);
-		});
+		} );
 
 		if ( matches.length < 1 ) {
 			return;
@@ -65,7 +64,7 @@ class ConnectedReactions extends Component {
 			} else {
 				reactions[ reaction.type ].push( reaction.author );
 			}
-		});
+		} );
 
 		return reactions;
 	}
@@ -77,8 +76,12 @@ class ConnectedReactions extends Component {
 			postId={ props.postId }
 			userId={ props.userId }
 			reactions={ this.getGroupedReactions() }
-			onAddReaction={ emoji => { this.onAddReaction( emoji ) } }
-			onRemoveReaction={ emoji => { this.onRemoveReaction( emoji ) } }
+			onAddReaction={ emoji => {
+				this.onAddReaction( emoji )
+			} }
+			onRemoveReaction={ emoji => {
+				this.onRemoveReaction( emoji )
+			} }
 		/>
 	}
 }

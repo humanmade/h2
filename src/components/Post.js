@@ -42,7 +42,7 @@ export default class Post extends Component {
 }
 
 Post.propTypes = {
-	author: User,
+	author:   User,
 	children: PropTypes.any,
-	post: PostType.isRequired,
+	post:     PostType.isRequired,
 };
