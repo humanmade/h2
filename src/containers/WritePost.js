@@ -26,6 +26,7 @@ class ConnectedWritePost extends Component {
 			onCancel={() => this.onCancel()}
 			onChange={post => this.onChange( post )}
 			onSave={content => this.onSave( content )}
+			onUpload={ file => this.onUpload( file ) }
 		/>;
 	}
 }

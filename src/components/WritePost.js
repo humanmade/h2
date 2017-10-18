@@ -26,6 +26,7 @@ export default function WritePost( props ) {
 				submitText="Publish"
 				onCancel={props.onCancel}
 				onSubmit={props.onSave}
+				onUpload={ props.onUpload }
 			/>
 		{props.children}
 
@@ -38,4 +39,5 @@ WritePost.propTypes = {
 	onCancel: PropTypes.func.isRequired,
 	onChange: PropTypes.func.isRequired,
 	onSave:   PropTypes.func.isRequired,
+	onUpload: PropTypes.func.isRequired,
 };
