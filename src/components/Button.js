@@ -26,7 +26,7 @@ export default function Button( props ) {
 
 Button.propTypes = {
 	children: PropTypes.any,
-	submit: PropTypes.bool.isRequired,
+	submit: PropTypes.bool,
 	onClick: PropTypes.func,
 	type: PropTypes.string,
 	size: PropTypes.string,
@@ -36,4 +36,5 @@ Button.propTypes = {
 Button.defaultProps = {
 	type: 'secondary',
 	size: 'small',
+	submit: false,
 }
