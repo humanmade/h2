@@ -37,7 +37,7 @@ class App extends Component {
 								post:     post.id,
 							} )
 						);
-					});
+					} );
 
 				} );
 				this.props.dispatch( fetchUser( null ) );

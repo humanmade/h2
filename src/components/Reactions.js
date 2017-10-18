@@ -48,7 +48,7 @@ export default class Reaction extends Component {
 							} ) }
 						</span>
 					</button>
-				})}
+				} ) }
 			</div>
 			{ this.state.isOpen && (
 				<Picker

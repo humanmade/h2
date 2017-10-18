@@ -9,7 +9,7 @@ export default combineReducers( {
 	posts:      store.reducers.posts,
 	tags:       store.reducers.tags,
 	comments:   store.reducers.comments,
-	reactions: ( state = {}, action ) => {
+	reactions:  ( state = {}, action ) => {
 		const s = { ...state };
 		switch ( action.type )  {
 			case 'WP_API_REDUX_FETCH_REACTIONS_UPDATED' :
