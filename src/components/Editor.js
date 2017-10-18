@@ -93,10 +93,25 @@ class Editor extends React.PureComponent {
 		this.props.onSubmit( marked( this.state.content ) );
 	}
 
+	onBlur() {
+		const { selectionStart, selectionEnd } = this.textarea;
+
+		this.setState({
+			lastSelection: [ selectionStart, selectionEnd ]
+		});
+	}
+
+	onFocus() {
+		this.setState({ lastSelection: null });
+	}
+
 	onButton( e, apply ) {
 		e.preventDefault();
 
-		const { selectionStart, selectionEnd } = this.textarea;
+		let { selectionStart, selectionEnd } = this.textarea;
+		if ( this.state.lastSelection ) {
+			[ selectionStart, selectionEnd ] = this.state.lastSelection;
+		}
 		const content = this.state.content;
 
 		const nextParts = [
