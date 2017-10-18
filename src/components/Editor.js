@@ -107,7 +107,7 @@ class Editor extends React.PureComponent {
 	}
 
 	onButton( e, apply ) {
-		e.preventDefault();
+		e && e.preventDefault();
 
 		let { selectionStart, selectionEnd } = this.textarea;
 		if ( this.state.lastSelection ) {
@@ -122,6 +122,12 @@ class Editor extends React.PureComponent {
 		];
 
 		this.setState( { content: nextParts.join( '' ) } );
+	}
+
+	onUpload( file ) {
+		// Insert placeholder into the text
+		const placeholder = `\n<img alt="Uploading ${ file.name }…" />\n`;
+		this.onButton( null, () => placeholder );
 	}
 
 	focus() {
@@ -185,7 +191,7 @@ class Editor extends React.PureComponent {
 				: null }
 			</div>
 
-			<DropUpload>
+			<DropUpload onUpload={ file => this.onUpload( file ) }>
 				{ mode === 'preview' ? (
 					<Preview>{ content || "*Nothing to preview*" }</Preview>
 				) : (
