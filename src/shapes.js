@@ -28,6 +28,12 @@ export const User = PropTypes.shape( {
 	avatar_urls: PropTypes.shape( { '96': PropTypes.string.isRequired } ).isRequired,
 } );
 
+export const Category = PropTypes.shape( {
+	id:   PropTypes.number.isRequired,
+	name: PropTypes.string.isRequired,
+	slug: PropTypes.string.isRequired,
+} );
+
 export const WindowState = PropTypes.shape( {
 	items:        PropTypes.arrayOf( PropTypes.number ).isRequired,
 	totalObjects: PropTypes.number,
@@ -89,6 +95,11 @@ export const UsersState = PropTypes.shape( {
 
 export const CommentsState = PropTypes.shape( {
 	byId:      PropTypes.objectOf( Comment ).isRequired,
+	isLoading: PropTypes.bool.isRequired,
+} );
+
+export const CategoriesState = PropTypes.shape( {
+	byId:      PropTypes.objectOf( Category ).isRequired,
 	isLoading: PropTypes.bool.isRequired,
 } );
 
