@@ -11,7 +11,7 @@ export default function Comment( props ) {
 		<header>
 			<Avatar
 				url={props.author ? props.author.avatar_urls['96'] : ''}
-				size={50}
+				size={40}
 			/>
 			<strong>{props.author ? props.author.name : ''}</strong>
 		</header>

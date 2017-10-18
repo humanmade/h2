@@ -196,7 +196,7 @@ class Editor extends React.PureComponent {
 						{this.props.onCancel
 							? <Button onClick={this.props.onCancel}>Cancel</Button>
 							: null}
-						<Button submit>{this.props.submitText}</Button>
+						<Button submit type="primary">{this.props.submitText}</Button>
 					</span>
 				</p>
 			</form>
