@@ -26,6 +26,10 @@
 	background-image: url(/static/media/icon-smiley-wink-white.4dcfb962.svg);
 }
 
+.reactions .btn .loading {
+	margin: 0;
+}
+
 .reactions .emoji-mart {
 	position: absolute;
 	top: 100%;

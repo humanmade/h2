@@ -56,12 +56,7 @@ export default class Post extends Component {
 				</div>
 			</header>
 			<PostContent html={props.post.content.rendered} />
-			<Reactions
-				reactions={ this.state.reactions }
-				onChangeReactions={ newReactions => {
-					this.setState( { reactions: newReactions } )
-				} }
-			/>
+			<Reactions postId={ props.post.id }/>
 			{props.children}
 
 		</div>;

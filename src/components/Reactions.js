@@ -14,7 +14,7 @@ export default class Reaction extends Component {
 	}
 
 	render() {
-		const { reactions, userId } = this.props;
+		const { reactions, userId, isLoading } = this.props;
 
 		if ( ! userId || userId <= 0 ) {
 			return null;
@@ -22,11 +22,16 @@ export default class Reaction extends Component {
 
 		return <div className="reactions">
 			<button
-				className="btn btn--small btn--tertiary"
+				className={ 'btn btn--small btn--tertiary' + ( isLoading ? ' loading' : '' ) }
 				onClick={ value => this.setState( { isOpen: ! this.state.isOpen  } ) }
 				key="button"
+				disabled={ isLoading }
 			>
-				<span className="icon icon--smiley-wink">Add reaction</span>
+				{ isLoading ?
+					<span className="loading loading--active"></span>
+					:
+					<span className="icon icon--smiley-wink">Add reaction</span>
+				}
 			</button>
 			<div key="reactions">
 				{ Object.entries( reactions ).map( ( [ emoji, users ] ) => {
@@ -35,6 +40,7 @@ export default class Reaction extends Component {
 						className={ 'btn btn--small btn--tertiary' + ( isActive ? ' btn--active' : '' ) }
 						onClick={ () => this.toggleReaction( emoji ) }
 						key={ emoji }
+						disabled={ isLoading }
 					>
 						<span className="reactions__emoji" key="emoji">{ emoji }</span>
 						<span className="reactions__count" key="count">{ users.length }</span>
@@ -87,6 +93,10 @@ Reaction.propTypes = {
 	reactions:        PropTypes.object.isRequired,
 	onAddReaction:    PropTypes.func.isRequired,
 	onRemoveReaction: PropTypes.func.isRequired,
+	isLoading:        PropTypes.bool,
 };
 
-Reaction.defaultProps = { userId: 0 }
+Reaction.defaultProps = {
+	userId:    0,
+	isLoading: false
+}

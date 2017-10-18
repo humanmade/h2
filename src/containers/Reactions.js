@@ -6,6 +6,7 @@ import { createReaction, deleteReaction } from '../actions';
 const mapStateToProps = ( state, props ) => {
 	let user = state.user.byId[ Object.keys( state.user.byId )[0] ];
 	let reactions = [];
+	let { updatingForPost } = state.reactions;
 
 	if ( 'reactions' in state && 'byId' in state.reactions ) {
 		Object.entries( state.reactions.byId ).forEach( ( [ id, reaction ] ) => {
@@ -18,6 +19,7 @@ const mapStateToProps = ( state, props ) => {
 	return {
 		userId:    typeof user !== 'undefined' ? user.id : 0,
 		reactions: reactions,
+		isLoading: updatingForPost ? updatingForPost.indexOf( props.postId ) >= 0 : false,
 	}
 };
 
@@ -76,6 +78,7 @@ class ConnectedReactions extends Component {
 			postId={ props.postId }
 			userId={ props.userId }
 			reactions={ this.getGroupedReactions() }
+			isLoading={ props.isLoading }
 			onAddReaction={ emoji => {
 				this.onAddReaction( emoji )
 			} }

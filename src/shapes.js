@@ -111,8 +111,8 @@ export const Reaction = PropTypes.shape( {
 } );
 
 export const ReactionsState = PropTypes.shape( {
-	byId:      PropTypes.objectOf( Reaction ).isRequired,
-	isLoading: PropTypes.bool.isRequired,
+	byId:            PropTypes.objectOf( Reaction ).isRequired,
+	loadingForPosts: PropTypes.array.isRequired,
 } );
 
 export const State = PropTypes.shape( {
