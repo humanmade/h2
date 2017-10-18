@@ -5,8 +5,8 @@ import './Avatar.css';
 
 export default function Avatar( props ) {
 	const style = {
-		width:        props.size,
-		height:       props.size,
+		width:  props.size,
+		height: props.size,
 	};
 	return <div className="Avatar">
 		<img

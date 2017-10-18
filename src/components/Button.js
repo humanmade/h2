@@ -28,12 +28,12 @@ Button.propTypes = {
 	children: PropTypes.any,
 	submit:   PropTypes.bool,
 	onClick:  PropTypes.func,
-	type: PropTypes.string,
-	size: PropTypes.string,
+	type:     PropTypes.string,
+	size:     PropTypes.string,
 };
 
 Button.defaultProps = {
-	type: 'secondary',
-	size: 'small',
+	type:   'secondary',
+	size:   'small',
 	submit: false,
 }
