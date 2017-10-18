@@ -80,6 +80,11 @@ export default class Reaction extends Component {
 			! ( emoji in reactions ) ||
 			reactions[ emoji ].indexOf( userId ) < 0
 		) {
+			if ( Object.keys( reactions ).length >= 10 ) {
+				alert( 'Sorry! You are only allowed 10 reactions per post!' );
+				return;
+			}
+
 			onAddReaction( emoji );
 		} else {
 			onRemoveReaction( emoji );
