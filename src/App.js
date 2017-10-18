@@ -17,17 +17,17 @@ class App extends Component {
 				api.saveCredentials();
 				this.props.dispatch(
 					fetchPosts( {
-						per_page: 5,
+						per_page: 10,
 						order_by: 'date_gmt',
 						order:    'desc',
 					} )
 				).then( response => {
 					response.map( post => {
 						return this.props.dispatch(
-                            fetchReplies( {
-	per_page: 100,
-	post:     post.id,
-} )
+							fetchReplies( {
+								per_page: 100,
+								post:     post.id,
+							} )
                         );
 					} );
 				} );

@@ -35,10 +35,10 @@ export default function createFetchObjectsActionCreator(
 							objectName,
 							objects,
 							filter,
-							totalObjects: response.headers['X-WP-Total']
+							totalObjects: typeof response.headers['X-WP-Total'] === 'number'
 								? response.headers['X-WP-Total']
 								: null,
-							totalPages: response.headers['X-WP-TotalPages']
+							totalPages: typeof response.headers['X-WP-TotalPages'] === 'number'
 								? response.headers['X-WP-TotalPages']
 								: null,
 						},
@@ -85,6 +85,7 @@ export default function createFetchObjectsActionCreator(
 						type:    `WP_API_REDUX_FETCH_${objectName.toUpperCase()}_ERRORED`,
 						payload: { error },
 					} );
+					throw error;
 				} );
 		};
 	};

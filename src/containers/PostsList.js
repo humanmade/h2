@@ -13,11 +13,14 @@ class ConnectedPostsList extends Component {
 		if ( this.props.posts.isLoading ) {
 			return;
 		}
+		if ( this.props.posts.windows.feed.totalObjects <= Object.values( this.props.posts.byId ).length ) {
+			return;
+		}
 		this.props.dispatch(
 			fetchPosts( {
 				_embed:   true,
-				per_page: 1,
-				page:     this.props.posts.windows.feed.items.length + 1,
+				per_page: 10,
+				page:     Math.ceil( this.props.posts.windows.feed.items.length / 10 ),
 				order_by: 'date_gmt',
 				order:    'desc',
 			} )
@@ -28,11 +31,7 @@ class ConnectedPostsList extends Component {
 			.map( id => this.props.posts.byId[id] )
 			.sort( ( a, b ) => ( a.date_gmt > b.date_gmt ? -1 : 1 ) );
 		return <PostsList
-			hasMore={
-				! this.props.posts.windows.feed.totalObjects ||
-					this.props.posts.windows.feed.totalObjects >
-						this.props.posts.windows.feed.items.length
-			}
+			hasMore={this.props.posts.windows.feed.totalObjects > this.props.posts.windows.feed.items.length}
 			onLoadMore={() => this.onLoadMore()}
 			posts={posts}
 		/>;
