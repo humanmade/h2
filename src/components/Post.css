@@ -30,7 +30,7 @@
 }
 
 .Post > header > .byline > h2 {
-	margin: 0;
+	margin: 0 0.5em 0 0;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
