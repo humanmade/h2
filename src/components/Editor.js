@@ -128,6 +128,8 @@ class Editor extends React.PureComponent {
 		// Insert placeholder into the text
 		const placeholder = `\n<img alt="Uploading ${ file.name }…" />\n`;
 		this.onButton( null, () => placeholder );
+
+		this.props.onUpload( file );
 	}
 
 	focus() {
