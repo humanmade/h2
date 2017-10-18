@@ -26,7 +26,7 @@ export default class Post extends Component {
 			<header>
 				<Avatar
 					url={props.author ? props.author.avatar_urls['96'] : ''}
-					size={70}
+					size={60}
 				/>
 				<div className="byline">
 					<h2 dangerouslySetInnerHTML={{ __html: props.post.title.rendered }} />

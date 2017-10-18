@@ -6,6 +6,7 @@
 .Header .Inner {
 	flex-direction: row;
 	display: flex;
+	padding: 0 20px;
 }
 
 .Header .CurrentUserDropDown {
