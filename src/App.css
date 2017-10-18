@@ -9,7 +9,8 @@
 }
 
 .App .WritePost {
-	margin-top: 100px;
+	margin: 20px;
+	max-width: 800px;
 }
 
 .Inner {

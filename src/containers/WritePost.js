@@ -10,27 +10,12 @@ class ConnectedWritePost extends Component {
 	onCancel() {
 		this.props.dispatch( { type: 'WRITE_POST_CANCELLED' } );
 	}
-	onSave() {
-		const fkContent = this.props.writePost.post.content.edited;
-		let title = '';
-		if (
-			fkContent.getCurrentContent().getBlockMap().first().getType() ===
-			'header-one'
-		) {
-			title = fkContent.getCurrentContent().getBlockMap().first().getText();
-		}
+	onSave( content ) {
 		const newPost = {
-			// content: FrontKit.export(this.props.writePost.post.content.edited),
-			title:  title,
+			content,
 			status: 'publish',
 		};
 		this.props.dispatch( store.actions.posts.create( newPost ) );
-	}
-	onChange( post ) {
-		this.props.dispatch( {
-			type:    'WRITE_POST_UPDATED',
-			payload: { post },
-		} );
 	}
 	render() {
 		const post = this.props.writePost.post;
@@ -40,7 +25,7 @@ class ConnectedWritePost extends Component {
 			post={post}
 			onCancel={() => this.onCancel()}
 			onChange={post => this.onChange( post )}
-			onSave={() => this.onSave()}
+			onSave={content => this.onSave( content )}
 		/>;
 	}
 }

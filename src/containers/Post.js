@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import CommentsList from '../components/CommentsList';
 import Post from '../components/Post';
 import { threadComments } from '../lib/comments';
-import Status from '../components/Status';
 import {
 	Post as PostShape,
 	PostsState,
@@ -39,9 +38,7 @@ class ConnectedPost extends Component {
 				writingComment={this.props.writeComments[this.props.post.id].comment}
 			/>
 		);
-		return post.title.rendered === ''
-			? <Status author={author} post={post}>{commentsList}</Status>
-			: <Post author={author} post={post} onComment={() => this.onComment()}>{commentsList}</Post>;
+		return <Post author={author} post={post} onComment={() => this.onComment()}>{commentsList}</Post>
 	}
 }
 
