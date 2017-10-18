@@ -42,6 +42,7 @@ export default new WPAPIRedux( {
 		},
 		users:    { route: '/wp/v2/users' },
 		comments: { route: '/wp/v2/comments' },
+		reactions: { route: '/h2/v1/reactions' },
 		user:     {
 			route:    '/wp/v2/users/me',
 			singular: true,

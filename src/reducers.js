@@ -9,6 +9,30 @@ export default combineReducers( {
 	posts:         store.reducers.posts,
 	tags:          store.reducers.tags,
 	comments:      store.reducers.comments,
+	reactions: ( state = {}, action ) => {
+		const s = { ...state };
+		switch ( action.type )  {
+			case 'WP_API_REDUX_FETCH_REACTIONS_UPDATED' :
+				if ( ! ( 'byId' in s ) ) {
+					s.byId = {};
+				}
+				action.payload.objects.forEach( reaction => {
+					s.byId[reaction.id] = {
+						author: reaction.author,
+						id: reaction.id,
+						postId: reaction.post,
+						type: reaction.type,
+						typeName: reaction.type_name,
+					};
+				});
+				return s;
+			case 'WP_API_REDUX_DELETE_REACTIONS_UPDATED' :
+				delete s.byId[ action.payload.objectId ];
+				return s;
+			default:
+				return state;
+		}
+	},
 	// state: WriteCommentsState = {}, action: Action
 	writeComments: ( state = {}, action ) => {
 		switch ( action.type ) {

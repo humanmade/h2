@@ -16,6 +16,11 @@
 	opacity: 0.4;
 }
 
+.reactions .btn:hover .icon--smiley-wink,
+.reactions .btn:focus .icon--smiley-wink {
+	background-image: url(/static/media/icon-smiley-wink-white.4dcfb962.svg);
+}
+
 .reactions .emoji-mart {
 	position: absolute;
 	top: 100%;
@@ -75,6 +80,7 @@
 .reactions .btn:focus .reactions__users {
 	display: block;
 }
+
 .reactions__user {
 	display: block;
 	color: white;

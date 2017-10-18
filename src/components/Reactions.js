@@ -10,7 +10,9 @@ export default class Reaction extends Component {
 	constructor( props ) {
 		super( props );
 
-		this.state = { isOpen: false }
+		this.state = {
+			isOpen: false
+		}
 	}
 
 	render() {
@@ -21,6 +23,13 @@ export default class Reaction extends Component {
 		}
 
 		return <div className="reactions">
+			<button
+				className="btn btn--small btn--tertiary"
+				onClick={ value => this.setState({ isOpen: ! this.state.isOpen  } ) }
+				key="button"
+			>
+				<span className="icon icon--smiley-wink">Add reaction</span>
+			</button>
 			<div key="reactions">
 				{ Object.entries( reactions ).map( ( [ emoji, users ] ) => {
 					let isActive = reactions[ emoji ].indexOf( userId ) >= 0 ? true : false;
@@ -32,21 +41,17 @@ export default class Reaction extends Component {
 						<span className="reactions__emoji" key="emoji">{ emoji }</span>
 						<span className="reactions__count" key="count">{ users.length }</span>
 						<span className="reactions__users" key="users">
-							{ users.map( userId => {
-								return <UserDisplayName userId={ userId } key="{ userId }" />
-							} )}
+							{ users.map( reactionAuthorId => {
+								return <UserDisplayName
+									className="reactions__user"
+									userId={ reactionAuthorId }
+									key={ this.props.postId + reactionAuthorId }
+								/>
+							})}
 						</span>
 					</button>
-				} )}
+				})}
 			</div>
-			<button
-				className="reactions-new btn btn--small btn--tertiary"
-				onClick={ value => this.setState( { isOpen: ! this.state.isOpen  } ) }
-				key="button"
-				title="Add reaction"
-			>
-				☺︎ +
-			</button>
 			{ this.state.isOpen && (
 				<Picker
 					key="picker"
@@ -62,35 +67,28 @@ export default class Reaction extends Component {
 		</div>;
 	}
 
-	toggleReaction( emoji ) {
-		const { reactions, onChangeReactions, userId } = this.props;
+	toggleReaction( emoji, reactionUserId ) {
+		const { reactions, onAddReaction, onRemoveReaction, userId } = this.props;
 
-		if ( ! ( emoji in reactions ) ) {
-			if ( Object.keys( reactions ).length >= 5 ) {
-				alert( 'Each post can only have a maximum of 5 different reactions. Sorry!' )
-			} else {
-				reactions[ emoji ] = [ userId ];
-			}
-		} else if ( reactions[ emoji ].indexOf( userId ) < 0 ) {
-			reactions[ emoji ].push( userId );
+		if (
+			! ( emoji in reactions ) ||
+			reactions[ emoji ].indexOf( userId ) < 0
+		) {
+			onAddReaction( emoji );
 		} else {
-			let index = reactions[ emoji ].indexOf( userId );
-			if ( index > -1 ) {
-				reactions[ emoji ].splice( index, 1 );
-			}
-
-			if ( reactions[ emoji ].length < 1 ) {
-				delete reactions[ emoji ];
-			}
+			onRemoveReaction( emoji );
 		}
-
-		onChangeReactions( reactions );
 	}
 }
 
 Reaction.propTypes = {
-	onChangeReactions: PropTypes.func.isRequired,
-	reactions:         PropTypes.object.isRequired,
+	userId: PropTypes.number,
+	postId: PropTypes.number.isRequired,
+	reactions: PropTypes.object.isRequired,
+	onAddReaction: PropTypes.func.isRequired,
+	onRemoveReaction: PropTypes.func.isRequired,
 };
 
-Reaction.defaultProps = { userId: 0 }
+Reaction.defaultProps = {
+	userId: 0,
+}

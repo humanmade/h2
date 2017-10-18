@@ -92,10 +92,23 @@ export const CommentsState = PropTypes.shape( {
 	isLoading: PropTypes.bool.isRequired,
 } );
 
+export const Reaction = PropTypes.shape( {
+	id: PropTypes.number,
+	type: PropTypes.string.isRequired,
+	author: PropTypes.number.isRequired,
+	postId: PropTypes.number.isRequired,
+} );
+
+export const ReactionsState = PropTypes.shape( {
+	byId: PropTypes.objectOf( Reaction ).isRequired,
+	isLoading: PropTypes.bool.isRequired,
+} );
+
 export const State = PropTypes.shape( {
 	users:         UsersState.isRequired,
 	posts:         PostsState.isRequired,
 	comments:      CommentsState.isRequired,
+	reactions:     ReactionsState.isRequired,
 	categories:    objectState.isRequired,
 	tags:          objectState.isRequired,
 	writeComments: WriteCommentsState.isRequired,

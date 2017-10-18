@@ -13,12 +13,6 @@ import './Post.css';
 // import api from './api';
 
 export default class Post extends Component {
-	constructor( props ) {
-		super( props );
-
-		this.state = { reactions: {} }
-	}
-
 	render() {
 		const props = this.props;
 
@@ -26,7 +20,7 @@ export default class Post extends Component {
 			<header>
 				<Avatar
 					url={props.author ? props.author.avatar_urls['96'] : ''}
-					size={70}
+					size={68}
 				/>
 				<div className="byline">
 					<h2 dangerouslySetInnerHTML={{ __html: props.post.title.rendered }} />
@@ -40,12 +34,7 @@ export default class Post extends Component {
 				</div>
 			</header>
 			<PostContent html={props.post.content.rendered} />
-			<Reactions
-				reactions={ this.state.reactions }
-				onChangeReactions={ newReactions => {
-					this.setState( { reactions: newReactions } )
-				} }
-			/>
+			<Reactions postId={props.post.id} />
 			{props.children}
 
 		</div>;
@@ -53,7 +42,7 @@ export default class Post extends Component {
 }
 
 Post.propTypes = {
-	author:   User,
+	author: User,
 	children: PropTypes.any,
-	post:     PostType.isRequired,
+	post: PostType.isRequired,
 };
