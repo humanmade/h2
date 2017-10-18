@@ -111,14 +111,6 @@ export default combineReducers( {
 					...state,
 					isShowing: false,
 				};
-			case 'WRITE_POST_UPDATED':
-				return {
-					...state,
-					post: {
-						...state.post,
-						...action.payload.post,
-					},
-				};
 			case 'WP_API_REDUX_CREATE_POSTS_UPDATED':
 				return {
 					...state,

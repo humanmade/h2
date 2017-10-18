@@ -1,49 +1,42 @@
 .WritePost {
 	flex-direction: column;
 	position: relative;
-	padding-bottom: 40px;
+	padding-bottom: 20px;
+	margin-bottom: 35px;
 	min-height: 144px;
-}
-
-.WritePost:before {
-	position: absolute;
-	content: '';
-	left: 32px;
-	top: 70px;
-	height: 40px;
-	width: 40px;
-	border-radius: 0 0 0 40px;
-	border-left: 5px solid #F1F2EE;
 	border-bottom: 5px solid #F1F2EE;
 }
 
-.WritePost:after {
-	position: absolute;
-	content: '';
-	left: 32px;
-	bottom: 0px;
-	height: 40px;
-	width: 40px;
-	border-radius: 40px 0 0 0;
-	border-top: 5px solid #F1F2EE;
-	border-left: 5px solid #F1F2EE;
+.WritePost > header {
+	position: sticky;
+	top: 0;
+	z-index: 3;
+	margin-top: -15px;
+	padding: 15px 0;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	height: 110px;
 }
 
-.WritePost > div > .Avatar {
+.WritePost > header > .Avatar {
 	margin-right: 30px;
 }
 
-.WritePost > div > .body {
-	flex: 1;
+.WritePost > header > .byline {
 	flex-direction: column;
+	flex-grow: 1;
 }
 
-.WritePost > div > .body > h2 {
-	margin-bottom: 0;
+.WritePost > header > .byline > h2 {
+	margin: 0;
 }
 
-.WritePost > div > .body > .date {
-	margin-bottom: 15px;
-	color: #bbb;
-	font-size: 11.5px;
+.WritePost > header > .byline > .date {
+	color: #AAA;
+	font-size: 14px;
+}
+
+.WritePost > .Editor {
+	margin-left: 100px;
 }
