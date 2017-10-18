@@ -2,6 +2,11 @@ import React from 'react';
 import { storiesOf, action } from '@storybook/react';
 import { IntlProvider } from 'react-intl';
 
+import { Provider } from 'react-redux';
+import { applyMiddleware, createStore } from 'redux';
+import thunk from 'redux-thunk';
+import reducers from '../reducers';
+
 import Header from '../components/Header';
 import Logo from '../components/Logo';
 import Avatar from '../components/Avatar';
@@ -49,6 +54,11 @@ storiesOf( 'Components', module )
 	.addDecorator( story => {
 		return <IntlProvider locale="en">{story()}</IntlProvider>;
 	} )
+	.addDecorator( story => {
+		const store = createStore( reducers, applyMiddleware( thunk ) );
+
+		return <Provider store={ store }>{ story() }</Provider>;
+	} )
 	.add( 'Header', () => (
 		<Header onWritePost={() => {}} onWriteStatus={() => {}}><Logo /></Header>
 	) )
@@ -61,6 +71,22 @@ storiesOf( 'Components', module )
 	) )
 	.add( 'Status', () => <Status author={user} post={post} /> )
 	.add( 'Post', () => <Post author={user} post={post} /> )
+	.add( 'Post Titles', () => {
+		const lengths = [ 20, 22, 24, 26, 28, 30, 32, 34 ];
+		return <div style={{ width: '800px' }}>
+			{ lengths.map( length => (
+				<Post
+					author={ user }
+					categories={ [] }
+					post={ {
+						...post,
+						title:   { rendered: 'm'.repeat( length ) },
+						content: { rendered: `Post with title of length ${ length }` },
+					} }
+				/>
+			) ) }
+		</div>;
+	} )
 	.add( 'Comment', () => <Comment author={user} comment={comment} /> )
 	.add( 'WriteComment', () => (
 		<WriteComment

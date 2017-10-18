@@ -16,7 +16,7 @@ const mapStateToProps = ( state, props ) => {
 	}
 
 	return {
-		userId:    user ? user.id : 0,
+		userId:    typeof user !== 'undefined' ? user.id : 0,
 		reactions: reactions,
 	}
 };

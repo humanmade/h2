@@ -6,7 +6,7 @@
 	position: absolute;
 	content: '';
 	background: #F1F2EE;
-	left: -35px;
+	left: -42.5px;
 	top: 0;
 	bottom: 0;
 	width: 5px;
@@ -19,6 +19,9 @@
 	display: flex;
 	margin-left: -60px;
 	margin-bottom: 10px;
+	position: sticky;
+	top: 110px;
+	background: #fff;
 	position: sticky;
 	top: 110px;
 	background: #fff;
