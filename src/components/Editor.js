@@ -5,6 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Button from './Button';
+import DropUpload from './DropUpload';
 
 import './Editor.css';
 
@@ -134,88 +135,90 @@ class Editor extends React.PureComponent {
 	render() {
 		const { content, height, mode } = this.state;
 
-		return (
-			<form onSubmit={e => this.onSubmit( e )}>
-				<div className="Editor-header">
-					<ul className="Editor-tabs">
-						<li>
-							<label>
-								<input
-									checked={mode === 'edit'}
-									name="Editor-mode"
-									type="radio"
-									value="edit"
-									onChange={e => this.setState( { mode: e.target.value } )}
-								/>
-								<span>Write</span>
-							</label>
-						</li>
-						<li>
-							<label>
-								<input
-									checked={mode === 'preview'}
-									name="Editor-mode"
-									type="radio"
-									value="preview"
-									onChange={e => this.setState( { mode: e.target.value } )}
-								/>
-								<span>Preview</span>
-							</label>
-						</li>
+		return <form className="Editor" onSubmit={ e => this.onSubmit( e ) }>
+			<div className="Editor-header">
+				<ul className="Editor-tabs">
+					<li>
+						<label>
+							<input
+								checked={ mode === 'edit' }
+								name="Editor-mode"
+								type="radio"
+								value="edit"
+								onChange={ e => this.setState({ mode: e.target.value }) }
+							/>
+							<span>Write</span>
+						</label>
+					</li>
+					<li>
+						<label>
+							<input
+								checked={ mode === 'preview' }
+								name="Editor-mode"
+								type="radio"
+								value="preview"
+								onChange={ e => this.setState({ mode: e.target.value }) }
+							/>
+							<span>Preview</span>
+						</label>
+					</li>
+				</ul>
+
+				{ mode === 'edit' ?
+					<ul className="Editor-toolbar">
+						{ Object.keys( BUTTONS ).map( type => {
+							if ( BUTTONS[ type ].separator ) {
+								return <span key={ type } className="separator" />;
+							}
+
+							return <button
+								key={type}
+								onClick={e => this.onButton( e, BUTTONS[type].apply )}
+								title={BUTTONS[type].title}
+								type="button"
+							>
+								{/*<span className={`dashicons dashicons-${ BUTTONS[ type ].icon }`} />*/}
+								{type}
+							</button>;
+						} ) }
 					</ul>
-					{mode === 'edit'
-						? <ul className="Editor-toolbar">
-								{Object.keys( BUTTONS ).map( type => {
-									if ( BUTTONS[type].separator ) {
-										return <span key={type} className="separator" />;
-									}
+				: null }
+			</div>
 
-									return (
-										<button
-											key={type}
-											onClick={e => this.onButton( e, BUTTONS[type].apply )}
-											title={BUTTONS[type].title}
-											type="button"
-										>
-											{/*<span className={`dashicons dashicons-${ BUTTONS[ type ].icon }`} />*/}
-											{type}
-										</button>
-									);
-								} )}
-							</ul>
+			<DropUpload>
+				{ mode === 'preview' ? (
+					<Preview>{ content || "*Nothing to preview*" }</Preview>
+				) : (
+					<textarea
+						ref={ el => this.updateTextarea( el ) }
+						className="Editor-editor"
+						placeholder="Write a comment..."
+						style={{ height }}
+						value={ content }
+						onBlur={ () => this.onBlur() }
+						onChange={ e => this.setState({ content: e.target.value }) }
+					/>
+				) }
+			</DropUpload>
+
+			<p className="Editor-submit">
+				<small>
+					<a
+						href="http://commonmark.org/help/"
+						rel="noopener noreferrer"
+						target="_blank"
+					>
+						Format with Markdown
+					</a>
+				</small>
+				<span className="Editor-submit-buttons">
+					{this.props.onCancel
+						? <Button onClick={this.props.onCancel}>Cancel</Button>
 						: null}
-				</div>
-
-				{mode === 'preview'
-					? <Preview>{content || '*Nothing to preview*'}</Preview>
-					: <textarea
-							ref={el => this.updateTextarea( el )}
-							className="Editor-editor"
-							placeholder="Write a comment..."
-							style={{ height }}
-							value={content}
-							onChange={e => this.setState( { content: e.target.value } )}
-						/>}
-
-				<p className="Editor-submit">
-					<small>
-						<a
-							href="http://commonmark.org/help/"
-							rel="noopener noreferrer"
-							target="_blank"
-						>
-							Format with Markdown
-						</a>
-					</small>
-					<span className="Editor-submit-buttons">
-						{this.props.onCancel
-							? <Button onClick={this.props.onCancel}>Cancel</Button>
-							: null}
-						<Button submit>{this.props.submitText}</Button>
-					</span>
-				</p>
-			</form>
-		);
+					<Button submit>{this.props.submitText}</Button>
+				</span>
+			</p>
+		</form>;
 	}
 }
 
