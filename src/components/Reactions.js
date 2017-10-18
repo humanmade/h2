@@ -61,6 +61,7 @@ export default class Reaction extends Component {
 					emoji=":upside_down_face:"
 					native={ true }
 					autofFocus={ true }
+					color="#D24632"
 				/>
 			)}
 		</div>;
