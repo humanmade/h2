@@ -1,6 +1,7 @@
 import store from './store';
 
 const fetchPosts = store.actions.posts.fetch;
+const fetchCategories = store.actions.categories.fetch;
 const fetchReplies = store.actions.comments.fetch;
 const fetchReactions = store.actions.reactions.fetch;
 const createReaction = store.actions.reactions.create;
@@ -11,6 +12,7 @@ const fetchUser = store.actions.user.fetch;
 
 export {
 	fetchPosts,
+	fetchCategories,
 	fetchReplies,
 	fetchCurrentUser,
 	fetchUsers,
