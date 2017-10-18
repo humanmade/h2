@@ -21,10 +21,10 @@ export default function createObjectWindowReducer( objectName, options ) {
 					...state,
 					isLoading:    false,
 					lastError:    action.payload.error,
-					totalObjects: action.payload.totalObjects
+					totalObjects: typeof action.payload.totalObjects !== 'undefined'
 						? action.payload.totalObjects
 						: state.totalObjects,
-					totalPages: action.payload.totalPages
+					totalPages: typeof action.payload.totalPages !== 'undefined'
 						? action.payload.totalPages
 						: state.totalPages,
 				};
@@ -43,6 +43,12 @@ export default function createObjectWindowReducer( objectName, options ) {
 							)
 							.map( object => object.id ),
 					],
+					totalObjects: typeof action.payload.totalObjects !== 'undefined'
+						? action.payload.totalObjects
+						: state.totalObjects,
+					totalPages: typeof action.payload.totalPages !== 'undefined'
+						? action.payload.totalPages
+						: state.totalPages,
 				};
 			case `WP_API_REDUX_${objectName.toUpperCase()}_WINDOW_FILTER_UPDATED`:
 				return {
