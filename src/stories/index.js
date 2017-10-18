@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf, action } from '@storybook/react';
 import { IntlProvider } from 'react-intl';
 
+import storeDecorator from './store-decorator';
 import Header from '../components/Header';
 import Logo from '../components/Logo';
 import Avatar from '../components/Avatar';
@@ -46,6 +47,7 @@ const user = {
 };
 
 storiesOf( 'Components', module )
+	.addDecorator( storeDecorator() )
 	.addDecorator( story => {
 		return <IntlProvider locale="en">{story()}</IntlProvider>;
 	} )
