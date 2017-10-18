@@ -13,7 +13,12 @@
 }
 
 .reactions .reactions-new {
-	opacity: 0.4;
+	opacity: 0.6;
+	font-weight: bold;
+}
+
+.reactions .reactions-new .icon {
+	margin-right: 2px;
 }
 
 .reactions .emoji-mart {
@@ -51,6 +56,11 @@
 
 .reactions .btn--active .reactions__count {
 	color: #504C4C;
+}
+
+.reactions .btn:hover .icon--smiley-wink,
+.reactions .btn:active .icon--smiley-wink {
+	background-image: url(/static/media/icon-smiley-wink-white.4dcfb962.svg);
 }
 
 .reactions .btn--active:hover .reactions__count,
