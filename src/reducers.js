@@ -69,6 +69,14 @@ export default combineReducers( {
 				unsetPostUpdating( parseInt( action.payload.object.post, 10 ) )
 				return s;
 			}
+			case 'WP_API_REDUX_CREATE_REACTIONS_ERRORED' : {
+				unsetPostUpdating( parseInt( action.payload.data.post, 10 ) )
+				return s;
+			}
+			case 'WP_API_REDUX_DELETE_REACTIONS_ERRORED' : {
+				unsetPostUpdating( parseInt( action.payload.objectId, 10 ) )
+				return s;
+			}
 			default : {
 				return state;
 			}
