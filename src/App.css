@@ -28,5 +28,6 @@
 	top: 0;
 	height: 100vh;
 	margin-left: 4rem;
-	overflow: scroll;
+	overflow: hidden;
+	overflow-y: scroll;
 }
