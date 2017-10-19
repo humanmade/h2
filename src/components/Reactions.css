@@ -10,6 +10,7 @@
 	margin-bottom: 0;
 	height: 31px;
 	position: relative;
+	border-color: #a3a3a3;
 }
 
 .reactions .reactions-new {
@@ -60,7 +61,8 @@
 }
 
 .reactions .btn--active {
-	background: #DFDFDF;
+	background: rgba(0,0,0,0.1);
+	border-color: #666666;
 }
 
 .reactions .btn--active .reactions__count {

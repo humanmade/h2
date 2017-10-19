@@ -21,18 +21,6 @@ export default class Reaction extends Component {
 		}
 
 		return <div className="reactions">
-			<button
-				className={ 'btn btn--small btn--tertiary' + ( isLoading ? ' loading' : '' ) }
-				onClick={ value => this.setState( { isOpen: ! this.state.isOpen  } ) }
-				key="button"
-				disabled={ isLoading }
-			>
-				{ isLoading ?
-					<span className="loading loading--active"></span>
-					:
-					<span className="icon icon--smiley-wink">Add reaction</span>
-				}
-			</button>
 			<div key="reactions">
 				{ Object.entries( reactions ).map( ( [ emoji, users ] ) => {
 					let isActive = reactions[ emoji ].indexOf( userId ) >= 0 ? true : false;
@@ -56,6 +44,18 @@ export default class Reaction extends Component {
 					</button>
 				} ) }
 			</div>
+			<button
+				className={ 'btn btn--small btn--tertiary' + ( isLoading ? ' loading' : '' ) }
+				onClick={ value => this.setState( { isOpen: ! this.state.isOpen  } ) }
+				key="button"
+				disabled={ isLoading }
+			>
+				{ isLoading ?
+					<span className="loading loading--active"></span>
+					:
+					<span className="icon icon--smiley-wink">Add reaction</span>
+				}
+			</button>
 			{ this.state.isOpen && (
 				<Picker
 					key="picker"
@@ -103,5 +103,5 @@ Reaction.propTypes = {
 
 Reaction.defaultProps = {
 	userId:    0,
-	isLoading: false
+	isLoading: false,
 }
