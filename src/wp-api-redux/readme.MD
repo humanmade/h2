@@ -6,6 +6,14 @@ A helper library for bridging the WordPress REST API (via wordpress-rest-api-oau
 
 At it's core, WordPress REST API Redux provides abstracted reducers and action creators for WordPress REST API objects. It's just as easy to manage custom REST API objects (Custom Post Types for example) as the in-built routes (Posts, Pages, Users, Comments, Terms and Taxonomies.)
 
+### Prerequisites
+
+For local development, you will need a separate WordPress install, with the [OAuth 1.0a Server plugin](https://wordpress.org/plugins/rest-api-oauth1/), and register an application under Settings > Users.
+Callback value: `http://localhost:3000/` - note the trailing slash
+Also, set the permalinks to "Post Name"
+
+When you fire up the app, it should redirect you to your WP install to go through the authorization process.
+
 ### How it Works
 
 ```
