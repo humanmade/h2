@@ -45,7 +45,7 @@ export default class Reaction extends Component {
 				key="button"
 				title="Add reaction"
 			>
-				<span class="icon icon--smiley-wink"></span>
+				<span className="icon icon--smiley-wink"></span>
 				+
 			</button>
 			{ this.state.isOpen && (
