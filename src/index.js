@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 
@@ -13,7 +14,7 @@ import './hm-pattern-library/assets/styles/juniper.css';
 
 let store = createStore(
 	reducers,
-	applyMiddleware( thunk, createLogger( { collapsed: true } ) )
+	composeWithDevTools( applyMiddleware( thunk, createLogger( { collapsed: true } ) ) )
 );
 
 const render = Main => {
