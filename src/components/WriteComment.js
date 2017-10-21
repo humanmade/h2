@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Avatar from './Avatar';
-import Editor from './Editor';
+import Editor from '../containers/Editor';
 import { User, Post, Comment } from '../shapes';
 
 import './WriteComment.css';

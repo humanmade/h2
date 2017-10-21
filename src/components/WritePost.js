@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Avatar from './Avatar';
-import Editor from './Editor';
+import Editor from '../containers/Editor';
 import { User, Post } from '../shapes';
 
 import './WritePost.css';

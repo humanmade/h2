@@ -1,0 +1,27 @@
+.Completion {
+	position: absolute;
+    border: 1px solid #DDD;
+    border-radius: 3px;
+	background: #fff;
+	margin-top: 1em;
+	list-style: none;
+    box-shadow: 0 0 8px rgba( 0, 0, 0, 0.1 );
+    padding: 0;
+    font-size: 0.9em;
+}
+
+.Completion > li {
+	padding: 0.15em 0.3em;
+	margin: 0;
+	border-bottom: 1px solid var( --hm-blue );
+	cursor: pointer;
+}
+
+.Completion > li:last-child {
+	border-bottom: none;
+}
+
+.Completion > li.selected {
+	background: var( --hm-red );
+	color: var( --hm-light-grey );
+}

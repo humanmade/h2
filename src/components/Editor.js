@@ -1,10 +1,12 @@
-import { emojiIndex } from 'emoji-mart';
 import marked from 'marked';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import getCaretCoordinates from 'textarea-caret';
 
 import Button from './Button';
+import EmojiCompletion from './EmojiCompletion';
+import MentionCompletion from './MentionCompletion';
 
 import './Editor.css';
 
@@ -37,22 +39,36 @@ const BUTTONS = {
 	},
 };
 
+const completions = {
+	'@': () => {},
+	':': () => {},
+};
+
 const Preview = props => {
 	const compiled = marked( props.children );
 	return <div className="Editor-preview" dangerouslySetInnerHTML={{ __html: compiled }} />;
 };
 Preview.propTypes = { children: PropTypes.string.isRequired };
 
-class Editor extends React.PureComponent {
+export default class Editor extends React.PureComponent {
 	constructor( props ) {
 		super( props );
 
 		this.state = {
+			completion: null,
 			content: '',
 			height:  null,
 			mode:    'edit',
 		};
 		this.textarea = null;
+
+		this.completions = {
+			'@': completion => <MentionCompletion
+				{ ...completion }
+				items={ Object.values( this.props.users ) }
+			/>,
+			':': completion => <EmojiCompletion { ...completion } />,
+		};
 	}
 
 	componentDidUpdate() {
@@ -75,15 +91,36 @@ class Editor extends React.PureComponent {
 		}
 
 		this.textarea = ref;
-		window.jQuery( ref ).atwho( {
-			at:   '@',
-			data: Object.values( this.props.users ).map( user => user.slug ),
-		} );
-		window.jQuery( ref ).atwho( {
-			at:         ':',
-			data:       Object.values( emojiIndex.emojis ),
-			displayTpl: item => `<li>${item.native} ${item.colons} </li>`,
-			insertTpl:  item => item.native,
+	}
+
+	onKeyDown( e ) {
+		const { key, target } = e;
+		if ( ! this.completions[ key ] ) {
+			return;
+		}
+
+		const coords = getCaretCoordinates( target, target.selectionEnd );
+		const completion = {
+			key,
+			coords,
+			start: target.selectionEnd,
+		};
+		this.setState( { completion } );
+	}
+
+	onInput( e ) {
+		const { completion } = this.state;
+		if ( ! completion ) {
+			return;
+		}
+
+		const { target } = e;
+		const nextCompletion = {
+			...completion,
+			end: target.selectionEnd + 1,
+		};
+		this.setState( {
+			completion: nextCompletion,
 		} );
 	}
 
@@ -108,6 +145,41 @@ class Editor extends React.PureComponent {
 		this.setState( { content: nextParts.join( '' ) } );
 	}
 
+	getCompletion() {
+		const { completion, content } = this.state;
+
+		if ( ! completion ) {
+			return null;
+		}
+
+		const completionProps = {
+			key:     completion.key,
+			coords:  completion.coords,
+			text:    content.substring( completion.start + 1, completion.end + 1 ),
+			trigger: completion.key,
+			onSelect: val => {
+				const content = this.state.content;
+
+				const nextParts = [
+					content.substring( 0, completion.start ),
+					val,
+					content.substring( completion.end ),
+				];
+
+				this.setState( {
+					completion: null,
+					content: nextParts.join( '' ),
+				} );
+			},
+		};
+
+		const handler = this.completions[ completion.key ];
+		if ( ! handler ) {
+			return null;
+		}
+		return handler( completionProps );
+	}
+
 	focus() {
 		if ( ! this.textarea ) {
 			return;
@@ -117,7 +189,7 @@ class Editor extends React.PureComponent {
 	}
 
 	render() {
-		const { content, height, mode } = this.state;
+		const { completion, content, height, mode } = this.state;
 
 		return (
 			<form onSubmit={e => this.onSubmit( e )}>
@@ -180,7 +252,11 @@ class Editor extends React.PureComponent {
 							style={{ height }}
 							value={content}
 							onChange={e => this.setState( { content: e.target.value } )}
+							onInput={ e => this.onInput( e ) }
+							onKeyDown={ e => this.onKeyDown( e ) }
 						/>}
+
+				{ mode !== 'preview' ? this.getCompletion() : null }
 
 				<p className="Editor-submit">
 					<small>
@@ -211,7 +287,3 @@ Editor.propTypes = {
 	onCancel:   PropTypes.func,
 	onSubmit:   PropTypes.func.isRequired,
 };
-
-export default connect( state => ( { users: state.users.byId } ), null, null, { withRef: true } )(
-	Editor
-);
