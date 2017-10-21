@@ -13,7 +13,7 @@
 .Completion > li {
 	padding: 0.15em 0.3em;
 	margin: 0;
-	border-bottom: 1px solid var( --hm-blue );
+	border-bottom: 1px solid var( --hm-beige );
 	cursor: pointer;
 }
 
