@@ -64,6 +64,10 @@
 	margin-left: 0.5rem;
 }
 
+.Editor-editor-container {
+	position: relative;
+}
+
 .Editor-editor {
 	margin-top: 0;
 	min-height: 5rem;

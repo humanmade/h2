@@ -243,9 +243,12 @@ export default class Editor extends React.PureComponent {
 						: null}
 				</div>
 
-				{mode === 'preview'
-					? <Preview>{content || '*Nothing to preview*'}</Preview>
-					: <textarea
+				<div className="Editor-editor-container">
+
+					{ mode === 'preview' ?
+						<Preview>{ content || '*Nothing to preview*' }</Preview>
+					:
+						<textarea
 							ref={el => this.updateTextarea( el )}
 							className="Editor-editor"
 							placeholder="Write a comment..."
@@ -254,9 +257,12 @@ export default class Editor extends React.PureComponent {
 							onChange={e => this.setState( { content: e.target.value } )}
 							onInput={ e => this.onInput( e ) }
 							onKeyDown={ e => this.onKeyDown( e ) }
-						/>}
+						/>
+					}
 
-				{ mode !== 'preview' ? this.getCompletion() : null }
+					{ mode !== 'preview' ? this.getCompletion() : null }
+
+				</div>
 
 				<p className="Editor-submit">
 					<small>
