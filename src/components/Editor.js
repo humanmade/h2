@@ -132,7 +132,6 @@ class Editor extends React.PureComponent {
 
 		this.props.onUpload( file ).then( data => {
 			this.setState( state => {
-				const title = data.title.raw;
 				const content = state.content.replace(
 					placeholder,
 					`\n<img alt="${ data.title.raw }" src="${ data.source_url }" />\n`
