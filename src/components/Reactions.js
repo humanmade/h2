@@ -45,7 +45,8 @@ export default class Reaction extends Component {
 				key="button"
 				title="Add reaction"
 			>
-				☺︎ +
+				<span className="icon icon--smiley-wink"></span>
+				+
 			</button>
 			{ this.state.isOpen && (
 				<Picker

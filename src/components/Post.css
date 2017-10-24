@@ -1,10 +1,21 @@
 .Post {
 	flex-direction: column;
 	position: relative;
-	padding-bottom: 20px;
-	margin-bottom: 35px;
+	padding-bottom: 1.667rem;
+	margin-bottom: 1.667rem;
 	min-height: 144px;
 	border-bottom: 5px solid #F1F2EE;
+}
+
+.Post:before {
+	position: absolute;
+	content: '';
+	background: #F1F2EE;
+	left: 27.5px;
+	height: 1.667rem;
+	top: -.8335rem;
+	width: 5px;
+	z-index: 2;
 }
 
 .Post > header {
@@ -16,20 +27,28 @@
 	background: #fff;
 	display: flex;
 	align-items: center;
-	height: 110px;
+	height: 99px;
 }
 
 .Post > header > .Avatar {
 	margin-right: 30px;
+	width: 3.333rem;
+	height: 3.333rem;
+	border-radius: 100%;
+	align-self: flex-start;
 }
 
 .Post > header > .byline {
 	flex-direction: column;
 	flex-grow: 1;
+	min-width: 0;
 }
 
 .Post > header > .byline > h2 {
-	margin: 0;
+	margin: 0 0.5em 0 0;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .Post > header > .byline > .date {
@@ -37,6 +56,19 @@
 	font-size: 14px;
 }
 
+.Post > header > .byline > .categories {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: inline;
+	font-size: 14px;
+}
+
+.Post > header > .byline > .categories > li {
+	display: inline-block;
+	margin-left: 10px;
+}
+
 .Post > .PostContent {
-	margin-left: 100px;
+	margin-left: 90px;
 }

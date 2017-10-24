@@ -6,7 +6,7 @@ import Avatar from './Avatar';
 import Button from './Button';
 import PostContent from './PostContent'
 import Reactions from '../containers/Reactions'
-import { Post as PostType, User } from '../shapes';
+import { Post as PostType, User, Category } from '../shapes';
 
 import './Post.css';
 
@@ -22,18 +22,34 @@ export default class Post extends Component {
 	render() {
 		const props = this.props;
 
+		// Scale title down slightly for longer titles.
+		const headerStyle = {};
+		if ( props.post.title.rendered.length > 22 ) {
+			headerStyle.fontSize = '1.333333333rem';
+		}
+
 		return <div className="Post">
 			<header>
 				<Avatar
 					url={props.author ? props.author.avatar_urls['96'] : ''}
-					size={70}
+					size={60}
 				/>
 				<div className="byline">
-					<h2 dangerouslySetInnerHTML={{ __html: props.post.title.rendered }} />
-					<div className="date">
+					<h2
+						dangerouslySetInnerHTML={{ __html: props.post.title.rendered }}
+						style={ headerStyle }
+					/>
+					<span className="date">
 						{props.author ? props.author.name : ''},&nbsp;
 						<FormattedRelative value={props.post.date_gmt} />
-					</div>
+					</span>
+					{props.categories.length > 0 &&
+						<ul className="categories">
+							{props.categories.map( category => (
+								<li key={category.id}><a href={category.link}>{category.name}</a></li>
+							) )}
+						</ul>
+					}
 				</div>
 				<div className="actions">
 					<Button onClick={props.onComment}>Reply</Button>
@@ -53,7 +69,8 @@ export default class Post extends Component {
 }
 
 Post.propTypes = {
-	author:   User,
-	children: PropTypes.any,
-	post:     PostType.isRequired,
+	author:     User,
+	categories: PropTypes.arrayOf( Category ).isRequired,
+	children:   PropTypes.any,
+	post:       PostType.isRequired,
 };

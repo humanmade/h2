@@ -31,15 +31,16 @@
     "react-storybook": "^1.0.0",
     "react-timeago": "^3.4.3",
     "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^2.7.0",
     "redux-thunk": "^2.2.0",
-    "wordpress-rest-api-oauth-1": "^1.1.7"
+    "wordpress-rest-api-oauth-2": "^0.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "deploy": "npm run build && aws s3 sync ./build s3://make.hmn.md/h2 --acl public-read",
-    "lint" : "eslint src/",
+    "lint": "eslint src/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
