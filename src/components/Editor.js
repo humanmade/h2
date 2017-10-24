@@ -49,9 +49,10 @@ class Editor extends React.PureComponent {
 		super( props );
 
 		this.state = {
-			content: '',
-			height:  null,
-			mode:    'edit',
+			content:   '',
+			height:    null,
+			mode:      'edit',
+			uploading: null,
 		};
 		this.textarea = null;
 	}
@@ -129,7 +130,24 @@ class Editor extends React.PureComponent {
 		const placeholder = `\n<img alt="Uploading ${ file.name }…" />\n`;
 		this.onButton( null, () => placeholder );
 
-		this.props.onUpload( file );
+		this.props.onUpload( file ).then( data => {
+			this.setState( state => {
+				const title = data.title.raw;
+				const content = state.content.replace(
+					placeholder,
+					`\n<img alt="${ data.title.raw }" src="${ data.source_url }" />\n`
+				);
+
+				return {
+					content,
+					uploading: null,
+				};
+			} );
+		} );
+
+		this.setState( {
+			uploading: file,
+		} );
 	}
 
 	focus() {
@@ -193,7 +211,7 @@ class Editor extends React.PureComponent {
 				: null }
 			</div>
 
-			<DropUpload onUpload={ file => this.onUpload( file ) }>
+			<DropUpload file={ this.state.uploading } onUpload={ file => this.onUpload( file ) }>
 				{ mode === 'preview' ? (
 					<Preview>{ content || "*Nothing to preview*" }</Preview>
 				) : (
