@@ -127,8 +127,8 @@ class Editor extends React.PureComponent {
 
 	onUpload( file ) {
 		// Insert placeholder into the text
-		const placeholder = `\n<img alt="Uploading ${ file.name }…" />\n`;
-		this.onButton( null, () => placeholder );
+		const placeholder = `<img alt="Uploading ${ file.name }…" />`;
+		this.onButton( null, () => `\n${ placeholder }\n` );
 
 		this.props.onUpload( file ).then( data => {
 			this.setState( state => {
