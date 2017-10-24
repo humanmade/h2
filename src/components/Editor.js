@@ -98,13 +98,13 @@ class Editor extends React.PureComponent {
 	onBlur() {
 		const { selectionStart, selectionEnd } = this.textarea;
 
-		this.setState({
-			lastSelection: [ selectionStart, selectionEnd ]
-		});
+		const lastSelection = [ selectionStart, selectionEnd ];
+
+		this.setState( { lastSelection } );
 	}
 
 	onFocus() {
-		this.setState({ lastSelection: null });
+		this.setState( { lastSelection: null } );
 	}
 
 	onButton( e, apply ) {
@@ -144,9 +144,7 @@ class Editor extends React.PureComponent {
 			} );
 		} );
 
-		this.setState( {
-			uploading: file,
-		} );
+		this.setState( { uploading: file } );
 	}
 
 	focus() {
@@ -173,7 +171,7 @@ class Editor extends React.PureComponent {
 								name="Editor-mode"
 								type="radio"
 								value="edit"
-								onChange={ e => this.setState({ mode: e.target.value }) }
+								onChange={ e => this.setState( { mode: e.target.value } ) }
 							/>
 							<span>Write</span>
 						</label>
@@ -185,7 +183,7 @@ class Editor extends React.PureComponent {
 								name="Editor-mode"
 								type="radio"
 								value="preview"
-								onChange={ e => this.setState({ mode: e.target.value }) }
+								onChange={ e => this.setState( { mode: e.target.value } ) }
 							/>
 							<span>Preview</span>
 						</label>
@@ -215,7 +213,7 @@ class Editor extends React.PureComponent {
 
 			<DropUpload file={ this.state.uploading } onUpload={ file => this.onUpload( file ) }>
 				{ mode === 'preview' ? (
-					<Preview>{ content || "*Nothing to preview*" }</Preview>
+					<Preview>{ content || '*Nothing to preview*' }</Preview>
 				) : (
 					<textarea
 						ref={ el => this.updateTextarea( el ) }
@@ -224,7 +222,7 @@ class Editor extends React.PureComponent {
 						style={{ height }}
 						value={ content }
 						onBlur={ () => this.onBlur() }
-						onChange={ e => this.setState({ content: e.target.value }) }
+						onChange={ e => this.setState( { content: e.target.value } ) }
 					/>
 				) }
 			</DropUpload>

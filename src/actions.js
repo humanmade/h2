@@ -14,9 +14,7 @@ export { fetchPosts, fetchReplies, fetchCurrentUser, fetchUsers, fetchUser, fetc
 
 export function uploadMedia( file ) {
 	return ( dispatch, getStore ) => {
-		const options = {
-			method: 'POST',
-		};
+		const options = { method: 'POST' };
 
 		/**
 		 * WordPress <4.9 doesn't allow Content-Disposition across CORS, so
@@ -28,21 +26,21 @@ export function uploadMedia( file ) {
 		options.body.append( 'file', file );
 
 		dispatch( {
-			type:    `WP_API_REDUX_CREATE_MEDIA_UPDATING`,
+			type:    'WP_API_REDUX_CREATE_MEDIA_UPDATING',
 			payload: {},
 		} );
 		return api.fetch( '/wp/v2/media', options )
 			.then( parseResponse )
 			.then( object => {
 				dispatch( {
-					type:    `WP_API_REDUX_FETCH_MEDIA_UPDATED`,
+					type:    'WP_API_REDUX_FETCH_MEDIA_UPDATED',
 					payload: {
 						objectName: 'media',
-						objects: [ object ],
+						objects:    [ object ],
 					},
 				} );
 				dispatch( {
-					type:    `WP_API_REDUX_CREATE_MEDIA_UPDATED`,
+					type:    'WP_API_REDUX_CREATE_MEDIA_UPDATED',
 					payload: {
 						objectName: 'media',
 						object,

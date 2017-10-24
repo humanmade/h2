@@ -3,11 +3,7 @@ import React from 'react';
 
 import './DropUpload.css';
 
-const INITIAL_STATE = {
-	dropping: false,
-	progress: 0,
-	uploadMessage: '',
-};
+const INITIAL_STATE = { dropping: false };
 
 export default class DropUpload extends React.PureComponent {
 	constructor( props ) {
@@ -22,13 +18,13 @@ export default class DropUpload extends React.PureComponent {
 		// Explicitly show this is a copy.
 		e.dataTransfer.dropEffect = 'copy';
 
-		this.setState({ dropping: true });
+		this.setState( { dropping: true } );
 	}
 
 	onDragLeave( e ) {
 		e.preventDefault();
 
-		this.setState({ dropping: false });
+		this.setState( { dropping: false } );
 	}
 
 	onDrop( e ) {
@@ -36,12 +32,12 @@ export default class DropUpload extends React.PureComponent {
 
 		// If there's no files, ignore it.
 		if ( ! e.dataTransfer.files.length ) {
-			this.setState({ dropping: false });
+			this.setState( { dropping: false } );
 			return;
 		}
 
 		const file = e.dataTransfer.files[0];
-		this.setState({ dropping: false });
+		this.setState( { dropping: false } );
 		this.props.onUpload( file );
 	}
 
@@ -89,26 +85,15 @@ export default class DropUpload extends React.PureComponent {
 
 				<p>
 					<a onClick={ () => this.onCancel() }>Cancel</a>
-
-					{/*
-					<progress
-						max={ 100 }
-						value={ this.state.progress }
-					/>
-					*/}
 				</p>
 			</div>
 		</div>;
 	}
 }
 
-DropUpload.defaultProps = {
-	onCancel: () => {},
-};
+DropUpload.defaultProps = { onCancel: () => {} };
 
 DropUpload.propTypes = {
-	file: PropTypes.shape( {
-		name: PropTypes.string.isRequired,
-	} ),
+	file:     PropTypes.shape( { name: PropTypes.string.isRequired } ),
 	onUpload: PropTypes.func.isRequired,
 };
