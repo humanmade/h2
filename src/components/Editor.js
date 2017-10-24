@@ -161,7 +161,10 @@ class Editor extends React.PureComponent {
 	render() {
 		const { content, height, mode } = this.state;
 
-		return <form className="Editor" onSubmit={ e => this.onSubmit( e ) }>
+		return <form
+			className={ mode === 'preview' ? 'Editor previewing' : 'Editor' }
+			onSubmit={ e => this.onSubmit( e ) }
+		>
 			<div className="Editor-header">
 				<ul className="Editor-tabs">
 					<li>
