@@ -1,0 +1,61 @@
+.DropUpload.dropping {
+	outline: 2px dashed #b4b9be;
+	border-radius: 3px;
+	position: relative;
+}
+.DropUpload.dropping:before {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	content: "Drop files here";
+	font-size: 1rem;
+	color: #b4b9be;
+	background: rgba(255, 255, 255, 0.8);
+}
+.DropUpload.dropping > * {
+	/*opacity: 0.4;*/
+}
+.DropUpload-status {
+	font-size: 0.8rem;
+	color: var( --hm-warm-grey );
+	display: flex;
+	justify-content: space-between;
+}
+.DropUpload-status p {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.DropUpload .DropUpload-status > .buttons {
+	display: flex;
+	align-items: center;
+}
+.DropUpload-status .Loading {
+	margin-left: 0;
+	margin-right: 0.5em;
+}
+
+label.DropUpload-uploader {
+	all: unset;
+	margin-right: 0.3em;
+	cursor: pointer;
+}
+.DropUpload-uploader > input[type=file] {
+	display: none;
+}
+.DropUpload-uploader .btn {
+	margin-bottom: 0;
+}
+
+.DropUpload-description {
+	padding: 7px;
+	width: calc( 100% - 7px * 2 );
+	font: inherit;
+	border: 1px solid #bfe7f3;
+}

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { uploadMedia } from '../actions';
 import WriteComment from '../components/WriteComment';
 import { Post, PostsState, UsersState, Comment, Dispatch } from '../shapes';
 import store from '../store';
@@ -29,6 +30,9 @@ class ConnectedWriteComment extends Component {
 			},
 		} );
 	}
+	onUpload( file ) {
+		return this.props.dispatch( uploadMedia( file ) );
+	}
 	render() {
 		const post = this.props.post;
 		const author = Object.values( this.props.user.byId )[0];
@@ -39,6 +43,7 @@ class ConnectedWriteComment extends Component {
 			onCancel={() => this.onCancel()}
 			onChange={comment => this.onChange( comment )}
 			onSave={ comment => this.onSave( comment ) }
+			onUpload={ file => this.onUpload( file ) }
 		/>;
 	}
 }
