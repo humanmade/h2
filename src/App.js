@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { fetchPosts, fetchUsers, fetchUser, fetchReplies, fetchCategories, fetchReactions } from './actions';
 import api from './api';
 import store from './store';
+
+import Button from './components/Button';
 import Header from './components/Header';
 import PostsList from './containers/PostsList';
 import WritePost from './containers/WritePost';
@@ -87,9 +89,18 @@ class App extends Component {
 			/>
 			<div className="Inner">
 				{this.props.writePost.isShowing ? <WritePost /> : null}
-				{this.props.posts.windows.feed.lastError
-					? this.props.posts.windows.feed.lastError.message
-					: <PostsList />}
+				{ this.props.posts.windows.feed.lastError ?
+					<div>
+						<p>{ this.props.posts.windows.feed.lastError.message }</p>
+
+						<hr />
+
+						<p><small>You may need to reset H2.</small></p>
+						<Button onClick={ () => this.onLogOut() }>
+							Reset H2
+						</Button>
+					</div>
+				: <PostsList /> }
 			</div>
 		</div>;
 	}

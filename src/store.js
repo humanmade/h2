@@ -49,5 +49,6 @@ export default new WPAPIRedux( {
 		},
 		tags:       { route: '/wp/v2/tags' },
 		categories: { route: '/wp/v2/categories' },
+		media:      { route: '/wp/v2/media' },
 	},
 } );
