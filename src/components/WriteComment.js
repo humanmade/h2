@@ -33,6 +33,7 @@ export default class WriteComment extends React.Component {
 					ref={editor => this.editor = editor ? editor.getWrappedInstance() : null}
 					onCancel={this.props.onCancel}
 					onSubmit={this.props.onSave}
+					onUpload={ this.props.onUpload }
 				/>
 			</div>
 		</div>;
@@ -46,4 +47,5 @@ WriteComment.propTypes = {
 	onCancel: PropTypes.func.isRequired,
 	onChange: PropTypes.func.isRequired,
 	onSave:   PropTypes.func.isRequired,
+	onUpload: PropTypes.func.isRequired,
 };

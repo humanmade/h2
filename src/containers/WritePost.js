@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { uploadMedia } from '../actions';
 import WritePost from '../components/WritePost';
 import { UsersState, Dispatch, WritePostState } from '../shapes';
 import store from '../store';
@@ -16,6 +17,9 @@ class ConnectedWritePost extends Component {
 			status: 'publish',
 		};
 		this.props.dispatch( store.actions.posts.create( newPost ) );
+	}
+	onUpload( file ) {
+		return this.props.dispatch( uploadMedia( file ) );
 	}
 	render() {
 		const post = this.props.writePost.post;
