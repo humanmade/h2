@@ -1,4 +1,4 @@
-import api from './lib/wordpress-rest-api-oauth-2/src/';
+import api from 'wordpress-rest-api-oauth-2';
 
 const url = window.location.href.split( '?' )[0];
 let config = {
