@@ -67,7 +67,7 @@ export default class DropUpload extends React.PureComponent {
 						<label className="DropUpload-uploader">
 							<input
 								type="file"
-								onChange={ e => this.setState({ file: e.target.files[0] }) }
+								onChange={ e => this.props.onUpload( e.target.files[0] ) }
 							/>
 							<a>Upload an attachment</a>
 						</label>
