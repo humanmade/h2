@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Button from './Button';
-
 import './DropUpload.css';
 
 const INITIAL_STATE = {
