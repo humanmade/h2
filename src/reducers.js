@@ -9,7 +9,7 @@ export default combineReducers( {
 	posts:      store.reducers.posts,
 	tags:       store.reducers.tags,
 	comments:   store.reducers.comments,
-	media:         store.reducers.media,
+	media:      store.reducers.media,
 	reactions:  ( state = {}, action ) => {
 		const s = { ...state };
 

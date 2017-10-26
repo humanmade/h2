@@ -1,3 +1,6 @@
+import { parseResponse } from 'wordpress-rest-api-oauth-2';
+
+import api from './api';
 import store from './store';
 
 const fetchPosts = store.actions.posts.fetch;
