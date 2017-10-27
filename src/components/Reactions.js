@@ -14,7 +14,7 @@ export default class Reaction extends Component {
 	}
 
 	render() {
-		const { reactions, userId } = this.props;
+		const { reactions, userId, isLoading } = this.props;
 
 		if ( ! userId || userId <= 0 ) {
 			return null;
@@ -28,25 +28,33 @@ export default class Reaction extends Component {
 						className={ 'btn btn--small btn--tertiary' + ( isActive ? ' btn--active' : '' ) }
 						onClick={ () => this.toggleReaction( emoji ) }
 						key={ emoji }
+						disabled={ isLoading }
 					>
 						<span className="reactions__emoji" key="emoji">{ emoji }</span>
 						<span className="reactions__count" key="count">{ users.length }</span>
 						<span className="reactions__users" key="users">
-							{ users.map( userId => {
-								return <UserDisplayName userId={ userId } key="{ userId }" />
-							} )}
+							{ users.map( reactionAuthorId => {
+								return <UserDisplayName
+									className="reactions__user"
+									userId={ reactionAuthorId }
+									key={ this.props.postId + reactionAuthorId }
+								/>
+							} ) }
 						</span>
 					</button>
-				} )}
+				} ) }
 			</div>
 			<button
-				className="reactions-new btn btn--small btn--tertiary"
+				className={ 'btn btn--small btn--tertiary' + ( isLoading ? ' loading' : '' ) }
 				onClick={ value => this.setState( { isOpen: ! this.state.isOpen  } ) }
 				key="button"
-				title="Add reaction"
+				disabled={ isLoading }
 			>
-				<span className="icon icon--smiley-wink"></span>
-				+
+				{ isLoading ?
+					<span className="loading loading--active"></span>
+					:
+					<span className="icon icon--smiley-wink">Add reaction</span>
+				}
 			</button>
 			{ this.state.isOpen && (
 				<Picker
@@ -58,40 +66,42 @@ export default class Reaction extends Component {
 					title={ false }
 					emoji=":upside_down_face:"
 					native={ true }
+					autofFocus={ true }
+					color="#D24632"
 				/>
 			)}
 		</div>;
 	}
 
-	toggleReaction( emoji ) {
-		const { reactions, onChangeReactions, userId } = this.props;
+	toggleReaction( emoji, reactionUserId ) {
+		const { reactions, onAddReaction, onRemoveReaction, userId } = this.props;
 
-		if ( ! ( emoji in reactions ) ) {
-			if ( Object.keys( reactions ).length >= 5 ) {
-				alert( 'Each post can only have a maximum of 5 different reactions. Sorry!' )
-			} else {
-				reactions[ emoji ] = [ userId ];
+		if (
+			! ( emoji in reactions ) ||
+			reactions[ emoji ].indexOf( userId ) < 0
+		) {
+			if ( Object.keys( reactions ).length >= 10 ) {
+				alert( 'Sorry! You are only allowed 10 reactions per post!' );
+				return;
 			}
-		} else if ( reactions[ emoji ].indexOf( userId ) < 0 ) {
-			reactions[ emoji ].push( userId );
+
+			onAddReaction( emoji );
 		} else {
-			let index = reactions[ emoji ].indexOf( userId );
-			if ( index > -1 ) {
-				reactions[ emoji ].splice( index, 1 );
-			}
-
-			if ( reactions[ emoji ].length < 1 ) {
-				delete reactions[ emoji ];
-			}
+			onRemoveReaction( emoji );
 		}
-
-		onChangeReactions( reactions );
 	}
 }
 
 Reaction.propTypes = {
-	onChangeReactions: PropTypes.func.isRequired,
-	reactions:         PropTypes.object.isRequired,
+	userId:           PropTypes.number,
+	postId:           PropTypes.number.isRequired,
+	reactions:        PropTypes.object.isRequired,
+	onAddReaction:    PropTypes.func.isRequired,
+	onRemoveReaction: PropTypes.func.isRequired,
+	isLoading:        PropTypes.bool,
 };
 
-Reaction.defaultProps = { userId: 0 }
+Reaction.defaultProps = {
+	userId:    0,
+	isLoading: false,
+}

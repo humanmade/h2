@@ -31,6 +31,13 @@ export default function createCreateObjectActionCreator(
 						},
 					} );
 					return object;
+				} )
+				.catch( error => {
+					dispatch( {
+						type:    `WP_API_REDUX_CREATE_${objectName.toUpperCase()}_ERRORED`,
+						payload: { error, data },
+					} );
+					throw error;
 				} );
 		};
 	};

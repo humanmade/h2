@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchPosts, fetchUsers, fetchUser, fetchReplies, fetchCategories } from './actions';
+import { fetchPosts, fetchUsers, fetchUser, fetchReplies, fetchCategories, fetchReactions } from './actions';
 import api from './api';
 import store from './store';
 
@@ -32,6 +32,15 @@ class App extends Component {
 							} )
 						);
 					} );
+					response.map( post => {
+						return this.props.dispatch(
+							fetchReactions( {
+								per_page: 100,
+								post:     post.id,
+							} )
+						);
+					} );
+
 				} );
 				this.props.dispatch( fetchUser( null ) );
 				this.props.dispatch( fetchUsers( { per_page: 100 } ) );
