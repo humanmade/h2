@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { FormattedRelative } from 'react-intl';
 
+import AuthorName from './AuthorName';
 import Avatar from './Avatar';
 import Button from './Button';
 import PostContent from './PostContent'
@@ -40,7 +41,7 @@ export default class Post extends Component {
 						style={ headerStyle }
 					/>
 					<span className="date">
-						{props.author ? props.author.name : ''},&nbsp;
+						{props.author ? <AuthorName user={ props.author } /> : ''},&nbsp;
 						<FormattedRelative value={props.post.date_gmt} />
 					</span>
 					{props.categories.length > 0 &&

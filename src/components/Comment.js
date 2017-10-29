@@ -1,5 +1,6 @@
 import React from 'react';
 
+import AuthorName from './AuthorName';
 import Avatar from './Avatar';
 import PostContent from './PostContent';
 import { User, Comment as CommentShape } from '../shapes';
@@ -13,7 +14,9 @@ export default function Comment( props ) {
 				url={props.author ? props.author.avatar_urls['96'] : ''}
 				size={40}
 			/>
-			<strong>{props.author ? props.author.name : ''}</strong>
+			<strong>
+				{ props.author ? <AuthorName user={ props.author } /> : '' }
+			</strong>
 		</header>
 		<div className="body">
 			<PostContent html={props.comment.content.rendered} />
