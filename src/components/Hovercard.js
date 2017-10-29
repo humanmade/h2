@@ -5,11 +5,11 @@ import { CSSTransition } from 'react-transition-group';
 import './Hovercard.css';
 
 const transition = {
-	component: "div",
-	classNames: "Hovercard-Transition",
-	timeout: {
+	component:  'div',
+	classNames: 'Hovercard-Transition',
+	timeout:    {
 		enter: 300,
-		exit: 300,
+		exit:  300,
 	},
 };
 
@@ -65,9 +65,7 @@ export default class Hovercard extends React.Component {
 	constructor( props ) {
 		super( props );
 
-		this.state = {
-			active: false,
-		};
+		this.state = { active: false };
 
 		this.target = null;
 	}
@@ -100,9 +98,9 @@ export default class Hovercard extends React.Component {
 			React.cloneElement(
 				React.Children.only( this.props.children ),
 				{
-					ref: ref => this.target = ref,
+					ref:         ref => this.target = ref,
 					onMouseOver: () => this.setState( { active: true, shouldShow: true } ),
-					onMouseOut: () => this.setState( { active: false } ),
+					onMouseOut:  () => this.setState( { active: false } ),
 				}
 			)
 		];
