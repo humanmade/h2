@@ -21,7 +21,7 @@ function getPosition( target, width ) {
 	let rect = target.getBoundingClientRect();
 
 	let position = {
-		top: rect.top + window.pageYOffset - document.documentElement.clientTop,
+		top:  rect.top + window.pageYOffset - document.documentElement.clientTop,
 		left: rect.left + window.pageXOffset - document.documentElement.clientLeft,
 	};
 
@@ -102,11 +102,9 @@ export default class Hovercard extends React.Component {
 					onMouseOver: () => this.setState( { active: true, shouldShow: true } ),
 					onMouseOut:  () => this.setState( { active: false } ),
 				}
-			)
+			),
 		];
 	}
 }
 
-Hovercard.defaultProps = {
-	width: 300,
-};
+Hovercard.defaultProps = { width: 300 };
