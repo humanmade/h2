@@ -35,6 +35,7 @@
 	z-index: 99;
 	background: #fff;
 	color: #000;
+	border: 1px solid var( --hm-red );
 	box-shadow: 1px 1px 4px rgba( 0, 0, 0, 0.4 );
 	padding: 16px;
 	margin-top: 10px; /* ::before[height] + offset */
@@ -52,5 +53,5 @@
 	top: -20px; /* -(2 * border) */
 	left: calc( 50% - 10px );
 	border: 10px solid transparent;
-	border-bottom-color: rgba(0, 0, 0, 0.2);
+	border-bottom-color: var( --hm-red );
 }
