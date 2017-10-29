@@ -1,0 +1,56 @@
+@keyframes hovercard-fade-in-up {
+	0% {
+		opacity: 0;
+		transform: translate(0, 20px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translate(0, 0);
+	}
+}
+
+@keyframes hovercard-fade-out-down {
+	0% {
+		opacity: 1;
+		transform: translate(0, 0);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translate(0, 20px);
+	}
+}
+
+.Hovercard-Transition-enter {
+	animation: hovercard-fade-in-up 0.3s ease forwards;
+}
+
+.Hovercard-Transition-exit {
+	animation: hovercard-fade-out-down 0.3s ease forwards;
+}
+
+.Hovercard-Card {
+	position: absolute;
+	z-index: 99;
+	background: #fff;
+	color: #000;
+	box-shadow: 1px 1px 4px rgba( 0, 0, 0, 0.4 );
+	padding: 16px;
+	margin-top: 10px; /* ::before[height] + offset */
+	font-size: 1rem;
+	pointer-events: none;
+	display: flex;
+	flex-direction: column;
+}
+
+.Hovercard-Card::before {
+	display: block;
+	content: " ";
+	position: absolute;
+	z-index: 100;
+	top: -20px; /* -(2 * border) */
+	left: calc( 50% - 10px );
+	border: 10px solid transparent;
+	border-bottom-color: rgba(0, 0, 0, 0.2);
+}
