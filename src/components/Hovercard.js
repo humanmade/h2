@@ -110,6 +110,5 @@ export default class Hovercard extends React.Component {
 }
 
 Hovercard.defaultProps = {
-	cardContent: () => <p />,
 	width: 300,
 };
