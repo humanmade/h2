@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import AuthorName from './AuthorName';
 import Avatar from './Avatar';
-import PostContent from './PostContent';
 import Button from './Button';
+import PostContent from './PostContent';
 import { User, Comment as CommentShape } from '../shapes';
 
 import './Comment.css';
