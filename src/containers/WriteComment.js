@@ -18,7 +18,7 @@ class ConnectedWriteComment extends Component {
 		const newComment = {
 			content,
 			parent: this.props.comment.parent,
-			post: this.props.comment.post,
+			post:   this.props.comment.post,
 		};
 		this.props.dispatch( store.actions.comments.create( newComment ) );
 	}
