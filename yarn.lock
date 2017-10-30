@@ -8012,9 +8012,9 @@ window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
 
-wordpress-rest-api-oauth-2@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/wordpress-rest-api-oauth-2/-/wordpress-rest-api-oauth-2-0.1.0.tgz#543af1f5f7b90d9ef9de70587bc6f9995885624a"
+wordpress-rest-api-oauth-2@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/wordpress-rest-api-oauth-2/-/wordpress-rest-api-oauth-2-0.1.1.tgz#538628588ab0e0375848ec7e1b119ad1ecffb2d4"
   dependencies:
     qs "^6.2.0"
 
