@@ -6,16 +6,16 @@
 	position: absolute;
 	content: '';
 	background: #F1F2EE;
-	left: -42.5px;
+	left: -41px;
 	top: 0;
 	bottom: 0;
-	width: 5px;
+	width: 2px;
 	z-index: -1;
 }
 
 .Comment > header {
 	height: 50px;
-	line-height: 50px;
+	line-height: 40px;
 	display: flex;
 	margin-left: -60px;
 	margin-bottom: 10px;
@@ -26,6 +26,10 @@
 
 .Comment > header > .Avatar {
 	margin-right: 10px;
+}
+
+.Comment > header > strong {
+	flex: 1;
 }
 
 .Comment > .body {

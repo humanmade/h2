@@ -24,7 +24,7 @@ export default class WriteComment extends React.Component {
 			<header>
 				<Avatar
 					url={this.props.author ? this.props.author.avatar_urls['96'] : ''}
-					size={50}
+					size={40}
 				/>
 				<strong>{this.props.author ? this.props.author.name : ''}</strong>
 			</header>
