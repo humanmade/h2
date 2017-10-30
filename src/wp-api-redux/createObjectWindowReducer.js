@@ -43,7 +43,9 @@ export default function createObjectWindowReducer( objectName, options ) {
 				];
 				return {
 					...state,
-					items: nextItems.filter( ( item, idx ) => nextItems.indexOf( item ) === idx ),
+					items: nextItems.filter(
+						( item, idx ) => nextItems.indexOf( item ) === idx
+					),
 					totalObjects: typeof action.payload.totalObjects !== 'undefined'
 						? action.payload.totalObjects
 						: state.totalObjects,
