@@ -11,12 +11,13 @@ class ConnectedWriteComment extends Component {
 	onCancel() {
 		this.props.dispatch( {
 			type:    'WRITE_COMMENT_CANCELLED',
-			payload: { postId: this.props.post.id },
+			payload: { postId: this.props.post.id, comment: this.props.comment },
 		} );
 	}
 	onSave( content ) {
 		const newComment = {
 			content,
+			parent: this.props.comment.parent,
 			post: this.props.comment.post,
 		};
 		this.props.dispatch( store.actions.comments.create( newComment ) );

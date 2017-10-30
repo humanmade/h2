@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import CommentsList from '../components/CommentsList';
 import Post from '../components/Post';
-import { threadComments } from '../lib/comments';
 import {
 	Post as PostShape,
 	PostsState,
@@ -25,8 +24,7 @@ class ConnectedPost extends Component {
 		const post = this.props.post;
 		const author = this.props.users.byId[ post.author ];
 		let comments = Object.values( this.props.comments.byId )
-			.filter( comment => comment.post === post.id );
-		comments = threadComments( comments );
+			.filter( comment => comment.post === post.id && comment.parent === 0 );
 		const categories = post.categories.map( id => this.props.categories.byId[ id ] ).filter( category => !! category )
 
 		const commentsList = (
@@ -35,9 +33,9 @@ class ConnectedPost extends Component {
 				onComment={() => this.onComment()}
 				post={this.props.post}
 				showWriteComment={
-					this.props.writeComments[this.props.post.id].isShowing
+					this.props.writeComments.posts[this.props.post.id].isShowing
 				}
-				writingComment={this.props.writeComments[this.props.post.id].comment}
+				writingComment={this.props.writeComments.posts[this.props.post.id].comment}
 			/>
 		);
 		return <Post author={author}  categories={categories} post={post} onComment={() => this.onComment()}>{commentsList}</Post>
