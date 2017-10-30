@@ -29,20 +29,21 @@ export default function createObjectWindowReducer( objectName, options ) {
 						: state.totalPages,
 				};
 			}
-			case `WP_API_REDUX_FETCH_${objectName.toUpperCase()}_UPDATED`:
+			case `WP_API_REDUX_FETCH_${objectName.toUpperCase()}_UPDATED`: {
+				const nextItems = [
+					...state.items,
+					...action.payload.objects
+						.filter(
+							object =>
+								( options.filter
+									? options.filter( object, window.filter )
+									: true )
+						)
+						.map( object => object.id ),
+				];
 				return {
 					...state,
-					items: [
-						...state.items,
-						...action.payload.objects
-							.filter(
-								object =>
-									( options.filter
-										? options.filter( object, window.filter )
-										: true )
-							)
-							.map( object => object.id ),
-					],
+					items: nextItems.filter( ( item, idx ) => nextItems.indexOf( item ) === idx ),
 					totalObjects: typeof action.payload.totalObjects !== 'undefined'
 						? action.payload.totalObjects
 						: state.totalObjects,
@@ -50,6 +51,7 @@ export default function createObjectWindowReducer( objectName, options ) {
 						? action.payload.totalPages
 						: state.totalPages,
 				};
+			}
 			case `WP_API_REDUX_${objectName.toUpperCase()}_WINDOW_FILTER_UPDATED`:
 				return {
 					...state,
