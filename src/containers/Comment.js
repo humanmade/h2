@@ -19,20 +19,20 @@ class ConnectedComment extends Component {
 		const author = this.props.users.byId[comment.author];
 		const comments = Object.values( this.props.comments.byId ).filter( c => c.parent === comment.id );
 		return <Comment
-				author={author}
-				comment={this.props.comment}
+			author={author}
+			comment={this.props.comment}
+			post={post}
+			onReply={() => this.onReply()}
+		>
+			<CommentsList
+				comments={comments}
 				post={post}
-				onReply={() => this.onReply()}
-			>
-				<CommentsList
-					comments={comments}
-					onComment={() => this.onReply()}
-					post={post}
-					showWriteComment={
-						this.props.writeComments.comments[comment.id].isShowing
-					}
-					writingComment={this.props.writeComments.comments[comment.id].comment}
-				/>
+				showWriteComment={
+					this.props.writeComments.comments[comment.id].isShowing
+				}
+				writingComment={this.props.writeComments.comments[comment.id].comment}
+				onComment={() => this.onReply()}
+			/>
 		</Comment>;
 	}
 }
