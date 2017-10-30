@@ -63,12 +63,20 @@ const objectState = PropTypes.shape( {
 	isLoading: PropTypes.bool.isRequired,
 } );
 
-export const WriteCommentsState = PropTypes.objectOf(
-	PropTypes.shape( {
-		isShowing: PropTypes.bool.isRequired,
-		comment:   Comment.isRequired,
-	} ),
-);
+export const WriteCommentsState = {
+	posts: PropTypes.objectOf(
+		PropTypes.shape( {
+			isShowing: PropTypes.bool.isRequired,
+			comment:   Comment.isRequired,
+		} ),
+	),
+	comments: PropTypes.objectOf(
+		PropTypes.shape( {
+			isShowing: PropTypes.bool.isRequired,
+			comment:   Comment.isRequired,
+		} ),
+	),
+};
 
 export const WritePostState = PropTypes.shape( {
 	isShowing: PropTypes.bool.isRequired,

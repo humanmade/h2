@@ -3,8 +3,8 @@
 	margin-left: 100px;
 }
 
-.CommentsList .Comment {
-	padding-bottom: 1.666666667rem;
+.CommentsList .CommentsList {
+	margin-left: 60px;
 }
 
 .CommentsList .post-reply {

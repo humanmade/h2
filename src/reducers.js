@@ -84,15 +84,16 @@ export default combineReducers( {
 		}
 	},
 	// state: WriteCommentsState = {}, action: Action
-	writeComments: ( state = {}, action ) => {
+	writeComments: ( state = { posts: {}, comments: {} }, action ) => {
 		switch ( action.type ) {
 			case 'WP_API_REDUX_FETCH_POSTS_UPDATED': {
-				const s = { ...state };
+				const s = { ...state.posts };
 				action.payload.objects.forEach( post => {
 					s[post.id] = {
 						isShowing: false,
 						comment:   {
 							post:    post.id,
+							parent:  0,
 							content: {
 								rendered: '',
 								raw:      '',
@@ -103,37 +104,107 @@ export default combineReducers( {
 						},
 					};
 				} );
-				return s;
+				return { ...state, posts: s };
+			}
+			case 'WP_API_REDUX_FETCH_COMMENTS_UPDATED': {
+				const s = { ...state.comments };
+				action.payload.objects.forEach( comment => {
+					s[comment.id] = {
+						isShowing: false,
+						comment:   {
+							post:    comment.post,
+							parent:  comment.id,
+							content: {
+								rendered: '',
+								raw:      '',
+								// edited: '',
+							},
+							author: 0,
+							id:     0,
+						},
+					};
+				} );
+				return { ...state, comments: s };
 			}
 			case 'SHOW_REPLY_TO_POST': {
 				return {
 					...state,
-					[action.payload.postId]: {
-						...state[action.payload.postId],
-						isShowing: true,
+					posts: {
+						...state.posts,
+						[action.payload.postId]: {
+							...state.posts[action.payload.postId],
+							isShowing: true,
+						},
+					},
+				};
+			}
+			case 'SHOW_REPLY_TO_COMMENT': {
+				return {
+					...state,
+					comments: {
+						...state.comments,
+						[action.payload.commentId]: {
+							...state.comments[action.payload.commentId],
+							isShowing: true,
+						},
 					},
 				};
 			}
 			case 'WRITE_COMMENT_CANCELLED': {
-				return {
-					...state,
-					[action.payload.postId]: {
-						...state[action.payload.postId],
-						isShowing: false,
-					},
-				};
+				if ( action.payload.comment.parent ) {
+					return {
+						...state,
+						comments: {
+							...state.comments,
+							[action.payload.comment.parent]: {
+								...state.comments[action.payload.comment.parent],
+								isShowing: false,
+							},
+						},
+					};
+				} else {
+					return {
+						...state,
+						posts: {
+							...state.posts,
+							[action.payload.postId]: {
+								...state.posts[action.payload.postId],
+								isShowing: false,
+							},
+						},
+					};
+				}
 			}
 			case 'WRITE_COMMENT_UPDATED': {
-				return {
-					...state,
-					[action.payload.postId]: {
-						...state[action.payload.postId],
-						comment: {
-							...state[action.payload.postId].comment,
-							...action.payload.comment,
+				if ( action.payload.comment.parent ) {
+					return {
+						...state,
+						comments: {
+							...state.comments,
+							[action.payload.comment.parent]: {
+								...state.comments[action.payload.comment.parent],
+								comment: {
+									...state.comments[action.payload.comment.parent].comment,
+									...action.payload.comment,
+								},
+							},
 						},
-					},
-				};
+					};
+				} else {
+					return {
+						...state,
+						posts: {
+							...state.posts,
+							[action.payload.postId]: {
+								...state.posts[action.payload.postId],
+								comment: {
+									...state.posts[action.payload.postId].comment,
+									...action.payload.comment,
+								},
+							},
+						},
+					};
+				}
 			}
 			case 'WP_API_REDUX_CREATE_COMMENTS_UPDATED': {
 				return {
