@@ -29,7 +29,7 @@
 }
 
 .Comment > header > strong {
-	flex: 1;
+	flex-grow: 1;
 }
 
 .Comment > .body {
