@@ -1,4 +1,22 @@
+.Avatar {
+	position: relative;
+}
+
 .Avatar img {
     max-width: initial;
     border-radius: 100%;
+    background-color: #FFF;
+}
+
+.Avatar:after {
+	content: ' ';
+    display: block;
+    right: 0;
+    bottom: 0;
+    border: 2px solid rgba(0,0,0,0.075);
+    border-radius: 100%;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
 }

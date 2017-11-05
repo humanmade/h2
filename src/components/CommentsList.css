@@ -1,6 +1,6 @@
 .CommentsList {
 	flex-direction: column;
-	margin-left: 100px;
+	margin-left: calc( 30px + 3.333rem + 60px );
 }
 
 .CommentsList .CommentsList {

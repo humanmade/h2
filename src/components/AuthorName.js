@@ -27,6 +27,7 @@ export default class AuthorName extends React.Component {
 	render() {
 		const { user } = this.props;
 		return <Hovercard
+			key={ user.id }
 			cardContent={ () => this.renderCard() }
 			width={ 500 }
 		>

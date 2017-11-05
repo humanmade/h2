@@ -72,3 +72,7 @@
 .Post > .PostContent {
 	margin-left: 90px;
 }
+
+.Post .actions button:last-child {
+	margin-right: 0;
+}

@@ -8,7 +8,13 @@ export default function Avatar( props ) {
 		width:  props.size,
 		height: props.size,
 	};
-	return <div className="Avatar">
+	return <div
+		className="Avatar"
+		style={ {
+			width: props.size + 'px',
+			height: props.size + 'px'
+		} }
+	>
 		<img
 			style={style}
 			alt="User Avatar"
