@@ -8,8 +8,8 @@ const transition = {
 	component:  'div',
 	classNames: 'Hovercard-Transition',
 	timeout:    {
-		enter: 300,
-		exit:  300,
+		enter: 100,
+		exit:  100,
 	},
 };
 

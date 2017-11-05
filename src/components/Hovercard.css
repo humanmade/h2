@@ -23,11 +23,11 @@
 }
 
 .Hovercard-Transition-enter {
-	animation: hovercard-fade-in-up 0.3s ease forwards;
+	animation: hovercard-fade-in-up 0.1s ease forwards;
 }
 
 .Hovercard-Transition-exit {
-	animation: hovercard-fade-out-down 0.3s ease forwards;
+	animation: hovercard-fade-out-down 0.1s ease forwards;
 }
 
 .Hovercard-Card {
