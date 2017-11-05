@@ -1,3 +1,7 @@
+.Editor {
+	padding-bottom: 1.66667rem;
+}
+
 .Editor-header {
 	display: flex;
 	justify-content: space-between;
@@ -20,14 +24,11 @@
 .Editor-tabs label {
 	all: unset;
 	cursor: pointer;
-	/*font: inherit;*/
-	/*color: inherit;*/
 }
 
 .Editor-tabs label span {
 	display: inline-block;
-	padding: 7.5px;
-
+	padding: 7.5px 12px;
 	border: 2px solid transparent;
 	border-bottom-style: none;
 	border-radius: 4px 4px 0 0;
@@ -55,6 +56,26 @@
 	margin: -0.25rem 0;
 }
 
+.Editor-toolbar button {
+	outline: none;
+}
+
+.Editor-toolbar .separator {
+	display: none;
+}
+
+.Editor-toolbar .svg-icon {
+	width: 1rem;
+	height: 1rem;
+	display: block;
+	opacity: 0.5;
+}
+
+.Editor-toolbar button:hover .svg-icon,
+.Editor-toolbar button:focus .svg-icon {
+	opacity: 1;
+}
+
 .Editor-toolbar button:hover,
 .Editor-toolbar button:focus {
 	color: #00a0d2;
@@ -64,8 +85,19 @@
 	margin-left: 0.5rem;
 }
 
+.Editor-tabs,
+.Editor-toolbar {
+    font-family: "proxima-nova", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    color: #504C4C;
+    font-size: .777777778rem;
+    line-height: 1.4285;
+}
+
 .Editor .DropUpload {
-	margin-bottom: 1.66667rem;
+	margin-bottom: 1rem;
 }
 .Editor .DropUpload-status {
 	border: 2px solid #d9d9d9;
@@ -90,6 +122,8 @@
 	border-bottom: none;
 	background-color: #fff;
 	margin-bottom: 0;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
 }
 
 .Editor-preview {
@@ -107,6 +141,16 @@
 	align-items: center;
 }
 
-.Editor-submit-buttons .Button {
-	margin-left: 0.5rem;
+.Editor-submit-buttons button {
+	margin-bottom: 0;
+}
+
+.Editor-submit-buttons button:last-child {
+	margin-right: 0;
+}
+
+.Editor-editor:focus,
+.Editor-editor:active,
+.Editor-editor:hover {
+	border-color: #d9d9d9;
 }
