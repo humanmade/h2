@@ -87,18 +87,19 @@
 
 .Editor-tabs,
 .Editor-toolbar {
-    font-family: "proxima-nova", sans-serif;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.01em;
-    color: #504C4C;
-    font-size: .777777778rem;
-    line-height: 1.4285;
+	font-family: "proxima-nova", sans-serif;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.01em;
+	color: #504C4C;
+	font-size: .777777778rem;
+	line-height: 1.4285;
 }
 
 .Editor .DropUpload {
 	margin-bottom: 1rem;
 }
+
 .Editor .DropUpload-status {
 	border: 2px solid #d9d9d9;
 	border-top-style: dashed;
