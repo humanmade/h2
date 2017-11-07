@@ -6,6 +6,10 @@
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/@hypnosphi/fuse.js/-/fuse.js-3.0.9.tgz#ea99f6121b4a8f065b4c71f85595db2714498807"
 
+"@iarna/word-count@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@iarna/word-count/-/word-count-1.0.3.tgz#9c8c125f73a7adcc90eb7ee13aec1d3203378822"
+
 "@storybook/addon-actions@^3.2.12":
   version "3.2.12"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-3.2.12.tgz#58ea949a02bd9ee956da7f30802677a44d9db024"

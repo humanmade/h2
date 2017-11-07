@@ -1,3 +1,4 @@
+import countWords from '@iarna/word-count';
 import { emojiIndex } from 'emoji-mart';
 import marked from 'marked';
 import PropTypes from 'prop-types';
@@ -50,6 +51,7 @@ class Editor extends React.PureComponent {
 
 		this.state = {
 			content:   '',
+			count:     0,
 			height:    null,
 			mode:      'edit',
 			uploading: null,
@@ -69,6 +71,12 @@ class Editor extends React.PureComponent {
 		if ( desired > height ) {
 			this.setState( { height: desired } );
 		}
+
+		this.setState( state => {
+			const count = countWords( state.content );
+
+			return { count };
+		} );
 	}
 
 	updateTextarea( ref ) {
@@ -156,7 +164,7 @@ class Editor extends React.PureComponent {
 	}
 
 	render() {
-		const { content, height, mode } = this.state;
+		const { content, count, height, mode } = this.state;
 
 		return <form
 			className={ mode === 'preview' ? 'Editor previewing' : 'Editor' }
@@ -229,6 +237,8 @@ class Editor extends React.PureComponent {
 
 			<p className="Editor-submit">
 				<small>
+					<span>{ count === 1 ? '1 word' : `${count.toLocaleString()} words` }</span>
+					<br />
 					<a
 						href="http://commonmark.org/help/"
 						rel="noopener noreferrer"

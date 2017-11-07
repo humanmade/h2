@@ -16,6 +16,7 @@
     "react-scripts": "^1.0.14"
   },
   "dependencies": {
+    "@iarna/word-count": "^1.0.3",
     "emoji-mart": "^2.1.1",
     "marked": "^0.3.6",
     "postcss-loader": "^2.0.8",
