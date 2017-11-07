@@ -2,6 +2,7 @@
 	display: block;
 	word-wrap: break-word;
 	word-break: break-word;
+	overflow: auto;
 }
 
 .PostContent img {
@@ -30,8 +31,12 @@
 	margin-right: auto;
 }
 
-.PostContent > p:first-child {
+.PostContent > *:first-child {
 	margin-top: 0;
+}
+
+.PostContent > *:last-child {
+	margin-bottom: 0;
 }
 
 .PostContent #hm_weekly_stats {
@@ -61,4 +66,28 @@
 
 .PostContent #hm_weekly_stats ul li img {
 	border-radius: 16px;
+}
+
+.PostContent p,
+.PostContent ul,
+.PostContent ol,
+.PostContent .text-std {
+	margin: 1rem 0
+}
+
+.PostContent h1,
+.PostContent h2,
+.PostContent h3,
+.PostContent h4,
+.PostContent h5,
+.PostContent h6 {
+	font-size: 1rem;
+	line-height: 1.555rem;
+	margin: 1rem 0;
+	text-transform: none;
+}
+
+.PostContent blockquote,
+.PostContent hr {
+	margin: 1.66667rem 0;
 }
