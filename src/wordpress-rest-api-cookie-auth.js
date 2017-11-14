@@ -1,0 +1,102 @@
+import qs from 'qs';
+import { parseResponse } from 'wordpress-rest-api-oauth-2';
+
+export default class {
+	constructor( config ) {
+		this.url = config.rest_url ? config.rest_url : config.url + 'wp-json';
+		this.url = this.url.replace( /\/$/, '' );
+		this.credentials = Object.assign( {}, config.credentials );
+		this.config = config;
+	}
+
+	getAuthorizationHeader() {
+		if ( ! this.credentials.nonce ) {
+			return {};
+		}
+
+		return { 'X-WP-Nonce': this.config.credentials.nonce };
+	}
+
+	authorize( next ) {
+		return Promise.resolve( 'Success' );
+	}
+
+	saveCredentials() {
+		// no op.
+	}
+
+	removeCredentials() {
+		// no op.
+	}
+
+	hasCredentials() {
+		return true;
+	}
+
+	restoreCredentials() {
+		return this;
+	}
+
+	get( url, data ) {
+		return this.request( 'GET', url, data );
+	}
+
+	post( url, data ) {
+		return this.request( 'POST', url, data );
+	}
+
+	del( url, data ) {
+		return this.request( 'DELETE', url, data );
+	}
+
+	request( method, url, data = null ) {
+		if ( url.indexOf( 'http' ) !== 0 ) {
+			url = this.url + url;
+		}
+
+		if ( method === 'GET' && data ) {
+			url += `?${decodeURIComponent( qs.stringify( data ) )}`;
+			data = null;
+		}
+
+		let headers = { Accept: 'application/json' };
+
+		if ( method !== 'GET' && method !== 'HEAD' && data ) {
+			headers['Content-Type'] = 'application/x-www-form-urlencoded';
+		}
+
+		/**
+		 * Only attach the oauth headers if we have a nonce
+		 */
+		if ( this.credentials.nonce ) {
+			headers = { ...headers, ...this.getAuthorizationHeader() };
+		}
+
+		const opts = {
+			method,
+			headers,
+			credentials: 'include',
+			body: [ 'GET', 'HEAD' ].indexOf( method ) > -1 ? null : qs.stringify( data ),
+		};
+
+		return fetch( url, opts ).then( parseResponse );
+	}
+
+	fetch( url, options ) {
+		// Make URL absolute
+		const relUrl = url[0] === '/' ? url.substring( 1 ) : url;
+		const absUrl = new URL( relUrl, this.url + '/' );
+
+		// Clone options
+		const actualOptions = { headers: {}, ...options };
+
+		/**
+		 * Only attach the oauth headers if we have a nonce
+		 */
+		if ( this.credentials.nonce ) {
+			actualOptions.headers = { ...actualOptions.headers, ...this.getAuthorizationHeader() };
+		}
+
+		return fetch( absUrl, actualOptions );
+	}
+}
