@@ -10,6 +10,11 @@ import store from '../store';
 const DRAFT_KEY = 'h2-draft-post';
 
 class ConnectedWritePost extends Component {
+	componentWillMount() {
+		const autosave = window.localStorage.getItem( DRAFT_KEY ) || '';
+		this.setState( { autosave } );
+	}
+
 	onCancel() {
 		this.props.dispatch( { type: 'WRITE_POST_CANCELLED' } );
 	}
@@ -38,6 +43,7 @@ class ConnectedWritePost extends Component {
 		const author = Object.values( this.props.user.byId )[0];
 		return <WritePost
 			author={author}
+			autosave={ this.state.autosave }
 			post={post}
 			onAutosave={ content => this.onAutosave( content ) }
 			onCancel={() => this.onCancel()}

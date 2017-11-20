@@ -23,6 +23,7 @@ export default function WritePost( props ) {
 			<div className="actions"></div>
 		</header>
 		<Editor
+				defaultValue={ props.autosave }
 				submitText="Publish"
 				onAutosave={ props.onAutosave }
 				onCancel={props.onCancel}
@@ -36,6 +37,7 @@ export default function WritePost( props ) {
 
 WritePost.propTypes = {
 	author:   User,
+	autosave: PropTypes.string,
 	post:     Post.isRequired,
 	onAutosave: PropTypes.func.isRequired,
 	onCancel: PropTypes.func.isRequired,

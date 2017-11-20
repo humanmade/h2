@@ -51,7 +51,7 @@ class Editor extends React.PureComponent {
 		super( props );
 
 		this.state = {
-			content:   '',
+			content:   props.defaultValue,
 			count:     0,
 			height:    null,
 			mode:      'edit',
@@ -272,13 +272,17 @@ class Editor extends React.PureComponent {
 	}
 }
 
-Editor.defaultProps = { submitText: 'Comment' };
+Editor.defaultProps = {
+	defaultValue: '',
+	submitText:   'Comment',
+};
 
 Editor.propTypes = {
-	submitText: PropTypes.string,
-	onCancel:   PropTypes.func,
-	onAutosave: PropTypes.func,
-	onSubmit:   PropTypes.func.isRequired,
+	defaultValue: PropTypes.string,
+	submitText:   PropTypes.string,
+	onCancel:     PropTypes.func,
+	onAutosave:   PropTypes.func,
+	onSubmit:     PropTypes.func.isRequired,
 };
 
 export default connect( state => ( { users: state.users.byId } ), null, null, { withRef: true } )(
