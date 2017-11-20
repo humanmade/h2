@@ -17,6 +17,7 @@ class ConnectedWritePost extends Component {
 
 	onCancel() {
 		this.props.dispatch( { type: 'WRITE_POST_CANCELLED' } );
+		window.localStorage.removeItem( DRAFT_KEY );
 	}
 
 	onAutosave( content ) {
@@ -32,6 +33,7 @@ class ConnectedWritePost extends Component {
 			status: 'publish',
 		};
 		this.props.dispatch( store.actions.posts.create( newPost ) );
+		window.localStorage.removeItem( DRAFT_KEY );
 	}
 
 	onUpload( file ) {
