@@ -7,9 +7,7 @@ export default class Dropdown extends React.PureComponent {
 	constructor( props ) {
 		super( props );
 
-		this.state = {
-			expanded: false,
-		};
+		this.state = { expanded: false };
 		this.documentClickListener = e => this.onDocumentClick( e );
 	}
 
@@ -26,7 +24,7 @@ export default class Dropdown extends React.PureComponent {
 		// Remove handler.
 		document.removeEventListener( 'click', this.documentClickListener );
 
-		this.setState({ expanded: false });
+		this.setState( { expanded: false } );
 		this.props.onToggle( false );
 	}
 
@@ -42,7 +40,7 @@ export default class Dropdown extends React.PureComponent {
 			document.removeEventListener( 'click', this.documentClickListener );
 		}
 
-		this.setState({ expanded: ! expanded });
+		this.setState( { expanded: ! expanded } );
 		this.props.onToggle( ! expanded );
 	}
 

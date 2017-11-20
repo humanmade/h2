@@ -15,7 +15,7 @@ export default class CurrentUserDropDown extends React.Component {
 				key="avatar"
 				size={ 40 }
 				url={ user.avatar_urls['96'] }
-			/>
+			/>,
 		];
 
 		return <Dropdown
