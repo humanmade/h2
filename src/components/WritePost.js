@@ -24,6 +24,7 @@ export default function WritePost( props ) {
 		</header>
 		<Editor
 				submitText="Publish"
+				onAutosave={ props.onAutosave }
 				onCancel={props.onCancel}
 				onSubmit={props.onSave}
 				onUpload={ props.onUpload }
@@ -36,6 +37,7 @@ export default function WritePost( props ) {
 WritePost.propTypes = {
 	author:   User,
 	post:     Post.isRequired,
+	onAutosave: PropTypes.func.isRequired,
 	onCancel: PropTypes.func.isRequired,
 	onChange: PropTypes.func.isRequired,
 	onSave:   PropTypes.func.isRequired,

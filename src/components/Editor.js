@@ -1,5 +1,6 @@
 import countWords from '@iarna/word-count';
 import { emojiIndex } from 'emoji-mart';
+import debounce from 'lodash/debounce';
 import marked from 'marked';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -57,6 +58,14 @@ class Editor extends React.PureComponent {
 			uploading: null,
 		};
 		this.textarea = null;
+
+		this.autosave = debounce(
+			() => {
+				this.props.onAutosave( this.state.content );
+			},
+			150,
+			{ maxWait: 2000 }
+		);
 	}
 
 	componentDidUpdate() {
@@ -95,6 +104,11 @@ class Editor extends React.PureComponent {
 			displayTpl: item => `<li>${item.native} ${item.colons} </li>`,
 			insertTpl:  item => item.native,
 		} );
+	}
+
+	onChange = ( e ) => {
+		this.setState( { content: e.target.value } );
+		this.autosave();
 	}
 
 	onSubmit( e ) {
@@ -230,7 +244,7 @@ class Editor extends React.PureComponent {
 						style={{ height }}
 						value={ content }
 						onBlur={ () => this.onBlur() }
-						onChange={ e => this.setState( { content: e.target.value } ) }
+						onChange={ this.onChange }
 					/>
 				) }
 			</DropUpload>
@@ -263,6 +277,7 @@ Editor.defaultProps = { submitText: 'Comment' };
 Editor.propTypes = {
 	submitText: PropTypes.string,
 	onCancel:   PropTypes.func,
+	onAutosave: PropTypes.func,
 	onSubmit:   PropTypes.func.isRequired,
 };
 
