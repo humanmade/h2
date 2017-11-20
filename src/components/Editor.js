@@ -54,6 +54,7 @@ class Editor extends React.PureComponent {
 			content:   props.defaultValue,
 			count:     0,
 			height:    null,
+			lastSave:  null,
 			mode:      'edit',
 			uploading: null,
 		};
@@ -62,6 +63,7 @@ class Editor extends React.PureComponent {
 		this.autosave = debounce(
 			() => {
 				this.props.onAutosave( this.state.content );
+				this.setState( { lastSave: this.state.content } );
 			},
 			150,
 			{ maxWait: 2000 }
@@ -178,7 +180,7 @@ class Editor extends React.PureComponent {
 	}
 
 	render() {
-		const { content, count, height, mode } = this.state;
+		const { content, count, height, lastSave, mode } = this.state;
 
 		return <form
 			className={ mode === 'preview' ? 'Editor previewing' : 'Editor' }
@@ -251,7 +253,12 @@ class Editor extends React.PureComponent {
 
 			<p className="Editor-submit">
 				<small>
-					<span>{ count === 1 ? '1 word' : `${count.toLocaleString()} words` }</span>
+					<span>
+						{ count === 1 ? '1 word' : `${count.toLocaleString()} words` }
+						{ lastSave === content ?
+							<span className="Editor-save-indicator">Saved</span>
+						: null }
+					</span>
 					<br />
 					<a
 						href="http://commonmark.org/help/"
