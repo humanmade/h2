@@ -108,7 +108,7 @@ class Editor extends React.PureComponent {
 		} );
 	}
 
-	onChange = ( e ) => {
+	onChange( e ) {
 		this.setState( { content: e.target.value } );
 		this.autosave();
 	}
@@ -246,7 +246,7 @@ class Editor extends React.PureComponent {
 						style={{ height }}
 						value={ content }
 						onBlur={ () => this.onBlur() }
-						onChange={ this.onChange }
+						onChange={ e => this.onChange( e ) }
 					/>
 				) }
 			</DropUpload>
