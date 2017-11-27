@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 
 import Comment from '../components/Comment';
 import CommentsList from '../components/CommentsList';
-import { Comment as CommentShape, PostsState, UsersState } from '../shapes';
+import { Comment as CommentShape } from '../shapes';
+
+import { withApiData } from '../with-api-data';
 
 class ConnectedComment extends Component {
 	onReply() {
@@ -15,9 +17,9 @@ class ConnectedComment extends Component {
 	}
 	render() {
 		const comment = this.props.comment;
-		const post = this.props.posts.byId[comment.post];
-		const author = this.props.users.byId[comment.author];
-		const comments = Object.values( this.props.comments.byId ).filter( c => c.parent === comment.id );
+		const post = this.props.post;
+		const author = this.props.author.data;
+		const directComments = this.props.comments.filter( c => c.parent === comment.id );
 		return <Comment
 			author={author}
 			comment={this.props.comment}
@@ -25,12 +27,13 @@ class ConnectedComment extends Component {
 			onReply={() => this.onReply()}
 		>
 			<CommentsList
-				comments={comments}
+				allComments={this.props.comments}
+				comments={directComments}
 				post={post}
 				showWriteComment={
-					this.props.writeComments.comments[comment.id].isShowing
+					this.props.writeComments.comments[comment.id] && this.props.writeComments.comments[comment.id].isShowing
 				}
-				writingComment={this.props.writeComments.comments[comment.id].comment}
+				writingComment={this.props.writeComments.comments[comment.id] && this.props.writeComments.comments[comment.id].comment}
 				onComment={() => this.onReply()}
 			/>
 		</Comment>;
@@ -38,10 +41,8 @@ class ConnectedComment extends Component {
 }
 
 ConnectedComment.propTypes = {
-	posts:   PostsState.isRequired,
-	users:   UsersState.isRequired,
-	comment: CommentShape.isRequired,
-	chidren: PropTypes.any,
+	comment:  CommentShape.isRequired,
+	children: PropTypes.any,
 };
 
-export default connect( s => s )( ConnectedComment );
+export default withApiData( props => ( { author: `/wp/v2/users/${ props.comment.author }` } ) )( connect( s => s )( ConnectedComment ) );

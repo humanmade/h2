@@ -6,10 +6,11 @@ import HeaderButton from './HeaderButton';
 import Logo from './Logo';
 import SearchInput from './SearchInput';
 import { User } from '../shapes';
+import { withApiData } from '../with-api-data';
 
 import './Header.css';
 
-export default function Header( props ) {
+function Header( props ) {
 	return <div className="Header">
 		<div className="Inner">
 			<Logo />
@@ -20,10 +21,10 @@ export default function Header( props ) {
 				path="new-post"
 			/>
 			<SearchInput onSearch={props.onSearch} value={props.searchValue} />
-			{props.currentUser
-				? <CurrentUserDropDown user={props.currentUser} />
+			{props.currentUser.data
+				? <CurrentUserDropDown user={props.currentUser.data} />
 				: null}
-			{ props.currentUser ?
+			{ props.currentUser.data ?
 				<HeaderButton
 					onClick={ props.onLogOut }
 					title="Log Out"
@@ -44,3 +45,5 @@ Header.propTypes = {
 	onWriteStatus: PropTypes.func.isRequired,
 	onSearch:      PropTypes.func.isRequired,
 };
+
+export default withApiData( props => ( { currentUser: '/wp/v2/users/me' } ) )( Header );

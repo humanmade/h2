@@ -5,13 +5,12 @@ import CommentsList from '../components/CommentsList';
 import Post from '../components/Post';
 import {
 	Post as PostShape,
-	PostsState,
-	UsersState,
 	Dispatch,
-	CommentsState,
 	WriteCommentsState,
 	CategoriesState,
 } from '../shapes';
+
+import { withApiData } from '../with-api-data';
 
 class ConnectedPost extends Component {
 	onComment() {
@@ -21,21 +20,23 @@ class ConnectedPost extends Component {
 		} );
 	}
 	render() {
+		if ( ! this.props.writeComments ) {
+			debugger
+		}
 		const post = this.props.post;
-		const author = this.props.users.byId[ post.author ];
-		let comments = Object.values( this.props.comments.byId )
-			.filter( comment => comment.post === post.id && comment.parent === 0 );
-		const categories = post.categories.map( id => this.props.categories.byId[ id ] ).filter( category => !! category )
-
+		const author = this.props.author.data;
+		let comments = this.props.comments.data ? this.props.comments.data.filter( comment => comment.parent === 0 ) : [];
+		const categories = this.props.categories.data ? this.props.categories.data : [];
 		const commentsList = (
 			<CommentsList
+				allComments={this.props.comments.data ? this.props.comments.data : []}
 				comments={comments}
 				onComment={() => this.onComment()}
 				post={this.props.post}
 				showWriteComment={
-					this.props.writeComments.posts[this.props.post.id].isShowing
+					this.props.writeComments.posts[this.props.post.id] && this.props.writeComments.posts[this.props.post.id].isShowing
 				}
-				writingComment={this.props.writeComments.posts[this.props.post.id].comment}
+				writingComment={this.props.writeComments.posts[this.props.post.id] && this.props.writeComments.posts[this.props.post.id].comment}
 			/>
 		);
 		return <Post author={author}  categories={categories} post={post} onComment={() => this.onComment()}>{commentsList}</Post>
@@ -44,12 +45,15 @@ class ConnectedPost extends Component {
 
 ConnectedPost.propTypes = {
 	dispatch:      Dispatch.isRequired,
-	comments:      CommentsState.isRequired,
 	categories:    CategoriesState.isRequired,
 	post:          PostShape.isRequired,
-	posts:         PostsState.isRequired,
-	users:         UsersState.isRequired,
 	writeComments: WriteCommentsState.isRequired,
 };
 
-export default connect( s => s )( ConnectedPost );
+const mapPropsToData = props => ( {
+	comments:   `/wp/v2/comments?post=${ props.post.id }&per_page=100`,
+	author:     `/wp/v2/users/${ props.post.author }`,
+	categories: `/wp/v2/categories?include=${ props.post.categories.join( ',' ) }`,
+} );
+
+export default withApiData( mapPropsToData )( connect( s => s )( ConnectedPost ) );
