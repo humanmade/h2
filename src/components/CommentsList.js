@@ -11,7 +11,7 @@ export default class CommentsList extends Component {
 	render() {
 		return <div className="CommentsList">
 			{this.props.comments.map( comment => (
-				<CommentComponent key={comment.id} comment={comment} />
+				<CommentComponent post={this.props.post} key={comment.id} comments={this.props.allComments} comment={comment} />
 			) ) }
 			{this.props.showWriteComment &&
 				<WriteComment post={this.props.post} comment={this.props.writingComment} />
@@ -21,6 +21,7 @@ export default class CommentsList extends Component {
 }
 
 CommentsList.propTypes = {
+	allComments:      PropTypes.arrayOf( Comment ).isRequired,
 	comments:         PropTypes.arrayOf( Comment ).isRequired,
 	post:             Post.isRequired,
 	showWriteComment: PropTypes.bool.isRequired,

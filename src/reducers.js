@@ -3,12 +3,6 @@ import { combineReducers } from 'redux';
 import store from './store';
 
 export default combineReducers( {
-	user:       store.reducers.user,
-	users:      store.reducers.users,
-	categories: store.reducers.categories,
-	posts:      store.reducers.posts,
-	tags:       store.reducers.tags,
-	comments:   store.reducers.comments,
 	media:      store.reducers.media,
 	reactions:  ( state = {}, action ) => {
 		const s = { ...state };
