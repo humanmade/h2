@@ -20,14 +20,11 @@ export default function Header( props ) {
 				path="new-post"
 			/>
 			<SearchInput onSearch={props.onSearch} value={props.searchValue} />
-			{props.currentUser
-				? <CurrentUserDropDown user={props.currentUser} />
-				: null}
+
 			{ props.currentUser ?
-				<HeaderButton
-					onClick={ props.onLogOut }
-					title="Log Out"
-					path="log-out"
+				<CurrentUserDropDown
+					onLogOut={ props.onLogOut }
+					user={ props.currentUser }
 				/>
 			: null }
 		</div>
