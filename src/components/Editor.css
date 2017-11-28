@@ -134,6 +134,11 @@
 	margin-bottom: 1.66667rem;
 }
 
+.Editor-save-indicator {
+	color: var( --hm-medium-grey );
+	margin-left: 1em;
+}
+
 .Editor-submit {
 	padding-left: 5px;
 	margin: 0;

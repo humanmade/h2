@@ -1,5 +1,6 @@
 import countWords from '@iarna/word-count';
 import { emojiIndex } from 'emoji-mart';
+import debounce from 'lodash/debounce';
 import marked from 'marked';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -50,13 +51,23 @@ class Editor extends React.PureComponent {
 		super( props );
 
 		this.state = {
-			content:   '',
+			content:   props.defaultValue,
 			count:     0,
 			height:    null,
+			lastSave:  null,
 			mode:      'edit',
 			uploading: null,
 		};
 		this.textarea = null;
+
+		this.autosave = debounce(
+			() => {
+				this.props.onAutosave( this.state.content );
+				this.setState( { lastSave: this.state.content } );
+			},
+			150,
+			{ maxWait: 2000 }
+		);
 	}
 
 	componentDidUpdate() {
@@ -95,6 +106,11 @@ class Editor extends React.PureComponent {
 			displayTpl: item => `<li>${item.native} ${item.colons} </li>`,
 			insertTpl:  item => item.native,
 		} );
+	}
+
+	onChange( e ) {
+		this.setState( { content: e.target.value } );
+		this.autosave();
 	}
 
 	onSubmit( e ) {
@@ -164,7 +180,7 @@ class Editor extends React.PureComponent {
 	}
 
 	render() {
-		const { content, count, height, mode } = this.state;
+		const { content, count, height, lastSave, mode } = this.state;
 
 		return <form
 			className={ mode === 'preview' ? 'Editor previewing' : 'Editor' }
@@ -230,14 +246,19 @@ class Editor extends React.PureComponent {
 						style={{ height }}
 						value={ content }
 						onBlur={ () => this.onBlur() }
-						onChange={ e => this.setState( { content: e.target.value } ) }
+						onChange={ e => this.onChange( e ) }
 					/>
 				) }
 			</DropUpload>
 
 			<p className="Editor-submit">
 				<small>
-					<span>{ count === 1 ? '1 word' : `${count.toLocaleString()} words` }</span>
+					<span>
+						{ count === 1 ? '1 word' : `${count.toLocaleString()} words` }
+						{ lastSave === content ?
+							<span className="Editor-save-indicator">Saved</span>
+						: null }
+					</span>
 					<br />
 					<a
 						href="http://commonmark.org/help/"
@@ -258,12 +279,17 @@ class Editor extends React.PureComponent {
 	}
 }
 
-Editor.defaultProps = { submitText: 'Comment' };
+Editor.defaultProps = {
+	defaultValue: '',
+	submitText:   'Comment',
+};
 
 Editor.propTypes = {
-	submitText: PropTypes.string,
-	onCancel:   PropTypes.func,
-	onSubmit:   PropTypes.func.isRequired,
+	defaultValue: PropTypes.string,
+	submitText:   PropTypes.string,
+	onCancel:     PropTypes.func,
+	onAutosave:   PropTypes.func,
+	onSubmit:     PropTypes.func.isRequired,
 };
 
 export default connect( state => ( { users: state.users.byId } ), null, null, { withRef: true } )(
