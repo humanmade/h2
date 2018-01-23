@@ -6,7 +6,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-import { RESTAPIContext } from './with-api-data';
+import { Provider as RestApiProvider } from './with-api-data';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App';
 import reducers from './reducers';
@@ -23,9 +24,11 @@ const render = Main => {
 	ReactDOM.render(
 		<Provider store={store}>
 			<IntlProvider locale="en">
-				<RESTAPIContext api={ api }>
-					<Main />
-				</RESTAPIContext>
+				<RestApiProvider fetch={( url, ...args ) => api.fetch( url, ...args )}>
+					<Router>
+						<Main />
+					</Router>
+				</RestApiProvider>
 			</IntlProvider>
 		</Provider>,
 		document.getElementById( 'root' )

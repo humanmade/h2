@@ -1,32 +1,43 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Route, withRouter } from 'react-router-dom';
 
-import api from './api';
+import { fetchCurrentUser } from './actions';
 
 import Header from './components/Header';
 import PostsList from './components/PostsList';
-import WritePost from './containers/WritePost';
+import WritePost from './components/WritePost';
 
 import './App.css';
 
 class App extends Component {
+	constructor( props ) {
+		super( props );
+		this.state = { isShowingWritePost: false };
+	}
 	componentWillMount() {
-		if ( api.config.credentials ) {
-			api.restoreCredentials().authorize().then( () => {
-				api.saveCredentials();
-			} );
-		}
+		this.props.dispatch( fetchCurrentUser() );
 	}
 
 	onLogOut() {
-		api.removeCredentials();
-		window.location.reload();
 	}
-
 	onWriteStatus() {}
 
-	onWritePost() {
-		this.props.dispatch( { type: 'SHOW_WRITE_POST' } );
+	onClickWritePost() {
+		this.setState( { isShowingWritePost: true } )
+	}
+
+	onCancelWritePost() {
+		this.setState( { isShowingWritePost: false } )
+	}
+
+	onSearch( string ) {
+		this.props.history.push( string ? `/search/${ string }` : '/' );
+	}
+
+	onWrotePost( post ) {
+		this.setState({ isShowingWritePost: false })
+		this.props.history.push( post.link.replace( /^(?:\/\/|[^/]+)*\//, '/' ) );
 	}
 
 	render() {
@@ -34,15 +45,19 @@ class App extends Component {
 			<Header
 				onLogOut={ () => this.onLogOut() }
 				onWriteStatus={() => this.onWriteStatus()}
-				onWritePost={() => this.onWritePost()}
+				onWritePost={() => this.onClickWritePost()}
 				onSearch={search => this.onSearch( search )}
 			/>
 			<div className="Inner">
-				{this.props.writePost.isShowing ? <WritePost /> : null}
-				<PostsList />
+				{this.state.isShowingWritePost ? <WritePost onWrotePost={ post => this.onWrotePost( post )} onCancel={() => this.onCancelWritePost()} /> : null}
+				<Route path="/" exact component={PostsList} />
+				<Route path="/page/:page" exact component={PostsList} />
+				<Route path="/search/:search" exact component={PostsList} />
+				<Route path="/category/:categorySlug" exact component={PostsList} />
+				<Route path="/:slug" exact component={PostsList} />
 			</div>
 		</div>;
 	}
 }
 
-export default connect( s => s )( App );
+export default connect( s => s, null, null, { pure: false } )( withRouter( App ) );

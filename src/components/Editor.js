@@ -3,7 +3,8 @@ import { emojiIndex } from 'emoji-mart';
 import marked from 'marked';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
+
+import { withApiData } from '../with-api-data'
 
 import Button from './Button';
 import DropUpload from './DropUpload';
@@ -87,7 +88,7 @@ class Editor extends React.PureComponent {
 		this.textarea = ref;
 		window.jQuery( ref ).atwho( {
 			at:   '@',
-			data: Object.values( this.props.users ).map( user => user.slug ),
+			data: Object.values( this.props.users.data ? this.props.users.data : [] ).map( user => user.slug ),
 		} );
 		window.jQuery( ref ).atwho( {
 			at:         ':',
@@ -211,8 +212,8 @@ class Editor extends React.PureComponent {
 								title={BUTTONS[type].title}
 								type="button"
 							>
-								<span class="svg-icon" dangerouslySetInnerHTML={ { __html: BUTTONS[ type ].icon } }></span>
-								<span class="screen-reader-text">{type}</span>
+								<span className="svg-icon" dangerouslySetInnerHTML={ { __html: BUTTONS[ type ].icon } }></span>
+								<span className="screen-reader-text">{type}</span>
 							</button>;
 						} ) }
 					</ul>
@@ -266,6 +267,4 @@ Editor.propTypes = {
 	onSubmit:   PropTypes.func.isRequired,
 };
 
-export default connect( state => ( { users: state.users.byId } ), null, null, { withRef: true } )(
-	Editor
-);
+export default withApiData( props => ( { users: '/wp/v2/users' } ) )( Editor );

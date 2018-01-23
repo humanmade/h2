@@ -1,4 +1,4 @@
-import { parseResponse } from 'wordpress-rest-api-oauth-2';
+import { parseResponse } from './wordpress-rest-api-cookie-auth';
 
 import api from './api';
 import store from './store';
@@ -18,6 +18,7 @@ export {
 	fetchReactions,
 	createReaction,
 	deleteReaction,
+	fetchCurrentUser,
 };
 
 export function uploadMedia( file ) {

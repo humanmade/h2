@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import CurrentUserDropDown from './CurrentUserDropDown';
 import HeaderButton from './HeaderButton';
 import Logo from './Logo';
 import SearchInput from './SearchInput';
-import { User } from '../shapes';
 import { withApiData } from '../with-api-data';
 
 import './Header.css';
@@ -13,7 +13,7 @@ import './Header.css';
 function Header( props ) {
 	return <div className="Header">
 		<div className="Inner">
-			<Logo />
+			<Link to="/"><Logo /></Link>
 			<HeaderButton
 				onClick={props.onWritePost}
 				title="New Post"
@@ -38,7 +38,6 @@ function Header( props ) {
 Header.defaultProps = { searchValue: '' };
 
 Header.propTypes = {
-	currentUser:   User,
 	searchValue:   PropTypes.string,
 	onLogOut:      PropTypes.func.isRequired,
 	onWritePost:   PropTypes.func.isRequired,

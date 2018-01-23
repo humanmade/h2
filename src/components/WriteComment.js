@@ -2,13 +2,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { withApiData } from '../with-api-data';
+import { parseResponse } from '../wordpress-rest-api-cookie-auth';
 import Avatar from './Avatar';
 import Editor from './Editor';
-import { User, Post, Comment } from '../shapes';
+import { Post } from '../shapes';
 
 import './WriteComment.css';
 
-export default class WriteComment extends React.Component {
+class WriteComment extends React.Component {
 	componentDidMount() {
 		if ( this.container && this.editor ) {
 			this.editor.focus();
@@ -19,21 +21,57 @@ export default class WriteComment extends React.Component {
 		}
 	}
 
+	onUpload( file ) {
+		const options = { method: 'POST' };
+
+		/**
+		 * WordPress <4.9 doesn't allow Content-Disposition across CORS, so
+		 * pack the data into FormData.
+		 *
+		 * https://core.trac.wordpress.org/ticket/41696
+		 */
+		options.body = new FormData();
+		options.body.append( 'file', file );
+
+		return this.props.fetch( '/wp/v2/media', options )
+			.then( parseResponse );
+	}
+
+	onSubmit( content ) {
+		const body = {
+			content,
+			post: this.props.post.id,
+		};
+
+		if ( this.props.comment ) {
+			body.parent = this.props.comment.id;
+		}
+
+		this.props.fetch( '/wp/v2/comments', {
+			headers: {
+				Accept:         'application/json',
+				'Content-Type': 'application/json',
+			},
+			body:   JSON.stringify( body ),
+			method: 'POST',
+		} ).then( this.props.onWroteComment );
+	}
+
 	render() {
 		return <div className="WriteComment" ref={ ref => this.container = ref }>
 			<header>
 				<Avatar
-					url={this.props.author ? this.props.author.avatar_urls['96'] : ''}
+					url={this.props.user.data ? this.props.user.data.avatar_urls['96'] : ''}
 					size={40}
 				/>
-				<strong>{this.props.author ? this.props.author.name : ''}</strong>
+				<strong>{this.props.user.data ? this.props.user.data.name : ''}</strong>
 			</header>
 			<div className="body">
 				<Editor
 					ref={editor => this.editor = editor ? editor.getWrappedInstance() : null}
 					onCancel={this.props.onCancel}
-					onSubmit={this.props.onSave}
-					onUpload={ this.props.onUpload }
+					onSubmit={( ...args ) => this.onSubmit( ...args )}
+					onUpload={( ...args ) => this.onUpload( ...args )}
 				/>
 			</div>
 		</div>;
@@ -41,11 +79,9 @@ export default class WriteComment extends React.Component {
 }
 
 WriteComment.propTypes = {
-	author:   User,
-	comment:  Comment.isRequired,
-	post:     Post.isRequired,
-	onCancel: PropTypes.func.isRequired,
-	onChange: PropTypes.func.isRequired,
-	onSave:   PropTypes.func.isRequired,
-	onUpload: PropTypes.func.isRequired,
+	post:           Post.isRequired,
+	onCancel:       PropTypes.func.isRequired,
+	onWroteComment: PropTypes.func.isRequired,
 };
+
+export default withApiData( props => ( { user: '/wp/v2/users/me' } ) )( WriteComment )

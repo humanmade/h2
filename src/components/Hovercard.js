@@ -84,6 +84,7 @@ export default class Hovercard extends React.Component {
 				mountOnEnter={ true }
 				unmountOnExit={ true }
 				onExited={ () => this.setState( { shouldShow: false } ) }
+				key="css-transition"
 			>
 				{ () => <CardPortal>
 					<div
@@ -101,6 +102,7 @@ export default class Hovercard extends React.Component {
 					ref:         ref => this.target = ref,
 					onMouseOver: () => this.setState( { active: true, shouldShow: true } ),
 					onMouseOut:  () => this.setState( { active: false } ),
+					key:'child',
 				}
 			),
 		];
