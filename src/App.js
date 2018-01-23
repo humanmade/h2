@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
 
-import { fetchCurrentUser } from './actions';
-
 import Header from './components/Header';
 import PostsList from './components/PostsList';
 import WritePost from './components/WritePost';
@@ -15,10 +13,6 @@ class App extends Component {
 		super( props );
 		this.state = { isShowingWritePost: false };
 	}
-	componentWillMount() {
-		this.props.dispatch( fetchCurrentUser() );
-	}
-
 	onLogOut() {
 	}
 	onWriteStatus() {}

@@ -12,7 +12,7 @@ import Button from './Button';
 import CommentsList from '../components/CommentsList';
 import Link from './RelativeLink';
 import PostContent from './PostContent'
-import Reactions from '../containers/Reactions'
+//import Reactions from '../containers/Reactions'
 import WriteComment from './WriteComment';
 
 import './Post.css';
@@ -73,7 +73,7 @@ class Post extends Component {
 				</div>
 			</header>
 			<PostContent html={post.content.rendered} />
-			<Reactions postId={post.id }/>
+			
 			<CommentsList
 				allComments={this.props.comments.data ? this.props.comments.data : []}
 				comments={comments}
