@@ -28,7 +28,7 @@ class Post extends Component {
 	onClickCancelReply() {
 		this.setState( { isShowingReply: false } )
 	}
-	onWroteComment(...args) {
+	onWroteComment( ...args ) {
 		this.setState( { isShowingReply: false } )
 		this.props.refreshData();
 	}
@@ -73,19 +73,19 @@ class Post extends Component {
 				</div>
 			</header>
 			<PostContent html={post.content.rendered} />
-			
+
 			<CommentsList
 				allComments={this.props.comments.data ? this.props.comments.data : []}
 				comments={comments}
 				onComment={() => this.onComment()}
 				post={this.props.post}
-				onWroteComment={(...args) => this.onWroteComment(...args)}
+				onWroteComment={( ...args ) => this.onWroteComment( ...args )}
 			>
 				{this.state.isShowingReply &&
 					<WriteComment
 						post={post}
 						onCancel={() => this.onClickCancelReply()}
-						onWroteComment={(...args) => this.onWroteComment(...args)}
+						onWroteComment={( ...args ) => this.onWroteComment( ...args )}
 					/>
 				}
 			</CommentsList>
@@ -93,9 +93,7 @@ class Post extends Component {
 	}
 }
 
-Post.propTypes = {
-	post: PostShape.isRequired,
-};
+Post.propTypes = { post: PostShape.isRequired };
 
 const mapPropsToData = props => ( {
 	comments:   `/wp/v2/comments?post=${ props.post.id }&per_page=100`,
