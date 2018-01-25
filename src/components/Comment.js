@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import { withApiData } from '../with-api-data';
-
 import AuthorName from './AuthorName';
 import Avatar from './Avatar';
-import CommentsList from './CommentsList';
 import Button from './Button';
+import CommentsList from './CommentsList';
 import PostContent from './PostContent';
-import { Comment as CommentShape } from '../shapes';
 import WriteComment from './WriteComment';
-
+import { Comment as CommentShape } from '../shapes';
+import { withApiData } from '../with-api-data';
 import './Comment.css';
 
 export class Comment extends Component {
