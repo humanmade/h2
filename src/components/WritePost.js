@@ -62,8 +62,8 @@ export class WritePost extends Component {
 			<Editor
 				submitText="Publish"
 				onCancel={this.props.onCancel}
-				onSubmit={(...args) => this.onSubmit(...args)}
-				onUpload={(...args) => this.onUpload(...args)}
+				onSubmit={( ...args ) => this.onSubmit( ...args )}
+				onUpload={( ...args ) => this.onUpload( ...args )}
 			/>
 			{this.props.children}
 		</div>
@@ -71,7 +71,7 @@ export class WritePost extends Component {
 }
 
 WritePost.propTypes = {
-	onCancel: PropTypes.func.isRequired,
+	onCancel:    PropTypes.func.isRequired,
 	onWrotePost: PropTypes.func.isRequired,
 };
 

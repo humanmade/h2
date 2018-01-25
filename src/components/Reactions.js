@@ -1,34 +1,99 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Picker } from 'emoji-mart'
-import UserDisplayName from '../containers/UserDisplayName';
+
+import { withApiData } from '../with-api-data';
+
+import UserDisplayName from './UserDisplayName';
 
 import 'emoji-mart/css/emoji-mart.css';
 import './Reactions.css';
 
-export default class Reaction extends Component {
+export class Reactions extends Component {
 	constructor( props ) {
 		super( props );
 
 		this.state = { isOpen: false }
 	}
 
-	render() {
-		const { reactions, userId, isLoading } = this.props;
+	onAddReaction( emoji ) {
+		const body = {
+			post: this.props.postId,
+			type: emoji,
+		};
 
-		if ( ! userId || userId <= 0 ) {
+		this.props.fetch( '/h2/v1/reactions', {
+			headers: {
+				Accept:         'application/json',
+				'Content-Type': 'application/json',
+			},
+			body:   JSON.stringify( body ),
+			method: 'POST',
+		} ).then( r => r.json() ).then( post  => {
+			this.props.refreshData();
+		} );
+
+	}
+
+	onRemoveReaction( emoji ) {
+		const reactions = this.props.reactions.data;
+
+		let matches = reactions.filter( reaction => {
+			return (
+				reaction.author === this.props.currentUser.data.id &&
+				reaction.type === emoji
+			);
+		} );
+
+		if ( matches.length < 1 ) {
+			return;
+		}
+
+		const body = {
+			post: this.props.postId,
+			type: emoji,
+		};
+
+		this.props.fetch( `/h2/v1/reactions/${ matches[0].id }`, {
+			method: 'DELETE',
+		} ).then( () => this.props.refreshData() );
+	}
+
+	/**
+	 * Return the raw reactions grouped by emoji.
+	 *
+	 * @return {object} Reaction emoji : array of user IDs. eg 🌭:[ 1, 2 ].
+	 */
+	getGroupedReactions() {
+		let reactions = {};
+		if ( ! this.props.reactions.data ) {
+			return reactions;
+		}
+		this.props.reactions.data.forEach( reaction => {
+			if ( ! ( reaction.type in reactions ) ) {
+				reactions[ reaction.type ] = [ reaction.author ];
+			} else {
+				reactions[ reaction.type ].push( reaction.author );
+			}
+		} );
+
+		return reactions;
+	}
+
+	render() {
+		const reactions = this.getGroupedReactions();
+		if ( ! this.props.currentUser.data ) {
 			return null;
 		}
 
 		return <div className="reactions">
 			<div key="reactions">
 				{ Object.entries( reactions ).map( ( [ emoji, users ] ) => {
-					let isActive = reactions[ emoji ].indexOf( userId ) >= 0 ? true : false;
+					let isActive = reactions[ emoji ].indexOf( this.props.currentUser.data.id ) >= 0 ? true : false;
 					return <button
 						className={ 'btn btn--small btn--tertiary' + ( isActive ? ' btn--active' : '' ) }
 						onClick={ () => this.toggleReaction( emoji ) }
 						key={ emoji }
-						disabled={ isLoading }
 					>
 						<span className="reactions__emoji" key="emoji">{ emoji }</span>
 						<span className="reactions__count" key="count">{ users.length }</span>
@@ -37,6 +102,7 @@ export default class Reaction extends Component {
 								return <UserDisplayName
 									className="reactions__user"
 									userId={ reactionAuthorId }
+									userName={ reactionAuthorId }
 									key={ this.props.postId + reactionAuthorId }
 								/>
 							} ) }
@@ -45,12 +111,12 @@ export default class Reaction extends Component {
 				} ) }
 			</div>
 			<button
-				className={ 'btn btn--small btn--tertiary' + ( isLoading ? ' loading' : '' ) }
+				className={ 'btn btn--small btn--tertiary' + ( this.props.reactions.isLoading ? ' loading' : '' ) }
 				onClick={ value => this.setState( { isOpen: ! this.state.isOpen  } ) }
 				key="button"
-				disabled={ isLoading }
+				disabled={ this.props.reactions.isLoading }
 			>
-				{ isLoading ?
+				{ this.props.reactions.isLoading ?
 					<span className="loading loading--active"></span>
 					:
 					<span className="icon icon--smiley-wink">Add reaction</span>
@@ -74,34 +140,35 @@ export default class Reaction extends Component {
 	}
 
 	toggleReaction( emoji, reactionUserId ) {
-		const { reactions, onAddReaction, onRemoveReaction, userId } = this.props;
-
+		const reactions = this.getGroupedReactions();
 		if (
 			! ( emoji in reactions ) ||
-			reactions[ emoji ].indexOf( userId ) < 0
+			reactions[ emoji ].indexOf( this.props.currentUser.data.id ) < 0
 		) {
 			if ( Object.keys( reactions ).length >= 10 ) {
 				alert( 'Sorry! You are only allowed 10 reactions per post!' );
 				return;
 			}
 
-			onAddReaction( emoji );
+			this.onAddReaction( emoji );
 		} else {
-			onRemoveReaction( emoji );
+			this.onRemoveReaction( emoji );
 		}
 	}
 }
 
-Reaction.propTypes = {
-	userId:           PropTypes.number,
-	postId:           PropTypes.number.isRequired,
-	reactions:        PropTypes.object.isRequired,
-	onAddReaction:    PropTypes.func.isRequired,
-	onRemoveReaction: PropTypes.func.isRequired,
-	isLoading:        PropTypes.bool,
+export default withApiData( props => ( {
+	reactions: `/h2/v1/reactions?post=${ props.postId }`,
+	currentUser: '/wp/v2/users/me',
+} ) )( Reactions );
+
+Reactions.propTypes = {
+	userId:    PropTypes.number,
+	postId:    PropTypes.number.isRequired,
+	reactions: PropTypes.object.isRequired,
 };
 
-Reaction.defaultProps = {
+Reactions.defaultProps = {
 	userId:    0,
 	isLoading: false,
 }

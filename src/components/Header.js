@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import CurrentUserDropDown from './CurrentUserDropDown';
@@ -10,29 +10,31 @@ import { withApiData } from '../with-api-data';
 
 import './Header.css';
 
-function Header( props ) {
-	return <div className="Header">
-		<div className="Inner">
-			<Link to="/"><Logo /></Link>
-			<HeaderButton
-				onClick={props.onWritePost}
-				title="New Post"
-				icon="icon icon--plus-alt"
-				path="new-post"
-			/>
-			<SearchInput onSearch={props.onSearch} value={props.searchValue} />
-			{props.currentUser.data
-				? <CurrentUserDropDown user={props.currentUser.data} />
-				: null}
-			{ props.currentUser.data ?
+class Header extends Component {
+	render() {
+		return <div className="Header">
+			<div className="Inner">
+				<Link to="/"><Logo /></Link>
 				<HeaderButton
-					onClick={ props.onLogOut }
-					title="Log Out"
-					path="log-out"
+					onClick={this.props.onWritePost}
+					title="New Post"
+					icon="icon icon--plus-alt"
+					path="new-post"
 				/>
-			: null }
-		</div>
-	</div>;
+				<SearchInput onSearch={this.props.onSearch} value={this.props.searchValue} />
+				{this.props.currentUser.data
+					? <CurrentUserDropDown user={this.props.currentUser.data} />
+					: null}
+				{ this.props.currentUser.data ?
+					<HeaderButton
+						onClick={ this.props.onLogOut }
+						title="Log Out"
+						path="log-out"
+					/>
+				: null }
+			</div>
+		</div>;
+	}
 }
 
 Header.defaultProps = { searchValue: '' };
