@@ -54,4 +54,4 @@ class App extends Component {
 	}
 }
 
-export default connect( s => s, null, null, { pure: false } )( withRouter( App ) );
+export default withRouter( connect( s => s )( App ) );
