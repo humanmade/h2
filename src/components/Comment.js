@@ -15,15 +15,9 @@ export class Comment extends Component {
 		super( props );
 		this.state = { isShowingReply: false };
 	}
-	onClickReply() {
-		this.setState( { isShowingReply: true } )
-	}
-	onClickCancelReply() {
+	onWroteComment( ...args ) {
 		this.setState( { isShowingReply: false } )
-	}
-	onWroteComment(...args) {
-		this.setState( { isShowingReply: false })
-		this.props.onWroteComment(...args);
+		this.props.onWroteComment( ...args );
 	}
 	render() {
 		const comment = this.props.comment;
@@ -41,7 +35,7 @@ export class Comment extends Component {
 					{ author ? <AuthorName user={ author } /> : '' }
 				</strong>
 				<div className="actions">
-					<Button onClick={() => this.onClickReply()}>Reply</Button>
+					<Button onClick={() => this.setState( { isShowingReply: true } )}>Reply</Button>
 				</div>
 			</header>
 			<div className="body">
@@ -58,8 +52,8 @@ export class Comment extends Component {
 					<WriteComment
 						comment={comment}
 						post={post}
-						onCancel={() => this.onClickCancelReply()}
-						onWroteComment={(...args) => this.onWroteComment(...args)}
+						onCancel={() => this.setState( { isShowingReply: false } )}
+						onWroteComment={( ...args ) => this.onWroteComment( ...args )}
 					/>
 				}
 			</CommentsList>
@@ -68,7 +62,7 @@ export class Comment extends Component {
 }
 
 Comment.propTypes = {
-	comment: CommentShape.isRequired,
+	comment:        CommentShape.isRequired,
 	onWroteComment: PropTypes.func.isRequired,
 };
 
