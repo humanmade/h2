@@ -19,5 +19,5 @@ function PostsList( props ) {
 }
 
 export default withApiData( props => ( {
-	posts: `/wp/v2/posts?page=${ props.match.params.page ? props.match.params.page : 1 }${ props.match.params.slug ? `&slug=${ props.match.params.slug }` : '' }${ props.match.params.search ? `&search=${ props.match.params.search }` : '' }`,
+	posts: `/wp/v2/posts?page=${ props.match.params.page || 1 }${ props.match.params.slug ? `&slug=${ props.match.params.slug }` : '' }${ props.match.params.search ? `&search=${ props.match.params.search }` : '' }`,
 } ) )( PostsList );
