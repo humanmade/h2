@@ -23,13 +23,6 @@ class WriteComment extends React.Component {
 
 	onUpload( file ) {
 		const options = { method: 'POST' };
-
-		/**
-		 * WordPress <4.9 doesn't allow Content-Disposition across CORS, so
-		 * pack the data into FormData.
-		 *
-		 * https://core.trac.wordpress.org/ticket/41696
-		 */
 		options.body = new FormData();
 		options.body.append( 'file', file );
 
