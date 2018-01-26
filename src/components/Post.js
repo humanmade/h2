@@ -35,7 +35,7 @@ class Post extends Component {
 	render() {
 		const post = this.props.post;
 		const author = this.props.author.data;
-		let comments = this.props.comments.data ? this.props.comments.data.filter( comment => comment.parent === 0 ) : [];
+		const comments = this.props.comments.data ? this.props.comments.data.filter( comment => comment.parent === 0 ) : [];
 		const categories = this.props.categories.data ? this.props.categories.data : [];
 		// Scale title down slightly for longer titles.
 		const headerStyle = {};
