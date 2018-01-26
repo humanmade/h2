@@ -4,7 +4,7 @@ import marked from 'marked';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { withApiData } from '../with-api-data'
+import { withApiData } from '../with-api-data';
 
 import Button from './Button';
 import DropUpload from './DropUpload';
