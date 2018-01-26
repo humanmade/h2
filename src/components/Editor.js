@@ -88,7 +88,7 @@ class Editor extends React.PureComponent {
 		this.textarea = ref;
 		window.jQuery( ref ).atwho( {
 			at:   '@',
-			data: Object.values( this.props.users.data ? this.props.users.data : [] ).map( user => user.slug ),
+			data: Object.values( this.props.users.data || [] ).map( user => user.slug ),
 		} );
 		window.jQuery( ref ).atwho( {
 			at:         ':',
