@@ -39,7 +39,7 @@ class Post extends Component {
 		const categories = this.props.categories.data ? this.props.categories.data : [];
 		// Scale title down slightly for longer titles.
 		const headerStyle = {};
-		if ( this.props.post.title.rendered.length > 22 ) {
+		if ( post.title.rendered.length > 22 ) {
 			headerStyle.fontSize = '1.333333333rem';
 		}
 
