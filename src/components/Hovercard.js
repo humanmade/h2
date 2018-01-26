@@ -102,7 +102,7 @@ export default class Hovercard extends React.Component {
 					ref:         ref => this.target = ref,
 					onMouseOver: () => this.setState( { active: true, shouldShow: true } ),
 					onMouseOut:  () => this.setState( { active: false } ),
-					key:'child',
+					key:         'child',
 				}
 			),
 		];
