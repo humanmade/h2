@@ -14,6 +14,7 @@ class App extends Component {
 		this.state = { isShowingWritePost: false };
 	}
 	onLogOut() {
+		window.location.href = '/wp-login.php?action=logout'
 	}
 
 	onClickWritePost() {
