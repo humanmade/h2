@@ -58,7 +58,7 @@ class Post extends Component {
 					</Link>
 					<span className="date">
 						{author ? <AuthorName user={ author } /> : ''},&nbsp;
-						<FormattedRelative value={post.date_gmt} />
+						<FormattedRelative value={post.date_gmt + 'Z'} />
 					</span>
 					{categories.length > 0 &&
 						<ul className="categories">
