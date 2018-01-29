@@ -15,7 +15,6 @@ class App extends Component {
 	}
 	onLogOut() {
 	}
-	onWriteStatus() {}
 
 	onClickWritePost() {
 		this.setState( { isShowingWritePost: true } )
@@ -29,7 +28,7 @@ class App extends Component {
 		this.props.history.push( string ? `/search/${ string }` : '/' );
 	}
 
-	onWrotePost( post ) {
+	onDidCreatePost( post ) {
 		this.setState({ isShowingWritePost: false })
 		this.props.history.push( post.link.replace( /^(?:\/\/|[^/]+)*\//, '/' ) );
 	}
@@ -38,16 +37,16 @@ class App extends Component {
 		return <div className="App">
 			<Header
 				onLogOut={ () => this.onLogOut() }
-				onWriteStatus={() => this.onWriteStatus()}
 				onWritePost={() => this.onClickWritePost()}
 				onSearch={search => this.onSearch( search )}
 			/>
 			<div className="Inner">
-				{this.state.isShowingWritePost ? <WritePost onWrotePost={ post => this.onWrotePost( post )} onCancel={() => this.onCancelWritePost()} /> : null}
+				{this.state.isShowingWritePost ? <WritePost onDidCreatePost={ post => this.onDidCreatePost( post )} onCancel={() => this.onCancelWritePost()} /> : null}
 				<Route path="/" exact component={PostsList} />
+				<Route path="/author/:authorSlug" exact component={PostsList} />
+				<Route path="/category/:categorySlug" exact component={PostsList} />
 				<Route path="/page/:page" exact component={PostsList} />
 				<Route path="/search/:search" exact component={PostsList} />
-				<Route path="/category/:categorySlug" exact component={PostsList} />
 				<Route path="/:slug" exact component={PostsList} />
 			</div>
 		</div>;

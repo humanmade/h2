@@ -28,7 +28,7 @@ class Post extends Component {
 	onClickCancelReply() {
 		this.setState( { isShowingReply: false } )
 	}
-	onWroteComment( ...args ) {
+	onDidCreateComment( ...args ) {
 		this.setState( { isShowingReply: false } )
 		this.props.refreshData();
 	}
@@ -79,13 +79,13 @@ class Post extends Component {
 				comments={comments}
 				onComment={() => this.onComment()}
 				post={this.props.post}
-				onWroteComment={( ...args ) => this.onWroteComment( ...args )}
+				onDidCreateComment={( ...args ) => this.onDidCreateComment( ...args )}
 			>
 				{this.state.isShowingReply &&
 					<WriteComment
 						post={post}
 						onCancel={() => this.onClickCancelReply()}
-						onWroteComment={( ...args ) => this.onWroteComment( ...args )}
+						onDidCreateComment={( ...args ) => this.onDidCreateComment( ...args )}
 					/>
 				}
 			</CommentsList>

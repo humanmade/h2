@@ -43,7 +43,6 @@ Header.propTypes = {
 	searchValue:   PropTypes.string,
 	onLogOut:      PropTypes.func.isRequired,
 	onWritePost:   PropTypes.func.isRequired,
-	onWriteStatus: PropTypes.func.isRequired,
 	onSearch:      PropTypes.func.isRequired,
 };
 

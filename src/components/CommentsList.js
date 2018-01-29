@@ -15,7 +15,7 @@ export default class CommentsList extends Component {
 					comment={comment}
 					comments={this.props.allComments}
 					post={this.props.post}
-					onWroteComment={this.props.onWroteComment}
+					onDidCreateComment={this.props.onDidCreateComment}
 				/>
 			) ) }
 			{this.props.children}
@@ -27,5 +27,5 @@ CommentsList.propTypes = {
 	allComments:    PropTypes.arrayOf( CommentShape ).isRequired,
 	comments:       PropTypes.arrayOf( CommentShape ).isRequired,
 	post:           Post.isRequired,
-	onWroteComment: PropTypes.func.isRequired,
+	onDidCreateComment: PropTypes.func.isRequired,
 };

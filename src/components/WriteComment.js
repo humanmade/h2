@@ -47,7 +47,7 @@ class WriteComment extends React.Component {
 			},
 			body:   JSON.stringify( body ),
 			method: 'POST',
-		} ).then( this.props.onWroteComment );
+		} ).then( this.props.onDidCreateComment );
 	}
 
 	render() {
@@ -74,7 +74,7 @@ class WriteComment extends React.Component {
 WriteComment.propTypes = {
 	post:           Post.isRequired,
 	onCancel:       PropTypes.func.isRequired,
-	onWroteComment: PropTypes.func.isRequired,
+	onDidCreateComment: PropTypes.func.isRequired,
 };
 
 export default withApiData( props => ( { user: '/wp/v2/users/me' } ) )( WriteComment )

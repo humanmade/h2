@@ -15,9 +15,9 @@ export class Comment extends Component {
 		super( props );
 		this.state = { isShowingReply: false };
 	}
-	onWroteComment( ...args ) {
+	onDidCreateComment( ...args ) {
 		this.setState( { isShowingReply: false } )
-		this.props.onWroteComment( ...args );
+		this.props.onDidCreateComment( ...args );
 	}
 	render() {
 		const comment = this.props.comment;
@@ -46,14 +46,14 @@ export class Comment extends Component {
 				comments={directComments}
 				post={post}
 				showWriteComment={false}
-				onWroteComment={this.props.onWroteComment}
+				onDidCreateComment={this.props.onDidCreateComment}
 			>
 				{this.state.isShowingReply &&
 					<WriteComment
 						comment={comment}
 						post={post}
 						onCancel={() => this.setState( { isShowingReply: false } )}
-						onWroteComment={( ...args ) => this.onWroteComment( ...args )}
+						onDidCreateComment={( ...args ) => this.onDidCreateComment( ...args )}
 					/>
 				}
 			</CommentsList>
@@ -63,7 +63,7 @@ export class Comment extends Component {
 
 Comment.propTypes = {
 	comment:        CommentShape.isRequired,
-	onWroteComment: PropTypes.func.isRequired,
+	onDidCreateComment: PropTypes.func.isRequired,
 };
 
 export default withApiData( props => ( { author: `/wp/v2/users/${ props.comment.author }` } ) )( Comment );
