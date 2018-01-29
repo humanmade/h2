@@ -11,8 +11,8 @@ export default function Avatar( props ) {
 	return <div
 		className="Avatar"
 		style={ {
-			width: props.size + 'px',
-			height: props.size + 'px'
+			width:  props.size + 'px',
+			height: props.size + 'px',
 		} }
 	>
 		<img
