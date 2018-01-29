@@ -55,6 +55,7 @@ class WriteComment extends React.Component {
 			<header>
 				<Avatar
 					url={this.props.user.data ? this.props.user.data.avatar_urls['96'] : ''}
+					user={this.props.user.data}
 					size={40}
 				/>
 				<strong>{this.props.user.data ? this.props.user.data.name : ''}</strong>

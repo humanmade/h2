@@ -99,10 +99,11 @@ export class Reactions extends Component {
 						<span className="reactions__count" key="count">{ users.length }</span>
 						<span className="reactions__users" key="users">
 							{ users.map( reactionAuthorId => {
+								const user = this.props.users.data && this.props.users.data.filter( user => user.id === reactionAuthorId );
 								return <UserDisplayName
 									className="reactions__user"
 									userId={ reactionAuthorId }
-									userName={ reactionAuthorId }
+									userName={ user && user.length > 0 ? user[0].name : 'Unknown' }
 									key={ this.props.postId + reactionAuthorId }
 								/>
 							} ) }

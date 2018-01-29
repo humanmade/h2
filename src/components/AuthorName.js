@@ -3,6 +3,7 @@ import React from 'react';
 
 import Avatar from './Avatar';
 import Hovercard from './Hovercard';
+import RelativeLink from './RelativeLink';
 
 import './AuthorName.css';
 
@@ -32,7 +33,7 @@ export default class AuthorName extends React.Component {
 			width={ 500 }
 		>
 			<span className="author-name">
-				{ user.name }
+				<RelativeLink to={ user.link }>{ user.name }</RelativeLink>
 			</span>
 		</Hovercard>;
 	}
