@@ -1,5 +1,6 @@
 import countWords from '@iarna/word-count';
 import { emojiIndex } from 'emoji-mart';
+import LinkRenderer from '../link-renderer';
 import marked from 'marked';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -14,6 +15,10 @@ import './Editor.css';
 const apply = ( selection, start, end ) => {
 	return selection.length ? start + selection + end : start;
 };
+
+let renderer = new marked.Renderer();
+renderer.link = LinkRenderer;
+
 
 const BUTTONS = {
 	bold: {
@@ -41,7 +46,7 @@ const BUTTONS = {
 };
 
 const Preview = props => {
-	const compiled = marked( props.children );
+	const compiled = marked( props.children, { renderer } );
 	return <div className="Editor-preview" dangerouslySetInnerHTML={{ __html: compiled }} />;
 };
 Preview.propTypes = { children: PropTypes.string.isRequired };
@@ -101,7 +106,7 @@ class Editor extends React.PureComponent {
 	onSubmit( e ) {
 		e.preventDefault();
 
-		this.props.onSubmit( marked( this.state.content ) );
+		this.props.onSubmit( marked( this.state.content, { renderer } ) );
 	}
 
 	onBlur() {
@@ -174,6 +179,7 @@ class Editor extends React.PureComponent {
 	render() {
 		const { content, count, height, mode } = this.state;
 
+		const PreviewComponent = this.props.previewComponent || Preview;
 		return <form
 			className={ mode === 'preview' ? 'Editor previewing' : 'Editor' }
 			onSubmit={ e => this.onSubmit( e ) }
@@ -229,7 +235,7 @@ class Editor extends React.PureComponent {
 
 			<DropUpload file={ this.state.uploading } onUpload={ file => this.onUpload( file ) }>
 				{ mode === 'preview' ? (
-					<Preview>{ content || '*Nothing to preview*' }</Preview>
+					<PreviewComponent>{ content || '*Nothing to preview*' }</PreviewComponent>
 				) : (
 					<textarea
 						ref={ el => this.updateTextarea( el ) }
@@ -270,9 +276,10 @@ class Editor extends React.PureComponent {
 Editor.defaultProps = { submitText: 'Comment' };
 
 Editor.propTypes = {
-	submitText: PropTypes.string,
-	onCancel:   PropTypes.func,
-	onSubmit:   PropTypes.func.isRequired,
+	submitText:       PropTypes.string,
+	onCancel:         PropTypes.func,
+	onSubmit:         PropTypes.func.isRequired,
+	previewComponent: PropTypes.func,
 };
 
 export default withApiData( props => ( { users: '/wp/v2/users?per_page=100' } ) )( Editor );

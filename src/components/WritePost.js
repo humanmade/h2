@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import RemotePreview from './RemotePreview';
 import { withApiData } from '../with-api-data';
 import { parseResponse } from '../wordpress-rest-api-cookie-auth';
 
@@ -82,6 +83,7 @@ export class WritePost extends Component {
 			<Editor
 				ref={editor => this.editor = editor ? editor.getWrappedInstance() : null}
 				submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
+				previewComponent={RemotePreview}
 				onCancel={this.props.onCancel}
 				onSubmit={( ...args ) => this.onSubmit( ...args )}
 				onUpload={( ...args ) => this.onUpload( ...args )}

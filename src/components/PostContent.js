@@ -3,11 +3,11 @@ import React from 'react';
 
 import './PostContent.css';
 
-export default function Post( props ) {
+export default function PostContent( props ) {
 	return <div
 		className="PostContent"
 		dangerouslySetInnerHTML={{ __html: props.html }}
 	/>;
 }
 
-Post.propTypes = { html: PropTypes.string.isRequired };
+PostContent.propTypes = { html: PropTypes.string.isRequired };
