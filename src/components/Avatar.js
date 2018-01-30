@@ -18,15 +18,15 @@ export default function Avatar( props ) {
 		} }
 	>
 		<Link to={props.user ? props.user.link : ''}>
-		<img
-			style={style}
-			alt="User Avatar"
-			src={
-				props.url === ''
-					? 'https://www.timeshighereducation.com/sites/default/files/byline_photos/default-avatar.png'
-					: props.url
-			}
-		/>
+			<img
+				style={style}
+				alt="User Avatar"
+				src={
+					props.url === ''
+						? 'https://www.timeshighereducation.com/sites/default/files/byline_photos/default-avatar.png'
+						: props.url
+				}
+			/>
 		</Link>
 	</div>;
 }
