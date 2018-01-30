@@ -22,12 +22,15 @@
 	position: sticky;
 	top: 0;
 	z-index: 1;
-	margin-top: -15px;
 	padding: 15px 0;
 	background: #fff;
 	display: flex;
 	align-items: center;
 	height: 99px;
+}
+
+.PostsList .Post > header {
+	margin-top: -15px;
 }
 
 .Post > header > .Avatar {
@@ -44,7 +47,7 @@
 	min-width: 0;
 }
 
-.Post > header > .byline > h2 {
+.Post > header > .byline > a > h2 {
 	margin: 0 0.5em 0 0;
 	text-overflow: ellipsis;
 	white-space: nowrap;

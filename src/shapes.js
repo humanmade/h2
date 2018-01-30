@@ -130,7 +130,6 @@ export const State = PropTypes.shape( {
 	reactions:     ReactionsState.isRequired,
 	categories:    objectState.isRequired,
 	tags:          objectState.isRequired,
-	writeComments: WriteCommentsState.isRequired,
 } );
 
 // (action: Action) => void

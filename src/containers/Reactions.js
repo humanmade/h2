@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import Reactions from '../components/Reactions';
 import { createReaction, deleteReaction } from '../actions';
 
+import { withApiData } from '../with-api-data';
+
 const mapStateToProps = ( state, props ) => {
-	let user = state.user.byId[ Object.keys( state.user.byId )[0] ];
+	let user = props.user.data
 	let reactions = [];
 	let { updatingForPost } = state.reactions;
 
@@ -17,7 +19,7 @@ const mapStateToProps = ( state, props ) => {
 	}
 
 	return {
-		userId:    typeof user !== 'undefined' ? user.id : 0,
+		userId:    user !== null ? user.id : 0,
 		reactions: reactions,
 		isLoading: updatingForPost ? updatingForPost.indexOf( props.postId ) >= 0 : false,
 	}
@@ -89,4 +91,6 @@ class ConnectedReactions extends Component {
 	}
 }
 
-export default connect( mapStateToProps )( ConnectedReactions );
+export default withApiData( props => ( {
+	user: '/wp/v2/users/me',
+} ) )( connect( mapStateToProps )( ConnectedReactions ) );

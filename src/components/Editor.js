@@ -1,10 +1,10 @@
 import countWords from '@iarna/word-count';
 import { emojiIndex } from 'emoji-mart';
-import debounce from 'lodash/debounce';
 import marked from 'marked';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
+
+import { withApiData } from '../with-api-data';
 
 import Button from './Button';
 import DropUpload from './DropUpload';
@@ -51,23 +51,13 @@ class Editor extends React.PureComponent {
 		super( props );
 
 		this.state = {
-			content:   props.defaultValue,
+			content:   '',
 			count:     0,
 			height:    null,
-			lastSave:  null,
 			mode:      'edit',
 			uploading: null,
 		};
 		this.textarea = null;
-
-		this.autosave = debounce(
-			() => {
-				this.props.onAutosave( this.state.content );
-				this.setState( { lastSave: this.state.content } );
-			},
-			150,
-			{ maxWait: 2000 }
-		);
 	}
 
 	componentDidUpdate() {
@@ -98,7 +88,7 @@ class Editor extends React.PureComponent {
 		this.textarea = ref;
 		window.jQuery( ref ).atwho( {
 			at:   '@',
-			data: Object.values( this.props.users ).map( user => user.slug ),
+			data: Object.values( this.props.users.data || [] ).map( user => user.slug ),
 		} );
 		window.jQuery( ref ).atwho( {
 			at:         ':',
@@ -106,11 +96,6 @@ class Editor extends React.PureComponent {
 			displayTpl: item => `<li>${item.native} ${item.colons} </li>`,
 			insertTpl:  item => item.native,
 		} );
-	}
-
-	onChange( e ) {
-		this.setState( { content: e.target.value } );
-		this.autosave();
 	}
 
 	onSubmit( e ) {
@@ -171,6 +156,13 @@ class Editor extends React.PureComponent {
 		this.setState( { uploading: file } );
 	}
 
+	onKeyDownTextArea( e ) {
+		if ( e.metaKey && e.key === 'Enter' ) {
+			this.onSubmit( e );
+			return false;
+		}
+	}
+
 	focus() {
 		if ( ! this.textarea ) {
 			return;
@@ -180,7 +172,7 @@ class Editor extends React.PureComponent {
 	}
 
 	render() {
-		const { content, count, height, lastSave, mode } = this.state;
+		const { content, count, height, mode } = this.state;
 
 		return <form
 			className={ mode === 'preview' ? 'Editor previewing' : 'Editor' }
@@ -227,8 +219,8 @@ class Editor extends React.PureComponent {
 								title={BUTTONS[type].title}
 								type="button"
 							>
-								<span class="svg-icon" dangerouslySetInnerHTML={ { __html: BUTTONS[ type ].icon } }></span>
-								<span class="screen-reader-text">{type}</span>
+								<span className="svg-icon" dangerouslySetInnerHTML={ { __html: BUTTONS[ type ].icon } }></span>
+								<span className="screen-reader-text">{type}</span>
 							</button>;
 						} ) }
 					</ul>
@@ -246,19 +238,15 @@ class Editor extends React.PureComponent {
 						style={{ height }}
 						value={ content }
 						onBlur={ () => this.onBlur() }
-						onChange={ e => this.onChange( e ) }
+						onChange={ e => this.setState( { content: e.target.value } ) }
+						onKeyDown={ e => this.onKeyDownTextArea( e ) }
 					/>
 				) }
 			</DropUpload>
 
 			<p className="Editor-submit">
 				<small>
-					<span>
-						{ count === 1 ? '1 word' : `${count.toLocaleString()} words` }
-						{ lastSave === content ?
-							<span className="Editor-save-indicator">Saved</span>
-						: null }
-					</span>
+					<span>{ count === 1 ? '1 word' : `${count.toLocaleString()} words` }</span>
 					<br />
 					<a
 						href="http://commonmark.org/help/"
@@ -279,19 +267,12 @@ class Editor extends React.PureComponent {
 	}
 }
 
-Editor.defaultProps = {
-	defaultValue: '',
-	submitText:   'Comment',
-};
+Editor.defaultProps = { submitText: 'Comment' };
 
 Editor.propTypes = {
-	defaultValue: PropTypes.string,
-	submitText:   PropTypes.string,
-	onCancel:     PropTypes.func,
-	onAutosave:   PropTypes.func,
-	onSubmit:     PropTypes.func.isRequired,
+	submitText: PropTypes.string,
+	onCancel:   PropTypes.func,
+	onSubmit:   PropTypes.func.isRequired,
 };
 
-export default connect( state => ( { users: state.users.byId } ), null, null, { withRef: true } )(
-	Editor
-);
+export default withApiData( props => ( { users: '/wp/v2/users' } ) )( Editor );
