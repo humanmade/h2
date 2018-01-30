@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import Link from './RelativeLink';
+
 import './Avatar.css';
 
 export default function Avatar( props ) {
@@ -15,19 +17,22 @@ export default function Avatar( props ) {
 			height: props.size + 'px',
 		} }
 	>
-		<img
-			style={style}
-			alt="User Avatar"
-			src={
-				props.url === ''
-					? 'https://www.timeshighereducation.com/sites/default/files/byline_photos/default-avatar.png'
-					: props.url
-			}
-		/>
+		<Link to={props.user ? props.user.link : ''}>
+			<img
+				style={style}
+				alt="User Avatar"
+				src={
+					props.url === ''
+						? 'https://www.timeshighereducation.com/sites/default/files/byline_photos/default-avatar.png'
+						: props.url
+				}
+			/>
+		</Link>
 	</div>;
 }
 
 Avatar.propTypes = {
 	size: PropTypes.number.isRequired,
 	url:  PropTypes.string.isRequired,
+	user: PropTypes.object,
 };

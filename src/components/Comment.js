@@ -29,6 +29,7 @@ export class Comment extends Component {
 			<header>
 				<Avatar
 					url={author ? author.avatar_urls['96'] : ''}
+					user={ author }
 					size={40}
 				/>
 				<strong>

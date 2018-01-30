@@ -47,6 +47,7 @@ class Post extends Component {
 			<header>
 				<Avatar
 					url={author ? author.avatar_urls['96'] : ''}
+					user={author}
 					size={60}
 				/>
 				<div className="byline">
