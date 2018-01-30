@@ -48,15 +48,7 @@ export class Reactions extends Component {
 		if ( matches.length < 1 ) {
 			return;
 		}
-
-		const body = {
-			post: this.props.postId,
-			type: emoji,
-		};
-
-		this.props.fetch( `/h2/v1/reactions/${ matches[0].id }`, {
-			method: 'DELETE',
-		} ).then( () => this.props.refreshData() );
+		this.props.fetch( `/h2/v1/reactions/${ matches[0].id }`, { method: 'DELETE' } ).then( () => this.props.refreshData() );
 	}
 
 	/**
@@ -159,8 +151,9 @@ export class Reactions extends Component {
 }
 
 export default withApiData( props => ( {
-	reactions: `/h2/v1/reactions?post=${ props.postId }`,
+	reactions:   `/h2/v1/reactions?post=${ props.postId }`,
 	currentUser: '/wp/v2/users/me',
+	users:       '/wp/v2/users',
 } ) )( Reactions );
 
 Reactions.propTypes = {
