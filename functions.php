@@ -7,7 +7,6 @@ use ReactWPScripts;
 require __DIR__ . '/wp-scripts-loader.php';
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_assets' );
-add_filter( 'reactwpscripts.is_development', '__return_true' );
 show_admin_bar( false );
 
 function enqueue_assets() {
