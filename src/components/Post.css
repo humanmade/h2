@@ -50,6 +50,7 @@
 .Post > header > .byline > a > h2 {
 	margin: 0 0.5em 0 0;
 	text-overflow: ellipsis;
+	text-transform: inherit;
 	white-space: nowrap;
 	overflow: hidden;
 }

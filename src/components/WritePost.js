@@ -61,7 +61,7 @@ export class WritePost extends Component {
 			<header>
 				<Avatar
 					url={user ? user.avatar_urls['96'] : ''}
-					size={70}
+					size={60}
 				/>
 				<div className="byline">
 					<h2><input type="text" placeholder="Enter post title..." value={ this.state.title } onChange={ e => this.setState( { title: e.target.value } ) } /></h2>
