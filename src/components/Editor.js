@@ -156,6 +156,13 @@ class Editor extends React.PureComponent {
 		this.setState( { uploading: file } );
 	}
 
+	onKeyDownTextArea( e ) {
+		if ( e.metaKey && e.key === 'Enter' ) {
+			this.onSubmit( e );
+			return false;
+		}
+	}
+
 	focus() {
 		if ( ! this.textarea ) {
 			return;
@@ -232,6 +239,7 @@ class Editor extends React.PureComponent {
 						value={ content }
 						onBlur={ () => this.onBlur() }
 						onChange={ e => this.setState( { content: e.target.value } ) }
+						onKeyDown={ e => this.onKeyDownTextArea( e ) }
 					/>
 				) }
 			</DropUpload>
