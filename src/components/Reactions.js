@@ -153,7 +153,7 @@ export class Reactions extends Component {
 export default withApiData( props => ( {
 	reactions:   `/h2/v1/reactions?post=${ props.postId }`,
 	currentUser: '/wp/v2/users/me',
-	users:       '/wp/v2/users',
+	users:       '/wp/v2/users?per_page=100',
 } ) )( Reactions );
 
 Reactions.propTypes = {

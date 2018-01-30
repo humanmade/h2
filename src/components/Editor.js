@@ -275,4 +275,4 @@ Editor.propTypes = {
 	onSubmit:   PropTypes.func.isRequired,
 };
 
-export default withApiData( props => ( { users: '/wp/v2/users' } ) )( Editor );
+export default withApiData( props => ( { users: '/wp/v2/users?per_page=100' } ) )( Editor );
