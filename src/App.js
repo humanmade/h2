@@ -48,7 +48,7 @@ class App extends Component {
 				<Route path="/category/:categorySlug" exact component={PostsList} />
 				<Route path="/page/:page" exact component={PostsList} />
 				<Route path="/search/:search" exact component={PostsList} />
-				<Route path="/:slug" exact component={PostsList} />
+				<Route path="/:year/:month/:day/:slug" exact component={PostsList} />
 			</div>
 		</div>;
 	}
