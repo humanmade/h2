@@ -2,7 +2,7 @@
   "name": "h2",
   "version": "0.0.1",
   "private": true,
-  "homepage": "http://make.hmn.md/h2",
+  "homepage": "https://makeh2.hmn.md/content/themes/h2/build",
   "devDependencies": {
     "@storybook/react": "3.2.12",
     "babel-eslint": "^7.2.3",
@@ -13,14 +13,17 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.10.3",
-    "react-scripts": "^1.0.14"
+    "react-scripts": "^1.1.0"
   },
   "dependencies": {
+    "@iarna/word-count": "^1.0.3",
     "emoji-mart": "^2.1.1",
+    "lodash": "^4.17.4",
     "marked": "^0.3.6",
     "postcss-loader": "^2.0.8",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
+    "react-content-loader": "^2.0.2",
     "react-document-title": "^2.0.2",
     "react-dom": "^16.0.0",
     "react-infinite-scroll-component": "^2.4.0",
@@ -30,16 +33,18 @@
     "react-router-dom": "^4.2.2",
     "react-storybook": "^1.0.0",
     "react-timeago": "^3.4.3",
+    "react-transition-group": "^2.2.1",
+    "react-wp-scripts": "^0.1.1",
     "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^2.7.0",
-    "redux-thunk": "^2.2.0",
-    "wordpress-rest-api-oauth-1": "^1.1.7"
+    "redux-thunk": "^2.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-wp-scripts start",
     "build": "react-scripts build",
     "deploy": "npm run build && aws s3 sync ./build s3://make.hmn.md/h2 --acl public-read",
-    "lint" : "eslint src/",
+    "lint": "eslint src/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",

@@ -1,36 +1,63 @@
 .Comment {
 	position: relative;
+	/*z-index: 5;*/
 }
 
 .Comment:before {
 	position: absolute;
 	content: '';
 	background: #F1F2EE;
-	left: -42.5px;
+	left: -41px;
 	top: 0;
 	bottom: 0;
-	width: 5px;
+	width: 3px;
 	z-index: -1;
+}
+
+.Comment:last-child:before {
+	bottom: 1rem;
+}
+
+.Comment:last-child:after {
+	position: absolute;
+	content: '';
+	background: #F1F2EE;
+	left: -43.5px;
+	bottom: calc( 1rem - 4.5px );
+	width: 9px;
+	height: 9px;
+	z-index: -1;
+	border-radius: 50%;
 }
 
 .Comment > header {
 	height: 50px;
-	line-height: 50px;
+	line-height: 40px;
 	display: flex;
-	margin-left: -60px;
-	margin-bottom: 10px;
+	margin-left: -30px;
 	position: sticky;
-	top: 110px;
-	background: #fff;
-	position: sticky;
-	top: 110px;
+	top: 99px;
 	background: #fff;
 }
 
 .Comment > header > .Avatar {
-	margin-right: 10px;
+	margin-left: -30px;
+	margin-right: 20px;
+}
+
+.Comment > header > strong {
+	flex-grow: 1;
 }
 
 .Comment > .body {
 	flex-direction: column;
+	padding-bottom: 1rem;
+}
+
+.Comment  > header > .actions {
+	display: none;
+}
+
+.Comment:hover > header > .actions {
+	display: block;
 }

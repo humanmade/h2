@@ -1,46 +1,49 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import CurrentUserDropDown from './CurrentUserDropDown';
 import HeaderButton from './HeaderButton';
 import Logo from './Logo';
 import SearchInput from './SearchInput';
-import { User } from '../shapes';
+import { withApiData } from '../with-api-data';
 
 import './Header.css';
 
-export default function Header( props ) {
-	return <div className="Header">
-		<div className="Inner">
-			<Logo />
-			<HeaderButton
-				onClick={props.onWritePost}
-				title="New Post"
-				icon="icon icon--plus-alt"
-				path="new-post"
-			/>
-			<SearchInput onSearch={props.onSearch} value={props.searchValue} />
-			{props.currentUser
-				? <CurrentUserDropDown user={props.currentUser} />
-				: null}
-			{ props.currentUser ?
+class Header extends Component {
+	render() {
+		return <div className="Header">
+			<div className="Inner">
+				<Link to="/"><Logo /></Link>
 				<HeaderButton
-					onClick={ props.onLogOut }
-					title="Log Out"
-					path="log-out"
+					onClick={this.props.onWritePost}
+					title="New Post"
+					icon="icon icon--plus-alt"
+					path="new-post"
 				/>
-			: null }
-		</div>
-	</div>;
+				<SearchInput onSearch={this.props.onSearch} value={this.props.searchValue} />
+				{this.props.currentUser.data
+					? <CurrentUserDropDown user={this.props.currentUser.data} />
+					: null}
+				{ this.props.currentUser.data ?
+					<HeaderButton
+						onClick={ this.props.onLogOut }
+						title="Log Out"
+						path="log-out"
+					/>
+				: null }
+			</div>
+		</div>;
+	}
 }
 
 Header.defaultProps = { searchValue: '' };
 
 Header.propTypes = {
-	currentUser:   User,
 	searchValue:   PropTypes.string,
 	onLogOut:      PropTypes.func.isRequired,
 	onWritePost:   PropTypes.func.isRequired,
-	onWriteStatus: PropTypes.func.isRequired,
 	onSearch:      PropTypes.func.isRequired,
 };
+
+export default withApiData( props => ( { currentUser: '/wp/v2/users/me' } ) )( Header );

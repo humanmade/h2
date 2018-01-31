@@ -63,12 +63,20 @@ const objectState = PropTypes.shape( {
 	isLoading: PropTypes.bool.isRequired,
 } );
 
-export const WriteCommentsState = PropTypes.objectOf(
-	PropTypes.shape( {
-		isShowing: PropTypes.bool.isRequired,
-		comment:   Comment.isRequired,
-	} ),
-);
+export const WriteCommentsState = {
+	posts: PropTypes.objectOf(
+		PropTypes.shape( {
+			isShowing: PropTypes.bool.isRequired,
+			comment:   Comment.isRequired,
+		} ),
+	),
+	comments: PropTypes.objectOf(
+		PropTypes.shape( {
+			isShowing: PropTypes.bool.isRequired,
+			comment:   Comment.isRequired,
+		} ),
+	),
+};
 
 export const WritePostState = PropTypes.shape( {
 	isShowing: PropTypes.bool.isRequired,
@@ -103,13 +111,25 @@ export const CategoriesState = PropTypes.shape( {
 	isLoading: PropTypes.bool.isRequired,
 } );
 
+export const Reaction = PropTypes.shape( {
+	id:     PropTypes.number,
+	type:   PropTypes.string.isRequired,
+	author: PropTypes.number.isRequired,
+	postId: PropTypes.number.isRequired,
+} );
+
+export const ReactionsState = PropTypes.shape( {
+	byId:            PropTypes.objectOf( Reaction ).isRequired,
+	loadingForPosts: PropTypes.array.isRequired,
+} );
+
 export const State = PropTypes.shape( {
 	users:         UsersState.isRequired,
 	posts:         PostsState.isRequired,
 	comments:      CommentsState.isRequired,
+	reactions:     ReactionsState.isRequired,
 	categories:    objectState.isRequired,
 	tags:          objectState.isRequired,
-	writeComments: WriteCommentsState.isRequired,
 } );
 
 // (action: Action) => void

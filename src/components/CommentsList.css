@@ -1,10 +1,10 @@
 .CommentsList {
 	flex-direction: column;
-	margin-left: 100px;
+	margin-left: calc( 30px + 3.333rem + 60px );
 }
 
-.CommentsList .Comment {
-	padding-bottom: 1.666666667rem;
+.CommentsList .CommentsList {
+	margin-left: 60px;
 }
 
 .CommentsList .post-reply {

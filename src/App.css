@@ -31,3 +31,6 @@
 	overflow: hidden;
 	overflow-y: scroll;
 }
+.App a {
+	border: none;
+}

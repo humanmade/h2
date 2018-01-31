@@ -1,17 +1,13 @@
-.WriteComment {
-	background-color: var( --hm-light-grey );
-	padding: 20px;
-}
-
 .WriteComment > header {
 	height: 50px;
 	line-height: 50px;
 	display: flex;
-	margin-bottom: 30px;
+	margin-bottom: 10px;
+	margin-left: -60px;
 }
 
 .WriteComment > header > .Avatar {
-	margin-right: 10px;
+	margin-right: 20px;
 }
 
 .WriteComment .buttons {
