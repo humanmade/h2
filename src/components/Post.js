@@ -43,9 +43,7 @@ class Post extends Component {
 			headerStyle.fontSize = '1.333333333rem';
 		}
 
-		const format = ! post.title.rendered ? 'status' : post.format;
-
-		return <div className={`Post ${ format }`}>
+		return <div className="Post">
 			<header>
 				<Avatar
 					url={author ? author.avatar_urls['96'] : ''}
@@ -53,14 +51,12 @@ class Post extends Component {
 					size={60}
 				/>
 				<div className="byline">
-					{post.title.rendered &&
-						<Link to={ post.link }>
-							<h2
-								dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-								style={ headerStyle }
-							/>
-						</Link>
-					}
+					<Link to={ post.link }>
+						<h2
+							dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+							style={ headerStyle }
+						/>
+					</Link>
 					<span className="date">
 						{author ? <AuthorName user={ author } /> : ''},&nbsp;
 						<FormattedRelative value={post.date_gmt + 'Z'} />
