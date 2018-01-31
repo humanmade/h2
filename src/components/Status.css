@@ -15,12 +15,17 @@
 	z-index: -1;
 }
 
+.Status > div {
+	flex-direction: row;
+	display: flex;
+}
+
 .Status > div > .Avatar {
 	margin-right: 35px;
 	margin-left: 10px;
 }
 
-.Status .PostContent p:first-of-type {
+.Status .body p:first-of-type {
 	display: inline;
 }
 
