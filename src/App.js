@@ -4,6 +4,7 @@ import { Route, withRouter } from 'react-router-dom';
 
 import Header from './components/Header';
 import PostsList from './components/PostsList';
+import Sidebar from './components/Sidebar';
 import WritePost from './components/WritePost';
 
 import './App.css';
@@ -51,23 +52,7 @@ class App extends Component {
 					<Route path="/search/:search" exact component={PostsList} />
 					<Route path="/:year/:month/:day/:slug" exact component={PostsList} />
 				</div>
-				<aside className="Sidebar">
-					<div className="widget">
-						<h2>Hangouts</h2>
-						<h3>Team Hangout</h3>
-						<p>Every second Thursday, 01:30 BST & 16:30 BST</p>
-						<p>Every second Friday, 21:00 BST</p>
-
-						<h3>Agency Hangout</h3>
-						<p>Tuesday, 15:00 BST</p>
-
-						<h3>Resourcing Call</h3>
-						<p>Alternating every week - Thursday, 09:00 BST and 16:00 BST</p>
-
-						<h3>Hiring Call</h3>
-						<p>Monday, 12:00 BST</p>
-					</div>
-				</aside>
+				<Sidebar />
 			</div>
 		</div>;
 	}
