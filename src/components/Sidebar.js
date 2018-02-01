@@ -12,7 +12,7 @@ export class Sidebar extends Component {
 			{ ( this.props.widgets.data || [] ).map( widget => {
 				const Widget = widgetMap[ widget.type ];
 				if ( ! Widget ) {
-					return <ErrorBlock key={ widget.id } message={`Unknown widget type ${ widget.type }`} />
+					return <TextWidget key={widget.id} text={ widget.html } />
 				}
 				return <Widget key={widget.id} {...widget} />
 			} ) }

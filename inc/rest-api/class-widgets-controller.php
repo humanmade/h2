@@ -152,6 +152,7 @@ class Widgets_Controller extends WP_REST_Controller {
 					'array_index' => $key,
 					'id_base' => $widget->id_base,
 					'settings' => $values,
+					'widget' => $widget,
 				);
 			}
 		}
@@ -170,7 +171,7 @@ class Widgets_Controller extends WP_REST_Controller {
 			if ( !$this->get_instance_permissions_check( $instance['id'] ) ) {
 				continue;
 			}
-			if ( !is_null( $args['sidebar'] ) && $args['sidebar'] !== $this->get_instance_sidebar( $instance['id'] ) ) {
+			if ( ! is_null( $args['sidebar'] ) && $args['sidebar'] !== $this->get_instance_sidebar( $instance['id'] ) ) {
 				continue;
 			}
 			$data = $this->prepare_item_for_response( $instance, $request );
@@ -272,6 +273,20 @@ class Widgets_Controller extends WP_REST_Controller {
 		$values = $instance['settings'];
 		$values['id'] = $instance['id'];
 		$values['type'] = $instance['id_base'];
+		$sidebar = $this->get_instance_sidebar( $instance['id'] );
+		global $wp_registered_sidebars;
+
+		$default_args = array(
+			'before_widget' => '<div class="widget %s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h2 class="widgettitle">',
+			'after_title'   => '</h2>',
+		);
+
+		$args = wp_parse_args( $wp_registered_sidebars[ $sidebar ], $default_args );
+		ob_start();
+		$instance['widget']->widget( $args, $instance['settings'] );
+		$values['html'] = ob_get_clean();
 
 		$schema = $this->get_type_schema( $instance['id_base'] );
 
@@ -281,10 +296,10 @@ class Widgets_Controller extends WP_REST_Controller {
 			// TODO check for public visibility of property and run permissions
 			// check for private properties.
 
-			if ( isset( $values[$property_id] ) && gettype( $values[$property_id] ) === $property['type'] ) {
-				$data[$property_id] = $values[$property_id];
+			if ( isset( $values[ $property_id ] ) && gettype( $values[ $property_id ] ) === $property['type'] ) {
+				$data[ $property_id ] = $values[ $property_id ];
 			} elseif ( isset( $property['default'] ) ) {
-				$data[$property_id] = $property['default'];
+				$data[ $property_id ] = $property['default'];
 			}
 		}
 
@@ -409,6 +424,12 @@ class Widgets_Controller extends WP_REST_Controller {
 			),
 			'type'            => array(
 				'description' => __( 'Type of Widget for the object.' ),
+				'type'        => 'string',
+				'context'     => array( 'view', 'edit', 'embed' ),
+				'readonly'    => true,
+			),
+			'html'            => array(
+				'description' => __( 'Rendered HTML for the object.' ),
 				'type'        => 'string',
 				'context'     => array( 'view', 'edit', 'embed' ),
 				'readonly'    => true,

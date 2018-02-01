@@ -17,6 +17,8 @@ show_admin_bar( false );
 register_sidebar( [
 	'id' => 'sidebar',
 	'name' => 'Sidebar',
+	'before_title'  => '<h4 class="widgettitle">',
+	'after_title'   => '</h4>',
 ] );
 
 function enqueue_assets() {
