@@ -10,6 +10,7 @@ import AuthorName from './AuthorName';
 import Avatar from './Avatar';
 import Button from './Button';
 import CommentsList from '../components/CommentsList';
+import Editor from './Editor';
 import Link from './RelativeLink';
 import PostContent from './PostContent'
 import Reactions from './Reactions'
@@ -20,7 +21,7 @@ import './Post.css';
 class Post extends Component {
 	constructor( props ) {
 		super( props );
-		this.state = { isShowingReply: false };
+		this.state = { isShowingReply: false, isEditing: false };
 	}
 	onClickReply() {
 		this.setState( { isShowingReply: true } )
@@ -31,6 +32,25 @@ class Post extends Component {
 	onDidCreateComment( ...args ) {
 		this.setState( { isShowingReply: false } )
 		this.props.refreshData();
+	}
+	onSubmitEditing( content, unprocessedContent ) {
+		const body = {
+			content,
+			status: 'publish',
+			meta:   { unprocessed_content: unprocessedContent },
+		};
+
+		this.props.fetch( `/wp/v2/posts/${ this.props.post.id }`, {
+			headers: {
+				Accept:         'application/json',
+				'Content-Type': 'application/json',
+			},
+			body:   JSON.stringify( body ),
+			method: 'POST',
+		} ).then( r => r.json() ).then( post  => {
+			this.setState( { isEditing: false } )
+			this.props.invalidateDataForUrl( '/wp/v2/posts' );
+		} );
 	}
 	render() {
 		const post = this.props.post;
@@ -70,10 +90,22 @@ class Post extends Component {
 					}
 				</div>
 				<div className="actions">
+					{! this.state.isEditing &&
+						<Button onClick={() => this.setState( { isEditing: true } )}>Edit</Button>
+					}
 					<Button onClick={() => this.onClickReply()}>Reply</Button>
 				</div>
 			</header>
-			<PostContent html={post.content.rendered} />
+			{ this.state.isEditing ?
+				<Editor
+					initialValue={ post.meta.unprocessed_content || post.content.raw }
+					submitText="Update"
+					onCancel={ () => this.setState( { isEditing: false } )}
+					onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
+					/>
+				:
+				<PostContent html={post.content.rendered} />
+			}
 			<Reactions postId={post.id }/>
 			<CommentsList
 				allComments={this.props.comments.data ? this.props.comments.data : []}

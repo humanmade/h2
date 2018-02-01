@@ -22,7 +22,7 @@ class PostsList extends Component {
 	}
 }
 
-export default withApiData( props => ({
+export default withApiData( props => ( {
 	categories: props.match.params.categorySlug ? '/wp/v2/categories' : null,
 	users:      props.match.params.authorSlug ? '/wp/v2/users?per_page=100' : null,
 } ) )( withApiData( props => {
@@ -46,5 +46,5 @@ export default withApiData( props => ({
 		filters.author = user.id;
 	}
 
-	return { posts: `/wp/v2/posts?${ qs.stringify( filters ) }` };
+	return { posts: `/wp/v2/posts${ qs.stringify( filters ) ? '?' + qs.stringify( filters ) : '' }` };
 } )( PostsList ) );

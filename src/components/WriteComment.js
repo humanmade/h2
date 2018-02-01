@@ -30,10 +30,11 @@ class WriteComment extends React.Component {
 			.then( parseResponse );
 	}
 
-	onSubmit( content ) {
+	onSubmit( content, unprocessedContent ) {
 		const body = {
 			content,
 			post: this.props.post.id,
+			meta: { unprocessed_content: unprocessedContent },
 		};
 
 		if ( this.props.comment ) {

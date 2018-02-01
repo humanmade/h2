@@ -58,4 +58,13 @@ function register_rest_routes() {
 
 	$widgets_controller = new REST_API\Widgets_Controller( $wp_widget_factory->widgets );
 	$widgets_controller->register_routes();
+
+	register_meta( 'post', 'unprocessed_content', [
+		'show_in_rest' => true,
+		'single'       => true,
+	] );
+	register_meta( 'comment', 'unprocessed_content', [
+		'show_in_rest' => true,
+		'single'       => true,
+	] );
 }

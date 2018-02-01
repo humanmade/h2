@@ -51,7 +51,7 @@ class Editor extends React.PureComponent {
 		super( props );
 
 		this.state = {
-			content:   '',
+			content:   props.initialValue,
 			count:     0,
 			height:    null,
 			mode:      'edit',
@@ -101,7 +101,7 @@ class Editor extends React.PureComponent {
 	onSubmit( e ) {
 		e.preventDefault();
 
-		this.props.onSubmit( marked( this.state.content ) );
+		this.props.onSubmit( marked( this.state.content ), this.state.content );
 	}
 
 	onBlur() {
