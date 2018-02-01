@@ -13,12 +13,24 @@
 	max-width: 800px;
 }
 
-.Inner {
+.Outer {
 	margin: 0 auto;
-	flex-direction: column;
+	display: flex;
 	max-width: 1200px;
 }
 
+.Inner {
+	flex-direction: column;
+}
+
+.Sidebar {
+	position: sticky;
+	top: 0;
+	height: 100vh;
+	margin-left: 4rem;
+	overflow: hidden;
+	overflow-y: scroll;
+}
 .App a {
 	border: none;
 }

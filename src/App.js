@@ -4,6 +4,7 @@ import { Route, withRouter } from 'react-router-dom';
 
 import Header from './components/Header';
 import PostsList from './components/PostsList';
+import Sidebar from './components/Sidebar';
 import WritePost from './components/WritePost';
 
 import './App.css';
@@ -41,14 +42,17 @@ class App extends Component {
 				onWritePost={() => this.onClickWritePost()}
 				onSearch={search => this.onSearch( search )}
 			/>
-			<div className="Inner">
-				{this.state.isShowingWritePost ? <WritePost onDidCreatePost={ post => this.onDidCreatePost( post )} onCancel={() => this.onCancelWritePost()} /> : null}
-				<Route path="/" exact component={PostsList} />
-				<Route path="/author/:authorSlug" exact component={PostsList} />
-				<Route path="/category/:categorySlug" exact component={PostsList} />
-				<Route path="/page/:page" exact component={PostsList} />
-				<Route path="/search/:search" exact component={PostsList} />
-				<Route path="/:year/:month/:day/:slug" exact component={PostsList} />
+			<div className="Outer">
+				<div className="Inner">
+					{this.state.isShowingWritePost ? <WritePost onDidCreatePost={ post => this.onDidCreatePost( post )} onCancel={() => this.onCancelWritePost()} /> : null}
+					<Route path="/" exact component={PostsList} />
+					<Route path="/author/:authorSlug" exact component={PostsList} />
+					<Route path="/category/:categorySlug" exact component={PostsList} />
+					<Route path="/page/:page" exact component={PostsList} />
+					<Route path="/search/:search" exact component={PostsList} />
+					<Route path="/:year/:month/:day/:slug" exact component={PostsList} />
+				</div>
+				<Sidebar />
 			</div>
 		</div>;
 	}
