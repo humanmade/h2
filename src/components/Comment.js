@@ -48,7 +48,7 @@ export class Comment extends Component {
 				<div className="actions">
 					<a
 						className="Comment-date"
-						href={ `#comment-${ comment.id }` }
+						href={ `${ post.link }#comment-${ comment.id }` }
 					>
 						<FormattedRelative value={ comment.date_gmt + 'Z' } />
 					</a>
