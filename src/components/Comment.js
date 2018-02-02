@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { FormattedRelative } from 'react-intl';
 import PropTypes from 'prop-types';
+
 import AuthorName from './AuthorName';
 import Avatar from './Avatar';
 import Button from './Button';
@@ -8,6 +10,7 @@ import PostContent from './PostContent';
 import WriteComment from './WriteComment';
 import { Comment as CommentShape } from '../shapes';
 import { withApiData } from '../with-api-data';
+
 import './Comment.css';
 
 export class Comment extends Component {
@@ -25,7 +28,10 @@ export class Comment extends Component {
 		const author = this.props.author.data;
 		const directComments = this.props.comments.filter( c => c.parent === comment.id );
 
-		return <div className="Comment">
+		return <div
+			className="Comment"
+			id={ `comment-${ comment.id }` }
+		>
 			<header>
 				<Avatar
 					url={author ? author.avatar_urls['96'] : ''}
@@ -33,9 +39,19 @@ export class Comment extends Component {
 					size={40}
 				/>
 				<strong>
-					{ author ? <AuthorName user={ author } /> : '' }
+					{ author ?
+						<AuthorName user={ author } />
+					:
+						comment.author_name
+					}
 				</strong>
 				<div className="actions">
+					<a
+						className="Comment-date"
+						href={ `#comment-${ comment.id }` }
+					>
+						<FormattedRelative value={ comment.date_gmt + 'Z' } />
+					</a>
 					<Button onClick={() => this.setState( { isShowingReply: true } )}>Reply</Button>
 				</div>
 			</header>

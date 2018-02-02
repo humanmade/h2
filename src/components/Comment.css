@@ -34,6 +34,7 @@
 	height: 50px;
 	line-height: 40px;
 	display: flex;
+	align-items: flex-start;
 	margin-left: -30px;
 	position: sticky;
 	top: 99px;
@@ -56,8 +57,23 @@
 
 .Comment  > header > .actions {
 	display: none;
+	align-items: center;
 }
 
 .Comment:hover > header > .actions {
-	display: block;
+	display: flex;
+}
+
+.Comment .Comment-date {
+	color: var( --hm-medium-grey );
+	font-size: 0.75em;
+	margin-right: 0.5em;
+}
+.Comment a.Comment-date:hover {
+	border: none;
+	text-decoration: underline;
+}
+
+.Comment > header button {
+	margin-bottom: 0;
 }
