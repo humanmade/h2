@@ -22,14 +22,11 @@ class Header extends Component {
 					path="new-post"
 				/>
 				<SearchInput onSearch={this.props.onSearch} value={this.props.searchValue} />
-				{this.props.currentUser.data
-					? <CurrentUserDropDown user={this.props.currentUser.data} />
-					: null}
+
 				{ this.props.currentUser.data ?
-					<HeaderButton
-						onClick={ this.props.onLogOut }
-						title="Log Out"
-						path="log-out"
+					<CurrentUserDropDown
+						user={ this.props.currentUser.data }
+						onLogOut={ this.props.onLogOut }
 					/>
 				: null }
 			</div>
