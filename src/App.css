@@ -25,7 +25,7 @@
 	position: sticky;
 	top: 0;
 	height: 100vh;
-	margin-left: 5%;
+	padding-left: 5%;
 	overflow: hidden;
 	overflow-y: scroll;
 	width: 30%;
