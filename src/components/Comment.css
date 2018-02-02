@@ -64,6 +64,16 @@
 	display: flex;
 }
 
+.Comment .Comment-date {
+	color: var( --hm-medium-grey );
+	font-size: 0.75em;
+	margin-right: 0.5em;
+}
+.Comment a.Comment-date:hover {
+	border: none;
+	text-decoration: underline;
+}
+
 .Comment > header button {
 	margin-bottom: 0;
 }

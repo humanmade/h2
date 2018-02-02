@@ -42,7 +42,12 @@ export class Comment extends Component {
 					{ author ? <AuthorName user={ author } /> : '' }
 				</strong>
 				<div className="actions">
-					<FormattedRelative value={ comment.date_gmt + 'Z' } />
+					<a
+						className="Comment-date"
+						href={ `#comment-${ comment.id }` }
+					>
+						<FormattedRelative value={ comment.date_gmt + 'Z' } />
+					</a>
 					<Button onClick={() => this.setState( { isShowingReply: true } )}>Reply</Button>
 				</div>
 			</header>
