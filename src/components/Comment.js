@@ -28,7 +28,10 @@ export class Comment extends Component {
 		const author = this.props.author.data;
 		const directComments = this.props.comments.filter( c => c.parent === comment.id );
 
-		return <div className="Comment">
+		return <div
+			className="Comment"
+			id={ `comment-${ comment.id }` }
+		>
 			<header>
 				<Avatar
 					url={author ? author.avatar_urls['96'] : ''}
