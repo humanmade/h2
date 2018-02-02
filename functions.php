@@ -20,6 +20,8 @@ register_sidebar( [
 	'name' => 'Sidebar',
 	'before_title'  => '<h4 class="widgettitle">',
 	'after_title'   => '</h4>',
+	'before_widget' => '',
+	'after_widget'  => '',
 ] );
 
 function enqueue_assets() {
