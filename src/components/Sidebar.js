@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+
 import { withApiData } from '../with-api-data';
 import ErrorBlock from './ErrorBlock';
+import SearchWidget from './widgets/Search';
 import TextWidget from './widgets/Text';
+
 import './Sidebar.css';
 
-const widgetMap = { text: TextWidget };
+const widgetMap = {
+	search: SearchWidget,
+	text: TextWidget,
+};
 
 export class Sidebar extends Component {
 	render() {
