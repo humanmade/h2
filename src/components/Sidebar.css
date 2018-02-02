@@ -1,0 +1,16 @@
+.Sidebar {
+	font-size: 0.8em;
+	padding: 1rem 0;
+}
+
+/* Use relative units for headers/margins */
+.Sidebar h4 {
+	font-size: 1.222222222em;
+	margin: 1.35em 0;
+}
+
+.Sidebar p,
+.Sidebar ul,
+.Sidebar ol {
+	margin: 1.66667em 0;
+}
