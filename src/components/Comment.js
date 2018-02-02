@@ -39,7 +39,11 @@ export class Comment extends Component {
 					size={40}
 				/>
 				<strong>
-					{ author ? <AuthorName user={ author } /> : '' }
+					{ author ?
+						<AuthorName user={ author } />
+					:
+						comment.author_name
+					}
 				</strong>
 				<div className="actions">
 					<a
