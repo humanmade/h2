@@ -8,6 +8,7 @@ import TextWidget from './widgets/Text';
 import './Sidebar.css';
 
 const widgetMap = {
+	default: ( { html } ) => <div dangerouslySetInnerHTML={ { __html: html } } />,
 	search: SearchWidget,
 	text: TextWidget,
 };
@@ -31,10 +32,7 @@ export class Sidebar extends Component {
 			onMouseOut={ () => this.setState( { active: false } ) }
 		>
 			{ ( this.props.widgets.data || [] ).map( widget => {
-				const Widget = widgetMap[ widget.type ];
-				if ( ! Widget ) {
-					return <TextWidget key={widget.id} text={ widget.html } />
-				}
+				const Widget = widgetMap[ widget.type ] || widgetMap['default'];
 				return <Widget key={widget.id} {...widget} />
 			} ) }
 		</aside>
