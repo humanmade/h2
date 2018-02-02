@@ -1,6 +1,18 @@
 .Sidebar {
 	font-size: 0.8em;
 	padding: 1rem 0;
+	opacity: 0.1;
+
+	/* Slow fade out */
+	transition: opacity 800ms 400ms;
+}
+
+/* Use both events to ensure we snap quickly */
+.Sidebar.active, .Sidebar:hover {
+	opacity: 1;
+
+	/* Snap in... */
+	transition: opacity 160ms;
 }
 
 /* Use relative units for headers/margins */

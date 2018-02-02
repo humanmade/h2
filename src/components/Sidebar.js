@@ -13,8 +13,23 @@ const widgetMap = {
 };
 
 export class Sidebar extends Component {
+	constructor( props ) {
+		super( props );
+
+		this.state = {
+			active: false,
+		};
+	}
+
 	render() {
-		return <aside className="Sidebar">
+		const { active } = this.state;
+		const className = `Sidebar ${ active ? 'active' : '' }`;
+
+		return <aside
+			className={ className }
+			onMouseOver={ () => this.setState( { active: true } ) }
+			onMouseOut={ () => this.setState( { active: false } ) }
+		>
 			{ ( this.props.widgets.data || [] ).map( widget => {
 				const Widget = widgetMap[ widget.type ];
 				if ( ! Widget ) {
