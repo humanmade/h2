@@ -79,7 +79,12 @@
 .PostContent ul,
 .PostContent ol,
 .PostContent .text-std {
-	margin: 1rem 0
+	margin: 1rem 0;
+}
+
+.PostContent ul,
+.PostContent ol {
+	padding-left: 20px;
 }
 
 .PostContent h1,
