@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import { withApiData } from '../with-api-data';
-import ErrorBlock from './ErrorBlock';
 import SearchWidget from './widgets/Search';
 import TextWidget from './widgets/Text';
 
@@ -9,17 +8,15 @@ import './Sidebar.css';
 
 const widgetMap = {
 	default: ( { html } ) => <div dangerouslySetInnerHTML={ { __html: html } } />,
-	search: SearchWidget,
-	text: TextWidget,
+	search:  SearchWidget,
+	text:    TextWidget,
 };
 
 export class Sidebar extends Component {
 	constructor( props ) {
 		super( props );
 
-		this.state = {
-			active: false,
-		};
+		this.state = { active: false };
 	}
 
 	render() {
