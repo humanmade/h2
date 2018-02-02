@@ -13,7 +13,7 @@ import './Header.css';
 class Header extends Component {
 	render() {
 		return <div className="Header">
-			<div className="Inner">
+			<div className="Header-inner">
 				<Link to="/"><Logo /></Link>
 				<HeaderButton
 					onClick={this.props.onWritePost}
