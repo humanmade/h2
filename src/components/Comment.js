@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { FormattedRelative } from 'react-intl';
 import PropTypes from 'prop-types';
+
 import AuthorName from './AuthorName';
 import Avatar from './Avatar';
 import Button from './Button';
@@ -8,6 +10,7 @@ import PostContent from './PostContent';
 import WriteComment from './WriteComment';
 import { Comment as CommentShape } from '../shapes';
 import { withApiData } from '../with-api-data';
+
 import './Comment.css';
 
 export class Comment extends Component {
@@ -36,6 +39,7 @@ export class Comment extends Component {
 					{ author ? <AuthorName user={ author } /> : '' }
 				</strong>
 				<div className="actions">
+					<FormattedRelative value={ comment.date_gmt + 'Z' } />
 					<Button onClick={() => this.setState( { isShowingReply: true } )}>Reply</Button>
 				</div>
 			</header>
