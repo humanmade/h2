@@ -101,7 +101,9 @@ export class WritePost extends Component {
 				onUpload={( ...args ) => this.onUpload( ...args )}
 			/>
 			{ this.state.showTitleWarning ?
-				<p className="WritePost-title-warn">⚠️ Your post needs a title!</p>
+				<p className="WritePost-title-warn">
+					<span role="img" aria-label="Warning">⚠️</span> Your post needs a title!
+				</p>
 			: null }
 			{this.props.children}
 		</div>
