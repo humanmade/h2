@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import CurrentUserDropDown from './CurrentUserDropDown';
 import HeaderButton from './HeaderButton';
 import Logo from './Logo';
 import SearchInput from './SearchInput';
@@ -21,6 +22,13 @@ class Header extends Component {
 					path="new-post"
 				/>
 				<SearchInput onSearch={this.props.onSearch} value={this.props.searchValue} />
+
+				{ this.props.currentUser.data ?
+					<CurrentUserDropDown
+						user={ this.props.currentUser.data }
+						onLogOut={ this.props.onLogOut }
+					/>
+				: null }
 			</div>
 		</div>;
 	}
