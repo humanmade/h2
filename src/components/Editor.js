@@ -56,12 +56,12 @@ export default class Editor extends React.PureComponent {
 		super( props );
 
 		this.state = {
-			content:   '',
+			content:    '',
 			completion: null,
-			count:     0,
-			height:    null,
-			mode:      'edit',
-			uploading: null,
+			count:      0,
+			height:     null,
+			mode:       'edit',
+			uploading:  null,
 		};
 		this.textarea = null;
 	}
@@ -125,9 +125,7 @@ export default class Editor extends React.PureComponent {
 
 		if ( target.selectionEnd === this.state.completion.start ) {
 			// Outside completion, close it.
-			this.setState( {
-				completion: null,
-			} );
+			this.setState( { completion: null } );
 		} else {
 			this.setState( {
 				completion: {
@@ -204,10 +202,10 @@ export default class Editor extends React.PureComponent {
 		}
 
 		const completionProps = {
-			key:     completion.key,
-			coords:  completion.coords,
-			text:    content.substring( completion.start + 1, completion.end + 1 ),
-			trigger: completion.key,
+			key:      completion.key,
+			coords:   completion.coords,
+			text:     content.substring( completion.start + 1, completion.end + 1 ),
+			trigger:  completion.key,
 			onSelect: val => {
 				const content = this.state.content;
 
@@ -219,7 +217,7 @@ export default class Editor extends React.PureComponent {
 
 				this.setState( {
 					completion: null,
-					content: nextParts.join( '' ),
+					content:    nextParts.join( '' ),
 				} );
 			},
 			onCancel: () => this.setState( { completion: null } ),

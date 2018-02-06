@@ -59,9 +59,8 @@ export default class Completion extends React.Component {
 	}
 
 	componentWillReceiveProps( nextProps ) {
-		this.setState( {
-			items: nextProps.items.filter( item => nextProps.matcher( item, nextProps.text ) ).slice( 0, 5 ),
-		} );
+		const items = nextProps.items.filter( item => nextProps.matcher( item, nextProps.text ) ).slice( 0, 5 );
+		this.setState( { items } );
 	}
 
 	componentWillUnmount() {
@@ -96,7 +95,7 @@ export default class Completion extends React.Component {
 			{ items.map( ( item, idx ) => renderItem( {
 				item,
 				selected: idx === this.state.selected,
-				onHover: () => this.setState( { selected: idx } ),
+				onHover:  () => this.setState( { selected: idx } ),
 				onSelect: () => onSelect( insert( item, this.props ) ),
 			} ) ) }
 		</ol>;
@@ -104,7 +103,7 @@ export default class Completion extends React.Component {
 }
 
 Completion.propTypes = {
-	coords:   PropTypes.shape( {
+	coords: PropTypes.shape( {
 		top:  PropTypes.number.isRequired,
 		left: PropTypes.number.isRequired,
 	} ).isRequired,
