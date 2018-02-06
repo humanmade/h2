@@ -225,6 +225,7 @@ class Editor extends React.PureComponent {
 					content: nextParts.join( '' ),
 				} );
 			},
+			onCancel: () => this.setState( { completion: null } ),
 		};
 
 		const handler = this.completions[ completion.key ];

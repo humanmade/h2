@@ -55,6 +55,11 @@ export default class Completion extends React.Component {
 					this.props.onSelect( this.props.insert( item, this.props ) );
 					return;
 				}
+
+				case 'Escape':
+					e.preventDefault();
+					this.props.onCancel();
+					return;
 			}
 		};
 
@@ -125,6 +130,7 @@ Completion.propTypes = {
 	items:    PropTypes.array.isRequired,
 	text:     PropTypes.string.isRequired,
 	trigger:  PropTypes.string.isRequired,
+	onCancel: PropTypes.func.isRequired,
 	onSelect: PropTypes.func.isRequired,
 };
 
