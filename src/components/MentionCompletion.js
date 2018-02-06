@@ -6,7 +6,6 @@ import Completion from './Completion';
 import './MentionCompletion.css';
 
 const MentionCompletion = props => {
-	console.log( props.items );
 	const renderItem = ( { item, selected, onSelect } ) => <li
 		key={ item.slug }
 		className={ selected ? 'MentionCompletion-item selected' : 'MentionCompletion-item' }

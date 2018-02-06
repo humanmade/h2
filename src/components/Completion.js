@@ -92,18 +92,9 @@ export default class Completion extends React.Component {
 
 		const { items } = this.state;
 
-		console.log( items );
-
 		if ( ! items.length ) {
 			return null;
 		}
-
-		console.log( items.map( ( item, idx ) => renderItem( {
-			item,
-			selected: idx === this.state.selected,
-			onHover: () => this.setState( { selected: idx } ),
-			onSelect: () => this.props.onSelect( insert( item, this.props ) ),
-		} ) ) );
 
 		return <ol
 			className="Completion"
