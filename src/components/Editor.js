@@ -1,5 +1,4 @@
 import countWords from '@iarna/word-count';
-import { emojiIndex } from 'emoji-mart';
 import marked from 'marked';
 import PropTypes from 'prop-types';
 import React from 'react';
