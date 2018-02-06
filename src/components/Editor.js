@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import getCaretCoordinates from 'textarea-caret';
 
-import { withApiData } from '../with-api-data';
-
 import Button from './Button';
 import DropUpload from './DropUpload';
 import EmojiCompletion from './EmojiCompletion';
@@ -54,7 +52,7 @@ const Preview = props => {
 };
 Preview.propTypes = { children: PropTypes.string.isRequired };
 
-class Editor extends React.PureComponent {
+export default class Editor extends React.PureComponent {
 	constructor( props ) {
 		super( props );
 
@@ -69,11 +67,8 @@ class Editor extends React.PureComponent {
 		this.textarea = null;
 
 		this.completions = {
-			'@': props => <MentionCompletion
-				{ ...props }
-				items={ Object.values( this.props.users.data || [] ) }
-			/>,
-			':': props => <EmojiCompletion { ...props } />,
+			'@': MentionCompletion,
+			':': EmojiCompletion,
 		};
 	}
 
@@ -359,4 +354,3 @@ Editor.propTypes = {
 	onCancel:   PropTypes.func,
 	onSubmit:   PropTypes.func.isRequired,
 };
-export default withApiData( props => ( { users: '/wp/v2/users?per_page=100' } ) )( Editor );

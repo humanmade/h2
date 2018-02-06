@@ -1,7 +1,7 @@
-import { emojiIndex } from 'emoji-mart';
 import React from 'react';
 
 import Completion from './Completion';
+import { withApiData } from '../with-api-data';
 
 import './MentionCompletion.css';
 
@@ -22,10 +22,11 @@ const MentionCompletion = props => {
 
 	return <Completion
 		{ ...props }
+		items={ Object.values( props.users.data || [] ) }
 		insert={ ( item, props ) => `${ props.trigger }${ item.slug } ` }
 		matcher={ ( item, search ) => `${ item.slug } ${ item.name }`.toLowerCase().indexOf( search.toLowerCase() ) >= 0 }
 		renderItem={ renderItem }
 	/>;
 };
 
-export default MentionCompletion;
+export default withApiData( props => ( { users: '/wp/v2/users?per_page=100' } ) )( MentionCompletion );
