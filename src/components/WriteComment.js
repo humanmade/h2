@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { withApiData } from '../with-api-data';
 import { parseResponse } from '../wordpress-rest-api-cookie-auth';
 import Avatar from './Avatar';
-import Editor from '../containers/Editor';
+import Editor from './Editor';
 import { Post } from '../shapes';
 
 import './WriteComment.css';
