@@ -125,20 +125,28 @@ class Editor extends React.PureComponent {
 		this.setState( { completion } );
 	}
 
-	onInput( e ) {
+	onKeyUp( e ) {
+		const { target } = e;
 		const { completion } = this.state;
+
+		// Is a completion open?
 		if ( ! completion ) {
 			return;
 		}
 
-		const { target } = e;
-		const nextCompletion = {
-			...completion,
-			end: target.selectionEnd + 1,
-		};
-		this.setState( {
-			completion: nextCompletion,
-		} );
+		if ( target.selectionEnd === this.state.completion.start ) {
+			// Outside completion, close it.
+			this.setState( {
+				completion: null,
+			} );
+		} else {
+			this.setState( {
+				completion: {
+					...this.state.completion,
+					end: target.selectionEnd,
+				},
+			} );
+		}
 	}
 
 	onSubmit( e ) {
@@ -312,8 +320,8 @@ class Editor extends React.PureComponent {
 							value={ content }
 							onBlur={ () => this.onBlur() }
 							onChange={ e => this.setState( { content: e.target.value } ) }
-							onInput={ e => this.onInput( e ) }
 							onKeyDown={ e => this.onKeyDown( e ) }
+							onKeyUp={ e => this.onKeyUp( e ) }
 						/>
 					) }
 				</DropUpload>
