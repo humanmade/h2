@@ -69,11 +69,11 @@ class Editor extends React.PureComponent {
 		this.textarea = null;
 
 		this.completions = {
-			'@': completion => <MentionCompletion
-				{ ...completion }
+			'@': props => <MentionCompletion
+				{ ...props }
 				items={ Object.values( this.props.users.data || [] ) }
 			/>,
-			':': completion => <EmojiCompletion { ...completion } />,
+			':': props => <EmojiCompletion { ...props } />,
 		};
 	}
 
@@ -236,11 +236,11 @@ class Editor extends React.PureComponent {
 			onCancel: () => this.setState( { completion: null } ),
 		};
 
-		const handler = this.completions[ completion.key ];
-		if ( ! handler ) {
+		const Handler = this.completions[ completion.key ];
+		if ( ! Handler ) {
 			return null;
 		}
-		return handler( completionProps );
+		return <Handler { ...completionProps } />;
 	}
 
 	focus() {
