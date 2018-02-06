@@ -42,8 +42,8 @@ const BUTTONS = {
 };
 
 const completions = {
-	'@': () => {},
-	':': () => {},
+	'@': MentionCompletion,
+	':': EmojiCompletion,
 };
 
 const Preview = props => {
@@ -65,11 +65,6 @@ export default class Editor extends React.PureComponent {
 			uploading: null,
 		};
 		this.textarea = null;
-
-		this.completions = {
-			'@': MentionCompletion,
-			':': EmojiCompletion,
-		};
 	}
 
 	componentDidUpdate() {
@@ -102,7 +97,7 @@ export default class Editor extends React.PureComponent {
 
 	onKeyDown( e ) {
 		const { key, target } = e;
-		if ( ! this.completions[ key ] ) {
+		if ( ! completions[ key ] ) {
 			if ( e.metaKey && e.key === 'Enter' ) {
 				this.onSubmit( e );
 				return false;
@@ -231,7 +226,7 @@ export default class Editor extends React.PureComponent {
 			onCancel: () => this.setState( { completion: null } ),
 		};
 
-		const Handler = this.completions[ completion.key ];
+		const Handler = completions[ completion.key ];
 		if ( ! Handler ) {
 			return null;
 		}
