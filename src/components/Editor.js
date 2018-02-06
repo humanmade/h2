@@ -71,7 +71,7 @@ class Editor extends React.PureComponent {
 		this.completions = {
 			'@': completion => <MentionCompletion
 				{ ...completion }
-				items={ Object.values( this.props.users ) }
+				items={ Object.values( this.props.users.data || [] ) }
 			/>,
 			':': completion => <EmojiCompletion { ...completion } />,
 		};
