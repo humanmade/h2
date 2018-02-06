@@ -2,11 +2,7 @@ import React from 'react';
 import { storiesOf, action } from '@storybook/react';
 import { IntlProvider } from 'react-intl';
 
-import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import thunk from 'redux-thunk';
-import reducers from '../reducers';
-
+import storeDecorator from './store-decorator';
 import Header from '../components/Header';
 import Logo from '../components/Logo';
 import Avatar from '../components/Avatar';
@@ -69,13 +65,9 @@ const users = [
 ];
 
 storiesOf( 'Components', module )
+	.addDecorator( storeDecorator() )
 	.addDecorator( story => {
 		return <IntlProvider locale="en">{story()}</IntlProvider>;
-	} )
-	.addDecorator( story => {
-		const store = createStore( reducers, applyMiddleware( thunk ) );
-
-		return <Provider store={ store }>{ story() }</Provider>;
 	} )
 	.add( 'Header', () => (
 		<Header onWritePost={() => {}} onWriteStatus={() => {}}><Logo /></Header>

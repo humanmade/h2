@@ -32,11 +32,35 @@
 	margin: 0;
 }
 
+.WritePost > header > .byline > h2 > input {
+	padding: 0;
+	font-size: inherit;
+	font-weight: inherit;
+	color: inherit;
+	border: inherit;
+	background-color: inherit;
+	border-radius: inherit;
+	margin: 0;
+	width: inherit;
+}
+
+.WritePost > header > .byline > h2 > input::placeholder {
+	font-style: inherit;
+}
+
 .WritePost > header > .byline > .date {
 	color: #AAA;
 	font-size: 14px;
 }
 
+.WritePost > header > .byline > .categories {
+	list-style: none;
+	margin: 0 0 0 10px;
+	padding: 0;
+	display: inline;
+	font-size: 14px;
+}
+
 .WritePost > .Editor {
-	margin-left: 100px;
+	margin-left: 90px;
 }

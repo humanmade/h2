@@ -4,17 +4,33 @@
 	flex: 1;
 }
 
-.App .PostsList {
-	max-width: 800px;
-}
-
 .App .WritePost {
 	margin: 20px;
 	max-width: 800px;
 }
 
-.Inner {
+.Outer {
 	margin: 0 auto;
-	flex-direction: column;
+	display: flex;
 	max-width: 1200px;
+}
+
+.Inner {
+	flex-direction: column;
+	width: 65%;
+	max-width: 800px;
+}
+
+.Sidebar {
+	position: sticky;
+	top: 0;
+	height: 100vh;
+	padding-left: 5%;
+	overflow: hidden;
+	overflow-y: scroll;
+	width: 30%;
+	flex-shrink: 0;
+}
+.App a {
+	border: none;
 }
