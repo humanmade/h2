@@ -88,7 +88,7 @@ export default class Completion extends React.Component {
 		return <ol
 			className="Completion"
 			style={ {
-				top: coords.top,
+				top:  coords.top,
 				left: coords.left,
 			} }
 		>
