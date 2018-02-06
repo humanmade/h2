@@ -48,6 +48,10 @@ export default class Completion extends React.Component {
 					e.preventDefault();
 					this.props.onCancel();
 					return;
+
+				default:
+					// No-op
+					return;
 			}
 		};
 
@@ -72,9 +76,7 @@ export default class Completion extends React.Component {
 		const {
 			coords,
 			insert,
-			matcher,
 			renderItem,
-			text,
 			onSelect,
 		} = this.props;
 
@@ -95,7 +97,7 @@ export default class Completion extends React.Component {
 				item,
 				selected: idx === this.state.selected,
 				onHover: () => this.setState( { selected: idx } ),
-				onSelect: () => this.props.onSelect( insert( item, this.props ) ),
+				onSelect: () => onSelect( insert( item, this.props ) ),
 			} ) ) }
 		</ol>;
 	}
