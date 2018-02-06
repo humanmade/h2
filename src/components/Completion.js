@@ -3,18 +3,6 @@ import React from 'react';
 
 import './Completion.css';
 
-const insert = ( item, props ) => `${ props.trigger }${ item } `;
-
-const matcher = ( item, search ) => item.toLowerCase().indexOf( search.toLowerCase() ) >= 0;
-
-const renderItem = ( { item, selected, onSelect } ) => {
-	return <li
-		key={ item }
-		className={ selected ? 'selected' : null }
-		onClick={ () => onSelect( item ) }
-	>{ item }</li>;
-};
-
 export default class Completion extends React.Component {
 	constructor( props ) {
 		super( props );
@@ -126,7 +114,13 @@ Completion.propTypes = {
 };
 
 Completion.defaultProps = {
-	matcher,
-	renderItem,
-	insert,
+	insert:     ( item, props ) => `${ props.trigger }${ item } `,
+	matcher:    ( item, search ) => item.toLowerCase().indexOf( search.toLowerCase() ) >= 0,
+	renderItem: ( { item, selected, onSelect } ) => {
+		return <li
+			key={ item }
+			className={ selected ? 'selected' : null }
+			onClick={ () => onSelect( item ) }
+		>{ item }</li>;
+	},
 };
