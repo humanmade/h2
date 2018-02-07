@@ -61,6 +61,15 @@
 	font-size: 14px;
 }
 
+.WritePost-title-warn {
+	background: var( --hm-red );
+	color: #fff;
+	margin-left: 90px;
+	margin-top: -1.36667rem;
+	padding: 0.5em 5px;
+	border-radius: 4px;
+}
+
 .WritePost > .Editor {
 	margin-left: 90px;
 }

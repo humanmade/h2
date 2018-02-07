@@ -12,9 +12,10 @@ import './WritePost.css';
 
 export class WritePost extends Component {
 	state = {
-		title:        '',
-		category:     null,
-		isSubmitting: false,
+		title:            '',
+		showTitleWarning: false,
+		category:         null,
+		isSubmitting:     false,
 	};
 	componentDidMount() {
 		if ( this.container && this.editor ) {
@@ -26,6 +27,11 @@ export class WritePost extends Component {
 		}
 	}
 	onSubmit( content ) {
+		if ( ! this.state.title ) {
+			this.setState( { showTitleWarning: true } );
+			return;
+		}
+
 		const body = {
 			content,
 			status:     'publish',
@@ -64,7 +70,15 @@ export class WritePost extends Component {
 					size={60}
 				/>
 				<div className="byline">
-					<h2><input type="text" placeholder="Enter post title..." value={ this.state.title } onChange={ e => this.setState( { title: e.target.value } ) } /></h2>
+					<h2>
+						<input
+							type="text"
+							placeholder="Enter post title..."
+							required
+							value={ this.state.title }
+							onChange={ e => this.setState( { title: e.target.value, showTitleWarning: false } ) }
+						/>
+					</h2>
 					<span className="date">
 						{user ? user.name : ''}, now
 					</span>
@@ -86,6 +100,11 @@ export class WritePost extends Component {
 				onSubmit={( ...args ) => this.onSubmit( ...args )}
 				onUpload={( ...args ) => this.onUpload( ...args )}
 			/>
+			{ this.state.showTitleWarning ?
+				<p className="WritePost-title-warn">
+					<span role="img" aria-label="Warning">⚠️</span> Your post needs a title!
+				</p>
+			: null }
 			{this.props.children}
 		</div>
 	}
