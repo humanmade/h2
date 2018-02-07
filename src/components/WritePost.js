@@ -80,7 +80,7 @@ export class WritePost extends Component {
 				<div className="actions"></div>
 			</header>
 			<Editor
-				ref={editor => this.editor = editor ? editor.getWrappedInstance() : null}
+				ref={editor => this.editor = editor}
 				submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
 				onCancel={this.props.onCancel}
 				onSubmit={( ...args ) => this.onSubmit( ...args )}

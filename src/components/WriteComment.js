@@ -62,7 +62,7 @@ class WriteComment extends React.Component {
 			</header>
 			<div className="body">
 				<Editor
-					ref={editor => this.editor = editor ? editor.getWrappedInstance() : null}
+					ref={editor => this.editor = editor}
 					onCancel={this.props.onCancel}
 					onSubmit={( ...args ) => this.onSubmit( ...args )}
 					onUpload={( ...args ) => this.onUpload( ...args )}

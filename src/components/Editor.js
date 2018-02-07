@@ -1,13 +1,13 @@
 import countWords from '@iarna/word-count';
-import { emojiIndex } from 'emoji-mart';
 import marked from 'marked';
 import PropTypes from 'prop-types';
 import React from 'react';
-
-import { withApiData } from '../with-api-data';
+import getCaretCoordinates from 'textarea-caret';
 
 import Button from './Button';
 import DropUpload from './DropUpload';
+import EmojiCompletion from './EmojiCompletion';
+import MentionCompletion from './MentionCompletion';
 
 import './Editor.css';
 
@@ -40,22 +40,28 @@ const BUTTONS = {
 	},
 };
 
+const completions = {
+	'@': MentionCompletion,
+	':': EmojiCompletion,
+};
+
 const Preview = props => {
 	const compiled = marked( props.children );
 	return <div className="Editor-preview" dangerouslySetInnerHTML={{ __html: compiled }} />;
 };
 Preview.propTypes = { children: PropTypes.string.isRequired };
 
-class Editor extends React.PureComponent {
+export default class Editor extends React.PureComponent {
 	constructor( props ) {
 		super( props );
 
 		this.state = {
-			content:   '',
-			count:     0,
-			height:    null,
-			mode:      'edit',
-			uploading: null,
+			content:    '',
+			completion: null,
+			count:      0,
+			height:     null,
+			mode:       'edit',
+			uploading:  null,
 		};
 		this.textarea = null;
 	}
@@ -86,16 +92,48 @@ class Editor extends React.PureComponent {
 		}
 
 		this.textarea = ref;
-		window.jQuery( ref ).atwho( {
-			at:   '@',
-			data: Object.values( this.props.users.data || [] ).map( user => user.slug ),
-		} );
-		window.jQuery( ref ).atwho( {
-			at:         ':',
-			data:       Object.values( emojiIndex.emojis ),
-			displayTpl: item => `<li>${item.native} ${item.colons} </li>`,
-			insertTpl:  item => item.native,
-		} );
+	}
+
+	onKeyDown( e ) {
+		const { key, target } = e;
+		if ( ! completions[ key ] ) {
+			if ( e.metaKey && e.key === 'Enter' ) {
+				this.onSubmit( e );
+				return false;
+			}
+
+			return;
+		}
+
+		const coords = getCaretCoordinates( target, target.selectionEnd );
+		const completion = {
+			key,
+			coords,
+			start: target.selectionEnd,
+		};
+		this.setState( { completion } );
+	}
+
+	onKeyUp( e ) {
+		const { target } = e;
+		const { completion } = this.state;
+
+		// Is a completion open?
+		if ( ! completion ) {
+			return;
+		}
+
+		if ( target.selectionEnd === this.state.completion.start ) {
+			// Outside completion, close it.
+			this.setState( { completion: null } );
+		} else {
+			this.setState( {
+				completion: {
+					...this.state.completion,
+					end: target.selectionEnd,
+				},
+			} );
+		}
 	}
 
 	onSubmit( e ) {
@@ -156,11 +194,40 @@ class Editor extends React.PureComponent {
 		this.setState( { uploading: file } );
 	}
 
-	onKeyDownTextArea( e ) {
-		if ( e.metaKey && e.key === 'Enter' ) {
-			this.onSubmit( e );
-			return false;
+	getCompletion() {
+		const { completion, content } = this.state;
+
+		if ( ! completion ) {
+			return null;
 		}
+
+		const completionProps = {
+			key:      completion.key,
+			coords:   completion.coords,
+			text:     content.substring( completion.start + 1, completion.end + 1 ),
+			trigger:  completion.key,
+			onSelect: val => {
+				const content = this.state.content;
+
+				const nextParts = [
+					content.substring( 0, completion.start ),
+					val,
+					content.substring( completion.end ),
+				];
+
+				this.setState( {
+					completion: null,
+					content:    nextParts.join( '' ),
+				} );
+			},
+			onCancel: () => this.setState( { completion: null } ),
+		};
+
+		const Handler = completions[ completion.key ];
+		if ( ! Handler ) {
+			return null;
+		}
+		return <Handler { ...completionProps } />;
 	}
 
 	focus() {
@@ -227,22 +294,27 @@ class Editor extends React.PureComponent {
 				: null }
 			</div>
 
-			<DropUpload file={ this.state.uploading } onUpload={ file => this.onUpload( file ) }>
-				{ mode === 'preview' ? (
-					<Preview>{ content || '*Nothing to preview*' }</Preview>
-				) : (
-					<textarea
-						ref={ el => this.updateTextarea( el ) }
-						className="Editor-editor"
-						placeholder="Write a comment..."
-						style={{ height }}
-						value={ content }
-						onBlur={ () => this.onBlur() }
-						onChange={ e => this.setState( { content: e.target.value } ) }
-						onKeyDown={ e => this.onKeyDownTextArea( e ) }
-					/>
-				) }
-			</DropUpload>
+			<div className="Editor-editor-container">
+				<DropUpload file={ this.state.uploading } onUpload={ file => this.onUpload( file ) }>
+					{ mode === 'preview' ? (
+						<Preview>{ content || '*Nothing to preview*' }</Preview>
+					) : (
+						<textarea
+							ref={ el => this.updateTextarea( el ) }
+							className="Editor-editor"
+							placeholder="Write a comment..."
+							style={{ height }}
+							value={ content }
+							onBlur={ () => this.onBlur() }
+							onChange={ e => this.setState( { content: e.target.value } ) }
+							onKeyDown={ e => this.onKeyDown( e ) }
+							onKeyUp={ e => this.onKeyUp( e ) }
+						/>
+					) }
+				</DropUpload>
+
+				{ mode !== 'preview' ? this.getCompletion() : null }
+			</div>
 
 			<p className="Editor-submit">
 				<small>
@@ -274,5 +346,3 @@ Editor.propTypes = {
 	onCancel:   PropTypes.func,
 	onSubmit:   PropTypes.func.isRequired,
 };
-
-export default withApiData( props => ( { users: '/wp/v2/users?per_page=100' } ) )( Editor );

@@ -43,8 +43,26 @@ const post = {
 
 const user = {
 	name:        'Noel',
-	avatar_urls: { '96': 'https://secure.gravatar.com/avatar/c57c8945079831fa3c19caef02e44614?s=300&d=mm&r=g' },
+	slug:        'noel',
+	avatar_urls: {
+		'48': 'https://secure.gravatar.com/avatar/c57c8945079831fa3c19caef02e44614?s=48&d=mm&r=g',
+		'96': 'https://secure.gravatar.com/avatar/c57c8945079831fa3c19caef02e44614?s=96&d=mm&r=g',
+	},
 };
+
+const users = [
+	user,
+	{
+		...user,
+		name: 'Joe',
+		slug: 'joe',
+	},
+	{
+		...user,
+		name: 'Tom',
+		slug: 'tomwillmot',
+	},
+];
 
 storiesOf( 'Components', module )
 	.addDecorator( storeDecorator() )
@@ -100,5 +118,8 @@ storiesOf( 'Components', module )
 		/>
 	) )
 	.add( 'Editor', () => (
-		<Editor onSubmit={ action( 'submit' ) } />
+		<Editor
+			onSubmit={ action( 'submit' ) }
+			users={ users }
+		/>
 	) );

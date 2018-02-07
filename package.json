@@ -38,7 +38,8 @@
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^2.7.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "textarea-caret": "^3.0.2"
   },
   "scripts": {
     "start": "react-wp-scripts start",

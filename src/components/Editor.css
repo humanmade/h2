@@ -85,6 +85,10 @@
 	margin-left: 0.5rem;
 }
 
+.Editor-editor-container {
+	position: relative;
+}
+
 .Editor-tabs,
 .Editor-toolbar {
 	font-family: "proxima-nova", sans-serif;
