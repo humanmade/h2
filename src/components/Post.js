@@ -22,6 +22,12 @@ class Post extends Component {
 		super( props );
 		this.state = { isShowingReply: false };
 	}
+	componentDidMount() {
+		this.interval = setInterval( () => this.props.refreshData(), 30000 );
+	}
+	componentWillUnmount() {
+		clearInterval( this.interval );
+	}
 	onClickReply() {
 		this.setState( { isShowingReply: true } )
 	}

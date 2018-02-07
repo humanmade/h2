@@ -10,7 +10,12 @@ import { withApiData } from '../with-api-data';
 import './PostsList.css';
 
 class PostsList extends Component {
-
+	componentDidMount() {
+		this.interval = setInterval( () => this.props.refreshData(), 30000 );
+	}
+	componentWillUnmount() {
+		clearInterval( this.interval );
+	}
 	render() {
 		return <div className="PostsList">
 			{this.props.posts.isLoading && <ContentLoader type="list" width={300} />}
