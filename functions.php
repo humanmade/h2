@@ -4,7 +4,10 @@ namespace H2;
 
 use ReactWPScripts;
 
-require __DIR__ . '/wp-scripts-loader.php';
+if ( ! function_exists( 'ReactWPScripts\enqueue_assets' ) ) {
+	require __DIR__ . '/wp-scripts-loader.php';
+}
+
 require __DIR__ . '/inc/rest-api/class-widgets-controller.php';
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_assets' );
