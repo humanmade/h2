@@ -50,7 +50,12 @@ export class Comment extends Component {
 						className="Comment-date"
 						href={ `${ post.link }#comment-${ comment.id }` }
 					>
-						<FormattedRelative value={ comment.date_gmt + 'Z' } />
+						<time
+							datetime={ comment.date_gmt + 'Z' }
+							title={ comment.date_gmt + 'Z' }
+						>
+							<FormattedRelative value={ comment.date_gmt + 'Z' } />
+						</time>
 					</a>
 					<Button onClick={() => this.setState( { isShowingReply: true } )}>Reply</Button>
 				</div>
