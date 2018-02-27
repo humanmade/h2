@@ -6,8 +6,8 @@ import AuthorName from './AuthorName';
 import Avatar from './Avatar';
 import Button from './Button';
 import CommentsList from './CommentsList';
-import PostContent from './PostContent';
-import WriteComment from './WriteComment';
+import MessageContent from './Message/Content';
+import WriteComment from './Message/WriteComment';
 import { Comment as CommentShape } from '../shapes';
 import { withApiData } from '../with-api-data';
 
@@ -56,7 +56,7 @@ export class Comment extends Component {
 				</div>
 			</header>
 			<div className="body">
-				<PostContent html={this.props.comment.content.rendered} />
+				<MessageContent html={this.props.comment.content.rendered} />
 			</div>
 			<CommentsList
 				allComments={this.props.comments}

@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { withApiData } from '../with-api-data';
-import { parseResponse } from '../wordpress-rest-api-cookie-auth';
-import Avatar from './Avatar';
-import Editor from './Editor';
-import { Post } from '../shapes';
+import Avatar from '../Avatar';
+import Editor from '../Editor';
+import { withApiData } from '../../with-api-data';
+import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
+import { Post } from '../../shapes';
 
 import './WriteComment.css';
 
