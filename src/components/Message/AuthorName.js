@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Avatar from './Avatar';
-import Hovercard from './Hovercard';
-import RelativeLink from './RelativeLink';
+import Avatar from '../Avatar';
+import Hovercard from '../Hovercard';
+import RelativeLink from '../RelativeLink';
 
 import './AuthorName.css';
 

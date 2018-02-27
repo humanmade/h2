@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { FormattedRelative } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import AuthorName from './AuthorName';
 import Avatar from './Avatar';
 import Button from './Button';
 import CommentsList from './CommentsList';
+import AuthorName from './Message/AuthorName';
 import MessageContent from './Message/Content';
 import WriteComment from './Message/WriteComment';
 import { Comment as CommentShape } from '../shapes';

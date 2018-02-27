@@ -6,11 +6,11 @@ import {
 	Post as PostShape,
 } from '../../shapes';
 
-import AuthorName from '../AuthorName';
 import Avatar from '../Avatar';
 import Button from '../Button';
 import CommentsList from '../../components/CommentsList';
 import Link from '../RelativeLink';
+import AuthorName from '../Message/AuthorName';
 import MessageContent from '../Message/Content'
 import WriteComment from '../Message/WriteComment';
 import Reactions from './Reactions'
