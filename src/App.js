@@ -4,8 +4,8 @@ import { Route, withRouter } from 'react-router-dom';
 
 import Header from './components/Header';
 import PostsList from './components/Post/List';
+import WritePost from './components/Post/Write';
 import Sidebar from './components/Sidebar';
-import WritePost from './components/WritePost';
 
 import './App.css';
 
