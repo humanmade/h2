@@ -6,8 +6,8 @@ import getCaretCoordinates from 'textarea-caret';
 
 import Button from './Button';
 import DropUpload from './DropUpload';
-import EmojiCompletion from './EmojiCompletion';
-import MentionCompletion from './MentionCompletion';
+import EmojiCompletion from './Editor/EmojiCompletion';
+import MentionCompletion from './Editor/MentionCompletion';
 
 import './Editor.css';
 
