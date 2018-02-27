@@ -41,7 +41,10 @@ export default function Changes( props ) {
 			</header>
 
 			{ newChanges.map( change =>
-				<div className="Changes-change">
+				<div
+					key={ change.title }
+					className="Changes-change"
+				>
 					<h3>{ change.title }</h3>
 					<change.content />
 				</div>
