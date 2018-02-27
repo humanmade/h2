@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import { withApiData } from '../with-api-data';
-import SearchWidget from './widgets/Search';
-import TextWidget from './widgets/Text';
+import SearchWidget from './Widgets/Search';
+import TextWidget from './Widgets/Text';
 
 import './Sidebar.css';
 
