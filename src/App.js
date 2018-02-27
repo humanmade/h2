@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
 
 import Header from './components/Header';
-import PostsList from './components/PostsList';
+import PostsList from './components/Post/List';
 import Sidebar from './components/Sidebar';
 import WritePost from './components/WritePost';
 
