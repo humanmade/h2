@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import getCaretCoordinates from 'textarea-caret';
 
-import Button from './Button';
-import DropUpload from './DropUpload';
-import EmojiCompletion from './Editor/EmojiCompletion';
-import MentionCompletion from './Editor/MentionCompletion';
+import Button from '../Button';
+import DropUpload from '../DropUpload';
+import EmojiCompletion from './EmojiCompletion';
+import MentionCompletion from './MentionCompletion';
 
-import './Editor.css';
+import './index.css';
 
 const apply = ( selection, start, end ) => {
 	return selection.length ? start + selection + end : start;
