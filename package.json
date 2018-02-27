@@ -43,7 +43,7 @@
   },
   "scripts": {
     "start": "react-wp-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && rm build/index.html",
     "deploy": "npm run build && aws s3 sync ./build s3://make.hmn.md/h2 --acl public-read",
     "lint": "eslint src/",
     "test": "react-scripts test --env=jsdom",
