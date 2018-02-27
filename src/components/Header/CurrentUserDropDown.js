@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Avatar from './Avatar';
-import Button from './Button';
-import Dropdown from './Dropdown';
-import { User } from '../shapes';
+import Avatar from '../Avatar';
+import Button from '../Button';
+import Dropdown from '../Dropdown';
+import { User } from '../../shapes';
 
 import './CurrentUserDropDown.css';
 

@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import CurrentUserDropDown from './CurrentUserDropDown';
 import HeaderButton from './HeaderButton';
 import Logo from './Logo';
-import SearchInput from './SearchInput';
-import { withApiData } from '../with-api-data';
+import SearchInput from '../SearchInput';
+import { withApiData } from '../../with-api-data';
 
-import './Header.css';
+import './index.css';
 
 class Header extends Component {
 	render() {
