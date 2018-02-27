@@ -21,6 +21,13 @@ class Header extends Component {
 					icon="icon icon--plus-alt"
 					path="new-post"
 				/>
+
+				<HeaderButton
+					icon="mail"
+					title="What's New"
+					onClick={ this.props.onShowChanges }
+				/>
+
 				<SearchInput onSearch={this.props.onSearch} value={this.props.searchValue} />
 
 				{ this.props.currentUser.data ?

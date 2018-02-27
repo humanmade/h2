@@ -57,6 +57,7 @@ class App extends Component {
 				onLogOut={ () => this.onLogOut() }
 				onWritePost={() => this.onClickWritePost()}
 				onSearch={search => this.onSearch( search )}
+				onShowChanges={ () => this.setState( { lastView: null } ) }
 			/>
 			<div className="Outer">
 				<div className="Inner">
