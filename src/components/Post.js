@@ -12,7 +12,7 @@ import Button from './Button';
 import CommentsList from '../components/CommentsList';
 import Link from './RelativeLink';
 import PostContent from './PostContent'
-import Reactions from './Reactions'
+import Reactions from './Post/Reactions'
 import WriteComment from './WriteComment';
 
 import './Post.css';
