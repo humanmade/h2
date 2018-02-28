@@ -14,7 +14,12 @@ class PostsList extends Component {
 		return <div className="PostsList">
 			{this.props.posts.isLoading && <ContentLoader type="list" width={300} />}
 			{this.props.posts.data &&
-				this.props.posts.data.map( post => <PostComponent key={post.id} post={post} /> )
+				this.props.posts.data.map( post =>
+					<PostComponent
+						key={ post.id }
+						data={ post }
+					/>
+				)
 			}
 			<Link to={`/page/${ this.props.match.params.page ? Number( this.props.match.params.page ) + 1 : 2 }`}>Older</Link>
 		</div>;

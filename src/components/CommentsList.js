@@ -14,7 +14,7 @@ export default class CommentsList extends Component {
 					key={comment.id}
 					comment={comment}
 					comments={this.props.allComments}
-					post={this.props.post}
+					parentPost={ this.props.post }
 					onDidCreateComment={this.props.onDidCreateComment}
 				/>
 			) ) }
