@@ -24,7 +24,10 @@ const render = Main => {
 	ReactDOM.render(
 		<Provider store={store}>
 			<IntlProvider locale="en">
-				<RestApiProvider fetch={( url, ...args ) => api.fetch( url, ...args )}>
+				<RestApiProvider
+					fetch={( url, ...args ) => api.fetch( url, ...args )}
+					initialData={ window.H2Data.preload }
+				>
 					<Router>
 						<Main />
 					</Router>
