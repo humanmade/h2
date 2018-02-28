@@ -50,5 +50,10 @@ export default withApiData( props => ({
 		filters.author = user.id;
 	}
 
-	return { posts: `/wp/v2/posts?${ qs.stringify( filters ) }` };
+	let postsRoute = '/wp/v2/posts';
+	if ( Object.keys( filters ).length > 0 ) {
+		postsRoute += '?' + qs.stringify( filters );
+	}
+
+	return { posts: postsRoute };
 } )( PostsList ) );
