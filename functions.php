@@ -3,6 +3,7 @@
 namespace H2;
 
 use ReactWPScripts;
+use WP_REST_Request;
 
 require __DIR__ . '/wp-scripts-loader.php';
 require __DIR__ . '/inc/rest-api/class-widgets-controller.php';
@@ -30,6 +31,68 @@ function enqueue_assets() {
 		'root'          => esc_url_raw( get_rest_url() ),
 		'nonce'         => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 	) );
+	wp_localize_script( 'h2', 'H2Data', get_script_data() );
+}
+
+/**
+ * Gather data for H2
+ */
+function get_script_data() {
+	$preload = [
+		'/wp/v2/posts',
+		'/h2/v1/widgets?sidebar=sidebar',
+		'/wp/v2/users/me',
+		'/wp/v2/users?per_page=100',
+	];
+
+	$data = [
+		'site' => [
+			'name'  => get_bloginfo( 'name' ),
+			'url'   => site_url(),
+			'home'  => home_url(),
+			'api'   => rest_url(),
+			'nonce' => wp_create_nonce( 'wp_rest' ),
+		],
+		'preload' => prefetch_urls( $preload ),
+	];
+
+	// Preload the comments and reactions for the posts too.
+	if ( isset( $data['preload']['/wp/v2/posts'] ) ) {
+		foreach ( $data['preload']['/wp/v2/posts'] as $post_data ) {
+			$id = $post_data['id'];
+			$urls = [
+				sprintf( '/h2/v1/reactions?post=%d', $post_data['id'] ),
+				sprintf( '/wp/v2/comments?post=%d&per_page=100', $post_data['id'] ),
+				sprintf( '/wp/v2/users/%d', $post_data['author'] ),
+				sprintf( '/wp/v2/categories?include=%s', implode( ',', $post_data['categories'] ) ),
+			];
+
+			// Only fetch new URLs we don't already have.
+			$urls = array_filter( $urls, function ( $url ) use ( $data ) {
+				return empty( $data['preload'][ $url ] );
+			} );
+
+			$results = prefetch_urls( $urls );
+			$data['preload'] = array_merge( $data['preload'], $results );
+		}
+	}
+
+	return $data;
+}
+
+function prefetch_urls( $urls ) {
+	$server = rest_get_server();
+	$data = [];
+	foreach ( $urls as $url ) {
+		$request = WP_REST_Request::from_url( rest_url( $url ) );
+		$response = rest_do_request( $request );
+		if ( $response->is_error() ) {
+			continue;
+		}
+
+		$data[ $url ] = $server->response_to_data( $response, false );
+	}
+	return $data;
 }
 
 /**
