@@ -12,8 +12,8 @@ import CommentsList from '../../components/CommentsList';
 import Link from '../RelativeLink';
 import AuthorName from '../Message/AuthorName';
 import MessageContent from '../Message/Content'
+import Reactions from '../Message/Reactions'
 import WriteComment from '../Message/WriteComment';
-import Reactions from './Reactions'
 
 import './index.css';
 
