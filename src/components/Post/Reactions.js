@@ -126,6 +126,7 @@ export class Reactions extends Component {
 					emoji="upside_down_face"
 					autoFocus={ true }
 					color="#D24632"
+					set="twitter"
 				/>
 			)}
 		</div>;
