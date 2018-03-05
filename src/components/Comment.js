@@ -7,6 +7,7 @@ import Button from './Button';
 import CommentsList from './CommentsList';
 import AuthorName from './Message/AuthorName';
 import MessageContent from './Message/Content';
+import Reactions from './Message/Reactions';
 import WriteComment from './Message/WriteComment';
 import { Comment as CommentShape } from '../shapes';
 import { withApiData } from '../with-api-data';
@@ -57,6 +58,10 @@ export class Comment extends Component {
 			</header>
 			<div className="body">
 				<MessageContent html={this.props.comment.content.rendered} />
+				<Reactions
+					commentId={ this.props.comment.id }
+					postId={ post.id }
+				/>
 			</div>
 			<CommentsList
 				allComments={this.props.comments}
