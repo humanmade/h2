@@ -123,7 +123,7 @@ export class Reactions extends Component {
 						this.toggleReaction( data.native );
 					}}
 					title={ false }
-					emoji=":upside_down_face:"
+					emoji="upside_down_face"
 					autoFocus={ true }
 					color="#D24632"
 				/>
