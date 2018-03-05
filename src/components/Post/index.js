@@ -73,8 +73,10 @@ class Post extends Component {
 					<Button onClick={() => this.onClickReply()}>Reply</Button>
 				</div>
 			</header>
-			<MessageContent html={post.content.rendered} />
-			<Reactions postId={post.id }/>
+			<div className="Post-content-wrap">
+				<MessageContent html={ post.content.rendered } />
+				<Reactions postId={ post.id }/>
+			</div>
 			<CommentsList
 				allComments={this.props.comments.data ? this.props.comments.data : []}
 				comments={comments}
