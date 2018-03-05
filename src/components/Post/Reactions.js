@@ -124,7 +124,6 @@ export class Reactions extends Component {
 					}}
 					title={ false }
 					emoji=":upside_down_face:"
-					native={ true }
 					autofFocus={ true }
 					color="#D24632"
 				/>
