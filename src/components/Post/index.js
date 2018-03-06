@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 
 import { FormattedRelative } from 'react-intl';
-import { withApiData } from '../with-api-data';
+import { withApiData } from '../../with-api-data';
 import {
 	Post as PostShape,
-} from '../shapes';
+} from '../../shapes';
 
-import AuthorName from './AuthorName';
-import Avatar from './Avatar';
-import Button from './Button';
-import CommentsList from '../components/CommentsList';
-import Link from './RelativeLink';
-import PostContent from './PostContent'
+import Avatar from '../Avatar';
+import Button from '../Button';
+import CommentsList from '../../components/CommentsList';
+import Link from '../RelativeLink';
+import AuthorName from '../Message/AuthorName';
+import MessageContent from '../Message/Content'
+import WriteComment from '../Message/WriteComment';
 import Reactions from './Reactions'
-import WriteComment from './WriteComment';
 
-import './Post.css';
+import './index.css';
 
 class Post extends Component {
 	constructor( props ) {
@@ -78,7 +78,7 @@ class Post extends Component {
 					<Button onClick={() => this.onClickReply()}>Reply</Button>
 				</div>
 			</header>
-			<PostContent html={post.content.rendered} />
+			<MessageContent html={post.content.rendered} />
 			<Reactions postId={post.id }/>
 			<CommentsList
 				allComments={this.props.comments.data ? this.props.comments.data : []}

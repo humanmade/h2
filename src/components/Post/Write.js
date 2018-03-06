@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import { withApiData } from '../with-api-data';
-import { parseResponse } from '../wordpress-rest-api-cookie-auth';
+import { withApiData } from '../../with-api-data';
+import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 
-import Avatar from './Avatar';
-import Editor from './Editor';
+import Avatar from '../Avatar';
+import Editor from '../Editor';
 
-import './WritePost.css';
+import './Write.css';
 
 export class WritePost extends Component {
 	state = {

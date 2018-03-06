@@ -3,11 +3,10 @@ import { Link } from 'react-router-dom';
 import ContentLoader from 'react-content-loader';
 import qs from 'qs';
 
-import PostComponent from './Post';
+import PostComponent from './index';
+import { withApiData } from '../../with-api-data';
 
-import { withApiData } from '../with-api-data';
-
-import './PostsList.css';
+import './List.css';
 
 class PostsList extends Component {
 

@@ -43,11 +43,9 @@
   },
   "scripts": {
     "start": "react-wp-scripts start",
-    "build": "react-scripts build",
-    "deploy": "npm run build && aws s3 sync ./build s3://make.hmn.md/h2 --acl public-read",
+    "build": "react-scripts build && rm build/index.html",
     "lint": "eslint src/",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   }
