@@ -12,8 +12,8 @@ import CommentsList from '../../components/CommentsList';
 import Link from '../RelativeLink';
 import AuthorName from '../Message/AuthorName';
 import MessageContent from '../Message/Content'
+import Reactions from '../Message/Reactions'
 import WriteComment from '../Message/WriteComment';
-import Reactions from './Reactions'
 
 import './index.css';
 
@@ -73,8 +73,10 @@ class Post extends Component {
 					<Button onClick={() => this.onClickReply()}>Reply</Button>
 				</div>
 			</header>
-			<MessageContent html={post.content.rendered} />
-			<Reactions postId={post.id }/>
+			<div className="Post-content-wrap">
+				<MessageContent html={ post.content.rendered } />
+				<Reactions postId={ post.id }/>
+			</div>
 			<CommentsList
 				allComments={this.props.comments.data ? this.props.comments.data : []}
 				comments={comments}

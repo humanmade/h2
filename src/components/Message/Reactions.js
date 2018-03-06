@@ -22,6 +22,10 @@ export class Reactions extends Component {
 			type: emoji,
 		};
 
+		if ( this.props.commentId ) {
+			body.comment = this.props.commentId;
+		}
+
 		this.props.fetch( '/h2/v1/reactions', {
 			headers: {
 				Accept:         'application/json',
@@ -151,7 +155,7 @@ export class Reactions extends Component {
 }
 
 export default withApiData( props => ( {
-	reactions:   `/h2/v1/reactions?post=${ props.postId }`,
+	reactions:   `/h2/v1/reactions?post=${ props.postId }${ props.commentId ? `&comment=${ props.commentId }` : '' }`,
 	currentUser: '/wp/v2/users/me',
 	users:       '/wp/v2/users?per_page=100',
 } ) )( Reactions );
@@ -159,6 +163,7 @@ export default withApiData( props => ( {
 Reactions.propTypes = {
 	userId:    PropTypes.number,
 	postId:    PropTypes.number.isRequired,
+	commentId: PropTypes.number,
 	reactions: PropTypes.object.isRequired,
 };
 
