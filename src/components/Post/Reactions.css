@@ -22,11 +22,6 @@
 	margin-right: 2px;
 }
 
-.reactions .btn:hover .icon--smiley-wink,
-.reactions .btn:focus .icon--smiley-wink {
-	background-image: url(/static/media/icon-smiley-wink-white.4dcfb962.svg);
-}
-
 .reactions .btn .loading {
 	margin: 0;
 }
@@ -61,22 +56,23 @@
 }
 
 .reactions .btn--active {
-	background: rgba(0,0,0,0.1);
-	border-color: #666666;
+	background: rgba( 125, 201, 218, 0.1 );
+	border-color: var( --hm-blue );
 }
 
 .reactions .btn--active .reactions__count {
-	color: #504C4C;
+	color: var( --hm-warm-grey );
 }
 
-.reactions .btn:hover .icon--smiley-wink,
-.reactions .btn:active .icon--smiley-wink {
-	background-image: url(/static/media/icon-smiley-wink-white.4dcfb962.svg);
+.reactions .btn:hover,
+.reactions .btn:active {
+	/* Reset background from tertiary button */
+	background: transparent;
 }
 
-.reactions .btn--active:hover .reactions__count,
-.reactions .btn--active:focus .reactions__count {
-	color: #FFF;
+.reactions .btn--active:hover,
+.reactions .btn--active:focus {
+	background: rgba( 125, 201, 218, 0.1 );
 }
 
 .reactions__users {
