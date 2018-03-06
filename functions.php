@@ -25,7 +25,9 @@ register_sidebar( [
 ] );
 
 function enqueue_assets() {
-	ReactWPScripts\enqueue_assets( get_stylesheet_directory() );
+	ReactWPScripts\enqueue_assets( get_stylesheet_directory(), array(
+		'handle' => 'h2'
+	) );
 	wp_localize_script( 'h2', 'wpApiSettings', array(
 		'root'          => esc_url_raw( get_rest_url() ),
 		'nonce'         => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
