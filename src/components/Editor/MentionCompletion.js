@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Completion from './Completion';
-import { withApiData } from '../with-api-data';
+import { withApiData } from '../../with-api-data';
 
 import './MentionCompletion.css';
 

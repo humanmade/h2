@@ -4,9 +4,9 @@ import { Route, withRouter } from 'react-router-dom';
 
 import Changes from './components/Changes';
 import Header from './components/Header';
-import PostsList from './components/PostsList';
+import PostsList from './components/Post/List';
+import WritePost from './components/Post/Write';
 import Sidebar from './components/Sidebar';
-import WritePost from './components/WritePost';
 
 import './App.css';
 
@@ -67,7 +67,7 @@ class App extends Component {
 					<Route path="/category/:categorySlug" exact component={PostsList} />
 					<Route path="/page/:page" exact component={PostsList} />
 					<Route path="/search/:search" exact component={PostsList} />
-					<Route path="/:year/:month/:day/:slug" exact component={PostsList} />
+					<Route path="/:year/:month/:day/:slug/:comment_page(comment-page-\d+)?" exact component={PostsList} />
 				</div>
 				<Sidebar />
 			</div>

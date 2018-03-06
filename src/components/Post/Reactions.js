@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Picker } from 'emoji-mart'
 
-import { withApiData } from '../with-api-data';
+import { withApiData } from '../../with-api-data';
 
-import UserDisplayName from './UserDisplayName';
+import UserDisplayName from '../UserDisplayName';
 
 import 'emoji-mart/css/emoji-mart.css';
 import './Reactions.css';
