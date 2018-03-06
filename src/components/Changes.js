@@ -13,6 +13,11 @@ const changes = [
 			<p>H2 now includes a changelog (you're looking at it!) to let you know of any new features.</p>
 			<p>(We'll only use this for new major features; keep an eye on the <a href="https://github.com/humanmade/H2">H2 repo</a> if you want to see minor changes too!)</p>
 		</React.Fragment>,
+	},
+	{
+		date:    '2018-03-06',
+		title:   'React to Comments',
+		content: () => <p>You can now <span role="img" aria-label="">🎉</span> emoji react to <span role="img" aria-label="">💬</span> comments. <span role="img" aria-label="">🙌</span></p>
 	}
 ];
 
