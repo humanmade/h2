@@ -15,11 +15,15 @@ export default class Completion extends React.Component {
 
 	componentDidMount() {
 		this.keyHandler = e => {
+			const { items, selected } = this.state;
+			if ( ! items.length ) {
+				return;
+			}
+
 			switch ( e.key ) {
 				case 'ArrowUp':
 					e.preventDefault();
 					this.setState( state => {
-						const { selected } = this.state;
 						const nextSelection = Math.max( 0, selected - 1 );
 						return { selected: nextSelection };
 					} );
@@ -28,7 +32,6 @@ export default class Completion extends React.Component {
 				case 'ArrowDown':
 					e.preventDefault();
 					this.setState( state => {
-						const { items, selected } = this.state;
 						const nextSelection = Math.min( selected + 1, items.length - 1 );
 						return { selected: nextSelection };
 					} );
@@ -38,7 +41,6 @@ export default class Completion extends React.Component {
 				case 'Enter': {
 					e.preventDefault();
 
-					const { items, selected } = this.state;
 					const item = items[ selected ];
 					this.props.onSelect( this.props.insert( item, this.props ) );
 					return;
