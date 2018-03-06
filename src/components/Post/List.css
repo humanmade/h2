@@ -25,3 +25,7 @@
 	width: 5px;
 	z-index: 2;
 }
+
+.PostsList > .pagination {
+	border-top: none;
+}
