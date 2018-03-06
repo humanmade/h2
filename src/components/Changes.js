@@ -5,7 +5,7 @@ import Button from './Button';
 import './Changes.css';
 
 const changes = [
-	// Add new changes above this line, in the following format:
+	// Add new changes to the bottom of this list, in the following format:
 	{
 		date:    '2018-02-26',
 		title:   "See What's New",
