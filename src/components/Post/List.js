@@ -16,7 +16,12 @@ class PostsList extends Component {
 		return <div className="PostsList">
 			{this.props.posts.isLoading && <ContentLoader type="list" width={300} />}
 			{this.props.posts.data &&
-				this.props.posts.data.map( post => <PostComponent key={post.id} post={post} /> )
+				this.props.posts.data.map( post =>
+					<PostComponent
+						key={ post.id }
+						data={ post }
+					/>
+				)
 			}
 			<div className="pagination">
 				<Link to={`/page/${ page ? Number( page ) + 1 : 2 }`}>Older</Link>
@@ -55,5 +60,10 @@ export default withApiData( props => ({
 		filters.author = user.id;
 	}
 
-	return { posts: `/wp/v2/posts?${ qs.stringify( filters ) }` };
+	let postsRoute = '/wp/v2/posts';
+	if ( Object.keys( filters ).length > 0 ) {
+		postsRoute += '?' + qs.stringify( filters );
+	}
+
+	return { posts: postsRoute };
 } )( PostsList ) );

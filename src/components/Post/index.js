@@ -33,7 +33,7 @@ class Post extends Component {
 		this.props.refreshData();
 	}
 	render() {
-		const post = this.props.post;
+		const post = this.props.data;
 		const author = this.props.author.data;
 		const comments = this.props.comments.data ? this.props.comments.data.filter( comment => comment.parent === 0 ) : [];
 		const categories = this.props.categories.data ? this.props.categories.data : [];
@@ -80,8 +80,8 @@ class Post extends Component {
 			<CommentsList
 				allComments={this.props.comments.data ? this.props.comments.data : []}
 				comments={comments}
+				post={ post }
 				onComment={() => this.onComment()}
-				post={this.props.post}
 				onDidCreateComment={( ...args ) => this.onDidCreateComment( ...args )}
 			>
 				{this.state.isShowingReply &&
@@ -96,12 +96,12 @@ class Post extends Component {
 	}
 }
 
-Post.propTypes = { post: PostShape.isRequired };
+Post.propTypes = { data: PostShape.isRequired };
 
 const mapPropsToData = props => ( {
-	comments:   `/wp/v2/comments?post=${ props.post.id }&per_page=100`,
-	author:     `/wp/v2/users/${ props.post.author }`,
-	categories: `/wp/v2/categories?include=${ props.post.categories.join( ',' ) }`,
+	comments:   `/wp/v2/comments?post=${ props.data.id }&per_page=100`,
+	author:     `/wp/v2/users/${ props.data.author }`,
+	categories: `/wp/v2/categories?include=${ props.data.categories.join( ',' ) }`,
 } );
 
 export default withApiData( mapPropsToData )( Post );
