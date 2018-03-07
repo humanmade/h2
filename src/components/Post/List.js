@@ -11,12 +11,22 @@ import './List.css';
 class PostsList extends Component {
 
 	render() {
+		const { page } = this.props.match.params;
+
 		return <div className="PostsList">
 			{this.props.posts.isLoading && <ContentLoader type="list" width={300} />}
 			{this.props.posts.data &&
 				this.props.posts.data.map( post => <PostComponent key={post.id} post={post} /> )
 			}
-			<Link to={`/page/${ this.props.match.params.page ? Number( this.props.match.params.page ) + 1 : 2 }`}>Older</Link>
+			<div className="pagination">
+				<Link to={`/page/${ page ? Number( page ) + 1 : 2 }`}>Older</Link>
+				{ page && page > 1 ?
+					<Link to={ `/page/${ page - 1 }` }>Newer</Link>
+				:
+					/* Hack to get pagination to float correctly */
+					<a style={ { display: 'none' } } />
+				}
+			</div>
 		</div>;
 	}
 }
