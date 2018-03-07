@@ -10,7 +10,7 @@ git clone --recursive git@github.com:humanmade/H2.git h2
 
 Once the checkout is complete, `cd` into the cloned theme directory, install npm modules, and start the development server:
 ```
-npm i
+npm install
 npm start
 ```
 
