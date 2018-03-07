@@ -12,7 +12,7 @@ import './App.css';
 
 const getLastChangesView = () => {
 	const viewed = window.localStorage.getItem( 'h2-last-change-view' );
-	return viewed ? new Date( viewed ) : new Date( '1980-01-01' );
+	return viewed ? new Date( viewed ) : new Date( '1970-01-01' );
 };
 
 class App extends Component {
