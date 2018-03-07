@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
 
+import Changes from './components/Changes';
 import Header from './components/Header';
 import PostsList from './components/Post/List';
 import WritePost from './components/Post/Write';
@@ -9,10 +10,18 @@ import Sidebar from './components/Sidebar';
 
 import './App.css';
 
+const getLastChangesView = () => {
+	const viewed = window.localStorage.getItem( 'h2-last-change-view' );
+	return viewed ? new Date( viewed ) : new Date( '1970-01-01' );
+};
+
 class App extends Component {
 	constructor( props ) {
 		super( props );
-		this.state = { isShowingWritePost: false };
+		this.state = {
+			isShowingWritePost: false,
+			lastView: getLastChangesView(),
+		};
 	}
 	onLogOut() {
 		window.location.href = '/wp-login.php?action=logout'
@@ -35,12 +44,20 @@ class App extends Component {
 		this.props.history.push( post.link.replace( /^(?:\/\/|[^/]+)*\//, '/' ) );
 	}
 
+	onDismissChanges = () => {
+		const { lastView } = this.state;
+		const now = new Date();
+		this.setState( { lastView: now } );
+		window.localStorage.setItem( 'h2-last-change-view', now.toISOString() );
+	}
+
 	render() {
 		return <div className="App">
 			<Header
 				onLogOut={ () => this.onLogOut() }
 				onWritePost={() => this.onClickWritePost()}
 				onSearch={search => this.onSearch( search )}
+				onShowChanges={ () => this.setState( { lastView: null } ) }
 			/>
 			<div className="Outer">
 				<div className="Inner">
@@ -54,6 +71,10 @@ class App extends Component {
 				</div>
 				<Sidebar />
 			</div>
+			<Changes
+				lastView={ this.state.lastView }
+				onDismiss={ this.onDismissChanges }
+			/>
 		</div>;
 	}
 }
