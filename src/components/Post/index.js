@@ -91,7 +91,7 @@ class Post extends Component {
 			>
 				{this.state.isShowingReply &&
 					<WriteComment
-						post={post}
+						parentPost={post}
 						onCancel={() => this.onClickCancelReply()}
 						onDidCreateComment={( ...args ) => this.onDidCreateComment( ...args )}
 					/>
