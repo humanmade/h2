@@ -78,7 +78,7 @@ export class Comment extends Component {
 				{this.state.isShowingReply &&
 					<WriteComment
 						comment={comment}
-						post={post}
+						parentPost={post}
 						onCancel={() => this.setState( { isShowingReply: false } )}
 						onDidCreateComment={( ...args ) => this.onDidCreateComment( ...args )}
 					/>

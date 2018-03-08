@@ -33,7 +33,7 @@ class WriteComment extends React.Component {
 	onSubmit( content ) {
 		const body = {
 			content,
-			post: this.props.post.id,
+			post: this.props.parentPost.id,
 		};
 
 		if ( this.props.comment ) {
@@ -73,7 +73,7 @@ class WriteComment extends React.Component {
 }
 
 WriteComment.propTypes = {
-	post:           Post.isRequired,
+	parentPost:     Post.isRequired,
 	onCancel:       PropTypes.func.isRequired,
 	onDidCreateComment: PropTypes.func.isRequired,
 };
