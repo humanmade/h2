@@ -21,11 +21,7 @@ export default function Avatar( props ) {
 			<img
 				style={style}
 				alt="User Avatar"
-				src={
-					props.url === ''
-						? 'https://www.timeshighereducation.com/sites/default/files/byline_photos/default-avatar.png'
-						: props.url
-				}
+				src={ props.url || window.H2Data.site.default_avatar }
 			/>
 		</Link>
 	</div>;
