@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { REGISTER_PLUGIN } from './actions';
+import { REGISTER_PLUGIN } from '../actions';
 
 export default class PluginAPI {
 	constructor( store ) {
