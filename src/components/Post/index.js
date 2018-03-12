@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FormattedRelative } from 'react-intl';
-import { Fill, Slot } from 'react-slot-fill';
+import { Slot } from 'react-slot-fill';
 
 import { withApiData } from '../../with-api-data';
 import {
