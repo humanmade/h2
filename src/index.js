@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
+import { Provider as SlotFillProvider } from 'react-slot-fill';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
@@ -12,6 +13,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import reducers from './reducers';
 import api from './api';
+import PluginAPI from './plugins';
 
 import './hm-pattern-library/assets/styles/juniper.css';
 
@@ -20,19 +22,26 @@ let store = createStore(
 	composeWithDevTools( applyMiddleware( thunk, createLogger( { collapsed: true } ) ) )
 );
 
+// Expose the plugin API globally.
+window.H2 = window.H2 || {};
+window.H2.React = React;
+window.H2.plugins = new PluginAPI( store );
+
 const render = Main => {
 	ReactDOM.render(
 		<Provider store={store}>
-			<IntlProvider locale="en">
-				<RestApiProvider
-					fetch={( url, ...args ) => api.fetch( url, ...args )}
-					initialData={ window.H2Data.preload }
-				>
-					<Router>
-						<Main />
-					</Router>
-				</RestApiProvider>
-			</IntlProvider>
+			<SlotFillProvider>
+				<IntlProvider locale="en">
+					<RestApiProvider
+						fetch={( url, ...args ) => api.fetch( url, ...args )}
+						initialData={ window.H2Data.preload }
+					>
+						<Router>
+							<Main />
+						</Router>
+					</RestApiProvider>
+				</IntlProvider>
+			</SlotFillProvider>
 		</Provider>,
 		document.getElementById( 'root' )
 	);
