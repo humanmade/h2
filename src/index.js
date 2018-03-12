@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
-import { Provider as SlotFillProvider } from 'react-slot-fill';
+import { Fill, Provider as SlotFillProvider } from 'react-slot-fill';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
@@ -24,6 +24,7 @@ let store = createStore(
 
 // Expose the plugin API globally.
 window.H2 = window.H2 || {};
+window.H2.Fill = Fill;
 window.H2.React = React;
 window.H2.plugins = new PluginAPI( store );
 
