@@ -53,6 +53,9 @@ function get_script_data() {
 			'api'   => rest_url(),
 			'nonce' => wp_create_nonce( 'wp_rest' ),
 		],
+		'plugins' => [
+			'reactions' => \class_exists( 'H2\\Reactions\\Reaction' ),
+		],
 		'preload' => prefetch_urls( $preload ),
 	];
 
