@@ -5,7 +5,7 @@ import Reactions from './Reactions';
 
 const ConnectReactions = props => {
 	const reactionsProps = {
-		postId: props.post.id,
+		postId:    props.post.id,
 		commentId: props.comment ? props.comment.id : null,
 	};
 
