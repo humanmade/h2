@@ -52,7 +52,9 @@ function get_script_data() {
 			'home'           => home_url(),
 			'api'            => rest_url(),
 			'nonce'          => wp_create_nonce( 'wp_rest' ),
-			'default_avatar' => get_avatar_url( 0, [ 'force_default' => true ] ),
+			'default_avatar' => get_avatar_url( 0, [
+				'force_default' => true,
+			] ),
 		],
 		'preload' => prefetch_urls( $preload ),
 	];
