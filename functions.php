@@ -47,11 +47,14 @@ function get_script_data() {
 
 	$data = [
 		'site' => [
-			'name'  => get_bloginfo( 'name' ),
-			'url'   => site_url(),
-			'home'  => home_url(),
-			'api'   => rest_url(),
-			'nonce' => wp_create_nonce( 'wp_rest' ),
+			'name'           => get_bloginfo( 'name' ),
+			'url'            => site_url(),
+			'home'           => home_url(),
+			'api'            => rest_url(),
+			'nonce'          => wp_create_nonce( 'wp_rest' ),
+			'default_avatar' => get_avatar_url( 0, [
+				'force_default' => true,
+			] ),
 		],
 		'preload' => prefetch_urls( $preload ),
 	];
