@@ -9,6 +9,11 @@
 	padding: 0 20px;
 }
 
+.Header-inner > a:hover,
+.Header-inner > a:focus {
+	border: none;
+}
+
 .Header .CurrentUserDropDown {
 	margin-left: auto;
 	align-self: center;
