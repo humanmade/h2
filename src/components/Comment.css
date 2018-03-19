@@ -86,9 +86,17 @@
 		flex-wrap: wrap;
 	}
 
+	.Comment:before {
+		left: -33px;
+	}
+	.Comment > header > .Avatar,
+	.Comment > header > .Avatar img {
+		height: 32px !important;
+		width: 32px !important;
+	}
 	.Comment > header > .Avatar {
-		margin-left: -60px;
-		margin-right: 20px;
+		margin-left: -48px;
+		margin-right: 15px;
 	}
 
 	.Comment > header > .actions {
