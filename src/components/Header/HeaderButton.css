@@ -40,3 +40,15 @@
 .HeaderButton:focus .icon {
 	opacity: 1;
 }
+
+@media ( max-width: 600px ) {
+	.HeaderButton {
+		width: auto;
+	}
+	.HeaderButton .icon {
+		margin: 0;
+	}
+	.HeaderButton-title {
+		display: none;
+	}
+}
