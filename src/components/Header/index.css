@@ -32,5 +32,6 @@
 }
 
 .Header .SearchInput {
-	margin: 7px 20px;
+	margin: 0 20px;
+	align-self: center;
 }
