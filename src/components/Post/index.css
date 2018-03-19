@@ -45,6 +45,8 @@
 	flex-direction: column;
 	flex-grow: 1;
 	min-width: 0;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .Post > header > .byline > a > h2 {
