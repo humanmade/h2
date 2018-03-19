@@ -80,3 +80,28 @@
 .Post .actions button:last-child {
 	margin-right: 0;
 }
+
+@media ( max-width: 600px ) {
+	.Post:before {
+		/* ( avatar_width - width ) / 2 */
+		left: 15px;
+		width: 2px;
+		height: 1.1rem;
+	}
+	.Post > header {
+		padding: 5px 0;
+		height: 70px;
+	}
+	.Post > header > .Avatar {
+		margin-right: 16px;
+	}
+	.Post > header > .Avatar,
+	.Post > header > .Avatar img {
+		width: 32px !important;
+		height: 32px !important;
+	}
+
+	.Post-content-wrap {
+		margin-left: 48px;
+	}
+}

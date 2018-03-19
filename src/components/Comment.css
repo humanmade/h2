@@ -77,3 +77,9 @@
 .Comment > header button {
 	margin-bottom: 0;
 }
+
+@media ( max-width: 600px ) {
+	.Comment > header {
+		top: 70px;
+	}
+}
