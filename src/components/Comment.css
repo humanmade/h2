@@ -80,7 +80,20 @@
 
 @media ( max-width: 600px ) {
 	.Comment > header {
+		margin-left: 0;
 		position: static;
 		height: auto;
+		flex-wrap: wrap;
+	}
+
+	.Comment > header > .Avatar {
+		margin-left: -60px;
+		margin-right: 20px;
+	}
+
+	.Comment > header > .actions {
+		display: flex;
+		flex-grow: 1;
+		justify-content: space-between;
 	}
 }
