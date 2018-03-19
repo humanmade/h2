@@ -41,7 +41,7 @@
 	background-color: inherit;
 	border-radius: inherit;
 	margin: 0;
-	width: inherit;
+	width: 100%;
 }
 
 .WritePost > header > .byline > h2 > input::placeholder {
