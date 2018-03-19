@@ -80,6 +80,7 @@
 
 @media ( max-width: 600px ) {
 	.Comment > header {
-		top: 70px;
+		position: static;
+		height: auto;
 	}
 }
