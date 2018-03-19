@@ -18,8 +18,8 @@ export class WritePost extends Component {
 		isSubmitting:     false,
 	};
 	componentDidMount() {
-		if ( this.container && this.editor ) {
-			this.editor.focus();
+		if ( this.container && this.titleInput ) {
+			this.titleInput.focus();
 			const node = ReactDOM.findDOMNode( this.container );
 			if ( node && node.scrollIntoView ) {
 				node.scrollIntoView( false );
@@ -72,6 +72,7 @@ export class WritePost extends Component {
 				<div className="byline">
 					<h2>
 						<input
+							ref={ title => this.titleInput = title }
 							type="text"
 							placeholder="Enter post title..."
 							required
@@ -94,7 +95,6 @@ export class WritePost extends Component {
 				<div className="actions"></div>
 			</header>
 			<Editor
-				ref={editor => this.editor = editor}
 				submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
 				onCancel={this.props.onCancel}
 				onSubmit={( ...args ) => this.onSubmit( ...args )}
