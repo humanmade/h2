@@ -14,6 +14,18 @@
 	border: none;
 }
 
+.Header .Header-site-name {
+	display: flex;
+	align-items: center;
+	background: var(--hm-red);
+	padding-right: 1em;
+	color: #fff;
+}
+
+.Header-site-name:hover {
+	color: rgba( 255, 255, 255, 0.6 );
+}
+
 .Header .CurrentUserDropDown {
 	margin-left: auto;
 	align-self: center;
