@@ -12,11 +12,10 @@ import './Write.css';
 
 export class WritePost extends Component {
 	state = {
-		title:            '',
-		error:            null,
-		showTitleWarning: false,
-		category:         null,
-		isSubmitting:     false,
+		title:        '',
+		error:        null,
+		category:     null,
+		isSubmitting: false,
 	};
 	componentDidMount() {
 		if ( this.container && this.editor ) {
@@ -29,7 +28,7 @@ export class WritePost extends Component {
 	}
 	onSubmit( content ) {
 		if ( ! this.state.title ) {
-			this.setState( { showTitleWarning: true } );
+			this.setState( { error: { message: "Your post needs a title!" } } );
 			return;
 		}
 
@@ -84,7 +83,7 @@ export class WritePost extends Component {
 							placeholder="Enter post title..."
 							required
 							value={ this.state.title }
-							onChange={ e => this.setState( { title: e.target.value, showTitleWarning: false } ) }
+							onChange={ e => this.setState( { title: e.target.value } ) }
 						/>
 					</h2>
 					<span className="date">
@@ -108,11 +107,6 @@ export class WritePost extends Component {
 				onSubmit={( ...args ) => this.onSubmit( ...args )}
 				onUpload={( ...args ) => this.onUpload( ...args )}
 			/>
-			{ this.state.showTitleWarning ?
-				<p className="WritePost-error">
-					<span role="img" aria-label="Warning">⚠️</span> Your post needs a title!
-				</p>
-			: null }
 
 			{ this.state.error ?
 				<p className="WritePost-error">
