@@ -7,16 +7,22 @@ import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 
 import Avatar from '../Avatar';
 import Editor from '../Editor';
+import Notification from '../Notification';
 
 import './Write.css';
 
 export class WritePost extends Component {
-	state = {
-		title:            '',
-		showTitleWarning: false,
-		category:         null,
-		isSubmitting:     false,
-	};
+	constructor( props ) {
+		super( props );
+
+		this.state = {
+			title:        '',
+			error:        null,
+			category:     null,
+			isSubmitting: false,
+		};
+	}
+
 	componentDidMount() {
 		if ( this.container && this.titleInput ) {
 			this.titleInput.focus();
@@ -28,9 +34,11 @@ export class WritePost extends Component {
 	}
 	onSubmit( content ) {
 		if ( ! this.state.title ) {
-			this.setState( { showTitleWarning: true } );
+			this.setState( { error: { message: 'Your post needs a title!' } } );
 			return;
 		}
+
+		this.setState( { isSubmitting: true, error: null } );
 
 		const body = {
 			content,
@@ -46,11 +54,16 @@ export class WritePost extends Component {
 			},
 			body:   JSON.stringify( body ),
 			method: 'POST',
-		} ).then( r => r.json() ).then( post  => {
-			this.setState( { title: '' } )
+		} ).then( r => r.json().then( data => {
+			if ( ! r.ok ) {
+				this.setState( { isSubmitting: false, error: data } );
+				return;
+			}
+
+			this.setState( { isSubmitting: true, title: '' } );
 			this.props.invalidateDataForUrl( '/wp/v2/posts?page=1' );
-			this.props.onDidCreatePost( post )
-		} );
+			this.props.onDidCreatePost( data );
+		} ) );
 	}
 	onUpload( file ) {
 		const options = { method: 'POST' };
@@ -77,7 +90,7 @@ export class WritePost extends Component {
 							placeholder="Enter post title..."
 							required
 							value={ this.state.title }
-							onChange={ e => this.setState( { title: e.target.value, showTitleWarning: false } ) }
+							onChange={ e => this.setState( { title: e.target.value } ) }
 						/>
 					</h2>
 					<span className="date">
@@ -100,18 +113,20 @@ export class WritePost extends Component {
 				onSubmit={( ...args ) => this.onSubmit( ...args )}
 				onUpload={( ...args ) => this.onUpload( ...args )}
 			/>
-			{ this.state.showTitleWarning ?
-				<p className="WritePost-title-warn">
-					<span role="img" aria-label="Warning">⚠️</span> Your post needs a title!
-				</p>
-			: null }
+
+			{ this.state.error &&
+				<Notification type="error">
+					Could not submit: { this.state.error.message }
+				</Notification>
+			}
+
 			{this.props.children}
 		</div>
 	}
 }
 
 WritePost.propTypes = {
-	onCancel:    PropTypes.func.isRequired,
+	onCancel:        PropTypes.func.isRequired,
 	onDidCreatePost: PropTypes.func.isRequired,
 };
 
