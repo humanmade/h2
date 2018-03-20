@@ -47,7 +47,7 @@ Shortcuts.propTypes = {
 		PropTypes.oneOfType( [
 			PropTypes.func,
 			PropTypes.shape( {
-				callback: PropTypes.func.isRequired,
+				callback:     PropTypes.func.isRequired,
 				allowInInput: PropTypes.bool,
 			} ),
 		] )
@@ -71,11 +71,11 @@ const reducePropsToState = propsList => {
 			return;
 		}
 
-		Object.keys( props.keys ).map( key => {
+		Object.keys( props.keys ).forEach( key => {
 			if ( isFunction( props.keys[ key ] ) ) {
 				keys[ key ] = {
 					allowInInput: false,
-					callback: props.keys[ key ],
+					callback:     props.keys[ key ],
 				};
 			} else {
 				keys[ key ] = {
@@ -106,7 +106,7 @@ const handleStateChange = state => {
 		delete toUnbind[ key ];
 	} );
 
-	Object.keys( toUnbind ).map( key => {
+	Object.keys( toUnbind ).forEach( key => {
 		Mousetrap.unbind( key );
 	} );
 	shortcutState.currentBindings = state;
