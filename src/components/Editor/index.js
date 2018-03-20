@@ -59,6 +59,7 @@ export default class Editor extends React.PureComponent {
 			content:    '',
 			completion: null,
 			count:      0,
+			hasFocus:   false,
 			height:     null,
 			mode:       'edit',
 			uploading:  null,
@@ -147,7 +148,10 @@ export default class Editor extends React.PureComponent {
 
 		const lastSelection = [ selectionStart, selectionEnd ];
 
-		this.setState( { lastSelection } );
+		this.setState( {
+			lastSelection,
+			hasFocus: false,
+		} );
 	}
 
 	onFocus() {
@@ -306,6 +310,7 @@ export default class Editor extends React.PureComponent {
 							style={{ height }}
 							value={ content }
 							onBlur={ () => this.onBlur() }
+							onFocus={ () => this.setState( { hasFocus: true } ) }
 							onChange={ e => this.setState( { content: e.target.value } ) }
 							onKeyDown={ e => this.onKeyDown( e ) }
 							onKeyUp={ e => this.onKeyUp( e ) }
