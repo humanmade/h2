@@ -10,17 +10,12 @@ import Sidebar from './components/Sidebar';
 
 import './App.css';
 
-const getLastChangesView = () => {
-	const viewed = window.localStorage.getItem( 'h2-last-change-view' );
-	return viewed ? new Date( viewed ) : new Date( '1970-01-01' );
-};
-
 class App extends Component {
 	constructor( props ) {
 		super( props );
 		this.state = {
 			isShowingWritePost: false,
-			lastView: getLastChangesView(),
+			showChanges:        false,
 		};
 	}
 	onLogOut() {
@@ -44,20 +39,13 @@ class App extends Component {
 		this.props.history.push( post.link.replace( /^(?:\/\/|[^/]+)*\//, '/' ) );
 	}
 
-	onDismissChanges = () => {
-		const { lastView } = this.state;
-		const now = new Date();
-		this.setState( { lastView: now } );
-		window.localStorage.setItem( 'h2-last-change-view', now.toISOString() );
-	}
-
 	render() {
 		return <div className="App">
 			<Header
 				onLogOut={ () => this.onLogOut() }
 				onWritePost={() => this.onClickWritePost()}
 				onSearch={search => this.onSearch( search )}
-				onShowChanges={ () => this.setState( { lastView: null } ) }
+				onShowChanges={ () => this.setState( { showChanges: true } ) }
 			/>
 			<div className="Outer">
 				<div className="Inner">
@@ -72,8 +60,8 @@ class App extends Component {
 				<Sidebar />
 			</div>
 			<Changes
-				lastView={ this.state.lastView }
-				onDismiss={ this.onDismissChanges }
+				forceShow={ this.state.showChanges }
+				onDismiss={ () => this.setState( { showChanges: false } ) }
 			/>
 		</div>;
 	}

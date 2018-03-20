@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Button from './Button';
+import { withApiData } from '../with-api-data';
 
 import './Changes.css';
 
@@ -21,7 +22,7 @@ const changes = [
 	}
 ];
 
-export default function Changes( props ) {
+function Changes( props ) {
 	const { lastView, onDismiss } = props;
 	const newChanges = changes.filter( change => {
 		const changeDate = new Date( change.date );
@@ -58,3 +59,45 @@ export default function Changes( props ) {
 		</div>
 	</div>;
 }
+
+class ConnectedChanges extends React.Component {
+	render() {
+		if ( this.props.forceShow ) {
+			return <Changes
+				lastView={ new Date( '1970-01-01' ) }
+				onDismiss={ this.props.onDismiss }
+			/>;
+		}
+
+		if ( ! this.props.currentUser || ! this.props.currentUser.data ) {
+			return null;
+		}
+
+		const rawLastView = this.props.currentUser.data.meta.h2_last_updated || '1970-01-01T00:00:00';
+		const lastView = new Date( rawLastView + 'Z' );
+
+		const onDismiss = () => {
+			const data = {
+				meta: {
+					h2_last_updated: ( new Date() ).toISOString(),
+				}
+			};
+			this.props.fetch( '/wp/v2/users/me', {
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body:   JSON.stringify( data ),
+				method: 'PUT',
+			} ).then( r => r.json().then( data => {
+				this.props.invalidateData();
+			} ) );
+		}
+
+		return <Changes
+			lastView={ lastView }
+			onDismiss={ onDismiss }
+		/>;
+	}
+}
+
+export default withApiData( props => ( { currentUser: '/wp/v2/users/me' } ) )( ConnectedChanges );
