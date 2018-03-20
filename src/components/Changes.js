@@ -19,7 +19,7 @@ const changes = [
 		date:    '2018-03-06',
 		title:   'React to Comments',
 		content: () => <p>You can now <span role="img" aria-label="">🎉</span> emoji react to <span role="img" aria-label="">💬</span> comments. <span role="img" aria-label="">🙌</span></p>
-	}
+	},
 ];
 
 function Changes( props ) {
@@ -77,17 +77,11 @@ class ConnectedChanges extends React.Component {
 		const lastView = new Date( rawLastView + 'Z' );
 
 		const onDismiss = () => {
-			const data = {
-				meta: {
-					h2_last_updated: ( new Date() ).toISOString(),
-				}
-			};
+			const meta = { h2_last_updated: ( new Date() ).toISOString() };
 			this.props.fetch( '/wp/v2/users/me', {
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body:   JSON.stringify( data ),
-				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body:    JSON.stringify( { meta } ),
+				method:  'PUT',
 			} ).then( r => r.json().then( data => {
 				this.props.invalidateData();
 			} ) );
