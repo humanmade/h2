@@ -158,7 +158,10 @@ export default class Editor extends React.PureComponent {
 	}
 
 	onFocus() {
-		this.setState( { lastSelection: null } );
+		this.setState( {
+			lastSelection: null,
+			hasFocus:      true,
+		} );
 	}
 
 	onButton( e, apply ) {
@@ -328,7 +331,7 @@ export default class Editor extends React.PureComponent {
 							style={{ height }}
 							value={ content }
 							onBlur={ () => this.onBlur() }
-							onFocus={ () => this.setState( { hasFocus: true } ) }
+							onFocus={ () => this.onFocus() }
 							onChange={ e => this.setState( { content: e.target.value } ) }
 							onKeyDown={ e => this.onKeyDown( e ) }
 							onKeyUp={ e => this.onKeyUp( e ) }
