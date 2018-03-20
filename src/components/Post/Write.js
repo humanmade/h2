@@ -13,6 +13,7 @@ import './Write.css';
 export class WritePost extends Component {
 	state = {
 		title:            '',
+		error:            null,
 		showTitleWarning: false,
 		category:         null,
 		isSubmitting:     false,
@@ -32,7 +33,7 @@ export class WritePost extends Component {
 			return;
 		}
 
-		this.setState( { isSubmitting: true } );
+		this.setState( { isSubmitting: true, error: null } );
 
 		const body = {
 			content,
@@ -48,11 +49,16 @@ export class WritePost extends Component {
 			},
 			body:   JSON.stringify( body ),
 			method: 'POST',
-		} ).then( r => r.json() ).then( post  => {
-			this.setState( { isSubmitting: true, title: '' } )
+		} ).then( r => r.json().then( data => {
+			if ( ! r.ok ) {
+				this.setState( { isSubmitting: false, error: data } );
+				return;
+			}
+
+			this.setState( { isSubmitting: true, title: '' } );
 			this.props.invalidateDataForUrl( '/wp/v2/posts?page=1' );
-			this.props.onDidCreatePost( post )
-		} );
+			this.props.onDidCreatePost( data );
+		} ) );
 	}
 	onUpload( file ) {
 		const options = { method: 'POST' };
@@ -107,6 +113,13 @@ export class WritePost extends Component {
 					<span role="img" aria-label="Warning">⚠️</span> Your post needs a title!
 				</p>
 			: null }
+
+			{ this.state.error ?
+				<p className="WritePost-title-warn">
+					Could not submit: { this.state.error.message }
+				</p>
+			: null }
+
 			{this.props.children}
 		</div>
 	}
