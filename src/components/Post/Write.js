@@ -7,6 +7,7 @@ import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 
 import Avatar from '../Avatar';
 import Editor from '../Editor';
+import Notification from '../Notification';
 
 import './Write.css';
 
@@ -109,9 +110,9 @@ export class WritePost extends Component {
 			/>
 
 			{ this.state.error ?
-				<p className="WritePost-error">
+				<Notification type="error">
 					Could not submit: { this.state.error.message }
-				</p>
+				</Notification>
 			: null }
 
 			{this.props.children}

@@ -61,15 +61,8 @@
 	font-size: 14px;
 }
 
-.WritePost-error {
-	background: #FFF2F4;
-	color: #FF001F;
-	border: 1px solid #FF001F;
-	border-radius: 4px;
+.WritePost .Notification {
 	margin-left: 90px;
-	margin-top: -1.36667rem;
-	padding: 1.1em;
-	font-size: 0.777777778em;
 }
 
 .WritePost > .Editor {
