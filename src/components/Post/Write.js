@@ -32,6 +32,8 @@ export class WritePost extends Component {
 			return;
 		}
 
+		this.setState( { isSubmitting: true } );
+
 		const body = {
 			content,
 			status:     'publish',
@@ -47,7 +49,7 @@ export class WritePost extends Component {
 			body:   JSON.stringify( body ),
 			method: 'POST',
 		} ).then( r => r.json() ).then( post  => {
-			this.setState( { title: '' } )
+			this.setState( { isSubmitting: true, title: '' } )
 			this.props.invalidateDataForUrl( '/wp/v2/posts?page=1' );
 			this.props.onDidCreatePost( post )
 		} );
