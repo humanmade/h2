@@ -3,6 +3,12 @@ import React from 'react';
 
 import './Notification.css';
 
+export const TYPES = {
+	STATUS: 'status',
+	ALERT:  'alert',
+	ERROR:  'error',
+};
+
 export default function Notification( props ) {
 	return <p className={ `Notification Notification--${ props.type }` }>
 		{ props.children }
@@ -10,11 +16,4 @@ export default function Notification( props ) {
 }
 
 Notification.defaultProps = { type: 'status' };
-
-Notification.propTypes = {
-	type: PropTypes.oneOf( [
-		'status',
-		'alert',
-		'error',
-	] ),
-}
+Notification.propTypes    = { type: PropTypes.oneOf( Object.values( TYPES ) ) };
