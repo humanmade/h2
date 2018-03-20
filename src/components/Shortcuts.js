@@ -32,6 +32,10 @@ const shortcutState = {
 
 class Shortcuts extends React.Component {
 	render() {
+		if ( ! this.props.children ) {
+			return null;
+		}
+
 		return <React.Fragment>
 			{ this.props.children }
 		</React.Fragment>;
