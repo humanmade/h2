@@ -109,13 +109,13 @@ export class WritePost extends Component {
 				onUpload={( ...args ) => this.onUpload( ...args )}
 			/>
 			{ this.state.showTitleWarning ?
-				<p className="WritePost-title-warn">
+				<p className="WritePost-error">
 					<span role="img" aria-label="Warning">⚠️</span> Your post needs a title!
 				</p>
 			: null }
 
 			{ this.state.error ?
-				<p className="WritePost-title-warn">
+				<p className="WritePost-error">
 					Could not submit: { this.state.error.message }
 				</p>
 			: null }
