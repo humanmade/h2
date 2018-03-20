@@ -9,9 +9,7 @@ export default function Notification( props ) {
 	</p>;
 }
 
-Notification.defaultProps = {
-	type: 'status',
-};
+Notification.defaultProps = { type: 'status' };
 
 Notification.propTypes = {
 	type: PropTypes.oneOf( [

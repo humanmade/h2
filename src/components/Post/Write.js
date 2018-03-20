@@ -12,12 +12,17 @@ import Notification from '../Notification';
 import './Write.css';
 
 export class WritePost extends Component {
-	state = {
-		title:        '',
-		error:        null,
-		category:     null,
-		isSubmitting: false,
-	};
+	constructor( props ) {
+		super( props );
+
+		this.state = {
+			title:        '',
+			error:        null,
+			category:     null,
+			isSubmitting: false,
+		};
+	}
+
 	componentDidMount() {
 		if ( this.container && this.editor ) {
 			this.editor.focus();
@@ -29,7 +34,7 @@ export class WritePost extends Component {
 	}
 	onSubmit( content ) {
 		if ( ! this.state.title ) {
-			this.setState( { error: { message: "Your post needs a title!" } } );
+			this.setState( { error: { message: 'Your post needs a title!' } } );
 			return;
 		}
 
@@ -109,11 +114,11 @@ export class WritePost extends Component {
 				onUpload={( ...args ) => this.onUpload( ...args )}
 			/>
 
-			{ this.state.error ?
+			{ this.state.error &&
 				<Notification type="error">
 					Could not submit: { this.state.error.message }
 				</Notification>
-			: null }
+			}
 
 			{this.props.children}
 		</div>

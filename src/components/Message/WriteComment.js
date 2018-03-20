@@ -12,10 +12,14 @@ import { Post } from '../../shapes';
 import './WriteComment.css';
 
 class WriteComment extends React.Component {
-	state = {
-		isSubmitting: false,
-		error:        null,
-	};
+	constructor( props ) {
+		super( props );
+
+		this.state = {
+			isSubmitting: false,
+			error:        null,
+		};
+	}
 
 	componentDidMount() {
 		if ( this.container && this.editor ) {
@@ -86,11 +90,11 @@ class WriteComment extends React.Component {
 					onUpload={( ...args ) => this.onUpload( ...args )}
 				/>
 
-				{ this.state.error ?
+				{ this.state.error &&
 					<Notification type="error">
 						Could not submit: { this.state.error.message }
 					</Notification>
-				: null }
+				}
 			</div>
 		</div>;
 	}
