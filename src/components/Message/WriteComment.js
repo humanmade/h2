@@ -101,8 +101,8 @@ class WriteComment extends React.Component {
 }
 
 WriteComment.propTypes = {
-	parentPost:     Post.isRequired,
-	onCancel:       PropTypes.func.isRequired,
+	parentPost:         Post.isRequired,
+	onCancel:           PropTypes.func.isRequired,
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 

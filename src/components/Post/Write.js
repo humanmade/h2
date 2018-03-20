@@ -126,7 +126,7 @@ export class WritePost extends Component {
 }
 
 WritePost.propTypes = {
-	onCancel:    PropTypes.func.isRequired,
+	onCancel:        PropTypes.func.isRequired,
 	onDidCreatePost: PropTypes.func.isRequired,
 };
 
