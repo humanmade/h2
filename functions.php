@@ -55,6 +55,7 @@ function get_script_data() {
 			'default_avatar' => get_avatar_url( 0, [
 				'force_default' => true,
 			] ),
+			'mapbox_key'     => defined( 'MAPBOX_KEY' ) ? MAPBOX_KEY : null,
 		],
 		'preload' => prefetch_urls( $preload ),
 	];
