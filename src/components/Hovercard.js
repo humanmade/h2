@@ -32,8 +32,8 @@ function getPosition( target, width ) {
 	position.left += target.offsetWidth / 2 - width / 2;
 
 	// Keep on the screen.
-	position.top = Math.max( position.top, 0 );
-	position.left = Math.max( position.left, 0 );
+	position.top = Math.max( position.top, 16 );
+	position.left = Math.max( position.left, 16 );
 
 	return position;
 }

@@ -1,6 +1,7 @@
 .AuthorName-Card {
 	display: flex;
 	font-size: 0.9rem;
+	align-items: center;
 }
 
 .AuthorName-Card .Avatar {
@@ -9,13 +10,45 @@
 	margin-right: 1em;
 }
 
+.AuthorName-Card-details header {
+	display: flex;
+	align-items: center;
+	margin: 0 0 1em;
+}
+
 .AuthorName-Card h1 {
 	font-size: 1em;
-	line-height: 40px;
+	line-height: 1.6;
 	text-transform: none;
 	margin: 0 0;
 }
 
-.AuthorName-Card-description {
+.AuthorName-Card-title {
+	line-height: 1.6;
 	color: var( --hm-medium-grey );
+	margin: 0;
+}
+
+.AuthorName-Card-map {
+	width: 150px;
+	height: 200px;
+	margin: 0 0 0 10px;
+}
+
+.AuthorName-Card-description {
+	font-size: 0.9em;
+	line-height: 1.7;
+}
+
+.AuthorName-Card-description p {
+	margin: 0 0 1.666667em;
+}
+
+.AuthorName-Card-description p:last-child {
+	margin-bottom: 0;
+}
+
+.AuthorName-Card-time {
+	margin: 0;
+	font-size: 0.9em;
 }
