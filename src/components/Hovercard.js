@@ -4,6 +4,8 @@ import { CSSTransition } from 'react-transition-group';
 
 import './Hovercard.css';
 
+const HOVER_DELAY = 100;
+
 const transition = {
 	component:  'div',
 	classNames: 'Hovercard-Transition',
@@ -70,6 +72,24 @@ export default class Hovercard extends React.Component {
 		this.target = null;
 	}
 
+	onMouseOver = () => {
+		if ( this.state.active ) {
+			return;
+		}
+
+		this.showTimer = setTimeout( () => {
+			this.showTimer = null;
+			this.setState( { active: true } );
+		}, HOVER_DELAY );
+	}
+
+	onMouseOut = () => {
+		if ( this.showTimer ) {
+			clearTimeout( this.showTimer );
+		}
+		this.setState( { active: false } );
+	}
+
 	render() {
 		const {
 			cardContent: Card,
@@ -83,7 +103,6 @@ export default class Hovercard extends React.Component {
 				in={ !! ( active && this.target ) }
 				mountOnEnter={ true }
 				unmountOnExit={ true }
-				onExited={ () => this.setState( { shouldShow: false } ) }
 				key="css-transition"
 			>
 				{ () => <CardPortal>
@@ -100,8 +119,8 @@ export default class Hovercard extends React.Component {
 				React.Children.only( this.props.children ),
 				{
 					ref:         ref => this.target = ref,
-					onMouseOver: () => this.setState( { active: true, shouldShow: true } ),
-					onMouseOut:  () => this.setState( { active: false } ),
+					onMouseOver: this.onMouseOver,
+					onMouseOut:  this.onMouseOut,
 					key:         'child',
 				}
 			),

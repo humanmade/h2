@@ -25,7 +25,7 @@
 .Hovercard-Transition-enter {
 	opacity: 0;
 	transform: translate(0, 20px);
-	animation: hovercard-fade-in-up 0.1s 0.5s ease forwards;
+	animation: hovercard-fade-in-up 0.1s ease forwards;
 }
 
 .Hovercard-Transition-exit {
