@@ -1,67 +1,67 @@
-.AuthorName-Card {
+.UserHovercard {
 	display: flex;
 	font-size: 0.77778rem;
 	align-items: center;
 }
 
-.AuthorName-Card .Avatar {
+.UserHovercard .Avatar {
 	flex-grow: 0;
 	flex-shrink: 0;
 	margin-right: 0.5em;
 }
 
-.AuthorName-Card-details header {
+.UserHovercard-details header {
 	display: flex;
 	align-items: center;
 	margin: 0 0 1em;
 }
 
-.AuthorName-Card-details header p {
+.UserHovercard-details header p {
 	line-height: 1.6;
 	margin: 0;
 }
 
-.AuthorName-Card h3 {
+.UserHovercard h3 {
 	font-size: 1em;
 	line-height: 1.6;
 	text-transform: none;
 	margin: 0 0;
 }
 
-.AuthorName-Card-slug {
+.UserHovercard-slug {
 	color: var( --hm-medium-grey );
 	font-size: 0.9em;
 	font-weight: normal;
 }
 
-.AuthorName-Card-title {
+.UserHovercard-title {
 	color: var( --hm-medium-grey );
 }
 
-.AuthorName-Card-title.missing {
+.UserHovercard-title.missing {
 	font-style: italic;
 }
 
-.AuthorName-Card-map {
+.UserHovercard-map {
 	width: 150px;
 	height: 150px;
 	margin: 0 0 0 10px;
 }
 
-.AuthorName-Card-description {
+.UserHovercard-description {
 	font-size: 0.9em;
 	line-height: 1.7;
 }
 
-.AuthorName-Card-description p {
+.UserHovercard-description p {
 	margin: 0 0 1.666667em;
 }
 
-.AuthorName-Card-description p:last-child {
+.UserHovercard-description p:last-child {
 	margin-bottom: 0;
 }
 
-.AuthorName-Card-time {
+.UserHovercard-time {
 	margin: 0;
 	font-size: 0.9em;
 }
