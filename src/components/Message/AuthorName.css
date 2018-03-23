@@ -38,6 +38,10 @@
 	color: var( --hm-medium-grey );
 }
 
+.AuthorName-Card-title.missing {
+	font-style: italic;
+}
+
 .AuthorName-Card-map {
 	width: 150px;
 	height: 150px;

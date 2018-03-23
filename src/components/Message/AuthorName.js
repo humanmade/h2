@@ -27,9 +27,9 @@ export default class AuthorName extends React.Component {
 					<div>
 						<h3>{ user.name }</h3>
 						<p className="AuthorName-Card-slug">@{ user.slug }</p>
-						{ user.facts.job_title && <p className="AuthorName-Card-title">
-							{ user.facts.job_title }
-						</p> }
+						<p className={ user.facts.job_title ? "AuthorName-Card-title" : "AuthorName-Card-title missing" }>
+							{ user.facts.job_title || "Unknown Role" }
+						</p>
 					</div>
 				</header>
 
