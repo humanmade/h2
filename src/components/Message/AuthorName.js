@@ -15,7 +15,7 @@ export default class AuthorName extends React.Component {
 
 		const location = user.facts.location;
 		const args = `access_token=${ window.H2Data.site.mapbox_key }`;
-		const mapUrl = `${ MAPBOX_BASE }/pin-s-marker+7DC9DA(${ location })/${ location },2.0,0,0/150x200@2x?${ args }`;
+		const mapUrl = `${ MAPBOX_BASE }/pin-s-marker+7DC9DA(${ location })/${ location },1.0,0,0/150x150@2x?${ args }`;
 
 		return <aside className="AuthorName-Card">
 			<div className="AuthorName-Card-details">
