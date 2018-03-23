@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
 
+import { RenderPlugins } from './plugins'
 import Changes from './components/Changes';
 import Header from './components/Header';
 import PostsList from './components/Post/List';
@@ -75,6 +76,8 @@ class App extends Component {
 				lastView={ this.state.lastView }
 				onDismiss={ this.onDismissChanges }
 			/>
+
+			<RenderPlugins />
 		</div>;
 	}
 }

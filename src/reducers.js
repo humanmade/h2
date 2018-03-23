@@ -1,3 +1,5 @@
 import { combineReducers } from 'redux';
 
-export default combineReducers( {} );
+import { reducer as plugins } from './plugins';
+
+export default combineReducers( { plugins } );
