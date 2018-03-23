@@ -6,25 +6,25 @@ import RelativeLink from '../RelativeLink';
 import UserHovercard from '../UserHovercard';
 import { showSidebarProfile } from '../../actions';
 
-import './AuthorName.css';
+import './AuthorLink.css';
 
-function AuthorName( props ) {
-	const { user } = props;
+function AuthorLink( props ) {
+	const { children, user } = props;
 
 	return <UserHovercard
 		user={ user }
 	>
 		<button
-			className="AuthorName"
+			className="AuthorLink"
 			onClick={ props.onSelect }
 			type="button"
 		>
-			{ user.name }
+			{ children }
 		</button>
 	</UserHovercard>;
 }
 
-AuthorName.propTypes = {
+AuthorLink.propTypes = {
 	user: PropTypes.shape( {
 		id:   PropTypes.number.isRequired,
 		name: PropTypes.string.isRequired,
@@ -37,4 +37,4 @@ const mapDispatchToProps = ( dispatch, props ) => {
 	return { onSelect: () => dispatch( showSidebarProfile( props.user.id ) ) };
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )( AuthorName );
+export default connect( mapStateToProps, mapDispatchToProps )( AuthorLink );

@@ -1,4 +1,4 @@
-.AuthorName {
+.AuthorLink {
 	display: inline;
 	font: inherit;
 	line-height: 1;
@@ -12,8 +12,8 @@
 	transition: color .2s ease-in, background .2s ease-in, border-width .2s ease-in, border-color .2s ease-in;
 }
 
-.AuthorName:hover,
-.AuthorName:focus {
+.AuthorLink:hover,
+.AuthorLink:focus {
 	color: var( --hm-red );
 	transition: color .2s ease-out, background .2s ease-out;
 	border-bottom: 2px solid var( --hm-red );
