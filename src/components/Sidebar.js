@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Slot } from 'react-slot-fill';
 
 import { withApiData } from '../with-api-data';
 import SearchWidget from './Widgets/Search';
@@ -28,10 +29,14 @@ export class Sidebar extends Component {
 			onMouseOver={ () => this.setState( { active: true } ) }
 			onMouseOut={ () => this.setState( { active: false } ) }
 		>
+			<Slot name="Sidebar.top" />
+
 			{ ( this.props.widgets.data || [] ).map( widget => {
 				const Widget = widgetMap[ widget.type ] || widgetMap['default'];
 				return <Widget key={widget.id} {...widget} />
 			} ) }
+
+			<Slot name="Sidebar.bottom" />
 		</aside>
 	}
 }

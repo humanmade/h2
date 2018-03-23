@@ -9,6 +9,7 @@ import PostsList from './components/Post/List';
 import WritePost from './components/Post/Write';
 import Profile from './components/Profile';
 import Sidebar from './components/Sidebar';
+import { RenderPlugins } from './plugins';
 
 import './App.css';
 
@@ -84,6 +85,8 @@ class App extends Component {
 				lastView={ this.state.lastView }
 				onDismiss={ this.onDismissChanges }
 			/>
+
+			<RenderPlugins />
 		</div>;
 	}
 }

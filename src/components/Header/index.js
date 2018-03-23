@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Slot } from 'react-slot-fill';
 
 import CurrentUserDropDown from './CurrentUserDropDown';
 import HeaderButton from './HeaderButton';
@@ -28,6 +29,8 @@ class Header extends Component {
 					onClick={ this.props.onShowChanges }
 				/>
 
+				<Slot name="Header.buttons" />
+
 				<SearchInput onSearch={this.props.onSearch} value={this.props.searchValue} />
 
 				{ this.props.currentUser.data ?
@@ -36,6 +39,8 @@ class Header extends Component {
 						onLogOut={ this.props.onLogOut }
 					/>
 				: null }
+
+				<Slot name="Header.meta" />
 			</div>
 		</div>;
 	}

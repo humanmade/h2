@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-
 import { FormattedRelative } from 'react-intl';
+import { Slot } from 'react-slot-fill';
+
 import { withApiData } from '../../with-api-data';
 import {
 	Post as PostShape,
@@ -43,6 +44,8 @@ class Post extends Component {
 			headerStyle.fontSize = '1.333333333rem';
 		}
 
+		const fillProps = { author, comments, categories, post };
+
 		return <div className="Post">
 			<header>
 				<Avatar
@@ -75,13 +78,17 @@ class Post extends Component {
 							) )}
 						</ul>
 					}
+					<Slot name="Post.byline" fillChildProps={ fillProps } />
 				</div>
 				<div className="actions">
 					<Button onClick={() => this.onClickReply()}>Reply</Button>
+					<Slot name="Post.actions" fillChildProps={ fillProps } />
 				</div>
 			</header>
 			<div className="Post-content-wrap">
+				<Slot name="Post.before_content" fillChildProps={ fillProps } />
 				<MessageContent html={ post.content.rendered } />
+				<Slot name="Post.after_content" fillChildProps={ fillProps } />
 				<Reactions postId={ post.id }/>
 			</div>
 			<CommentsList
