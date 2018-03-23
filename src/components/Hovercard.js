@@ -108,9 +108,8 @@ export default class Hovercard extends React.Component {
 			top:  positions.top,
 			width,
 		};
-		const pointerStyle = {
-			transform: positions.pointerOffset ? `translate( ${ positions.pointerOffset}px, 0 )` : null,
-		};
+		const pointerStyle = {};
+		pointerStyle.transform = positions.pointerOffset ? `translate( ${ positions.pointerOffset}px, 0 )` : null;
 
 		return <React.Fragment>
 			<CSSTransition

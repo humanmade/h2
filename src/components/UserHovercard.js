@@ -27,8 +27,8 @@ export default class UserHovercard extends React.Component {
 					<div>
 						<h3>{ user.name }</h3>
 						<p className="UserHovercard-slug">@{ user.slug }</p>
-						<p className={ user.facts.job_title ? "UserHovercard-title" : "UserHovercard-title missing" }>
-							{ user.facts.job_title || "Unknown Role" }
+						<p className={ user.facts.job_title ? 'UserHovercard-title' : 'UserHovercard-title missing' }>
+							{ user.facts.job_title || 'Unknown Role' }
 						</p>
 					</div>
 				</header>

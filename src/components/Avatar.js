@@ -43,6 +43,4 @@ Avatar.propTypes = {
 	withHovercard: PropTypes.bool.isRequired,
 };
 
-Avatar.defaultProps = {
-	withHovercard: true,
-};
+Avatar.defaultProps = { withHovercard: true };
