@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import AuthorLink from './Message/AuthorLink';
 import Link from './RelativeLink';
 import UserHovercard from './UserHovercard';
 
@@ -18,13 +19,13 @@ export default function Avatar( props ) {
 			height: props.size + 'px',
 		} }
 	>
-		<Link to={props.user ? props.user.link : ''}>
+		<AuthorLink user={ props.user || null }>
 			<img
 				style={style}
 				alt="User Avatar"
 				src={ props.url || window.H2Data.site.default_avatar }
 			/>
-		</Link>
+		</AuthorLink>
 	</div>;
 
 	if ( ! props.user || ! props.withHovercard ) {
