@@ -25,7 +25,7 @@ export default class AuthorName extends React.Component {
 						size={ 40 }
 					/>
 					<div>
-						<h1>{ user.name }</h1>
+						<h3>{ user.name }</h3>
 						<p className="AuthorName-Card-slug">@{ user.slug }</p>
 						{ user.facts.job_title && <p className="AuthorName-Card-title">
 							{ user.facts.job_title }
