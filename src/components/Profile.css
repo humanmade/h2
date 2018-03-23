@@ -1,0 +1,49 @@
+.Profile {
+	font-size: 0.8em;
+}
+
+.Profile-closer {
+	display: block;
+	position: sticky;
+	top: 0;
+	background: #fff;
+	padding: 0.5em 0;
+	z-index: 2;
+}
+
+.Profile > header {
+	display: flex;
+	align-items: center;
+	margin: 0 0 1em;
+	padding: 0.2em 0;
+	overflow: hidden;
+}
+
+.Profile > header .Avatar {
+	margin-right: 0.5em;
+}
+
+.Profile h2 {
+	text-transform: none;
+	font-size: 1rem;
+	line-height: 1.4;
+	margin: 0;
+}
+
+.Profile > header p {
+	margin: 0;
+}
+
+.Profile-slug {
+	color: var( --hm-medium-grey );
+	font-size: 0.9em;
+	font-weight: normal;
+}
+
+.Profile-title {
+	color: var( --hm-medium-grey );
+}
+
+.Profile-title.missing {
+	font-style: italic;
+}
