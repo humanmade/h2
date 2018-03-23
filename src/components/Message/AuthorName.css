@@ -16,6 +16,11 @@
 	margin: 0 0 1em;
 }
 
+.AuthorName-Card-details header p {
+	line-height: 1.6;
+	margin: 0;
+}
+
 .AuthorName-Card h1 {
 	font-size: 1em;
 	line-height: 1.6;
@@ -23,10 +28,14 @@
 	margin: 0 0;
 }
 
-.AuthorName-Card-title {
-	line-height: 1.6;
+.AuthorName-Card-slug {
 	color: var( --hm-medium-grey );
-	margin: 0;
+	font-size: 0.9em;
+	font-weight: normal;
+}
+
+.AuthorName-Card-title {
+	color: var( --hm-medium-grey );
 }
 
 .AuthorName-Card-map {
