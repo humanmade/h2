@@ -109,6 +109,9 @@ export default class Hovercard extends React.Component {
 						className="Hovercard-Card"
 						style={ { width, ...getPosition( this.target, width ) } }
 					>
+						<div
+							className="Hovercard-Card-pointer"
+						/>
 						<Card />
 					</div>
 				</CardPortal> }
