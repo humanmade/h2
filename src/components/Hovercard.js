@@ -97,13 +97,12 @@ export default class Hovercard extends React.Component {
 		} = this.props;
 		const { active } = this.state;
 
-		return [
+		return <React.Fragment>
 			<CSSTransition
 				{...transition}
 				in={ !! ( active && this.target ) }
 				mountOnEnter={ true }
 				unmountOnExit={ true }
-				key="css-transition"
 			>
 				{ () => <CardPortal>
 					<div
@@ -113,18 +112,17 @@ export default class Hovercard extends React.Component {
 						<Card />
 					</div>
 				</CardPortal> }
-			</CSSTransition>,
+			</CSSTransition>
 
-			React.cloneElement(
+			{ React.cloneElement(
 				React.Children.only( this.props.children ),
 				{
 					ref:         ref => this.target = ref,
 					onMouseOver: this.onMouseOver,
 					onMouseOut:  this.onMouseOut,
-					key:         'child',
 				}
-			),
-		];
+			) }
+		</React.Fragment>;
 	}
 }
 
