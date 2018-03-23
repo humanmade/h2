@@ -37,10 +37,11 @@ export default class UserHovercard extends React.Component {
 					<p>{ user.facts.short_bio }</p>
 				</div>
 			</div>
-				<img
-					className="UserHovercard-map"
-					src={ mapUrl }
-				/>
+			<img
+				alt={ `Map of ${ user.name }'s location` }
+				className="UserHovercard-map"
+				src={ mapUrl }
+			/>
 		</aside>;
 	}
 
