@@ -7,8 +7,6 @@ import Map from './Map';
 
 import './UserHovercard.css';
 
-const MAPBOX_BASE = 'https://api.mapbox.com/styles/v1/mapbox/outdoors-v9/static';
-
 export default class UserHovercard extends React.Component {
 	renderCard() {
 		const { user } = this.props;
