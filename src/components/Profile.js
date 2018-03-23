@@ -26,8 +26,6 @@ function Profile( props ) {
 		</aside>;
 	}
 
-	console.log( user.facts );
-
 	return <aside className="Profile">
 		<header className="Profile-closer">
 			<h2>Profile</h2>
@@ -62,11 +60,11 @@ function Profile( props ) {
 		<p><RelativeLink to={ user.link }>View all posts →</RelativeLink></p>
 
 		<div className="Profile-description">
-			{ user.facts.long_description.split( "\n" ).map( ( text, idx ) =>
+			{ user.facts.long_description.split( '\n' ).map( ( text, idx ) =>
 				<p key={ idx }>{ text }</p>
 			) }
 		</div>
 	</aside>;
 }
 
-export default withApiData( props => ( { user: `/wp/v2/users/${ props.id }`} ) )( Profile );
+export default withApiData( props => ( { user: `/wp/v2/users/${ props.id }` } ) )( Profile );

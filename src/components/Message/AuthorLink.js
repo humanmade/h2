@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import RelativeLink from '../RelativeLink';
 import UserHovercard from '../UserHovercard';
 import { showSidebarProfile } from '../../actions';
 

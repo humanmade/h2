@@ -21,6 +21,4 @@ export default function Map( props ) {
 	/>;
 }
 
-Map.defaultProps = {
-	zoom: 1.0,
-};
+Map.defaultProps = { zoom: 1.0 };

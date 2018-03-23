@@ -72,14 +72,14 @@ class App extends Component {
 					<Route path="/search/:search" exact component={PostsList} />
 					<Route path="/:year/:month/:day/:slug/:comment_page(comment-page-\d+)?" exact component={PostsList} />
 				</div>
-				{ this.props.sidebarProfile ?
+				{ this.props.sidebarProfile ? (
 					<Profile
 						id={ this.props.sidebarProfile }
 						onClose={ this.props.onDismissSidebarProfile }
 					/>
-				:
+				) : (
 					<Sidebar />
-				}
+				) }
 			</div>
 			<Changes
 				lastView={ this.state.lastView }

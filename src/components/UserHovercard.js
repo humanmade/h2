@@ -13,8 +13,6 @@ export default class UserHovercard extends React.Component {
 	renderCard() {
 		const { user } = this.props;
 
-		const location = user.facts.location;
-
 		return <aside className="UserHovercard">
 			<div className="UserHovercard-details">
 				<header>

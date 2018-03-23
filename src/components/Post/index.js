@@ -61,9 +61,9 @@ class Post extends Component {
 						/>
 					</Link>
 					<span className="date">
-						{ author ?
+						{ author ? (
 							<AuthorLink user={ author }>{ author.name }</AuthorLink>
-						: ''},&nbsp;
+						) : ''},&nbsp;
 						<time
 							datetime={ post.date_gmt + 'Z' }
 							title={ post.date_gmt + 'Z' }

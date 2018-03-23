@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import AuthorLink from './Message/AuthorLink';
-import Link from './RelativeLink';
 import UserHovercard from './UserHovercard';
 
 import './Avatar.css';
