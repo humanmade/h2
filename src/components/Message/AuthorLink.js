@@ -11,6 +11,10 @@ import './AuthorLink.css';
 function AuthorLink( props ) {
 	const { children, user } = props;
 
+	if ( ! user ) {
+		return children;
+	}
+
 	return <UserHovercard
 		user={ user }
 	>
