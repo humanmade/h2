@@ -22,6 +22,7 @@ export default class UserHovercard extends React.Component {
 					<Avatar
 						url={ user.avatar_urls['96'] }
 						size={ 40 }
+						withHovercard={ false }
 					/>
 					<div>
 						<h3>{ user.name }</h3>
