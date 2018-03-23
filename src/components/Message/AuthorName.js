@@ -6,15 +6,21 @@ import RelativeLink from '../RelativeLink';
 import UserHovercard from '../UserHovercard';
 import { showSidebarProfile } from '../../actions';
 
+import './AuthorName.css';
+
 function AuthorName( props ) {
 	const { user } = props;
 
 	return <UserHovercard
 		user={ user }
 	>
-		<a className="author-name" onClick={ props.onSelect }>
+		<button
+			className="AuthorName"
+			onClick={ props.onSelect }
+			type="button"
+		>
 			{ user.name }
-		</a>
+		</button>
 	</UserHovercard>;
 }
 
