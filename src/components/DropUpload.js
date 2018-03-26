@@ -36,9 +36,21 @@ export default class DropUpload extends React.PureComponent {
 			return;
 		}
 
-		const file = e.dataTransfer.files[0];
 		this.setState( { dropping: false } );
-		this.props.onUpload( file );
+		if ( this.props.allowMultiple ) {
+			this.props.onUpload( Array.from( e.dataTransfer.files ) );
+		} else {
+			const file = e.dataTransfer.files[0];
+			this.props.onUpload( file );
+		}
+	}
+
+	onInputChange( e ) {
+		if ( this.props.allowMultiple ) {
+			this.props.onUpload( Array.from( e.target.files ) );
+		} else {
+			this.props.onUpload( e.target.files[0] );
+		}
 	}
 
 	onCancel() {
@@ -47,9 +59,12 @@ export default class DropUpload extends React.PureComponent {
 	}
 
 	render() {
-		const { children, file } = this.props;
+		const { allowMultiple, children, file } = this.props;
 
-		if ( ! file ) {
+		const isMulti = Array.isArray( file );
+		const files = ( isMulti && allowMultiple ) ? file : [ file ];
+
+		if ( ! file || ! file.length ) {
 			return <div
 				className={ `DropUpload ${ this.state.dropping ? 'dropping' : ''}` }
 				onDragOver={ e => this.onDragOver( e ) }
@@ -62,8 +77,9 @@ export default class DropUpload extends React.PureComponent {
 					<p className="buttons">
 						<label className="DropUpload-uploader">
 							<input
+								multiple={ allowMultiple }
 								type="file"
-								onChange={ e => this.props.onUpload( e.target.files[0] ) }
+								onChange={ e => this.onInputChange( e ) }
 							/>
 							<a>Upload an attachment</a>
 						</label>
@@ -77,11 +93,13 @@ export default class DropUpload extends React.PureComponent {
 			{ children }
 
 			<div className="DropUpload-status">
-				<p>
-					<span className="Loading loading--active"></span>
+				{ files.map( file =>
+					<p key={ `${ file.name }-${ file.lastModified }` }>
+						<span className="Loading loading--active"></span>
 
-					Uploading { file.name }…
-				</p>
+						Uploading { file.name }…
+					</p>
+				) }
 
 				<p>
 					<a onClick={ () => this.onCancel() }>Cancel</a>
@@ -91,9 +109,13 @@ export default class DropUpload extends React.PureComponent {
 	}
 }
 
-DropUpload.defaultProps = { onCancel: () => {} };
+DropUpload.defaultProps = {
+	allowMultiple: false,
+	onCancel:      () => {},
+};
 
 DropUpload.propTypes = {
-	file:     PropTypes.shape( { name: PropTypes.string.isRequired } ),
-	onUpload: PropTypes.func.isRequired,
+	allowMultiple: PropTypes.boolean,
+	file:          PropTypes.shape( { name: PropTypes.string.isRequired } ),
+	onUpload:      PropTypes.func.isRequired,
 };
