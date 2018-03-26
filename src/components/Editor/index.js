@@ -157,19 +157,23 @@ export default class Editor extends React.PureComponent {
 	onButton( e, apply ) {
 		e && e.preventDefault();
 
-		let { selectionStart, selectionEnd } = this.textarea;
-		if ( this.state.lastSelection ) {
-			[ selectionStart, selectionEnd ] = this.state.lastSelection;
-		}
-		const content = this.state.content;
+		this.setState( state => {
+			let { selectionStart, selectionEnd } = this.textarea;
+			if ( state.lastSelection ) {
+				[ selectionStart, selectionEnd ] = state.lastSelection;
+			}
+			const content = state.content;
 
-		const nextParts = [
-			content.substring( 0, selectionStart ),
-			apply( content.substring( selectionStart, selectionEnd ) ),
-			content.substring( selectionEnd ),
-		];
+			const nextParts = [
+				content.substring( 0, selectionStart ),
+				apply( content.substring( selectionStart, selectionEnd ) ),
+				content.substring( selectionEnd ),
+			];
 
-		this.setState( { content: nextParts.join( '' ) } );
+			return {
+				content: nextParts.join( '' ),
+			};
+		} );
 	}
 
 	onUpload( file ) {
