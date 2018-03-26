@@ -61,7 +61,7 @@ export default class Editor extends React.PureComponent {
 			count:      0,
 			height:     null,
 			mode:       'edit',
-			uploading:  null,
+			uploading:  [],
 		};
 		this.textarea = null;
 	}
@@ -176,26 +176,34 @@ export default class Editor extends React.PureComponent {
 		} );
 	}
 
-	onUpload( file ) {
-		// Insert placeholder into the text
-		const placeholder = `<img alt="Uploading ${ file.name }…" />`;
-		this.onButton( null, () => `\n${ placeholder }\n` );
+	onUpload( files ) {
+		this.setState( state => ( { uploading: [ ...state.uploading, ...files ] } ) );
 
-		this.props.onUpload( file ).then( data => {
-			this.setState( state => {
-				const content = state.content.replace(
-					placeholder,
-					`\n<img alt="${ data.title.raw }" src="${ data.source_url }" />\n`
-				);
+		// Start uploads and build placeholder array.
+		const placeholders = files.map( file => {
+			const placeholder = `<img alt="Uploading ${ file.name }…" />`;
 
-				return {
-					content,
-					uploading: null,
-				};
+			this.props.onUpload( file ).then( data => {
+				this.setState( state => {
+					const content = state.content.replace(
+						placeholder,
+						`<img alt="${ data.title.raw }" src="${ data.source_url }" />`
+					);
+
+					const nextUploading = state.uploading.filter( item => item !== file );
+
+					return {
+						content,
+						uploading: nextUploading,
+					};
+				} );
 			} );
+
+			return placeholder;
 		} );
 
-		this.setState( { uploading: file } );
+		// Insert placeholders into the text
+		this.onButton( null, () => `\n${ placeholders.join( '\n' ) }\n` );
 	}
 
 	getCompletion() {
@@ -299,7 +307,11 @@ export default class Editor extends React.PureComponent {
 			</div>
 
 			<div className="Editor-editor-container">
-				<DropUpload file={ this.state.uploading } onUpload={ file => this.onUpload( file ) }>
+				<DropUpload
+					allowMultiple
+					file={ this.state.uploading }
+					onUpload={ file => this.onUpload( file ) }
+				>
 					{ mode === 'preview' ? (
 						<Preview>{ content || '*Nothing to preview*' }</Preview>
 					) : (
