@@ -170,9 +170,7 @@ export default class Editor extends React.PureComponent {
 				content.substring( selectionEnd ),
 			];
 
-			return {
-				content: nextParts.join( '' ),
-			};
+			return { content: nextParts.join( '' ) };
 		} );
 	}
 
