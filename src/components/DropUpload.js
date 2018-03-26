@@ -59,16 +59,24 @@ export default class DropUpload extends React.PureComponent {
 		const isMulti = Array.isArray( file );
 		const files = ( isMulti && allowMultiple ) ? file : [ file ];
 
-		if ( ! file || ! file.length ) {
-			return <div
-				className={ `DropUpload ${ this.state.dropping ? 'dropping' : ''}` }
-				onDragOver={ e => this.onDragOver( e ) }
-				onDragLeave={ e => this.onDragLeave( e ) }
-				onDrop={ e => this.onDrop( e ) }
-			>
-				{ children }
+		return <div
+			className={ `DropUpload ${ this.state.dropping ? 'dropping' : ''}` }
+			onDragOver={ e => this.onDragOver( e ) }
+			onDragLeave={ e => this.onDragLeave( e ) }
+			onDrop={ e => this.onDrop( e ) }
+		>
+			{ children }
 
-				<div className="DropUpload-status">
+			<div className="DropUpload-status">
+				{ files.length ?
+					files.map( file =>
+						<p key={ `${ file.name }-${ file.lastModified }` }>
+							<span className="Loading loading--active"></span>
+
+							Uploading { file.name }…
+						</p>
+					)
+				:
 					<p className="buttons">
 						<label className="DropUpload-uploader">
 							<input
@@ -80,21 +88,7 @@ export default class DropUpload extends React.PureComponent {
 						</label>
 						<span> or drop files here.</span>
 					</p>
-				</div>
-			</div>;
-		}
-
-		return <div className="DropUpload">
-			{ children }
-
-			<div className="DropUpload-status">
-				{ files.map( file =>
-					<p key={ `${ file.name }-${ file.lastModified }` }>
-						<span className="Loading loading--active"></span>
-
-						Uploading { file.name }…
-					</p>
-				) }
+				}
 			</div>
 		</div>;
 	}
