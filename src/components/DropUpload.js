@@ -56,7 +56,7 @@ export default class DropUpload extends React.PureComponent {
 			{ children }
 
 			<div className="DropUpload-status">
-				{ files.length ?
+				{ files.length ? (
 					files.map( file =>
 						<p key={ `${ file.name }-${ file.lastModified }` }>
 							<span className="Loading loading--active"></span>
@@ -64,7 +64,7 @@ export default class DropUpload extends React.PureComponent {
 							Uploading { file.name }…
 						</p>
 					)
-				:
+				) : (
 					<p className="buttons">
 						<label className="DropUpload-uploader">
 							<input
@@ -76,7 +76,7 @@ export default class DropUpload extends React.PureComponent {
 						</label>
 						<span> or drop files here.</span>
 					</p>
-				}
+				) }
 			</div>
 		</div>;
 	}
