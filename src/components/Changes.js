@@ -22,7 +22,7 @@ const changes = [
 		content: () => <p>You can now <span role="img" aria-label="">🎉</span> emoji react to <span role="img" aria-label="">💬</span> comments. <span role="img" aria-label="">🙌</span></p>
 	},
 	{
-		date:    '2018-03-27',
+		date:    '2018-03-26',
 		title:   'More Useful Hovercards',
 		content: withApiData( props => ( { user: '/wp/v2/users/me' } ) )( props => <React.Fragment>
 			<p>Hovercards are now more useful, and will be displayed on usernames and avatars.</p>
