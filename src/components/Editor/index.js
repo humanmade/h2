@@ -309,7 +309,7 @@ export default class Editor extends React.PureComponent {
 			<div className="Editor-editor-container">
 				<DropUpload
 					allowMultiple
-					file={ this.state.uploading }
+					files={ this.state.uploading }
 					onUpload={ file => this.onUpload( file ) }
 				>
 					{ mode === 'preview' ? (
