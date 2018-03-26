@@ -25,7 +25,6 @@
 .DropUpload-status {
 	font-size: 0.8rem;
 	color: var( --hm-warm-grey );
-	display: flex;
 	justify-content: space-between;
 }
 .DropUpload-status p {
