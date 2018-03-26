@@ -19,7 +19,7 @@ const changes = [
 	{
 		date:    '2018-03-06',
 		title:   'React to Comments',
-		content: () => <p>You can now <span role="img" aria-label="">🎉</span> emoji react to <span role="img" aria-label="">💬</span> comments. <span role="img" aria-label="">🙌</span></p>
+		content: () => <p>You can now <span role="img" aria-label="">🎉</span> emoji react to <span role="img" aria-label="">💬</span> comments. <span role="img" aria-label="">🙌</span></p>,
 	},
 	{
 		date:    '2018-03-26',
@@ -32,7 +32,7 @@ const changes = [
 				<p>For example, hover over your name to see yours: <AuthorName user={ props.user.data } /></p>
 			}
 		</React.Fragment> ),
-	}
+	},
 ];
 
 export default function Changes( props ) {
