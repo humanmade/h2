@@ -17,7 +17,7 @@ export default class SiteSelect extends React.Component {
 				<Switch>
 					<Route exact path="/" />
 					<Route>
-						<li><Link to="/">&larr; Back to home</Link></li>
+						<li className="SiteSelect-with-separator"><Link to="/">&larr; Back to home</Link></li>
 					</Route>
 				</Switch>
 				<li>

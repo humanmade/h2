@@ -53,3 +53,7 @@
 	padding: 0;
 	list-style: none;
 }
+
+.SiteSelect-with-separator {
+	border-bottom: 1px solid var( --hm-red-light );
+}
