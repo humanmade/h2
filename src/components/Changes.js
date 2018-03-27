@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from './Button';
-import AuthorName from './Message/AuthorName';
+import AuthorLink from './Message/AuthorLink';
 import { withApiData } from '../with-api-data';
 
 import './Changes.css';
@@ -29,8 +29,9 @@ const changes = [
 			{ props.user.isLoading ?
 				<p>For example, hover over your name to see yours: <em>loading…</em></p>
 			:
-				<p>For example, hover over your name to see yours: <AuthorName user={ props.user.data } /></p>
+				<p>For example, hover over your name to see yours: <AuthorLink user={ props.user.data }>{ props.user.data.name }</AuthorLink></p>
 			}
+			<p>You can also click linked names to show a full profile.</p>
 		</React.Fragment> ),
 	},
 ];
