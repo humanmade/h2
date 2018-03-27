@@ -28,16 +28,6 @@ const LocalTime = props => {
 			value={ now }
 			timeZone={ timeZone }
 		/>
-
-		{ ', '}
-
-		<FormattedDate
-			day="numeric"
-			month="short"
-			value={ now }
-			timeZone={ timeZone }
-			timeZoneName="short"
-		/>
 	</p>;
 }
 
