@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Avatar from './Avatar';
 import Button from './Button';
 import CommentsList from './CommentsList';
-import AuthorName from './Message/AuthorName';
+import AuthorLink from './Message/AuthorLink';
 import MessageContent from './Message/Content';
 import Reactions from './Message/Reactions';
 import WriteComment from './Message/WriteComment';
@@ -43,11 +43,9 @@ export class Comment extends Component {
 					size={40}
 				/>
 				<strong>
-					{ author ?
-						<AuthorName user={ author } />
-					:
-						comment.author_name
-					}
+					{ author ? (
+						<AuthorLink user={ author }>{ author.name }</AuthorLink>
+					) : comment.author_name }
 				</strong>
 				<div className="actions">
 					<a

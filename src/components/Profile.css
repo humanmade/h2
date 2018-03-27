@@ -1,0 +1,59 @@
+.Profile {
+	font-size: 0.8em;
+	margin-top: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+	border-left: 1px solid var( --hm-beige );
+	border-right: 1px solid var( --hm-beige );
+}
+
+.Profile > header {
+	display: flex;
+	align-items: center;
+	margin: 0 -1em 1em;
+	padding: 0.2em 1em 0;
+	overflow: hidden;
+}
+
+.Profile .Profile-closer {
+	align-items: baseline;
+	justify-content: space-between;
+	position: sticky;
+	top: 0;
+	background: var( --hm-beige );
+	padding: 0.5em;
+	z-index: 2;
+}
+
+.Profile-closer .btn {
+	margin: 0;
+}
+
+.Profile > header .Avatar {
+	margin-right: 0.5em;
+}
+
+.Profile h2 {
+	text-transform: none;
+	font-size: 1rem;
+	line-height: 1.4;
+	margin: 0;
+}
+
+.Profile > header p {
+	margin: 0;
+}
+
+.Profile-slug {
+	color: var( --hm-medium-grey );
+	font-size: 0.9em;
+	font-weight: normal;
+}
+
+.Profile-title {
+	color: var( --hm-medium-grey );
+}
+
+.Profile-title.missing {
+	font-style: italic;
+}

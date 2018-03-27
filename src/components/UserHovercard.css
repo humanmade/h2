@@ -42,9 +42,7 @@
 	font-style: italic;
 }
 
-.UserHovercard-map {
-	width: 150px;
-	height: 150px;
+.UserHovercard .Map {
 	margin: 0 0 0 10px;
 }
 

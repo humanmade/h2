@@ -1,0 +1,21 @@
+.AuthorLink {
+	display: inline;
+	font: inherit;
+	line-height: 1;
+	cursor: pointer;
+	background: transparent;
+	border: none;
+	padding: 0;
+	margin: 0;
+	overflow: visible;
+	color: var( --hm-red );
+	transition: color .2s ease-in, background .2s ease-in, border-width .2s ease-in, border-color .2s ease-in;
+}
+
+.AuthorLink:hover,
+.AuthorLink:focus {
+	color: var( --hm-red );
+	transition: color .2s ease-out, background .2s ease-out;
+	border-bottom: 2px solid var( --hm-red );
+	outline: none;
+}

@@ -11,7 +11,7 @@ import Avatar from '../Avatar';
 import Button from '../Button';
 import CommentsList from '../../components/CommentsList';
 import Link from '../RelativeLink';
-import AuthorName from '../Message/AuthorName';
+import AuthorLink from '../Message/AuthorLink';
 import MessageContent from '../Message/Content'
 import Reactions from '../Message/Reactions'
 import WriteComment from '../Message/WriteComment';
@@ -61,7 +61,9 @@ class Post extends Component {
 						/>
 					</Link>
 					<span className="date">
-						{author ? <AuthorName user={ author } /> : ''},&nbsp;
+						{ author ? (
+							<AuthorLink user={ author }>{ author.name }</AuthorLink>
+						) : ''},&nbsp;
 						<time
 							datetime={ post.date_gmt + 'Z' }
 							title={ post.date_gmt + 'Z' }

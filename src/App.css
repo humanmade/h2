@@ -21,11 +21,11 @@
 	max-width: 800px;
 }
 
-.Sidebar {
+.App > .Outer > aside {
 	position: sticky;
 	top: 0;
 	height: 100vh;
-	padding-left: 5%;
+	margin-left: 5%;
 	overflow: hidden;
 	overflow-y: scroll;
 	width: 30%;

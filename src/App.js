@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
 
-import { RenderPlugins } from './plugins'
+import { hideSidebarProfile } from './actions';
 import Changes from './components/Changes';
 import Header from './components/Header';
 import PostsList from './components/Post/List';
 import WritePost from './components/Post/Write';
+import Profile from './components/Profile';
 import Sidebar from './components/Sidebar';
+import { RenderPlugins } from './plugins';
 
 import './App.css';
 
@@ -58,7 +60,14 @@ class App extends Component {
 					<Route path="/search/:search" exact component={PostsList} />
 					<Route path="/:year/:month/:day/:slug/:comment_page(comment-page-\d+)?" exact component={PostsList} />
 				</div>
-				<Sidebar />
+				{ this.props.sidebarProfile ? (
+					<Profile
+						id={ this.props.sidebarProfile }
+						onClose={ this.props.onDismissSidebarProfile }
+					/>
+				) : (
+					<Sidebar />
+				) }
 			</div>
 			<Changes
 				forceShow={ this.state.showChanges }
@@ -70,4 +79,14 @@ class App extends Component {
 	}
 }
 
-export default withRouter( connect( s => s )( App ) );
+const mapStateToProps = state => {
+	return { sidebarProfile: state.ui.sidebarProfile };
+};
+
+const mapDispatchToProps = dispatch => {
+	return { onDismissSidebarProfile: () => dispatch( hideSidebarProfile() ) };
+};
+
+export default withRouter(
+	connect( mapStateToProps, mapDispatchToProps )( App )
+);

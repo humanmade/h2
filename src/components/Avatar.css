@@ -8,7 +8,7 @@
 	background-color: #FFF;
 }
 
-.Avatar a:hover {
+.Avatar .AuthorLink:hover {
 	border: none;
 }
 
