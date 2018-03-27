@@ -46,6 +46,10 @@
 	margin: 0 0 0 10px;
 }
 
+.UserHovercard-local-time.missing span {
+	font-style: italic;
+}
+
 .UserHovercard-description {
 	font-size: 0.9em;
 	line-height: 1.7;
