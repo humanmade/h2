@@ -15,7 +15,10 @@ class Header extends Component {
 	render() {
 		return <div className="Header">
 			<div className="Header-inner">
-				<Link to="/"><Logo /></Link>
+				<Link to="/" className="Header-site-name">
+					<Logo />
+					{ window.H2Data.site.name }
+				</Link>
 				<HeaderButton
 					onClick={this.props.onWritePost}
 					title="New Post"
