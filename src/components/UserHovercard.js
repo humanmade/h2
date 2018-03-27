@@ -36,6 +36,7 @@ const LocalTime = props => {
 			month="short"
 			value={ now }
 			timeZone={ timeZone }
+			timeZoneName="short"
 		/>
 	</p>;
 }
