@@ -77,6 +77,12 @@ export default class Hovercard extends React.Component {
 		this.target = null;
 	}
 
+	componentWillUnmount() {
+		if ( this.showTimer ) {
+			clearTimeout( this.showTimer );
+		}
+	}
+
 	// eslint-disable-next-line no-undef
 	onMouseOver = () => {
 		if ( this.state.active ) {

@@ -26,3 +26,9 @@
 .Sidebar ol {
 	margin: 1.66667em 0;
 }
+
+@media ( max-width: 800px ) {
+	.Sidebar {
+		opacity: 1;
+	}
+}

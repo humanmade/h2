@@ -34,3 +34,17 @@
 .App a {
 	border: none;
 }
+
+@media ( max-width: 800px ) {
+	.Outer {
+		flex-wrap: wrap;
+	}
+	.Inner {
+		width: 100%;
+	}
+	.Sidebar {
+		position: static;
+		width: 100%;
+		padding: 0 2%;
+	}
+}
