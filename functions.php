@@ -135,4 +135,8 @@ function register_custom_meta() {
 		'single'       => true,
 		'show_in_rest' => true,
 	] );
+	register_meta( 'user', 'hm_time_timezone', [
+		'single'       => true,
+		'show_in_rest' => true,
+	] );
 }
