@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FormattedRelative } from 'react-intl';
+import { Slot } from 'react-slot-fill';
 import PropTypes from 'prop-types';
 
 import Avatar from './Avatar';
@@ -28,6 +29,8 @@ export class Comment extends Component {
 		const post = this.props.parentPost;
 		const author = this.props.author.data;
 		const directComments = this.props.comments.filter( c => c.parent === comment.id );
+
+		const fillProps = { author, comment, comments: this.props.comments, post };
 
 		return <div
 			className="Comment"
@@ -59,10 +62,13 @@ export class Comment extends Component {
 						</time>
 					</a>
 					<Button onClick={() => this.setState( { isShowingReply: true } )}>Reply</Button>
+					<Slot name="Comment.actions" fillChildProps={ fillProps } />
 				</div>
 			</header>
 			<div className="body">
+				<Slot name="Comment.before_content" fillChildProps={ fillProps } />
 				<MessageContent html={this.props.comment.content.rendered} />
+				<Slot name="Comment.after_content" fillChildProps={ fillProps } />
 				<Reactions
 					commentId={ this.props.comment.id }
 					postId={ post.id }

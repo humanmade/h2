@@ -21,7 +21,7 @@
 .Post > header {
 	position: sticky;
 	top: 0;
-	z-index: 1;
+	z-index: 2;
 	padding: 15px 0;
 	background: #fff;
 	display: flex;
@@ -45,6 +45,8 @@
 	flex-direction: column;
 	flex-grow: 1;
 	min-width: 0;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .Post > header > .byline > a > h2 {
@@ -79,4 +81,29 @@
 
 .Post .actions button:last-child {
 	margin-right: 0;
+}
+
+@media ( max-width: 600px ) {
+	.Post:before {
+		/* ( avatar_width - width ) / 2 */
+		left: 15px;
+		width: 2px;
+		height: 1.1rem;
+	}
+	.Post > header {
+		padding: 5px 0;
+		height: 70px;
+	}
+	.Post > header > .Avatar {
+		margin-right: 16px;
+	}
+	.Post > header > .Avatar,
+	.Post > header > .Avatar img {
+		width: 32px !important;
+		height: 32px !important;
+	}
+
+	.Post-content-wrap {
+		margin-left: 48px;
+	}
 }

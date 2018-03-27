@@ -29,3 +29,10 @@
 .PostsList > .pagination {
 	border-top: none;
 }
+
+@media ( max-width: 600px ) {
+	.PostsList:before {
+		left: 35px;
+		width: 2px;
+	}
+}

@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 
 import Avatar from '../Avatar';
 import Editor from '../Editor';
+import Notification from '../Notification';
 import { withApiData } from '../../with-api-data';
 import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 import { Post } from '../../shapes';
@@ -11,6 +12,15 @@ import { Post } from '../../shapes';
 import './WriteComment.css';
 
 class WriteComment extends React.Component {
+	constructor( props ) {
+		super( props );
+
+		this.state = {
+			isSubmitting: false,
+			error:        null,
+		};
+	}
+
 	componentDidMount() {
 		if ( this.container && this.editor ) {
 			this.editor.focus();
@@ -40,6 +50,8 @@ class WriteComment extends React.Component {
 			body.parent = this.props.comment.id;
 		}
 
+		this.setState( { isSubmitting: true } );
+
 		this.props.fetch( '/wp/v2/comments', {
 			headers: {
 				Accept:         'application/json',
@@ -47,7 +59,16 @@ class WriteComment extends React.Component {
 			},
 			body:   JSON.stringify( body ),
 			method: 'POST',
-		} ).then( this.props.onDidCreateComment );
+		} ).then( r => r.json().then( data => {
+			if ( ! r.ok ) {
+				this.setState( { isSubmitting: false, error: data } );
+				return;
+			}
+
+			this.setState( { isSubmitting: false } );
+
+			this.props.onDidCreateComment();
+		} ) );
 	}
 
 	render() {
@@ -63,18 +84,25 @@ class WriteComment extends React.Component {
 			<div className="body">
 				<Editor
 					ref={editor => this.editor = editor}
+					submitText={ this.state.isSubmitting ? 'Commenting...' : 'Comment' }
 					onCancel={this.props.onCancel}
 					onSubmit={( ...args ) => this.onSubmit( ...args )}
 					onUpload={( ...args ) => this.onUpload( ...args )}
 				/>
+
+				{ this.state.error &&
+					<Notification type="error">
+						Could not submit: { this.state.error.message }
+					</Notification>
+				}
 			</div>
 		</div>;
 	}
 }
 
 WriteComment.propTypes = {
-	parentPost:     Post.isRequired,
-	onCancel:       PropTypes.func.isRequired,
+	parentPost:         Post.isRequired,
+	onCancel:           PropTypes.func.isRequired,
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 
