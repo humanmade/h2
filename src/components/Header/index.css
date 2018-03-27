@@ -17,3 +17,9 @@
 .Header .SearchInput {
 	margin: 7px 20px;
 }
+
+@media ( max-width: 600px ) {
+	.Header-inner {
+		padding: 0 7px;
+	}
+}

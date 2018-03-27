@@ -14,6 +14,10 @@
 	outline: none;
 }
 
+.HeaderButton + .HeaderButton {
+	border-left: 1px solid rgba(0,0,0,0.05);
+}
+
 .HeaderButton .icon {
 	margin-right: 10px;
 	margin-left: -0.5em;
@@ -35,4 +39,16 @@
 .HeaderButton:hover .icon,
 .HeaderButton:focus .icon {
 	opacity: 1;
+}
+
+@media ( max-width: 600px ) {
+	.HeaderButton {
+		width: auto;
+	}
+	.HeaderButton .icon {
+		margin: 0;
+	}
+	.HeaderButton-title {
+		display: none;
+	}
 }
