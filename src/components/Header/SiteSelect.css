@@ -45,6 +45,7 @@
 	display: block;
 	color: rgba( 255, 255, 255, 0.75 );
 	font-size: 0.875em;
+	line-height: 1.555em;
 }
 
 .SiteSelect ul {
