@@ -1,0 +1,16 @@
+a.SiteSelect {
+	display: flex;
+	align-items: center;
+	background: var(--hm-red);
+	padding-right: 1em;
+	color: #fff;
+}
+
+.SiteSelect:hover,
+.SiteSelect:focus {
+	border: none;
+}
+
+.SiteSelect:hover {
+	color: rgba( 255, 255, 255, 0.6 );
+}

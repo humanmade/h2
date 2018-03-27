@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { Slot } from 'react-slot-fill';
 
 import CurrentUserDropDown from './CurrentUserDropDown';
 import HeaderButton from './HeaderButton';
-import Logo from './Logo';
+import SiteSelect from './SiteSelect';
 import SearchInput from '../SearchInput';
 import { withApiData } from '../../with-api-data';
 
@@ -15,10 +14,8 @@ class Header extends Component {
 	render() {
 		return <div className="Header">
 			<div className="Header-inner">
-				<Link to="/" className="Header-site-name">
-					<Logo />
-					{ window.H2Data.site.name }
-				</Link>
+				<SiteSelect />
+
 				<HeaderButton
 					onClick={this.props.onWritePost}
 					title="New Post"
