@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedDate, FormattedTime } from 'react-intl';
 
 import Avatar from './Avatar';
 import Button from './Button';
@@ -12,6 +13,42 @@ const Field = props => <p className="Profile-field">
 	<strong>{ props.name }:</strong>
 	<span className={ props.missing ? "missing" : null }>{ props.children }</span>
 </p>;
+
+const LocalTime = props => {
+	const timeZone = props.user.meta.hm_time_timezone;
+	if ( ! timeZone ) {
+		const profileUrl = `${ window.H2Data.site.url }/wp-admin/profile.php?user_id=${ props.user.id }`;
+		return <Field
+			name="Local time"
+			missing
+		>
+			Unknown timezone,
+			set in <a href={ profileUrl }>your profile</a>
+		</Field>;
+	}
+
+	const now = new Date();
+	return <React.Fragment>
+		<Field name="Local time">
+			<FormattedTime
+				value={ now }
+				timeZone={ timeZone }
+			/>
+
+			{ ', '}
+
+			<FormattedDate
+				day="numeric"
+				month="long"
+				value={ now }
+				timeZone={ timeZone }
+			/>
+		</Field>
+		<Field name="Timezone">
+			{ timeZone }
+		</Field>
+	</React.Fragment>;
+}
 
 function Profile( props ) {
 	if ( props.user.isLoading ) {
@@ -65,6 +102,7 @@ function Profile( props ) {
 		<p><RelativeLink to={ user.link }>View all posts →</RelativeLink></p>
 
 		<div className="Profile-fields">
+			<LocalTime user={ user } />
 		</div>
 
 		<div className="Profile-description">
