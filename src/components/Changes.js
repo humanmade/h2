@@ -31,6 +31,7 @@ const changes = [
 			:
 				<p>For example, hover over your name to see yours: <AuthorName user={ props.user.data } /></p>
 			}
+			<p>You can also click linked names to show a full profile.</p>
 		</React.Fragment> ),
 	},
 ];
