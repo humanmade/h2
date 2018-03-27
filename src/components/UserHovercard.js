@@ -27,6 +27,7 @@ const LocalTime = props => {
 		<FormattedTime
 			value={ now }
 			timeZone={ timeZone }
+			timeZoneName="short"
 		/>
 	</p>;
 }
