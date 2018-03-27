@@ -105,6 +105,12 @@ export default class Editor extends React.PureComponent {
 			return;
 		}
 
+		// Only trigger if preceeded by whitespace.
+		const shouldTrigger = !! target.value.substring( 0, target.selectionEnd ).match( /(^|\s)$/ );
+		if ( ! shouldTrigger ) {
+			return;
+		}
+
 		const coords = getCaretCoordinates( target, target.selectionEnd );
 		const completion = {
 			key,
@@ -204,7 +210,7 @@ export default class Editor extends React.PureComponent {
 		const completionProps = {
 			key:      completion.key,
 			coords:   completion.coords,
-			text:     content.substring( completion.start + 1, completion.end + 1 ),
+			text:     content.substring( completion.start + 1, completion.end ),
 			trigger:  completion.key,
 			onSelect: val => {
 				const content = this.state.content;
