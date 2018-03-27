@@ -18,6 +18,7 @@ export default function CurrentUserDropDown( props ) {
 	return <Dropdown
 		className="CurrentUserDropDown"
 		label={ label }
+		reverse
 	>
 		<Avatar
 			key="avatar"

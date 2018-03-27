@@ -45,10 +45,15 @@ export default class Dropdown extends React.PureComponent {
 	}
 
 	render() {
-		const { children, label } = this.props;
+		const { children, label, reverse } = this.props;
 		const { expanded } = this.state;
 
-		const className = this.props.className + ( expanded ? ' Dropdown expanded' : ' Dropdown' );
+		const className = [
+			this.props.className,
+			'Dropdown',
+			expanded && 'expanded',
+			reverse && 'reverse',
+		].filter( Boolean ).join( ' ' );
 
 		return <div className={ className } ref={ ref => this.root = ref }>
 			<button
@@ -69,9 +74,11 @@ export default class Dropdown extends React.PureComponent {
 Dropdown.propTypes = {
 	className: PropTypes.string,
 	label:     PropTypes.string.isRequired,
+	reverse:   PropTypes.bool,
 };
 
 Dropdown.defaultProps = {
 	className: '',
+	reverse:   false,
 	onToggle:  () => {},
 };

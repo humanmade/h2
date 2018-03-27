@@ -16,7 +16,7 @@
 	display: none;
 
 	position: absolute;
-	right: 0;
+	left: 0;
 	z-index: 1;
 
 	margin: 0;
@@ -30,6 +30,11 @@
 	border: 1px solid rgba( 210, 70, 50, 0.2 );
 	border-top: 0;
 	box-shadow: 0 2px 3px rgba(53, 53, 63, 0.2);
+}
+
+.Dropdown.reverse .Dropdown-content {
+	left: auto;
+	right: 0;
 }
 
 .Dropdown.expanded .Dropdown-content {
