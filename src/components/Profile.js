@@ -8,6 +8,11 @@ import { withApiData } from '../with-api-data';
 
 import './Profile.css';
 
+const Field = props => <p className="Profile-field">
+	<strong>{ props.name }:</strong>
+	<span className={ props.missing ? "missing" : null }>{ props.children }</span>
+</p>;
+
 function Profile( props ) {
 	if ( props.user.isLoading ) {
 		return <aside className="Profile">
@@ -58,6 +63,9 @@ function Profile( props ) {
 		/>
 
 		<p><RelativeLink to={ user.link }>View all posts →</RelativeLink></p>
+
+		<div className="Profile-fields">
+		</div>
 
 		<div className="Profile-description">
 			{ user.facts.long_description.split( '\n' ).map( ( text, idx ) =>
