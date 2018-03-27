@@ -16,6 +16,8 @@ npm start
 
 H2 uses [react-wp-scripts](https://github.com/humanmade/react-wp-scripts) to integrate with Webpack's development server. This means that H2 will try to load files from localhost if `SCRIPT_DEBUG` is `true`, and will white-screen if that server is not running. If you see a white screen after activating H2, check to make sure `SCRIPT_DEBUG` is defined (to use the hot-reloading dev server), or run `npm run build` to generate the production-ready static file bundle.
 
+To enable Hovercards, you'll also need the [Global Facts](https://github.com/humanmade/global-facts) plugin, along with the development code to map your local users to HM users.
+
 ## Create a new Component
 
 1. Create `Component.js` and `Component.scss` to the `src/components` folder.

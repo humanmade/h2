@@ -1,0 +1,67 @@
+.UserHovercard {
+	display: flex;
+	font-size: 0.77778rem;
+	align-items: center;
+}
+
+.UserHovercard .Avatar {
+	flex-grow: 0;
+	flex-shrink: 0;
+	margin-right: 0.5em;
+}
+
+.UserHovercard-details header {
+	display: flex;
+	align-items: center;
+	margin: 0 0 1em;
+}
+
+.UserHovercard-details header p {
+	line-height: 1.6;
+	margin: 0;
+}
+
+.UserHovercard h3 {
+	font-size: 1em;
+	line-height: 1.6;
+	text-transform: none;
+	margin: 0 0;
+}
+
+.UserHovercard-slug {
+	color: var( --hm-medium-grey );
+	font-size: 0.9em;
+	font-weight: normal;
+}
+
+.UserHovercard-title {
+	color: var( --hm-medium-grey );
+}
+
+.UserHovercard-title.missing {
+	font-style: italic;
+}
+
+.UserHovercard-map {
+	width: 150px;
+	height: 150px;
+	margin: 0 0 0 10px;
+}
+
+.UserHovercard-description {
+	font-size: 0.9em;
+	line-height: 1.7;
+}
+
+.UserHovercard-description p {
+	margin: 0 0 1.666667em;
+}
+
+.UserHovercard-description p:last-child {
+	margin-bottom: 0;
+}
+
+.UserHovercard-time {
+	margin: 0;
+	font-size: 0.9em;
+}

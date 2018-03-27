@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Button from './Button';
+import AuthorName from './Message/AuthorName';
 import { withApiData } from '../with-api-data';
 
 import './Changes.css';
@@ -18,7 +19,19 @@ const changes = [
 	{
 		date:    '2018-03-06',
 		title:   'React to Comments',
-		content: () => <p>You can now <span role="img" aria-label="">🎉</span> emoji react to <span role="img" aria-label="">💬</span> comments. <span role="img" aria-label="">🙌</span></p>
+		content: () => <p>You can now <span role="img" aria-label="">🎉</span> emoji react to <span role="img" aria-label="">💬</span> comments. <span role="img" aria-label="">🙌</span></p>,
+	},
+	{
+		date:    '2018-03-26',
+		title:   'More Useful Hovercards',
+		content: withApiData( props => ( { user: '/wp/v2/users/me' } ) )( props => <React.Fragment>
+			<p>Hovercards are now more useful, and will be displayed on usernames and avatars.</p>
+			{ props.user.isLoading ?
+				<p>For example, hover over your name to see yours: <em>loading…</em></p>
+			:
+				<p>For example, hover over your name to see yours: <AuthorName user={ props.user.data } /></p>
+			}
+		</React.Fragment> ),
 	},
 ];
 
