@@ -11,7 +11,7 @@ import './Profile.css';
 
 const Field = props => <p className="Profile-field">
 	<strong>{ props.name }:</strong>
-	<span className={ props.missing ? "missing" : null }>{ props.children }</span>
+	<span className={ props.missing ? 'missing' : null }>{ props.children }</span>
 </p>;
 
 const LocalTime = props => {
