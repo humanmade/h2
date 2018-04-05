@@ -83,7 +83,7 @@ export default class RecentPosts extends React.Component {
 
 		return (
 			<div className="RecentPosts">
-				<h4>{ title || "Recent Posts" }</h4>
+				<h4>{ title || 'Recent Posts' }</h4>
 
 				<ConnectedPostList
 					page={ this.state.page }
