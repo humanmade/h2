@@ -1,3 +1,7 @@
+.Sidebar .RecentPosts ul {
+	margin-bottom: 0.83333335rem;
+}
+
 .RecentPosts-pagination {
 	display: flex;
 	align-items: baseline;
