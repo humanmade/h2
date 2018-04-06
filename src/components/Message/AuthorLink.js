@@ -2,10 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import LinkButton from '../LinkButton';
 import UserHovercard from '../UserHovercard';
 import { showSidebarProfile } from '../../actions';
-
-import './AuthorLink.css';
 
 function AuthorLink( props ) {
 	const { children, user } = props;
@@ -17,13 +16,12 @@ function AuthorLink( props ) {
 	return <UserHovercard
 		user={ user }
 	>
-		<button
+		<LinkButton
 			className="AuthorLink"
 			onClick={ props.onSelect }
-			type="button"
 		>
 			{ children }
-		</button>
+		</LinkButton>
 	</UserHovercard>;
 }
 

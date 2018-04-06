@@ -1,0 +1,26 @@
+.Sidebar .RecentPosts ul {
+	margin-bottom: 0.83333335rem;
+}
+
+.RecentPosts-pagination {
+	display: flex;
+	align-items: baseline;
+	padding: 0 1em;
+	max-width: 20em;
+}
+
+.RecentPosts-pagination > div {
+	width: 50%;
+}
+
+.RecentPosts-pagination .cta {
+	font-size: inherit;
+}
+
+.RecentPosts-pagination .cta:after {
+	width: 1em;
+}
+
+.RecentPosts-pagination-newer:first-child {
+	margin-left: 50%;
+}
