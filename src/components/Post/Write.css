@@ -41,7 +41,9 @@
 	background-color: inherit;
 	border-radius: inherit;
 	margin: 0;
-	width: inherit;
+	width: 100%;
+	border: 2px solid rgba( 217, 217, 217, 0.6 );
+	padding: 0.2em;
 }
 
 .WritePost > header > .byline > h2 > input::placeholder {
@@ -61,13 +63,8 @@
 	font-size: 14px;
 }
 
-.WritePost-title-warn {
-	background: var( --hm-red );
-	color: #fff;
+.WritePost .Notification {
 	margin-left: 90px;
-	margin-top: -1.36667rem;
-	padding: 0.5em 5px;
-	border-radius: 4px;
 }
 
 .WritePost > .Editor {

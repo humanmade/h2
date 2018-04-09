@@ -8,6 +8,7 @@ import Button from '../Button';
 import DropUpload from '../DropUpload';
 import EmojiCompletion from './EmojiCompletion';
 import MentionCompletion from './MentionCompletion';
+import Shortcuts from '../Shortcuts';
 
 import './index.css';
 
@@ -19,11 +20,13 @@ const BUTTONS = {
 	bold: {
 		icon:  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path d="M6 4v13h4.54c1.37 0 2.46-.33 3.26-1 .8-.66 1.2-1.58 1.2-2.77 0-.84-.17-1.51-.51-2.01s-.9-.85-1.67-1.03v-.09c.57-.1 1.02-.4 1.36-.9s.51-1.13.51-1.91c0-1.14-.39-1.98-1.17-2.5C12.75 4.26 11.5 4 9.78 4H6zm2.57 5.15V6.26h1.36c.73 0 1.27.11 1.61.32.34.22.51.58.51 1.07 0 .54-.16.92-.47 1.15s-.82.35-1.51.35h-1.5zm0 2.19h1.6c1.44 0 2.16.53 2.16 1.61 0 .6-.17 1.05-.51 1.34s-.86.43-1.57.43H8.57v-3.38z"/></g></svg>',
 		title: 'Add bold text',
+		key:   'mod+b',
 		apply: text => apply( text, '**', '**' ),
 	},
 	italic: {
 		icon:  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path d="M14.78 6h-2.13l-2.8 9h2.12l-.62 2H4.6l.62-2h2.14l2.8-9H8.03l.62-2h6.75z"/></g></svg>',
 		title: 'Add italic text',
+		key:   'mod+i',
 		apply: text => apply( text, '*', '*' ),
 	},
 	sep1:  { separator: true },
@@ -59,9 +62,10 @@ export default class Editor extends React.PureComponent {
 			content:    '',
 			completion: null,
 			count:      0,
+			hasFocus:   false,
 			height:     null,
 			mode:       'edit',
-			uploading:  null,
+			uploading:  [],
 		};
 		this.textarea = null;
 	}
@@ -102,6 +106,12 @@ export default class Editor extends React.PureComponent {
 				return false;
 			}
 
+			return;
+		}
+
+		// Only trigger if preceeded by whitespace.
+		const shouldTrigger = !! target.value.substring( 0, target.selectionEnd ).match( /(^|\s)$/ );
+		if ( ! shouldTrigger ) {
 			return;
 		}
 
@@ -147,51 +157,67 @@ export default class Editor extends React.PureComponent {
 
 		const lastSelection = [ selectionStart, selectionEnd ];
 
-		this.setState( { lastSelection } );
+		this.setState( {
+			lastSelection,
+			hasFocus: false,
+		} );
 	}
 
 	onFocus() {
-		this.setState( { lastSelection: null } );
+		this.setState( {
+			lastSelection: null,
+			hasFocus:      true,
+		} );
 	}
 
 	onButton( e, apply ) {
 		e && e.preventDefault();
 
-		let { selectionStart, selectionEnd } = this.textarea;
-		if ( this.state.lastSelection ) {
-			[ selectionStart, selectionEnd ] = this.state.lastSelection;
-		}
-		const content = this.state.content;
+		this.setState( state => {
+			let { selectionStart, selectionEnd } = this.textarea;
+			if ( state.lastSelection ) {
+				[ selectionStart, selectionEnd ] = state.lastSelection;
+			}
+			const content = state.content;
 
-		const nextParts = [
-			content.substring( 0, selectionStart ),
-			apply( content.substring( selectionStart, selectionEnd ) ),
-			content.substring( selectionEnd ),
-		];
+			const nextParts = [
+				content.substring( 0, selectionStart ),
+				apply( content.substring( selectionStart, selectionEnd ) ),
+				content.substring( selectionEnd ),
+			];
 
-		this.setState( { content: nextParts.join( '' ) } );
+			return { content: nextParts.join( '' ) };
+		} );
 	}
 
-	onUpload( file ) {
-		// Insert placeholder into the text
-		const placeholder = `<img alt="Uploading ${ file.name }…" />`;
-		this.onButton( null, () => `\n${ placeholder }\n` );
+	onUpload( files ) {
+		this.setState( state => ( { uploading: [ ...state.uploading, ...files ] } ) );
 
-		this.props.onUpload( file ).then( data => {
-			this.setState( state => {
-				const content = state.content.replace(
-					placeholder,
-					`\n<img alt="${ data.title.raw }" src="${ data.source_url }" />\n`
-				);
+		// Start uploads and build placeholder array.
+		const placeholders = files.map( file => {
+			const placeholder = `<img alt="Uploading ${ file.name }…" />`;
 
-				return {
-					content,
-					uploading: null,
-				};
+			this.props.onUpload( file ).then( data => {
+				this.setState( state => {
+					const content = state.content.replace(
+						placeholder,
+						`<img alt="${ data.title.raw }" src="${ data.source_url }" />`
+					);
+
+					const nextUploading = state.uploading.filter( item => item !== file );
+
+					return {
+						content,
+						uploading: nextUploading,
+					};
+				} );
 			} );
+
+			return placeholder;
 		} );
 
-		this.setState( { uploading: file } );
+		// Insert placeholders into the text
+		this.onButton( null, () => `\n${ placeholders.join( '\n' ) }\n` );
 	}
 
 	getCompletion() {
@@ -204,7 +230,7 @@ export default class Editor extends React.PureComponent {
 		const completionProps = {
 			key:      completion.key,
 			coords:   completion.coords,
-			text:     content.substring( completion.start + 1, completion.end + 1 ),
+			text:     content.substring( completion.start + 1, completion.end ),
 			trigger:  completion.key,
 			onSelect: val => {
 				const content = this.state.content;
@@ -239,12 +265,27 @@ export default class Editor extends React.PureComponent {
 	}
 
 	render() {
-		const { content, count, height, mode } = this.state;
+		const { content, count, hasFocus, height, mode } = this.state;
+
+		const shortcuts = {};
+		Object.keys( BUTTONS ).forEach( buttonType => {
+			const button = BUTTONS[ buttonType ];
+			if ( ! button.key ) {
+				return;
+			}
+
+			shortcuts[ button.key ] = {
+				allowInInput: true,
+				callback:     e => this.onButton( e, button.apply ),
+			};
+		} );
 
 		return <form
 			className={ mode === 'preview' ? 'Editor previewing' : 'Editor' }
 			onSubmit={ e => this.onSubmit( e ) }
 		>
+			<Shortcuts keys={ hasFocus ? shortcuts : null } />
+
 			<div className="Editor-header">
 				<ul className="Editor-tabs">
 					<li>
@@ -295,7 +336,11 @@ export default class Editor extends React.PureComponent {
 			</div>
 
 			<div className="Editor-editor-container">
-				<DropUpload file={ this.state.uploading } onUpload={ file => this.onUpload( file ) }>
+				<DropUpload
+					allowMultiple
+					files={ this.state.uploading }
+					onUpload={ file => this.onUpload( file ) }
+				>
 					{ mode === 'preview' ? (
 						<Preview>{ content || '*Nothing to preview*' }</Preview>
 					) : (
@@ -306,6 +351,7 @@ export default class Editor extends React.PureComponent {
 							style={{ height }}
 							value={ content }
 							onBlur={ () => this.onBlur() }
+							onFocus={ () => this.onFocus() }
 							onChange={ e => this.setState( { content: e.target.value } ) }
 							onKeyDown={ e => this.onKeyDown( e ) }
 							onKeyUp={ e => this.onKeyUp( e ) }

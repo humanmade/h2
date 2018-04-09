@@ -8,7 +8,7 @@ export default function HeaderButton( props ) {
 		{ props.icon && <span
 			className={ 'icon icon--' + props.icon + ' icon--black' }
 		></span> }
-		{props.title}
+		<span className="HeaderButton-title">{ props.title }</span>
 	</button>;
 }
 

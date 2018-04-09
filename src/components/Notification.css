@@ -1,0 +1,19 @@
+.Notification {
+	border-radius: 4px;
+	margin-top: -1.36667rem;
+	padding: 1.1em;
+	font-size: 0.777777778em;
+	border: 1px solid currentColor;
+}
+.Notification--status {
+	background: #ECF6FA;
+	color: #009ACE;
+}
+.Notification--alert {
+	background: #FFFAE2;
+	color: #DB7E26;
+}
+.Notification--error {
+	background: #FFF2F4;
+	color: #FF001F;
+}

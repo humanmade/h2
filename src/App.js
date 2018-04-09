@@ -2,26 +2,23 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
 
-import { RenderPlugins } from './plugins'
+import { hideSidebarProfile } from './actions';
 import Changes from './components/Changes';
 import Header from './components/Header';
 import PostsList from './components/Post/List';
 import WritePost from './components/Post/Write';
+import Profile from './components/Profile';
 import Sidebar from './components/Sidebar';
+import { RenderPlugins } from './plugins';
 
 import './App.css';
-
-const getLastChangesView = () => {
-	const viewed = window.localStorage.getItem( 'h2-last-change-view' );
-	return viewed ? new Date( viewed ) : new Date( '1970-01-01' );
-};
 
 class App extends Component {
 	constructor( props ) {
 		super( props );
 		this.state = {
 			isShowingWritePost: false,
-			lastView: getLastChangesView(),
+			showChanges:        false,
 		};
 	}
 	onLogOut() {
@@ -45,20 +42,13 @@ class App extends Component {
 		this.props.history.push( post.link.replace( /^(?:\/\/|[^/]+)*\//, '/' ) );
 	}
 
-	onDismissChanges = () => {
-		const { lastView } = this.state;
-		const now = new Date();
-		this.setState( { lastView: now } );
-		window.localStorage.setItem( 'h2-last-change-view', now.toISOString() );
-	}
-
 	render() {
 		return <div className="App">
 			<Header
 				onLogOut={ () => this.onLogOut() }
 				onWritePost={() => this.onClickWritePost()}
 				onSearch={search => this.onSearch( search )}
-				onShowChanges={ () => this.setState( { lastView: null } ) }
+				onShowChanges={ () => this.setState( { showChanges: true } ) }
 			/>
 			<div className="Outer">
 				<div className="Inner">
@@ -70,11 +60,18 @@ class App extends Component {
 					<Route path="/search/:search" exact component={PostsList} />
 					<Route path="/:year/:month/:day/:slug/:comment_page(comment-page-\d+)?" exact component={PostsList} />
 				</div>
-				<Sidebar />
+				{ this.props.sidebarProfile ? (
+					<Profile
+						id={ this.props.sidebarProfile }
+						onClose={ this.props.onDismissSidebarProfile }
+					/>
+				) : (
+					<Sidebar />
+				) }
 			</div>
 			<Changes
-				lastView={ this.state.lastView }
-				onDismiss={ this.onDismissChanges }
+				forceShow={ this.state.showChanges }
+				onDismiss={ () => this.setState( { showChanges: false } ) }
 			/>
 
 			<RenderPlugins />
@@ -82,4 +79,14 @@ class App extends Component {
 	}
 }
 
-export default withRouter( connect( s => s )( App ) );
+const mapStateToProps = state => {
+	return { sidebarProfile: state.ui.sidebarProfile };
+};
+
+const mapDispatchToProps = dispatch => {
+	return { onDismissSidebarProfile: () => dispatch( hideSidebarProfile() ) };
+};
+
+export default withRouter(
+	connect( mapStateToProps, mapDispatchToProps )( App )
+);

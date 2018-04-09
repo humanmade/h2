@@ -11,6 +11,7 @@ require __DIR__ . '/inc/rest-api/class-widgets-controller.php';
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_assets' );
 add_filter( 'pre_option_permalink_structure', __NAMESPACE__ . '\\get_permalink_structure' );
 add_action( 'init', __NAMESPACE__ . '\\update_wp_rewrite_permalink_structure' );
+add_action( 'init', __NAMESPACE__ . '\\register_custom_meta' );
 add_action( 'rest_api_init', __NAMESPACE__ . '\\register_rest_routes' );
 
 show_admin_bar( false );
@@ -47,11 +48,15 @@ function get_script_data() {
 
 	$data = [
 		'site' => [
-			'name'  => get_bloginfo( 'name' ),
-			'url'   => site_url(),
-			'home'  => home_url(),
-			'api'   => rest_url(),
-			'nonce' => wp_create_nonce( 'wp_rest' ),
+			'name'           => get_bloginfo( 'name' ),
+			'url'            => site_url(),
+			'home'           => home_url(),
+			'api'            => rest_url(),
+			'nonce'          => wp_create_nonce( 'wp_rest' ),
+			'default_avatar' => get_avatar_url( 0, [
+				'force_default' => true,
+			] ),
+			'mapbox_key'     => defined( 'MAPBOX_KEY' ) ? MAPBOX_KEY : null,
 		],
 		'plugins' => [
 			'reactions' => \class_exists( 'H2\\Reactions\\Reaction' ),
@@ -123,4 +128,18 @@ function register_rest_routes() {
 
 	$widgets_controller = new REST_API\Widgets_Controller( $wp_widget_factory->widgets );
 	$widgets_controller->register_routes();
+}
+
+/**
+ * Register custom metadata.
+ */
+function register_custom_meta() {
+	register_meta( 'user', 'h2_last_updated', [
+		'single'       => true,
+		'show_in_rest' => true,
+	] );
+	register_meta( 'user', 'hm_time_timezone', [
+		'single'       => true,
+		'show_in_rest' => true,
+	] );
 }

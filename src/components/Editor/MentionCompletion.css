@@ -1,5 +1,4 @@
 .MentionCompletion-item {
-	width: 250px;
 	display: flex;
 }
 
@@ -10,6 +9,7 @@
 
 .MentionCompletion-item .name {
 	margin-left: 0.5em;
+	margin-right: 0.5em;
 	flex-grow: 1;
 }
 
