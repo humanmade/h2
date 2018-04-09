@@ -58,6 +58,9 @@ function get_script_data() {
 			] ),
 			'mapbox_key'     => defined( 'MAPBOX_KEY' ) ? MAPBOX_KEY : null,
 		],
+		'plugins' => [
+			'reactions' => \class_exists( 'H2\\Reactions\\Reaction' ),
+		],
 		'preload' => prefetch_urls( $preload ),
 	];
 

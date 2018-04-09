@@ -12,8 +12,7 @@ import Button from '../Button';
 import CommentsList from '../../components/CommentsList';
 import Link from '../RelativeLink';
 import AuthorLink from '../Message/AuthorLink';
-import MessageContent from '../Message/Content'
-import Reactions from '../Message/Reactions'
+import MessageContent from '../Message/Content';
 import WriteComment from '../Message/WriteComment';
 
 import './index.css';
@@ -89,7 +88,6 @@ class Post extends Component {
 				<Slot name="Post.before_content" fillChildProps={ fillProps } />
 				<MessageContent html={ post.content.rendered } />
 				<Slot name="Post.after_content" fillChildProps={ fillProps } />
-				<Reactions postId={ post.id }/>
 			</div>
 			<CommentsList
 				allComments={this.props.comments.data ? this.props.comments.data : []}

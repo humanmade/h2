@@ -4,7 +4,7 @@ import { Picker } from 'emoji-mart'
 
 import { withApiData } from '../../with-api-data';
 
-import UserDisplayName from '../UserDisplayName';
+import UserDisplayName from '../../components/UserDisplayName';
 
 import 'emoji-mart/css/emoji-mart.css';
 import './Reactions.css';

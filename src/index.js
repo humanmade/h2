@@ -14,6 +14,7 @@ import App from './App';
 import reducers from './reducers';
 import api from './api';
 import PluginAPI from './plugins';
+import loadPlugins from './plugins/load';
 
 import './hm-pattern-library/assets/styles/juniper.css';
 
@@ -27,6 +28,9 @@ window.H2 = window.H2 || {};
 window.H2.Fill = Fill;
 window.H2.React = React;
 window.H2.plugins = new PluginAPI( store );
+
+// Load our default plugins.
+loadPlugins();
 
 const render = Main => {
 	ReactDOM.render(
