@@ -18,7 +18,17 @@ export class Comment extends Component {
 	constructor( props ) {
 		super( props );
 		this.state = { isShowingReply: false };
+		this.element = null;
 	}
+
+	componentDidMount() {
+		const { comment } = this.props;
+
+		if ( window.location.hash === `#comment-${ comment.id }` && this.element ) {
+			this.element.scrollIntoView();
+		}
+	}
+
 	onDidCreateComment( ...args ) {
 		this.setState( { isShowingReply: false } )
 		this.props.onDidCreateComment( ...args );
@@ -34,6 +44,7 @@ export class Comment extends Component {
 		return <div
 			className="Comment"
 			id={ `comment-${ comment.id }` }
+			ref={ el => this.element = el }
 		>
 			<header>
 				<Avatar
