@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Slot } from 'react-slot-fill';
 
@@ -7,7 +8,7 @@ import CurrentUserDropDown from './CurrentUserDropDown';
 import HeaderButton from './HeaderButton';
 import Logo from './Logo';
 import SearchInput from '../SearchInput';
-import { withApiData } from '../../with-api-data';
+import { users } from '../../types';
 
 import './index.css';
 
@@ -36,9 +37,9 @@ class Header extends Component {
 
 				<SearchInput onSearch={this.props.onSearch} value={this.props.searchValue} />
 
-				{ this.props.currentUser.data ?
+				{ this.props.currentUser ?
 					<CurrentUserDropDown
-						user={ this.props.currentUser.data }
+						user={ this.props.currentUser }
 						onLogOut={ this.props.onLogOut }
 					/>
 				: null }
@@ -58,4 +59,7 @@ Header.propTypes = {
 	onSearch:      PropTypes.func.isRequired,
 };
 
-export default withApiData( props => ( { currentUser: '/wp/v2/users/me' } ) )( Header );
+export default connect( state => ( {
+	currentUser: users.getSingle( state.users, state.users.current ),
+	loading:     users.isPostLoading( state.users, state.users.current ),
+} ) )( Header );

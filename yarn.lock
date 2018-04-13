@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@humanmade/repress@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@humanmade/repress/-/repress-0.4.2.tgz#98788f3cdb995dab157f3a96bb05ae7f18b9de97"
+  dependencies:
+    lodash "^4.17.5"
+    qs "^6.5.1"
+
 "@hypnosphi/fuse.js@^3.0.9":
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/@hypnosphi/fuse.js/-/fuse.js-3.0.9.tgz#ea99f6121b4a8f065b4c71f85595db2714498807"
@@ -4995,6 +5002,10 @@ lodash@4.x.x, "lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.14.0, lodash@^4.15.0, 
 lodash@^3.10.1:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
+
+lodash@^4.17.5:
+  version "4.17.5"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
 loglevel@^1.4.1:
   version "1.5.1"

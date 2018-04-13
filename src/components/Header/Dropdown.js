@@ -68,7 +68,10 @@ export default class Dropdown extends React.PureComponent {
 
 Dropdown.propTypes = {
 	className: PropTypes.string,
-	label:     PropTypes.string.isRequired,
+	label:     PropTypes.oneOf( [
+		PropTypes.string,
+		PropTypes.element,
+	] ).isRequired,
 };
 
 Dropdown.defaultProps = {

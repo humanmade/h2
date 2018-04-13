@@ -1,18 +1,19 @@
+import { withArchive } from '@humanmade/repress';
 import React from 'react';
 import qs from 'qs';
 
 import LinkButton from '../LinkButton';
 import Link from '../RelativeLink';
-import { withApiData } from '../../with-api-data';
+import { posts } from '../../types';
 
 import './RecentPosts.css';
 
 function PostList( props ) {
-	if ( props.posts.isLoading ) {
+	if ( props.isLoading ) {
 		return <p>Loading…</p>;
 	}
 
-	if ( props.posts.error ) {
+	if ( ! props.posts ) {
 		return <p>Error!</p>;
 	}
 
@@ -20,13 +21,13 @@ function PostList( props ) {
 	// https://github.com/joehoyle/with-api-data/issues/3
 	// In the meantime, if we have less than the requested number, it's likely
 	// that we don't have a next page.
-	const hasNext = props.posts.data.length === props.per_page;
+	const hasNext = props.hasMore;
 	const hasPrevious = props.page > 1;
 
 	return (
 		<div>
 			<ul>
-				{ props.posts.data.map( post => (
+				{ props.posts.map( post => (
 					<li key={ post.id }>
 						<Link to={ post.link }>
 							<span
@@ -59,17 +60,18 @@ function PostList( props ) {
 	);
 }
 
-const mapPropsToApi = props => {
+const mapPropsToArchive = props => {
 	const args = {
 		per_page: props.per_page,
 		page:     props.page,
 	};
 
-	const posts = `/wp/v2/posts?${ qs.stringify( args ) }`;
-	return { posts };
+	const id = qs.stringify( args );
+	posts.registerArchive( id, args );
+	return id;
 };
 
-const ConnectedPostList = withApiData( mapPropsToApi )( PostList );
+const ConnectedPostList = withArchive( posts, state => state.posts, mapPropsToArchive )( PostList );
 
 export default class RecentPosts extends React.Component {
 	constructor( props ) {
