@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 
-import { comments, users } from '../../types';
+import { withCurrentUser } from '../../hocs';
+import { comments } from '../../types';
 import { withApiData } from '../../with-api-data';
 import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 
@@ -123,11 +124,6 @@ WritePost.propTypes = {
 	onDidCreatePost: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => {
-	return {
-		currentUser: users.getSingle( state.users, state.users.current ),
-	};
-};
 const mapDispatchToProps = dispatch => {
 	return {
 		onCreate: data => dispatch( comments.createSingle( data ) ),
@@ -135,7 +131,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-	mapStateToProps,
+	() => ( {} ),
 	mapDispatchToProps
 )(
 	withApiData(
@@ -143,6 +139,6 @@ export default connect(
 			categories: '/wp/v2/categories',
 		} )
 	)(
-		WritePost
+		withCurrentUser( WritePost )
 	)
 );

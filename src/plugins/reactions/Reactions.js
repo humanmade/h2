@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Picker } from 'emoji-mart'
 
+import { withCurrentUser } from '../../hocs';
 import { reactions, users } from '../../types';
 
 import UserDisplayName from '../../components/UserDisplayName';
@@ -150,8 +151,7 @@ export class Reactions extends Component {
 }
 
 const mapStateToProps = state => ( {
-	currentUser: users.getSingle( state.users, state.users.current ),
-	users:       state.users.posts,
+	users: state.users.posts,
 } );
 const mapDispatchToProps = ( dispatch ) => ( {
 	onCreate: data => dispatch( reactions.createSingle( data ) )
@@ -174,7 +174,7 @@ export default withArchive(
 	mapPropsToId,
 	{ mapDataToProps }
 )(
-	connect( mapStateToProps, mapDispatchToProps ) ( Reactions )
+	connect( mapStateToProps, mapDispatchToProps )( withCurrentUser( Reactions ) )
 );
 
 Reactions.propTypes = {

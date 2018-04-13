@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Slot } from 'react-slot-fill';
 
@@ -8,7 +7,7 @@ import CurrentUserDropDown from './CurrentUserDropDown';
 import HeaderButton from './HeaderButton';
 import Logo from './Logo';
 import SearchInput from '../SearchInput';
-import { users } from '../../types';
+import { withCurrentUser } from '../../hocs';
 
 import './index.css';
 
@@ -59,7 +58,4 @@ Header.propTypes = {
 	onSearch:      PropTypes.func.isRequired,
 };
 
-export default connect( state => ( {
-	currentUser: users.getSingle( state.users, state.users.current ),
-	loading:     users.isPostLoading( state.users, state.users.current ),
-} ) )( Header );
+export default withCurrentUser( Header );

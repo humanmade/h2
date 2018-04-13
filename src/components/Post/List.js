@@ -2,7 +2,6 @@ import { withArchive } from '@humanmade/repress';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ContentLoader from 'react-content-loader';
-import { connect } from 'react-redux';
 import qs from 'qs';
 
 import PostComponent from './index';

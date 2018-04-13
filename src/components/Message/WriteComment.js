@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Avatar from '../Avatar';
 import Editor from '../Editor';
 import Notification from '../Notification';
+import { withCurrentUser } from '../../hocs';
 import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 import { Post } from '../../shapes';
 import { comments, users } from '../../types';
@@ -68,11 +69,11 @@ class WriteComment extends React.Component {
 		return <div className="WriteComment" ref={ ref => this.container = ref }>
 			<header>
 				<Avatar
-					url={this.props.user ? this.props.user.avatar_urls['96'] : ''}
-					user={this.props.user}
+					url={this.props.currentUser ? this.props.currentUser.avatar_urls['96'] : ''}
+					user={this.props.currentUser}
 					size={40}
 				/>
-				<strong>{this.props.user ? this.props.user.name : ''}</strong>
+				<strong>{this.props.currentUser ? this.props.currentUser.name : ''}</strong>
 			</header>
 			<div className="body">
 				<Editor
@@ -99,15 +100,10 @@ WriteComment.propTypes = {
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => {
-	return {
-		currentUser: users.getSingle( state.users, state.users.current ),
-	};
-};
 const mapDispatchToProps = dispatch => {
 	return {
 		onCreate: data => dispatch( comments.createSingle( data ) ),
 	};
 };
 
-export default connect( mapStateToProps, mapDispatchToProps )( WriteComment );
+export default connect( () => ( {} ), mapDispatchToProps )( withCurrentUser( WriteComment ) );

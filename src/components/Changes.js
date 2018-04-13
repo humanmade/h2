@@ -1,16 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import Button from './Button';
 import AuthorLink from './Message/AuthorLink';
-import { users } from '../types';
+import { withCurrentUser } from '../hocs';
 
 import './Changes.css';
-
-const withCurrentUser = connect( state => ( {
-	currentUser: users.getSingle( state.users, state.users.current ),
-	loading:     users.isPostLoading( state.users, state.users.current ),
-} ) );
 
 const changes = [
 	// Add new changes to the bottom of this list, in the following format:
