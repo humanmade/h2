@@ -14,14 +14,12 @@ import './List.css';
 class PostsList extends Component {
 
 	render() {
-		// console.log( this.props.loading );
 		if ( this.props.loading ) {
 			return <div className="PostsList">
 				<ContentLoader type="list" width={300} />
 			</div>;
 		}
 		if ( ! this.props.posts ) {
-			// console.log( 'received', { ...this.props } );
 			return <div className="PostsList">
 				Error
 			</div>;
