@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 
-import { withCurrentUser } from '../../hocs';
+import { withCategories, withCurrentUser } from '../../hocs';
 import { comments } from '../../types';
 import { withApiData } from '../../with-api-data';
 import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
@@ -134,11 +134,7 @@ export default connect(
 	() => ( {} ),
 	mapDispatchToProps
 )(
-	withApiData(
-		props => ( {
-			categories: '/wp/v2/categories',
-		} )
-	)(
+	withCategories(
 		withCurrentUser( WritePost )
 	)
 );

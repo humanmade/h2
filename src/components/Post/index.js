@@ -4,6 +4,7 @@ import { FormattedRelative } from 'react-intl';
 import { connect } from 'react-redux';
 import { Slot } from 'react-slot-fill';
 
+import { withCategories } from '../../hocs';
 import {
 	Post as PostShape,
 } from '../../shapes';
@@ -35,8 +36,7 @@ class Post extends Component {
 	}
 	render() {
 		const { author, post } = this.props;
-		// const categories = this.props.categories.data ? this.props.categories.data : [];
-		const categories = [];
+		const categories = this.props.categories.data ? this.props.categories.data : [];
 		// Scale title down slightly for longer titles.
 		const headerStyle = {};
 		if ( post.title.rendered.length > 22 ) {
@@ -118,10 +118,12 @@ const mapStateToProps = ( state, props ) => {
 	};
 };
 
-export default withSingle(
-	posts,
-	state => state.posts,
-	props => props.data.id
-)(
-	connect( mapStateToProps )( Post )
+export default withCategories(
+	withSingle(
+		posts,
+		state => state.posts,
+		props => props.data.id
+	)(
+		connect( mapStateToProps )( Post )
+	)
 );

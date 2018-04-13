@@ -5,6 +5,7 @@ import ContentLoader from 'react-content-loader';
 import qs from 'qs';
 
 import PostComponent from './index';
+import { withCategories } from '../../hocs';
 import { posts, users } from '../../types';
 import { withApiData } from '../../with-api-data';
 
@@ -90,6 +91,4 @@ const MoreConnectedPostsList = withArchive(
 	}
 )( ConnectedPostsList );
 
-export default withApiData( props => ({
-	categories: props.match.params.categorySlug ? '/wp/v2/categories' : null,
-} ) )( MoreConnectedPostsList );
+export default withCategories( MoreConnectedPostsList );
