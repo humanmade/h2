@@ -1,10 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Button from './Button';
 import AuthorLink from './Message/AuthorLink';
-import { withApiData } from '../with-api-data';
+import { users } from '../types';
 
 import './Changes.css';
+
+const withCurrentUser = connect( state => ( {
+	currentUser: users.getSingle( state.users, state.users.current ),
+	loading:     users.isPostLoading( state.users, state.users.current ),
+} ) );
 
 const changes = [
 	// Add new changes to the bottom of this list, in the following format:
@@ -24,12 +30,12 @@ const changes = [
 	{
 		date:    '2018-03-26',
 		title:   'More Useful Hovercards',
-		content: withApiData( props => ( { user: '/wp/v2/users/me' } ) )( props => <React.Fragment>
+		content: withCurrentUser( props => <React.Fragment>
 			<p>Hovercards are now more useful, and will be displayed on usernames and avatars.</p>
-			{ props.user.isLoading ?
+			{ props.loading ?
 				<p>For example, hover over your name to see yours: <em>loading…</em></p>
 			:
-				<p>For example, hover over your name to see yours: <AuthorLink user={ props.user.data }>{ props.user.data.name }</AuthorLink></p>
+				<p>For example, hover over your name to see yours: <AuthorLink user={ props.currentUser }>{ props.currentUser.name }</AuthorLink></p>
 			}
 			<p>You can also click linked names to show a full profile.</p>
 		</React.Fragment> ),
@@ -83,11 +89,11 @@ class ConnectedChanges extends React.Component {
 			/>;
 		}
 
-		if ( ! this.props.currentUser || ! this.props.currentUser.data ) {
+		if ( ! this.props.currentUser || ! this.props.currentUser ) {
 			return null;
 		}
 
-		const rawLastView = this.props.currentUser.data.meta.h2_last_updated || '1970-01-01T00:00:00';
+		const rawLastView = this.props.currentUser.meta.h2_last_updated || '1970-01-01T00:00:00';
 		const lastView = new Date( rawLastView + 'Z' );
 
 		const onDismiss = () => {
@@ -108,4 +114,4 @@ class ConnectedChanges extends React.Component {
 	}
 }
 
-export default withApiData( props => ( { currentUser: '/wp/v2/users/me' } ) )( ConnectedChanges );
+export default withCurrentUser( ConnectedChanges );

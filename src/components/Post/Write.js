@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 
+import { comments, users } from '../../types';
 import { withApiData } from '../../with-api-data';
 import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 
@@ -47,23 +49,14 @@ export class WritePost extends Component {
 			categories: this.state.category ? [ this.state.category ] : [],
 		};
 
-		this.props.fetch( '/wp/v2/posts', {
-			headers: {
-				Accept:         'application/json',
-				'Content-Type': 'application/json',
-			},
-			body:   JSON.stringify( body ),
-			method: 'POST',
-		} ).then( r => r.json().then( data => {
-			if ( ! r.ok ) {
-				this.setState( { isSubmitting: false, error: data } );
-				return;
-			}
-
-			this.setState( { isSubmitting: true, title: '' } );
-			this.props.invalidateDataForUrl( '/wp/v2/posts?page=1' );
-			this.props.onDidCreatePost( data );
-		} ) );
+		this.props.onCreate( body )
+			.then( data => {
+				this.setState( { isSubmitting: true, title: '' } );
+				this.props.onDidCreatePost( data );
+			} )
+			.catch( error => {
+				this.setState( { isSubmitting: false, error } );
+			} );
 	}
 	onUpload( file ) {
 		const options = { method: 'POST' };
@@ -74,7 +67,7 @@ export class WritePost extends Component {
 			.then( parseResponse );
 	}
 	render() {
-		const user = this.props.user.data;
+		const user = this.props.currentUser;
 		const categories = this.props.categories.data || [];
 		return <div className="WritePost" ref={ ref => this.container = ref }>
 			<header>
@@ -130,7 +123,26 @@ WritePost.propTypes = {
 	onDidCreatePost: PropTypes.func.isRequired,
 };
 
-export default withApiData( props => ( {
-	user:       '/wp/v2/users/me',
-	categories: '/wp/v2/categories',
-} ) )( WritePost )
+const mapStateToProps = state => {
+	return {
+		currentUser: users.getSingle( state.users, state.users.current ),
+	};
+};
+const mapDispatchToProps = dispatch => {
+	return {
+		onCreate: data => dispatch( comments.createSingle( data ) ),
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(
+	withApiData(
+		props => ( {
+			categories: '/wp/v2/categories',
+		} )
+	)(
+		WritePost
+	)
+);

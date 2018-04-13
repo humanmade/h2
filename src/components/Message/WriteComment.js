@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 
 import Avatar from '../Avatar';
 import Editor from '../Editor';
 import Notification from '../Notification';
-import { withApiData } from '../../with-api-data';
 import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 import { Post } from '../../shapes';
+import { comments, users } from '../../types';
 
 import './WriteComment.css';
 
@@ -52,34 +53,26 @@ class WriteComment extends React.Component {
 
 		this.setState( { isSubmitting: true } );
 
-		this.props.fetch( '/wp/v2/comments', {
-			headers: {
-				Accept:         'application/json',
-				'Content-Type': 'application/json',
-			},
-			body:   JSON.stringify( body ),
-			method: 'POST',
-		} ).then( r => r.json().then( data => {
-			if ( ! r.ok ) {
-				this.setState( { isSubmitting: false, error: data } );
-				return;
-			}
+		this.props.onCreate( body )
+			.then( data => {
+				this.setState( { isSubmitting: false } );
 
-			this.setState( { isSubmitting: false } );
-
-			this.props.onDidCreateComment();
-		} ) );
+				this.props.onDidCreateComment();
+			} )
+			.catch( error => {
+				this.setState( { isSubmitting: false, error } );
+			} );
 	}
 
 	render() {
 		return <div className="WriteComment" ref={ ref => this.container = ref }>
 			<header>
 				<Avatar
-					url={this.props.user.data ? this.props.user.data.avatar_urls['96'] : ''}
-					user={this.props.user.data}
+					url={this.props.user ? this.props.user.avatar_urls['96'] : ''}
+					user={this.props.user}
 					size={40}
 				/>
-				<strong>{this.props.user.data ? this.props.user.data.name : ''}</strong>
+				<strong>{this.props.user ? this.props.user.name : ''}</strong>
 			</header>
 			<div className="body">
 				<Editor
@@ -106,4 +99,15 @@ WriteComment.propTypes = {
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 
-export default withApiData( props => ( { user: '/wp/v2/users/me' } ) )( WriteComment )
+const mapStateToProps = state => {
+	return {
+		currentUser: users.getSingle( state.users, state.users.current ),
+	};
+};
+const mapDispatchToProps = dispatch => {
+	return {
+		onCreate: data => dispatch( comments.createSingle( data ) ),
+	};
+};
+
+export default connect( mapStateToProps, mapDispatchToProps )( WriteComment );

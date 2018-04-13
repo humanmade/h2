@@ -1,15 +1,17 @@
+import { withSingle } from '@humanmade/repress';
 import React, { Component } from 'react';
 import { FormattedRelative } from 'react-intl';
+import { connect } from 'react-redux';
 import { Slot } from 'react-slot-fill';
 
-import { withApiData } from '../../with-api-data';
 import {
 	Post as PostShape,
 } from '../../shapes';
+import { posts, users } from '../../types';
 
+import PostComments from './Comments';
 import Avatar from '../Avatar';
 import Button from '../Button';
-import CommentsList from '../../components/CommentsList';
 import Link from '../RelativeLink';
 import AuthorLink from '../Message/AuthorLink';
 import MessageContent from '../Message/Content';
@@ -30,20 +32,18 @@ class Post extends Component {
 	}
 	onDidCreateComment( ...args ) {
 		this.setState( { isShowingReply: false } )
-		this.props.refreshData();
 	}
 	render() {
-		const post = this.props.data;
-		const author = this.props.author.data;
-		const comments = this.props.comments.data ? this.props.comments.data.filter( comment => comment.parent === 0 ) : [];
-		const categories = this.props.categories.data ? this.props.categories.data : [];
+		const { author, post } = this.props;
+		// const categories = this.props.categories.data ? this.props.categories.data : [];
+		const categories = [];
 		// Scale title down slightly for longer titles.
 		const headerStyle = {};
 		if ( post.title.rendered.length > 22 ) {
 			headerStyle.fontSize = '1.333333333rem';
 		}
 
-		const fillProps = { author, comments, categories, post };
+		const fillProps = { author, /*comments,*/ categories, post };
 
 		return <div className="Post">
 			<header>
@@ -64,7 +64,7 @@ class Post extends Component {
 							<AuthorLink user={ author }>{ author.name }</AuthorLink>
 						) : ''},&nbsp;
 						<time
-							datetime={ post.date_gmt + 'Z' }
+							dateTime={ post.date_gmt + 'Z' }
 							title={ post.date_gmt + 'Z' }
 						>
 							<FormattedRelative value={ post.date_gmt + 'Z' } />
@@ -89,9 +89,7 @@ class Post extends Component {
 				<MessageContent html={ post.content.rendered } />
 				<Slot name="Post.after_content" fillChildProps={ fillProps } />
 			</div>
-			<CommentsList
-				allComments={this.props.comments.data ? this.props.comments.data : []}
-				comments={comments}
+			<PostComments
 				post={ post }
 				onComment={() => this.onComment()}
 				onDidCreateComment={( ...args ) => this.onDidCreateComment( ...args )}
@@ -103,17 +101,27 @@ class Post extends Component {
 						onDidCreateComment={( ...args ) => this.onDidCreateComment( ...args )}
 					/>
 				}
-			</CommentsList>
+			</PostComments>
 		</div>;
 	}
 }
 
 Post.propTypes = { data: PostShape.isRequired };
 
-const mapPropsToData = props => ( {
-	comments:   `/wp/v2/comments?post=${ props.data.id }&per_page=100`,
-	author:     `/wp/v2/users/${ props.data.author }`,
-	categories: `/wp/v2/categories?include=${ props.data.categories.join( ',' ) }`,
-} );
+const mapStateToProps = ( state, props ) => {
+	if ( ! props.post ) {
+		return {};
+	}
 
-export default withApiData( mapPropsToData )( Post );
+	return {
+		author: users.getSingle( state.users, props.post.author ),
+	};
+};
+
+export default withSingle(
+	posts,
+	state => state.posts,
+	props => props.data.id
+)(
+	connect( mapStateToProps )( Post )
+);

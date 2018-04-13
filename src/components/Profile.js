@@ -1,3 +1,4 @@
+import { withSingle } from '@humanmade/repress';
 import React from 'react';
 import { FormattedDate, FormattedTime } from 'react-intl';
 
@@ -5,7 +6,7 @@ import Avatar from './Avatar';
 import Button from './Button';
 import Map from './Map';
 import RelativeLink from './RelativeLink';
-import { withApiData } from '../with-api-data';
+import { users } from '../types';
 
 import './Profile.css';
 
@@ -51,13 +52,13 @@ const LocalTime = props => {
 }
 
 function Profile( props ) {
-	if ( props.user.isLoading ) {
+	const { loading, user } = props;
+	if ( loading ) {
 		return <aside className="Profile">
 			<p>Loading…</p>
 		</aside>;
 	}
 
-	const user = props.user.data;
 	if ( ! user ) {
 		return <aside className="Profile">
 			<Button onClick={ props.onClose }>
@@ -113,4 +114,14 @@ function Profile( props ) {
 	</aside>;
 }
 
-export default withApiData( props => ( { user: `/wp/v2/users/${ props.id }` } ) )( Profile );
+export default withSingle(
+	users,
+	state => state.users,
+	props => props.id,
+	{
+		mapDataToProps: data => ( {
+			loading: data.loading,
+			user: data.post,
+		} ),
+	}
+)( Profile );

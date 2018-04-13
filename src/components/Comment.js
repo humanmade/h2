@@ -1,3 +1,4 @@
+import { withSingle } from '@humanmade/repress';
 import React, { Component } from 'react';
 import { FormattedRelative } from 'react-intl';
 import { Slot } from 'react-slot-fill';
@@ -10,7 +11,7 @@ import AuthorLink from './Message/AuthorLink';
 import MessageContent from './Message/Content';
 import WriteComment from './Message/WriteComment';
 import { Comment as CommentShape } from '../shapes';
-import { withApiData } from '../with-api-data';
+import { users } from '../types';
 
 import './Comment.css';
 
@@ -36,7 +37,7 @@ export class Comment extends Component {
 	render() {
 		const comment = this.props.comment;
 		const post = this.props.parentPost;
-		const author = this.props.author.data;
+		const author = this.props.author;
 		const directComments = this.props.comments.filter( c => c.parent === comment.id );
 
 		const fillProps = { author, comment, comments: this.props.comments, post };
@@ -103,4 +104,15 @@ Comment.propTypes = {
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 
-export default withApiData( props => ( { author: `/wp/v2/users/${ props.comment.author }` } ) )( Comment );
+export default withSingle(
+	users,
+	state => state.users,
+	props => props.comment.author,
+	{
+		mapDataToProps: data => ( {
+			author: data.post,
+			loadingAuthor: data.loading,
+		} ),
+		mapDispatchToProps: () => ( {} )
+	}
+)( Comment );
