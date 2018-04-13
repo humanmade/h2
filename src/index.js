@@ -18,8 +18,20 @@ import loadPlugins from './plugins/load';
 
 import './hm-pattern-library/assets/styles/juniper.css';
 
+const initialState = {
+	users: {
+		archives: {
+			all: window.H2Data.preload['/wp/v2/users?per_page=100'].map( user => user.id ),
+			me:  [ window.H2Data.preload['/wp/v2/users/me'].id ],
+		},
+		current: window.H2Data.preload['/wp/v2/users/me'].id,
+		posts:   window.H2Data.preload['/wp/v2/users?per_page=100'],
+	},
+};
+
 let store = createStore(
 	reducers,
+	initialState,
 	composeWithDevTools( applyMiddleware( thunk, createLogger( { collapsed: true } ) ) )
 );
 
