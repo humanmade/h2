@@ -16,6 +16,7 @@
     "react-scripts": "^1.1.0"
   },
   "dependencies": {
+    "@humanmade/repress": "^0.4.2",
     "@iarna/word-count": "^1.0.3",
     "emoji-mart": "^2.5.0",
     "lodash": "^4.17.4",
