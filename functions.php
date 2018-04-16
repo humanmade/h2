@@ -2,10 +2,9 @@
 
 namespace H2;
 
-use ReactWPScripts;
 use WP_REST_Request;
 
-require __DIR__ . '/wp-scripts-loader.php';
+require __DIR__ . '/inc/loader/namespace.php';
 require __DIR__ . '/inc/rest-api/class-widgets-controller.php';
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_assets' );
@@ -27,7 +26,7 @@ register_sidebar( [
 ] );
 
 function enqueue_assets() {
-	ReactWPScripts\enqueue_assets( get_stylesheet_directory() );
+	Loader\enqueue_assets( get_stylesheet_directory() );
 	wp_localize_script( 'h2', 'wpApiSettings', array(
 		'root'          => esc_url_raw( get_rest_url() ),
 		'nonce'         => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),

@@ -3,7 +3,7 @@
  * Entrypoint for the theme.
  */
 
-namespace ReactWPScripts;
+namespace H2\Loader;
 
 /**
  * Is this a development environment?
