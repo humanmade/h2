@@ -19,6 +19,7 @@ function bootstrap() {
 	wp_cache_add_global_groups( CACHE_GROUP );
 
 	add_filter( 'h2.custom_emoji', __NAMESPACE__ . '\\get_custom_emoji' );
+	add_filter( 'the_content', __NAMESPACE__ . '\\replace_custom_emoji', 20 );
 	add_action( 'h2.emoji.update_slack', __NAMESPACE__ . '\\update_slack_emoji' );
 }
 
@@ -121,4 +122,90 @@ function fetch_slack_emoji() {
 	}
 
 	return (array) $data->emoji;
+}
+
+/**
+ * Get the URL for a particular emoji
+ *
+ * Resolves aliased URLs.
+ *
+ * @param string $type Emoji type (i.e. `shipit`)
+ * @return string|null URL if found, null otherwise
+ */
+function get_url_for_slack_emoji( string $type ) {
+	$emoji = get_slack_emoji();
+	if ( empty( $emoji[ $type ] ) ) {
+		return null;
+	}
+
+	$url = $emoji[ $type ];
+	if ( strpos( $url, 'alias:' ) === 0 ) {
+		return get_url_for_slack_emoji( substr( $url, 6 ) );
+	}
+
+	return $url;
+}
+
+/**
+ * Replace custom emoji in post content
+ *
+ * Based on convert_smilies() from WordPress core.
+ *
+ * @param string $content Original post content
+ * @return string Modified post content
+ */
+function replace_custom_emoji( $content ) {
+	$emoji = get_slack_emoji();
+	$search = '#:(' . join( '|', array_map( 'preg_quote', array_keys( $emoji ) ) ) . '):#';
+
+	// HTML loop taken from texturize function, could possible be consolidated
+	$textarr = preg_split( '/(<.*>)/U', $content, -1, PREG_SPLIT_DELIM_CAPTURE ); // capture the tags as well as in between
+	$stop = count( $textarr );// loop stuff
+
+	// Ignore proessing of specific tags
+	$tags_to_ignore = 'code|pre|style|script|textarea';
+	$ignore_block_element = '';
+
+	$output = '';
+	foreach ( $textarr as $content ) {
+		// If we're in an ignore block, wait until we find its closing tag
+		if ( '' == $ignore_block_element && preg_match( '/^<(' . $tags_to_ignore . ')>/', $content, $matches ) )  {
+			$ignore_block_element = $matches[1];
+		}
+
+		// If it's not a tag and not in ignore block
+		if ( '' ==  $ignore_block_element && strlen( $content ) > 0 && '<' != $content[0] ) {
+			$content = preg_replace_callback(
+				$search,
+				function ( $matches ) {
+					if ( count( $matches ) == 0 ) {
+						return '';
+					}
+
+					$type = trim( $matches[1] );
+					$src_url = get_url_for_slack_emoji( $type );
+
+					if ( empty( $src_url ) ) {
+						return $matches[0];
+					}
+
+					return sprintf(
+						'<img src="%1$s" alt="%2$s" title="%2$s" class="wp-smiley" style="height: 1em; max-height: 1em;" />',
+						esc_url( $src_url ),
+						esc_attr( $type )
+					);
+				},
+				$content
+			);
+		}
+
+		// did we exit ignore block
+		if ( '' != $ignore_block_element && '</' . $ignore_block_element . '>' == $content )  {
+			$ignore_block_element = '';
+		}
+
+		$output .= $content;
+	}
+
+	return $output;
 }
