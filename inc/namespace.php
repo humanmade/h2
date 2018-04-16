@@ -21,12 +21,15 @@ function set_up_theme() {
 	] );
 }
 
+/**
+ * Enqueue frontend CSS and JS
+ */
 function enqueue_assets() {
 	Loader\enqueue_assets( get_stylesheet_directory() );
-	wp_localize_script( 'h2', 'wpApiSettings', array(
+	wp_localize_script( 'h2', 'wpApiSettings', [
 		'root'          => esc_url_raw( get_rest_url() ),
 		'nonce'         => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
-	) );
+	] );
 	wp_localize_script( 'h2', 'H2Data', get_script_data() );
 }
 
