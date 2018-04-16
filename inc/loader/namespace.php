@@ -24,6 +24,8 @@ function load_asset_file( $path ) {
 	if ( ! file_exists( $path ) ) {
 		return null;
 	}
+
+	// @codingStandardsIgnoreLine
 	$contents = file_get_contents( $path );
 	if ( empty( $path ) ) {
 		return null;
