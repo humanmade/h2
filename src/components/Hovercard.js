@@ -103,6 +103,17 @@ export default class Hovercard extends React.Component {
 		this.setState( { active: false } );
 	}
 
+	// eslint-disable-next-line no-undef
+	onUpdateRef = ( ref ) => {
+		if ( ! ref ) {
+			this.target = null;
+		} else if ( ref instanceof HTMLElement ) {
+			this.target = ref;
+		} else {
+			this.target = ReactDOM.findDOMNode( ref );
+		}
+	}
+
 	render() {
 		const {
 			cardContent: Card,
@@ -143,7 +154,7 @@ export default class Hovercard extends React.Component {
 			{ React.cloneElement(
 				React.Children.only( this.props.children ),
 				{
-					ref:         ref => this.target = ref,
+					ref:         this.onUpdateRef,
 					onMouseOver: this.onMouseOver,
 					onMouseOut:  this.onMouseOut,
 				}
