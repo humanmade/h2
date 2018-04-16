@@ -9,14 +9,14 @@ export default class Completion extends React.Component {
 
 		this.state = {
 			selected: 0,
-			items:    props.getItems( props.items, props.text, props.matcher ),
+			items:    props.getItems( props.text, props.items, props.matcher ),
 		};
 	}
 
 	componentDidMount() {
 		this.keyHandler = e => {
 			const { items, selected } = this.state;
-			if ( ! items.length ) {
+			if ( ! items || ! items.length ) {
 				return;
 			}
 
@@ -61,7 +61,7 @@ export default class Completion extends React.Component {
 	}
 
 	componentWillReceiveProps( nextProps ) {
-		const items = nextProps.getItems( nextProps.items, nextProps.text, nextProps.matcher );
+		const items = nextProps.getItems( nextProps.text, nextProps.items, nextProps.matcher );
 		this.setState( { items } );
 	}
 
@@ -83,7 +83,7 @@ export default class Completion extends React.Component {
 
 		const { items } = this.state;
 
-		if ( ! items.length ) {
+		if ( ! items || ! items.length ) {
 			return null;
 		}
 
@@ -120,7 +120,7 @@ Completion.defaultProps = {
 	items:      [],
 	insert:     ( item, props ) => `${ props.trigger }${ item } `,
 	matcher:    ( item, search ) => item.toLowerCase().indexOf( search.toLowerCase() ) >= 0,
-	getItems:   ( items, search, matcher ) => items.filter( item => matcher( item, search ) ).slice( 0, 5 ),
+	getItems:   ( search, items, matcher ) => items.filter( item => matcher( item, search ) ).slice( 0, 5 ),
 	renderItem: ( { item, selected, onSelect } ) => {
 		return <li
 			key={ item }
