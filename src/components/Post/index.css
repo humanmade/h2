@@ -29,6 +29,16 @@
 	height: 99px;
 }
 
+body.admin-bar .Post > header {
+	top: 32px;
+}
+
+@media screen and ( max-width: 782px ) {
+	body.admin-bar .Post > header {
+		top: 48px;
+	}
+}
+
 .PostsList .Post > header {
 	margin-top: -15px;
 }

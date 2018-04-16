@@ -31,6 +31,17 @@
 	width: 30%;
 	flex-shrink: 0;
 }
+
+body.admin-bar .App > .Outer > aside {
+	top: 32px;
+}
+
+@media screen and ( max-width: 782px ) {
+	body.admin-bar .App > .Outer > aside {
+		top: 48px;
+	}
+}
+
 .App a {
 	border: none;
 }
