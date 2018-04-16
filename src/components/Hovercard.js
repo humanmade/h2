@@ -104,7 +104,7 @@ export default class Hovercard extends React.Component {
 	}
 
 	// eslint-disable-next-line no-undef
-	onUpdateRef = ( ref ) => {
+	onUpdateRef = ref => {
 		if ( ! ref ) {
 			this.target = null;
 		} else if ( ref instanceof HTMLElement ) {
