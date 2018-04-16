@@ -67,7 +67,7 @@ function get_custom_emoji( $emoji ) {
 		];
 	}
 
-	return array_merge( $emoji, array_values( $custom ) );
+	return array_merge( $emoji, $custom );
 }
 
 /**
