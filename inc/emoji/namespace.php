@@ -62,7 +62,9 @@ function get_custom_emoji( $emoji ) {
 			],
 			'text'        => '',
 			'emoticons'   => [],
-			'keywords'    => ['slack'],
+			'keywords'    => [
+				'slack',
+			],
 			'imageUrl'    => $url,
 		];
 	}
@@ -96,7 +98,7 @@ function get_slack_emoji() {
  * Fetch custom emoji from Slack
  */
 function fetch_slack_emoji() {
-	$url = add_query_arg( 'token', urlencode( HM_SLACK_BOT_TOKEN ), API_URL );
+	$url = add_query_arg( 'token', rawurlencode( HM_SLACK_BOT_TOKEN ), API_URL );
 
 	$response = wp_remote_get( $url );
 	if ( is_wp_error( $response ) ) {
