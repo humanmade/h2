@@ -176,7 +176,7 @@ function replace_custom_emoji( $content ) {
 		}
 
 		// If it's not a tag and not in ignore block
-		if ( '' === $ignore_block_element && strlen( $content ) > 0 && '<' != $content[0] ) {
+		if ( '' === $ignore_block_element && strlen( $content ) > 0 && '<' !== $content[0] ) {
 			$content = preg_replace_callback(
 				$search,
 				function ( $matches ) {
