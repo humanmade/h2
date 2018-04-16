@@ -5,11 +5,6 @@ import Completion from './Completion';
 
 import './EmojiCompletion.css';
 
-const emoji = [
-	...Object.values( emojiIndex.emojis ),
-	...window.H2Data.site.emoji,
-];
-
 const EmojiCompletion = props => {
 	const renderItem = ( { item, selected, onSelect } ) => {
 		return <li
@@ -27,10 +22,17 @@ const EmojiCompletion = props => {
 		</li>;
 	};
 
+	const getItems = search => emojiIndex.search(
+		search,
+		{
+			custom:     window.H2Data.site.emoji,
+			maxResults: 5,
+		}
+	);
+
 	return <Completion
 		{ ...props }
-		matcher={ ( item, search ) => `${ item.colons } ${ item.name }`.toLowerCase().indexOf( search.toLowerCase() ) >= 0 }
-		items={ emoji }
+		getItems={ getItems }
 		renderItem={ renderItem }
 		insert={ item => ( item.native || item.colons ) + ' ' }
 	/>;
