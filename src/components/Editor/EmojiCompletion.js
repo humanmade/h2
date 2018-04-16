@@ -14,6 +14,7 @@ const EmojiCompletion = props => {
 		>
 			{ item.imageUrl ? (
 				<img
+					alt={ item.colons }
 					className="EmojiCompletion-custom"
 					src={ item.imageUrl }
 				/>
