@@ -4,7 +4,7 @@ namespace H2;
 
 require __DIR__ . '/inc/namespace.php';
 require __DIR__ . '/inc/loader/namespace.php';
-require __DIR__ . '/inc/rest-api/class-widgets-controller.php';
+require __DIR__ . '/inc/rest_api/class-widgets-controller.php';
 
 add_action( 'after_setup_theme', __NAMESPACE__ . '\\set_up_theme' );
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_assets' );
