@@ -9,6 +9,21 @@ import UserDisplayName from '../../components/UserDisplayName';
 import 'emoji-mart/css/emoji-mart.css';
 import './Reactions.css';
 
+const Emoji = props => {
+	const custom = window.H2Data.site.emoji[ props.type ];
+	if ( custom ) {
+		return (
+			<img
+				alt={ custom.colons }
+				className="Reactions-custom"
+				src={ custom.imageUrl }
+			/>
+		);
+	}
+
+	return props.type;
+};
+
 export class Reactions extends Component {
 	constructor( props ) {
 		super( props );
@@ -91,7 +106,9 @@ export class Reactions extends Component {
 						onClick={ () => this.toggleReaction( emoji ) }
 						key={ emoji }
 					>
-						<span className="reactions__emoji" key="emoji">{ emoji }</span>
+						<span className="reactions__emoji" key="emoji">
+							<Emoji type={ emoji } />
+						</span>
 						<span className="reactions__count" key="count">{ users.length }</span>
 						<span className="reactions__users" key="users">
 							{ users.map( reactionAuthorId => {
