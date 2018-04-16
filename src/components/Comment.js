@@ -99,7 +99,7 @@ export class Comment extends Component {
 }
 
 Comment.propTypes = {
-	comment:        CommentShape.isRequired,
+	comment:            CommentShape.isRequired,
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 
