@@ -14,7 +14,6 @@ add_action( 'init', __NAMESPACE__ . '\\update_wp_rewrite_permalink_structure' );
 add_action( 'init', __NAMESPACE__ . '\\register_custom_meta' );
 add_action( 'rest_api_init', __NAMESPACE__ . '\\register_rest_routes' );
 
-show_admin_bar( false );
 add_theme_support( 'title-tag' );
 
 register_sidebar( [
