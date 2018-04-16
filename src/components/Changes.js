@@ -49,7 +49,7 @@ const changes = [
 				/>
 			) : null }
 		</p>,
-	}
+	},
 ];
 
 function Changes( props ) {
