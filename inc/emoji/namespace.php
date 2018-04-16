@@ -171,16 +171,16 @@ function replace_custom_emoji( $content ) {
 	$output = '';
 	foreach ( $textarr as $content ) {
 		// If we're in an ignore block, wait until we find its closing tag
-		if ( '' == $ignore_block_element && preg_match( '/^<(' . $tags_to_ignore . ')>/', $content, $matches ) )  {
+		if ( '' === $ignore_block_element && preg_match( '/^<(' . $tags_to_ignore . ')>/', $content, $matches ) ) {
 			$ignore_block_element = $matches[1];
 		}
 
 		// If it's not a tag and not in ignore block
-		if ( '' ==  $ignore_block_element && strlen( $content ) > 0 && '<' != $content[0] ) {
+		if ( '' === $ignore_block_element && strlen( $content ) > 0 && '<' != $content[0] ) {
 			$content = preg_replace_callback(
 				$search,
 				function ( $matches ) {
-					if ( count( $matches ) == 0 ) {
+					if ( count( $matches ) === 0 ) {
 						return '';
 					}
 
@@ -202,7 +202,7 @@ function replace_custom_emoji( $content ) {
 		}
 
 		// did we exit ignore block
-		if ( '' != $ignore_block_element && '</' . $ignore_block_element . '>' == $content )  {
+		if ( '' !== $ignore_block_element && '</' . $ignore_block_element . '>' === $content ) {
 			$ignore_block_element = '';
 		}
 
