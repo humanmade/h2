@@ -53,7 +53,9 @@ function get_assets_list( string $directory ) {
 	if ( ! empty( $production_assets ) ) {
 		// Prepend "build/" to all build-directory array paths.
 		return array_map(
-			function( $asset_path ) { return 'build/' . $asset_path; },
+			function( $asset_path ) {
+				return 'build/' . $asset_path;
+			},
 			array_values( $production_assets )
 		);
 	}
@@ -141,7 +143,6 @@ function enqueue_assets( $directory, $opts = [] ) {
 			continue;
 		}
 
-
 		if ( $is_js ) {
 			wp_enqueue_script(
 				$opts['handle'],
@@ -150,7 +151,7 @@ function enqueue_assets( $directory, $opts = [] ) {
 				null,
 				true
 			);
-		} else if ( $is_css ) {
+		} elseif ( $is_css ) {
 			wp_enqueue_style(
 				$opts['handle'],
 				get_asset_uri( $asset_path, $base_url )
