@@ -9,7 +9,7 @@ export default class Completion extends React.Component {
 
 		this.state = {
 			selected: 0,
-			items:    props.items.filter( item => props.matcher( item, props.text ) ).slice( 0, 5 ),
+			items:    props.getItems( props.items, props.text, props.matcher ),
 		};
 	}
 
@@ -61,7 +61,7 @@ export default class Completion extends React.Component {
 	}
 
 	componentWillReceiveProps( nextProps ) {
-		const items = nextProps.items.filter( item => nextProps.matcher( item, nextProps.text ) ).slice( 0, 5 );
+		const items = nextProps.getItems( nextProps.items, nextProps.text, nextProps.matcher );
 		this.setState( { items } );
 	}
 
@@ -109,7 +109,7 @@ Completion.propTypes = {
 		top:  PropTypes.number.isRequired,
 		left: PropTypes.number.isRequired,
 	} ).isRequired,
-	items:    PropTypes.array.isRequired,
+	items:    PropTypes.array,
 	text:     PropTypes.string.isRequired,
 	trigger:  PropTypes.string.isRequired,
 	onCancel: PropTypes.func.isRequired,
@@ -117,8 +117,10 @@ Completion.propTypes = {
 };
 
 Completion.defaultProps = {
+	items:      [],
 	insert:     ( item, props ) => `${ props.trigger }${ item } `,
 	matcher:    ( item, search ) => item.toLowerCase().indexOf( search.toLowerCase() ) >= 0,
+	getItems:   ( items, search, matcher ) => items.filter( item => matcher( item, search ) ).slice( 0, 5 ),
 	renderItem: ( { item, selected, onSelect } ) => {
 		return <li
 			key={ item }
