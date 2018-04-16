@@ -63,7 +63,7 @@ export class Comment extends Component {
 						href={ `${ post.link }#comment-${ comment.id }` }
 					>
 						<time
-							datetime={ comment.date_gmt + 'Z' }
+							dateTime={ comment.date_gmt + 'Z' }
 							title={ comment.date_gmt + 'Z' }
 						>
 							<FormattedRelative value={ comment.date_gmt + 'Z' } />
