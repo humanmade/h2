@@ -319,7 +319,7 @@ export default class Editor extends React.PureComponent {
 					</li>
 				</ul>
 
-				{ mode === 'edit' ?
+				{ mode === 'edit' ? (
 					<ul className="Editor-toolbar">
 						{ Object.keys( BUTTONS ).map( type => {
 							if ( BUTTONS[ type ].separator ) {
@@ -337,7 +337,7 @@ export default class Editor extends React.PureComponent {
 							</button>;
 						} ) }
 					</ul>
-				: null }
+				) : null }
 			</div>
 
 			<div className="Editor-editor-container">
