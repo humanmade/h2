@@ -8,7 +8,6 @@ import Button from './Button';
 import CommentsList from './CommentsList';
 import AuthorLink from './Message/AuthorLink';
 import MessageContent from './Message/Content';
-import Reactions from './Message/Reactions';
 import WriteComment from './Message/WriteComment';
 import { Comment as CommentShape } from '../shapes';
 import { withApiData } from '../with-api-data';
@@ -19,7 +18,17 @@ export class Comment extends Component {
 	constructor( props ) {
 		super( props );
 		this.state = { isShowingReply: false };
+		this.element = null;
 	}
+
+	componentDidMount() {
+		const { comment } = this.props;
+
+		if ( window.location.hash === `#comment-${ comment.id }` && this.element ) {
+			this.element.scrollIntoView();
+		}
+	}
+
 	onDidCreateComment( ...args ) {
 		this.setState( { isShowingReply: false } )
 		this.props.onDidCreateComment( ...args );
@@ -35,6 +44,7 @@ export class Comment extends Component {
 		return <div
 			className="Comment"
 			id={ `comment-${ comment.id }` }
+			ref={ el => this.element = el }
 		>
 			<header>
 				<Avatar
@@ -53,7 +63,7 @@ export class Comment extends Component {
 						href={ `${ post.link }#comment-${ comment.id }` }
 					>
 						<time
-							datetime={ comment.date_gmt + 'Z' }
+							dateTime={ comment.date_gmt + 'Z' }
 							title={ comment.date_gmt + 'Z' }
 						>
 							<FormattedRelative value={ comment.date_gmt + 'Z' } />
@@ -67,10 +77,6 @@ export class Comment extends Component {
 				<Slot name="Comment.before_content" fillChildProps={ fillProps } />
 				<MessageContent html={this.props.comment.content.rendered} />
 				<Slot name="Comment.after_content" fillChildProps={ fillProps } />
-				<Reactions
-					commentId={ this.props.comment.id }
-					postId={ post.id }
-				/>
 			</div>
 			<CommentsList
 				allComments={this.props.comments}
@@ -93,7 +99,7 @@ export class Comment extends Component {
 }
 
 Comment.propTypes = {
-	comment:        CommentShape.isRequired,
+	comment:            CommentShape.isRequired,
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 

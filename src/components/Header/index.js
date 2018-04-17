@@ -33,12 +33,12 @@ class Header extends Component {
 
 				<SearchInput onSearch={this.props.onSearch} value={this.props.searchValue} />
 
-				{ this.props.currentUser.data ?
+				{ this.props.currentUser.data ? (
 					<CurrentUserDropDown
 						user={ this.props.currentUser.data }
 						onLogOut={ this.props.onLogOut }
 					/>
-				: null }
+				) : null }
 
 				<Slot name="Header.meta" />
 			</div>
@@ -49,10 +49,10 @@ class Header extends Component {
 Header.defaultProps = { searchValue: '' };
 
 Header.propTypes = {
-	searchValue:   PropTypes.string,
-	onLogOut:      PropTypes.func.isRequired,
-	onWritePost:   PropTypes.func.isRequired,
-	onSearch:      PropTypes.func.isRequired,
+	searchValue: PropTypes.string,
+	onLogOut:    PropTypes.func.isRequired,
+	onWritePost: PropTypes.func.isRequired,
+	onSearch:    PropTypes.func.isRequired,
 };
 
 export default withApiData( props => ( { currentUser: '/wp/v2/users/me' } ) )( Header );

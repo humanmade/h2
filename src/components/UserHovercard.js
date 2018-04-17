@@ -1,11 +1,36 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { FormattedTime } from 'react-intl';
 
 import Avatar from './Avatar';
 import Hovercard from './Hovercard';
 import Map from './Map';
 
 import './UserHovercard.css';
+
+const LocalTime = props => {
+	const timeZone = props.user.meta.hm_time_timezone;
+	if ( ! timeZone ) {
+		return <p className="UserHovercard-local-time missing">
+			<strong>Local time:</strong>
+			{ ' ' }
+			<span>Unknown timezone</span>
+		</p>;
+	}
+
+	const now = new Date();
+	return <p className="UserHovercard-local-time">
+		<strong>Local time:</strong>
+
+		{ ' ' }
+
+		<FormattedTime
+			value={ now }
+			timeZone={ timeZone }
+			timeZoneName="short"
+		/>
+	</p>;
+}
 
 export default class UserHovercard extends React.Component {
 	renderCard() {
@@ -29,6 +54,7 @@ export default class UserHovercard extends React.Component {
 				</header>
 
 				<div className="UserHovercard-description">
+					<LocalTime user={ user } />
 					<p>{ user.facts.short_bio }</p>
 				</div>
 			</div>

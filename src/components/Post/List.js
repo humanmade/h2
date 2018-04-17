@@ -14,8 +14,10 @@ class PostsList extends Component {
 		const { page } = this.props.match.params;
 
 		return <div className="PostsList">
-			{this.props.posts.isLoading && <ContentLoader type="list" width={300} />}
-			{this.props.posts.data &&
+			{ this.props.posts.isLoading &&
+				<ContentLoader type="list" width={ 300 } />
+			}
+			{ this.props.posts.data &&
 				this.props.posts.data.map( post =>
 					<PostComponent
 						key={ post.id }
@@ -25,18 +27,18 @@ class PostsList extends Component {
 			}
 			<div className="pagination">
 				<Link to={`/page/${ page ? Number( page ) + 1 : 2 }`}>Older</Link>
-				{ page && page > 1 ?
+				{ page && page > 1 ? (
 					<Link to={ `/page/${ page - 1 }` }>Newer</Link>
-				:
+				) : (
 					/* Hack to get pagination to float correctly */
-					<a style={ { display: 'none' } } />
-				}
+					<a style={ { display: 'none' } }>&nbsp;</a>
+				) }
 			</div>
 		</div>;
 	}
 }
 
-export default withApiData( props => ({
+export default withApiData( props => ( {
 	categories: props.match.params.categorySlug ? '/wp/v2/categories' : null,
 	users:      props.match.params.authorSlug ? '/wp/v2/users?per_page=100' : null,
 } ) )( withApiData( props => {

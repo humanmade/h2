@@ -124,12 +124,12 @@ export const ReactionsState = PropTypes.shape( {
 } );
 
 export const State = PropTypes.shape( {
-	users:         UsersState.isRequired,
-	posts:         PostsState.isRequired,
-	comments:      CommentsState.isRequired,
-	reactions:     ReactionsState.isRequired,
-	categories:    objectState.isRequired,
-	tags:          objectState.isRequired,
+	users:      UsersState.isRequired,
+	posts:      PostsState.isRequired,
+	comments:   CommentsState.isRequired,
+	reactions:  ReactionsState.isRequired,
+	categories: objectState.isRequired,
+	tags:       objectState.isRequired,
 } );
 
 // (action: Action) => void

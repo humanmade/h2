@@ -37,10 +37,6 @@ export default function CurrentUserDropDown( props ) {
 			</ul>
 		</div>
 	</Dropdown>;
-	return <div className="CurrentUserDropDown">
-		<span>{props.user.name}</span>
-		<Avatar user={props.user} url={props.user.avatar_urls['96']} size={40} />
-	</div>;
 }
 
 CurrentUserDropDown.propTypes = { user: User.isRequired };

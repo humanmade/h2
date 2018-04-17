@@ -85,7 +85,7 @@ export default class DropUpload extends React.PureComponent {
 DropUpload.defaultProps = { allowMultiple: false };
 
 DropUpload.propTypes = {
-	allowMultiple: PropTypes.boolean,
+	allowMultiple: PropTypes.bool,
 	files:         PropTypes.arrayOf( PropTypes.shape( { name: PropTypes.string.isRequired } ) ),
 	onUpload:      PropTypes.func.isRequired,
 };

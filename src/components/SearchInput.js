@@ -11,6 +11,7 @@ class SearchInput extends React.Component {
 		this.state = { value: null };
 	}
 
+	// eslint-disable-next-line no-undef
 	onSubmit = e => {
 		e.preventDefault();
 		this.props.onSearch( this.state.value );
@@ -35,8 +36,6 @@ class SearchInput extends React.Component {
 	}
 }
 
-SearchInput.propTypes = {
-	onSearch: PropTypes.func.isRequired,
-};
+SearchInput.propTypes = { onSearch: PropTypes.func.isRequired };
 
 export default withRouter( SearchInput );
