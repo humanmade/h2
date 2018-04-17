@@ -10,7 +10,7 @@ const changes = [
 	// Add new changes to the bottom of this list, in the following format:
 	{
 		date:    '2018-02-26',
-		title:   "See What's New",
+		title:   'See What\'s New',
 		content: () => <React.Fragment>
 			<p>H2 now includes a changelog (you're looking at it!) to let you know of any new features.</p>
 			<p>(We'll only use this for new major features; keep an eye on the <a href="https://github.com/humanmade/H2">H2 repo</a> if you want to see minor changes too!)</p>
@@ -26,11 +26,11 @@ const changes = [
 		title:   'More Useful Hovercards',
 		content: withApiData( props => ( { user: '/wp/v2/users/me' } ) )( props => <React.Fragment>
 			<p>Hovercards are now more useful, and will be displayed on usernames and avatars.</p>
-			{ props.user.isLoading ?
+			{ props.user.isLoading ? (
 				<p>For example, hover over your name to see yours: <em>loading…</em></p>
-			:
+			) : (
 				<p>For example, hover over your name to see yours: <AuthorLink user={ props.user.data }>{ props.user.data.name }</AuthorLink></p>
-			}
+			) }
 			<p>You can also click linked names to show a full profile.</p>
 		</React.Fragment> ),
 	},
