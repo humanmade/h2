@@ -26,11 +26,11 @@ class App extends Component {
 	}
 
 	onClickWritePost() {
-		this.setState( { isShowingWritePost: true } )
+		this.setState( { isShowingWritePost: true } );
 	}
 
 	onCancelWritePost() {
-		this.setState( { isShowingWritePost: false } )
+		this.setState( { isShowingWritePost: false } );
 	}
 
 	onSearch( string ) {
@@ -38,7 +38,7 @@ class App extends Component {
 	}
 
 	onDidCreatePost( post ) {
-		this.setState({ isShowingWritePost: false })
+		this.setState( { isShowingWritePost: false } );
 		this.props.history.push( post.link.replace( /^(?:\/\/|[^/]+)*\//, '/' ) );
 	}
 

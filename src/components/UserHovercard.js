@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { FormattedDate, FormattedTime } from 'react-intl';
+import { FormattedTime } from 'react-intl';
 
 import Avatar from './Avatar';
 import Hovercard from './Hovercard';

@@ -1,5 +1,19 @@
 import qs from 'qs';
 
+export const parseResponse = resp => resp.json().then( data => {
+	if ( resp.ok ) {
+		// Expose response via a getter, which avoids copying.
+		Object.defineProperty( data, 'getResponse', { get: () => () => resp } );
+		return data;
+	}
+
+	// Build an error
+	const err = new Error( data.message )
+	err.code = data.code
+	err.data = data.data
+	throw err
+} )
+
 export default class {
 	constructor( config ) {
 		this.url = config.rest_url ? config.rest_url : config.url + 'wp-json';
@@ -71,7 +85,7 @@ export default class {
 			method,
 			headers,
 			credentials: 'include',
-			body: [ 'GET', 'HEAD' ].indexOf( method ) > -1 ? null : qs.stringify( data ),
+			body:        [ 'GET', 'HEAD' ].indexOf( method ) > -1 ? null : qs.stringify( data ),
 		};
 
 		return fetch( url, opts ).then( parseResponse );
@@ -95,17 +109,3 @@ export default class {
 		return fetch( absUrl, actualOptions );
 	}
 }
-
-export const parseResponse = resp => resp.json().then( data => {
-	if ( resp.ok ) {
-		// Expose response via a getter, which avoids copying.
-		Object.defineProperty( data, 'getResponse', { get: () => () => resp } );
-		return data;
-	}
-
-	// Build an error
-	const err = new Error( data.message )
-	err.code = data.code
-	err.data = data.data
-	throw err
-} )
