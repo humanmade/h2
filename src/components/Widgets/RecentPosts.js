@@ -7,56 +7,58 @@ import { withApiData } from '../../with-api-data';
 
 import './RecentPosts.css';
 
-function PostList( props ) {
-	if ( props.posts.isLoading ) {
-		return <p>Loading…</p>;
-	}
+class PostList extends React.Component {
+	render() {
+		if ( this.props.posts.isLoading ) {
+			return <p>Loading…</p>;
+		}
 
-	if ( props.posts.error ) {
-		return <p>Error!</p>;
-	}
+		if ( this.props.posts.error ) {
+			return <p>Error!</p>;
+		}
 
-	// TODO: Add proper pagination support:
-	// https://github.com/joehoyle/with-api-data/issues/3
-	// In the meantime, if we have less than the requested number, it's likely
-	// that we don't have a next page.
-	const hasNext = props.posts.data.length === props.per_page;
-	const hasPrevious = props.page > 1;
+		// TODO: Add proper pagination support:
+		// https://github.com/joehoyle/with-api-data/issues/3
+		// In the meantime, if we have less than the requested number, it's likely
+		// that we don't have a next page.
+		const hasNext = this.props.posts.data.length === this.props.per_page;
+		const hasPrevious = this.props.page > 1;
 
-	return (
-		<div>
-			<ul>
-				{ props.posts.data.map( post => (
-					<li key={ post.id }>
-						<Link to={ post.link }>
-							<span
-								dangerouslySetInnerHTML={ { __html: post.title.rendered } }
-							/>
-						</Link>
-					</li>
-				) ) }
-			</ul>
+		return (
+			<div>
+				<ul>
+					{ this.props.posts.data.map( post => (
+						<li key={ post.id }>
+							<Link to={ post.link }>
+								<span
+									dangerouslySetInnerHTML={ { __html: post.title.rendered } }
+								/>
+							</Link>
+						</li>
+					) ) }
+				</ul>
 
-			<div className="RecentPosts-pagination">
-				{ hasNext && (
-					<div className="RecentPosts-pagination-older">
-						<LinkButton
-							className="cta cta--small cta--arrow-left"
-							onClick={ props.onNext }
-						>Older</LinkButton>
-					</div>
-				) }
-				{ hasPrevious && (
-					<div className="RecentPosts-pagination-newer">
-						<LinkButton
-							className="cta cta--small cta--arrow"
-							onClick={ props.onPrevious }
-						>Newer</LinkButton>
-					</div>
-				) }
+				<div className="RecentPosts-pagination">
+					{ hasNext && (
+						<div className="RecentPosts-pagination-older">
+							<LinkButton
+								className="cta cta--small cta--arrow-left"
+								onClick={ this.props.onNext }
+							>Older</LinkButton>
+						</div>
+					) }
+					{ hasPrevious && (
+						<div className="RecentPosts-pagination-newer">
+							<LinkButton
+								className="cta cta--small cta--arrow"
+								onClick={ this.props.onPrevious }
+							>Newer</LinkButton>
+						</div>
+					) }
+				</div>
 			</div>
-		</div>
-	);
+		);
+	}
 }
 
 const mapPropsToApi = props => {

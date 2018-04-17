@@ -64,7 +64,7 @@ class Post extends Component {
 							<AuthorLink user={ author }>{ author.name }</AuthorLink>
 						) : ''},&nbsp;
 						<time
-							datetime={ post.date_gmt + 'Z' }
+							dateTime={ post.date_gmt + 'Z' }
 							title={ post.date_gmt + 'Z' }
 						>
 							<FormattedRelative value={ post.date_gmt + 'Z' } />

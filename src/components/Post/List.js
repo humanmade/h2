@@ -29,7 +29,7 @@ class PostsList extends Component {
 					<Link to={ `/page/${ page - 1 }` }>Newer</Link>
 				:
 					/* Hack to get pagination to float correctly */
-					<a style={ { display: 'none' } } />
+					<a style={ { display: 'none' } }>&nbsp;</a>
 				}
 			</div>
 		</div>;
