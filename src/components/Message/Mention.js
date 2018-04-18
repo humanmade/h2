@@ -15,9 +15,7 @@ class Mention extends React.Component {
 	}
 }
 
-Mention.propTypes = {
-	user: PropTypes.object,
-};
+Mention.propTypes = { user: PropTypes.object };
 
 const ConnectedMention = withApiData( props => ( { user: `/wp/v2/users?slug=${ props.username }` } ) )( Mention );
 
@@ -38,10 +36,6 @@ export class MentionMatcher extends Matcher {
 	}
 
 	match( string ) {
-		return this.doMatch( string, /@(\w+)/, matches => {
-			return {
-				username: matches[1],
-			};
-		} );
+		return this.doMatch( string, /@(\w+)/, matches => ( { username: matches[1] } ) );
 	}
 }
