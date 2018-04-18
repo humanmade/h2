@@ -34,6 +34,22 @@ const changes = [
 			<p>You can also click linked names to show a full profile.</p>
 		</React.Fragment> ),
 	},
+	{
+		date:    '2018-04-16',
+		title:   'Custom Emoji',
+		content: () => <p>
+			You can now use Slack custom emoji in posts or reactions.
+
+			{ ' ' }
+
+			{ window.H2Data.site.emoji['mindblown'] ? (
+				<img
+					alt=":mindblown:"
+					src={ window.H2Data.site.emoji['mindblown'].imageUrl }
+				/>
+			) : null }
+		</p>,
+	},
 ];
 
 function Changes( props ) {

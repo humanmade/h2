@@ -55,6 +55,7 @@ function get_script_data() {
 				'force_default' => true,
 			] ),
 			'mapbox_key'     => defined( 'MAPBOX_KEY' ) ? MAPBOX_KEY : null,
+			'emoji'          => apply_filters( 'h2.custom_emoji', [] ),
 		],
 		'plugins' => [
 			'reactions' => \class_exists( 'H2\\Reactions\\Reaction' ),
