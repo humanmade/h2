@@ -9,7 +9,7 @@ export default function Container( props ) {
 	return (
 		<aside
 			{ ...otherProps }
-			className={ `Sidebar-Container ${ props.className || '' } ` }
+			className={ `Sidebar-Container ${ className || '' } ` }
 		>
 			<TitleBar
 				title={ title }

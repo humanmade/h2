@@ -99,7 +99,7 @@ class App extends Component {
 const mapStateToProps = state => {
 	return {
 		sidebarProfile: state.ui.sidebarProfile,
-		sidebarView: state.ui.sidebarView,
+		sidebarView:    state.ui.sidebarView,
 	};
 };
 

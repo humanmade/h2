@@ -53,5 +53,5 @@ export default connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(
-	withApiData( props => ( { user: `/wp/v2/users/me` } ) )( MetaSidebar )
+	withApiData( props => ( { user: '/wp/v2/users/me' } ) )( MetaSidebar )
 );
