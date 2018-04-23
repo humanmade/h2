@@ -5,6 +5,7 @@ import { Slot } from 'react-slot-fill';
 
 import CurrentUserDropDown from './CurrentUserDropDown';
 import HeaderButton from './HeaderButton';
+import HeaderLabel from './HeaderLabel';
 import Logo from './Logo';
 import SearchInput from '../SearchInput';
 import { withApiData } from '../../with-api-data';
@@ -26,15 +27,15 @@ class Header extends Component {
 					path="new-post"
 				/>
 
-				<HeaderButton
-					icon="mail"
-					title="What's New"
-					onClick={ this.props.onShowChanges }
-				/>
-
 				<Slot name="Header.buttons" />
 
 				<SearchInput onSearch={this.props.onSearch} value={this.props.searchValue} />
+
+				<HeaderLabel
+					icon="mail"
+					title="What's New?"
+					onClick={ this.props.onShowChanges }
+				/>
 
 				{ this.props.currentUser.data ? (
 					<CurrentUserDropDown
