@@ -5,6 +5,7 @@ import Avatar from './Avatar';
 import Button from './Button';
 import Map from './Map';
 import RelativeLink from './RelativeLink';
+import UserBlock from './UserBlock';
 import Container from './Sidebar/Container';
 import { withApiData } from '../with-api-data';
 
@@ -76,23 +77,7 @@ class Profile extends React.Component {
 				title="Profile"
 				onClose={ this.props.onClose }
 			>
-
-				<header className="Profile-header">
-					<div>
-						<Avatar
-							url={ user.avatar_urls[96] }
-							user={ user }
-							size={ 60 }
-						/>
-					</div>
-					<div>
-						<h2>{ user.name }</h2>
-						<p>@{ user.slug }</p>
-						<p className={ user.facts.job_title ? 'Profile-title' : 'Profile-title missing' }>
-							{ user.facts.job_title || 'Unknown Role' }
-						</p>
-					</div>
-				</header>
+				<UserBlock user={ user } />
 
 				<Map
 					height="200"
