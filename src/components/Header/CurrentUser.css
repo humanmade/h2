@@ -1,37 +1,7 @@
-.Header-CurrentUser .Dropdown-trigger {
-	padding: 7px 0;
-}
-
-.Header-CurrentUser .Dropdown-content {
-	width: 20rem;
-	margin-top: 0;
-	margin-right: -0.5em;
-	padding: 1em;
-}
-
-.Header-CurrentUser.expanded .Dropdown-content {
-	display: flex;
-}
-
-.Header-CurrentUser .Dropdown-content > :nth-child( 2 ) {
-	margin-left: 5%;
-	flex-grow: 1;
-}
-
-.Header-CurrentUser p {
-	margin: 0.25em 0 0.5em;
-}
-
-.Header-CurrentUser-name {
-	font-size: 1.25rem;
-}
-
-.Header-CurrentUser-items {
-	list-style: none;
-	margin: 1em 0;
+.Header-CurrentUser {
 	padding: 0;
-}
-
-.Header-CurrentUser button {
+	background: transparent;
+	border-color: transparent;
 	margin-bottom: 0;
+	cursor: pointer;
 }
