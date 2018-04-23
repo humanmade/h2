@@ -1,12 +1,12 @@
 import React from 'react';
-import { FormattedDate, FormattedTime } from 'react-intl';
+import { connect } from 'react-redux';
 
-import Avatar from './Avatar';
 import Button from './Button';
 import LinkButton from './LinkButton';
 import RelativeLink from './RelativeLink';
 import UserBlock from './UserBlock';
 import Container from './Sidebar/Container';
+import { showSidebarProfile } from '../actions';
 import { withApiData } from '../with-api-data';
 
 class MetaSidebar extends React.Component {
@@ -34,7 +34,7 @@ class MetaSidebar extends React.Component {
 			<UserBlock user={ user } />
 
 			<ul>
-				<li><LinkButton to={ user.link }>View your profile →</LinkButton></li>
+				<li><LinkButton onClick={ () => this.props.onViewProfile( user.id ) }>View your profile →</LinkButton></li>
 				<li><RelativeLink to={ user.link }>View all posts →</RelativeLink></li>
 			</ul>
 
@@ -43,4 +43,15 @@ class MetaSidebar extends React.Component {
 	}
 }
 
-export default withApiData( props => ( { user: `/wp/v2/users/me` } ) )( MetaSidebar );
+const mapStateToProps = () => ( {} );
+
+const mapDispatchToProps = dispatch => {
+	return { onViewProfile: id => dispatch( showSidebarProfile( id ) ) };
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(
+	withApiData( props => ( { user: `/wp/v2/users/me` } ) )( MetaSidebar )
+);
