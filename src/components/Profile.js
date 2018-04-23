@@ -54,29 +54,27 @@ const LocalTime = props => {
 
 class Profile extends React.Component {
 	render() {
+		const containerProps = {
+			className: 'Profile',
+			title:     'Profile',
+			onClose:   this.props.onClose,
+		};
+
 		if ( this.props.user.isLoading ) {
-			return <aside className="Profile">
+			return <Container { ...containerProps }>
 				<p>Loading…</p>
-			</aside>;
+			</Container>;
 		}
 
 		const user = this.props.user.data;
 		if ( ! user ) {
-			return <aside className="Profile">
-				<Button onClick={ this.props.onClose }>
-					Close
-				</Button>
-
+			return <Container { ...containerProps }>
 				<p>Could not find details for user</p>
-			</aside>;
+			</Container>;
 		}
 
 		return (
-			<Container
-				className="Profile"
-				title="Profile"
-				onClose={ this.props.onClose }
-			>
+			<Container { ...containerProps }>
 				<UserBlock user={ user } />
 
 				<Map
