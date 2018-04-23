@@ -1,8 +1,6 @@
 import React from 'react';
 import { FormattedDate, FormattedTime } from 'react-intl';
 
-import Avatar from './Avatar';
-import Button from './Button';
 import Map from './Map';
 import RelativeLink from './RelativeLink';
 import UserBlock from './UserBlock';
