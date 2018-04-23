@@ -5,9 +5,9 @@ import Avatar from '../Avatar';
 import Button from '../Button';
 import { User } from '../../shapes';
 
-import './CurrentUserDropDown.css';
+import './CurrentUser.css';
 
-export default function CurrentUserDropDown( props ) {
+export default function CurrentUser( props ) {
 	const { user } = props;
 	const label = <Avatar
 		key="avatar"
@@ -16,7 +16,7 @@ export default function CurrentUserDropDown( props ) {
 	/>;
 
 	return <Dropdown
-		className="CurrentUserDropDown"
+		className="Header-CurrentUser"
 		label={ label }
 	>
 		<Avatar
@@ -25,9 +25,9 @@ export default function CurrentUserDropDown( props ) {
 			url={ user.avatar_urls['96'] }
 		/>
 		<div>
-			<p className="CurrentUserDropDown-name">{ user.name }</p>
-			<p className="CurrentUserDropDown-username"><code>@{ user.slug }</code></p>
-			<ul className="CurrentUserDropDown-items">
+			<p className="Header-CurrentUser-name">{ user.name }</p>
+			<p className="Header-CurrentUser-username"><code>@{ user.slug }</code></p>
+			<ul className="Header-CurrentUser-items">
 				<li>
 					<Button
 						onClick={ props.onLogOut }
@@ -38,4 +38,4 @@ export default function CurrentUserDropDown( props ) {
 	</Dropdown>;
 }
 
-CurrentUserDropDown.propTypes = { user: User.isRequired };
+CurrentUser.propTypes = { user: User.isRequired };

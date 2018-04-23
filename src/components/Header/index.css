@@ -26,7 +26,7 @@
 	color: rgba( 255, 255, 255, 0.6 );
 }
 
-.Header .CurrentUserDropDown {
+.Header .Header-CurrentUser {
 	margin-left: auto;
 	align-self: center;
 }

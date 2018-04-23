@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Slot } from 'react-slot-fill';
 
-import CurrentUserDropDown from './CurrentUserDropDown';
+import CurrentUser from './CurrentUser';
 import HeaderButton from './HeaderButton';
 import Logo from './Logo';
 import SearchInput from '../SearchInput';
@@ -37,7 +37,7 @@ class Header extends Component {
 				<SearchInput onSearch={this.props.onSearch} value={this.props.searchValue} />
 
 				{ this.props.currentUser.data ? (
-					<CurrentUserDropDown
+					<CurrentUser
 						user={ this.props.currentUser.data }
 						onLogOut={ this.props.onLogOut }
 					/>
