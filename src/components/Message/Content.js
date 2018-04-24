@@ -46,13 +46,15 @@ const transform = ( node, children, config ) => {
 			}
 
 			return {
-				id:      child.key,
-				label:   <React.Fragment>{ child.props.children }</React.Fragment>,
-				checked: child.props.checked,
+				id:       child.key,
+				label:    <React.Fragment>{ child.props.children }</React.Fragment>,
+				checked:  child.props.checked,
+				disabled: true,
 			};
 		} ).filter( Boolean );
 
 		return <Tasklist
+			disableSort={ true }
 			items={ items }
 			onChange={ ( ...args ) => console.log( args ) }
 			onReorder={ ( ...args ) => console.log( args ) }
