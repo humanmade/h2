@@ -103,3 +103,16 @@
 .PostContent hr {
 	margin: 1.66667rem 0;
 }
+
+.Tasklist-Item > label {
+	/* Unset all the default styles we don't need */
+	font: unset;
+	margin: 0;
+	letter-spacing: unset;
+	line-height: unset;
+	text-transform: unset;
+}
+
+.Tasklist-Item > label > input[type="checkbox"] {
+	margin: 3px 3px 3px 4px;
+}
