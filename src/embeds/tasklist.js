@@ -31,7 +31,7 @@ export default props => ( node, children, config ) => {
 			if ( child.type !== DummyComponent ) {
 				return {
 					id:    child.key,
-					label: child,
+					label: <React.Fragment>{ child.props.children }</React.Fragment>,
 					task:  false,
 				};
 			}
