@@ -47,8 +47,8 @@ export default props => ( node, children, config ) => {
 		return <Tasklist
 			disableSort={ true }
 			items={ items }
-			onChange={ ( ...args ) => console.log( args ) }
-			onReorder={ ( ...args ) => console.log( args ) }
+			onChange={ () => {} }
+			onReorder={ () => {} }
 		/>;
 	}
 }
