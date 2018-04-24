@@ -54,8 +54,36 @@ const completions = {
 	':': EmojiCompletion,
 };
 
+class CustomRender extends marked.Renderer {
+	tasklisttoken = '<!-- H2_TASKLIST_ITEM -->';
+
+	list( body, ordered ) {
+		if ( body.indexOf( this.tasklisttoken ) >= 0 ) {
+			return '<ul class="Tasklist">' + body.replace( new RegExp( this.tasklisttoken, 'g' ), '' ) + '</ul>';
+		}
+
+		return super.list( body, ordered );
+	}
+
+	listitem( text ) {
+		const listMatch = text.match( /^\[(x| )] ?(.+)/i );
+		if ( listMatch ) {
+			const checked = listMatch[1] !== ' ';
+			return `<li class="Tasklist-Item"${ checked ? ' data-checked' : '' }>${ listMatch[2] }</li>\n` + this.tasklisttoken;
+		}
+
+		return super.listitem( text );
+	}
+}
+
+const renderer = new CustomRender();
+
+const compileMarkdown = text => {
+	return marked( text, { renderer } );
+};
+
 const Preview = props => {
-	const compiled = marked( props.children );
+	const compiled = compileMarkdown( props.children );
 	return <div className="Editor-preview"><MessageContent html={ compiled } /></div>;
 };
 Preview.propTypes = { children: PropTypes.string.isRequired };
@@ -155,7 +183,7 @@ export default class Editor extends React.PureComponent {
 	onSubmit( e ) {
 		e.preventDefault();
 
-		this.props.onSubmit( marked( this.state.content ) );
+		this.props.onSubmit( compileMarkdown( this.state.content ) );
 	}
 
 	onBlur() {
