@@ -1,5 +1,4 @@
 import countWords from '@iarna/word-count';
-import marked from 'marked';
 import PropTypes from 'prop-types';
 import React from 'react';
 import getCaretCoordinates from 'textarea-caret';
@@ -10,6 +9,7 @@ import EmojiCompletion from './EmojiCompletion';
 import MentionCompletion from './MentionCompletion';
 import MessageContent from '../Message/Content';
 import Shortcuts from '../Shortcuts';
+import { compileMarkdown } from '../../markdown';
 
 import './index.css';
 
@@ -52,34 +52,6 @@ const BUTTONS = {
 const completions = {
 	'@': MentionCompletion,
 	':': EmojiCompletion,
-};
-
-class CustomRender extends marked.Renderer {
-	tasklisttoken = '<!-- H2_TASKLIST_ITEM -->';
-
-	list( body, ordered ) {
-		if ( body.indexOf( this.tasklisttoken ) >= 0 ) {
-			return '<ul class="Tasklist">' + body.replace( new RegExp( this.tasklisttoken, 'g' ), '' ) + '</ul>';
-		}
-
-		return super.list( body, ordered );
-	}
-
-	listitem( text ) {
-		const listMatch = text.match( /^\[(x| )] ?(.+)/i );
-		if ( listMatch ) {
-			const checked = listMatch[1] !== ' ';
-			return `<li class="Tasklist-Item"${ checked ? ' data-checked' : '' }>${ listMatch[2] }</li>\n` + this.tasklisttoken;
-		}
-
-		return super.listitem( text );
-	}
-}
-
-const renderer = new CustomRender();
-
-const compileMarkdown = text => {
-	return marked( text, { renderer } );
 };
 
 const Preview = props => {
