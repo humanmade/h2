@@ -8,6 +8,7 @@ import Button from '../Button';
 import DropUpload from '../DropUpload';
 import EmojiCompletion from './EmojiCompletion';
 import MentionCompletion from './MentionCompletion';
+import MessageContent from '../Message/Content';
 import Shortcuts from '../Shortcuts';
 
 import './index.css';
@@ -55,7 +56,7 @@ const completions = {
 
 const Preview = props => {
 	const compiled = marked( props.children );
-	return <div className="Editor-preview" dangerouslySetInnerHTML={{ __html: compiled }} />;
+	return <div className="Editor-preview"><MessageContent html={ compiled } /></div>;
 };
 Preview.propTypes = { children: PropTypes.string.isRequired };
 
