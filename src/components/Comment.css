@@ -41,6 +41,16 @@
 	background: #fff;
 }
 
+body.admin-bar .Comment > header {
+	top: 131px; /* 32 + 99 */
+}
+
+@media screen and ( max-width: 782px ) {
+	body.admin-bar .Comment > header {
+		top: 147px; /* 48 + 99 */
+	}
+}
+
 .Comment > header > .Avatar {
 	margin-left: -30px;
 	margin-right: 20px;

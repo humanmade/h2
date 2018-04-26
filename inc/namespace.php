@@ -8,7 +8,6 @@ use WP_REST_Request;
  * Set up theme global settings
  */
 function set_up_theme() {
-	show_admin_bar( false );
 	add_theme_support( 'title-tag' );
 
 	register_sidebar( [
