@@ -7,6 +7,7 @@ import Changes from './components/Changes';
 import Header from './components/Header';
 import PostsList from './components/Post/List';
 import WritePost from './components/Post/Write';
+import MetaSidebar from './components/MetaSidebar';
 import Profile from './components/Profile';
 import Sidebar from './components/Sidebar';
 import { RenderPlugins } from './plugins';
@@ -42,6 +43,29 @@ class App extends Component {
 		this.props.history.push( post.link.replace( /^(?:\/\/|[^/]+)*\//, '/' ) );
 	}
 
+	renderSidebar() {
+		switch ( this.props.sidebarView ) {
+			case 'meta':
+				return (
+					<MetaSidebar
+						onClose={ this.props.onDismissSidebarProfile }
+						onLogOut={ () => this.onLogOut() }
+					/>
+				);
+
+			case 'profile':
+				return (
+					<Profile
+						id={ this.props.sidebarProfile }
+						onClose={ this.props.onDismissSidebarProfile }
+					/>
+				);
+
+			default:
+				return <Sidebar />;
+		}
+	}
+
 	render() {
 		return <div className="App">
 			<Header
@@ -60,14 +84,7 @@ class App extends Component {
 					<Route path="/search/:search" exact component={PostsList} />
 					<Route path="/:year/:month/:day/:slug/:comment_page(comment-page-\d+)?" exact component={PostsList} />
 				</div>
-				{ this.props.sidebarProfile ? (
-					<Profile
-						id={ this.props.sidebarProfile }
-						onClose={ this.props.onDismissSidebarProfile }
-					/>
-				) : (
-					<Sidebar />
-				) }
+				{ this.renderSidebar() }
 			</div>
 			<Changes
 				forceShow={ this.state.showChanges }
@@ -80,7 +97,10 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-	return { sidebarProfile: state.ui.sidebarProfile };
+	return {
+		sidebarProfile: state.ui.sidebarProfile,
+		sidebarView:    state.ui.sidebarView,
+	};
 };
 
 const mapDispatchToProps = dispatch => {

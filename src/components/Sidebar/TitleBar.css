@@ -1,0 +1,23 @@
+.Sidebar-TitleBar {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	overflow: hidden;
+	position: sticky;
+	top: 0;
+	background: var( --hm-beige );
+	margin: 0 -1em 1em;
+	padding: 0.5em;
+	z-index: 2;
+}
+
+.Sidebar-TitleBar h2 {
+	text-transform: none;
+	font-size: 1rem;
+	line-height: 1.4;
+	margin: 0;
+}
+
+.Sidebar-TitleBar .btn {
+	margin: 0;
+}
