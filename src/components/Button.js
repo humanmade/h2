@@ -18,6 +18,7 @@ export default function Button( props ) {
 	return (
 		<button
 			className={ classes.join( ' ' ) }
+			disabled={ props.disabled }
 			type={ props.submit ? 'submit' : 'button' }
 			onClick={ props.onClick || undefined }
 		>
@@ -28,6 +29,7 @@ export default function Button( props ) {
 
 Button.propTypes = {
 	children: PropTypes.any,
+	disabled: PropTypes.bool,
 	submit: PropTypes.bool,
 	onClick: PropTypes.func,
 	type: PropTypes.string,
@@ -35,6 +37,7 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
+	disabled: false,
 	type: 'secondary',
 	size: 'small',
 	submit: false,
