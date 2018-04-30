@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import AuthorLink from './Message/AuthorLink';
-import UserHovercard from './UserHovercard';
 
 import './Avatar.css';
 
@@ -11,7 +10,8 @@ export default function Avatar( props ) {
 		width: props.size,
 		height: props.size,
 	};
-	const avatar = (
+
+	return (
 		<div
 			className="Avatar"
 			style={ {
@@ -19,7 +19,10 @@ export default function Avatar( props ) {
 				height: props.size + 'px',
 			} }
 		>
-			<AuthorLink user={ props.user || null }>
+			<AuthorLink
+				user={ props.user || null }
+				withHovercard={ props.withHovercard }
+			>
 				<img
 					style={ style }
 					alt="User Avatar"
@@ -27,16 +30,6 @@ export default function Avatar( props ) {
 				/>
 			</AuthorLink>
 		</div>
-	);
-
-	if ( ! props.user || ! props.withHovercard ) {
-		return avatar;
-	}
-
-	return (
-		<UserHovercard user={ props.user }>
-			{ avatar }
-		</UserHovercard>
 	);
 }
 
