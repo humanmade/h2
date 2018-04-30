@@ -3,12 +3,20 @@ import { Link } from 'react-router-dom';
 import ContentLoader from 'react-content-loader';
 import qs from 'qs';
 
+import Button from '../Button';
 import PostComponent from './index';
 import { withApiData } from '../../with-api-data';
 
 import './List.css';
 
 class PostsList extends Component {
+	constructor( props ) {
+		super( props );
+
+		this.state = {
+			view: 'expanded',
+		};
+	}
 
 	render() {
 		const { page } = this.props.match.params;
@@ -18,11 +26,19 @@ class PostsList extends Component {
 				{ this.props.posts.isLoading &&
 					<ContentLoader type="list" width={ 300 } />
 				}
+				<div className="PostsList--settings">
+					<span />
+					<span>
+						<Button disabled={ this.state.view === 'summary' } onClick={ () => this.setState( { view: 'summary' } ) }>Summary</Button>
+						<Button disabled={ this.state.view === 'expanded' } onClick={ () => this.setState( { view: 'expanded' } ) }>Expanded</Button>
+					</span>
+				</div>
 				{ this.props.posts.data &&
 					this.props.posts.data.map( post => (
 						<PostComponent
 							key={ post.id }
 							data={ post }
+							expanded={ this.state.view === 'expanded' }
 							onInvalidate={ () => this.props.invalidateData() }
 						/>
 					) )
