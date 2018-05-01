@@ -63,7 +63,7 @@ class Post extends Component {
 				isSubmitting: false,
 				isEditing:    false,
 			} );
-			this.props.invalidateDataForUrl( '/wp/v2/posts' );
+			this.props.onInvalidate();
 		} ) );
 	}
 	render() {
