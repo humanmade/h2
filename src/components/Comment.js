@@ -21,6 +21,7 @@ export class Comment extends Component {
 		this.state = {
 			isShowingReply: false,
 			isEditing:      false,
+			isSubmitting:   false,
 		};
 		this.element = null;
 	}
@@ -37,7 +38,10 @@ export class Comment extends Component {
 		this.setState( { isShowingReply: false } )
 		this.props.onDidCreateComment( ...args );
 	}
+
 	onSubmitEditing( content, unprocessedContent ) {
+		this.setState( { isSubmitting: true } );
+
 		const body = {
 			content,
 			meta: { unprocessed_content: unprocessedContent },
@@ -50,11 +54,20 @@ export class Comment extends Component {
 			},
 			body:   JSON.stringify( body ),
 			method: 'POST',
-		} ).then( r => r.json() ).then( post  => {
-			this.setState( { isEditing: false } )
+		} ).then( r => r.json().then( data => {
+			if ( ! r.ok ) {
+				this.setState( { isSubmitting: false, error: data } );
+				return;
+			}
+
+			this.setState( {
+				isEditing:    false,
+				isSubmitting: false,
+			} );
 			this.props.invalidateDataForUrl( `/wp/v2/comments?post=${ this.props.parentPost.id }&per_page=100` );
-		} );
+		} ) );
 	}
+
 	render() {
 		const comment = this.props.comment;
 		const post = this.props.parentPost;
@@ -103,7 +116,7 @@ export class Comment extends Component {
 				{ this.state.isEditing ?
 					<Editor
 						initialValue={ comment.meta.unprocessed_content || comment.content.raw }
-						submitText="Update"
+						submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
 						onCancel={ () => this.setState( { isEditing: false } )}
 						onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
 					/>

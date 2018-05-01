@@ -21,7 +21,11 @@ import './index.css';
 class Post extends Component {
 	constructor( props ) {
 		super( props );
-		this.state = { isShowingReply: false, isEditing: false };
+		this.state = {
+			isShowingReply: false,
+			isEditing:      false,
+			isSubmitting:   false,
+		};
 	}
 	onClickReply() {
 		this.setState( { isShowingReply: true } )
@@ -34,6 +38,8 @@ class Post extends Component {
 		this.props.refreshData();
 	}
 	onSubmitEditing( content, unprocessedContent ) {
+		this.setState( { isSubmitting: true } );
+
 		const body = {
 			content,
 			status: 'publish',
@@ -47,10 +53,18 @@ class Post extends Component {
 			},
 			body:   JSON.stringify( body ),
 			method: 'POST',
-		} ).then( r => r.json() ).then( post  => {
-			this.setState( { isEditing: false } )
+		} ).then( r => r.json().then( data => {
+			if ( ! r.ok ) {
+				this.setState( { isSubmitting: false, error: data } );
+				return;
+			}
+
+			this.setState( {
+				isSubmitting: false,
+				isEditing:    false,
+			} );
 			this.props.invalidateDataForUrl( '/wp/v2/posts' );
-		} );
+		} ) );
 	}
 	render() {
 		const post = this.props.data;
@@ -112,7 +126,7 @@ class Post extends Component {
 				{ this.state.isEditing ?
 					<Editor
 						initialValue={ post.meta.unprocessed_content || post.content.raw }
-						submitText="Update"
+						submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
 						onCancel={ () => this.setState( { isEditing: false } )}
 						onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
 					/>
