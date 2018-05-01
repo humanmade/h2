@@ -1,6 +1,5 @@
 .Comment {
 	position: relative;
-	/*z-index: 5;*/
 }
 
 .Comment:before {
@@ -34,10 +33,22 @@
 	height: 50px;
 	line-height: 40px;
 	display: flex;
+	align-items: flex-start;
 	margin-left: -30px;
 	position: sticky;
 	top: 99px;
+	z-index: 3;
 	background: #fff;
+}
+
+body.admin-bar .Comment > header {
+	top: 131px; /* 32 + 99 */
+}
+
+@media screen and ( max-width: 782px ) {
+	body.admin-bar .Comment > header {
+		top: 147px; /* 48 + 99 */
+	}
 }
 
 .Comment > header > .Avatar {
@@ -56,8 +67,51 @@
 
 .Comment  > header > .actions {
 	display: none;
+	align-items: center;
 }
 
 .Comment:hover > header > .actions {
-	display: block;
+	display: flex;
+}
+
+.Comment .Comment-date {
+	color: var( --hm-medium-grey );
+	font-size: 0.75em;
+	margin-right: 0.5em;
+}
+.Comment a.Comment-date:hover {
+	border: none;
+	text-decoration: underline;
+}
+
+.Comment > header button {
+	margin-bottom: 0;
+}
+
+@media ( max-width: 600px ) {
+	.Comment > header {
+		margin-left: 0;
+		position: static;
+		height: auto;
+		flex-wrap: wrap;
+	}
+
+	.Comment:before {
+		left: -33px;
+	}
+	.Comment > header > .Avatar,
+	.Comment > header > .Avatar img {
+		height: 32px !important;
+		width: 32px !important;
+	}
+	.Comment > header > .Avatar {
+		margin-left: -48px;
+		margin-right: 15px;
+	}
+
+	.Comment > header > .actions {
+		display: flex;
+		flex-grow: 1;
+		justify-content: space-between;
+	}
 }

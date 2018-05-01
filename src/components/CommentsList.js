@@ -14,7 +14,7 @@ export default class CommentsList extends Component {
 					key={comment.id}
 					comment={comment}
 					comments={this.props.allComments}
-					post={this.props.post}
+					parentPost={ this.props.post }
 					onDidCreateComment={this.props.onDidCreateComment}
 				/>
 			) ) }
@@ -24,8 +24,8 @@ export default class CommentsList extends Component {
 }
 
 CommentsList.propTypes = {
-	allComments:    PropTypes.arrayOf( CommentShape ).isRequired,
-	comments:       PropTypes.arrayOf( CommentShape ).isRequired,
-	post:           Post.isRequired,
+	allComments:        PropTypes.arrayOf( CommentShape ).isRequired,
+	comments:           PropTypes.arrayOf( CommentShape ).isRequired,
+	post:               Post.isRequired,
 	onDidCreateComment: PropTypes.func.isRequired,
 };

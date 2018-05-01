@@ -1,0 +1,18 @@
+.MentionCompletion-item {
+	display: flex;
+}
+
+.MentionCompletion-item .avatar {
+	width: 24px;
+	height: 24px;
+}
+
+.MentionCompletion-item .name {
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+	flex-grow: 1;
+}
+
+.MentionCompletion-item .username {
+	font-size: 0.8em;
+}

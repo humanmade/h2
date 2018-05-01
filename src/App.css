@@ -4,10 +4,6 @@
 	flex: 1;
 }
 
-.App .PostsList {
-	max-width: 800px;
-}
-
 .App .WritePost {
 	margin: 20px;
 	max-width: 800px;
@@ -21,16 +17,45 @@
 
 .Inner {
 	flex-direction: column;
+	width: 65%;
+	max-width: 800px;
 }
 
-.Sidebar {
+.App > .Outer > aside {
 	position: sticky;
 	top: 0;
 	height: 100vh;
-	margin-left: 4rem;
+	margin-left: 5%;
 	overflow: hidden;
 	overflow-y: scroll;
+	width: 30%;
+	flex-shrink: 0;
 }
+
+body.admin-bar .App > .Outer > aside {
+	top: 32px;
+}
+
+@media screen and ( max-width: 782px ) {
+	body.admin-bar .App > .Outer > aside {
+		top: 48px;
+	}
+}
+
 .App a {
 	border: none;
+}
+
+@media ( max-width: 800px ) {
+	.Outer {
+		flex-wrap: wrap;
+	}
+	.Inner {
+		width: 100%;
+	}
+	.Sidebar {
+		position: static;
+		width: 100%;
+		padding: 0 2%;
+	}
 }

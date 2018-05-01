@@ -1,21 +1,38 @@
 import React, { Component } from 'react';
+import { FormattedRelative } from 'react-intl';
+import { Slot } from 'react-slot-fill';
 import PropTypes from 'prop-types';
-import AuthorName from './AuthorName';
+
 import Avatar from './Avatar';
 import Button from './Button';
 import CommentsList from './CommentsList';
 import Editor from './Editor';
-import PostContent from './PostContent';
-import WriteComment from './WriteComment';
+import AuthorLink from './Message/AuthorLink';
+import MessageContent from './Message/Content';
+import WriteComment from './Message/WriteComment';
 import { Comment as CommentShape } from '../shapes';
 import { withApiData } from '../with-api-data';
+
 import './Comment.css';
 
 export class Comment extends Component {
 	constructor( props ) {
 		super( props );
-		this.state = { isShowingReply: false, isEditing: false };
+		this.state = {
+			isShowingReply: false,
+			isEditing:      false,
+		};
+		this.element = null;
 	}
+
+	componentDidMount() {
+		const { comment } = this.props;
+
+		if ( window.location.hash === `#comment-${ comment.id }` && this.element ) {
+			this.element.scrollIntoView();
+		}
+	}
+
 	onDidCreateComment( ...args ) {
 		this.setState( { isShowingReply: false } )
 		this.props.onDidCreateComment( ...args );
@@ -35,16 +52,22 @@ export class Comment extends Component {
 			method: 'POST',
 		} ).then( r => r.json() ).then( post  => {
 			this.setState( { isEditing: false } )
-			this.props.invalidateDataForUrl( `/wp/v2/comments?post=${ this.props.post.id}&per_page=100` );
+			this.props.invalidateDataForUrl( `/wp/v2/comments?post=${ this.props.parentPost.id }&per_page=100` );
 		} );
 	}
 	render() {
 		const comment = this.props.comment;
-		const post = this.props.post;
+		const post = this.props.parentPost;
 		const author = this.props.author.data;
 		const directComments = this.props.comments.filter( c => c.parent === comment.id );
 
-		return <div className="Comment">
+		const fillProps = { author, comment, comments: this.props.comments, post };
+
+		return <div
+			className="Comment"
+			id={ `comment-${ comment.id }` }
+			ref={ el => this.element = el }
+		>
 			<header>
 				<Avatar
 					url={author ? author.avatar_urls['96'] : ''}
@@ -52,26 +75,42 @@ export class Comment extends Component {
 					size={40}
 				/>
 				<strong>
-					{ author ? <AuthorName user={ author } /> : '' }
+					{ author ? (
+						<AuthorLink user={ author }>{ author.name }</AuthorLink>
+					) : comment.author_name }
 				</strong>
 				<div className="actions">
+					<a
+						className="Comment-date"
+						href={ `${ post.link }#comment-${ comment.id }` }
+					>
+						<time
+							dateTime={ comment.date_gmt + 'Z' }
+							title={ comment.date_gmt + 'Z' }
+						>
+							<FormattedRelative value={ comment.date_gmt + 'Z' } />
+						</time>
+					</a>
 					{! this.state.isEditing &&
 						<Button onClick={() => this.setState( { isEditing: true } )}>Edit</Button>
 					}
 					<Button onClick={() => this.setState( { isShowingReply: true } )}>Reply</Button>
+					<Slot name="Comment.actions" fillChildProps={ fillProps } />
 				</div>
 			</header>
 			<div className="body">
-			{ this.state.isEditing ?
-				<Editor
-					initialValue={ comment.meta.unprocessed_content || comment.content.raw }
-					submitText="Update"
-					onCancel={ () => this.setState( { isEditing: false } )}
-					onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
+				<Slot name="Comment.before_content" fillChildProps={ fillProps } />
+				{ this.state.isEditing ?
+					<Editor
+						initialValue={ comment.meta.unprocessed_content || comment.content.raw }
+						submitText="Update"
+						onCancel={ () => this.setState( { isEditing: false } )}
+						onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
 					/>
 				:
-				<PostContent html={this.props.comment.content.rendered} />
-			}
+					<MessageContent html={ this.props.comment.content.rendered } />
+				}
+				<Slot name="Comment.after_content" fillChildProps={ fillProps } />
 			</div>
 			<CommentsList
 				allComments={this.props.comments}
@@ -83,7 +122,7 @@ export class Comment extends Component {
 				{this.state.isShowingReply &&
 					<WriteComment
 						comment={comment}
-						post={post}
+						parentPost={post}
 						onCancel={() => this.setState( { isShowingReply: false } )}
 						onDidCreateComment={( ...args ) => this.onDidCreateComment( ...args )}
 					/>
@@ -94,7 +133,7 @@ export class Comment extends Component {
 }
 
 Comment.propTypes = {
-	comment:        CommentShape.isRequired,
+	comment:            CommentShape.isRequired,
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 

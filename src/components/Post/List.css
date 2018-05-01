@@ -1,0 +1,38 @@
+.PostsList {
+	position: relative;
+	padding: 0 20px;
+}
+
+.PostsList > div {
+	flex: 1;
+}
+
+.PostsList .infinite-scroll-component {
+	flex-direction: column;
+}
+
+.PostsList:first-child {
+	padding-top: 60px;
+}
+
+.PostsList:before {
+	position: absolute;
+	content: '';
+	background: #F1F2EE;
+	left: 48.5px;
+	height: 60px;
+	top: 0;
+	width: 5px;
+	z-index: 2;
+}
+
+.PostsList > .pagination {
+	border-top: none;
+}
+
+@media ( max-width: 600px ) {
+	.PostsList:before {
+		left: 35px;
+		width: 2px;
+	}
+}
