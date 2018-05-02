@@ -108,11 +108,13 @@ class Post extends Component {
 	}
 }
 
-Post.propTypes = { data: PostShape.isRequired };
+Post.propTypes = {
+	data: PostShape.isRequired,
+};
 
 const mapPropsToData = props => ( {
-	comments:   `/wp/v2/comments?post=${ props.data.id }&per_page=100`,
-	author:     `/wp/v2/users/${ props.data.author }`,
+	comments: `/wp/v2/comments?post=${ props.data.id }&per_page=100`,
+	author: `/wp/v2/users/${ props.data.author }`,
 	categories: `/wp/v2/categories?include=${ props.data.categories.join( ',' ) }`,
 } );
 

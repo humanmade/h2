@@ -19,7 +19,7 @@ class App extends Component {
 		super( props );
 		this.state = {
 			isShowingWritePost: false,
-			showChanges:        false,
+			showChanges: false,
 		};
 	}
 	onLogOut() {
@@ -99,7 +99,7 @@ class App extends Component {
 const mapStateToProps = state => {
 	return {
 		sidebarProfile: state.ui.sidebarProfile,
-		sidebarView:    state.ui.sidebarView,
+		sidebarView: state.ui.sidebarView,
 	};
 };
 

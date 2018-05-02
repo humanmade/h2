@@ -64,7 +64,7 @@ class PostList extends React.Component {
 const mapPropsToApi = props => {
 	const args = {
 		per_page: props.per_page,
-		page:     props.page,
+		page: props.page,
 	};
 
 	const posts = `/wp/v2/posts?${ qs.stringify( args ) }`;
@@ -77,7 +77,9 @@ export default class RecentPosts extends React.Component {
 	constructor( props ) {
 		super( props );
 
-		this.state = { page: 1 };
+		this.state = {
+			page: 1,
+		};
 	}
 
 	render() {

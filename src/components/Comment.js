@@ -17,7 +17,9 @@ import './Comment.css';
 export class Comment extends Component {
 	constructor( props ) {
 		super( props );
-		this.state = { isShowingReply: false };
+		this.state = {
+			isShowingReply: false,
+		};
 		this.element = null;
 	}
 
@@ -99,7 +101,7 @@ export class Comment extends Component {
 }
 
 Comment.propTypes = {
-	comment:            CommentShape.isRequired,
+	comment: CommentShape.isRequired,
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 

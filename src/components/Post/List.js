@@ -40,7 +40,7 @@ class PostsList extends Component {
 
 export default withApiData( props => ( {
 	categories: props.match.params.categorySlug ? '/wp/v2/categories' : null,
-	users:      props.match.params.authorSlug ? '/wp/v2/users?per_page=100' : null,
+	users: props.match.params.authorSlug ? '/wp/v2/users?per_page=100' : null,
 } ) )( withApiData( props => {
 	const filters = {};
 	if ( props.match.params.page ) {

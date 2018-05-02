@@ -24,7 +24,7 @@ export default function Status( props ) {
 }
 
 Status.propTypes = {
-	author:   User,
+	author: User,
 	children: PropTypes.any,
-	post:     Post.isRequired,
+	post: Post.isRequired,
 };

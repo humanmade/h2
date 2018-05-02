@@ -17,7 +17,7 @@ class WriteComment extends React.Component {
 
 		this.state = {
 			isSubmitting: false,
-			error:        null,
+			error: null,
 		};
 	}
 
@@ -54,14 +54,17 @@ class WriteComment extends React.Component {
 
 		this.props.fetch( '/wp/v2/comments', {
 			headers: {
-				Accept:         'application/json',
+				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
-			body:   JSON.stringify( body ),
+			body: JSON.stringify( body ),
 			method: 'POST',
 		} ).then( r => r.json().then( data => {
 			if ( ! r.ok ) {
-				this.setState( { isSubmitting: false, error: data } );
+				this.setState( {
+					isSubmitting: false,
+					error: data,
+				} );
 				return;
 			}
 
@@ -101,8 +104,8 @@ class WriteComment extends React.Component {
 }
 
 WriteComment.propTypes = {
-	parentPost:         Post.isRequired,
-	onCancel:           PropTypes.func.isRequired,
+	parentPost: Post.isRequired,
+	onCancel: PropTypes.func.isRequired,
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 

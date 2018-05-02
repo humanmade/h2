@@ -78,14 +78,17 @@ export default class {
 		 * Only attach the oauth headers if we have a nonce
 		 */
 		if ( this.credentials.nonce ) {
-			headers = { ...headers, ...this.getAuthorizationHeader() };
+			headers = {
+				...headers,
+				...this.getAuthorizationHeader(),
+			};
 		}
 
 		const opts = {
 			method,
 			headers,
 			credentials: 'include',
-			body:        [ 'GET', 'HEAD' ].indexOf( method ) > -1 ? null : qs.stringify( data ),
+			body: [ 'GET', 'HEAD' ].indexOf( method ) > -1 ? null : qs.stringify( data ),
 		};
 
 		return fetch( url, opts ).then( parseResponse );
@@ -97,13 +100,20 @@ export default class {
 		const absUrl = new URL( relUrl, this.url + '/' );
 
 		// Clone options
-		const actualOptions = { headers: {}, credentials: 'include', ...options };
+		const actualOptions = {
+			headers: {},
+			credentials: 'include',
+			...options,
+		};
 
 		/**
 		 * Only attach the oauth headers if we have a nonce
 		 */
 		if ( this.credentials.nonce ) {
-			actualOptions.headers = { ...actualOptions.headers, ...this.getAuthorizationHeader() };
+			actualOptions.headers = {
+				...actualOptions.headers,
+				...this.getAuthorizationHeader(),
+			};
 		}
 
 		return fetch( absUrl, actualOptions );

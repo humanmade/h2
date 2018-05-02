@@ -26,7 +26,7 @@ const EmojiCompletion = props => {
 	const getItems = search => emojiIndex.search(
 		search,
 		{
-			custom:     Object.values( window.H2Data.site.emoji ),
+			custom: Object.values( window.H2Data.site.emoji ),
 			maxResults: 5,
 		}
 	);

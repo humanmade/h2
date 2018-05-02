@@ -10,4 +10,6 @@ export default function Content( props ) {
 	/>;
 }
 
-Content.propTypes = { html: PropTypes.string.isRequired };
+Content.propTypes = {
+	html: PropTypes.string.isRequired,
+};

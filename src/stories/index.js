@@ -16,25 +16,25 @@ import WritePost from '../components/WritePost';
 import '../hm-pattern-library/assets/styles/juniper.css';
 
 const comment = {
-	id:       1,
-	post:     1,
+	id: 1,
+	post: 1,
 	date_gmt: new Date().toISOString(),
-	author:   1,
-	content:  {
+	author: 1,
+	content: {
 		rendered: 'Heading up to Oregon for my brother and sister-in-law’s birthday celebrations! I’ll be out May 4-7!',
-		raw:      'awd',
+		raw: 'awd',
 	},
 };
 
 const post = {
-	id:       1,
+	id: 1,
 	date_gmt: new Date().toISOString(),
-	author:   1,
-	title:    { rendered: 'Exploring the idea of Platform' },
-	content:  { rendered: 'Heading up to Oregon for my brother and sister-in-law’s birthday celebrations! I’ll be out May 4-7!' },
-	related:  {
+	author: 1,
+	title: { rendered: 'Exploring the idea of Platform' },
+	content: { rendered: 'Heading up to Oregon for my brother and sister-in-law’s birthday celebrations! I’ll be out May 4-7!' },
+	related: {
 		comments: {
-			items:     [],
+			items: [],
 			isLoading: false,
 			hasLoaded: false,
 		},
@@ -42,8 +42,8 @@ const post = {
 };
 
 const user = {
-	name:        'Noel',
-	slug:        'noel',
+	name: 'Noel',
+	slug: 'noel',
 	avatar_urls: {
 		'48': 'https://secure.gravatar.com/avatar/c57c8945079831fa3c19caef02e44614?s=48&d=mm&r=g',
 		'96': 'https://secure.gravatar.com/avatar/c57c8945079831fa3c19caef02e44614?s=96&d=mm&r=g',
@@ -90,7 +90,7 @@ storiesOf( 'Components', module )
 					categories={ [] }
 					post={ {
 						...post,
-						title:   { rendered: 'm'.repeat( length ) },
+						title: { rendered: 'm'.repeat( length ) },
 						content: { rendered: `Post with title of length ${ length }` },
 					} }
 				/>

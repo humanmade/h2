@@ -9,17 +9,19 @@ import TextWidget from './Widgets/Text';
 import './Sidebar.css';
 
 const widgetMap = {
-	default:        ( { html } ) => <div dangerouslySetInnerHTML={ { __html: html } } />,
+	default: ( { html } ) => <div dangerouslySetInnerHTML={ { __html: html } } />,
 	'recent-posts': RecentPostsWidget,
-	search:         SearchWidget,
-	text:           TextWidget,
+	search: SearchWidget,
+	text: TextWidget,
 };
 
 export class Sidebar extends Component {
 	constructor( props ) {
 		super( props );
 
-		this.state = { active: false };
+		this.state = {
+			active: false,
+		};
 	}
 
 	render() {

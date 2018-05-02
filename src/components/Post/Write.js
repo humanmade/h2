@@ -16,9 +16,9 @@ export class WritePost extends Component {
 		super( props );
 
 		this.state = {
-			title:        '',
-			error:        null,
-			category:     null,
+			title: '',
+			error: null,
+			category: null,
 			isSubmitting: false,
 		};
 	}
@@ -38,29 +38,38 @@ export class WritePost extends Component {
 			return;
 		}
 
-		this.setState( { isSubmitting: true, error: null } );
+		this.setState( {
+			isSubmitting: true,
+			error: null,
+		} );
 
 		const body = {
 			content,
-			status:     'publish',
-			title:      this.state.title,
+			status: 'publish',
+			title: this.state.title,
 			categories: this.state.category ? [ this.state.category ] : [],
 		};
 
 		this.props.fetch( '/wp/v2/posts', {
 			headers: {
-				Accept:         'application/json',
+				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
-			body:   JSON.stringify( body ),
+			body: JSON.stringify( body ),
 			method: 'POST',
 		} ).then( r => r.json().then( data => {
 			if ( ! r.ok ) {
-				this.setState( { isSubmitting: false, error: data } );
+				this.setState( {
+					isSubmitting: false,
+					error: data,
+				} );
 				return;
 			}
 
-			this.setState( { isSubmitting: true, title: '' } );
+			this.setState( {
+				isSubmitting: true,
+				title: '',
+			} );
 			this.props.invalidateDataForUrl( '/wp/v2/posts?page=1' );
 			this.props.onDidCreatePost( data );
 		} ) );
@@ -126,11 +135,11 @@ export class WritePost extends Component {
 }
 
 WritePost.propTypes = {
-	onCancel:        PropTypes.func.isRequired,
+	onCancel: PropTypes.func.isRequired,
 	onDidCreatePost: PropTypes.func.isRequired,
 };
 
 export default withApiData( props => ( {
-	user:       '/wp/v2/users/me',
+	user: '/wp/v2/users/me',
 	categories: '/wp/v2/categories',
 } ) )( WritePost )

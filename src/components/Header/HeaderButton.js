@@ -13,6 +13,6 @@ export default function HeaderButton( props ) {
 }
 
 HeaderButton.propTypes = {
-	title:   PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
 	onClick: PropTypes.func.isRequired,
 };

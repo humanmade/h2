@@ -86,6 +86,6 @@ DropUpload.defaultProps = { allowMultiple: false };
 
 DropUpload.propTypes = {
 	allowMultiple: PropTypes.bool,
-	files:         PropTypes.arrayOf( PropTypes.shape( { name: PropTypes.string.isRequired } ) ),
-	onUpload:      PropTypes.func.isRequired,
+	files: PropTypes.arrayOf( PropTypes.shape( { name: PropTypes.string.isRequired } ) ),
+	onUpload: PropTypes.func.isRequired,
 };

@@ -50,13 +50,15 @@ class Header extends Component {
 	}
 }
 
-Header.defaultProps = { searchValue: '' };
+Header.defaultProps = {
+	searchValue: '',
+};
 
 Header.propTypes = {
 	searchValue: PropTypes.string,
-	onLogOut:    PropTypes.func.isRequired,
+	onLogOut: PropTypes.func.isRequired,
 	onWritePost: PropTypes.func.isRequired,
-	onSearch:    PropTypes.func.isRequired,
+	onSearch: PropTypes.func.isRequired,
 };
 
 export default withApiData( props => ( { currentUser: '/wp/v2/users/me' } ) )( Header );
