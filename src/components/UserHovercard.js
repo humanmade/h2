@@ -84,7 +84,7 @@ export default class UserHovercard extends React.Component {
 
 UserHovercard.propTypes = {
 	user: PropTypes.shape( {
-		id:   PropTypes.number.isRequired,
+		id: PropTypes.number.isRequired,
 		name: PropTypes.string.isRequired,
 	} ).isRequired,
 };

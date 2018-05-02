@@ -35,7 +35,7 @@ class Widgets_Controller extends WP_REST_Controller {
 	public function __construct( $widgets ) {
 		$this->namespace = 'h2/v1';
 		$this->rest_base = 'widgets';
-		$this->widgets = $widgets;
+		$this->widgets   = $widgets;
 
 		$this->sidebars = wp_get_sidebars_widgets();
 
@@ -162,7 +162,7 @@ class Widgets_Controller extends WP_REST_Controller {
 			return rest_ensure_response( [] );
 		};
 
-		$args = [];
+		$args            = [];
 		$args['sidebar'] = $request['sidebar'];
 
 		// TODO pagination
@@ -175,7 +175,7 @@ class Widgets_Controller extends WP_REST_Controller {
 			if ( ! is_null( $args['sidebar'] ) && $args['sidebar'] !== $this->get_instance_sidebar( $instance['id'] ) ) {
 				continue;
 			}
-			$data = $this->prepare_item_for_response( $instance, $request );
+			$data        = $this->prepare_item_for_response( $instance, $request );
 			$instances[] = $this->prepare_response_for_collection( $data );
 		}
 
@@ -270,10 +270,10 @@ class Widgets_Controller extends WP_REST_Controller {
 	 * @return WP_REST_Response $data
 	 */
 	public function prepare_item_for_response( $instance, $request ) {
-		$values = $instance['settings'];
-		$values['id'] = $instance['id'];
+		$values         = $instance['settings'];
+		$values['id']   = $instance['id'];
 		$values['type'] = $instance['id_base'];
-		$sidebar = $this->get_instance_sidebar( $instance['id'] );
+		$sidebar        = $this->get_instance_sidebar( $instance['id'] );
 		global $wp_registered_sidebars;
 
 		$default_args = [

@@ -65,7 +65,7 @@ function get_script_data() {
 	// Preload the comments and reactions for the posts too.
 	if ( isset( $data['preload']['/wp/v2/posts'] ) ) {
 		foreach ( $data['preload']['/wp/v2/posts'] as $post_data ) {
-			$id = $post_data['id'];
+			$id   = $post_data['id'];
 			$urls = [
 				sprintf( '/h2/v1/reactions?post=%d', $post_data['id'] ),
 				sprintf( '/wp/v2/comments?post=%d&per_page=100', $post_data['id'] ),
@@ -78,7 +78,7 @@ function get_script_data() {
 				return empty( $data['preload'][ $url ] );
 			} );
 
-			$results = prefetch_urls( $urls );
+			$results         = prefetch_urls( $urls );
 			$data['preload'] = array_merge( $data['preload'], $results );
 		}
 	}
@@ -88,9 +88,9 @@ function get_script_data() {
 
 function prefetch_urls( $urls ) {
 	$server = rest_get_server();
-	$data = [];
+	$data   = [];
 	foreach ( $urls as $url ) {
-		$request = WP_REST_Request::from_url( rest_url( $url ) );
+		$request  = WP_REST_Request::from_url( rest_url( $url ) );
 		$response = rest_do_request( $request );
 		if ( $response->is_error() ) {
 			continue;

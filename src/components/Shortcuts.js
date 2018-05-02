@@ -47,7 +47,7 @@ Shortcuts.propTypes = {
 		PropTypes.oneOfType( [
 			PropTypes.func,
 			PropTypes.shape( {
-				callback:     PropTypes.func.isRequired,
+				callback: PropTypes.func.isRequired,
 				allowInInput: PropTypes.bool,
 			} ),
 		] )
@@ -75,7 +75,7 @@ const reducePropsToState = propsList => {
 			if ( isFunction( props.keys[ key ] ) ) {
 				keys[ key ] = {
 					allowInInput: false,
-					callback:     props.keys[ key ],
+					callback: props.keys[ key ],
 				};
 			} else {
 				keys[ key ] = {

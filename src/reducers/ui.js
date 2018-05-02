@@ -17,14 +17,14 @@ export default function ui( state = DEFAULT_STATE, action ) {
 		case SHOW_SIDEBAR_PROFILE:
 			return {
 				...state,
-				sidebarView:    'profile',
+				sidebarView: 'profile',
 				sidebarProfile: action.id,
 			};
 
 		case HIDE_SIDEBAR_PROFILE:
 			return {
 				...state,
-				sidebarView:    null,
+				sidebarView: null,
 				sidebarProfile: null,
 			};
 

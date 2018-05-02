@@ -12,7 +12,7 @@ export default function UserDisplayName( props ) {
 }
 
 UserDisplayName.propTypes = {
-	userId:    PropTypes.number.isRequired,
-	userName:  PropTypes.string.isRequired,
+	userId: PropTypes.number.isRequired,
+	userName: PropTypes.string.isRequired,
 	className: PropTypes.string,
 };

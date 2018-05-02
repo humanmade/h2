@@ -13,8 +13,8 @@ class MetaSidebar extends React.Component {
 	render() {
 		const containerProps = {
 			className: 'MetaSidebar',
-			title:     'All About You',
-			onClose:   this.props.onClose,
+			title: 'All About You',
+			onClose: this.props.onClose,
 		};
 
 		if ( this.props.user.isLoading ) {
@@ -46,7 +46,9 @@ class MetaSidebar extends React.Component {
 const mapStateToProps = () => ( {} );
 
 const mapDispatchToProps = dispatch => {
-	return { onViewProfile: id => dispatch( showSidebarProfile( id ) ) };
+	return {
+		onViewProfile: id => dispatch( showSidebarProfile( id ) ),
+	};
 }
 
 export default connect(
