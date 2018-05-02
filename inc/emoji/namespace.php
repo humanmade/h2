@@ -4,8 +4,8 @@ namespace H2\Emoji;
 
 use WP_Error;
 
-const API_URL = 'https://slack.com/api/emoji.list';
-const CACHE_GROUP = 'h2-global';
+const API_URL         = 'https://slack.com/api/emoji.list';
+const CACHE_GROUP     = 'h2-global';
 const SLACK_CACHE_KEY = 'slack-emoji';
 
 /**
@@ -157,15 +157,15 @@ function get_url_for_slack_emoji( string $type ) {
  * @return string Modified post content
  */
 function replace_custom_emoji( $content ) {
-	$emoji = get_slack_emoji();
+	$emoji  = get_slack_emoji();
 	$search = '#:(' . join( '|', array_map( 'preg_quote', array_keys( $emoji ) ) ) . '):#';
 
 	// HTML loop taken from texturize function, could possible be consolidated
 	$textarr = preg_split( '/(<.*>)/U', $content, -1, PREG_SPLIT_DELIM_CAPTURE ); // capture the tags as well as in between
-	$stop = count( $textarr );// loop stuff
+	$stop    = count( $textarr );// loop stuff
 
 	// Ignore proessing of specific tags
-	$tags_to_ignore = 'code|pre|style|script|textarea';
+	$tags_to_ignore       = 'code|pre|style|script|textarea';
 	$ignore_block_element = '';
 
 	$output = '';
@@ -184,7 +184,7 @@ function replace_custom_emoji( $content ) {
 						return '';
 					}
 
-					$type = trim( $matches[1] );
+					$type    = trim( $matches[1] );
 					$src_url = get_url_for_slack_emoji( $type );
 
 					if ( empty( $src_url ) ) {
