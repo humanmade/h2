@@ -78,26 +78,26 @@ class WriteComment extends React.Component {
 		return <div className="WriteComment" ref={ ref => this.container = ref }>
 			<header>
 				<Avatar
-					url={this.props.user.data ? this.props.user.data.avatar_urls['96'] : ''}
-					user={this.props.user.data}
-					size={40}
+					url={ this.props.user.data ? this.props.user.data.avatar_urls['96'] : '' }
+					user={ this.props.user.data }
+					size={ 40 }
 				/>
-				<strong>{this.props.user.data ? this.props.user.data.name : ''}</strong>
+				<strong>{ this.props.user.data ? this.props.user.data.name : '' }</strong>
 			</header>
 			<div className="body">
 				<Editor
-					ref={editor => this.editor = editor}
+					ref={ editor => this.editor = editor }
 					submitText={ this.state.isSubmitting ? 'Commenting...' : 'Comment' }
-					onCancel={this.props.onCancel}
-					onSubmit={( ...args ) => this.onSubmit( ...args )}
-					onUpload={( ...args ) => this.onUpload( ...args )}
+					onCancel={ this.props.onCancel }
+					onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
+					onUpload={ ( ...args ) => this.onUpload( ...args ) }
 				/>
 
-				{ this.state.error &&
+				{ this.state.error && (
 					<Notification type="error">
 						Could not submit: { this.state.error.message }
 					</Notification>
-				}
+				) }
 			</div>
 		</div>;
 	}

@@ -88,8 +88,8 @@ export class WritePost extends Component {
 		return <div className="WritePost" ref={ ref => this.container = ref }>
 			<header>
 				<Avatar
-					url={user ? user.avatar_urls['96'] : ''}
-					size={60}
+					url={ user ? user.avatar_urls['96'] : '' }
+					size={ 60 }
 				/>
 				<div className="byline">
 					<h2>
@@ -107,9 +107,14 @@ export class WritePost extends Component {
 					</span>
 					{categories.length > 0 &&
 						<select onChange={ e => this.setState( { category: e.target.value } ) } value={ this.state.cateogry } className="categories">
-							<option key="none" value={null}>- Category-</option>
-							{categories.map( category => (
-								<option key={category.id} value={category.id}>{ category.name }</option>
+							<option key="none" value={ null }>- Category-</option>
+							{ categories.map( category => (
+								<option
+									key={ category.id }
+									value={ category.id }
+								>
+									{ category.name }
+								</option>
 							) ) }
 						</select>
 					}
@@ -118,18 +123,18 @@ export class WritePost extends Component {
 			</header>
 			<Editor
 				submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
-				onCancel={this.props.onCancel}
-				onSubmit={( ...args ) => this.onSubmit( ...args )}
-				onUpload={( ...args ) => this.onUpload( ...args )}
+				onCancel={ this.props.onCancel }
+				onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
+				onUpload={ ( ...args ) => this.onUpload( ...args ) }
 			/>
 
-			{ this.state.error &&
+			{ this.state.error && (
 				<Notification type="error">
 					Could not submit: { this.state.error.message }
 				</Notification>
-			}
+			) }
 
-			{this.props.children}
+			{ this.props.children }
 		</div>
 	}
 }

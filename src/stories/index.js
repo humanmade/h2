@@ -70,20 +70,20 @@ storiesOf( 'Components', module )
 		return <IntlProvider locale="en">{story()}</IntlProvider>;
 	} )
 	.add( 'Header', () => (
-		<Header onWritePost={() => {}} onWriteStatus={() => {}}><Logo /></Header>
+		<Header onWritePost={ () => {} } onWriteStatus={ () => {} }><Logo /></Header>
 	) )
 	.add( 'Logo', () => <Logo /> )
 	.add( 'Avatar', () => (
 		<Avatar
-			size={32}
+			size={ 32 }
 			url="https://secure.gravatar.com/avatar/0ceb885cc3d306af93c9764b2936d618?s=300&d=mm&r=g"
 		/>
 	) )
-	.add( 'Status', () => <Status author={user} post={post} /> )
-	.add( 'Post', () => <Post author={user} post={post} /> )
+	.add( 'Status', () => <Status author={ user } post={ post } /> )
+	.add( 'Post', () => <Post author={ user } post={ post } /> )
 	.add( 'Post Titles', () => {
 		const lengths = [ 20, 22, 24, 26, 28, 30, 32, 34 ];
-		return <div style={{ width: '800px' }}>
+		return <div style={ { width: '800px' } }>
 			{ lengths.map( length => (
 				<Post
 					author={ user }
@@ -97,24 +97,24 @@ storiesOf( 'Components', module )
 			) ) }
 		</div>;
 	} )
-	.add( 'Comment', () => <Comment author={user} comment={comment} /> )
+	.add( 'Comment', () => <Comment author={ user } comment={ comment } /> )
 	.add( 'WriteComment', () => (
 		<WriteComment
-			author={user}
-			comment={comment}
-			post={post}
-			onChange={() => {}}
+			author={ user }
+			comment={ comment }
+			post={ post }
+			onChange={ () => {} }
 			onSave={ action( 'save' ) }
-			onCancel={() => {}}
+			onCancel={ () => {} }
 		/>
 	) )
 	.add( 'WritePost', () => (
 		<WritePost
-			author={user}
-			post={post}
-			onChange={() => {}}
-			onSave={() => {}}
-			onCancel={() => {}}
+			author={ user }
+			post={ post }
+			onChange={ () => {} }
+			onSave={ () => {} }
+			onCancel={ () => {} }
 		/>
 	) )
 	.add( 'Editor', () => (

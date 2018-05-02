@@ -26,7 +26,7 @@ class PostsList extends Component {
 				)
 			}
 			<div className="pagination">
-				<Link to={`/page/${ page ? Number( page ) + 1 : 2 }`}>Older</Link>
+				<Link to={ `/page/${ page ? Number( page ) + 1 : 2 }` }>Older</Link>
 				{ page && page > 1 ? (
 					<Link to={ `/page/${ page - 1 }` }>Newer</Link>
 				) : (

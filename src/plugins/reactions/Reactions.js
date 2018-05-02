@@ -142,7 +142,7 @@ export class Reactions extends Component {
 					onClick={ data => {
 						this.setState( { isOpen: false } );
 						this.toggleReaction( data.native || data.name );
-					}}
+					} }
 					title={ false }
 					emoji="upside_down_face"
 					autoFocus={ true }

@@ -21,7 +21,7 @@ class Header extends Component {
 					{ window.H2Data.site.name }
 				</Link>
 				<HeaderButton
-					onClick={this.props.onWritePost}
+					onClick={ this.props.onWritePost }
 					title="New Post"
 					icon="icon icon--plus-alt"
 					path="new-post"
@@ -29,7 +29,10 @@ class Header extends Component {
 
 				<Slot name="Header.buttons" />
 
-				<SearchInput onSearch={this.props.onSearch} value={this.props.searchValue} />
+				<SearchInput
+					value={ this.props.searchValue }
+					onSearch={ this.props.onSearch }
+				/>
 
 				<HeaderLabel
 					icon="mail"

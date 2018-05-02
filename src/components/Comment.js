@@ -50,9 +50,9 @@ export class Comment extends Component {
 		>
 			<header>
 				<Avatar
-					url={author ? author.avatar_urls['96'] : ''}
+					url={ author ? author.avatar_urls['96'] : '' }
 					user={ author }
-					size={40}
+					size={ 40 }
 				/>
 				<strong>
 					{ author ? (
@@ -71,30 +71,30 @@ export class Comment extends Component {
 							<FormattedRelative value={ comment.date_gmt + 'Z' } />
 						</time>
 					</a>
-					<Button onClick={() => this.setState( { isShowingReply: true } )}>Reply</Button>
+					<Button onClick={ () => this.setState( { isShowingReply: true } ) }>Reply</Button>
 					<Slot name="Comment.actions" fillChildProps={ fillProps } />
 				</div>
 			</header>
 			<div className="body">
 				<Slot name="Comment.before_content" fillChildProps={ fillProps } />
-				<MessageContent html={this.props.comment.content.rendered} />
+				<MessageContent html={ this.props.comment.content.rendered } />
 				<Slot name="Comment.after_content" fillChildProps={ fillProps } />
 			</div>
 			<CommentsList
-				allComments={this.props.comments}
-				comments={directComments}
-				post={post}
-				showWriteComment={false}
-				onDidCreateComment={this.props.onDidCreateComment}
+				allComments={ this.props.comments }
+				comments={ directComments }
+				post={ post }
+				showWriteComment={ false }
+				onDidCreateComment={ this.props.onDidCreateComment }
 			>
-				{this.state.isShowingReply &&
+				{ this.state.isShowingReply && (
 					<WriteComment
-						comment={comment}
-						parentPost={post}
-						onCancel={() => this.setState( { isShowingReply: false } )}
-						onDidCreateComment={( ...args ) => this.onDidCreateComment( ...args )}
+						comment={ comment }
+						parentPost={ post }
+						onCancel={ () => this.setState( { isShowingReply: false } ) }
+						onDidCreateComment={ ( ...args ) => this.onDidCreateComment( ...args ) }
 					/>
-				}
+				) }
 			</CommentsList>
 		</div>;
 	}

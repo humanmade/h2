@@ -4,13 +4,13 @@ import { storiesOf, action } from '@storybook/react';
 import DropUpload from '../components/DropUpload';
 
 storiesOf( 'Editor/Upload', module )
-	.addDecorator( story => <div style={{ margin: '10px' }}>{ story() }</div> )
+	.addDecorator( story => <div style={ { margin: '10px' } }>{ story() }</div> )
 	.add( 'Normal', () => (
 		<DropUpload
 			onCancel={ action( 'upload' ) }
 			onUpload={ action( 'upload' ) }
 		>
-			<p style={{ background: '#eee' }}>DropUpload children.</p>
+			<p style={ { background: '#eee' } }>DropUpload children.</p>
 		</DropUpload>
 	) )
 	.add( 'In Progress', () => (
@@ -19,6 +19,6 @@ storiesOf( 'Editor/Upload', module )
 			onCancel={ action( 'upload' ) }
 			onUpload={ action( 'upload' ) }
 		>
-			<p style={{ background: '#eee' }}>DropUpload children.</p>
+			<p style={ { background: '#eee' } }>DropUpload children.</p>
 		</DropUpload>
 	) );

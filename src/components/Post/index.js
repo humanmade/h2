@@ -48,14 +48,14 @@ class Post extends Component {
 		return <div className="Post">
 			<header>
 				<Avatar
-					url={author ? author.avatar_urls['96'] : ''}
-					user={author}
-					size={60}
+					url={ author ? author.avatar_urls['96'] : '' }
+					user={ author }
+					size={ 60 }
 				/>
 				<div className="byline">
 					<Link to={ post.link }>
 						<h2
-							dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+							dangerouslySetInnerHTML={ { __html: post.title.rendered } }
 							style={ headerStyle }
 						/>
 					</Link>
@@ -72,15 +72,17 @@ class Post extends Component {
 					</span>
 					{categories.length > 0 &&
 						<ul className="categories">
-							{categories.map( category => (
-								<li key={category.id}><Link to={category.link}>{category.name}</Link></li>
-							) )}
+							{ categories.map( category => (
+								<li key={ category.id }>
+									<Link to={ category.link }>{ category.name }</Link>
+								</li>
+							) ) }
 						</ul>
 					}
 					<Slot name="Post.byline" fillChildProps={ fillProps } />
 				</div>
 				<div className="actions">
-					<Button onClick={() => this.onClickReply()}>Reply</Button>
+					<Button onClick={ () => this.onClickReply() }>Reply</Button>
 					<Slot name="Post.actions" fillChildProps={ fillProps } />
 				</div>
 			</header>
@@ -90,19 +92,19 @@ class Post extends Component {
 				<Slot name="Post.after_content" fillChildProps={ fillProps } />
 			</div>
 			<CommentsList
-				allComments={this.props.comments.data ? this.props.comments.data : []}
-				comments={comments}
+				allComments={ this.props.comments.data ? this.props.comments.data : [] }
+				comments={ comments }
 				post={ post }
-				onComment={() => this.onComment()}
-				onDidCreateComment={( ...args ) => this.onDidCreateComment( ...args )}
+				onComment={ () => this.onComment() }
+				onDidCreateComment={ ( ...args ) => this.onDidCreateComment( ...args ) }
 			>
-				{this.state.isShowingReply &&
+				{ this.state.isShowingReply && (
 					<WriteComment
-						parentPost={post}
-						onCancel={() => this.onClickCancelReply()}
-						onDidCreateComment={( ...args ) => this.onDidCreateComment( ...args )}
+						parentPost={ post }
+						onCancel={ () => this.onClickCancelReply() }
+						onDidCreateComment={ ( ...args ) => this.onDidCreateComment( ...args ) }
 					/>
-				}
+				) }
 			</CommentsList>
 		</div>;
 	}

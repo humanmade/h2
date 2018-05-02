@@ -328,9 +328,9 @@ export default class Editor extends React.PureComponent {
 							}
 
 							return <button
-								key={type}
-								onClick={e => this.onButton( e, BUTTONS[type].apply )}
-								title={BUTTONS[type].title}
+								key={ type }
+								onClick={ e => this.onButton( e, BUTTONS[type].apply ) }
+								title={ BUTTONS[ type ].title }
 								type="button"
 							>
 								<span className="svg-icon" dangerouslySetInnerHTML={ { __html: BUTTONS[ type ].icon } }></span>
@@ -354,7 +354,7 @@ export default class Editor extends React.PureComponent {
 							ref={ el => this.updateTextarea( el ) }
 							className="Editor-editor"
 							placeholder="Write a comment..."
-							style={{ height }}
+							style={ { height } }
 							value={ content }
 							onBlur={ () => this.onBlur() }
 							onFocus={ () => this.onFocus() }
@@ -381,10 +381,10 @@ export default class Editor extends React.PureComponent {
 					</a>
 				</small>
 				<span className="Editor-submit-buttons">
-					{this.props.onCancel
-						? <Button onClick={this.props.onCancel}>Cancel</Button>
-						: null}
-					<Button submit type="primary">{this.props.submitText}</Button>
+					{ this.props.onCancel ? (
+						<Button onClick={ this.props.onCancel }>Cancel</Button>
+					) : null }
+					<Button submit type="primary">{ this.props.submitText }</Button>
 				</span>
 			</p>
 		</form>;

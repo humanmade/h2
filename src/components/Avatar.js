@@ -20,7 +20,7 @@ export default function Avatar( props ) {
 	>
 		<AuthorLink user={ props.user || null }>
 			<img
-				style={style}
+				style={ style }
 				alt="User Avatar"
 				src={ props.url || window.H2Data.site.default_avatar }
 			/>

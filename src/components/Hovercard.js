@@ -132,7 +132,7 @@ export default class Hovercard extends React.Component {
 
 		return <React.Fragment>
 			<CSSTransition
-				{...transition}
+				{ ...transition }
 				in={ !! ( active && this.target ) }
 				mountOnEnter={ true }
 				unmountOnExit={ true }
@@ -154,9 +154,9 @@ export default class Hovercard extends React.Component {
 			{ React.cloneElement(
 				React.Children.only( this.props.children ),
 				{
-					ref:         this.onUpdateRef,
+					ref: this.onUpdateRef,
 					onMouseOver: this.onMouseOver,
-					onMouseOut:  this.onMouseOut,
+					onMouseOut: this.onMouseOut,
 				}
 			) }
 		</React.Fragment>;

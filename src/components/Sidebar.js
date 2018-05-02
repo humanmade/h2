@@ -37,7 +37,7 @@ export class Sidebar extends Component {
 
 			{ ( this.props.widgets.data || [] ).map( widget => {
 				const Widget = widgetMap[ widget.type ] || widgetMap['default'];
-				return <Widget key={widget.id} {...widget} />
+				return <Widget key={ widget.id } { ...widget } />
 			} ) }
 
 			<Slot name="Sidebar.bottom" />

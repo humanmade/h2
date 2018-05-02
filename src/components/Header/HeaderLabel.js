@@ -4,7 +4,7 @@ import React from 'react';
 import './HeaderLabel.css';
 
 export default function HeaderButton( props ) {
-	return <button onClick={props.onClick} className="HeaderLabel label">
+	return <button onClick={ props.onClick } className="HeaderLabel label">
 		{ props.icon && <span
 			className={ 'icon icon--red icon--' + props.icon }
 		></span> }

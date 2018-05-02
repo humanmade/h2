@@ -70,19 +70,25 @@ class App extends Component {
 		return <div className="App">
 			<Header
 				onLogOut={ () => this.onLogOut() }
-				onWritePost={() => this.onClickWritePost()}
-				onSearch={search => this.onSearch( search )}
+				onWritePost={ () => this.onClickWritePost() }
+				onSearch={ search => this.onSearch( search ) }
 				onShowChanges={ () => this.setState( { showChanges: true } ) }
 			/>
 			<div className="Outer">
 				<div className="Inner">
-					{this.state.isShowingWritePost ? <WritePost onDidCreatePost={ post => this.onDidCreatePost( post )} onCancel={() => this.onCancelWritePost()} /> : null}
-					<Route path="/" exact component={PostsList} />
-					<Route path="/author/:authorSlug" exact component={PostsList} />
-					<Route path="/category/:categorySlug" exact component={PostsList} />
-					<Route path="/page/:page" exact component={PostsList} />
-					<Route path="/search/:search" exact component={PostsList} />
-					<Route path="/:year/:month/:day/:slug/:comment_page(comment-page-\d+)?" exact component={PostsList} />
+					{ this.state.isShowingWritePost ? (
+						<WritePost
+							onDidCreatePost={ post => this.onDidCreatePost( post ) }
+							onCancel={ () => this.onCancelWritePost() }
+						/>
+					) : null }
+
+					<Route path="/" exact component={ PostsList } />
+					<Route path="/author/:authorSlug" exact component={ PostsList } />
+					<Route path="/category/:categorySlug" exact component={ PostsList } />
+					<Route path="/page/:page" exact component={ PostsList } />
+					<Route path="/search/:search" exact component={ PostsList } />
+					<Route path="/:year/:month/:day/:slug/:comment_page(comment-page-\d+)?" exact component={ PostsList } />
 				</div>
 				{ this.renderSidebar() }
 			</div>
