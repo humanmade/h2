@@ -27,7 +27,7 @@ function AuthorLink( props ) {
 
 AuthorLink.propTypes = {
 	user: PropTypes.shape( {
-		id:   PropTypes.number.isRequired,
+		id: PropTypes.number.isRequired,
 		name: PropTypes.string.isRequired,
 	} ),
 };
@@ -35,7 +35,9 @@ AuthorLink.propTypes = {
 const mapStateToProps = () => ( {} );
 
 const mapDispatchToProps = ( dispatch, props ) => {
-	return { onSelect: () => dispatch( showSidebarProfile( props.user.id ) ) };
+	return {
+		onSelect: () => dispatch( showSidebarProfile( props.user.id ) ),
+	};
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( AuthorLink );

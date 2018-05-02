@@ -16,25 +16,25 @@ import WritePost from '../components/WritePost';
 import '../hm-pattern-library/assets/styles/juniper.css';
 
 const comment = {
-	id:       1,
-	post:     1,
+	id: 1,
+	post: 1,
 	date_gmt: new Date().toISOString(),
-	author:   1,
-	content:  {
+	author: 1,
+	content: {
 		rendered: 'Heading up to Oregon for my brother and sister-in-law’s birthday celebrations! I’ll be out May 4-7!',
-		raw:      'awd',
+		raw: 'awd',
 	},
 };
 
 const post = {
-	id:       1,
+	id: 1,
 	date_gmt: new Date().toISOString(),
-	author:   1,
-	title:    { rendered: 'Exploring the idea of Platform' },
-	content:  { rendered: 'Heading up to Oregon for my brother and sister-in-law’s birthday celebrations! I’ll be out May 4-7!' },
-	related:  {
+	author: 1,
+	title: { rendered: 'Exploring the idea of Platform' },
+	content: { rendered: 'Heading up to Oregon for my brother and sister-in-law’s birthday celebrations! I’ll be out May 4-7!' },
+	related: {
 		comments: {
-			items:     [],
+			items: [],
 			isLoading: false,
 			hasLoaded: false,
 		},
@@ -42,8 +42,8 @@ const post = {
 };
 
 const user = {
-	name:        'Noel',
-	slug:        'noel',
+	name: 'Noel',
+	slug: 'noel',
 	avatar_urls: {
 		'48': 'https://secure.gravatar.com/avatar/c57c8945079831fa3c19caef02e44614?s=48&d=mm&r=g',
 		'96': 'https://secure.gravatar.com/avatar/c57c8945079831fa3c19caef02e44614?s=96&d=mm&r=g',
@@ -70,51 +70,51 @@ storiesOf( 'Components', module )
 		return <IntlProvider locale="en">{story()}</IntlProvider>;
 	} )
 	.add( 'Header', () => (
-		<Header onWritePost={() => {}} onWriteStatus={() => {}}><Logo /></Header>
+		<Header onWritePost={ () => {} } onWriteStatus={ () => {} }><Logo /></Header>
 	) )
 	.add( 'Logo', () => <Logo /> )
 	.add( 'Avatar', () => (
 		<Avatar
-			size={32}
+			size={ 32 }
 			url="https://secure.gravatar.com/avatar/0ceb885cc3d306af93c9764b2936d618?s=300&d=mm&r=g"
 		/>
 	) )
-	.add( 'Status', () => <Status author={user} post={post} /> )
-	.add( 'Post', () => <Post author={user} post={post} /> )
+	.add( 'Status', () => <Status author={ user } post={ post } /> )
+	.add( 'Post', () => <Post author={ user } post={ post } /> )
 	.add( 'Post Titles', () => {
 		const lengths = [ 20, 22, 24, 26, 28, 30, 32, 34 ];
-		return <div style={{ width: '800px' }}>
+		return <div style={ { width: '800px' } }>
 			{ lengths.map( length => (
 				<Post
 					author={ user }
 					categories={ [] }
 					post={ {
 						...post,
-						title:   { rendered: 'm'.repeat( length ) },
+						title: { rendered: 'm'.repeat( length ) },
 						content: { rendered: `Post with title of length ${ length }` },
 					} }
 				/>
 			) ) }
 		</div>;
 	} )
-	.add( 'Comment', () => <Comment author={user} comment={comment} /> )
+	.add( 'Comment', () => <Comment author={ user } comment={ comment } /> )
 	.add( 'WriteComment', () => (
 		<WriteComment
-			author={user}
-			comment={comment}
-			post={post}
-			onChange={() => {}}
+			author={ user }
+			comment={ comment }
+			post={ post }
+			onChange={ () => {} }
 			onSave={ action( 'save' ) }
-			onCancel={() => {}}
+			onCancel={ () => {} }
 		/>
 	) )
 	.add( 'WritePost', () => (
 		<WritePost
-			author={user}
-			post={post}
-			onChange={() => {}}
-			onSave={() => {}}
-			onCancel={() => {}}
+			author={ user }
+			post={ post }
+			onChange={ () => {} }
+			onSave={ () => {} }
+			onCancel={ () => {} }
 		/>
 	) )
 	.add( 'Editor', () => (

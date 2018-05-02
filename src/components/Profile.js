@@ -54,8 +54,8 @@ class Profile extends React.Component {
 	render() {
 		const containerProps = {
 			className: 'Profile',
-			title:     'Profile',
-			onClose:   this.props.onClose,
+			title: 'Profile',
+			onClose: this.props.onClose,
 		};
 
 		if ( this.props.user.isLoading ) {

@@ -43,10 +43,10 @@ export class Reactions extends Component {
 
 		this.props.fetch( '/h2/v1/reactions', {
 			headers: {
-				Accept:         'application/json',
+				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
-			body:   JSON.stringify( body ),
+			body: JSON.stringify( body ),
 			method: 'POST',
 		} ).then( r => r.json() ).then( post  => {
 			this.props.refreshData();
@@ -142,7 +142,7 @@ export class Reactions extends Component {
 					onClick={ data => {
 						this.setState( { isOpen: false } );
 						this.toggleReaction( data.native || data.name );
-					}}
+					} }
 					title={ false }
 					emoji="upside_down_face"
 					autoFocus={ true }
@@ -173,19 +173,19 @@ export class Reactions extends Component {
 }
 
 export default withApiData( props => ( {
-	reactions:   `/h2/v1/reactions?post=${ props.postId }${ props.commentId ? `&comment=${ props.commentId }` : '' }`,
+	reactions: `/h2/v1/reactions?post=${ props.postId }${ props.commentId ? `&comment=${ props.commentId }` : '' }`,
 	currentUser: '/wp/v2/users/me',
-	users:       '/wp/v2/users?per_page=100',
+	users: '/wp/v2/users?per_page=100',
 } ) )( Reactions );
 
 Reactions.propTypes = {
-	userId:    PropTypes.number,
-	postId:    PropTypes.number.isRequired,
+	userId: PropTypes.number,
+	postId: PropTypes.number.isRequired,
 	commentId: PropTypes.number,
 	reactions: PropTypes.object.isRequired,
 };
 
 Reactions.defaultProps = {
-	userId:    0,
+	userId: 0,
 	isLoading: false,
 }

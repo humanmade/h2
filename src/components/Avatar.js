@@ -8,19 +8,19 @@ import './Avatar.css';
 
 export default function Avatar( props ) {
 	const style = {
-		width:  props.size,
+		width: props.size,
 		height: props.size,
 	};
 	const avatar = <div
 		className="Avatar"
 		style={ {
-			width:  props.size + 'px',
+			width: props.size + 'px',
 			height: props.size + 'px',
 		} }
 	>
 		<AuthorLink user={ props.user || null }>
 			<img
-				style={style}
+				style={ style }
 				alt="User Avatar"
 				src={ props.url || window.H2Data.site.default_avatar }
 			/>
@@ -37,10 +37,12 @@ export default function Avatar( props ) {
 }
 
 Avatar.propTypes = {
-	size:          PropTypes.number.isRequired,
-	url:           PropTypes.string.isRequired,
-	user:          PropTypes.object,
+	size: PropTypes.number.isRequired,
+	url: PropTypes.string.isRequired,
+	user: PropTypes.object,
 	withHovercard: PropTypes.bool.isRequired,
 };
 
-Avatar.defaultProps = { withHovercard: true };
+Avatar.defaultProps = {
+	withHovercard: true,
+};

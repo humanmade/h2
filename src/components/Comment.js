@@ -74,7 +74,12 @@ export class Comment extends Component {
 		const author = this.props.author.data;
 		const directComments = this.props.comments.filter( c => c.parent === comment.id );
 
-		const fillProps = { author, comment, comments: this.props.comments, post };
+		const fillProps = {
+			author,
+			comment,
+			comments: this.props.comments,
+			post,
+		};
 
 		return <div
 			className="Comment"
@@ -83,9 +88,9 @@ export class Comment extends Component {
 		>
 			<header>
 				<Avatar
-					url={author ? author.avatar_urls['96'] : ''}
+					url={ author ? author.avatar_urls['96'] : '' }
 					user={ author }
-					size={40}
+					size={ 40 }
 				/>
 				<strong>
 					{ author ? (
@@ -104,10 +109,10 @@ export class Comment extends Component {
 							<FormattedRelative value={ comment.date_gmt + 'Z' } />
 						</time>
 					</a>
-					{! this.state.isEditing &&
-						<Button onClick={() => this.setState( { isEditing: true } )}>Edit</Button>
-					}
-					<Button onClick={() => this.setState( { isShowingReply: true } )}>Reply</Button>
+					{ ! this.state.isEditing && (
+						<Button onClick={ () => this.setState( { isEditing: true } ) }>Edit</Button>
+					) }
+					<Button onClick={ () => this.setState( { isShowingReply: true } ) }>Reply</Button>
 					<Slot name="Comment.actions" fillChildProps={ fillProps } />
 				</div>
 			</header>
@@ -126,27 +131,27 @@ export class Comment extends Component {
 				<Slot name="Comment.after_content" fillChildProps={ fillProps } />
 			</div>
 			<CommentsList
-				allComments={this.props.comments}
-				comments={directComments}
-				post={post}
-				showWriteComment={false}
-				onDidCreateComment={this.props.onDidCreateComment}
+				allComments={ this.props.comments }
+				comments={ directComments }
+				post={ post }
+				showWriteComment={ false }
+				onDidCreateComment={ this.props.onDidCreateComment }
 			>
-				{this.state.isShowingReply &&
+				{ this.state.isShowingReply && (
 					<WriteComment
-						comment={comment}
-						parentPost={post}
-						onCancel={() => this.setState( { isShowingReply: false } )}
-						onDidCreateComment={( ...args ) => this.onDidCreateComment( ...args )}
+						comment={ comment }
+						parentPost={ post }
+						onCancel={ () => this.setState( { isShowingReply: false } ) }
+						onDidCreateComment={ ( ...args ) => this.onDidCreateComment( ...args ) }
 					/>
-				}
+				) }
 			</CommentsList>
 		</div>;
 	}
 }
 
 Comment.propTypes = {
-	comment:            CommentShape.isRequired,
+	comment: CommentShape.isRequired,
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 
