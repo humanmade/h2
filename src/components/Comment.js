@@ -20,8 +20,8 @@ export class Comment extends Component {
 		super( props );
 		this.state = {
 			isShowingReply: false,
-			isEditing:      false,
-			isSubmitting:   false,
+			isEditing: false,
+			isSubmitting: false,
 		};
 		this.element = null;
 	}
@@ -49,19 +49,22 @@ export class Comment extends Component {
 
 		this.props.fetch( `/wp/v2/comments/${ this.props.comment.id }`, {
 			headers: {
-				Accept:         'application/json',
+				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
-			body:   JSON.stringify( body ),
+			body: JSON.stringify( body ),
 			method: 'POST',
 		} ).then( r => r.json().then( data => {
 			if ( ! r.ok ) {
-				this.setState( { isSubmitting: false, error: data } );
+				this.setState( {
+					isSubmitting: false,
+					error: data,
+				} );
 				return;
 			}
 
 			this.setState( {
-				isEditing:    false,
+				isEditing: false,
 				isSubmitting: false,
 			} );
 			this.props.invalidateDataForUrl( `/wp/v2/comments?post=${ this.props.parentPost.id }&per_page=100` );
@@ -118,16 +121,16 @@ export class Comment extends Component {
 			</header>
 			<div className="body">
 				<Slot name="Comment.before_content" fillChildProps={ fillProps } />
-				{ this.state.isEditing ?
+				{ this.state.isEditing ? (
 					<Editor
 						initialValue={ comment.meta.unprocessed_content || comment.content.raw }
 						submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
-						onCancel={ () => this.setState( { isEditing: false } )}
+						onCancel={ () => this.setState( { isEditing: false } ) }
 						onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
 					/>
-				:
+				) : (
 					<MessageContent html={ this.props.comment.content.rendered } />
-				}
+				) }
 				<Slot name="Comment.after_content" fillChildProps={ fillProps } />
 			</div>
 			<CommentsList

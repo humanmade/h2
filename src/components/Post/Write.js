@@ -48,7 +48,7 @@ export class WritePost extends Component {
 			status: 'publish',
 			title: this.state.title,
 			categories: this.state.category ? [ this.state.category ] : [],
-			meta:       { unprocessed_content: unprocessedContent },
+			meta: { unprocessed_content: unprocessedContent },
 		};
 
 		this.props.fetch( '/wp/v2/posts', {

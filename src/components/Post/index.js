@@ -23,8 +23,8 @@ class Post extends Component {
 		super( props );
 		this.state = {
 			isShowingReply: false,
-			isEditing:      false,
-			isSubmitting:   false,
+			isEditing: false,
+			isSubmitting: false,
 		};
 	}
 	onClickReply() {
@@ -43,25 +43,28 @@ class Post extends Component {
 		const body = {
 			content,
 			status: 'publish',
-			meta:   { unprocessed_content: unprocessedContent },
+			meta: { unprocessed_content: unprocessedContent },
 		};
 
 		this.props.fetch( `/wp/v2/posts/${ this.props.data.id }`, {
 			headers: {
-				Accept:         'application/json',
+				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
-			body:   JSON.stringify( body ),
+			body: JSON.stringify( body ),
 			method: 'POST',
 		} ).then( r => r.json().then( data => {
 			if ( ! r.ok ) {
-				this.setState( { isSubmitting: false, error: data } );
+				this.setState( {
+					isSubmitting: false,
+					error: data,
+				} );
 				return;
 			}
 
 			this.setState( {
 				isSubmitting: false,
-				isEditing:    false,
+				isEditing: false,
 			} );
 			this.props.onInvalidate();
 		} ) );
@@ -130,16 +133,16 @@ class Post extends Component {
 			</header>
 			<div className="Post-content-wrap">
 				<Slot name="Post.before_content" fillChildProps={ fillProps } />
-				{ this.state.isEditing ?
+				{ this.state.isEditing ? (
 					<Editor
 						initialValue={ post.meta.unprocessed_content || post.content.raw }
 						submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
-						onCancel={ () => this.setState( { isEditing: false } )}
+						onCancel={ () => this.setState( { isEditing: false } ) }
 						onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
 					/>
-				:
+				) : (
 					<MessageContent html={ post.content.rendered } />
-				}
+				) }
 				<Slot name="Post.after_content" fillChildProps={ fillProps } />
 			</div>
 			<CommentsList
