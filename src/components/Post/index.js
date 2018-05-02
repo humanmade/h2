@@ -43,7 +43,12 @@ class Post extends Component {
 			headerStyle.fontSize = '1.333333333rem';
 		}
 
-		const fillProps = { author, comments, categories, post };
+		const fillProps = {
+			author,
+			comments,
+			categories,
+			post,
+		};
 
 		return <div className="Post">
 			<header>

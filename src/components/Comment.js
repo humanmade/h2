@@ -41,7 +41,12 @@ export class Comment extends Component {
 		const author = this.props.author.data;
 		const directComments = this.props.comments.filter( c => c.parent === comment.id );
 
-		const fillProps = { author, comment, comments: this.props.comments, post };
+		const fillProps = {
+			author,
+			comment,
+			comments: this.props.comments,
+			post,
+		};
 
 		return <div
 			className="Comment"
