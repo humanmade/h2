@@ -50,7 +50,7 @@ export class Comment extends Component {
 
 		const body = {
 			content,
-			meta: { unprocessed_content: unprocessedContent },
+			unprocessed_content: unprocessedContent,
 		};
 
 		this.props.fetch( `/wp/v2/comments/${ this.props.comment.id }`, {

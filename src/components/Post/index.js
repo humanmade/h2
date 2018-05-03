@@ -48,7 +48,7 @@ class Post extends Component {
 		const body = {
 			content,
 			status: 'publish',
-			meta: { unprocessed_content: unprocessedContent },
+			unprocessed_content: unprocessedContent,
 		};
 
 		this.props.fetch( `/wp/v2/posts/${ this.props.data.id }`, {
