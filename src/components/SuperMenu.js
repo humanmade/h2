@@ -89,6 +89,6 @@ class SuperMenu extends React.Component {
 }
 
 export default withApiData( props => ( {
-	user:       '/wp/v2/users/me',
+	user: '/wp/v2/users/me',
 	categories: '/wp/v2/categories',
 } ) )( SuperMenu );
