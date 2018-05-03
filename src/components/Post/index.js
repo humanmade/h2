@@ -11,6 +11,7 @@ import Avatar from '../Avatar';
 import Button from '../Button';
 import Editor from '../Editor';
 import CommentsList from '../../components/CommentsList';
+import Notification from '../Notification';
 import Link from '../RelativeLink';
 import AuthorLink from '../Message/AuthorLink';
 import MessageContent from '../Message/Content';
@@ -32,6 +33,10 @@ class Post extends Component {
 	}
 	onClickCancelReply() {
 		this.setState( { isShowingReply: false } )
+	}
+	onClickEdit = () => {
+		this.setState( { isEditing: true } );
+		this.props.onLoadEditable();
 	}
 	onDidCreateComment( ...args ) {
 		this.setState( { isShowingReply: false } )
@@ -67,10 +72,12 @@ class Post extends Component {
 				isEditing: false,
 			} );
 			this.props.onInvalidate();
+			this.props.invalidateDataForUrl( `/wp/v2/posts/${ this.props.data.id }?context=edit` );
 		} ) );
 	}
 	render() {
 		const post = this.props.data;
+		const editable = this.props.editable ? this.props.editable.data : null;
 		const author = this.props.author.data;
 		const comments = this.props.comments.data ? this.props.comments.data.filter( comment => comment.parent === 0 ) : [];
 		const categories = this.props.categories.data ? this.props.categories.data : [];
@@ -125,7 +132,7 @@ class Post extends Component {
 				</div>
 				<div className="actions">
 					{! this.state.isEditing &&
-						<Button onClick={ () => this.setState( { isEditing: true } ) }>Edit</Button>
+						<Button onClick={ this.onClickEdit }>Edit</Button>
 					}
 					<Button onClick={ () => this.onClickReply() }>Reply</Button>
 					<Slot name="Post.actions" fillChildProps={ fillProps } />
@@ -134,12 +141,16 @@ class Post extends Component {
 			<div className="Post-content-wrap">
 				<Slot name="Post.before_content" fillChildProps={ fillProps } />
 				{ this.state.isEditing ? (
-					<Editor
-						initialValue={ post.meta.unprocessed_content || post.content.raw }
-						submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
-						onCancel={ () => this.setState( { isEditing: false } ) }
-						onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
-					/>
+					editable ? (
+						<Editor
+							initialValue={ editable.meta.unprocessed_content || editable.content.raw }
+							submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
+							onCancel={ () => this.setState( { isEditing: false } ) }
+							onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
+						/>
+					) : (
+						<Notification>Loading…</Notification>
+					)
 				) : (
 					<MessageContent html={ post.content.rendered } />
 				) }
@@ -168,10 +179,34 @@ Post.propTypes = {
 	data: PostShape.isRequired,
 };
 
-const mapPropsToData = props => ( {
-	comments: `/wp/v2/comments?post=${ props.data.id }&per_page=100`,
-	author: `/wp/v2/users/${ props.data.author }`,
-	categories: `/wp/v2/categories?include=${ props.data.categories.join( ',' ) }`,
-} );
+const mapPropsToData = props => {
+	const urls = {
+		comments: `/wp/v2/comments?post=${ props.data.id }&per_page=100`,
+		author: `/wp/v2/users/${ props.data.author }`,
+		categories: `/wp/v2/categories?include=${ props.data.categories.join( ',' ) }`,
+	};
 
-export default withApiData( mapPropsToData )( Post );
+	if ( props.needsEditable ) {
+		urls.editable = `/wp/v2/posts/${ props.data.id }?context=edit`;
+	}
+
+	return urls;
+};
+
+const PostWithData = withApiData( mapPropsToData )( Post );
+
+class EditablePost extends React.Component {
+	state = {
+		needsEditable: false,
+	};
+
+	render() {
+		return <PostWithData
+			{ ...this.props }
+			needsEditable={ this.state.needsEditable }
+			onLoadEditable={ () => this.setState( { needsEditable: true } ) }
+		/>;
+	}
+}
+
+export default EditablePost;
