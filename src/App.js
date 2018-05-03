@@ -12,6 +12,8 @@ import Profile from './components/Profile';
 import Sidebar from './components/Sidebar';
 import { RenderPlugins } from './plugins';
 
+import SuperMenu from './components/SuperMenu';
+
 import './App.css';
 
 class App extends Component {
@@ -20,10 +22,32 @@ class App extends Component {
 		this.state = {
 			isShowingWritePost: false,
 			showChanges: false,
+			showingSuper: false,
 		};
 	}
 	onLogOut() {
 		window.location.href = '/wp-login.php?action=logout'
+	}
+
+	componentDidMount() {
+		this.unsubscribeFromHistory = this.props.history.listen( loc => this.handleLocationChange( loc ) );
+	}
+
+	componentWillUnmount() {
+		if ( this.unsubscribeFromHistory ) {
+			this.unsubscribeFromHistory();
+		}
+	}
+
+	handleLocationChange( location ) {
+		// Don't change on in-page navigation.
+		if ( location.pathname === this.props.location.pathname && location.search === this.props.location.search ) {
+			return;
+		}
+
+		if ( this.state.showingSuper ) {
+			this.setState( { showingSuper: false } );
+		}
 	}
 
 	onClickWritePost() {
@@ -67,12 +91,21 @@ class App extends Component {
 	}
 
 	render() {
-		return <div className="App">
+		const classes = [
+			'App',
+			this.state.showingSuper && 'App--showing-super',
+		];
+		return <div className={ classes.filter( Boolean ).join( ' ' ) }>
+			<SuperMenu
+				visible={ this.state.showingSuper }
+				onClose={ () => this.setState( { showingSuper: false } ) }
+			/>
 			<Header
 				onLogOut={ () => this.onLogOut() }
 				onWritePost={ () => this.onClickWritePost() }
 				onSearch={ search => this.onSearch( search ) }
 				onShowChanges={ () => this.setState( { showChanges: true } ) }
+				onShowSuper={ () => this.setState( { showingSuper: true } ) }
 			/>
 			<div className="Outer">
 				<div className="Inner">

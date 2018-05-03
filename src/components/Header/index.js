@@ -6,7 +6,6 @@ import CurrentUser from './CurrentUser';
 import HeaderButton from './HeaderButton';
 import HeaderLabel from './HeaderLabel';
 import Logo from './Logo';
-import SiteSelect from './SiteSelect';
 import SearchInput from '../SearchInput';
 import { withApiData } from '../../with-api-data';
 
@@ -16,7 +15,15 @@ class Header extends Component {
 	render() {
 		return <div className="Header">
 			<div className="Header-inner">
-				<SiteSelect />
+				<button
+					className="Header-site-name"
+					type="button"
+					onClick={ this.props.onShowSuper }
+				>
+					<Logo />
+
+					{ window.H2Data.site.name }
+				</button>
 
 				<HeaderButton
 					onClick={ this.props.onWritePost }
