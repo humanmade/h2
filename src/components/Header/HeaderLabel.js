@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import './HeaderButton.css';
+import './HeaderLabel.css';
 
 export default function HeaderButton( props ) {
-	return <button onClick={ props.onClick } className="HeaderButton">
+	return <button onClick={ props.onClick } className="HeaderLabel label">
 		{ props.icon && <span
-			className={ 'icon icon--' + props.icon + ' icon--black' }
+			className={ 'icon icon--red icon--' + props.icon }
 		></span> }
-		<span className="HeaderButton-title">{ props.title }</span>
+		{ props.title }
 	</button>;
 }
 

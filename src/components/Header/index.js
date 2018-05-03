@@ -2,8 +2,10 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Slot } from 'react-slot-fill';
 
-import CurrentUserDropDown from './CurrentUserDropDown';
+import CurrentUser from './CurrentUser';
 import HeaderButton from './HeaderButton';
+import HeaderLabel from './HeaderLabel';
+import Logo from './Logo';
 import SiteSelect from './SiteSelect';
 import SearchInput from '../SearchInput';
 import { withApiData } from '../../with-api-data';
@@ -17,24 +19,27 @@ class Header extends Component {
 				<SiteSelect />
 
 				<HeaderButton
-					onClick={this.props.onWritePost}
+					onClick={ this.props.onWritePost }
 					title="New Post"
 					icon="icon icon--plus-alt"
 					path="new-post"
 				/>
 
-				<HeaderButton
+				<Slot name="Header.buttons" />
+
+				<SearchInput
+					value={ this.props.searchValue }
+					onSearch={ this.props.onSearch }
+				/>
+
+				<HeaderLabel
 					icon="mail"
-					title="What's New"
+					title="What's New?"
 					onClick={ this.props.onShowChanges }
 				/>
 
-				<Slot name="Header.buttons" />
-
-				<SearchInput onSearch={this.props.onSearch} value={this.props.searchValue} />
-
 				{ this.props.currentUser.data ? (
-					<CurrentUserDropDown
+					<CurrentUser
 						user={ this.props.currentUser.data }
 						onLogOut={ this.props.onLogOut }
 					/>
@@ -46,13 +51,15 @@ class Header extends Component {
 	}
 }
 
-Header.defaultProps = { searchValue: '' };
+Header.defaultProps = {
+	searchValue: '',
+};
 
 Header.propTypes = {
 	searchValue: PropTypes.string,
-	onLogOut:    PropTypes.func.isRequired,
+	onLogOut: PropTypes.func.isRequired,
 	onWritePost: PropTypes.func.isRequired,
-	onSearch:    PropTypes.func.isRequired,
+	onSearch: PropTypes.func.isRequired,
 };
 
 export default withApiData( props => ( { currentUser: '/wp/v2/users/me' } ) )( Header );

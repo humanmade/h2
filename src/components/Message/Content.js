@@ -6,8 +6,10 @@ import './Content.css';
 export default function Content( props ) {
 	return <div
 		className="PostContent"
-		dangerouslySetInnerHTML={{ __html: props.html }}
+		dangerouslySetInnerHTML={ { __html: props.html } }
 	/>;
 }
 
-Content.propTypes = { html: PropTypes.string.isRequired };
+Content.propTypes = {
+	html: PropTypes.string.isRequired,
+};

@@ -9,21 +9,21 @@ import './Changes.css';
 const changes = [
 	// Add new changes to the bottom of this list, in the following format:
 	{
-		date:    '2018-02-26',
-		title:   'See What\'s New',
+		date: '2018-02-26',
+		title: 'See What\'s New',
 		content: () => <React.Fragment>
 			<p>H2 now includes a changelog (you're looking at it!) to let you know of any new features.</p>
 			<p>(We'll only use this for new major features; keep an eye on the <a href="https://github.com/humanmade/H2">H2 repo</a> if you want to see minor changes too!)</p>
 		</React.Fragment>,
 	},
 	{
-		date:    '2018-03-06',
-		title:   'React to Comments',
+		date: '2018-03-06',
+		title: 'React to Comments',
 		content: () => <p>You can now <span role="img" aria-label="">🎉</span> emoji react to <span role="img" aria-label="">💬</span> comments. <span role="img" aria-label="">🙌</span></p>,
 	},
 	{
-		date:    '2018-03-26',
-		title:   'More Useful Hovercards',
+		date: '2018-03-26',
+		title: 'More Useful Hovercards',
 		content: withApiData( props => ( { user: '/wp/v2/users/me' } ) )( props => <React.Fragment>
 			<p>Hovercards are now more useful, and will be displayed on usernames and avatars.</p>
 			{ props.user.isLoading ? (
@@ -33,6 +33,22 @@ const changes = [
 			) }
 			<p>You can also click linked names to show a full profile.</p>
 		</React.Fragment> ),
+	},
+	{
+		date: '2018-04-16',
+		title: 'Custom Emoji',
+		content: () => <p>
+			You can now use Slack custom emoji in posts or reactions.
+
+			{ ' ' }
+
+			{ window.H2Data.site.emoji['mindblown'] ? (
+				<img
+					alt=":mindblown:"
+					src={ window.H2Data.site.emoji['mindblown'].imageUrl }
+				/>
+			) : null }
+		</p>,
 	},
 ];
 
@@ -94,8 +110,8 @@ class ConnectedChanges extends React.Component {
 			const meta = { h2_last_updated: ( new Date() ).toISOString() };
 			this.props.fetch( '/wp/v2/users/me', {
 				headers: { 'Content-Type': 'application/json' },
-				body:    JSON.stringify( { meta } ),
-				method:  'PUT',
+				body: JSON.stringify( { meta } ),
+				method: 'PUT',
 			} ).then( r => r.json().then( data => {
 				this.props.invalidateData();
 			} ) );

@@ -3,6 +3,7 @@
 namespace H2;
 
 require __DIR__ . '/inc/namespace.php';
+require __DIR__ . '/inc/emoji/namespace.php';
 require __DIR__ . '/inc/loader/namespace.php';
 require __DIR__ . '/inc/rest_api/class-widgets-controller.php';
 
@@ -12,3 +13,5 @@ add_filter( 'pre_option_permalink_structure', __NAMESPACE__ . '\\get_permalink_s
 add_action( 'init', __NAMESPACE__ . '\\update_wp_rewrite_permalink_structure' );
 add_action( 'init', __NAMESPACE__ . '\\register_custom_meta' );
 add_action( 'rest_api_init', __NAMESPACE__ . '\\register_rest_routes' );
+
+Emoji\bootstrap();

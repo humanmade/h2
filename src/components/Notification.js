@@ -5,8 +5,8 @@ import './Notification.css';
 
 export const TYPES = {
 	STATUS: 'status',
-	ALERT:  'alert',
-	ERROR:  'error',
+	ALERT: 'alert',
+	ERROR: 'error',
 };
 
 export default function Notification( props ) {
@@ -15,5 +15,10 @@ export default function Notification( props ) {
 	</p>;
 }
 
-Notification.defaultProps = { type: 'status' };
-Notification.propTypes    = { type: PropTypes.oneOf( Object.values( TYPES ) ) };
+Notification.defaultProps = {
+	type: 'status',
+};
+
+Notification.propTypes = {
+	type: PropTypes.oneOf( Object.values( TYPES ) ),
+};

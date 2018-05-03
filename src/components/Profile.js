@@ -1,10 +1,10 @@
 import React from 'react';
 import { FormattedDate, FormattedTime } from 'react-intl';
 
-import Avatar from './Avatar';
-import Button from './Button';
 import Map from './Map';
 import RelativeLink from './RelativeLink';
+import UserBlock from './UserBlock';
+import Container from './Sidebar/Container';
 import { withApiData } from '../with-api-data';
 
 import './Profile.css';
@@ -52,66 +52,49 @@ const LocalTime = props => {
 
 class Profile extends React.Component {
 	render() {
+		const containerProps = {
+			className: 'Profile',
+			title: 'Profile',
+			onClose: this.props.onClose,
+		};
+
 		if ( this.props.user.isLoading ) {
-			return <aside className="Profile">
+			return <Container { ...containerProps }>
 				<p>Loading…</p>
-			</aside>;
+			</Container>;
 		}
 
 		const user = this.props.user.data;
 		if ( ! user ) {
-			return <aside className="Profile">
-				<Button onClick={ this.props.onClose }>
-					Close
-				</Button>
-
+			return <Container { ...containerProps }>
 				<p>Could not find details for user</p>
-			</aside>;
+			</Container>;
 		}
 
-		return <aside className="Profile">
-			<header className="Profile-closer">
-				<h2>Profile</h2>
-				<Button onClick={ this.props.onClose }>
-					Close
-				</Button>
-			</header>
-			<header>
-				<div>
-					<Avatar
-						url={ user.avatar_urls[96] }
-						user={ user }
-						size={ 60 }
-					/>
+		return (
+			<Container { ...containerProps }>
+				<UserBlock user={ user } />
+
+				<Map
+					height="200"
+					location={ user.facts.location }
+					width="300"
+					zoom="2.0"
+				/>
+
+				<p><RelativeLink to={ user.link }>View all posts →</RelativeLink></p>
+
+				<div className="Profile-fields">
+					<LocalTime user={ user } />
 				</div>
-				<div>
-					<h2>{ user.name }</h2>
-					<p>@{ user.slug }</p>
-					<p className={ user.facts.job_title ? 'Profile-title' : 'Profile-title missing' }>
-						{ user.facts.job_title || 'Unknown Role' }
-					</p>
+
+				<div className="Profile-description">
+					{ user.facts.long_description.split( '\n' ).map( ( text, idx ) =>
+						<p key={ idx }>{ text }</p>
+					) }
 				</div>
-			</header>
-
-			<Map
-				height="200"
-				location={ user.facts.location }
-				width="300"
-				zoom="2.0"
-			/>
-
-			<p><RelativeLink to={ user.link }>View all posts →</RelativeLink></p>
-
-			<div className="Profile-fields">
-				<LocalTime user={ user } />
-			</div>
-
-			<div className="Profile-description">
-				{ user.facts.long_description.split( '\n' ).map( ( text, idx ) =>
-					<p key={ idx }>{ text }</p>
-				) }
-			</div>
-		</aside>;
+			</Container>
+		);
 	}
 }
 

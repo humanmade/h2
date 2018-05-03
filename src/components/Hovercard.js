@@ -7,11 +7,11 @@ import './Hovercard.css';
 const HOVER_DELAY = 100;
 
 const transition = {
-	component:  'div',
+	component: 'div',
 	classNames: 'Hovercard-Transition',
-	timeout:    {
+	timeout: {
 		enter: 100,
-		exit:  100,
+		exit: 100,
 	},
 };
 
@@ -23,7 +23,7 @@ function getPosition( target, width ) {
 	let rect = target.getBoundingClientRect();
 
 	let style = {
-		top:  rect.top + window.pageYOffset - document.documentElement.clientTop,
+		top: rect.top + window.pageYOffset - document.documentElement.clientTop,
 		left: rect.left + window.pageXOffset - document.documentElement.clientLeft,
 	};
 
@@ -124,7 +124,7 @@ export default class Hovercard extends React.Component {
 		const positions = getPosition( this.target, width );
 		const cardStyle = {
 			left: positions.left,
-			top:  positions.top,
+			top: positions.top,
 			width,
 		};
 		const pointerStyle = {};
@@ -132,7 +132,7 @@ export default class Hovercard extends React.Component {
 
 		return <React.Fragment>
 			<CSSTransition
-				{...transition}
+				{ ...transition }
 				in={ !! ( active && this.target ) }
 				mountOnEnter={ true }
 				unmountOnExit={ true }
@@ -154,13 +154,15 @@ export default class Hovercard extends React.Component {
 			{ React.cloneElement(
 				React.Children.only( this.props.children ),
 				{
-					ref:         this.onUpdateRef,
+					ref: this.onUpdateRef,
 					onMouseOver: this.onMouseOver,
-					onMouseOut:  this.onMouseOut,
+					onMouseOut: this.onMouseOut,
 				}
 			) }
 		</React.Fragment>;
 	}
 }
 
-Hovercard.defaultProps = { width: 300 };
+Hovercard.defaultProps = {
+	width: 300,
+};
