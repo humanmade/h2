@@ -59,6 +59,7 @@ class SuperMenu extends React.Component {
 				<ul>
 					<li><Link to="/">All Posts</Link></li>
 					{/*<li><Link to="/drafts/">Your Drafts</Link></li>*/}
+					<li><a href="/wp-admin/">Dashboard</a></li>
 				</ul>
 
 				<h3>Categories</h3>
