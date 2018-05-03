@@ -54,33 +54,35 @@ class SuperMenu extends React.Component {
 				</button>
 			</header>
 
-			<h2 className="screen-reader-text">Navigation</h2>
-			<ul>
-				<li><Link to="/">All Posts</Link></li>
-				{/*<li><Link to="/drafts/">Your Drafts</Link></li>*/}
-			</ul>
+			<div className="SuperMenu__content">
+				<h2 className="screen-reader-text">Navigation</h2>
+				<ul>
+					<li><Link to="/">All Posts</Link></li>
+					{/*<li><Link to="/drafts/">Your Drafts</Link></li>*/}
+				</ul>
 
-			<h3>Categories</h3>
-			<ul>
-				{ categories.data && categories.data.map( category => (
-					<li key={ category.id }>
-						<Link to={ category.link }>
-							{ category.name }
-						</Link>
-					</li>
-				) ) }
-			</ul>
+				<h3>Categories</h3>
+				<ul>
+					{ categories.data && categories.data.map( category => (
+						<li key={ category.id }>
+							<Link to={ category.link }>
+								{ category.name }
+							</Link>
+						</li>
+					) ) }
+				</ul>
 
-			<h3>Sites</h3>
-			<ul>
-				{ sites.map( site => (
-					<li key={ site.url }>
-						<a href={ site.url }>
-							{ site.title }
-						</a>
-					</li>
-				) ) }
-			</ul>
+				<h3>Sites</h3>
+				<ul>
+					{ sites.map( site => (
+						<li key={ site.url }>
+							<a href={ site.url }>
+								{ site.title }
+							</a>
+						</li>
+					) ) }
+				</ul>
+			</div>
 		</nav>;
 	}
 }

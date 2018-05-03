@@ -9,6 +9,8 @@
 	padding: 1rem 20px;
 	box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.15 );
 	transition: transform 150ms;
+	display: flex;
+	flex-direction: column;
 }
 
 .SuperMenu--visible {
@@ -31,6 +33,10 @@
 	padding: 0;
 	margin: 0;
 	cursor: pointer;
+}
+
+.SuperMenu__content {
+	overflow: auto;
 }
 
 /* Use relative units for headers/margins */

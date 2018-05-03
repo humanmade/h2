@@ -20,6 +20,11 @@
 	pointer-events: none;
 }
 
+.App--showing-super {
+	overflow: hidden;
+	height: 100vh;
+}
+
 .App--showing-super:before {
 	opacity: 1;
 	pointer-events: auto;
