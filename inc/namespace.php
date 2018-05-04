@@ -126,6 +126,39 @@ function register_rest_routes() {
 
 	$widgets_controller = new REST_API\Widgets_Controller( $wp_widget_factory->widgets );
 	$widgets_controller->register_routes();
+
+	$markdown_schema = [
+		'description' => 'Raw Markdown content for the post.',
+		'type'        => 'string',
+		'context'     => [ 'edit' ],
+	];
+
+	register_rest_field( 'post', 'unprocessed_content', [
+		'get_callback'    => function ( $data, $attr, $request ) {
+			if ( $request['context'] !== 'edit' ) {
+				return null;
+			}
+
+			return get_post_meta( $data['id'], 'unprocessed_content', true );
+		},
+		'update_callback' => function ( $value, $post ) {
+			update_post_meta( $post->ID, 'unprocessed_content', wp_slash( $value ) );
+		},
+		'schema'          => $markdown_schema,
+	] );
+	register_rest_field( 'comment', 'unprocessed_content', [
+		'get_callback'    => function ( $data, $attr, $request ) {
+			if ( $request['context'] !== 'edit' ) {
+				return null;
+			}
+
+			return get_comment_meta( $data['id'], 'unprocessed_content', true );
+		},
+		'update_callback' => function ( $value, $comment ) {
+			update_comment_meta( $comment->comment_ID, 'unprocessed_content', wp_slash( $value ) );
+		},
+		'schema'          => $markdown_schema,
+	] );
 }
 
 /**
@@ -139,5 +172,15 @@ function register_custom_meta() {
 	register_meta( 'user', 'hm_time_timezone', [
 		'single'       => true,
 		'show_in_rest' => true,
+	] );
+
+	// These fields are exposed above.
+	register_meta( 'post', 'unprocessed_content', [
+		'show_in_rest' => false,
+		'single'       => true,
+	] );
+	register_meta( 'comment', 'unprocessed_content', [
+		'show_in_rest' => false,
+		'single'       => true,
 	] );
 }

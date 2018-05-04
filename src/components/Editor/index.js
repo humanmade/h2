@@ -65,7 +65,7 @@ export default class Editor extends React.PureComponent {
 		super( props );
 
 		this.state = {
-			content: '',
+			content: props.initialValue,
 			completion: null,
 			count: 0,
 			hasFocus: false,
@@ -155,7 +155,7 @@ export default class Editor extends React.PureComponent {
 	onSubmit( e ) {
 		e.preventDefault();
 
-		this.props.onSubmit( marked( this.state.content ) );
+		this.props.onSubmit( marked( this.state.content ), this.state.content );
 	}
 
 	onBlur() {
@@ -392,6 +392,7 @@ export default class Editor extends React.PureComponent {
 }
 
 Editor.defaultProps = {
+	initialValue: '',
 	submitText: 'Comment',
 };
 
