@@ -91,7 +91,7 @@ export default class Editor extends React.PureComponent {
 
 		const warning = 'You have unsaved content. Are you sure you want to leave?';
 		e.returnValue = warning;
-		return e;
+		return warning;
 	}
 
 	componentDidUpdate() {
