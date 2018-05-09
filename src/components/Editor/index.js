@@ -76,6 +76,24 @@ export default class Editor extends React.PureComponent {
 		this.textarea = null;
 	}
 
+	componentDidMount() {
+		window.addEventListener( 'beforeunload', this.warnBeforeLeaving );
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener( 'beforeunload', this.warnBeforeLeaving );
+	}
+
+	warnBeforeLeaving = e => {
+		if ( this.state.content === '' || ( this.props.initialValue && this.state.content === this.props.initialValue ) ) {
+			return;
+		}
+
+		const warning = 'You have unsaved content. Are you sure you want to leave?';
+		e.returnValue = warning;
+		return e;
+	}
+
 	componentDidUpdate() {
 		if ( ! this.textarea ) {
 			return;
