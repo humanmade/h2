@@ -13,6 +13,7 @@ import WriteComment from './Message/WriteComment';
 import Notification from './Notification';
 import { Comment as CommentShape } from '../shapes';
 import { withApiData } from '../with-api-data';
+import { parseResponse } from '../wordpress-rest-api-cookie-auth';
 
 import './Comment.css';
 
@@ -78,6 +79,15 @@ export class Comment extends Component {
 		} ) );
 	}
 
+	onUpload = file => {
+		const options = { method: 'POST' };
+		options.body = new FormData();
+		options.body.append( 'file', file );
+
+		return this.props.fetch( '/wp/v2/media', options )
+			.then( parseResponse );
+	}
+
 	render() {
 		const comment = this.props.comment;
 		const editable = this.props.editable ? this.props.editable.data : null;
@@ -136,6 +146,7 @@ export class Comment extends Component {
 							submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
 							onCancel={ () => this.setState( { isEditing: false } ) }
 							onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
+							onUpload={ this.onUpload }
 						/>
 					) : (
 						<Notification>Loading…</Notification>
