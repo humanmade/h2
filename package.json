@@ -13,7 +13,7 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.10.3",
-    "react-scripts": "^1.1.0"
+    "react-scripts": "^1.1.4"
   },
   "dependencies": {
     "@iarna/word-count": "^1.0.3",
