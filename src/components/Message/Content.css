@@ -2,7 +2,6 @@
 	display: block;
 	word-wrap: break-word;
 	word-break: break-word;
-	overflow: auto;
 }
 
 .PostContent img {
