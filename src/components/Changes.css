@@ -23,3 +23,15 @@
 	border-radius: 4px;
 	overflow: auto;
 }
+
+/* Use relative units for headers/margins */
+.Changes h2 {
+	text-transform: none;
+	font-size: 1.777777778em;
+	margin: 1.35em 0;
+}
+.Changes h3 {
+	text-transform: none;
+	font-size: 1.222222222em;
+	margin: 1.35em 0;
+}
