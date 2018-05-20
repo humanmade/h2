@@ -8,9 +8,6 @@ import './Changes.css';
 
 function Changes( props ) {
 	const { newChanges, onDismiss } = props;
-	if ( ! newChanges.length ) {
-		// return null;
-	}
 
 	// Separate old changes.
 	const oldChanges = changes.filter( change => newChanges.indexOf( change ) === -1 );
