@@ -92,10 +92,11 @@ class App extends Component {
 				</div>
 				{ this.renderSidebar() }
 			</div>
-			<Changes
-				forceShow={ this.state.showChanges }
-				onDismiss={ () => this.setState( { showChanges: false } ) }
-			/>
+			{ this.state.showChanges ? (
+				<Changes
+					onDismiss={ () => this.setState( { showChanges: false } ) }
+				/>
+			) : null }
 
 			<RenderPlugins />
 		</div>;

@@ -9,8 +9,14 @@ import './Changes.css';
 function Changes( props ) {
 	const { newChanges, onDismiss } = props;
 	if ( ! newChanges.length ) {
-		return null;
+		// return null;
 	}
+
+	// Separate old changes.
+	const oldChanges = changes.filter( change => newChanges.indexOf( change ) === -1 );
+
+	// Show previous changes in reverse-chronological order.
+	oldChanges.reverse();
 
 	return <div
 		className="Changes"
@@ -36,19 +42,25 @@ function Changes( props ) {
 				</div>
 			) }
 
+			{ newChanges.length > 0 && oldChanges.length > 0 ? (
+				<h2>Previous Changes</h2>
+			) : null }
+
+			{ oldChanges.map( change =>
+				<div
+					key={ change.title }
+					className="Changes-change"
+				>
+					<h3>{ change.title }</h3>
+					<change.content />
+				</div>
+			) }
 		</div>
 	</div>;
 }
 
 class ConnectedChanges extends React.Component {
 	render() {
-		if ( this.props.forceShow ) {
-			return <Changes
-				newChanges={ changes }
-				onDismiss={ this.props.onDismiss }
-			/>;
-		}
-
 		if ( ! this.props.currentUser || ! this.props.currentUser.data ) {
 			return null;
 		}
@@ -64,6 +76,7 @@ class ConnectedChanges extends React.Component {
 			} ).then( r => r.json().then( data => {
 				this.props.invalidateData();
 			} ) );
+			this.props.onDismiss();
 		}
 
 		return <Changes
