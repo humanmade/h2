@@ -8,10 +8,12 @@ export const changes = [
 	{
 		date: '2018-02-26',
 		title: 'See What\'s New',
-		content: () => <React.Fragment>
-			<p>H2 now includes a changelog (you're looking at it!) to let you know of any new features.</p>
-			<p>(We'll only use this for new major features; keep an eye on the <a href="https://github.com/humanmade/H2">H2 repo</a> if you want to see minor changes too!)</p>
-		</React.Fragment>,
+		content: () => (
+			<React.Fragment>
+				<p>H2 now includes a changelog (you're looking at it!) to let you know of any new features.</p>
+				<p>(We'll only use this for new major features; keep an eye on the <a href="https://github.com/humanmade/H2">H2 repo</a> if you want to see minor changes too!)</p>
+			</React.Fragment>
+		),
 	},
 	{
 		date: '2018-03-06',
@@ -21,31 +23,35 @@ export const changes = [
 	{
 		date: '2018-03-26',
 		title: 'More Useful Hovercards',
-		content: withApiData( props => ( { user: '/wp/v2/users/me' } ) )( props => <React.Fragment>
-			<p>Hovercards are now more useful, and will be displayed on usernames and avatars.</p>
-			{ props.user.isLoading ? (
-				<p>For example, hover over your name to see yours: <em>loading…</em></p>
-			) : (
-				<p>For example, hover over your name to see yours: <AuthorLink user={ props.user.data }>{ props.user.data.name }</AuthorLink></p>
-			) }
-			<p>You can also click linked names to show a full profile.</p>
-		</React.Fragment> ),
+		content: withApiData( props => ( { user: '/wp/v2/users/me' } ) )( props => (
+			<React.Fragment>
+				<p>Hovercards are now more useful, and will be displayed on usernames and avatars.</p>
+				{ props.user.isLoading ? (
+					<p>For example, hover over your name to see yours: <em>loading…</em></p>
+				) : (
+					<p>For example, hover over your name to see yours: <AuthorLink user={ props.user.data }>{ props.user.data.name }</AuthorLink></p>
+				) }
+				<p>You can also click linked names to show a full profile.</p>
+			</React.Fragment>
+		) ),
 	},
 	{
 		date: '2018-04-16',
 		title: 'Custom Emoji',
-		content: () => <p>
-			You can now use Slack custom emoji in posts or reactions.
+		content: () => (
+			<p>
+				You can now use Slack custom emoji in posts or reactions.
 
-			{ ' ' }
+				{ ' ' }
 
-			{ window.H2Data.site.emoji['mindblown'] ? (
-				<img
-					alt=":mindblown:"
-					src={ window.H2Data.site.emoji['mindblown'].imageUrl }
-				/>
-			) : null }
-		</p>,
+				{ window.H2Data.site.emoji['mindblown'] ? (
+					<img
+						alt=":mindblown:"
+						src={ window.H2Data.site.emoji['mindblown'].imageUrl }
+					/>
+				) : null }
+			</p>
+		),
 	},
 ];
 

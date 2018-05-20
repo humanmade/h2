@@ -15,44 +15,46 @@ function Changes( props ) {
 	// Show previous changes in reverse-chronological order.
 	oldChanges.reverse();
 
-	return <div
-		className="Changes"
-		onClick={ onDismiss }
-	>
+	return (
 		<div
-			className="Changes-inner"
-			onClick={ e => e.stopPropagation() }
+			className="Changes"
+			onClick={ onDismiss }
 		>
-			<TitleBar
-				title={ <span><i className="icon icon--mail" /> Latest Changes</span> }
-				onClose={ onDismiss }
-			/>
+			<div
+				className="Changes-inner"
+				onClick={ e => e.stopPropagation() }
+			>
+				<TitleBar
+					title={ <span><i className="icon icon--mail" /> Latest Changes</span> }
+					onClose={ onDismiss }
+				/>
 
-			{ newChanges.map( change =>
-				<div
-					key={ change.title }
-					className="Changes-change"
-				>
-					<h3>{ change.title }</h3>
-					<change.content />
-				</div>
-			) }
+				{ newChanges.map( change =>
+					<div
+						key={ change.title }
+						className="Changes-change"
+					>
+						<h3>{ change.title }</h3>
+						<change.content />
+					</div>
+				) }
 
-			{ newChanges.length > 0 && oldChanges.length > 0 ? (
-				<h2>Previous Changes</h2>
-			) : null }
+				{ newChanges.length > 0 && oldChanges.length > 0 ? (
+					<h2>Previous Changes</h2>
+				) : null }
 
-			{ oldChanges.map( change =>
-				<div
-					key={ change.title }
-					className="Changes-change"
-				>
-					<h3>{ change.title }</h3>
-					<change.content />
-				</div>
-			) }
+				{ oldChanges.map( change =>
+					<div
+						key={ change.title }
+						className="Changes-change"
+					>
+						<h3>{ change.title }</h3>
+						<change.content />
+					</div>
+				) }
+			</div>
 		</div>
-	</div>;
+	);
 }
 
 class ConnectedChanges extends React.Component {
@@ -75,10 +77,12 @@ class ConnectedChanges extends React.Component {
 			this.props.onDismiss();
 		}
 
-		return <Changes
-			newChanges={ newChanges }
-			onDismiss={ onDismiss }
-		/>;
+		return (
+			<Changes
+				newChanges={ newChanges }
+				onDismiss={ onDismiss }
+			/>
+		);
 	}
 }
 
