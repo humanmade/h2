@@ -23,17 +23,3 @@
 	border-radius: 4px;
 	overflow: auto;
 }
-
-.Changes header {
-	display: flex;
-	align-items: center;
-}
-
-.Changes header h2 {
-	flex-grow: 1;
-	margin-left: 0.5em;
-}
-
-.Changes header .btn {
-	margin: 0;
-}

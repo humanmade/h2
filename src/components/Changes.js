@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Button from './Button';
+import TitleBar from './Sidebar/TitleBar';
 import { changes, getChangesForUser } from '../changelog';
 import { withApiData } from '../with-api-data';
 
@@ -23,11 +24,10 @@ function Changes( props ) {
 			className="Changes-inner"
 			onClick={ e => e.stopPropagation() }
 		>
-			<header>
-				<i className="icon icon--mail" />
-				<h2>Latest Changes</h2>
-				<Button onClick={ onDismiss }>Close</Button>
-			</header>
+			<TitleBar
+				title={ <span><i className="icon icon--mail" /> Latest Changes</span> }
+				onClose={ onDismiss }
+			/>
 
 			{ newChanges.map( change =>
 				<div
