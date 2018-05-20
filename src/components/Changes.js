@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Button from './Button';
 import TitleBar from './Sidebar/TitleBar';
 import { changes, getChangesForUser } from '../changelog';
 import { withApiData } from '../with-api-data';
