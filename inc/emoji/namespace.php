@@ -20,6 +20,7 @@ function bootstrap() {
 
 	add_filter( 'h2.custom_emoji', __NAMESPACE__ . '\\get_custom_emoji' );
 	add_filter( 'the_content', __NAMESPACE__ . '\\replace_custom_emoji', 20 );
+	add_filter( 'comment_text', __NAMESPACE__ . '\\replace_custom_emoji', 20 );
 	add_action( 'h2.emoji.update_slack', __NAMESPACE__ . '\\update_slack_emoji' );
 }
 
