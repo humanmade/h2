@@ -16,6 +16,7 @@ import Link from '../RelativeLink';
 import AuthorLink from '../Message/AuthorLink';
 import MessageContent from '../Message/Content';
 import WriteComment from '../Message/WriteComment';
+import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 
 import './index.css';
 
@@ -75,6 +76,16 @@ class Post extends Component {
 			this.props.invalidateDataForUrl( `/wp/v2/posts/${ this.props.data.id }?context=edit` );
 		} ) );
 	}
+
+	onUpload = file => {
+		const options = { method: 'POST' };
+		options.body = new FormData();
+		options.body.append( 'file', file );
+
+		return this.props.fetch( '/wp/v2/media', options )
+			.then( parseResponse );
+	}
+
 	render() {
 		const post = this.props.data;
 		const editable = this.props.editable ? this.props.editable.data : null;
@@ -147,6 +158,7 @@ class Post extends Component {
 							submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
 							onCancel={ () => this.setState( { isEditing: false } ) }
 							onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
+							onUpload={ this.onUpload }
 						/>
 					) : (
 						<Notification>Loading…</Notification>
