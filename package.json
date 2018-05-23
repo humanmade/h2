@@ -12,8 +12,8 @@
     "eslint-plugin-flowtype": "^2.21.0",
     "eslint-plugin-import": "^2.0.1",
     "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.4.1",
-    "react-scripts": "^1.1.0"
+    "eslint-plugin-react": "^6.10.3",
+    "react-scripts": "^1.1.4"
   },
   "dependencies": {
     "@iarna/word-count": "^1.0.3",
@@ -37,7 +37,7 @@
     "react-storybook": "^1.0.0",
     "react-timeago": "^3.4.3",
     "react-transition-group": "^2.2.1",
-    "react-wp-scripts": "^0.1.1",
+    "react-wp-scripts": "^0.2.0",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^2.7.0",
