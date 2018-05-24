@@ -25,12 +25,12 @@
 }
 
 /* Use relative units for headers/margins */
-.Changes h2 {
+h2.Changes-previous {
 	text-transform: none;
 	font-size: 1.777777778em;
 	margin: 1.35em 0;
 }
-.Changes h3 {
+.Changes-change h3 {
 	text-transform: none;
 	font-size: 1.222222222em;
 	margin: 1.35em 0;

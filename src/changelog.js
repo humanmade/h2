@@ -74,8 +74,8 @@ export function getChangesForUser( user ) {
 		return null;
 	}
 
-	const rawLastView = user.meta.h2_last_updated || '1970-01-01T00:00:00';
-	const lastView = new Date( rawLastView + 'Z' );
+	const rawLastView = user.meta.h2_last_updated || '1970-01-01T00:00:00Z';
+	const lastView = new Date( rawLastView );
 
 	return getChanges( lastView );
 }
