@@ -8,11 +8,20 @@ import HeaderLabel from './HeaderLabel';
 import Logo from './Logo';
 import SearchInput from '../SearchInput';
 import { withApiData } from '../../with-api-data';
+import { getChangesForUser } from '../../changelog';
 
 import './index.css';
 
 class Header extends Component {
 	render() {
+		const newChanges = this.props.currentUser && this.props.currentUser.data ? getChangesForUser( this.props.currentUser.data ) : [];
+
+		const newLabel = <span>
+			What's New?
+			{ ' ' }
+			{ newChanges.length > 0 ? <span class="label__count">{ newChanges.length }</span> : null }
+		</span>;
+
 		return <div className="Header">
 			<div className="Header-inner">
 				<button
@@ -41,7 +50,7 @@ class Header extends Component {
 
 				<HeaderLabel
 					icon="mail"
-					title="What's New?"
+					title={ newLabel }
 					onClick={ this.props.onShowChanges }
 				/>
 

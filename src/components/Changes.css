@@ -24,16 +24,14 @@
 	overflow: auto;
 }
 
-.Changes header {
-	display: flex;
-	align-items: center;
+/* Use relative units for headers/margins */
+.Changes h2 {
+	text-transform: none;
+	font-size: 1.777777778em;
+	margin: 1.35em 0;
 }
-
-.Changes header h2 {
-	flex-grow: 1;
-	margin-left: 0.5em;
-}
-
-.Changes header .btn {
-	margin: 0;
+.Changes h3 {
+	text-transform: none;
+	font-size: 1.222222222em;
+	margin: 1.35em 0;
 }
