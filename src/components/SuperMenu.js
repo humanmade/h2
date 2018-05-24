@@ -6,36 +6,10 @@ import { withApiData } from '../with-api-data';
 
 import './SuperMenu.css';
 
-const sites = [
-	{
-		url: 'https://updates.hmn.md/',
-		title: 'Updates',
-	},
-	{
-		url: 'https://dev.hmn.md/',
-		title: 'Dev',
-	},
-	{
-		url: 'https://servers.hmn.md/',
-		title: 'Servers',
-	},
-	{
-		url: 'https://money.hmn.md/',
-		title: 'Money',
-	},
-	{
-		url: 'https://hiring.hmn.md/',
-		title: 'Hiring',
-	},
-	{
-		url: 'https://pm.hmn.md/',
-		title: 'Project Management',
-	},
-];
-
 class SuperMenu extends React.Component {
 	render() {
 		const { categories, visible } = this.props;
+		const sites = this.props.sites && this.props.sites.data;
 
 		const classes = [
 			'SuperMenu',
@@ -73,22 +47,27 @@ class SuperMenu extends React.Component {
 					) ) }
 				</ul>
 
-				<h3>Sites</h3>
-				<ul>
-					{ sites.map( site => (
-						<li key={ site.url }>
-							<a href={ site.url }>
-								{ site.title }
-							</a>
-						</li>
-					) ) }
-				</ul>
+				{ sites ? (
+					<React.Fragment>
+						<h3>Sites</h3>
+						<ul>
+							{ sites.map( site => (
+								<li key={ site.id }>
+									<a href={ site.url }>
+										{ site.name }
+									</a>
+								</li>
+							) ) }
+						</ul>
+					</React.Fragment>
+				) : null }
 			</div>
 		</nav>;
 	}
 }
 
 export default withApiData( props => ( {
+	sites: '/h2/v1/site-switcher/sites',
 	user: '/wp/v2/users/me',
 	categories: '/wp/v2/categories',
 } ) )( SuperMenu );
