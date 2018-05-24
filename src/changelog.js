@@ -53,6 +53,13 @@ export const changes = [
 			</p>
 		),
 	},
+	{
+		date: '2018-05-24',
+		title: 'Cross-Site & Category Navigation',
+		content: () => <p>H2 now includes navigation between categories and
+			across sites, to enable you to work quicker and more efficiently.
+			Simply click the red H button in the top left to show the navigation.</p>,
+	}
 ];
 
 export function getChanges( lastView ) {
