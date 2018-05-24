@@ -22,6 +22,7 @@ class PostsList extends Component {
 					<PostComponent
 						key={ post.id }
 						data={ post }
+						onInvalidate={ () => this.props.invalidateData() }
 					/>
 				)
 			}
