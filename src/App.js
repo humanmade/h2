@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
 
-import { hideSidebarProfile } from './actions';
+import {
+	hideSidebarProfile,
+	hideSuperSidebar,
+	showSuperSidebar,
+} from './actions';
 import Changes from './components/Changes';
 import Header from './components/Header';
 import PostsList from './components/Post/List';
@@ -22,7 +26,6 @@ class App extends Component {
 		this.state = {
 			isShowingWritePost: false,
 			showChanges: false,
-			showingSuper: false,
 		};
 	}
 	onLogOut() {
@@ -45,8 +48,8 @@ class App extends Component {
 			return;
 		}
 
-		if ( this.state.showingSuper ) {
-			this.setState( { showingSuper: false } );
+		if ( this.props.showingSuper ) {
+			this.props.onHideSuperSidebar();
 		}
 	}
 
@@ -93,19 +96,19 @@ class App extends Component {
 	render() {
 		const classes = [
 			'App',
-			this.state.showingSuper && 'App--showing-super',
+			this.props.showingSuper && 'App--showing-super',
 		];
 		return <div className={ classes.filter( Boolean ).join( ' ' ) }>
 			<SuperMenu
-				visible={ this.state.showingSuper }
-				onClose={ () => this.setState( { showingSuper: false } ) }
+				visible={ this.props.showingSuper }
+				onClose={ this.props.onHideSuperSidebar }
 			/>
 			<Header
 				onLogOut={ () => this.onLogOut() }
 				onWritePost={ () => this.onClickWritePost() }
 				onSearch={ search => this.onSearch( search ) }
 				onShowChanges={ () => this.setState( { showChanges: true } ) }
-				onShowSuper={ () => this.setState( { showingSuper: true } ) }
+				onShowSuper={ this.props.onShowSuperSidebar }
 			/>
 			<div className="Outer">
 				<div className="Inner">
@@ -137,13 +140,18 @@ class App extends Component {
 
 const mapStateToProps = state => {
 	return {
+		showingSuper: state.ui.showingSuper,
 		sidebarProfile: state.ui.sidebarProfile,
 		sidebarView: state.ui.sidebarView,
 	};
 };
 
 const mapDispatchToProps = dispatch => {
-	return { onDismissSidebarProfile: () => dispatch( hideSidebarProfile() ) };
+	return {
+		onDismissSidebarProfile: () => dispatch( hideSidebarProfile() ),
+		onHideSuperSidebar: () => dispatch( hideSuperSidebar() ),
+		onShowSuperSidebar: () => dispatch( showSuperSidebar() ),
+	};
 };
 
 export default withRouter(
