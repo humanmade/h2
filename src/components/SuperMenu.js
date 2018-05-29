@@ -32,7 +32,6 @@ class SuperMenu extends React.Component {
 				<h2 className="screen-reader-text">Navigation</h2>
 				<ul>
 					<li><Link to="/">All Posts</Link></li>
-					{/*<li><Link to="/drafts/">Your Drafts</Link></li>*/}
 					<li><a href="/wp-admin/">Dashboard</a></li>
 				</ul>
 
