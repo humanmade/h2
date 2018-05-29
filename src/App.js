@@ -33,7 +33,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		this.unsubscribeFromHistory = this.props.history.listen( loc => this.handleLocationChange( loc ) );
+		this.unsubscribeFromHistory = this.props.history.listen( this.handleLocationChange );
 	}
 
 	componentWillUnmount() {
@@ -42,7 +42,7 @@ class App extends Component {
 		}
 	}
 
-	handleLocationChange( location ) {
+	handleLocationChange = location => {
 		// Don't change on in-page navigation.
 		if ( location.pathname === this.props.location.pathname && location.search === this.props.location.search ) {
 			return;
