@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { Slot } from 'react-slot-fill';
 
 import CurrentUser from './CurrentUser';
@@ -25,10 +24,16 @@ class Header extends Component {
 
 		return <div className="Header">
 			<div className="Header-inner">
-				<Link to="/" className="Header-site-name">
+				<button
+					className="Header-site-name"
+					type="button"
+					onClick={ this.props.onShowSuper }
+				>
 					<Logo />
+
 					{ window.H2Data.site.name }
-				</Link>
+				</button>
+
 				<HeaderButton
 					onClick={ this.props.onWritePost }
 					title="New Post"

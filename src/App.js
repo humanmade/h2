@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
 
-import { hideSidebarProfile } from './actions';
+import {
+	hideSidebarProfile,
+	hideSuperSidebar,
+	showSuperSidebar,
+} from './actions';
 import Changes from './components/Changes';
 import Header from './components/Header';
 import PostsList from './components/Post/List';
@@ -11,6 +15,8 @@ import MetaSidebar from './components/MetaSidebar';
 import Profile from './components/Profile';
 import Sidebar from './components/Sidebar';
 import { RenderPlugins } from './plugins';
+
+import SuperMenu from './components/SuperMenu';
 
 import './App.css';
 
@@ -24,6 +30,27 @@ class App extends Component {
 	}
 	onLogOut() {
 		window.location.href = '/wp-login.php?action=logout'
+	}
+
+	componentDidMount() {
+		this.unsubscribeFromHistory = this.props.history.listen( this.handleLocationChange );
+	}
+
+	componentWillUnmount() {
+		if ( this.unsubscribeFromHistory ) {
+			this.unsubscribeFromHistory();
+		}
+	}
+
+	handleLocationChange = location => {
+		// Don't change on in-page navigation.
+		if ( location.pathname === this.props.location.pathname && location.search === this.props.location.search ) {
+			return;
+		}
+
+		if ( this.props.showingSuper ) {
+			this.props.onHideSuperSidebar();
+		}
 	}
 
 	onClickWritePost() {
@@ -67,12 +94,21 @@ class App extends Component {
 	}
 
 	render() {
-		return <div className="App">
+		const classes = [
+			'App',
+			this.props.showingSuper && 'App--showing-super',
+		];
+		return <div className={ classes.filter( Boolean ).join( ' ' ) }>
+			<SuperMenu
+				visible={ this.props.showingSuper }
+				onClose={ this.props.onHideSuperSidebar }
+			/>
 			<Header
 				onLogOut={ () => this.onLogOut() }
 				onWritePost={ () => this.onClickWritePost() }
 				onSearch={ search => this.onSearch( search ) }
 				onShowChanges={ () => this.setState( { showChanges: true } ) }
+				onShowSuper={ this.props.onShowSuperSidebar }
 			/>
 			<div className="Outer">
 				<div className="Inner">
@@ -105,13 +141,18 @@ class App extends Component {
 
 const mapStateToProps = state => {
 	return {
+		showingSuper: state.ui.showingSuper,
 		sidebarProfile: state.ui.sidebarProfile,
 		sidebarView: state.ui.sidebarView,
 	};
 };
 
 const mapDispatchToProps = dispatch => {
-	return { onDismissSidebarProfile: () => dispatch( hideSidebarProfile() ) };
+	return {
+		onDismissSidebarProfile: () => dispatch( hideSidebarProfile() ),
+		onHideSuperSidebar: () => dispatch( hideSuperSidebar() ),
+		onShowSuperSidebar: () => dispatch( showSuperSidebar() ),
+	};
 };
 
 export default withRouter(

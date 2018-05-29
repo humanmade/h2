@@ -40,7 +40,7 @@ function Changes( props ) {
 				) }
 
 				{ newChanges.length > 0 && oldChanges.length > 0 ? (
-					<h2>Previous Changes</h2>
+					<h2 className="Changes-previous">Previous Changes</h2>
 				) : null }
 
 				{ oldChanges.map( change =>

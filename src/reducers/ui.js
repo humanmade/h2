@@ -2,9 +2,14 @@ import {
 	SHOW_META_SIDEBAR,
 	SHOW_SIDEBAR_PROFILE,
 	HIDE_SIDEBAR_PROFILE,
+	SHOW_SUPER_SIDEBAR,
+	HIDE_SUPER_SIDEBAR,
 } from '../actions';
 
-const DEFAULT_STATE = { sidebarProfile: null };
+const DEFAULT_STATE = {
+	showingSuper: false,
+	sidebarProfile: null,
+};
 
 export default function ui( state = DEFAULT_STATE, action ) {
 	switch ( action.type ) {
@@ -26,6 +31,18 @@ export default function ui( state = DEFAULT_STATE, action ) {
 				...state,
 				sidebarView: null,
 				sidebarProfile: null,
+			};
+
+		case SHOW_SUPER_SIDEBAR:
+			return {
+				...state,
+				showingSuper: true,
+			};
+
+		case HIDE_SUPER_SIDEBAR:
+			return {
+				...state,
+				showingSuper: false,
 			};
 
 		default:

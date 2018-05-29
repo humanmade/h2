@@ -1,5 +1,5 @@
 .Header {
-	background: var(--hm-beige);
+	background: var( --hm-beige );
 	flex: 1;
 }
 
@@ -9,20 +9,20 @@
 	padding: 0 20px;
 }
 
-.Header-inner > a:hover,
-.Header-inner > a:focus {
-	border: none;
-}
-
-.Header .Header-site-name {
+.Header-site-name {
+	background: var( --hm-red );
+	color: #fff;
 	display: flex;
 	align-items: center;
-	background: var(--hm-red);
 	padding-right: 1em;
-	color: #fff;
+	border: none;
+	font: inherit;
+	cursor: pointer;
 }
 
-.Header-site-name:hover {
+.Header-site-name:hover,
+.Header-site-name:focus {
+	border: none;
 	color: rgba( 255, 255, 255, 0.6 );
 }
 
