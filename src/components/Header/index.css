@@ -1,5 +1,5 @@
 .Header {
-	background: var(--hm-beige);
+	background: var( --hm-beige );
 	flex: 1;
 }
 
@@ -10,7 +10,7 @@
 }
 
 .Header-site-name {
-	background: var(--hm-red);
+	background: var( --hm-red );
 	color: #fff;
 	display: flex;
 	align-items: center;
