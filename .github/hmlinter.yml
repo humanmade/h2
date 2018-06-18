@@ -1,0 +1,9 @@
+version: 0.4.2
+
+phpcs:
+    enabled: true
+    version: inherit
+
+eslint:
+    enabled: true
+    version: inherit
