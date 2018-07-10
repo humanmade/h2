@@ -37,6 +37,10 @@
 	padding-left: 15px;
 }
 
+.PostContent iframe {
+	max-width: 100%;
+}
+
 .PostContent > *:first-child {
 	margin-top: 0;
 }
