@@ -73,7 +73,7 @@ export default class DropUpload extends React.PureComponent {
 									type="file"
 									onChange={ e => this.onInputChange( e ) }
 								/>
-								<span>Upload an attachment</span>
+								Upload an attachment
 							</label>
 							<span> or drop files here.</span>
 						</p>
