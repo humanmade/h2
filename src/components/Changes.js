@@ -29,7 +29,7 @@ function Changes( props ) {
 					onClose={ onDismiss }
 				/>
 
-				{ newChanges.map( change =>
+				{ newChanges.map( change => (
 					<div
 						key={ change.title }
 						className="Changes-change"
@@ -37,13 +37,13 @@ function Changes( props ) {
 						<h3>{ change.title }</h3>
 						<change.content />
 					</div>
-				) }
+				) ) }
 
 				{ newChanges.length > 0 && oldChanges.length > 0 ? (
 					<h2 className="Changes-previous">Previous Changes</h2>
 				) : null }
 
-				{ oldChanges.map( change =>
+				{ oldChanges.map( change => (
 					<div
 						key={ change.title }
 						className="Changes-change"
@@ -51,7 +51,7 @@ function Changes( props ) {
 						<h3>{ change.title }</h3>
 						<change.content />
 					</div>
-				) }
+				) ) }
 			</div>
 		</div>
 	);

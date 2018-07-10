@@ -10,16 +10,18 @@ import './CurrentUser.css';
 function CurrentUser( props ) {
 	const { user } = props;
 
-	return <button
-		className="Header-CurrentUser"
-		onClick={ props.onShowSidebar }
-	>
-		<Avatar
-			key="avatar"
-			size={ 40 }
-			url={ user.avatar_urls['96'] }
-		/>
-	</button>;
+	return (
+		<button
+			className="Header-CurrentUser"
+			onClick={ props.onShowSidebar }
+		>
+			<Avatar
+				key="avatar"
+				size={ 40 }
+				url={ user.avatar_urls['96'] }
+			/>
+		</button>
+	);
 }
 
 CurrentUser.propTypes = { user: User.isRequired };

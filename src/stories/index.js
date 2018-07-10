@@ -83,19 +83,21 @@ storiesOf( 'Components', module )
 	.add( 'Post', () => <Post author={ user } post={ post } /> )
 	.add( 'Post Titles', () => {
 		const lengths = [ 20, 22, 24, 26, 28, 30, 32, 34 ];
-		return <div style={ { width: '800px' } }>
-			{ lengths.map( length => (
-				<Post
-					author={ user }
-					categories={ [] }
-					post={ {
-						...post,
-						title: { rendered: 'm'.repeat( length ) },
-						content: { rendered: `Post with title of length ${ length }` },
-					} }
-				/>
-			) ) }
-		</div>;
+		return (
+			<div style={ { width: '800px' } }>
+				{ lengths.map( length => (
+					<Post
+						author={ user }
+						categories={ [] }
+						post={ {
+							...post,
+							title: { rendered: 'm'.repeat( length ) },
+							content: { rendered: `Post with title of length ${ length }` },
+						} }
+					/>
+				) ) }
+			</div>
+		);
 	} )
 	.add( 'Comment', () => <Comment author={ user } comment={ comment } /> )
 	.add( 'WriteComment', () => (

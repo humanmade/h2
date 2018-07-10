@@ -98,44 +98,46 @@ class App extends Component {
 			'App',
 			this.props.showingSuper && 'App--showing-super',
 		];
-		return <div className={ classes.filter( Boolean ).join( ' ' ) }>
-			<SuperMenu
-				visible={ this.props.showingSuper }
-				onClose={ this.props.onHideSuperSidebar }
-			/>
-			<Header
-				onLogOut={ () => this.onLogOut() }
-				onWritePost={ () => this.onClickWritePost() }
-				onSearch={ search => this.onSearch( search ) }
-				onShowChanges={ () => this.setState( { showChanges: true } ) }
-				onShowSuper={ this.props.onShowSuperSidebar }
-			/>
-			<div className="Outer">
-				<div className="Inner">
-					{ this.state.isShowingWritePost ? (
-						<WritePost
-							onDidCreatePost={ post => this.onDidCreatePost( post ) }
-							onCancel={ () => this.onCancelWritePost() }
-						/>
-					) : null }
-
-					<Route path="/" exact component={ PostsList } />
-					<Route path="/author/:authorSlug" exact component={ PostsList } />
-					<Route path="/category/:categorySlug" exact component={ PostsList } />
-					<Route path="/page/:page" exact component={ PostsList } />
-					<Route path="/search/:search" exact component={ PostsList } />
-					<Route path="/:year/:month/:day/:slug/:comment_page(comment-page-\d+)?" exact component={ PostsList } />
-				</div>
-				{ this.renderSidebar() }
-			</div>
-			{ this.state.showChanges ? (
-				<Changes
-					onDismiss={ () => this.setState( { showChanges: false } ) }
+		return (
+			<div className={ classes.filter( Boolean ).join( ' ' ) }>
+				<SuperMenu
+					visible={ this.props.showingSuper }
+					onClose={ this.props.onHideSuperSidebar }
 				/>
-			) : null }
+				<Header
+					onLogOut={ () => this.onLogOut() }
+					onWritePost={ () => this.onClickWritePost() }
+					onSearch={ search => this.onSearch( search ) }
+					onShowChanges={ () => this.setState( { showChanges: true } ) }
+					onShowSuper={ this.props.onShowSuperSidebar }
+				/>
+				<div className="Outer">
+					<div className="Inner">
+						{ this.state.isShowingWritePost ? (
+							<WritePost
+								onDidCreatePost={ post => this.onDidCreatePost( post ) }
+								onCancel={ () => this.onCancelWritePost() }
+							/>
+						) : null }
 
-			<RenderPlugins />
-		</div>;
+						<Route path="/" exact component={ PostsList } />
+						<Route path="/author/:authorSlug" exact component={ PostsList } />
+						<Route path="/category/:categorySlug" exact component={ PostsList } />
+						<Route path="/page/:page" exact component={ PostsList } />
+						<Route path="/search/:search" exact component={ PostsList } />
+						<Route path="/:year/:month/:day/:slug/:comment_page(comment-page-\d+)?" exact component={ PostsList } />
+					</div>
+					{ this.renderSidebar() }
+				</div>
+				{ this.state.showChanges ? (
+					<Changes
+						onDismiss={ () => this.setState( { showChanges: false } ) }
+					/>
+				) : null }
+
+				<RenderPlugins />
+			</div>
+		);
 	}
 }
 

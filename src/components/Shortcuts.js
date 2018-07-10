@@ -36,9 +36,11 @@ class Shortcuts extends React.Component {
 			return null;
 		}
 
-		return <React.Fragment>
-			{ this.props.children }
-		</React.Fragment>;
+		return (
+			<React.Fragment>
+				{ this.props.children }
+			</React.Fragment>
+		);
 	}
 }
 

@@ -9,45 +9,51 @@ import { withApiData } from '../with-api-data';
 
 import './Profile.css';
 
-const Field = props => <p className="Profile-field">
-	<strong>{ props.name }:</strong>
-	<span className={ props.missing ? 'missing' : null }>{ props.children }</span>
-</p>;
+const Field = props => (
+	<p className="Profile-field">
+		<strong>{ props.name }:</strong>
+		<span className={ props.missing ? 'missing' : null }>{ props.children }</span>
+	</p>
+);
 
 const LocalTime = props => {
 	const timeZone = props.user.meta.hm_time_timezone;
 	if ( ! timeZone ) {
 		const profileUrl = `${ window.H2Data.site.url }/wp-admin/profile.php?user_id=${ props.user.id }`;
-		return <Field
-			name="Local time"
-			missing
-		>
-			Unknown timezone,
-			set in <a href={ profileUrl }>your profile</a>
-		</Field>;
+		return (
+			<Field
+				name="Local time"
+				missing
+			>
+				Unknown timezone,
+				set in <a href={ profileUrl }>your profile</a>
+			</Field>
+		);
 	}
 
 	const now = new Date();
-	return <React.Fragment>
-		<Field name="Local time">
-			<FormattedTime
-				value={ now }
-				timeZone={ timeZone }
-			/>
+	return (
+		<React.Fragment>
+			<Field name="Local time">
+				<FormattedTime
+					value={ now }
+					timeZone={ timeZone }
+				/>
 
-			{ ', '}
+				{ ', '}
 
-			<FormattedDate
-				day="numeric"
-				month="long"
-				value={ now }
-				timeZone={ timeZone }
-			/>
-		</Field>
-		<Field name="Timezone">
-			{ timeZone }
-		</Field>
-	</React.Fragment>;
+				<FormattedDate
+					day="numeric"
+					month="long"
+					value={ now }
+					timeZone={ timeZone }
+				/>
+			</Field>
+			<Field name="Timezone">
+				{ timeZone }
+			</Field>
+		</React.Fragment>
+	);
 }
 
 class Profile extends React.Component {
@@ -59,16 +65,20 @@ class Profile extends React.Component {
 		};
 
 		if ( this.props.user.isLoading ) {
-			return <Container { ...containerProps }>
-				<p>Loading…</p>
-			</Container>;
+			return (
+				<Container { ...containerProps }>
+					<p>Loading…</p>
+				</Container>
+			);
 		}
 
 		const user = this.props.user.data;
 		if ( ! user ) {
-			return <Container { ...containerProps }>
-				<p>Could not find details for user</p>
-			</Container>;
+			return (
+				<Container { ...containerProps }>
+					<p>Could not find details for user</p>
+				</Container>
+			);
 		}
 
 		return (

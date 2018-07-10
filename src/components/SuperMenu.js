@@ -16,52 +16,54 @@ class SuperMenu extends React.Component {
 			visible && 'SuperMenu--visible',
 		];
 
-		return <nav className={ classes.filter( Boolean ).join( ' ' ) }>
-			<header>
-				<Logo />
-				<button
-					className="SuperMenu--closer"
-					type="button"
-					onClick={ this.props.onClose }
-				>
-					<i className="icon icon--close icon--white" />
-				</button>
-			</header>
+		return (
+			<nav className={ classes.filter( Boolean ).join( ' ' ) }>
+				<header>
+					<Logo />
+					<button
+						className="SuperMenu--closer"
+						type="button"
+						onClick={ this.props.onClose }
+					>
+						<i className="icon icon--close icon--white" />
+					</button>
+				</header>
 
-			<div className="SuperMenu__content">
-				<h2 className="screen-reader-text">Navigation</h2>
-				<ul>
-					<li><Link to="/">All Posts</Link></li>
-					<li><a href="/wp-admin/">Dashboard</a></li>
-				</ul>
+				<div className="SuperMenu__content">
+					<h2 className="screen-reader-text">Navigation</h2>
+					<ul>
+						<li><Link to="/">All Posts</Link></li>
+						<li><a href="/wp-admin/">Dashboard</a></li>
+					</ul>
 
-				<h3>Categories</h3>
-				<ul>
-					{ categories.data && categories.data.map( category => (
-						<li key={ category.id }>
-							<Link to={ category.link }>
-								{ category.name }
-							</Link>
-						</li>
-					) ) }
-				</ul>
+					<h3>Categories</h3>
+					<ul>
+						{ categories.data && categories.data.map( category => (
+							<li key={ category.id }>
+								<Link to={ category.link }>
+									{ category.name }
+								</Link>
+							</li>
+						) ) }
+					</ul>
 
-				{ sites ? (
-					<React.Fragment>
-						<h3>Sites</h3>
-						<ul>
-							{ sites.map( site => (
-								<li key={ site.id }>
-									<a href={ site.url }>
-										{ site.name }
-									</a>
-								</li>
-							) ) }
-						</ul>
-					</React.Fragment>
-				) : null }
-			</div>
-		</nav>;
+					{ sites ? (
+						<React.Fragment>
+							<h3>Sites</h3>
+							<ul>
+								{ sites.map( site => (
+									<li key={ site.id }>
+										<a href={ site.url }>
+											{ site.name }
+										</a>
+									</li>
+								) ) }
+							</ul>
+						</React.Fragment>
+					) : null }
+				</div>
+			</nav>
+		);
 	}
 }
 

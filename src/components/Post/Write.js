@@ -86,57 +86,59 @@ export class WritePost extends Component {
 	render() {
 		const user = this.props.user.data;
 		const categories = this.props.categories.data || [];
-		return <div className="WritePost" ref={ ref => this.container = ref }>
-			<header>
-				<Avatar
-					url={ user ? user.avatar_urls['96'] : '' }
-					size={ 60 }
+		return (
+			<div className="WritePost" ref={ ref => this.container = ref }>
+				<header>
+					<Avatar
+						url={ user ? user.avatar_urls['96'] : '' }
+						size={ 60 }
+					/>
+					<div className="byline">
+						<h2>
+							<input
+								ref={ title => this.titleInput = title }
+								type="text"
+								placeholder="Enter post title..."
+								required
+								value={ this.state.title }
+								onChange={ e => this.setState( { title: e.target.value } ) }
+							/>
+						</h2>
+						<span className="date">
+							{user ? user.name : ''}, now
+						</span>
+						{categories.length > 0 &&
+							<select onChange={ e => this.setState( { category: e.target.value } ) } value={ this.state.cateogry } className="categories">
+								<option key="none" value={ null }>- Category-</option>
+								{ categories.map( category => (
+									<option
+										key={ category.id }
+										value={ category.id }
+									>
+										{ category.name }
+									</option>
+								) ) }
+							</select>
+						}
+					</div>
+					<div className="actions"></div>
+				</header>
+				<Editor
+					submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
+					onCancel={ this.props.onCancel }
+					onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
+					onUpload={ ( ...args ) => this.onUpload( ...args ) }
 				/>
-				<div className="byline">
-					<h2>
-						<input
-							ref={ title => this.titleInput = title }
-							type="text"
-							placeholder="Enter post title..."
-							required
-							value={ this.state.title }
-							onChange={ e => this.setState( { title: e.target.value } ) }
-						/>
-					</h2>
-					<span className="date">
-						{user ? user.name : ''}, now
-					</span>
-					{categories.length > 0 &&
-						<select onChange={ e => this.setState( { category: e.target.value } ) } value={ this.state.cateogry } className="categories">
-							<option key="none" value={ null }>- Category-</option>
-							{ categories.map( category => (
-								<option
-									key={ category.id }
-									value={ category.id }
-								>
-									{ category.name }
-								</option>
-							) ) }
-						</select>
-					}
-				</div>
-				<div className="actions"></div>
-			</header>
-			<Editor
-				submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
-				onCancel={ this.props.onCancel }
-				onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
-				onUpload={ ( ...args ) => this.onUpload( ...args ) }
-			/>
 
-			{ this.state.error && (
-				<Notification type="error">
-					Could not submit: { this.state.error.message }
-				</Notification>
-			) }
+				{ this.state.error && (
+					<Notification type="error">
+						Could not submit: { this.state.error.message }
+					</Notification>
+				) }
 
-			{ this.props.children }
-		</div>
+				{ this.props.children }
+			</div>
+		);
 	}
 }
 

@@ -130,36 +130,40 @@ export default class Hovercard extends React.Component {
 		const pointerStyle = {};
 		pointerStyle.transform = positions.pointerOffset ? `translate( ${ positions.pointerOffset}px, 0 )` : null;
 
-		return <React.Fragment>
-			<CSSTransition
-				{ ...transition }
-				in={ !! ( active && this.target ) }
-				mountOnEnter={ true }
-				unmountOnExit={ true }
-			>
-				{ () => <CardPortal>
-					<div
-						className="Hovercard-Card"
-						style={ cardStyle }
-					>
-						<div
-							className="Hovercard-Card-pointer"
-							style={ pointerStyle }
-						/>
-						<Card />
-					</div>
-				</CardPortal> }
-			</CSSTransition>
+		return (
+			<React.Fragment>
+				<CSSTransition
+					{ ...transition }
+					in={ !! ( active && this.target ) }
+					mountOnEnter={ true }
+					unmountOnExit={ true }
+				>
+					{ () => (
+						<CardPortal>
+							<div
+								className="Hovercard-Card"
+								style={ cardStyle }
+							>
+								<div
+									className="Hovercard-Card-pointer"
+									style={ pointerStyle }
+								/>
+								<Card />
+							</div>
+						</CardPortal>
+					) }
+				</CSSTransition>
 
-			{ React.cloneElement(
-				React.Children.only( this.props.children ),
-				{
-					ref: this.onUpdateRef,
-					onMouseOver: this.onMouseOver,
-					onMouseOut: this.onMouseOut,
-				}
-			) }
-		</React.Fragment>;
+				{ React.cloneElement(
+					React.Children.only( this.props.children ),
+					{
+						ref: this.onUpdateRef,
+						onMouseOver: this.onMouseOver,
+						onMouseOut: this.onMouseOut,
+					}
+				) }
+			</React.Fragment>
+		);
 	}
 }
 

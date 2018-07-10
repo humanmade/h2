@@ -13,29 +13,32 @@ class PostsList extends Component {
 	render() {
 		const { page } = this.props.match.params;
 
-		return <div className="PostsList">
-			{ this.props.posts.isLoading &&
-				<ContentLoader type="list" width={ 300 } />
-			}
-			{ this.props.posts.data &&
-				this.props.posts.data.map( post =>
-					<PostComponent
-						key={ post.id }
-						data={ post }
-						onInvalidate={ () => this.props.invalidateData() }
-					/>
-				)
-			}
-			<div className="pagination">
-				<Link to={ `/page/${ page ? Number( page ) + 1 : 2 }` }>Older</Link>
-				{ page && page > 1 ? (
-					<Link to={ `/page/${ page - 1 }` }>Newer</Link>
-				) : (
-					/* Hack to get pagination to float correctly */
-					<a style={ { display: 'none' } }>&nbsp;</a>
-				) }
+		return (
+			<div className="PostsList">
+				{ this.props.posts.isLoading &&
+					<ContentLoader type="list" width={ 300 } />
+				}
+				{ this.props.posts.data &&
+					this.props.posts.data.map( post => (
+						<PostComponent
+							key={ post.id }
+							data={ post }
+							onInvalidate={ () => this.props.invalidateData() }
+						/>
+					) )
+				}
+				<div className="pagination">
+					<Link to={ `/page/${ page ? Number( page ) + 1 : 2 }` }>Older</Link>
+					{ page && page > 1 ? (
+						<Link to={ `/page/${ page - 1 }` }>Newer</Link>
+					) : (
+						/* Hack to get pagination to float correctly */
+						/* eslint-disable-next-line jsx-a11y/anchor-is-valid */
+						<a style={ { display: 'none' } }>&nbsp;</a>
+					) }
+				</div>
 			</div>
-		</div>;
+		);
 	}
 }
 

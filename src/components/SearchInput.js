@@ -22,17 +22,19 @@ class SearchInput extends React.Component {
 		const termFromURL = this.props.location.pathname.match( /\/search\/(.+)/ );
 		const term = this.state.value || ( termFromURL && termFromURL[1] ) || '';
 
-		return <form
-			className="SearchInput"
-			onSubmit={ this.onSubmit }
-		>
-			<input
-				type="search"
-				placeholder="Search..."
-				value={ term }
-				onChange={ e => this.setState( { value: e.target.value } ) }
-			/>
-		</form>;
+		return (
+			<form
+				className="SearchInput"
+				onSubmit={ this.onSubmit }
+			>
+				<input
+					type="search"
+					placeholder="Search..."
+					value={ term }
+					onChange={ e => this.setState( { value: e.target.value } ) }
+				/>
+			</form>
+		);
 	}
 }
 
