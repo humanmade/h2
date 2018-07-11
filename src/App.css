@@ -47,15 +47,17 @@
 	max-width: 800px;
 }
 
-.App > .Outer > aside {
-	position: sticky;
-	top: 0;
-	height: 100vh;
-	margin-left: 5%;
-	overflow: hidden;
-	overflow-y: scroll;
-	width: 30%;
-	flex-shrink: 0;
+@media ( min-width: 800px ) {
+	.App > .Outer > aside {
+		position: sticky;
+		top: 0;
+		height: 100vh;
+		margin-left: 5%;
+		overflow: hidden;
+		overflow-y: scroll;
+		width: 30%;
+		flex-shrink: 0;
+	}
 }
 
 body.admin-bar .App > .Outer > aside {
@@ -80,8 +82,7 @@ body.admin-bar .App > .Outer > aside {
 		width: 100%;
 	}
 	.Sidebar {
-		position: static;
 		width: 100%;
-		padding: 0 2%;
+		padding: 0 20px;
 	}
 }
