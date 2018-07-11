@@ -18,28 +18,34 @@ class MetaSidebar extends React.Component {
 		};
 
 		if ( this.props.user.isLoading ) {
-			return <Container { ...containerProps }>
-				<p>Loading…</p>
-			</Container>;
+			return (
+				<Container { ...containerProps }>
+					<p>Loading…</p>
+				</Container>
+			);
 		}
 
 		const user = this.props.user.data;
 		if ( ! user ) {
-			return <Container { ...containerProps }>
-				<p>Could not find details for user</p>
-			</Container>;
+			return (
+				<Container { ...containerProps }>
+					<p>Could not find details for user</p>
+				</Container>
+			);
 		}
 
-		return <Container { ...containerProps }>
-			<UserBlock user={ user } />
+		return (
+			<Container { ...containerProps }>
+				<UserBlock user={ user } />
 
-			<ul>
-				<li><LinkButton onClick={ () => this.props.onViewProfile( user.id ) }>View your profile →</LinkButton></li>
-				<li><RelativeLink to={ user.link }>View all posts →</RelativeLink></li>
-			</ul>
+				<ul>
+					<li><LinkButton onClick={ () => this.props.onViewProfile( user.id ) }>View your profile →</LinkButton></li>
+					<li><RelativeLink to={ user.link }>View all posts →</RelativeLink></li>
+				</ul>
 
-			<Button onClick={ this.props.onLogOut }>Log out</Button>
-		</Container>;
+				<Button onClick={ this.props.onLogOut }>Log out</Button>
+			</Container>
+		);
 	}
 }
 

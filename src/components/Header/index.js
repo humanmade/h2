@@ -16,54 +16,58 @@ class Header extends Component {
 	render() {
 		const newChanges = this.props.currentUser && this.props.currentUser.data ? getChangesForUser( this.props.currentUser.data ) : [];
 
-		const newLabel = <span>
-			What's New?
-			{ ' ' }
-			{ newChanges.length > 0 ? <span class="label__count">{ newChanges.length }</span> : null }
-		</span>;
+		const newLabel = (
+			<span>
+				What's New?
+				{ ' ' }
+				{ newChanges.length > 0 ? <span class="label__count">{ newChanges.length }</span> : null }
+			</span>
+		);
 
-		return <div className="Header">
-			<div className="Header-inner">
-				<button
-					className="Header-site-name"
-					type="button"
-					onClick={ this.props.onShowSuper }
-				>
-					<Logo />
+		return (
+			<div className="Header">
+				<div className="Header-inner">
+					<button
+						className="Header-site-name"
+						type="button"
+						onClick={ this.props.onShowSuper }
+					>
+						<Logo />
 
-					{ window.H2Data.site.name }
-				</button>
+						{ window.H2Data.site.name }
+					</button>
 
-				<HeaderButton
-					onClick={ this.props.onWritePost }
-					title="New Post"
-					icon="icon icon--plus-alt"
-					path="new-post"
-				/>
-
-				<Slot name="Header.buttons" />
-
-				<SearchInput
-					value={ this.props.searchValue }
-					onSearch={ this.props.onSearch }
-				/>
-
-				<HeaderLabel
-					icon="mail"
-					title={ newLabel }
-					onClick={ this.props.onShowChanges }
-				/>
-
-				{ this.props.currentUser.data ? (
-					<CurrentUser
-						user={ this.props.currentUser.data }
-						onLogOut={ this.props.onLogOut }
+					<HeaderButton
+						onClick={ this.props.onWritePost }
+						title="New Post"
+						icon="icon icon--plus-alt"
+						path="new-post"
 					/>
-				) : null }
 
-				<Slot name="Header.meta" />
+					<Slot name="Header.buttons" />
+
+					<SearchInput
+						value={ this.props.searchValue }
+						onSearch={ this.props.onSearch }
+					/>
+
+					<HeaderLabel
+						icon="mail"
+						title={ newLabel }
+						onClick={ this.props.onShowChanges }
+					/>
+
+					{ this.props.currentUser.data ? (
+						<CurrentUser
+							user={ this.props.currentUser.data }
+							onLogOut={ this.props.onLogOut }
+						/>
+					) : null }
+
+					<Slot name="Header.meta" />
+				</div>
 			</div>
-		</div>;
+		);
 	}
 }
 

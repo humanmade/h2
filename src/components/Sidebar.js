@@ -28,20 +28,22 @@ export class Sidebar extends Component {
 		const { active } = this.state;
 		const className = `Sidebar ${ active ? 'active' : '' }`;
 
-		return <aside
-			className={ className }
-			onMouseOver={ () => this.setState( { active: true } ) }
-			onMouseOut={ () => this.setState( { active: false } ) }
-		>
-			<Slot name="Sidebar.top" />
+		return (
+			<aside
+				className={ className }
+				onMouseOver={ () => this.setState( { active: true } ) }
+				onMouseOut={ () => this.setState( { active: false } ) }
+			>
+				<Slot name="Sidebar.top" />
 
-			{ ( this.props.widgets.data || [] ).map( widget => {
-				const Widget = widgetMap[ widget.type ] || widgetMap['default'];
-				return <Widget key={ widget.id } { ...widget } />
-			} ) }
+				{ ( this.props.widgets.data || [] ).map( widget => {
+					const Widget = widgetMap[ widget.type ] || widgetMap['default'];
+					return <Widget key={ widget.id } { ...widget } />
+				} ) }
 
-			<Slot name="Sidebar.bottom" />
-		</aside>
+				<Slot name="Sidebar.bottom" />
+			</aside>
+		);
 	}
 }
 

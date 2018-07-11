@@ -13,12 +13,14 @@ export default function Map( props ) {
 		width: `${ width }px`,
 	};
 
-	return <img
-		alt={ `Map of ${ location }` }
-		className="Map"
-		src={ mapUrl }
-		style={ style }
-	/>;
+	return (
+		<img
+			alt={ `Map of ${ location }` }
+			className="Map"
+			src={ mapUrl }
+			style={ style }
+		/>
+	);
 }
 
 Map.defaultProps = {

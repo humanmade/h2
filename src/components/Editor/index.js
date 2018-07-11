@@ -304,108 +304,112 @@ export default class Editor extends React.PureComponent {
 			};
 		} );
 
-		return <form
-			className={ mode === 'preview' ? 'Editor previewing' : 'Editor' }
-			onSubmit={ e => this.onSubmit( e ) }
-		>
-			<Shortcuts keys={ hasFocus ? shortcuts : null } />
+		return (
+			<form
+				className={ mode === 'preview' ? 'Editor previewing' : 'Editor' }
+				onSubmit={ e => this.onSubmit( e ) }
+			>
+				<Shortcuts keys={ hasFocus ? shortcuts : null } />
 
-			<div className="Editor-header">
-				<ul className="Editor-tabs">
-					<li>
-						<label>
-							<input
-								checked={ mode === 'edit' }
-								name="Editor-mode"
-								type="radio"
-								value="edit"
-								onChange={ e => this.setState( { mode: e.target.value } ) }
-							/>
-							<span>Write</span>
-						</label>
-					</li>
-					<li>
-						<label>
-							<input
-								checked={ mode === 'preview' }
-								name="Editor-mode"
-								type="radio"
-								value="preview"
-								onChange={ e => this.setState( { mode: e.target.value } ) }
-							/>
-							<span>Preview</span>
-						</label>
-					</li>
-				</ul>
-
-				{ mode === 'edit' ? (
-					<ul className="Editor-toolbar">
-						{ Object.keys( BUTTONS ).map( type => {
-							if ( BUTTONS[ type ].separator ) {
-								return <span key={ type } className="separator" />;
-							}
-
-							return <button
-								key={ type }
-								onClick={ e => this.onButton( e, BUTTONS[type].apply ) }
-								title={ BUTTONS[ type ].title }
-								type="button"
-							>
-								<span className="svg-icon" dangerouslySetInnerHTML={ { __html: BUTTONS[ type ].icon } }></span>
-								<span className="screen-reader-text">{type}</span>
-							</button>;
-						} ) }
+				<div className="Editor-header">
+					<ul className="Editor-tabs">
+						<li>
+							<label>
+								<input
+									checked={ mode === 'edit' }
+									name="Editor-mode"
+									type="radio"
+									value="edit"
+									onChange={ e => this.setState( { mode: e.target.value } ) }
+								/>
+								<span>Write</span>
+							</label>
+						</li>
+						<li>
+							<label>
+								<input
+									checked={ mode === 'preview' }
+									name="Editor-mode"
+									type="radio"
+									value="preview"
+									onChange={ e => this.setState( { mode: e.target.value } ) }
+								/>
+								<span>Preview</span>
+							</label>
+						</li>
 					</ul>
-				) : null }
-			</div>
 
-			<div className="Editor-editor-container">
-				<DropUpload
-					allowMultiple
-					files={ this.state.uploading }
-					onUpload={ file => this.onUpload( file ) }
-				>
-					{ mode === 'preview' ? (
-						<Preview>{ content || '*Nothing to preview*' }</Preview>
-					) : (
-						<textarea
-							ref={ el => this.updateTextarea( el ) }
-							className="Editor-editor"
-							placeholder="Write a comment..."
-							style={ { height } }
-							value={ content }
-							onBlur={ () => this.onBlur() }
-							onFocus={ () => this.onFocus() }
-							onChange={ e => this.setState( { content: e.target.value } ) }
-							onKeyDown={ e => this.onKeyDown( e ) }
-							onKeyUp={ e => this.onKeyUp( e ) }
-						/>
-					) }
-				</DropUpload>
+					{ mode === 'edit' ? (
+						<ul className="Editor-toolbar">
+							{ Object.keys( BUTTONS ).map( type => {
+								if ( BUTTONS[ type ].separator ) {
+									return <span key={ type } className="separator" />;
+								}
 
-				{ mode !== 'preview' ? this.getCompletion() : null }
-			</div>
-
-			<p className="Editor-submit">
-				<small>
-					<span>{ count === 1 ? '1 word' : `${count.toLocaleString()} words` }</span>
-					<br />
-					<a
-						href="http://commonmark.org/help/"
-						rel="noopener noreferrer"
-						target="_blank"
-					>
-						Format with Markdown
-					</a>
-				</small>
-				<span className="Editor-submit-buttons">
-					{ this.props.onCancel ? (
-						<Button onClick={ this.props.onCancel }>Cancel</Button>
+								return (
+									<button
+										key={ type }
+										onClick={ e => this.onButton( e, BUTTONS[type].apply ) }
+										title={ BUTTONS[ type ].title }
+										type="button"
+									>
+										<span className="svg-icon" dangerouslySetInnerHTML={ { __html: BUTTONS[ type ].icon } }></span>
+										<span className="screen-reader-text">{type}</span>
+									</button>
+								);
+							} ) }
+						</ul>
 					) : null }
-					<Button submit type="primary">{ this.props.submitText }</Button>
-				</span>
-			</p>
-		</form>;
+				</div>
+
+				<div className="Editor-editor-container">
+					<DropUpload
+						allowMultiple
+						files={ this.state.uploading }
+						onUpload={ file => this.onUpload( file ) }
+					>
+						{ mode === 'preview' ? (
+							<Preview>{ content || '*Nothing to preview*' }</Preview>
+						) : (
+							<textarea
+								ref={ el => this.updateTextarea( el ) }
+								className="Editor-editor"
+								placeholder="Write a comment..."
+								style={ { height } }
+								value={ content }
+								onBlur={ () => this.onBlur() }
+								onFocus={ () => this.onFocus() }
+								onChange={ e => this.setState( { content: e.target.value } ) }
+								onKeyDown={ e => this.onKeyDown( e ) }
+								onKeyUp={ e => this.onKeyUp( e ) }
+							/>
+						) }
+					</DropUpload>
+
+					{ mode !== 'preview' ? this.getCompletion() : null }
+				</div>
+
+				<p className="Editor-submit">
+					<small>
+						<span>{ count === 1 ? '1 word' : `${count.toLocaleString()} words` }</span>
+						<br />
+						<a
+							href="http://commonmark.org/help/"
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							Format with Markdown
+						</a>
+					</small>
+					<span className="Editor-submit-buttons">
+						{ this.props.onCancel ? (
+							<Button onClick={ this.props.onCancel }>Cancel</Button>
+						) : null }
+						<Button submit type="primary">{ this.props.submitText }</Button>
+					</span>
+				</p>
+			</form>
+		);
 	}
 }
 

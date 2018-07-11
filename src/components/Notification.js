@@ -10,9 +10,11 @@ export const TYPES = {
 };
 
 export default function Notification( props ) {
-	return <p className={ `Notification Notification--${ props.type }` }>
-		{ props.children }
-	</p>;
+	return (
+		<p className={ `Notification Notification--${ props.type }` }>
+			{ props.children }
+		</p>
+	);
 }
 
 Notification.defaultProps = {

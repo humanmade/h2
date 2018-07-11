@@ -87,20 +87,22 @@ export default class Completion extends React.Component {
 			return null;
 		}
 
-		return <ol
-			className="Completion"
-			style={ {
-				top: coords.top,
-				left: coords.left,
-			} }
-		>
-			{ items.map( ( item, idx ) => renderItem( {
-				item,
-				selected: idx === this.state.selected,
-				onHover: () => this.setState( { selected: idx } ),
-				onSelect: () => onSelect( insert( item, this.props ) ),
-			} ) ) }
-		</ol>;
+		return (
+			<ol
+				className="Completion"
+				style={ {
+					top: coords.top,
+					left: coords.left,
+				} }
+			>
+				{ items.map( ( item, idx ) => renderItem( {
+					item,
+					selected: idx === this.state.selected,
+					onHover: () => this.setState( { selected: idx } ),
+					onSelect: () => onSelect( insert( item, this.props ) ),
+				} ) ) }
+			</ol>
+		);
 	}
 }
 
@@ -122,10 +124,12 @@ Completion.defaultProps = {
 	matcher: ( item, search ) => item.toLowerCase().indexOf( search.toLowerCase() ) >= 0,
 	getItems: ( search, items, matcher ) => items.filter( item => matcher( item, search ) ).slice( 0, 5 ),
 	renderItem: ( { item, selected, onSelect } ) => {
-		return <li
-			key={ item }
-			className={ selected ? 'selected' : null }
-			onClick={ () => onSelect( item ) }
-		>{ item }</li>;
+		return (
+			<li
+				key={ item }
+				className={ selected ? 'selected' : null }
+				onClick={ () => onSelect( item ) }
+			>{ item }</li>
+		);
 	},
 };

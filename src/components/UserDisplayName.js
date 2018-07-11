@@ -6,9 +6,11 @@ export default function UserDisplayName( props ) {
 		return null;
 	}
 
-	return <span className={ 'user-display-name ' + props.className }>
-		{ props.userName }
-	</span>;
+	return (
+		<span className={ 'user-display-name ' + props.className }>
+			{ props.userName }
+		</span>
+	);
 }
 
 UserDisplayName.propTypes = {

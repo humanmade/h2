@@ -15,13 +15,15 @@ export default function Button( props ) {
 		classes.push( 'btn--' + props.size );
 	}
 
-	return <button
-		className={ classes.join( ' ' ) }
-		type={ props.submit ? 'submit' : 'button' }
-		onClick={ props.onClick || undefined }
-	>
-		{props.children}
-	</button>;
+	return (
+		<button
+			className={ classes.join( ' ' ) }
+			type={ props.submit ? 'submit' : 'button' }
+			onClick={ props.onClick || undefined }
+		>
+			{props.children}
+		</button>
+	);
 }
 
 Button.propTypes = {

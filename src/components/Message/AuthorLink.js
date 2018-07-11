@@ -13,16 +13,18 @@ function AuthorLink( props ) {
 		return children;
 	}
 
-	return <UserHovercard
-		user={ user }
-	>
-		<LinkButton
-			className="AuthorLink"
-			onClick={ props.onSelect }
+	return (
+		<UserHovercard
+			user={ user }
 		>
-			{ children }
-		</LinkButton>
-	</UserHovercard>;
+			<LinkButton
+				className="AuthorLink"
+				onClick={ props.onSelect }
+			>
+				{ children }
+			</LinkButton>
+		</UserHovercard>
+	);
 }
 
 AuthorLink.propTypes = {

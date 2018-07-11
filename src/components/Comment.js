@@ -102,77 +102,79 @@ export class Comment extends Component {
 			post,
 		};
 
-		return <div
-			className="Comment"
-			id={ `comment-${ comment.id }` }
-			ref={ el => this.element = el }
-		>
-			<header>
-				<Avatar
-					url={ author ? author.avatar_urls['96'] : '' }
-					user={ author }
-					size={ 40 }
-				/>
-				<strong>
-					{ author ? (
-						<AuthorLink user={ author }>{ author.name }</AuthorLink>
-					) : comment.author_name }
-				</strong>
-				<div className="actions">
-					<a
-						className="Comment-date"
-						href={ `${ post.link }#comment-${ comment.id }` }
-					>
-						<time
-							dateTime={ comment.date_gmt + 'Z' }
-							title={ comment.date_gmt + 'Z' }
-						>
-							<FormattedRelative value={ comment.date_gmt + 'Z' } />
-						</time>
-					</a>
-					{ ! this.state.isEditing && (
-						<Button onClick={ this.onClickEdit }>Edit</Button>
-					) }
-					<Button onClick={ () => this.setState( { isShowingReply: true } ) }>Reply</Button>
-					<Slot name="Comment.actions" fillChildProps={ fillProps } />
-				</div>
-			</header>
-			<div className="body">
-				<Slot name="Comment.before_content" fillChildProps={ fillProps } />
-				{ this.state.isEditing ? (
-					editable ? (
-						<Editor
-							initialValue={ editable.meta.unprocessed_content || editable.content.raw }
-							submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
-							onCancel={ () => this.setState( { isEditing: false } ) }
-							onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
-							onUpload={ this.onUpload }
-						/>
-					) : (
-						<Notification>Loading…</Notification>
-					)
-				) : (
-					<MessageContent html={ this.props.comment.content.rendered } />
-				) }
-				<Slot name="Comment.after_content" fillChildProps={ fillProps } />
-			</div>
-			<CommentsList
-				allComments={ this.props.comments }
-				comments={ directComments }
-				post={ post }
-				showWriteComment={ false }
-				onDidCreateComment={ this.props.onDidCreateComment }
+		return (
+			<div
+				className="Comment"
+				id={ `comment-${ comment.id }` }
+				ref={ el => this.element = el }
 			>
-				{ this.state.isShowingReply && (
-					<WriteComment
-						comment={ comment }
-						parentPost={ post }
-						onCancel={ () => this.setState( { isShowingReply: false } ) }
-						onDidCreateComment={ ( ...args ) => this.onDidCreateComment( ...args ) }
+				<header>
+					<Avatar
+						url={ author ? author.avatar_urls['96'] : '' }
+						user={ author }
+						size={ 40 }
 					/>
-				) }
-			</CommentsList>
-		</div>;
+					<strong>
+						{ author ? (
+							<AuthorLink user={ author }>{ author.name }</AuthorLink>
+						) : comment.author_name }
+					</strong>
+					<div className="actions">
+						<a
+							className="Comment-date"
+							href={ `${ post.link }#comment-${ comment.id }` }
+						>
+							<time
+								dateTime={ comment.date_gmt + 'Z' }
+								title={ comment.date_gmt + 'Z' }
+							>
+								<FormattedRelative value={ comment.date_gmt + 'Z' } />
+							</time>
+						</a>
+						{ ! this.state.isEditing && (
+							<Button onClick={ this.onClickEdit }>Edit</Button>
+						) }
+						<Button onClick={ () => this.setState( { isShowingReply: true } ) }>Reply</Button>
+						<Slot name="Comment.actions" fillChildProps={ fillProps } />
+					</div>
+				</header>
+				<div className="body">
+					<Slot name="Comment.before_content" fillChildProps={ fillProps } />
+					{ this.state.isEditing ? (
+						editable ? (
+							<Editor
+								initialValue={ editable.meta.unprocessed_content || editable.content.raw }
+								submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
+								onCancel={ () => this.setState( { isEditing: false } ) }
+								onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
+								onUpload={ this.onUpload }
+							/>
+						) : (
+							<Notification>Loading…</Notification>
+						)
+					) : (
+						<MessageContent html={ this.props.comment.content.rendered } />
+					) }
+					<Slot name="Comment.after_content" fillChildProps={ fillProps } />
+				</div>
+				<CommentsList
+					allComments={ this.props.comments }
+					comments={ directComments }
+					post={ post }
+					showWriteComment={ false }
+					onDidCreateComment={ this.props.onDidCreateComment }
+				>
+					{ this.state.isShowingReply && (
+						<WriteComment
+							comment={ comment }
+							parentPost={ post }
+							onCancel={ () => this.setState( { isShowingReply: false } ) }
+							onDidCreateComment={ ( ...args ) => this.onDidCreateComment( ...args ) }
+						/>
+					) }
+				</CommentsList>
+			</div>
+		);
 	}
 }
 
@@ -201,11 +203,13 @@ class EditablePost extends React.Component {
 	};
 
 	render() {
-		return <CommentWithData
-			{ ...this.props }
-			needsEditable={ this.state.needsEditable }
-			onLoadEditable={ () => this.setState( { needsEditable: true } ) }
-		/>;
+		return (
+			<CommentWithData
+				{ ...this.props }
+				needsEditable={ this.state.needsEditable }
+				onLoadEditable={ () => this.setState( { needsEditable: true } ) }
+			/>
+		);
 	}
 }
 
