@@ -6,11 +6,37 @@ import LinkButton from './LinkButton';
 import RelativeLink from './RelativeLink';
 import UserBlock from './UserBlock';
 import Container from './Sidebar/Container';
-import { showSidebarProfile } from '../actions';
+import {
+	disableBetaFeature,
+	enableBetaFeature,
+	showSidebarProfile,
+} from '../actions';
 import { withApiData } from '../with-api-data';
+
+import './MetaSidebar.css';
+
+const FEATURES = {
+}
+
+const BetaFeature = props => (
+	<div className="MetaSidebar--feature">
+		<label>
+			<input
+				type="checkbox"
+				value={ props.enabled }
+				onChange={ e => e.target.checked ? props.onEnable() : props.onDisable() }
+			/>
+			<span>{ props.name }</span>
+		</label>
+		{ props.description && (
+			<p className="MetaSidebar--feature-description">{ props.description }</p>
+		) }
+	</div>
+);
 
 class MetaSidebar extends React.Component {
 	render() {
+		const { features, onDisableFeature, onEnableFeature } = this.props;
 		const containerProps = {
 			className: 'MetaSidebar',
 			title: 'All About You',
@@ -44,15 +70,31 @@ class MetaSidebar extends React.Component {
 				</ul>
 
 				<Button onClick={ this.props.onLogOut }>Log out</Button>
+
+				<h3>Beta Features</h3>
+				{ Object.keys( FEATURES ).map( key => (
+					<BetaFeature
+						key={ key }
+						enabled={ features[ key ] }
+						description={ FEATURES[ key ].description || null }
+						name={ FEATURES[ key ].name }
+						onEnable={ () => onEnableFeature( key ) }
+						onDisable={ () => onDisableFeature( key ) }
+					/>
+				) ) }
 			</Container>
 		);
 	}
 }
 
-const mapStateToProps = () => ( {} );
+const mapStateToProps = state => ( {
+	features: state.features,
+} );
 
 const mapDispatchToProps = dispatch => {
 	return {
+		onDisableFeature: id => dispatch( disableBetaFeature( id ) ),
+		onEnableFeature: id => dispatch( enableBetaFeature( id ) ),
 		onViewProfile: id => dispatch( showSidebarProfile( id ) ),
 	};
 }
