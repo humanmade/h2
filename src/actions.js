@@ -21,5 +21,11 @@ export const showMetaSidebar = () => ( { type: SHOW_META_SIDEBAR } );
 export const showSuperSidebar = () => ( { type: SHOW_SUPER_SIDEBAR } );
 export const hideSuperSidebar = () => ( { type: HIDE_SUPER_SIDEBAR } );
 
-export const enableBetaFeature = feature => ( { type: ENABLE_BETA_FEATURE, feature } );
-export const disableBetaFeature = feature => ( { type: DISABLE_BETA_FEATURE, feature } );
+export const enableBetaFeature = feature => ( {
+	type: ENABLE_BETA_FEATURE,
+	feature,
+} );
+export const disableBetaFeature = feature => ( {
+	type: DISABLE_BETA_FEATURE,
+	feature,
+} );
