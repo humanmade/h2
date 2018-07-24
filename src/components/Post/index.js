@@ -114,7 +114,6 @@ class Post extends Component {
 		const classes = [
 			'Post',
 			collapsed && 'Post--collapsed',
-			post.content.count < 150 ? 'Post--short' : 'Post--long',
 		];
 
 		return (
