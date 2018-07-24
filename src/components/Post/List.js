@@ -27,20 +27,25 @@ class PostsList extends Component {
 				{ this.props.posts.isLoading &&
 					<ContentLoader type="list" width={ 300 } />
 				}
-				<div className="PostsList--settings">
-					<Button
-						disabled={ this.state.view === 'summary' }
-						onClick={ () => this.setState( { view: 'summary' } ) }
-					>
-						Summary
-					</Button>
-					<Button
-						disabled={ this.state.view === 'expanded' }
-						onClick={ () => this.setState( { view: 'expanded' } ) }
-					>
-						Expanded
-					</Button>
-				</div>
+				{ this.props.summaryEnabled ? (
+					<div className="PostsList--settings">
+						<Button
+							disabled={ this.state.view === 'summary' }
+							onClick={ () => this.setState( { view: 'summary' } ) }
+						>
+							Summary
+						</Button>
+						<Button
+							disabled={ this.state.view === 'expanded' }
+							onClick={ () => this.setState( { view: 'expanded' } ) }
+						>
+							Expanded
+						</Button>
+					</div>
+				) : (
+					/* Dummy settings div to ensure markup matches */
+					<div className="PostsList--settings" />
+				) }
 				{ this.props.posts.data &&
 					this.props.posts.data.map( post => (
 						<PostComponent
@@ -66,7 +71,11 @@ class PostsList extends Component {
 	}
 }
 
-export default withApiData( props => ( {
+const mapStateToProps = state => ( {
+	summaryEnabled: state.features.summary_view,
+} );
+
+export default connect( mapStateToProps )( withApiData( props => ( {
 	categories: props.match.params.categorySlug ? '/wp/v2/categories' : null,
 	users: props.match.params.authorSlug ? '/wp/v2/users?per_page=100' : null,
 } ) )( withApiData( props => {
@@ -96,4 +105,4 @@ export default withApiData( props => ( {
 	}
 
 	return { posts: postsRoute };
-} )( PostsList ) );
+} )( PostsList ) ) );

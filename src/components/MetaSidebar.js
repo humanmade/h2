@@ -16,6 +16,10 @@ import { withApiData } from '../with-api-data';
 import './MetaSidebar.css';
 
 const FEATURES = {
+	summary_view: {
+		name: 'Summary View',
+		description: 'Adds a summary view to the post list screen.',
+	},
 }
 
 const BetaFeature = props => (
