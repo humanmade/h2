@@ -14,12 +14,14 @@ const Person = props => {
 		return null;
 	}
 
-	return <Avatar
-		size={ 30 }
-		url={ props.user.data ? props.user.data.avatar_urls['96'] : '' }
-		user={ props.user.data }
-		withHovercard={ false }
-	/>;
+	return (
+		<Avatar
+			size={ 30 }
+			url={ props.user.data ? props.user.data.avatar_urls['96'] : '' }
+			user={ props.user.data }
+			withHovercard={ false }
+		/>
+	);
 };
 
 const ConnectedPerson = withApiData( props => ( { user: `/wp/v2/users/${ props.id }` } ) )( Person );
