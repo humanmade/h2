@@ -27,11 +27,18 @@ class PostsList extends Component {
 					<ContentLoader type="list" width={ 300 } />
 				}
 				<div className="PostsList--settings">
-					<span />
-					<span>
-						<Button disabled={ this.state.view === 'summary' } onClick={ () => this.setState( { view: 'summary' } ) }>Summary</Button>
-						<Button disabled={ this.state.view === 'expanded' } onClick={ () => this.setState( { view: 'expanded' } ) }>Expanded</Button>
-					</span>
+					<Button
+						disabled={ this.state.view === 'summary' }
+						onClick={ () => this.setState( { view: 'summary' } ) }
+					>
+						Summary
+					</Button>
+					<Button
+						disabled={ this.state.view === 'expanded' }
+						onClick={ () => this.setState( { view: 'expanded' } ) }
+					>
+						Expanded
+					</Button>
 				</div>
 				{ this.props.posts.data &&
 					this.props.posts.data.map( post => (

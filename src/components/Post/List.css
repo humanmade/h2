@@ -10,7 +10,7 @@
 .PostsList--settings {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: flex-end;
 	border-left: 5px solid #F1F2EE;
 	margin-left: 28.5px;
 	padding: 0 0 10px 56.5px;
