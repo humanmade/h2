@@ -142,7 +142,10 @@ export default class Editor extends React.PureComponent {
 		const coords = getCaretCoordinates( target, target.selectionEnd );
 		const completion = {
 			key,
-			coords,
+			coords: {
+				top: coords.top - target.scrollTop,
+				left: coords.left - target.scrollLeft,
+			},
 			start: target.selectionEnd,
 		};
 		this.setState( { completion } );
