@@ -200,21 +200,45 @@ export default class Editor extends React.PureComponent {
 	onButton( e, apply ) {
 		e && e.preventDefault();
 
-		this.setState( state => {
-			let { selectionStart, selectionEnd } = this.textarea;
-			if ( state.lastSelection ) {
-				[ selectionStart, selectionEnd ] = state.lastSelection;
+		this.setState(
+			state => {
+				let { selectionStart, selectionEnd } = this.textarea;
+				if ( state.lastSelection ) {
+					[ selectionStart, selectionEnd ] = state.lastSelection;
+				}
+				const content = state.content;
+
+				const current = content.substring( selectionStart, selectionEnd );
+				const next = apply( current );
+
+				// Adjust cursor.
+				const nextEnd = selectionEnd + ( next.length - current.length );
+				const nextStart = selectionStart === selectionEnd ? nextEnd : selectionStart;
+
+				const nextParts = [
+					content.substring( 0, selectionStart ),
+					next,
+					content.substring( selectionEnd ),
+				];
+
+				return {
+					content: nextParts.join( '' ),
+					lastSelection: [
+						nextStart,
+						nextEnd,
+					],
+				};
+			},
+			() => {
+				// Force the selection back.
+				const [ selectionStart, selectionEnd ] = this.state.lastSelection;
+				if ( this.textarea ) {
+					this.textarea.selectionStart = selectionStart;
+					this.textarea.selectionEnd = selectionEnd;
+					this.focus();
+				}
 			}
-			const content = state.content;
-
-			const nextParts = [
-				content.substring( 0, selectionStart ),
-				apply( content.substring( selectionStart, selectionEnd ) ),
-				content.substring( selectionEnd ),
-			];
-
-			return { content: nextParts.join( '' ) };
-		} );
+		);
 	}
 
 	onUpload( files ) {
