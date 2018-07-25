@@ -128,6 +128,8 @@ function register_rest_routes() {
 	$widgets_controller = new REST_API\Widgets_Controller( $wp_widget_factory->widgets );
 	$widgets_controller->register_routes();
 
+	add_filter( 'rest_prepare_post', __NAMESPACE__ . '\\add_word_count_to_api' );
+
 	$markdown_schema = [
 		'description' => 'Raw Markdown content for the post.',
 		'type'        => 'string',
@@ -184,4 +186,24 @@ function register_custom_meta() {
 		'show_in_rest' => false,
 		'single'       => true,
 	] );
+}
+
+/**
+ * Add word count to REST API post responses.
+ *
+ * @param WP_REST_Response $response The response object.
+ * @return WP_REST_Response
+ */
+function add_word_count_to_api( $response, $post ) {
+	$data = $response->get_data();
+
+	// Convert HTML to text.
+	$text = wp_strip_all_tags( $data['content']['rendered'] );
+	$text = wp_kses_decode_entities( ent2ncr( $text ) );
+
+	// Add word count.
+	$data['content']['count'] = str_word_count( $text );
+
+	$response->set_data( $data );
+	return $response;
 }

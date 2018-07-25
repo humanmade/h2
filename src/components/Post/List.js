@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ContentLoader from 'react-content-loader';
+import { connect } from 'react-redux';
 import qs from 'qs';
 
+import Button from '../Button';
 import PostComponent from './index';
 import { withApiData } from '../../with-api-data';
 
 import './List.css';
 
 class PostsList extends Component {
+	constructor( props ) {
+		super( props );
+
+		this.state = {
+			view: 'expanded',
+		};
+	}
 
 	render() {
 		const { page } = this.props.match.params;
@@ -18,11 +27,31 @@ class PostsList extends Component {
 				{ this.props.posts.isLoading &&
 					<ContentLoader type="list" width={ 300 } />
 				}
+				{ this.props.summaryEnabled ? (
+					<div className="PostsList--settings">
+						<Button
+							disabled={ this.state.view === 'summary' }
+							onClick={ () => this.setState( { view: 'summary' } ) }
+						>
+							Summary
+						</Button>
+						<Button
+							disabled={ this.state.view === 'expanded' }
+							onClick={ () => this.setState( { view: 'expanded' } ) }
+						>
+							Expanded
+						</Button>
+					</div>
+				) : (
+					/* Dummy settings div to ensure markup matches */
+					<div className="PostsList--settings" />
+				) }
 				{ this.props.posts.data &&
 					this.props.posts.data.map( post => (
 						<PostComponent
 							key={ post.id }
 							data={ post }
+							expanded={ this.state.view === 'expanded' }
 							onInvalidate={ () => this.props.invalidateData() }
 						/>
 					) )
@@ -42,7 +71,11 @@ class PostsList extends Component {
 	}
 }
 
-export default withApiData( props => ( {
+const mapStateToProps = state => ( {
+	summaryEnabled: state.features.summary_view,
+} );
+
+export default connect( mapStateToProps )( withApiData( props => ( {
 	categories: props.match.params.categorySlug ? '/wp/v2/categories' : null,
 	users: props.match.params.authorSlug ? '/wp/v2/users?per_page=100' : null,
 } ) )( withApiData( props => {
@@ -72,4 +105,4 @@ export default withApiData( props => ( {
 	}
 
 	return { posts: postsRoute };
-} )( PostsList ) );
+} )( PostsList ) ) );

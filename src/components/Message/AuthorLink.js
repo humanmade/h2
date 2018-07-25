@@ -7,24 +7,26 @@ import UserHovercard from '../UserHovercard';
 import { showSidebarProfile } from '../../actions';
 
 function AuthorLink( props ) {
-	const { children, user } = props;
+	const { children, user, withHovercard } = props;
 
 	if ( ! user ) {
 		return children;
 	}
 
-	return (
-		<UserHovercard
-			user={ user }
+	const button = (
+		<LinkButton
+			className="AuthorLink"
+			onClick={ props.onSelect }
 		>
-			<LinkButton
-				className="AuthorLink"
-				onClick={ props.onSelect }
-			>
-				{ children }
-			</LinkButton>
-		</UserHovercard>
+			{ children }
+		</LinkButton>
 	);
+
+	if ( ! withHovercard ) {
+		return button;
+	}
+
+	return <UserHovercard user={ user }>{ button }</UserHovercard>;
 }
 
 AuthorLink.propTypes = {
@@ -32,7 +34,10 @@ AuthorLink.propTypes = {
 		id: PropTypes.number.isRequired,
 		name: PropTypes.string.isRequired,
 	} ),
+	withHovercard: PropTypes.bool.isRequired,
 };
+
+AuthorLink.defaultProps = { withHovercard: true };
 
 const mapStateToProps = () => ( {} );
 

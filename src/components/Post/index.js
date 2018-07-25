@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { FormattedRelative } from 'react-intl';
 import { Slot } from 'react-slot-fill';
@@ -7,6 +8,7 @@ import {
 	Post as PostShape,
 } from '../../shapes';
 
+import Summary from './Summary';
 import Avatar from '../Avatar';
 import Button from '../Button';
 import Editor from '../Editor';
@@ -24,6 +26,7 @@ class Post extends Component {
 	constructor( props ) {
 		super( props );
 		this.state = {
+			expanded: false,
 			isShowingReply: false,
 			isEditing: false,
 			isSubmitting: false,
@@ -98,15 +101,23 @@ class Post extends Component {
 			headerStyle.fontSize = '1.333333333rem';
 		}
 
+		const collapsed = ! ( this.state.expanded || this.props.expanded );
+
 		const fillProps = {
 			author,
+			collapsed,
 			comments,
 			categories,
 			post,
 		};
 
+		const classes = [
+			'Post',
+			collapsed && 'Post--collapsed',
+		];
+
 		return (
-			<div className="Post">
+			<div className={ classes.filter( Boolean ).join( ' ' ) }>
 				<header>
 					<Avatar
 						url={ author ? author.avatar_urls['96'] : '' }
@@ -169,27 +180,36 @@ class Post extends Component {
 					) }
 					<Slot name="Post.after_content" fillChildProps={ fillProps } />
 				</div>
-				<CommentsList
-					allComments={ this.props.comments.data ? this.props.comments.data : [] }
-					comments={ comments }
-					post={ post }
-					onComment={ () => this.onComment() }
-					onDidCreateComment={ ( ...args ) => this.onDidCreateComment( ...args ) }
-				>
-					{ this.state.isShowingReply && (
-						<WriteComment
-							parentPost={ post }
-							onCancel={ () => this.onClickCancelReply() }
-							onDidCreateComment={ ( ...args ) => this.onDidCreateComment( ...args ) }
-						/>
-					) }
-				</CommentsList>
+				{ collapsed ? (
+					<Summary
+						comments={ this.props.comments.data || [] }
+						post={ post }
+						onExpand={ () => this.setState( { expanded: true } ) }
+					/>
+				) : (
+					<CommentsList
+						allComments={ this.props.comments.data ? this.props.comments.data : [] }
+						comments={ comments }
+						post={ post }
+						onComment={ () => this.onComment() }
+						onDidCreateComment={ ( ...args ) => this.onDidCreateComment( ...args ) }
+					>
+						{ this.state.isShowingReply && (
+							<WriteComment
+								parentPost={ post }
+								onCancel={ () => this.onClickCancelReply() }
+								onDidCreateComment={ ( ...args ) => this.onDidCreateComment( ...args ) }
+							/>
+						) }
+					</CommentsList>
+				) }
 			</div>
 		);
 	}
 }
 
 Post.propTypes = {
+	collapsed: PropTypes.bool.isRequired,
 	data: PostShape.isRequired,
 };
 

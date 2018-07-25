@@ -93,6 +93,31 @@ body.admin-bar .Post > header {
 	margin-right: 0;
 }
 
+.Post--collapsed .Post-content-wrap {
+	min-height: 70px;
+	max-height: 150px;
+	overflow: hidden;
+	position: relative;
+}
+.Post--collapsed .Post-content-wrap::after {
+	display: block;
+	content: ' ';
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 100%;
+	background: linear-gradient(
+		to bottom,
+		rgba( 255, 255, 255, 0 ),
+		rgba( 255, 255, 255, 0.9 ) 50%,
+		#fff
+	);
+}
+.Post--collapsed .reactions {
+	display: none;
+}
+
 @media ( max-width: 600px ) {
 	.Post:before {
 		/* ( avatar_width - width ) / 2 */
