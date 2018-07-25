@@ -4,7 +4,7 @@ import {
 } from '../actions';
 
 const DEFAULT_STATE = {
-	the_great_expando: false,
+	summary_view: false,
 };
 
 export default function features( state = DEFAULT_STATE, action ) {
