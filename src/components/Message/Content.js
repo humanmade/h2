@@ -1,6 +1,7 @@
 import Interweave from 'interweave';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { MentionMatcher } from './Mention';
 
@@ -10,7 +11,16 @@ const MATCHERS = [
 	new MentionMatcher( 'mention' ),
 ];
 
-export default function Content( props ) {
+function Content( props ) {
+	if ( ! props.useInterweave ) {
+		return (
+			<div
+				className="PostContent"
+				dangerouslySetInnerHTML={ { __html: props.html } }
+			/>
+		);
+	}
+
 	return <div className="PostContent">
 		<Interweave
 			commonClass={ null }
@@ -24,3 +34,9 @@ export default function Content( props ) {
 Content.propTypes = {
 	html: PropTypes.string.isRequired,
 };
+
+const mapStateToProps = state => ( {
+	useInterweave: state.features.use_interweave,
+} );
+
+export default connect( mapStateToProps )( Content );
