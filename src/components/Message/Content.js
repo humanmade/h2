@@ -3,13 +3,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { MentionMatcher } from './Mention';
+import matchers from '../../matchers';
 
 import './Content.css';
-
-const MATCHERS = [
-	new MentionMatcher( 'mention' ),
-];
 
 function Content( props ) {
 	if ( ! props.useInterweave ) {
@@ -26,7 +22,7 @@ function Content( props ) {
 			<Interweave
 				commonClass={ null }
 				content={ props.html }
-				matchers={ MATCHERS }
+				matchers={ matchers }
 				tagName="fragment"
 			/>
 		</div>

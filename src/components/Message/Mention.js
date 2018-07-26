@@ -1,4 +1,3 @@
-import { Matcher } from 'interweave';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -19,27 +18,6 @@ class Mention extends React.Component {
 
 Mention.propTypes = { user: PropTypes.object };
 
-const ConnectedMention = withApiData( props => ( { user: `/wp/v2/users?slug=${ props.username }` } ) )( Mention );
+const mapPropsToData = props => ( { user: `/wp/v2/users?slug=${ props.username }` } );
 
-export default ConnectedMention;
-
-export class MentionMatcher extends Matcher {
-	replaceWith( match, props ) {
-		return (
-			<ConnectedMention
-				key={ props.key }
-				username={ props.username }
-			>
-				{ match }
-			</ConnectedMention>
-		);
-	}
-
-	asTag(): string {
-		return 'span';
-	}
-
-	match( string ) {
-		return this.doMatch( string, /@(\w+)/, matches => ( { username: matches[1] } ) );
-	}
-}
+export default withApiData( mapPropsToData )( Mention );
