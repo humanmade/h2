@@ -7,36 +7,40 @@ import './EmojiCompletion.css';
 
 const EmojiCompletion = props => {
 	const renderItem = ( { item, selected, onSelect } ) => {
-		return <li
-			key={ item.colons }
-			className={ selected ? 'selected' : null }
-			onClick={ onSelect }
-		>
-			{ item.imageUrl ? (
-				<img
-					alt={ item.colons }
-					className="EmojiCompletion-custom"
-					src={ item.imageUrl }
-				/>
-			) : item.native }
-			{ item.colons }
-		</li>;
+		return (
+			<li
+				key={ item.colons }
+				className={ selected ? 'selected' : null }
+				onClick={ onSelect }
+			>
+				{ item.imageUrl ? (
+					<img
+						alt={ item.colons }
+						className="EmojiCompletion-custom"
+						src={ item.imageUrl }
+					/>
+				) : item.native }
+				{ item.colons }
+			</li>
+		);
 	};
 
 	const getItems = search => emojiIndex.search(
 		search,
 		{
-			custom:     Object.values( window.H2Data.site.emoji ),
+			custom: Object.values( window.H2Data.site.emoji ),
 			maxResults: 5,
 		}
 	);
 
-	return <Completion
-		{ ...props }
-		getItems={ getItems }
-		renderItem={ renderItem }
-		insert={ item => ( item.native || item.colons ) + ' ' }
-	/>;
+	return (
+		<Completion
+			{ ...props }
+			getItems={ getItems }
+			renderItem={ renderItem }
+			insert={ item => ( item.native || item.colons ) + ' ' }
+		/>
+	);
 };
 
 export default EmojiCompletion;

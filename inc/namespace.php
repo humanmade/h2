@@ -8,7 +8,6 @@ use WP_REST_Request;
  * Set up theme global settings
  */
 function set_up_theme() {
-	show_admin_bar( false );
 	add_theme_support( 'title-tag' );
 
 	register_sidebar( [
@@ -39,6 +38,7 @@ function enqueue_assets() {
 function get_script_data() {
 	$preload = [
 		'/wp/v2/posts',
+		'/h2/v1/site-switcher/sites',
 		'/h2/v1/widgets?sidebar=sidebar',
 		'/wp/v2/users/me',
 		'/wp/v2/users?per_page=100',
@@ -66,7 +66,7 @@ function get_script_data() {
 	// Preload the comments and reactions for the posts too.
 	if ( isset( $data['preload']['/wp/v2/posts'] ) ) {
 		foreach ( $data['preload']['/wp/v2/posts'] as $post_data ) {
-			$id = $post_data['id'];
+			$id   = $post_data['id'];
 			$urls = [
 				sprintf( '/h2/v1/reactions?post=%d', $post_data['id'] ),
 				sprintf( '/wp/v2/comments?post=%d&per_page=100', $post_data['id'] ),
@@ -79,7 +79,7 @@ function get_script_data() {
 				return empty( $data['preload'][ $url ] );
 			} );
 
-			$results = prefetch_urls( $urls );
+			$results         = prefetch_urls( $urls );
 			$data['preload'] = array_merge( $data['preload'], $results );
 		}
 	}
@@ -89,9 +89,9 @@ function get_script_data() {
 
 function prefetch_urls( $urls ) {
 	$server = rest_get_server();
-	$data = [];
+	$data   = [];
 	foreach ( $urls as $url ) {
-		$request = WP_REST_Request::from_url( rest_url( $url ) );
+		$request  = WP_REST_Request::from_url( rest_url( $url ) );
 		$response = rest_do_request( $request );
 		if ( $response->is_error() ) {
 			continue;
@@ -127,6 +127,41 @@ function register_rest_routes() {
 
 	$widgets_controller = new REST_API\Widgets_Controller( $wp_widget_factory->widgets );
 	$widgets_controller->register_routes();
+
+	add_filter( 'rest_prepare_post', __NAMESPACE__ . '\\add_word_count_to_api' );
+
+	$markdown_schema = [
+		'description' => 'Raw Markdown content for the post.',
+		'type'        => 'string',
+		'context'     => [ 'edit' ],
+	];
+
+	register_rest_field( 'post', 'unprocessed_content', [
+		'get_callback'    => function ( $data, $attr, $request ) {
+			if ( $request['context'] !== 'edit' ) {
+				return null;
+			}
+
+			return get_post_meta( $data['id'], 'unprocessed_content', true );
+		},
+		'update_callback' => function ( $value, $post ) {
+			update_post_meta( $post->ID, 'unprocessed_content', wp_slash( $value ) );
+		},
+		'schema'          => $markdown_schema,
+	] );
+	register_rest_field( 'comment', 'unprocessed_content', [
+		'get_callback'    => function ( $data, $attr, $request ) {
+			if ( $request['context'] !== 'edit' ) {
+				return null;
+			}
+
+			return get_comment_meta( $data['id'], 'unprocessed_content', true );
+		},
+		'update_callback' => function ( $value, $comment ) {
+			update_comment_meta( $comment->comment_ID, 'unprocessed_content', wp_slash( $value ) );
+		},
+		'schema'          => $markdown_schema,
+	] );
 }
 
 /**
@@ -141,4 +176,34 @@ function register_custom_meta() {
 		'single'       => true,
 		'show_in_rest' => true,
 	] );
+
+	// These fields are exposed above.
+	register_meta( 'post', 'unprocessed_content', [
+		'show_in_rest' => false,
+		'single'       => true,
+	] );
+	register_meta( 'comment', 'unprocessed_content', [
+		'show_in_rest' => false,
+		'single'       => true,
+	] );
+}
+
+/**
+ * Add word count to REST API post responses.
+ *
+ * @param WP_REST_Response $response The response object.
+ * @return WP_REST_Response
+ */
+function add_word_count_to_api( $response, $post ) {
+	$data = $response->get_data();
+
+	// Convert HTML to text.
+	$text = wp_strip_all_tags( $data['content']['rendered'] );
+	$text = wp_kses_decode_entities( ent2ncr( $text ) );
+
+	// Add word count.
+	$data['content']['count'] = str_word_count( $text );
+
+	$response->set_data( $data );
+	return $response;
 }

@@ -8,6 +8,7 @@ import Button from '../Button';
 import DropUpload from '../DropUpload';
 import EmojiCompletion from './EmojiCompletion';
 import MentionCompletion from './MentionCompletion';
+import MessageContent from '../Message/Content';
 import Shortcuts from '../Shortcuts';
 
 import './index.css';
@@ -18,30 +19,30 @@ const apply = ( selection, start, end ) => {
 
 const BUTTONS = {
 	bold: {
-		icon:  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path d="M6 4v13h4.54c1.37 0 2.46-.33 3.26-1 .8-.66 1.2-1.58 1.2-2.77 0-.84-.17-1.51-.51-2.01s-.9-.85-1.67-1.03v-.09c.57-.1 1.02-.4 1.36-.9s.51-1.13.51-1.91c0-1.14-.39-1.98-1.17-2.5C12.75 4.26 11.5 4 9.78 4H6zm2.57 5.15V6.26h1.36c.73 0 1.27.11 1.61.32.34.22.51.58.51 1.07 0 .54-.16.92-.47 1.15s-.82.35-1.51.35h-1.5zm0 2.19h1.6c1.44 0 2.16.53 2.16 1.61 0 .6-.17 1.05-.51 1.34s-.86.43-1.57.43H8.57v-3.38z"/></g></svg>',
+		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path d="M6 4v13h4.54c1.37 0 2.46-.33 3.26-1 .8-.66 1.2-1.58 1.2-2.77 0-.84-.17-1.51-.51-2.01s-.9-.85-1.67-1.03v-.09c.57-.1 1.02-.4 1.36-.9s.51-1.13.51-1.91c0-1.14-.39-1.98-1.17-2.5C12.75 4.26 11.5 4 9.78 4H6zm2.57 5.15V6.26h1.36c.73 0 1.27.11 1.61.32.34.22.51.58.51 1.07 0 .54-.16.92-.47 1.15s-.82.35-1.51.35h-1.5zm0 2.19h1.6c1.44 0 2.16.53 2.16 1.61 0 .6-.17 1.05-.51 1.34s-.86.43-1.57.43H8.57v-3.38z"/></g></svg>',
 		title: 'Add bold text',
-		key:   'mod+b',
+		key: 'mod+b',
 		apply: text => apply( text, '**', '**' ),
 	},
 	italic: {
-		icon:  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path d="M14.78 6h-2.13l-2.8 9h2.12l-.62 2H4.6l.62-2h2.14l2.8-9H8.03l.62-2h6.75z"/></g></svg>',
+		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path d="M14.78 6h-2.13l-2.8 9h2.12l-.62 2H4.6l.62-2h2.14l2.8-9H8.03l.62-2h6.75z"/></g></svg>',
 		title: 'Add italic text',
-		key:   'mod+i',
+		key: 'mod+i',
 		apply: text => apply( text, '*', '*' ),
 	},
 	link: {
-		icon:  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path d="M17.74 2.76c1.68 1.69 1.68 4.41 0 6.1l-1.53 1.52c-1.12 1.12-2.7 1.47-4.14 1.09l2.62-2.61.76-.77.76-.76c.84-.84.84-2.2 0-3.04-.84-.85-2.2-.85-3.04 0l-.77.76-3.38 3.38c-.37-1.44-.02-3.02 1.1-4.14l1.52-1.53c1.69-1.68 4.42-1.68 6.1 0zM8.59 13.43l5.34-5.34c.42-.42.42-1.1 0-1.52-.44-.43-1.13-.39-1.53 0l-5.33 5.34c-.42.42-.42 1.1 0 1.52.44.43 1.13.39 1.52 0zm-.76 2.29l4.14-4.15c.38 1.44.03 3.02-1.09 4.14l-1.52 1.53c-1.69 1.68-4.41 1.68-6.1 0-1.68-1.68-1.68-4.42 0-6.1l1.53-1.52c1.12-1.12 2.7-1.47 4.14-1.1l-4.14 4.15c-.85.84-.85 2.2 0 3.05.84.84 2.2.84 3.04 0z"/></g></svg>',
+		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path d="M17.74 2.76c1.68 1.69 1.68 4.41 0 6.1l-1.53 1.52c-1.12 1.12-2.7 1.47-4.14 1.09l2.62-2.61.76-.77.76-.76c.84-.84.84-2.2 0-3.04-.84-.85-2.2-.85-3.04 0l-.77.76-3.38 3.38c-.37-1.44-.02-3.02 1.1-4.14l1.52-1.53c1.69-1.68 4.42-1.68 6.1 0zM8.59 13.43l5.34-5.34c.42-.42.42-1.1 0-1.52-.44-.43-1.13-.39-1.53 0l-5.33 5.34c-.42.42-.42 1.1 0 1.52.44.43 1.13.39 1.52 0zm-.76 2.29l4.14-4.15c.38 1.44.03 3.02-1.09 4.14l-1.52 1.53c-1.69 1.68-4.41 1.68-6.1 0-1.68-1.68-1.68-4.42 0-6.1l1.53-1.52c1.12-1.12 2.7-1.47 4.14-1.1l-4.14 4.15c-.85.84-.85 2.2 0 3.05.84.84 2.2.84 3.04 0z"/></g></svg>',
 		title: 'Add link',
 		apply: text => `[${ text || 'Text' }](http://)`,
 	},
-	sep1:  { separator: true },
+	sep1: { separator: true },
 	quote: {
-		icon:  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path d="M9.49 13.22c0-.74-.2-1.38-.61-1.9-.62-.78-1.83-.88-2.53-.72-.29-1.65 1.11-3.75 2.92-4.65L7.88 4c-2.73 1.3-5.42 4.28-4.96 8.05C3.21 14.43 4.59 16 6.54 16c.85 0 1.56-.25 2.12-.75s.83-1.18.83-2.03zm8.05 0c0-.74-.2-1.38-.61-1.9-.63-.78-1.83-.88-2.53-.72-.29-1.65 1.11-3.75 2.92-4.65L15.93 4c-2.73 1.3-5.41 4.28-4.95 8.05.29 2.38 1.66 3.95 3.61 3.95.85 0 1.56-.25 2.12-.75s.83-1.18.83-2.03z"/></g></svg>',
+		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path d="M9.49 13.22c0-.74-.2-1.38-.61-1.9-.62-.78-1.83-.88-2.53-.72-.29-1.65 1.11-3.75 2.92-4.65L7.88 4c-2.73 1.3-5.42 4.28-4.96 8.05C3.21 14.43 4.59 16 6.54 16c.85 0 1.56-.25 2.12-.75s.83-1.18.83-2.03zm8.05 0c0-.74-.2-1.38-.61-1.9-.63-.78-1.83-.88-2.53-.72-.29-1.65 1.11-3.75 2.92-4.65L15.93 4c-2.73 1.3-5.41 4.28-4.95 8.05.29 2.38 1.66 3.95 3.61 3.95.85 0 1.56-.25 2.12-.75s.83-1.18.83-2.03z"/></g></svg>',
 		title: 'Add blockquote',
 		apply: text => apply( text, '>', '\n' ),
 	},
 	code: {
-		icon:  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path d="M9 6l-4 4 4 4-1 2-6-6 6-6zm2 8l4-4-4-4 1-2 6 6-6 6z"/></g></svg>',
+		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path d="M9 6l-4 4 4 4-1 2-6-6 6-6zm2 8l4-4-4-4 1-2 6 6-6 6z"/></g></svg>',
 		title: 'Add code',
 		apply: text =>
 			( text.indexOf( '\n' ) > 0 ? apply( text, '```\n', '\n```\n' ) : apply( text, '`', '`' ) ),
@@ -55,7 +56,7 @@ const completions = {
 
 const Preview = props => {
 	const compiled = marked( props.children );
-	return <div className="Editor-preview" dangerouslySetInnerHTML={{ __html: compiled }} />;
+	return <div className="Editor-preview"><MessageContent html={ compiled } /></div>;
 };
 Preview.propTypes = { children: PropTypes.string.isRequired };
 
@@ -64,15 +65,33 @@ export default class Editor extends React.PureComponent {
 		super( props );
 
 		this.state = {
-			content:    '',
+			content: props.initialValue,
 			completion: null,
-			count:      0,
-			hasFocus:   false,
-			height:     null,
-			mode:       'edit',
-			uploading:  [],
+			count: 0,
+			hasFocus: false,
+			height: null,
+			mode: 'edit',
+			uploading: [],
 		};
 		this.textarea = null;
+	}
+
+	componentDidMount() {
+		window.addEventListener( 'beforeunload', this.warnBeforeLeaving );
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener( 'beforeunload', this.warnBeforeLeaving );
+	}
+
+	warnBeforeLeaving = e => {
+		if ( this.state.content === '' || ( this.props.initialValue && this.state.content === this.props.initialValue ) ) {
+			return;
+		}
+
+		const warning = 'You have unsaved content. Are you sure you want to leave?';
+		e.returnValue = warning;
+		return warning;
 	}
 
 	componentDidUpdate() {
@@ -123,7 +142,10 @@ export default class Editor extends React.PureComponent {
 		const coords = getCaretCoordinates( target, target.selectionEnd );
 		const completion = {
 			key,
-			coords,
+			coords: {
+				top: coords.top - target.scrollTop,
+				left: coords.left - target.scrollLeft,
+			},
 			start: target.selectionEnd,
 		};
 		this.setState( { completion } );
@@ -154,7 +176,7 @@ export default class Editor extends React.PureComponent {
 	onSubmit( e ) {
 		e.preventDefault();
 
-		this.props.onSubmit( marked( this.state.content ) );
+		this.props.onSubmit( marked( this.state.content ), this.state.content );
 	}
 
 	onBlur() {
@@ -171,28 +193,52 @@ export default class Editor extends React.PureComponent {
 	onFocus() {
 		this.setState( {
 			lastSelection: null,
-			hasFocus:      true,
+			hasFocus: true,
 		} );
 	}
 
 	onButton( e, apply ) {
 		e && e.preventDefault();
 
-		this.setState( state => {
-			let { selectionStart, selectionEnd } = this.textarea;
-			if ( state.lastSelection ) {
-				[ selectionStart, selectionEnd ] = state.lastSelection;
+		this.setState(
+			state => {
+				let { selectionStart, selectionEnd } = this.textarea;
+				if ( state.lastSelection ) {
+					[ selectionStart, selectionEnd ] = state.lastSelection;
+				}
+				const content = state.content;
+
+				const current = content.substring( selectionStart, selectionEnd );
+				const next = apply( current );
+
+				// Adjust cursor.
+				const nextEnd = selectionEnd + ( next.length - current.length );
+				const nextStart = selectionStart === selectionEnd ? nextEnd : selectionStart;
+
+				const nextParts = [
+					content.substring( 0, selectionStart ),
+					next,
+					content.substring( selectionEnd ),
+				];
+
+				return {
+					content: nextParts.join( '' ),
+					lastSelection: [
+						nextStart,
+						nextEnd,
+					],
+				};
+			},
+			() => {
+				// Force the selection back.
+				const [ selectionStart, selectionEnd ] = this.state.lastSelection;
+				if ( this.textarea ) {
+					this.textarea.selectionStart = selectionStart;
+					this.textarea.selectionEnd = selectionEnd;
+					this.focus();
+				}
 			}
-			const content = state.content;
-
-			const nextParts = [
-				content.substring( 0, selectionStart ),
-				apply( content.substring( selectionStart, selectionEnd ) ),
-				content.substring( selectionEnd ),
-			];
-
-			return { content: nextParts.join( '' ) };
-		} );
+		);
 	}
 
 	onUpload( files ) {
@@ -233,10 +279,10 @@ export default class Editor extends React.PureComponent {
 		}
 
 		const completionProps = {
-			key:      completion.key,
-			coords:   completion.coords,
-			text:     content.substring( completion.start + 1, completion.end ),
-			trigger:  completion.key,
+			key: completion.key,
+			coords: completion.coords,
+			text: content.substring( completion.start + 1, completion.end ),
+			trigger: completion.key,
 			onSelect: val => {
 				const content = this.state.content;
 
@@ -248,7 +294,7 @@ export default class Editor extends React.PureComponent {
 
 				this.setState( {
 					completion: null,
-					content:    nextParts.join( '' ),
+					content: nextParts.join( '' ),
 				} );
 			},
 			onCancel: () => this.setState( { completion: null } ),
@@ -281,119 +327,126 @@ export default class Editor extends React.PureComponent {
 
 			shortcuts[ button.key ] = {
 				allowInInput: true,
-				callback:     e => this.onButton( e, button.apply ),
+				callback: e => this.onButton( e, button.apply ),
 			};
 		} );
 
-		return <form
-			className={ mode === 'preview' ? 'Editor previewing' : 'Editor' }
-			onSubmit={ e => this.onSubmit( e ) }
-		>
-			<Shortcuts keys={ hasFocus ? shortcuts : null } />
+		return (
+			<form
+				className={ mode === 'preview' ? 'Editor previewing' : 'Editor' }
+				onSubmit={ e => this.onSubmit( e ) }
+			>
+				<Shortcuts keys={ hasFocus ? shortcuts : null } />
 
-			<div className="Editor-header">
-				<ul className="Editor-tabs">
-					<li>
-						<label>
-							<input
-								checked={ mode === 'edit' }
-								name="Editor-mode"
-								type="radio"
-								value="edit"
-								onChange={ e => this.setState( { mode: e.target.value } ) }
-							/>
-							<span>Write</span>
-						</label>
-					</li>
-					<li>
-						<label>
-							<input
-								checked={ mode === 'preview' }
-								name="Editor-mode"
-								type="radio"
-								value="preview"
-								onChange={ e => this.setState( { mode: e.target.value } ) }
-							/>
-							<span>Preview</span>
-						</label>
-					</li>
-				</ul>
-
-				{ mode === 'edit' ? (
-					<ul className="Editor-toolbar">
-						{ Object.keys( BUTTONS ).map( type => {
-							if ( BUTTONS[ type ].separator ) {
-								return <span key={ type } className="separator" />;
-							}
-
-							return <button
-								key={type}
-								onClick={e => this.onButton( e, BUTTONS[type].apply )}
-								title={BUTTONS[type].title}
-								type="button"
-							>
-								<span className="svg-icon" dangerouslySetInnerHTML={ { __html: BUTTONS[ type ].icon } }></span>
-								<span className="screen-reader-text">{type}</span>
-							</button>;
-						} ) }
+				<div className="Editor-header">
+					<ul className="Editor-tabs">
+						<li>
+							<label>
+								<input
+									checked={ mode === 'edit' }
+									name="Editor-mode"
+									type="radio"
+									value="edit"
+									onChange={ e => this.setState( { mode: e.target.value } ) }
+								/>
+								<span>Write</span>
+							</label>
+						</li>
+						<li>
+							<label>
+								<input
+									checked={ mode === 'preview' }
+									name="Editor-mode"
+									type="radio"
+									value="preview"
+									onChange={ e => this.setState( { mode: e.target.value } ) }
+								/>
+								<span>Preview</span>
+							</label>
+						</li>
 					</ul>
-				) : null }
-			</div>
 
-			<div className="Editor-editor-container">
-				<DropUpload
-					allowMultiple
-					files={ this.state.uploading }
-					onUpload={ file => this.onUpload( file ) }
-				>
-					{ mode === 'preview' ? (
-						<Preview>{ content || '*Nothing to preview*' }</Preview>
-					) : (
-						<textarea
-							ref={ el => this.updateTextarea( el ) }
-							className="Editor-editor"
-							placeholder="Write a comment..."
-							style={{ height }}
-							value={ content }
-							onBlur={ () => this.onBlur() }
-							onFocus={ () => this.onFocus() }
-							onChange={ e => this.setState( { content: e.target.value } ) }
-							onKeyDown={ e => this.onKeyDown( e ) }
-							onKeyUp={ e => this.onKeyUp( e ) }
-						/>
-					) }
-				</DropUpload>
+					{ mode === 'edit' ? (
+						<ul className="Editor-toolbar">
+							{ Object.keys( BUTTONS ).map( type => {
+								if ( BUTTONS[ type ].separator ) {
+									return <span key={ type } className="separator" />;
+								}
 
-				{ mode !== 'preview' ? this.getCompletion() : null }
-			</div>
+								return (
+									<button
+										key={ type }
+										onClick={ e => this.onButton( e, BUTTONS[type].apply ) }
+										title={ BUTTONS[ type ].title }
+										type="button"
+									>
+										<span className="svg-icon" dangerouslySetInnerHTML={ { __html: BUTTONS[ type ].icon } }></span>
+										<span className="screen-reader-text">{type}</span>
+									</button>
+								);
+							} ) }
+						</ul>
+					) : null }
+				</div>
 
-			<p className="Editor-submit">
-				<small>
-					<span>{ count === 1 ? '1 word' : `${count.toLocaleString()} words` }</span>
-					<br />
-					<a
-						href="http://commonmark.org/help/"
-						rel="noopener noreferrer"
-						target="_blank"
+				<div className="Editor-editor-container">
+					<DropUpload
+						allowMultiple
+						files={ this.state.uploading }
+						onUpload={ file => this.onUpload( file ) }
 					>
-						Format with Markdown
-					</a>
-				</small>
-				<span className="Editor-submit-buttons">
-					{this.props.onCancel
-						? <Button onClick={this.props.onCancel}>Cancel</Button>
-						: null}
-					<Button submit type="primary">{this.props.submitText}</Button>
-				</span>
-			</p>
-		</form>;
+						{ mode === 'preview' ? (
+							<Preview>{ content || '*Nothing to preview*' }</Preview>
+						) : (
+							<textarea
+								ref={ el => this.updateTextarea( el ) }
+								className="Editor-editor"
+								placeholder="Write a comment..."
+								style={ { height } }
+								value={ content }
+								onBlur={ () => this.onBlur() }
+								onFocus={ () => this.onFocus() }
+								onChange={ e => this.setState( { content: e.target.value } ) }
+								onKeyDown={ e => this.onKeyDown( e ) }
+								onKeyUp={ e => this.onKeyUp( e ) }
+							/>
+						) }
+					</DropUpload>
+
+					{ mode !== 'preview' ? this.getCompletion() : null }
+				</div>
+
+				<p className="Editor-submit">
+					<small>
+						<span>{ count === 1 ? '1 word' : `${count.toLocaleString()} words` }</span>
+						<br />
+						<a
+							href="http://commonmark.org/help/"
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							Format with Markdown
+						</a>
+					</small>
+					<span className="Editor-submit-buttons">
+						{ this.props.onCancel ? (
+							<Button onClick={ this.props.onCancel }>Cancel</Button>
+						) : null }
+						<Button submit type="primary">{ this.props.submitText }</Button>
+					</span>
+				</p>
+			</form>
+		);
 	}
 }
 
-Editor.defaultProps = { submitText: 'Comment' };
+Editor.defaultProps = {
+	initialValue: '',
+	submitText: 'Comment',
+};
 
 Editor.propTypes = {
 	submitText: PropTypes.string,
-	onCancel:   PropTypes.func,
-	onSubmit:   PropTypes.func.isRequired,
+	onCancel: PropTypes.func,
+	onSubmit: PropTypes.func.isRequired,
 };

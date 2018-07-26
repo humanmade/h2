@@ -6,14 +6,14 @@
   "devDependencies": {
     "@storybook/react": "3.2.12",
     "babel-eslint": "^7.2.3",
-    "eslint": "^3.19.0",
-    "eslint-config-humanmade": "^0.2.0",
-    "eslint-config-react-app": "^0.5.2",
-    "eslint-plugin-flowtype": "^2.39.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.10.3",
-    "react-scripts": "^1.1.0"
+    "eslint": "^4.19.1",
+    "eslint-config-humanmade": "^0.5.0",
+    "eslint-config-react-app": "^2.1.0",
+    "eslint-plugin-flowtype": "^2.50.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.1.0",
+    "eslint-plugin-react": "^7.10.0",
+    "react-scripts": "^1.1.4"
   },
   "dependencies": {
     "@iarna/word-count": "^1.0.3",
@@ -38,7 +38,7 @@
     "react-storybook": "^1.0.0",
     "react-timeago": "^3.4.3",
     "react-transition-group": "^2.2.1",
-    "react-wp-scripts": "^0.1.1",
+    "react-wp-scripts": "^0.2.0",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^2.7.0",

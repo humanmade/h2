@@ -17,7 +17,7 @@ class WriteComment extends React.Component {
 
 		this.state = {
 			isSubmitting: false,
-			error:        null,
+			error: null,
 		};
 	}
 
@@ -40,10 +40,11 @@ class WriteComment extends React.Component {
 			.then( parseResponse );
 	}
 
-	onSubmit( content ) {
+	onSubmit( content, unprocessedContent ) {
 		const body = {
 			content,
 			post: this.props.parentPost.id,
+			meta: { unprocessed_content: unprocessedContent },
 		};
 
 		if ( this.props.comment ) {
@@ -54,14 +55,17 @@ class WriteComment extends React.Component {
 
 		this.props.fetch( '/wp/v2/comments', {
 			headers: {
-				Accept:         'application/json',
+				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
-			body:   JSON.stringify( body ),
+			body: JSON.stringify( body ),
 			method: 'POST',
 		} ).then( r => r.json().then( data => {
 			if ( ! r.ok ) {
-				this.setState( { isSubmitting: false, error: data } );
+				this.setState( {
+					isSubmitting: false,
+					error: data,
+				} );
 				return;
 			}
 
@@ -72,37 +76,39 @@ class WriteComment extends React.Component {
 	}
 
 	render() {
-		return <div className="WriteComment" ref={ ref => this.container = ref }>
-			<header>
-				<Avatar
-					url={this.props.user.data ? this.props.user.data.avatar_urls['96'] : ''}
-					user={this.props.user.data}
-					size={40}
-				/>
-				<strong>{this.props.user.data ? this.props.user.data.name : ''}</strong>
-			</header>
-			<div className="body">
-				<Editor
-					ref={editor => this.editor = editor}
-					submitText={ this.state.isSubmitting ? 'Commenting...' : 'Comment' }
-					onCancel={this.props.onCancel}
-					onSubmit={( ...args ) => this.onSubmit( ...args )}
-					onUpload={( ...args ) => this.onUpload( ...args )}
-				/>
+		return (
+			<div className="WriteComment" ref={ ref => this.container = ref }>
+				<header>
+					<Avatar
+						url={ this.props.user.data ? this.props.user.data.avatar_urls['96'] : '' }
+						user={ this.props.user.data }
+						size={ 40 }
+					/>
+					<strong>{ this.props.user.data ? this.props.user.data.name : '' }</strong>
+				</header>
+				<div className="body">
+					<Editor
+						ref={ editor => this.editor = editor }
+						submitText={ this.state.isSubmitting ? 'Commenting...' : 'Comment' }
+						onCancel={ this.props.onCancel }
+						onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
+						onUpload={ ( ...args ) => this.onUpload( ...args ) }
+					/>
 
-				{ this.state.error &&
-					<Notification type="error">
-						Could not submit: { this.state.error.message }
-					</Notification>
-				}
+					{ this.state.error && (
+						<Notification type="error">
+							Could not submit: { this.state.error.message }
+						</Notification>
+					) }
+				</div>
 			</div>
-		</div>;
+		);
 	}
 }
 
 WriteComment.propTypes = {
-	parentPost:         Post.isRequired,
-	onCancel:           PropTypes.func.isRequired,
+	parentPost: Post.isRequired,
+	onCancel: PropTypes.func.isRequired,
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 

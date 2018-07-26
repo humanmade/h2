@@ -21,4 +21,6 @@ export default function Content( props ) {
 	</div>;
 }
 
-Content.propTypes = { html: PropTypes.string.isRequired };
+Content.propTypes = {
+	html: PropTypes.string.isRequired,
+};

@@ -16,9 +16,9 @@ export class WritePost extends Component {
 		super( props );
 
 		this.state = {
-			title:        '',
-			error:        null,
-			category:     null,
+			title: '',
+			error: null,
+			category: null,
 			isSubmitting: false,
 		};
 	}
@@ -32,35 +32,45 @@ export class WritePost extends Component {
 			}
 		}
 	}
-	onSubmit( content ) {
+	onSubmit( content, unprocessedContent ) {
 		if ( ! this.state.title ) {
 			this.setState( { error: { message: 'Your post needs a title!' } } );
 			return;
 		}
 
-		this.setState( { isSubmitting: true, error: null } );
+		this.setState( {
+			isSubmitting: true,
+			error: null,
+		} );
 
 		const body = {
 			content,
-			status:     'publish',
-			title:      this.state.title,
+			status: 'publish',
+			title: this.state.title,
 			categories: this.state.category ? [ this.state.category ] : [],
+			meta: { unprocessed_content: unprocessedContent },
 		};
 
 		this.props.fetch( '/wp/v2/posts', {
 			headers: {
-				Accept:         'application/json',
+				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
-			body:   JSON.stringify( body ),
+			body: JSON.stringify( body ),
 			method: 'POST',
 		} ).then( r => r.json().then( data => {
 			if ( ! r.ok ) {
-				this.setState( { isSubmitting: false, error: data } );
+				this.setState( {
+					isSubmitting: false,
+					error: data,
+				} );
 				return;
 			}
 
-			this.setState( { isSubmitting: true, title: '' } );
+			this.setState( {
+				isSubmitting: true,
+				title: '',
+			} );
 			this.props.invalidateDataForUrl( '/wp/v2/posts?page=1' );
 			this.props.onDidCreatePost( data );
 		} ) );
@@ -76,61 +86,68 @@ export class WritePost extends Component {
 	render() {
 		const user = this.props.user.data;
 		const categories = this.props.categories.data || [];
-		return <div className="WritePost" ref={ ref => this.container = ref }>
-			<header>
-				<Avatar
-					url={user ? user.avatar_urls['96'] : ''}
-					size={60}
+		return (
+			<div className="WritePost" ref={ ref => this.container = ref }>
+				<header>
+					<Avatar
+						url={ user ? user.avatar_urls['96'] : '' }
+						size={ 60 }
+					/>
+					<div className="byline">
+						<h2>
+							<input
+								ref={ title => this.titleInput = title }
+								type="text"
+								placeholder="Enter post title..."
+								required
+								value={ this.state.title }
+								onChange={ e => this.setState( { title: e.target.value } ) }
+							/>
+						</h2>
+						<span className="date">
+							{user ? user.name : ''}, now
+						</span>
+						{categories.length > 0 &&
+							<select onChange={ e => this.setState( { category: e.target.value } ) } value={ this.state.cateogry } className="categories">
+								<option key="none" value={ null }>- Category-</option>
+								{ categories.map( category => (
+									<option
+										key={ category.id }
+										value={ category.id }
+									>
+										{ category.name }
+									</option>
+								) ) }
+							</select>
+						}
+					</div>
+					<div className="actions"></div>
+				</header>
+				<Editor
+					submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
+					onCancel={ this.props.onCancel }
+					onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
+					onUpload={ ( ...args ) => this.onUpload( ...args ) }
 				/>
-				<div className="byline">
-					<h2>
-						<input
-							ref={ title => this.titleInput = title }
-							type="text"
-							placeholder="Enter post title..."
-							required
-							value={ this.state.title }
-							onChange={ e => this.setState( { title: e.target.value } ) }
-						/>
-					</h2>
-					<span className="date">
-						{user ? user.name : ''}, now
-					</span>
-					{categories.length > 0 &&
-						<select onChange={ e => this.setState( { category: e.target.value } ) } value={ this.state.cateogry } className="categories">
-							<option key="none" value={null}>- Category-</option>
-							{categories.map( category => (
-								<option key={category.id} value={category.id}>{ category.name }</option>
-							) ) }
-						</select>
-					}
-				</div>
-				<div className="actions"></div>
-			</header>
-			<Editor
-				submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
-				onCancel={this.props.onCancel}
-				onSubmit={( ...args ) => this.onSubmit( ...args )}
-				onUpload={( ...args ) => this.onUpload( ...args )}
-			/>
 
-			{ this.state.error &&
-				<Notification type="error">
-					Could not submit: { this.state.error.message }
-				</Notification>
-			}
+				{ this.state.error && (
+					<Notification type="error">
+						Could not submit: { this.state.error.message }
+					</Notification>
+				) }
 
-			{this.props.children}
-		</div>
+				{ this.props.children }
+			</div>
+		);
 	}
 }
 
 WritePost.propTypes = {
-	onCancel:        PropTypes.func.isRequired,
+	onCancel: PropTypes.func.isRequired,
 	onDidCreatePost: PropTypes.func.isRequired,
 };
 
 export default withApiData( props => ( {
-	user:       '/wp/v2/users/me',
+	user: '/wp/v2/users/me',
 	categories: '/wp/v2/categories',
 } ) )( WritePost )

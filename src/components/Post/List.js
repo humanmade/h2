@@ -1,46 +1,83 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ContentLoader from 'react-content-loader';
+import { connect } from 'react-redux';
 import qs from 'qs';
 
+import Button from '../Button';
 import PostComponent from './index';
 import { withApiData } from '../../with-api-data';
 
 import './List.css';
 
 class PostsList extends Component {
+	constructor( props ) {
+		super( props );
+
+		this.state = {
+			view: 'expanded',
+		};
+	}
 
 	render() {
 		const { page } = this.props.match.params;
 
-		return <div className="PostsList">
-			{ this.props.posts.isLoading &&
-				<ContentLoader type="list" width={ 300 } />
-			}
-			{ this.props.posts.data &&
-				this.props.posts.data.map( post =>
-					<PostComponent
-						key={ post.id }
-						data={ post }
-					/>
-				)
-			}
-			<div className="pagination">
-				<Link to={`/page/${ page ? Number( page ) + 1 : 2 }`}>Older</Link>
-				{ page && page > 1 ? (
-					<Link to={ `/page/${ page - 1 }` }>Newer</Link>
+		return (
+			<div className="PostsList">
+				{ this.props.posts.isLoading &&
+					<ContentLoader type="list" width={ 300 } />
+				}
+				{ this.props.summaryEnabled ? (
+					<div className="PostsList--settings">
+						<Button
+							disabled={ this.state.view === 'summary' }
+							onClick={ () => this.setState( { view: 'summary' } ) }
+						>
+							Summary
+						</Button>
+						<Button
+							disabled={ this.state.view === 'expanded' }
+							onClick={ () => this.setState( { view: 'expanded' } ) }
+						>
+							Expanded
+						</Button>
+					</div>
 				) : (
-					/* Hack to get pagination to float correctly */
-					<a style={ { display: 'none' } }>&nbsp;</a>
+					/* Dummy settings div to ensure markup matches */
+					<div className="PostsList--settings" />
 				) }
+				{ this.props.posts.data &&
+					this.props.posts.data.map( post => (
+						<PostComponent
+							key={ post.id }
+							data={ post }
+							expanded={ this.state.view === 'expanded' }
+							onInvalidate={ () => this.props.invalidateData() }
+						/>
+					) )
+				}
+				<div className="pagination">
+					<Link to={ `/page/${ page ? Number( page ) + 1 : 2 }` }>Older</Link>
+					{ page && page > 1 ? (
+						<Link to={ `/page/${ page - 1 }` }>Newer</Link>
+					) : (
+						/* Hack to get pagination to float correctly */
+						/* eslint-disable-next-line jsx-a11y/anchor-is-valid */
+						<a style={ { display: 'none' } }>&nbsp;</a>
+					) }
+				</div>
 			</div>
-		</div>;
+		);
 	}
 }
 
-export default withApiData( props => ( {
+const mapStateToProps = state => ( {
+	summaryEnabled: state.features.summary_view,
+} );
+
+export default connect( mapStateToProps )( withApiData( props => ( {
 	categories: props.match.params.categorySlug ? '/wp/v2/categories' : null,
-	users:      props.match.params.authorSlug ? '/wp/v2/users?per_page=100' : null,
+	users: props.match.params.authorSlug ? '/wp/v2/users?per_page=100' : null,
 } ) )( withApiData( props => {
 	const filters = {};
 	if ( props.match.params.page ) {
@@ -68,4 +105,4 @@ export default withApiData( props => ( {
 	}
 
 	return { posts: postsRoute };
-} )( PostsList ) );
+} )( PostsList ) ) );

@@ -43,10 +43,10 @@ export class Reactions extends Component {
 
 		this.props.fetch( '/h2/v1/reactions', {
 			headers: {
-				Accept:         'application/json',
+				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
-			body:   JSON.stringify( body ),
+			body: JSON.stringify( body ),
 			method: 'POST',
 		} ).then( r => r.json() ).then( post  => {
 			this.props.refreshData();
@@ -97,61 +97,67 @@ export class Reactions extends Component {
 			return null;
 		}
 
-		return <div className="reactions">
-			<div key="reactions">
-				{ Object.entries( reactions ).map( ( [ emoji, users ] ) => {
-					let isActive = reactions[ emoji ].indexOf( this.props.currentUser.data.id ) >= 0 ? true : false;
-					return <button
-						className={ 'btn btn--small btn--tertiary' + ( isActive ? ' btn--active' : '' ) }
-						onClick={ () => this.toggleReaction( emoji ) }
-						key={ emoji }
-					>
-						<span className="reactions__emoji" key="emoji">
-							<Emoji type={ emoji } />
-						</span>
-						<span className="reactions__count" key="count">{ users.length }</span>
-						<span className="reactions__users" key="users">
-							{ users.map( reactionAuthorId => {
-								const user = this.props.users.data && this.props.users.data.filter( user => user.id === reactionAuthorId );
-								return <UserDisplayName
-									className="reactions__user"
-									userId={ reactionAuthorId }
-									userName={ user && user.length > 0 ? user[0].name : 'Unknown' }
-									key={ this.props.postId + reactionAuthorId }
-								/>
-							} ) }
-						</span>
-					</button>
-				} ) }
+		return (
+			<div className="reactions">
+				<div key="reactions">
+					{ Object.entries( reactions ).map( ( [ emoji, users ] ) => {
+						let isActive = reactions[ emoji ].indexOf( this.props.currentUser.data.id ) >= 0 ? true : false;
+						return (
+							<button
+								className={ 'btn btn--small btn--tertiary' + ( isActive ? ' btn--active' : '' ) }
+								onClick={ () => this.toggleReaction( emoji ) }
+								key={ emoji }
+							>
+								<span className="reactions__emoji" key="emoji">
+									<Emoji type={ emoji } />
+								</span>
+								<span className="reactions__count" key="count">{ users.length }</span>
+								<span className="reactions__users" key="users">
+									{ users.map( reactionAuthorId => {
+										const user = this.props.users.data && this.props.users.data.filter( user => user.id === reactionAuthorId );
+										return (
+											<UserDisplayName
+												className="reactions__user"
+												userId={ reactionAuthorId }
+												userName={ user && user.length > 0 ? user[0].name : 'Unknown' }
+												key={ this.props.postId + reactionAuthorId }
+											/>
+										);
+									} ) }
+								</span>
+							</button>
+						);
+					} ) }
+				</div>
+				<button
+					className={ 'btn btn--small btn--tertiary' + ( this.props.reactions.isLoading ? ' loading' : '' ) }
+					onClick={ value => this.setState( { isOpen: ! this.state.isOpen  } ) }
+					key="button"
+					disabled={ this.props.reactions.isLoading }
+				>
+					{ this.props.reactions.isLoading ?
+						<span className="loading loading--active"></span>
+						:
+						<span className="icon icon--smiley-wink">Add reaction</span>
+					}
+				</button>
+				{ this.state.isOpen && (
+					<Picker
+						key="picker"
+						onClick={ data => {
+							this.setState( { isOpen: false } );
+							this.toggleReaction( data.native || data.name );
+						} }
+						title={ false }
+						emoji="upside_down_face"
+						autoFocus={ true }
+						color="#D24632"
+						custom={ window.H2Data.site.emoji }
+						set="twitter"
+					/>
+				)}
 			</div>
-			<button
-				className={ 'btn btn--small btn--tertiary' + ( this.props.reactions.isLoading ? ' loading' : '' ) }
-				onClick={ value => this.setState( { isOpen: ! this.state.isOpen  } ) }
-				key="button"
-				disabled={ this.props.reactions.isLoading }
-			>
-				{ this.props.reactions.isLoading ?
-					<span className="loading loading--active"></span>
-					:
-					<span className="icon icon--smiley-wink">Add reaction</span>
-				}
-			</button>
-			{ this.state.isOpen && (
-				<Picker
-					key="picker"
-					onClick={ data => {
-						this.setState( { isOpen: false } );
-						this.toggleReaction( data.native || data.name );
-					}}
-					title={ false }
-					emoji="upside_down_face"
-					autoFocus={ true }
-					color="#D24632"
-					custom={ window.H2Data.site.emoji }
-					set="twitter"
-				/>
-			)}
-		</div>;
+		);
 	}
 
 	toggleReaction( emoji, reactionUserId ) {
@@ -173,19 +179,19 @@ export class Reactions extends Component {
 }
 
 export default withApiData( props => ( {
-	reactions:   `/h2/v1/reactions?post=${ props.postId }${ props.commentId ? `&comment=${ props.commentId }` : '' }`,
+	reactions: `/h2/v1/reactions?post=${ props.postId }${ props.commentId ? `&comment=${ props.commentId }` : '' }`,
 	currentUser: '/wp/v2/users/me',
-	users:       '/wp/v2/users?per_page=100',
+	users: '/wp/v2/users?per_page=100',
 } ) )( Reactions );
 
 Reactions.propTypes = {
-	userId:    PropTypes.number,
-	postId:    PropTypes.number.isRequired,
+	userId: PropTypes.number,
+	postId: PropTypes.number.isRequired,
 	commentId: PropTypes.number,
 	reactions: PropTypes.object.isRequired,
 };
 
 Reactions.defaultProps = {
-	userId:    0,
+	userId: 0,
 	isLoading: false,
 }
