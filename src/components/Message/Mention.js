@@ -9,9 +9,11 @@ class Mention extends React.Component {
 	render() {
 		const user = this.props.user.data ? this.props.user.data[0] : null;
 
-		return <AuthorLink user={ user }>
-			{ this.props.children }
-		</AuthorLink>;
+		return (
+			<AuthorLink user={ user }>
+				{ this.props.children }
+			</AuthorLink>
+		);
 	}
 }
 
@@ -23,12 +25,14 @@ export default ConnectedMention;
 
 export class MentionMatcher extends Matcher {
 	replaceWith( match, props ) {
-		return <ConnectedMention
-			key={ props.key }
-			username={ props.username }
-		>
-			{ match }
-		</ConnectedMention>;
+		return (
+			<ConnectedMention
+				key={ props.key }
+				username={ props.username }
+			>
+				{ match }
+			</ConnectedMention>
+		);
 	}
 
 	asTag(): string {

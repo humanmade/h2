@@ -21,14 +21,16 @@ function Content( props ) {
 		);
 	}
 
-	return <div className="PostContent">
-		<Interweave
-			commonClass={ null }
-			content={ props.html }
-			matchers={ MATCHERS }
-			tagName="fragment"
-		/>
-	</div>;
+	return (
+		<div className="PostContent">
+			<Interweave
+				commonClass={ null }
+				content={ props.html }
+				matchers={ MATCHERS }
+				tagName="fragment"
+			/>
+		</div>
+	);
 }
 
 Content.propTypes = {
