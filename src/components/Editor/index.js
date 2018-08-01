@@ -236,6 +236,7 @@ export default class Editor extends React.PureComponent {
 					this.textarea.selectionStart = selectionStart;
 					this.textarea.selectionEnd = selectionEnd;
 					this.focus();
+					this.setState( { lastSelection: null } );
 				}
 			}
 		);
