@@ -33,7 +33,7 @@ export default function Summary( props ) {
 
 	const peopleClass = [
 		'Post-Summary-people',
-		people.length > 5 && 'Post-Summary-people__overflow',
+		people.length >= 8 && 'Post-Summary-people__overflow',
 	].filter( Boolean ).join( ' ' );
 
 	return (
