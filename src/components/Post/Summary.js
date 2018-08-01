@@ -46,8 +46,8 @@ export default function Summary( props ) {
 				<div className="Post-Summary-comments">
 					<span>{ _n( 'comment', 'comments', comments.length ) }</span>
 					<ul className={ peopleClass }>
-						{ people.slice( 0, 8 ).map( ( person, idx ) => (
-							<li key={ idx }>
+						{ people.slice( 0, 8 ).map( person => (
+							<li key={ person }>
 								<ConnectedPerson id={ person } />
 							</li>
 						) ) }
