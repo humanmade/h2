@@ -21,9 +21,11 @@
 }
 
 .Post-Summary-people {
+	position: relative;
 	list-style-type: none;
 	margin: 0 0 0 0.5em;
-	padding: 0;
+	/* Pad the left to avoid the box-shadow overflowing */
+	padding: 0 0 0 3px;
 	align-self: baseline;
 }
 
@@ -43,4 +45,21 @@
 
 .Post-Summary-people li:nth-child(n+2) {
 	margin-left: -12px;
+}
+
+.Post-Summary-people__overflow::before {
+	display: block;
+	content: " ";
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	/* Fade out over the last 3 avatars + 3px box shadow */
+	width: 63px;
+	z-index: 2;
+	background: linear-gradient(
+		to right,
+		rgba( 255, 255, 255, 1 ),
+		rgba( 255, 255, 255, 0 )
+	);
 }
