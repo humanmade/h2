@@ -31,6 +31,11 @@ export default function Summary( props ) {
 
 	const people = uniq( comments.map( comment => comment.author ) ).filter( Boolean );
 
+	const peopleClass = [
+		'Post-Summary-people',
+		people.length > 5 && 'Post-Summary-people__overflow',
+	].filter( Boolean ).join( ' ' );
+
 	return (
 		<div className="Post-Summary">
 			<Button onClick={ onExpand }>
@@ -40,9 +45,9 @@ export default function Summary( props ) {
 			{ ( comments && comments.length > 0 ) && (
 				<div className="Post-Summary-comments">
 					<span>{ _n( 'comment', 'comments', comments.length ) }</span>
-					<ul className="Post-Summary-people">
-						{ people.map( person => (
-							<li key={ person }>
+					<ul className={ peopleClass }>
+						{ people.slice( 0, 8 ).map( ( person, idx ) => (
+							<li key={ idx }>
 								<ConnectedPerson id={ person } />
 							</li>
 						) ) }
