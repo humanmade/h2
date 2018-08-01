@@ -4,9 +4,11 @@ import {
 	HIDE_SIDEBAR_PROFILE,
 	SHOW_SUPER_SIDEBAR,
 	HIDE_SUPER_SIDEBAR,
+	SET_DEFAULT_POST_VIEW,
 } from '../actions';
 
 const DEFAULT_STATE = {
+	defaultPostView: 'expanded',
 	showingSuper: false,
 	sidebarProfile: null,
 };
@@ -43,6 +45,12 @@ export default function ui( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				showingSuper: false,
+			};
+
+		case SET_DEFAULT_POST_VIEW:
+			return {
+				...state,
+				defaultPostView: action.view,
 			};
 
 		default:

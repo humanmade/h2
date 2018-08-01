@@ -6,20 +6,14 @@ import qs from 'qs';
 
 import Button from '../Button';
 import PostComponent from './index';
+import { setDefaultPostView } from '../../actions';
 import { withApiData } from '../../with-api-data';
 
 import './List.css';
 
 class PostsList extends Component {
-	constructor( props ) {
-		super( props );
-
-		this.state = {
-			view: 'expanded',
-		};
-	}
-
 	render() {
+		const { defaultPostView, summaryEnabled } = this.props;
 		const { page } = this.props.match.params;
 
 		return (
@@ -27,17 +21,17 @@ class PostsList extends Component {
 				{ this.props.posts.isLoading &&
 					<ContentLoader type="list" width={ 300 } />
 				}
-				{ this.props.summaryEnabled ? (
+				{ summaryEnabled ? (
 					<div className="PostsList--settings">
 						<Button
-							disabled={ this.state.view === 'summary' }
-							onClick={ () => this.setState( { view: 'summary' } ) }
+							disabled={ defaultPostView === 'summary' }
+							onClick={ () => this.props.setDefaultPostView( 'summary' ) }
 						>
 							Summary
 						</Button>
 						<Button
-							disabled={ this.state.view === 'expanded' }
-							onClick={ () => this.setState( { view: 'expanded' } ) }
+							disabled={ defaultPostView === 'expanded' }
+							onClick={ () => this.props.setDefaultPostView( 'expanded' ) }
 						>
 							Expanded
 						</Button>
@@ -51,7 +45,7 @@ class PostsList extends Component {
 						<PostComponent
 							key={ post.id }
 							data={ post }
-							expanded={ this.state.view === 'expanded' }
+							expanded={ ! summaryEnabled || defaultPostView === 'expanded' }
 							onInvalidate={ () => this.props.invalidateData() }
 						/>
 					) )
@@ -72,10 +66,15 @@ class PostsList extends Component {
 }
 
 const mapStateToProps = state => ( {
+	defaultPostView: state.ui.defaultPostView,
 	summaryEnabled: state.features.summary_view,
 } );
 
-export default connect( mapStateToProps )( withApiData( props => ( {
+const mapDispatchToProps = dispatch => ( {
+	setDefaultPostView: view => dispatch( setDefaultPostView( view ) ),
+} );
+
+export default connect( mapStateToProps, mapDispatchToProps )( withApiData( props => ( {
 	categories: props.match.params.categorySlug ? '/wp/v2/categories' : null,
 	users: props.match.params.authorSlug ? '/wp/v2/users?per_page=100' : null,
 } ) )( withApiData( props => {
