@@ -6,6 +6,7 @@ export const SHOW_SUPER_SIDEBAR = 'SHOW_SUPER_SIDEBAR';
 export const HIDE_SUPER_SIDEBAR = 'HIDE_SUPER_SIDEBAR';
 export const ENABLE_BETA_FEATURE = 'ENABLE_BETA_FEATURE';
 export const DISABLE_BETA_FEATURE = 'DISABLE_BETA_FEATURE';
+export const SET_DEFAULT_POST_VIEW = 'SET_DEFAULT_POST_VIEW';
 
 export const showSidebarProfile = id => {
 	return {
@@ -28,4 +29,9 @@ export const enableBetaFeature = feature => ( {
 export const disableBetaFeature = feature => ( {
 	type: DISABLE_BETA_FEATURE,
 	feature,
+} );
+
+export const setDefaultPostView = view => ( {
+	type: SET_DEFAULT_POST_VIEW,
+	view,
 } );
