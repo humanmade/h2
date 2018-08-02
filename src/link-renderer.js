@@ -7,4 +7,4 @@ export default function ( href, title, text ) {
 	}
 
 	return marked.Renderer.prototype.link.apply( this, arguments );
-};
+}
