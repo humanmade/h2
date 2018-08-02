@@ -2,6 +2,7 @@
 
 namespace H2;
 
+use WP_Error;
 use WP_REST_Request;
 
 /**
