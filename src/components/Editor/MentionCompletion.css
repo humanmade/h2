@@ -1,16 +1,21 @@
 .MentionCompletion-item {
 	display: flex;
+	white-space: nowrap;
+	max-width: 500px;
 }
 
 .MentionCompletion-item .avatar {
 	width: 24px;
 	height: 24px;
+	max-width: initial;
 }
 
 .MentionCompletion-item .name {
 	margin-left: 0.5em;
 	margin-right: 0.5em;
 	flex-grow: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .MentionCompletion-item .username {
