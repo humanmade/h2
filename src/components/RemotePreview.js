@@ -7,11 +7,11 @@ import { withApiData } from '../with-api-data';
 
 class RemotePreview extends Component {
 	state: {
-		isLoading: false,
+		isLoading: true,
 		compiledPreview: '',
 	};
 
-	componentWillMount() {
+	componentDidMount() {
 		this.onUpdateMarkdown();
 	}
 
