@@ -11,8 +11,9 @@ class RemotePreview extends React.Component {
 		super( props );
 
 		this.state = {
-			isLoading: true,
 			compiledPreview: '',
+			error: null,
+			isLoading: true,
 		};
 	}
 
@@ -39,18 +40,38 @@ class RemotePreview extends React.Component {
 			body: JSON.stringify( body ),
 			method: 'POST',
 		} )
-			.then( r => r.json() )
-			.then( response => {
-				this.setState( {
-					compiledPreview: response.html,
-					isLoading: false,
-				} );
+			.then( r => {
+				r.json()
+					.then( response => {
+						if ( ! r.ok ) {
+							this.setState( {
+								isLoading: false,
+								error: response.message || 'Unknown error occurred',
+							} );
+							return;
+						}
+
+						this.setState( {
+							compiledPreview: response.html,
+							isLoading: false,
+						} );
+					} )
+					.catch( err =>  {
+						this.setState( {
+							isLoading: false,
+							error: err.message,
+						} );
+					} );
 			} );
 	}
 
 	render() {
 		if ( this.state.isLoading ) {
 			return <Notification>Loading…</Notification>;
+		}
+
+		if ( this.state.error ) {
+			return <Notification type="error">Could not load preview: { this.state.error }</Notification>;
 		}
 
 		return (
