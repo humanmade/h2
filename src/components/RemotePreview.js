@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Notification from './Notification';
 import MessageContent from './Message/Content';
 import compileMarkdown from '../compile-markdown';
 import { withApiData } from '../with-api-data';
 
-class RemotePreview extends Component {
+class RemotePreview extends React.Component {
 	constructor( props ) {
 		super( props );
 
