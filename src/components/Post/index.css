@@ -1,0 +1,144 @@
+.Post {
+	flex-direction: column;
+	position: relative;
+	padding-bottom: 1.667rem;
+	margin-bottom: 1.667rem;
+	min-height: 144px;
+	border-bottom: 5px solid #F1F2EE;
+}
+
+.Post:before {
+	position: absolute;
+	content: '';
+	background: #F1F2EE;
+	left: 27.5px;
+	height: 1.667rem;
+	top: -.8335rem;
+	width: 5px;
+	z-index: 2;
+}
+
+.Post > header {
+	position: sticky;
+	top: 0;
+	z-index: 5;
+	padding: 15px 0;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	height: 99px;
+}
+
+body.admin-bar .Post > header {
+	top: 32px;
+}
+
+@media screen and ( max-width: 782px ) {
+	body.admin-bar .Post > header {
+		top: 48px;
+	}
+}
+
+.PostsList .Post > header {
+	margin-top: -15px;
+}
+
+.Post > header > .Avatar {
+	margin-right: 30px;
+	width: 3.333rem;
+	height: 3.333rem;
+	border-radius: 100%;
+	align-self: flex-start;
+}
+
+.Post > header > .byline {
+	flex-direction: column;
+	flex-grow: 1;
+	min-width: 0;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.Post > header > .byline > a > h2 {
+	margin: 0 0.5em 0 0;
+	text-overflow: ellipsis;
+	text-transform: inherit;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.Post > header > .byline > .date {
+	color: #AAA;
+	font-size: 14px;
+}
+
+.Post > header > .byline > .categories {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: inline;
+	font-size: 14px;
+}
+
+.Post > header > .byline > .categories > li {
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.Post-content-wrap {
+	margin-left: 90px;
+}
+
+.Post .actions button:last-child {
+	margin-right: 0;
+}
+
+.Post--collapsed .Post-content-wrap {
+	min-height: 70px;
+	max-height: 150px;
+	overflow: hidden;
+	position: relative;
+}
+.Post--collapsed .Post-content-wrap::after {
+	display: block;
+	content: ' ';
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 100%;
+	background: linear-gradient(
+		to bottom,
+		rgba( 255, 255, 255, 0 ),
+		rgba( 255, 255, 255, 0.9 ) 50%,
+		#fff
+	);
+}
+.Post--collapsed .reactions {
+	display: none;
+}
+
+@media ( max-width: 600px ) {
+	.Post:before {
+		/* ( avatar_width - width ) / 2 */
+		left: 15px;
+		width: 2px;
+		height: 1.1rem;
+	}
+	.Post > header {
+		padding: 5px 0;
+		height: 70px;
+	}
+	.Post > header > .Avatar {
+		margin-right: 16px;
+	}
+	.Post > header > .Avatar,
+	.Post > header > .Avatar img {
+		width: 32px !important;
+		height: 32px !important;
+	}
+
+	.Post-content-wrap {
+		margin-left: 48px;
+	}
+}

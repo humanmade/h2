@@ -4,12 +4,14 @@ import { CSSTransition } from 'react-transition-group';
 
 import './Hovercard.css';
 
+const HOVER_DELAY = 100;
+
 const transition = {
-	component:  'div',
+	component: 'div',
 	classNames: 'Hovercard-Transition',
-	timeout:    {
+	timeout: {
 		enter: 100,
-		exit:  100,
+		exit: 100,
 	},
 };
 
@@ -20,22 +22,27 @@ function getPosition( target, width ) {
 
 	let rect = target.getBoundingClientRect();
 
-	let position = {
-		top:  rect.top + window.pageYOffset - document.documentElement.clientTop,
+	let style = {
+		top: rect.top + window.pageYOffset - document.documentElement.clientTop,
 		left: rect.left + window.pageXOffset - document.documentElement.clientLeft,
 	};
 
 	// Ofset by the size of the element itself.
-	position.top += target.offsetHeight;
+	style.top += target.offsetHeight;
 
 	// Point to the centre.
-	position.left += target.offsetWidth / 2 - width / 2;
+	style.left += target.offsetWidth / 2 - width / 2;
 
 	// Keep on the screen.
-	position.top = Math.max( position.top, 0 );
-	position.left = Math.max( position.left, 0 );
+	const originalLeft = style.left;
+	style.top = Math.max( style.top, 16 );
+	style.left = Math.max( style.left, 16 );
 
-	return position;
+	// Offset the pointer back.
+	const diff = originalLeft - style.left;
+	style.pointerOffset = diff;
+
+	return style;
 }
 
 class CardPortal extends React.Component {
@@ -70,6 +77,43 @@ export default class Hovercard extends React.Component {
 		this.target = null;
 	}
 
+	componentWillUnmount() {
+		if ( this.showTimer ) {
+			clearTimeout( this.showTimer );
+		}
+	}
+
+	// eslint-disable-next-line no-undef
+	onMouseOver = () => {
+		if ( this.state.active ) {
+			return;
+		}
+
+		this.showTimer = setTimeout( () => {
+			this.showTimer = null;
+			this.setState( { active: true } );
+		}, HOVER_DELAY );
+	}
+
+	// eslint-disable-next-line no-undef
+	onMouseOut = () => {
+		if ( this.showTimer ) {
+			clearTimeout( this.showTimer );
+		}
+		this.setState( { active: false } );
+	}
+
+	// eslint-disable-next-line no-undef
+	onUpdateRef = ref => {
+		if ( ! ref ) {
+			this.target = null;
+		} else if ( ref instanceof HTMLElement ) {
+			this.target = ref;
+		} else {
+			this.target = ReactDOM.findDOMNode( ref );
+		}
+	}
+
 	render() {
 		const {
 			cardContent: Card,
@@ -77,36 +121,52 @@ export default class Hovercard extends React.Component {
 		} = this.props;
 		const { active } = this.state;
 
-		return [
-			<CSSTransition
-				{...transition}
-				in={ !! ( active && this.target ) }
-				mountOnEnter={ true }
-				unmountOnExit={ true }
-				onExited={ () => this.setState( { shouldShow: false } ) }
-				key="css-transition"
-			>
-				{ () => <CardPortal>
-					<div
-						className="Hovercard-Card"
-						style={ { width, ...getPosition( this.target, width ) } }
-					>
-						<Card />
-					</div>
-				</CardPortal> }
-			</CSSTransition>,
+		const positions = getPosition( this.target, width );
+		const cardStyle = {
+			left: positions.left,
+			top: positions.top,
+			width,
+		};
+		const pointerStyle = {};
+		pointerStyle.transform = positions.pointerOffset ? `translate( ${ positions.pointerOffset}px, 0 )` : null;
 
-			React.cloneElement(
-				React.Children.only( this.props.children ),
-				{
-					ref:         ref => this.target = ref,
-					onMouseOver: () => this.setState( { active: true, shouldShow: true } ),
-					onMouseOut:  () => this.setState( { active: false } ),
-					key:         'child',
-				}
-			),
-		];
+		return (
+			<React.Fragment>
+				<CSSTransition
+					{ ...transition }
+					in={ !! ( active && this.target ) }
+					mountOnEnter={ true }
+					unmountOnExit={ true }
+				>
+					{ () => (
+						<CardPortal>
+							<div
+								className="Hovercard-Card"
+								style={ cardStyle }
+							>
+								<div
+									className="Hovercard-Card-pointer"
+									style={ pointerStyle }
+								/>
+								<Card />
+							</div>
+						</CardPortal>
+					) }
+				</CSSTransition>
+
+				{ React.cloneElement(
+					React.Children.only( this.props.children ),
+					{
+						ref: this.onUpdateRef,
+						onMouseOver: this.onMouseOver,
+						onMouseOut: this.onMouseOut,
+					}
+				) }
+			</React.Fragment>
+		);
 	}
 }
 
-Hovercard.defaultProps = { width: 300 };
+Hovercard.defaultProps = {
+	width: 300,
+};

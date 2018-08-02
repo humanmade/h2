@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withApiData } from '../with-api-data';
 import marked from 'marked';
 import LinkRenderer from '../link-renderer';
-import PostContent from './PostContent';
+import MessageContent from './Message/Content';
 
 let render = new marked.Renderer();
 render.link = LinkRenderer;
@@ -40,7 +40,7 @@ class RemotePreview extends Component {
 	}
 	render() {
 		return <div className="Editor-preview">
-			<PostContent html={ this.state.compiledPreview } />
+			<MessageContent html={ this.state.compiledPreview } />
 		</div>
 	}
 }

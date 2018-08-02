@@ -15,25 +15,30 @@ export default function Button( props ) {
 		classes.push( 'btn--' + props.size );
 	}
 
-	return <button
-		className={ classes.join( ' ' ) }
-		type={ props.submit ? 'submit' : 'button' }
-		onClick={ props.onClick || undefined }
-	>
-		{props.children}
-	</button>;
+	return (
+		<button
+			className={ classes.join( ' ' ) }
+			disabled={ props.disabled }
+			type={ props.submit ? 'submit' : 'button' }
+			onClick={ props.onClick || undefined }
+		>
+			{props.children}
+		</button>
+	);
 }
 
 Button.propTypes = {
 	children: PropTypes.any,
-	submit:   PropTypes.bool,
-	onClick:  PropTypes.func,
-	type:     PropTypes.string,
-	size:     PropTypes.string,
+	disabled: PropTypes.bool,
+	submit: PropTypes.bool,
+	onClick: PropTypes.func,
+	type: PropTypes.string,
+	size: PropTypes.string,
 };
 
 Button.defaultProps = {
-	type:   'secondary',
-	size:   'small',
+	disabled: false,
+	type: 'secondary',
+	size: 'small',
 	submit: false,
 }

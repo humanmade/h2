@@ -25,7 +25,6 @@
 .DropUpload-status {
 	font-size: 0.8rem;
 	color: var( --hm-warm-grey );
-	display: flex;
 	justify-content: space-between;
 }
 .DropUpload-status p {
@@ -45,6 +44,11 @@ label.DropUpload-uploader {
 	all: unset;
 	margin-right: 0.3em;
 	cursor: pointer;
+	/* Style label text similar to an <a> */
+	color: var( --hm-red );
+}
+.DropUpload-uploader:hover {
+	text-decoration: underline;
 }
 .DropUpload-uploader > input[type=file] {
 	display: none;

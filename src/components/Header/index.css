@@ -1,0 +1,43 @@
+.Header {
+	background: var( --hm-beige );
+	flex: 1;
+}
+
+.Header-inner {
+	flex-direction: row;
+	display: flex;
+	padding: 0 20px;
+}
+
+.Header-site-name {
+	background: var( --hm-red );
+	color: #fff;
+	display: flex;
+	align-items: center;
+	padding-right: 1em;
+	border: none;
+	font: inherit;
+	cursor: pointer;
+}
+
+.Header-site-name:hover,
+.Header-site-name:focus {
+	border: none;
+	color: rgba( 255, 255, 255, 0.6 );
+}
+
+.Header .Header-CurrentUser {
+	margin-left: auto;
+	align-self: center;
+}
+
+.Header .SearchInput {
+	margin: 0 20px;
+	align-self: center;
+}
+
+@media ( max-width: 600px ) {
+	.Header-inner {
+		padding: 0 7px;
+	}
+}

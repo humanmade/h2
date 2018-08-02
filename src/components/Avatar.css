@@ -8,6 +8,10 @@
 	background-color: #FFF;
 }
 
+.Avatar .AuthorLink:hover {
+	border: none;
+}
+
 .Avatar:after {
 	content: ' ';
 	display: block;
@@ -19,4 +23,5 @@
 	position: absolute;
 	top: 0;
 	left: 0;
+	pointer-events: none;
 }

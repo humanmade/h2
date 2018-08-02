@@ -1,0 +1,40 @@
+.PostsList {
+	position: relative;
+	padding: 0 20px;
+}
+
+.PostsList > div {
+	flex: 1;
+}
+
+.PostsList--settings {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	border-left: 5px solid #F1F2EE;
+	margin-left: 28.5px;
+	padding: 0 0 10px 56.5px;
+	height: 80px;
+	font-size: 14px;
+}
+
+.PostsList--settings .btn {
+	margin: 0 0 0 0.5em;
+	font: inherit;
+}
+
+.PostsList .infinite-scroll-component {
+	flex-direction: column;
+}
+
+.PostsList > .pagination {
+	border-top: none;
+}
+
+@media ( max-width: 600px ) {
+	.PostsList--settings {
+		margin-left: 15px;
+		border-width: 2px;
+		padding-left: 31px;
+	}
+}
