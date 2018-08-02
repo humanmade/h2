@@ -1,10 +1,12 @@
 .MentionCompletion-item {
 	display: flex;
+	white-space: nowrap;
 }
 
 .MentionCompletion-item .avatar {
 	width: 24px;
 	height: 24px;
+	max-width: initial;
 }
 
 .MentionCompletion-item .name {
