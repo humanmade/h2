@@ -194,7 +194,7 @@ function register_custom_meta() {
  * @param WP_REST_Response $response The response object.
  * @return WP_REST_Response
  */
-function add_word_count_to_api( $response, $post ) {
+function add_word_count_to_api( $response ) {
 	$data = $response->get_data();
 
 	// Convert HTML to text.
