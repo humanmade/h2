@@ -1,5 +1,4 @@
 import countWords from '@iarna/word-count';
-import marked from 'marked';
 import PropTypes from 'prop-types';
 import React from 'react';
 import getCaretCoordinates from 'textarea-caret';
@@ -10,12 +9,9 @@ import EmojiCompletion from './EmojiCompletion';
 import MentionCompletion from './MentionCompletion';
 import MessageContent from '../Message/Content';
 import Shortcuts from '../Shortcuts';
-import LinkRenderer from '../../link-renderer';
+import compileMarkdown from '../../compile-markdown';
 
 import './index.css';
-
-let renderer = new marked.Renderer();
-renderer.link = LinkRenderer;
 
 const apply = ( selection, start, end ) => {
 	return selection.length ? start + selection + end : start;
@@ -59,7 +55,7 @@ const completions = {
 };
 
 const Preview = props => {
-	const compiled = marked( props.children, { renderer } );
+	const compiled = compileMarkdown( props.children );
 	return <div className="Editor-preview"><MessageContent html={ compiled } /></div>;
 };
 Preview.propTypes = { children: PropTypes.string.isRequired };
@@ -180,7 +176,7 @@ export default class Editor extends React.PureComponent {
 	onSubmit( e ) {
 		e.preventDefault();
 
-		this.props.onSubmit( marked( this.state.content, { renderer } ), this.state.content );
+		this.props.onSubmit( compileMarkdown( this.state.content ), this.state.content );
 	}
 
 	onBlur() {

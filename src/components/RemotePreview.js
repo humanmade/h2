@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { withApiData } from '../with-api-data';
-import marked from 'marked';
-import LinkRenderer from '../link-renderer';
-import MessageContent from './Message/Content';
 
-let render = new marked.Renderer();
-render.link = LinkRenderer;
+import MessageContent from './Message/Content';
+import compileMarkdown from '../compile-markdown';
+import { withApiData } from '../with-api-data';
 
 class RemotePreview extends Component {
 	state: {
@@ -18,7 +15,7 @@ class RemotePreview extends Component {
 	}
 
 	onUpdateMarkdown() {
-		const compiledMarkdown = marked( this.props.children, { renderer: render } );
+		const compiledMarkdown = compileMarkdown( this.props.children );
 		this.setState( {
 			compiledPreview: compiledMarkdown,
 			isFetching: true,
