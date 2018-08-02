@@ -5,7 +5,6 @@ namespace H2;
 require __DIR__ . '/inc/namespace.php';
 require __DIR__ . '/inc/emoji/namespace.php';
 require __DIR__ . '/inc/loader/namespace.php';
-require __DIR__ . '/inc/preview/namespace.php';
 require __DIR__ . '/inc/rest_api/class-widgets-controller.php';
 
 add_action( 'after_setup_theme', __NAMESPACE__ . '\\set_up_theme' );

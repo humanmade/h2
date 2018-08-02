@@ -162,6 +162,17 @@ function register_rest_routes() {
 		},
 		'schema'          => $markdown_schema,
 	] );
+
+	register_rest_route( 'h2', 'v1/preview', [
+		'methods' => 'POST',
+		'callback' => __NAMESPACE__ . '\\render_preview',
+		'args' => [
+			'html' => [
+				'type' => 'text',
+				'required' => true,
+			],
+		],
+	] );
 }
 
 /**
@@ -206,4 +217,19 @@ function add_word_count_to_api( $response ) {
 
 	$response->set_data( $data );
 	return $response;
+}
+
+/**
+ * Render HTML preview text as content.
+ *
+ * Applies `the_content` filter to arbitrary input text to enable more accurate
+ * previews of the final output while editing.
+ *
+ * @param WP_REST_Request $request
+ * @return array
+ */
+function render_preview( WP_REST_Request $request ) {
+	return [
+		'html' => apply_filters( 'the_content', $request['html'] ),
+	];
 }
