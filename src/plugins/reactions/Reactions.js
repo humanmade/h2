@@ -28,7 +28,10 @@ export class Reactions extends Component {
 	constructor( props ) {
 		super( props );
 
-		this.state = { isOpen: false }
+		this.state = {
+			isLoading: false,
+			isOpen: false,
+		};
 	}
 
 	onAddReaction( emoji ) {
@@ -41,6 +44,8 @@ export class Reactions extends Component {
 			body.comment = this.props.commentId;
 		}
 
+		this.setState( { isLoading: true } );
+
 		this.props.fetch( '/h2/v1/reactions', {
 			headers: {
 				Accept: 'application/json',
@@ -49,6 +54,7 @@ export class Reactions extends Component {
 			body: JSON.stringify( body ),
 			method: 'POST',
 		} ).then( r => r.json() ).then( post  => {
+			this.setState( { isLoading: false } );
 			this.props.refreshData();
 		} );
 
@@ -97,6 +103,8 @@ export class Reactions extends Component {
 			return null;
 		}
 
+		const loading = this.props.reactions.isLoading || this.state.isLoading;
+
 		return (
 			<div className="reactions">
 				<div key="reactions">
@@ -130,16 +138,16 @@ export class Reactions extends Component {
 					} ) }
 				</div>
 				<button
-					className={ 'btn btn--small btn--tertiary' + ( this.props.reactions.isLoading ? ' loading' : '' ) }
+					className={ 'btn btn--small btn--tertiary' + ( loading ? ' loading' : '' ) }
 					onClick={ value => this.setState( { isOpen: ! this.state.isOpen  } ) }
 					key="button"
-					disabled={ this.props.reactions.isLoading }
+					disabled={ loading }
 				>
-					{ this.props.reactions.isLoading ?
+					{ loading ? (
 						<span className="loading loading--active"></span>
-						:
+					) : (
 						<span className="icon icon--smiley-wink">Add reaction</span>
-					}
+					) }
 				</button>
 				{ this.state.isOpen && (
 					<Picker
