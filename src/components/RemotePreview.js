@@ -16,12 +16,12 @@ class RemotePreview extends Component {
 		this.onUpdateMarkdown();
 	}
 	onUpdateMarkdown() {
-		const compiledMarkedown = marked( this.props.children, { renderer: render } );
+		const compiledMarkdown = marked( this.props.children, { renderer: render } );
 		this.setState( {
-			compiledPreview: compiledMarkedown,
+			compiledPreview: compiledMarkdown,
 			isFetching: true,
 		} );
-		const body = { html: compiledMarkedown };
+		const body = { html: compiledMarkdown };
 		this.props.fetch( '/h2/v1/preview', {
 			headers: {
 				Accept: 'application/json',
