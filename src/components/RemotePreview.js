@@ -12,9 +12,11 @@ class RemotePreview extends Component {
 		isFetching: false,
 		compiledPreview: '',
 	};
+
 	componentWillMount() {
 		this.onUpdateMarkdown();
 	}
+
 	onUpdateMarkdown() {
 		const compiledMarkdown = marked( this.props.children, { renderer: render } );
 		this.setState( {
@@ -38,10 +40,13 @@ class RemotePreview extends Component {
 				} );
 			} );
 	}
+
 	render() {
-		return <div className="Editor-preview">
-			<MessageContent html={ this.state.compiledPreview } />
-		</div>
+		return (
+			<div className="Editor-preview">
+				<MessageContent html={ this.state.compiledPreview } />
+			</div>
+		);
 	}
 }
 
