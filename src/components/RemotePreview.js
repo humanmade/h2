@@ -19,22 +19,22 @@ class RemotePreview extends Component {
 		const compiledMarkedown = marked( this.props.children, { renderer: render } );
 		this.setState( {
 			compiledPreview: compiledMarkedown,
-			isFetching:      true,
+			isFetching: true,
 		} );
 		const body = { html: compiledMarkedown };
 		this.props.fetch( '/h2/v1/preview', {
 			headers: {
-				Accept:         'application/json',
+				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
-			body:   JSON.stringify( body ),
+			body: JSON.stringify( body ),
 			method: 'POST',
 		} )
 			.then( r => r.json() )
 			.then( response => {
 				this.setState( {
 					compiledPreview: response.html,
-					isFetching:      false,
+					isFetching: false,
 				} );
 			} );
 	}
