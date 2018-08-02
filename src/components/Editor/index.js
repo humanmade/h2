@@ -7,7 +7,7 @@ import getCaretCoordinates from 'textarea-caret';
 import Button from '../Button';
 import DropUpload from '../DropUpload';
 import EmojiCompletion from './EmojiCompletion';
-import LinkRenderer from '../link-renderer';
+// import LinkRenderer from '../link-renderer';
 import MentionCompletion from './MentionCompletion';
 import MessageContent from '../Message/Content';
 import Shortcuts from '../Shortcuts';
@@ -15,7 +15,7 @@ import Shortcuts from '../Shortcuts';
 import './index.css';
 
 let renderer = new marked.Renderer();
-renderer.link = LinkRenderer;
+// renderer.link = LinkRenderer;
 
 const apply = ( selection, start, end ) => {
 	return selection.length ? start + selection + end : start;
