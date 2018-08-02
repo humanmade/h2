@@ -6,10 +6,14 @@ import compileMarkdown from '../compile-markdown';
 import { withApiData } from '../with-api-data';
 
 class RemotePreview extends Component {
-	state: {
-		isLoading: true,
-		compiledPreview: '',
-	};
+	constructor( props ) {
+		super( props );
+
+		this.state = {
+			isLoading: true,
+			compiledPreview: '',
+		};
+	}
 
 	componentDidMount() {
 		this.onUpdateMarkdown();
