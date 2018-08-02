@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 
+import Notification from './Notification';
 import MessageContent from './Message/Content';
 import compileMarkdown from '../compile-markdown';
 import { withApiData } from '../with-api-data';
 
 class RemotePreview extends Component {
 	state: {
-		isFetching: false,
+		isLoading: false,
 		compiledPreview: '',
 	};
 
@@ -15,11 +16,11 @@ class RemotePreview extends Component {
 	}
 
 	onUpdateMarkdown() {
-		const compiledMarkdown = compileMarkdown( this.props.children );
 		this.setState( {
-			compiledPreview: compiledMarkdown,
-			isFetching: true,
+			isLoading: true,
 		} );
+
+		const compiledMarkdown = compileMarkdown( this.props.children );
 		const body = { html: compiledMarkdown };
 		this.props.fetch( '/h2/v1/preview', {
 			headers: {
@@ -33,12 +34,16 @@ class RemotePreview extends Component {
 			.then( response => {
 				this.setState( {
 					compiledPreview: response.html,
-					isFetching: false,
+					isLoading: false,
 				} );
 			} );
 	}
 
 	render() {
+		if ( this.state.isLoading ) {
+			return <Notification>Loading…</Notification>;
+		}
+
 		return (
 			<div className="Editor-preview">
 				<MessageContent html={ this.state.compiledPreview } />
