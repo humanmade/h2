@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { withApiData } from '../with-api-data';
 import marked from 'marked';
-// import LinkRenderer from '../link-renderer';
+import LinkRenderer from '../link-renderer';
 import MessageContent from './Message/Content';
 
 let render = new marked.Renderer();
-// render.link = LinkRenderer;
+render.link = LinkRenderer;
 
 class RemotePreview extends Component {
 	state: {
