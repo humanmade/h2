@@ -171,6 +171,15 @@ function register_rest_routes() {
 				'type' => 'text',
 				'required' => true,
 			],
+			'type' => [
+				'type' => 'string',
+				'required' => true,
+				'default' => 'post',
+				'enum' => [
+					'post',
+					'comment',
+				],
+			],
 		],
 	] );
 }
@@ -229,7 +238,21 @@ function add_word_count_to_api( $response ) {
  * @return array
  */
 function render_preview( WP_REST_Request $request ) {
+	switch ( $request['type'] ) {
+		case 'post':
+			$content = apply_filters( 'the_content', $request['html'] );
+			break;
+
+		case 'comment':
+			$content = apply_filters( 'comment_text', $request['html'], null );
+			break;
+
+		default:
+			return new WP_Error( 'h2_preview_invalid_type', 'Invalid preview type' );
+	}
+
 	return [
-		'html' => apply_filters( 'the_content', $request['html'] ),
+		'type' => $request['type'],
+		'html' => $content,
 	];
 }

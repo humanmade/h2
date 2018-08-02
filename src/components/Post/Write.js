@@ -125,7 +125,7 @@ export class WritePost extends Component {
 					<div className="actions"></div>
 				</header>
 				<Editor
-					previewComponent={ RemotePreview }
+					previewComponent={ props => <RemotePreview type="post" { ...props } /> }
 					submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
 					onCancel={ this.props.onCancel }
 					onSubmit={ ( ...args ) => this.onSubmit( ...args ) }

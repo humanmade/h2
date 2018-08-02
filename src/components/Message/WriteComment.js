@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import Avatar from '../Avatar';
 import Editor from '../Editor';
 import Notification from '../Notification';
+import RemotePreview from '../RemotePreview';
 import { withApiData } from '../../with-api-data';
 import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 import { Post } from '../../shapes';
@@ -88,6 +89,7 @@ class WriteComment extends React.Component {
 				</header>
 				<div className="body">
 					<Editor
+						previewComponent={ props => <RemotePreview type="comment" { ...props } /> }
 						ref={ editor => this.editor = editor }
 						submitText={ this.state.isSubmitting ? 'Commenting...' : 'Comment' }
 						onCancel={ this.props.onCancel }

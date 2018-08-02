@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Notification from './Notification';
@@ -25,7 +26,11 @@ class RemotePreview extends React.Component {
 		} );
 
 		const compiledMarkdown = compileMarkdown( this.props.children );
-		const body = { html: compiledMarkdown };
+		const body = {
+			html: compiledMarkdown,
+			type: this.props.type,
+		};
+
 		this.props.fetch( '/h2/v1/preview', {
 			headers: {
 				Accept: 'application/json',
@@ -55,5 +60,12 @@ class RemotePreview extends React.Component {
 		);
 	}
 }
+
+RemotePreview.propTypes = {
+	type: PropTypes.oneOf( [
+		'comment',
+		'post',
+	] ),
+};
 
 export default withApiData( () => ( {} ) )( RemotePreview );
