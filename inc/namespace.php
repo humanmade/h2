@@ -2,6 +2,7 @@
 
 namespace H2;
 
+use WP_Error;
 use WP_REST_Request;
 
 /**
@@ -162,6 +163,26 @@ function register_rest_routes() {
 		},
 		'schema'          => $markdown_schema,
 	] );
+
+	register_rest_route( 'h2', 'v1/preview', [
+		'methods' => 'POST',
+		'callback' => __NAMESPACE__ . '\\render_preview',
+		'args' => [
+			'html' => [
+				'type' => 'text',
+				'required' => true,
+			],
+			'type' => [
+				'type' => 'string',
+				'required' => true,
+				'default' => 'post',
+				'enum' => [
+					'post',
+					'comment',
+				],
+			],
+		],
+	] );
 }
 
 /**
@@ -206,4 +227,33 @@ function add_word_count_to_api( $response ) {
 
 	$response->set_data( $data );
 	return $response;
+}
+
+/**
+ * Render HTML preview text as content.
+ *
+ * Applies `the_content` filter to arbitrary input text to enable more accurate
+ * previews of the final output while editing.
+ *
+ * @param WP_REST_Request $request
+ * @return array
+ */
+function render_preview( WP_REST_Request $request ) {
+	switch ( $request['type'] ) {
+		case 'post':
+			$content = apply_filters( 'the_content', $request['html'] );
+			break;
+
+		case 'comment':
+			$content = apply_filters( 'comment_text', $request['html'], null );
+			break;
+
+		default:
+			return new WP_Error( 'h2_preview_invalid_type', 'Invalid preview type' );
+	}
+
+	return [
+		'type' => $request['type'],
+		'html' => $content,
+	];
 }

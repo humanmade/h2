@@ -1,5 +1,4 @@
 import countWords from '@iarna/word-count';
-import marked from 'marked';
 import PropTypes from 'prop-types';
 import React from 'react';
 import getCaretCoordinates from 'textarea-caret';
@@ -10,6 +9,7 @@ import EmojiCompletion from './EmojiCompletion';
 import MentionCompletion from './MentionCompletion';
 import MessageContent from '../Message/Content';
 import Shortcuts from '../Shortcuts';
+import compileMarkdown from '../../compile-markdown';
 
 import './index.css';
 
@@ -55,7 +55,7 @@ const completions = {
 };
 
 const Preview = props => {
-	const compiled = marked( props.children );
+	const compiled = compileMarkdown( props.children );
 	return <div className="Editor-preview"><MessageContent html={ compiled } /></div>;
 };
 Preview.propTypes = { children: PropTypes.string.isRequired };
@@ -176,7 +176,7 @@ export default class Editor extends React.PureComponent {
 	onSubmit( e ) {
 		e.preventDefault();
 
-		this.props.onSubmit( marked( this.state.content ), this.state.content );
+		this.props.onSubmit( compileMarkdown( this.state.content ), this.state.content );
 	}
 
 	onBlur() {
@@ -332,6 +332,8 @@ export default class Editor extends React.PureComponent {
 			};
 		} );
 
+		const PreviewComponent = this.props.previewComponent || Preview;
+
 		return (
 			<form
 				className={ mode === 'preview' ? 'Editor previewing' : 'Editor' }
@@ -397,7 +399,7 @@ export default class Editor extends React.PureComponent {
 						onUpload={ file => this.onUpload( file ) }
 					>
 						{ mode === 'preview' ? (
-							<Preview>{ content || '*Nothing to preview*' }</Preview>
+							<PreviewComponent>{ content || '*Nothing to preview*' }</PreviewComponent>
 						) : (
 							<textarea
 								ref={ el => this.updateTextarea( el ) }
@@ -447,6 +449,7 @@ Editor.defaultProps = {
 };
 
 Editor.propTypes = {
+	previewComponent: PropTypes.func,
 	submitText: PropTypes.string,
 	onCancel: PropTypes.func,
 	onSubmit: PropTypes.func.isRequired,
