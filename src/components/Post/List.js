@@ -18,18 +18,22 @@ class PostsList extends Component {
 	render() {
 		const { defaultPostView, summaryEnabled } = this.props;
 		if ( this.props.loading ) {
-			return <PageTitle title="Loading…">
-				<div className="PostsList">
-					<ContentLoader type="list" width={300} />
-				</div>
-			</PageTitle>;
+			return (
+				<PageTitle title="Loading…">
+					<div className="PostsList">
+						<ContentLoader type="list" width={300} />
+					</div>
+				</PageTitle>
+			);
 		}
 		if ( ! this.props.posts || ! this.props.posts[0] ) {
-			return <PageTitle title="Not Found">
-				<div className="PostsList">
-					Error
-				</div>
-			</PageTitle>;
+			return (
+				<PageTitle title="Not Found">
+					<div className="PostsList">
+						Error
+					</div>
+				</PageTitle>
+			);
 		}
 
 		const { page } = this.props.match.params;
