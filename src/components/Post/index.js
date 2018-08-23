@@ -43,7 +43,9 @@ class Post extends Component {
 	}
 	onClickEdit = () => {
 		this.setState( { isEditing: true } );
-		this.props.onLoadEditable();
+		if ( ! ( 'raw' in this.props.post.content ) ) {
+			this.props.onLoad( 'edit' );
+		}
 	}
 	onDidCreateComment( ...args ) {
 		this.setState( { isShowingReply: false } )
@@ -92,7 +94,7 @@ class Post extends Component {
 	}
 
 	render() {
-		const { author, editable, post } = this.props;
+		const { author, post } = this.props;
 		const categories = this.props.categories.data ? this.props.categories.data : [];
 		// Scale title down slightly for longer titles.
 		const headerStyle = {};
@@ -163,16 +165,16 @@ class Post extends Component {
 				<div className="Post-content-wrap">
 					<Slot name="Post.before_content" fillChildProps={ fillProps } />
 					{ this.state.isEditing ? (
-						editable ? (
+						this.props.loading ? (
+							<Notification>Loading…</Notification>
+						) : (
 							<Editor
-								initialValue={ editable.meta.unprocessed_content || editable.content.raw }
+								initialValue={ post.meta.unprocessed_content || post.content.raw }
 								submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
 								onCancel={ () => this.setState( { isEditing: false } ) }
 								onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
 								onUpload={ this.onUpload }
 							/>
-						) : (
-							<Notification>Loading…</Notification>
 						)
 					) : (
 						<MessageContent html={ post.content.rendered } />
