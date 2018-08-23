@@ -20,7 +20,6 @@ import Notification from '../Notification';
 import Link from '../RelativeLink';
 import AuthorLink from '../Message/AuthorLink';
 import MessageContent from '../Message/Content';
-import WriteComment from '../Message/WriteComment';
 import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 
 import './index.css';
@@ -190,17 +189,11 @@ class Post extends Component {
 				) : (
 					<PostComments
 						post={ post }
+						showingReply={ this.state.isShowingReply }
+						onCancelReply={ () => this.onClickCancelReply() }
 						onComment={ () => this.onComment() }
 						onDidCreateComment={ ( ...args ) => this.onDidCreateComment( ...args ) }
-					>
-						{ this.state.isShowingReply && (
-							<WriteComment
-								parentPost={ post }
-								onCancel={ () => this.onClickCancelReply() }
-								onDidCreateComment={ ( ...args ) => this.onDidCreateComment( ...args ) }
-							/>
-						) }
-					</PostComments>
+					/>
 				) }
 			</div>
 		);

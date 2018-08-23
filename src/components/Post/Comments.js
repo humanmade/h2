@@ -1,7 +1,8 @@
 import { withArchive } from '@humanmade/repress';
 import React from 'react';
 
-import CommentsList from '../../components/CommentsList';
+import CommentsList from '../CommentsList';
+import WriteComment from '../Message/WriteComment';
 import { comments } from '../../types';
 
 const PostComments = props => {
@@ -28,7 +29,13 @@ const PostComments = props => {
 		onComment={ props.onComment }
 		onDidCreateComment={ onDidCreateComment }
 	>
-		{ props.children }
+		{ props.showingReply && (
+			<WriteComment
+				parentPost={ props.post }
+				onCancel={ props.onCancelReply }
+				onDidCreateComment={ onDidCreateComment }
+			/>
+		) }
 	</CommentsList>;
 };
 
