@@ -57,29 +57,19 @@ class Post extends Component {
 			unprocessed_content: unprocessedContent,
 		};
 
-		this.props.fetch( `/wp/v2/posts/${ this.props.data.id }`, {
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify( body ),
-			method: 'POST',
-		} ).then( r => r.json().then( data => {
-			if ( ! r.ok ) {
+		this.props.onUpdatePost( body )
+			.then( () => {
 				this.setState( {
 					isSubmitting: false,
-					error: data,
+					isEditing: false,
 				} );
-				return;
-			}
-
-			this.setState( {
-				isSubmitting: false,
-				isEditing: false,
-			} );
-			this.props.onInvalidate();
-			this.props.invalidateDataForUrl( `/wp/v2/posts/${ this.props.data.id }?context=edit` );
-		} ) );
+			} )
+			.catch( error => {
+				this.setState( {
+					isSubmitting: false,
+					error,
+				} );
+			} )
 	}
 
 	render() {

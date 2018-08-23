@@ -56,29 +56,19 @@ export class Comment extends Component {
 			unprocessed_content: unprocessedContent,
 		};
 
-		this.props.fetch( `/wp/v2/comments/${ this.props.comment.id }`, {
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify( body ),
-			method: 'POST',
-		} ).then( r => r.json().then( data => {
-			if ( ! r.ok ) {
+		this.props.onUpdate( body )
+			.then( data => {
+				this.setState( {
+					isEditing: false,
+					isSubmitting: false,
+				} );
+			} )
+			.catch( error => {
 				this.setState( {
 					isSubmitting: false,
-					error: data,
+					error,
 				} );
-				return;
-			}
-
-			this.setState( {
-				isEditing: false,
-				isSubmitting: false,
 			} );
-			this.props.invalidateDataForUrl( `/wp/v2/comments?post=${ this.props.parentPost.id }&per_page=100` );
-			this.props.invalidateDataForUrl( `/wp/v2/comments/${ this.props.comment.id }?context=edit` );
-		} ) );
 	}
 
 	render() {
@@ -192,6 +182,10 @@ export default withSingle(
 		mapDataToProps: data => ( {
 			comment: data.post,
 			loading: data.loading,
+		} ),
+		mapActionsToProps: actions => ( {
+			onLoad: actions.onLoad,
+			onUpdate: actions.onUpdatePost,
 		} ),
 	}
 )( Comment ) );
