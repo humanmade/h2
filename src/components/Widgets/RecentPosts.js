@@ -10,7 +10,7 @@ import './RecentPosts.css';
 
 class PostList extends React.Component {
 	render() {
-		if ( this.props.isLoading ) {
+		if ( this.props.loading ) {
 			return <p>Loading…</p>;
 		}
 
@@ -18,10 +18,6 @@ class PostList extends React.Component {
 			return <p>Error!</p>;
 		}
 
-		// TODO: Add proper pagination support:
-		// https://github.com/joehoyle/with-api-data/issues/3
-		// In the meantime, if we have less than the requested number, it's likely
-		// that we don't have a next page.
 		const hasNext = this.props.hasMore;
 		const hasPrevious = this.props.page > 1;
 
