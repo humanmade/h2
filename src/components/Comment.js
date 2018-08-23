@@ -13,8 +13,8 @@ import MessageContent from './Message/Content';
 import WriteComment from './Message/WriteComment';
 import Notification from './Notification';
 import { Comment as CommentShape } from '../shapes';
+import { comments, users } from '../types';
 import { parseResponse } from '../wordpress-rest-api-cookie-auth';
-import { users } from '../types';
 
 import './Comment.css';
 
@@ -39,7 +39,9 @@ export class Comment extends Component {
 
 	onClickEdit = () => {
 		this.setState( { isEditing: true } );
-		this.props.onLoadEditable();
+		if ( ! ( 'raw' in this.props.comment.content ) ) {
+			this.props.onLoad( 'edit' );
+		}
 	}
 
 	onDidCreateComment( ...args ) {
@@ -90,10 +92,8 @@ export class Comment extends Component {
 	}
 
 	render() {
-		const comment = this.props.comment;
-		const editable = this.props.editable ? this.props.editable.data : null;
+		const { author, comment, loading } = this.props;
 		const post = this.props.parentPost;
-		const author = this.props.author;
 		const directComments = this.props.comments.filter( c => c.parent === comment.id );
 
 		const fillProps = {
@@ -142,19 +142,19 @@ export class Comment extends Component {
 				<div className="body">
 					<Slot name="Comment.before_content" fillChildProps={ fillProps } />
 					{ this.state.isEditing ? (
-						editable ? (
+						loading ? (
+							<Notification>Loading…</Notification>
+						) : (
 							<Editor
-								initialValue={ editable.meta.unprocessed_content || editable.content.raw }
+								initialValue={ comment.meta.unprocessed_content || comment.content.raw }
 								submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
 								onCancel={ () => this.setState( { isEditing: false } ) }
 								onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
 								onUpload={ this.onUpload }
 							/>
-						) : (
-							<Notification>Loading…</Notification>
 						)
 					) : (
-						<MessageContent html={ this.props.comment.content.rendered } />
+						<MessageContent html={ comment.content.rendered } />
 					) }
 					<Slot name="Comment.after_content" fillChildProps={ fillProps } />
 				</div>
@@ -193,6 +193,16 @@ export default withSingle(
 			author: data.post,
 			loadingAuthor: data.loading,
 		} ),
-		mapDispatchToProps: () => ( {} )
+		mapActionsToProps: () => ( {} ),
 	}
-)( Comment );
+)( withSingle(
+	comments,
+	state => state.comments,
+	props => props.comment.id,
+	{
+		mapDataToProps: data => ( {
+			comment: data.post,
+			loading: data.loading,
+		} ),
+	}
+)( Comment ) );
