@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import RemotePreview from '../RemotePreview';
 import { withCategories, withCurrentUser } from '../../hocs';
-import { comments } from '../../types';
+import { posts } from '../../types';
 import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 
 import Avatar from '../Avatar';
@@ -55,8 +55,8 @@ export class WritePost extends Component {
 		};
 
 		this.props.onCreate( body )
-			.then( data => {
-				this.setState( { isSubmitting: true, title: '' } );
+			.then( id => {
+				const data = posts.getSingle( this.props.posts, id );
 				this.props.onDidCreatePost( data );
 			} )
 			.catch( error => {
@@ -136,14 +136,20 @@ WritePost.propTypes = {
 	onDidCreatePost: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = state => {
+	return {
+		posts: state.posts,
+	};
+};
+
 const mapDispatchToProps = dispatch => {
 	return {
-		onCreate: data => dispatch( comments.createSingle( data ) ),
+		onCreate: data => dispatch( posts.createSingle( data ) ),
 	};
 };
 
 export default connect(
-	() => ( {} ),
+	mapStateToProps,
 	mapDispatchToProps
 )(
 	withCategories(
