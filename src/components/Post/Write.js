@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import RemotePreview from '../RemotePreview';
 import { withCategories, withCurrentUser } from '../../hocs';
 import { posts } from '../../types';
-import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 
 import Avatar from '../Avatar';
 import Editor from '../Editor';
@@ -63,14 +62,7 @@ export class WritePost extends Component {
 				this.setState( { isSubmitting: false, error } );
 			} );
 	}
-	onUpload( file ) {
-		const options = { method: 'POST' };
-		options.body = new FormData();
-		options.body.append( 'file', file );
 
-		return this.props.fetch( '/wp/v2/media', options )
-			.then( parseResponse );
-	}
 	render() {
 		const user = this.props.currentUser;
 		const categories = this.props.categories.data || [];
@@ -116,7 +108,6 @@ export class WritePost extends Component {
 					submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
 					onCancel={ this.props.onCancel }
 					onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
-					onUpload={ ( ...args ) => this.onUpload( ...args ) }
 				/>
 
 				{ this.state.error && (

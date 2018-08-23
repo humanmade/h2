@@ -8,7 +8,6 @@ import Editor from '../Editor';
 import Notification from '../Notification';
 import RemotePreview from '../RemotePreview';
 import { withCurrentUser } from '../../hocs';
-import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 import { Post } from '../../shapes';
 import { comments } from '../../types';
 
@@ -32,15 +31,6 @@ class WriteComment extends React.Component {
 				node.scrollIntoView( false );
 			}
 		}
-	}
-
-	onUpload( file ) {
-		const options = { method: 'POST' };
-		options.body = new FormData();
-		options.body.append( 'file', file );
-
-		return this.props.fetch( '/wp/v2/media', options )
-			.then( parseResponse );
 	}
 
 	onSubmit( content, unprocessedContent ) {
@@ -85,7 +75,6 @@ class WriteComment extends React.Component {
 						submitText={ this.state.isSubmitting ? 'Commenting...' : 'Comment' }
 						onCancel={ this.props.onCancel }
 						onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
-						onUpload={ ( ...args ) => this.onUpload( ...args ) }
 					/>
 
 					{ this.state.error && (
