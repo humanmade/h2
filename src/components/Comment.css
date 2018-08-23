@@ -1,6 +1,5 @@
 .Comment {
 	position: relative;
-	/*z-index: 5;*/
 }
 
 .Comment:before {
@@ -38,7 +37,18 @@
 	margin-left: -30px;
 	position: sticky;
 	top: 99px;
+	z-index: 3;
 	background: #fff;
+}
+
+body.admin-bar .Comment > header {
+	top: 131px; /* 32 + 99 */
+}
+
+@media screen and ( max-width: 782px ) {
+	body.admin-bar .Comment > header {
+		top: 147px; /* 48 + 99 */
+	}
 }
 
 .Comment > header > .Avatar {

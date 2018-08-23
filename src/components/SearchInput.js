@@ -11,6 +11,7 @@ class SearchInput extends React.Component {
 		this.state = { value: null };
 	}
 
+	// eslint-disable-next-line no-undef
 	onSubmit = e => {
 		e.preventDefault();
 		this.props.onSearch( this.state.value );
@@ -21,22 +22,22 @@ class SearchInput extends React.Component {
 		const termFromURL = this.props.location.pathname.match( /\/search\/(.+)/ );
 		const term = this.state.value || ( termFromURL && termFromURL[1] ) || '';
 
-		return <form
-			className="SearchInput"
-			onSubmit={ this.onSubmit }
-		>
-			<input
-				type="search"
-				placeholder="Search..."
-				value={ term }
-				onChange={ e => this.setState( { value: e.target.value } ) }
-			/>
-		</form>;
+		return (
+			<form
+				className="SearchInput"
+				onSubmit={ this.onSubmit }
+			>
+				<input
+					type="search"
+					placeholder="Search..."
+					value={ term }
+					onChange={ e => this.setState( { value: e.target.value } ) }
+				/>
+			</form>
+		);
 	}
 }
 
-SearchInput.propTypes = {
-	onSearch: PropTypes.func.isRequired,
-};
+SearchInput.propTypes = { onSearch: PropTypes.func.isRequired };
 
 export default withRouter( SearchInput );

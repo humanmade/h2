@@ -10,15 +10,19 @@ export default function Map( props ) {
 	const mapUrl = `${ MAPBOX_BASE }/${ marker }/${ location },${ zoom },0,0/${ width }x${ height }@2x?${ args }`;
 	const style = {
 		height: `${ height }px`,
-		width:  `${ width }px`,
+		width: `${ width }px`,
 	};
 
-	return <img
-		alt={ `Map of ${ location }` }
-		className="Map"
-		src={ mapUrl }
-		style={ style }
-	/>;
+	return (
+		<img
+			alt={ `Map of ${ location }` }
+			className="Map"
+			src={ mapUrl }
+			style={ style }
+		/>
+	);
 }
 
-Map.defaultProps = { zoom: 1.0 };
+Map.defaultProps = {
+	zoom: 1.0,
+};

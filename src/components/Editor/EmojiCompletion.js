@@ -3,22 +3,44 @@ import React from 'react';
 
 import Completion from './Completion';
 
+import './EmojiCompletion.css';
+
 const EmojiCompletion = props => {
 	const renderItem = ( { item, selected, onSelect } ) => {
-		return <li
-			key={ item.colons }
-			className={ selected ? 'selected' : null }
-			onClick={ onSelect }
-		>{ item.native } { item.colons }</li>;
+		return (
+			<li
+				key={ item.colons }
+				className={ selected ? 'selected' : null }
+				onClick={ onSelect }
+			>
+				{ item.imageUrl ? (
+					<img
+						alt={ item.colons }
+						className="EmojiCompletion-custom"
+						src={ item.imageUrl }
+					/>
+				) : item.native }
+				{ item.colons }
+			</li>
+		);
 	};
 
-	return <Completion
-		{ ...props }
-		matcher={ ( item, search ) => `${ item.colons } ${ item.name }`.toLowerCase().indexOf( search.toLowerCase() ) >= 0 }
-		items={ Object.values( emojiIndex.emojis ) }
-		renderItem={ renderItem }
-		insert={ item => item.native + ' ' }
-	/>;
+	const getItems = search => emojiIndex.search(
+		search,
+		{
+			custom: Object.values( window.H2Data.site.emoji ),
+			maxResults: 5,
+		}
+	);
+
+	return (
+		<Completion
+			{ ...props }
+			getItems={ getItems }
+			renderItem={ renderItem }
+			insert={ item => ( item.native || item.colons ) + ' ' }
+		/>
+	);
 };
 
 export default EmojiCompletion;

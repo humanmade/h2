@@ -3,7 +3,7 @@
  * Entrypoint for the theme.
  */
 
-namespace ReactWPScripts;
+namespace H2\Loader;
 
 /**
  * Is this a development environment?
@@ -24,6 +24,8 @@ function load_asset_file( $path ) {
 	if ( ! file_exists( $path ) ) {
 		return null;
 	}
+
+	// @codingStandardsIgnoreLine
 	$contents = file_get_contents( $path );
 	if ( empty( $path ) ) {
 		return null;
@@ -53,7 +55,9 @@ function get_assets_list( string $directory ) {
 	if ( ! empty( $production_assets ) ) {
 		// Prepend "build/" to all build-directory array paths.
 		return array_map(
-			function( $asset_path ) { return 'build/' . $asset_path; },
+			function( $asset_path ) {
+				return 'build/' . $asset_path;
+			},
 			array_values( $production_assets )
 		);
 	}
@@ -133,14 +137,13 @@ function enqueue_assets( $directory, $opts = [] ) {
 
 	// There will be at most one JS and one CSS file in vanilla Create React App manifests.
 	foreach ( $assets as $asset_path ) {
-		$is_js = preg_match( '/\.js$/', $asset_path );
+		$is_js  = preg_match( '/\.js$/', $asset_path );
 		$is_css = preg_match( '/\.css$/', $asset_path );
 
 		if ( ! $is_js && ! $is_css ) {
 			// Assets such as source maps and images are also listed; ignore these.
 			continue;
 		}
-
 
 		if ( $is_js ) {
 			wp_enqueue_script(
@@ -150,7 +153,7 @@ function enqueue_assets( $directory, $opts = [] ) {
 				null,
 				true
 			);
-		} else if ( $is_css ) {
+		} elseif ( $is_css ) {
 			wp_enqueue_style(
 				$opts['handle'],
 				get_asset_uri( $asset_path, $base_url )

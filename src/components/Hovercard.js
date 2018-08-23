@@ -7,11 +7,11 @@ import './Hovercard.css';
 const HOVER_DELAY = 100;
 
 const transition = {
-	component:  'div',
+	component: 'div',
 	classNames: 'Hovercard-Transition',
-	timeout:    {
+	timeout: {
 		enter: 100,
-		exit:  100,
+		exit: 100,
 	},
 };
 
@@ -23,7 +23,7 @@ function getPosition( target, width ) {
 	let rect = target.getBoundingClientRect();
 
 	let style = {
-		top:  rect.top + window.pageYOffset - document.documentElement.clientTop,
+		top: rect.top + window.pageYOffset - document.documentElement.clientTop,
 		left: rect.left + window.pageXOffset - document.documentElement.clientLeft,
 	};
 
@@ -103,6 +103,17 @@ export default class Hovercard extends React.Component {
 		this.setState( { active: false } );
 	}
 
+	// eslint-disable-next-line no-undef
+	onUpdateRef = ref => {
+		if ( ! ref ) {
+			this.target = null;
+		} else if ( ref instanceof HTMLElement ) {
+			this.target = ref;
+		} else {
+			this.target = ReactDOM.findDOMNode( ref );
+		}
+	}
+
 	render() {
 		const {
 			cardContent: Card,
@@ -113,43 +124,49 @@ export default class Hovercard extends React.Component {
 		const positions = getPosition( this.target, width );
 		const cardStyle = {
 			left: positions.left,
-			top:  positions.top,
+			top: positions.top,
 			width,
 		};
 		const pointerStyle = {};
 		pointerStyle.transform = positions.pointerOffset ? `translate( ${ positions.pointerOffset}px, 0 )` : null;
 
-		return <React.Fragment>
-			<CSSTransition
-				{...transition}
-				in={ !! ( active && this.target ) }
-				mountOnEnter={ true }
-				unmountOnExit={ true }
-			>
-				{ () => <CardPortal>
-					<div
-						className="Hovercard-Card"
-						style={ cardStyle }
-					>
-						<div
-							className="Hovercard-Card-pointer"
-							style={ pointerStyle }
-						/>
-						<Card />
-					</div>
-				</CardPortal> }
-			</CSSTransition>
+		return (
+			<React.Fragment>
+				<CSSTransition
+					{ ...transition }
+					in={ !! ( active && this.target ) }
+					mountOnEnter={ true }
+					unmountOnExit={ true }
+				>
+					{ () => (
+						<CardPortal>
+							<div
+								className="Hovercard-Card"
+								style={ cardStyle }
+							>
+								<div
+									className="Hovercard-Card-pointer"
+									style={ pointerStyle }
+								/>
+								<Card />
+							</div>
+						</CardPortal>
+					) }
+				</CSSTransition>
 
-			{ React.cloneElement(
-				React.Children.only( this.props.children ),
-				{
-					ref:         ref => this.target = ref,
-					onMouseOver: this.onMouseOver,
-					onMouseOut:  this.onMouseOut,
-				}
-			) }
-		</React.Fragment>;
+				{ React.cloneElement(
+					React.Children.only( this.props.children ),
+					{
+						ref: this.onUpdateRef,
+						onMouseOver: this.onMouseOver,
+						onMouseOut: this.onMouseOut,
+					}
+				) }
+			</React.Fragment>
+		);
 	}
 }
 
-Hovercard.defaultProps = { width: 300 };
+Hovercard.defaultProps = {
+	width: 300,
+};

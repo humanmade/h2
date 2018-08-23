@@ -6,10 +6,11 @@ import { connect } from 'react-redux';
 import Avatar from '../Avatar';
 import Editor from '../Editor';
 import Notification from '../Notification';
+import RemotePreview from '../RemotePreview';
 import { withCurrentUser } from '../../hocs';
 import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 import { Post } from '../../shapes';
-import { comments, users } from '../../types';
+import { comments } from '../../types';
 
 import './WriteComment.css';
 
@@ -19,7 +20,7 @@ class WriteComment extends React.Component {
 
 		this.state = {
 			isSubmitting: false,
-			error:        null,
+			error: null,
 		};
 	}
 
@@ -42,10 +43,11 @@ class WriteComment extends React.Component {
 			.then( parseResponse );
 	}
 
-	onSubmit( content ) {
+	onSubmit( content, unprocessedContent ) {
 		const body = {
 			content,
 			post: this.props.parentPost.id,
+			meta: { unprocessed_content: unprocessedContent },
 		};
 
 		if ( this.props.comment ) {
@@ -66,37 +68,40 @@ class WriteComment extends React.Component {
 	}
 
 	render() {
-		return <div className="WriteComment" ref={ ref => this.container = ref }>
-			<header>
-				<Avatar
-					url={this.props.currentUser ? this.props.currentUser.avatar_urls['96'] : ''}
-					user={this.props.currentUser}
-					size={40}
-				/>
-				<strong>{this.props.currentUser ? this.props.currentUser.name : ''}</strong>
-			</header>
-			<div className="body">
-				<Editor
-					ref={editor => this.editor = editor}
-					submitText={ this.state.isSubmitting ? 'Commenting...' : 'Comment' }
-					onCancel={this.props.onCancel}
-					onSubmit={( ...args ) => this.onSubmit( ...args )}
-					onUpload={( ...args ) => this.onUpload( ...args )}
-				/>
+		return (
+			<div className="WriteComment" ref={ ref => this.container = ref }>
+				<header>
+					<Avatar
+						url={ this.props.currentUser ? this.props.currentUser.avatar_urls['96'] : '' }
+						user={ this.props.currentUser }
+						size={ 40 }
+					/>
+					<strong>{ this.props.currentUser ? this.props.currentUser.name : '' }</strong>
+				</header>
+				<div className="body">
+					<Editor
+						previewComponent={ props => <RemotePreview type="comment" { ...props } /> }
+						ref={ editor => this.editor = editor }
+						submitText={ this.state.isSubmitting ? 'Commenting...' : 'Comment' }
+						onCancel={ this.props.onCancel }
+						onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
+						onUpload={ ( ...args ) => this.onUpload( ...args ) }
+					/>
 
-				{ this.state.error &&
-					<Notification type="error">
-						Could not submit: { this.state.error.message }
-					</Notification>
-				}
+					{ this.state.error && (
+						<Notification type="error">
+							Could not submit: { this.state.error.message }
+						</Notification>
+					) }
+				</div>
 			</div>
-		</div>;
+		);
 	}
 }
 
 WriteComment.propTypes = {
-	parentPost:         Post.isRequired,
-	onCancel:           PropTypes.func.isRequired,
+	parentPost: Post.isRequired,
+	onCancel: PropTypes.func.isRequired,
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 

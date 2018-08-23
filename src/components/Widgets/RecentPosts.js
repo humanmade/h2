@@ -8,62 +8,64 @@ import { posts } from '../../types';
 
 import './RecentPosts.css';
 
-function PostList( props ) {
-	if ( props.isLoading ) {
-		return <p>Loading…</p>;
-	}
+class PostList extends React.Component {
+	render() {
+		if ( this.props.isLoading ) {
+			return <p>Loading…</p>;
+		}
 
-	if ( ! props.posts ) {
-		return <p>Error!</p>;
-	}
+		if ( ! this.props.posts ) {
+			return <p>Error!</p>;
+		}
 
-	// TODO: Add proper pagination support:
-	// https://github.com/joehoyle/with-api-data/issues/3
-	// In the meantime, if we have less than the requested number, it's likely
-	// that we don't have a next page.
-	const hasNext = props.hasMore;
-	const hasPrevious = props.page > 1;
+		// TODO: Add proper pagination support:
+		// https://github.com/joehoyle/with-api-data/issues/3
+		// In the meantime, if we have less than the requested number, it's likely
+		// that we don't have a next page.
+		const hasNext = this.props.hasMore;
+		const hasPrevious = this.props.page > 1;
 
-	return (
-		<div>
-			<ul>
-				{ props.posts.map( post => (
-					<li key={ post.id }>
-						<Link to={ post.link }>
-							<span
-								dangerouslySetInnerHTML={ { __html: post.title.rendered } }
-							/>
-						</Link>
-					</li>
-				) ) }
-			</ul>
+		return (
+			<div>
+				<ul>
+					{ this.props.posts.map( post => (
+						<li key={ post.id }>
+							<Link to={ post.link }>
+								<span
+									dangerouslySetInnerHTML={ { __html: post.title.rendered } }
+								/>
+							</Link>
+						</li>
+					) ) }
+				</ul>
 
-			<div className="RecentPosts-pagination">
-				{ hasNext && (
-					<div className="RecentPosts-pagination-older">
-						<LinkButton
-							className="cta cta--small cta--arrow-left"
-							onClick={ props.onNext }
-						>Older</LinkButton>
-					</div>
-				) }
-				{ hasPrevious && (
-					<div className="RecentPosts-pagination-newer">
-						<LinkButton
-							className="cta cta--small cta--arrow"
-							onClick={ props.onPrevious }
-						>Newer</LinkButton>
-					</div>
-				) }
+				<div className="RecentPosts-pagination">
+					{ hasNext && (
+						<div className="RecentPosts-pagination-older">
+							<LinkButton
+								className="cta cta--small cta--arrow-left"
+								onClick={ this.props.onNext }
+							>Older</LinkButton>
+						</div>
+					) }
+					{ hasPrevious && (
+						<div className="RecentPosts-pagination-newer">
+							<LinkButton
+								className="cta cta--small cta--arrow"
+								onClick={ this.props.onPrevious }
+							>Newer</LinkButton>
+						</div>
+					) }
+				</div>
 			</div>
-		</div>
-	);
+		);
+	}
 }
 
 const mapPropsToArchive = props => {
 	const args = {
 		per_page: props.per_page,
-		page:     props.page,
+		page: props.page,
 	};
 
 	const id = qs.stringify( args );
@@ -77,7 +79,9 @@ export default class RecentPosts extends React.Component {
 	constructor( props ) {
 		super( props );
 
-		this.state = { page: 1 };
+		this.state = {
+			page: 1,
+		};
 	}
 
 	render() {

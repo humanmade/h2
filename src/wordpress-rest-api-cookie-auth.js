@@ -1,5 +1,19 @@
 import qs from 'qs';
 
+export const parseResponse = resp => resp.json().then( data => {
+	if ( resp.ok ) {
+		// Expose response via a getter, which avoids copying.
+		Object.defineProperty( data, 'getResponse', { get: () => () => resp } );
+		return data;
+	}
+
+	// Build an error
+	const err = new Error( data.message )
+	err.code = data.code
+	err.data = data.data
+	throw err
+} )
+
 export default class {
 	constructor( config ) {
 		this.url = config.rest_url ? config.rest_url : config.url + 'wp-json';
@@ -64,7 +78,10 @@ export default class {
 		 * Only attach the oauth headers if we have a nonce
 		 */
 		if ( this.credentials.nonce ) {
-			headers = { ...headers, ...this.getAuthorizationHeader() };
+			headers = {
+				...headers,
+				...this.getAuthorizationHeader(),
+			};
 		}
 
 		const opts = {
@@ -83,29 +100,22 @@ export default class {
 		const absUrl = new URL( relUrl, this.url + '/' );
 
 		// Clone options
-		const actualOptions = { headers: {}, credentials: 'include', ...options };
+		const actualOptions = {
+			headers: {},
+			credentials: 'include',
+			...options,
+		};
 
 		/**
 		 * Only attach the oauth headers if we have a nonce
 		 */
 		if ( this.credentials.nonce ) {
-			actualOptions.headers = { ...actualOptions.headers, ...this.getAuthorizationHeader() };
+			actualOptions.headers = {
+				...actualOptions.headers,
+				...this.getAuthorizationHeader(),
+			};
 		}
 
 		return fetch( absUrl, actualOptions );
 	}
 }
-
-export const parseResponse = resp => resp.json().then( data => {
-	if ( resp.ok ) {
-		// Expose response via a getter, which avoids copying.
-		Object.defineProperty( data, 'getResponse', { get: () => () => resp } );
-		return data;
-	}
-
-	// Build an error
-	const err = new Error( data.message )
-	err.code = data.code
-	err.data = data.data
-	throw err
-} )

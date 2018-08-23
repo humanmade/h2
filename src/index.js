@@ -46,11 +46,11 @@ loadPlugins();
 
 const render = Main => {
 	ReactDOM.render(
-		<Provider store={store}>
+		<Provider store={ store }>
 			<SlotFillProvider>
 				<IntlProvider locale="en">
 					<RestApiProvider
-						fetch={( url, ...args ) => api.fetch( url, ...args )}
+						fetch={ ( url, ...args ) => api.fetch( url, ...args ) }
 						initialData={ window.H2Data.preload }
 					>
 						<Router>

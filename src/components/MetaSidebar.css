@@ -1,0 +1,23 @@
+.MetaSidebar h3 {
+	text-transform: none;
+}
+
+.MetaSidebar--feature {
+	margin: 0 0 1rem;
+}
+
+.MetaSidebar--feature input[type="checkbox"] {
+	width: 1rem;
+	height: 1rem;
+	font-size: 1rem;
+	margin-right: 0.5rem;
+}
+
+.MetaSidebar--feature label {
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.MetaSidebar--feature-description {
+	margin: 0.25rem 0 0 1.5rem;
+}
