@@ -69,7 +69,9 @@ export class Reactions extends Component {
 		if ( matches.length < 1 ) {
 			return;
 		}
-		this.props.fetch( `/h2/v1/reactions/${ matches[0].id }`, { method: 'DELETE' } ).then( () => this.props.refreshData() );
+		this.props.onDelete( matches[0].id ).then( () => {
+			this.props.onLoad();
+		} );
 	}
 
 	/**
@@ -186,7 +188,8 @@ const mapStateToProps = state => ( {
 	users: state.users.posts,
 } );
 const mapDispatchToProps = ( dispatch ) => ( {
-	onCreate: data => dispatch( reactions.createSingle( data ) )
+	onCreate: data => dispatch( reactions.createSingle( data ) ),
+	onDelete: id => dispatch( reactions.deleteSingle( id ) ),
 } );
 const mapPropsToId = props => {
 	const post = props.postId;
