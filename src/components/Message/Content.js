@@ -1,4 +1,5 @@
 import Interweave from 'interweave';
+import { memoize } from 'lodash/function';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -7,6 +8,8 @@ import Notification from '../Notification';
 import matchers from '../../matchers';
 
 import './Content.css';
+
+const preparseEmoji = window.wp && window.wp.emoji ? memoize( content => window.wp.emoji.parse( content ) ) : content => content;
 
 class ErrorBoundary extends React.Component {
 	constructor( props ) {
@@ -45,12 +48,17 @@ function Content( props ) {
 		);
 	}
 
+	// Parse emoji early to ensure it doesn't get replaced later by wp-emoji,
+	// which breaks React's rendering.
+	// https://github.com/humanmade/H2/issues/250
+	const html = preparseEmoji( props.html );
+
 	return (
 		<div className="PostContent">
 			<ErrorBoundary>
 				<Interweave
 					commonClass={ null }
-					content={ props.html }
+					content={ html }
 					matchers={ matchers }
 					tagName="fragment"
 				/>
