@@ -2,6 +2,7 @@ import countWords from '@iarna/word-count';
 import PropTypes from 'prop-types';
 import React from 'react';
 import getCaretCoordinates from 'textarea-caret';
+import Turndown from 'turndown';
 
 import Button from '../Button';
 import DropUpload from '../DropUpload';
@@ -171,6 +172,23 @@ export default class Editor extends React.PureComponent {
 				},
 			} );
 		}
+	}
+
+	onPaste = e => {
+		const html = e.clipboardData.getData( 'text/html' );
+		if ( ! html ) {
+			// Use default browser handling.
+			return;
+		}
+
+		e.preventDefault();
+
+		// Convert HTML content to Markdown
+		const turndown = new Turndown();
+		const markdown = turndown.turndown( html );
+
+		// Insert at the current selection point
+		this.onButton( null, () => markdown );
 	}
 
 	onSubmit( e ) {
@@ -412,6 +430,7 @@ export default class Editor extends React.PureComponent {
 								onChange={ e => this.setState( { content: e.target.value } ) }
 								onKeyDown={ e => this.onKeyDown( e ) }
 								onKeyUp={ e => this.onKeyUp( e ) }
+								onPaste={ this.onPaste }
 							/>
 						) }
 					</DropUpload>
