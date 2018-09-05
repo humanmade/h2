@@ -58,7 +58,7 @@
   },
   "bundlesize": [
     {
-      "path": "./build/static/js/main.*.js"
+      "path": "./build/static/js/main.js"
     }
   ]
 }
