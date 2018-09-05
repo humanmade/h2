@@ -6,6 +6,7 @@
   "devDependencies": {
     "@storybook/react": "3.2.12",
     "babel-eslint": "^7.2.3",
+    "bundlesize": "^0.17.0",
     "eslint": "^4.19.1",
     "eslint-config-humanmade": "^0.5.0",
     "eslint-config-react-app": "^2.1.0",
@@ -52,6 +53,12 @@
     "lint": "eslint src/",
     "test": "react-scripts test --env=jsdom",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
-  }
+    "build-storybook": "build-storybook -s public",
+    "check-size": "bundlesize"
+  },
+  "bundlesize": [
+    {
+      "path": "./build/static/js/main.*.js"
+    }
+  ]
 }
