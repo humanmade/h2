@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@iarna/word-count": "^1.0.3",
-    "emoji-mart": "^2.5.0",
+    "emoji-mart": "^2.8.1",
     "interweave": "^8.1.0",
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
