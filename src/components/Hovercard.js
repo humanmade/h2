@@ -52,7 +52,7 @@ class CardPortal extends React.Component {
 		this.container = document.createElement( 'div' );
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		document.body.appendChild( this.container );
 	}
 
@@ -83,7 +83,6 @@ export default class Hovercard extends React.Component {
 		}
 	}
 
-	// eslint-disable-next-line no-undef
 	onMouseOver = () => {
 		if ( this.state.active ) {
 			return;
@@ -95,7 +94,6 @@ export default class Hovercard extends React.Component {
 		}, HOVER_DELAY );
 	}
 
-	// eslint-disable-next-line no-undef
 	onMouseOut = () => {
 		if ( this.showTimer ) {
 			clearTimeout( this.showTimer );
@@ -103,7 +101,6 @@ export default class Hovercard extends React.Component {
 		this.setState( { active: false } );
 	}
 
-	// eslint-disable-next-line no-undef
 	onUpdateRef = ref => {
 		if ( ! ref ) {
 			this.target = null;

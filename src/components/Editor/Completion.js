@@ -9,17 +9,17 @@ export default class Completion extends React.Component {
 
 		this.state = {
 			selected: 0,
-			items: props.getItems( props.text, props.items, props.matcher ),
 		};
 	}
 
 	componentDidMount() {
 		this.keyHandler = e => {
-			const { items, selected } = this.state;
+			const items = this.getItems();
 			if ( ! items || ! items.length ) {
 				return;
 			}
 
+			const { selected } = this.state;
 			switch ( e.key ) {
 				case 'ArrowUp':
 					e.preventDefault();
@@ -60,17 +60,16 @@ export default class Completion extends React.Component {
 		window.addEventListener( 'keydown', this.keyHandler );
 	}
 
-	componentWillReceiveProps( nextProps ) {
-		const items = nextProps.getItems( nextProps.text, nextProps.items, nextProps.matcher );
-		this.setState( { items } );
-	}
-
 	componentWillUnmount() {
 		if ( ! this.keyHandler ) {
 			return;
 		}
 
 		window.removeEventListener( 'keydown', this.keyHandler );
+	}
+
+	getItems() {
+		return this.props.getItems( this.props.text, this.props.items, this.props.matcher );
 	}
 
 	render() {
@@ -81,7 +80,7 @@ export default class Completion extends React.Component {
 			onSelect,
 		} = this.props;
 
-		const { items } = this.state;
+		const items = this.getItems();
 
 		if ( ! items || ! items.length ) {
 			return null;
