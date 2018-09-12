@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://makeh2.hmn.md/content/themes/h2/build",
   "devDependencies": {
-    "@storybook/react": "3.2.12",
+    "@storybook/react": "^3.4.10",
     "babel-eslint": "^7.2.3",
     "bundlesize": "^0.17.0",
     "eslint": "^4.19.1",
