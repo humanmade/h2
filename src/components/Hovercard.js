@@ -52,7 +52,7 @@ class CardPortal extends React.Component {
 		this.container = document.createElement( 'div' );
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		document.body.appendChild( this.container );
 	}
 
