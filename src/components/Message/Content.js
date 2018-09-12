@@ -1,5 +1,5 @@
 import Interweave from 'interweave';
-import { memoize } from 'lodash/function';
+import memoize from 'lodash/memoize';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';

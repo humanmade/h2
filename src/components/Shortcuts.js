@@ -19,7 +19,7 @@
  * - `allowInInput` (boolean, default `false`): Should the callback fire if an
  *   input is focussed?
  */
-import { isFunction } from 'lodash';
+import isFunction from 'lodash/isFunction';
 import Mousetrap from 'mousetrap';
 import PropTypes from 'prop-types';
 import React from 'react';
