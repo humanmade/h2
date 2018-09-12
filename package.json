@@ -32,7 +32,7 @@
     "react-router-dom": "^4.3.1",
     "react-side-effect": "^1.1.5",
     "react-slot-fill": "^2.0.0",
-    "react-transition-group": "^2.2.1",
+    "react-transition-group": "^2.4.0",
     "react-wp-scripts": "^0.2.0",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
