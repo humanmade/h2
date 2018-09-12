@@ -14,7 +14,7 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.0",
     "eslint-plugin-react": "^7.10.0",
-    "react-scripts": "^1.1.4"
+    "react-scripts": "^1.1.5"
   },
   "dependencies": {
     "@iarna/word-count": "^1.0.3",
@@ -22,7 +22,7 @@
     "interweave": "^8.1.0",
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
-    "mousetrap": "^1.6.1",
+    "mousetrap": "^1.6.2",
     "prop-types": "^15.6.0",
     "react": "^16.4.2",
     "react-content-loader": "^2.0.2",
