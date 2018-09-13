@@ -130,16 +130,18 @@ body.admin-bar .Post > header {
 		height: 1.1rem;
 	}
 	.Post > header {
-		padding: 5px 0;
-		height: 70px;
+		padding: 0.5em 0;
+		height: auto;
+		display: block;
 	}
 	.Post > header > .Avatar {
-		margin-right: 16px;
+		margin-right: 8px;
+		float: right;
 	}
 	.Post > header > .Avatar,
 	.Post > header > .Avatar img {
-		width: 32px !important;
-		height: 32px !important;
+		width: 24px !important;
+		height: 24px !important;
 	}
 
 	.Post-content-wrap {
