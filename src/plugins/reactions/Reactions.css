@@ -1,12 +1,7 @@
 .reactions {
 	display: flex;
 	flex-wrap: wrap;
-}
-
-.Comment .reactions {
 	position: relative;
-	width: 100%;
-	margin: 1.666rem 0 1.248rem;
 }
 
 .reactions .btn {
