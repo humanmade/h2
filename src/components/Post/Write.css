@@ -71,3 +71,13 @@
 .WritePost > .Editor {
 	margin-left: 90px;
 }
+
+@media ( max-width: 600px ) {
+	.WritePost > header > .Avatar {
+		display: none;
+	}
+
+	.WritePost > .Editor {
+		margin-left: 0;
+	}
+}
