@@ -122,11 +122,6 @@ class App extends Component {
 
 						<Switch>
 							<Route
-								path="/:hasPage(page)?/:page(\d+)?"
-								exact
-								component={ PostsList }
-							/>
-							<Route
 								path="/author/:authorSlug/:hasPage(page)?/:page(\d+)?"
 								exact
 								component={ PostsList }
@@ -143,6 +138,11 @@ class App extends Component {
 							/>
 							<Route
 								path="/:year/:month/:day/:slug/:comment_page(comment-page-\d+)?"
+								exact
+								component={ PostsList }
+							/>
+							<Route
+								path="/:hasPage(page)?/:page(\d+)?"
 								exact
 								component={ PostsList }
 							/>
