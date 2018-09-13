@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { Picker } from 'emoji-mart'
 
 import { withApiData } from '../../with-api-data';
@@ -23,6 +24,51 @@ const Emoji = props => {
 
 	return props.type;
 };
+
+class PickerWrap extends Component {
+	constructor( props ) {
+		super( props );
+
+		this.container = document.createElement( 'div' );
+		this.container.className = 'reactions-picker-wrap';
+
+		this.mediaQuery = window.matchMedia( '(max-width: 600px)' );
+		this.state = {
+			needsPortal: this.mediaQuery.matches,
+		};
+		this.mediaQuery.addListener( this.onQueryChange );
+	}
+
+	componentDidMount() {
+		document.body.appendChild( this.container );
+	}
+
+	componentWillUnmount() {
+		document.body.removeChild( this.container );
+	}
+
+	onQueryChange = e => {
+		this.setState( { needsPortal: e.matches } );
+	}
+
+	render() {
+		const { needsPortal } = this.state;
+		console.log( needsPortal );
+
+		if ( ! needsPortal ) {
+			return (
+				<React.Fragment>
+					{ this.props.children }
+				</React.Fragment>
+			);
+		}
+
+		return ReactDOM.createPortal(
+			this.props.children,
+			this.container
+		);
+	}
+}
 
 export class Reactions extends Component {
 	constructor( props ) {
@@ -148,19 +194,21 @@ export class Reactions extends Component {
 					) }
 				</button>
 				{ this.state.isOpen && (
-					<Picker
-						key="picker"
-						onClick={ data => {
-							this.setState( { isOpen: false } );
-							this.toggleReaction( data.native || data.name );
-						} }
-						title={ false }
-						emoji="upside_down_face"
-						autoFocus={ true }
-						color="#D24632"
-						custom={ window.H2Data.site.emoji }
-						set="twitter"
-					/>
+					<PickerWrap>
+						<Picker
+							key="picker"
+							onClick={ data => {
+								this.setState( { isOpen: false } );
+								this.toggleReaction( data.native || data.name );
+							} }
+							title={ false }
+							emoji="upside_down_face"
+							autoFocus={ true }
+							color="#D24632"
+							custom={ window.H2Data.site.emoji }
+							set="twitter"
+						/>
+					</PickerWrap>
 				)}
 			</div>
 		);
