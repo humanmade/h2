@@ -32,7 +32,6 @@ class SuperMenu extends React.Component {
 
 				<div className="SuperMenu__content">
 					<SearchInput
-						value={ this.props.searchValue }
 						onSearch={ this.props.onSearch }
 					/>
 

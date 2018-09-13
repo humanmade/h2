@@ -103,6 +103,7 @@ class App extends Component {
 				<SuperMenu
 					visible={ this.props.showingSuper }
 					onClose={ this.props.onHideSuperSidebar }
+					onSearch={ search => this.onSearch( search ) }
 				/>
 				<Header
 					onLogOut={ () => this.onLogOut() }
