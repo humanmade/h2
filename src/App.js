@@ -126,17 +126,17 @@ class App extends Component {
 							component={ PostsList }
 						/>
 						<Route
-							path="/author/:authorSlug"
+							path="/author/:authorSlug/:hasPage(page)?/:page(\d+)?"
 							exact
 							component={ PostsList }
 						/>
 						<Route
-							path="/category/:categorySlug"
+							path="/category/:categorySlug/:hasPage(page)?/:page(\d+)?"
 							exact
 							component={ PostsList }
 						/>
 						<Route
-							path="/search/:search"
+							path="/search/:search/:hasPage(page)?/:page(\d+)?"
 							exact
 							component={ PostsList }
 						/>
