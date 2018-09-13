@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 
 import {
 	hideSidebarProfile,
@@ -120,31 +120,33 @@ class App extends Component {
 							/>
 						) : null }
 
-						<Route
-							path="/:hasPage(page)?/:page(\d+)?"
-							exact
-							component={ PostsList }
-						/>
-						<Route
-							path="/author/:authorSlug/:hasPage(page)?/:page(\d+)?"
-							exact
-							component={ PostsList }
-						/>
-						<Route
-							path="/category/:categorySlug/:hasPage(page)?/:page(\d+)?"
-							exact
-							component={ PostsList }
-						/>
-						<Route
-							path="/search/:search/:hasPage(page)?/:page(\d+)?"
-							exact
-							component={ PostsList }
-						/>
-						<Route
-							path="/:year/:month/:day/:slug/:comment_page(comment-page-\d+)?"
-							exact
-							component={ PostsList }
-						/>
+						<Switch>
+							<Route
+								path="/:hasPage(page)?/:page(\d+)?"
+								exact
+								component={ PostsList }
+							/>
+							<Route
+								path="/author/:authorSlug/:hasPage(page)?/:page(\d+)?"
+								exact
+								component={ PostsList }
+							/>
+							<Route
+								path="/category/:categorySlug/:hasPage(page)?/:page(\d+)?"
+								exact
+								component={ PostsList }
+							/>
+							<Route
+								path="/search/:search/:hasPage(page)?/:page(\d+)?"
+								exact
+								component={ PostsList }
+							/>
+							<Route
+								path="/:year/:month/:day/:slug/:comment_page(comment-page-\d+)?"
+								exact
+								component={ PostsList }
+							/>
+						</Switch>
 					</div>
 					{ this.renderSidebar() }
 				</div>
