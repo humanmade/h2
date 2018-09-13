@@ -40,4 +40,8 @@
 	.Header-inner {
 		padding: 0 7px;
 	}
+
+	.Header .SearchInput {
+		display: none;
+	}
 }

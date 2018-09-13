@@ -39,6 +39,10 @@
 	overflow: auto;
 }
 
+.SuperMenu__content .SearchInput {
+	margin-bottom: 1rem;
+}
+
 /* Use relative units for headers/margins */
 .SuperMenu h2 {
 	font-size: 1rem;
@@ -60,4 +64,10 @@
 .SuperMenu ul {
 	list-style: none;
 	padding: 0;
+}
+
+@media ( min-width: 600px ) {
+	.SuperMenu__content .SearchInput {
+		display: none;
+	}
 }

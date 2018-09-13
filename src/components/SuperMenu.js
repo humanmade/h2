@@ -2,6 +2,7 @@ import React from 'react';
 
 import Logo from './Header/Logo';
 import Link from './RelativeLink';
+import SearchInput from './SearchInput';
 import { withApiData } from '../with-api-data';
 
 import './SuperMenu.css';
@@ -30,6 +31,11 @@ class SuperMenu extends React.Component {
 				</header>
 
 				<div className="SuperMenu__content">
+					<SearchInput
+						value={ this.props.searchValue }
+						onSearch={ this.props.onSearch }
+					/>
+
 					<h2 className="screen-reader-text">Navigation</h2>
 					<ul>
 						<li><Link to="/">All Posts</Link></li>
