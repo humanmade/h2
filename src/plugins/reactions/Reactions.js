@@ -61,7 +61,6 @@ class PickerWrap extends Component {
 
 	render() {
 		const { needsPortal } = this.state;
-		console.log( needsPortal );
 
 		if ( ! needsPortal ) {
 			return (
