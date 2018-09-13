@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import ContentLoader from 'react-content-loader';
 import { connect } from 'react-redux';
 import qs from 'qs';
 
 import Button from '../Button';
 import PageTitle from '../PageTitle';
+import Pagination from '../Pagination';
 import PostComponent from './index';
 import { setDefaultPostView } from '../../actions';
 import { withApiData } from '../../with-api-data';
@@ -15,7 +15,6 @@ import './List.css';
 class PostsList extends Component {
 	render() {
 		const { defaultPostView, summaryEnabled } = this.props;
-		const { page } = this.props.match.params;
 
 		const isSingular = !! this.props.match.params.slug;
 		const getTitle = () => {
@@ -74,16 +73,10 @@ class PostsList extends Component {
 							/>
 						) )
 					}
-					<div className="pagination">
-						<Link to={ `/page/${ page ? Number( page ) + 1 : 2 }` }>Older</Link>
-						{ page && page > 1 ? (
-							<Link to={ `/page/${ page - 1 }` }>Newer</Link>
-						) : (
-							/* Hack to get pagination to float correctly */
-							/* eslint-disable-next-line jsx-a11y/anchor-is-valid */
-							<a style={ { display: 'none' } }>&nbsp;</a>
-						) }
-					</div>
+					<Pagination
+						params={ this.props.match.params }
+						path={ this.props.match.path }
+					/>
 				</div>
 			</PageTitle>
 		);
