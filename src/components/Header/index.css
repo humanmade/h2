@@ -44,4 +44,8 @@
 	.Header .SearchInput {
 		display: none;
 	}
+
+	.Header .Header-changelog {
+		display: none;
+	}
 }
