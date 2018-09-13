@@ -40,4 +40,12 @@
 	.Header-inner {
 		padding: 0 7px;
 	}
+
+	.Header .SearchInput {
+		display: none;
+	}
+
+	.Header .Header-changelog {
+		display: none;
+	}
 }

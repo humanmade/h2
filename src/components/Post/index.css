@@ -89,6 +89,12 @@ body.admin-bar .Post > header {
 	margin-left: 90px;
 }
 
+.Post-footer-actions {
+	display: flex;
+	margin: 1.666rem 0 1.248rem;
+	justify-content: space-between;
+}
+
 .Post .actions button:last-child {
 	margin-right: 0;
 }
@@ -120,25 +126,34 @@ body.admin-bar .Post > header {
 
 @media ( max-width: 600px ) {
 	.Post:before {
-		/* ( avatar_width - width ) / 2 */
-		left: 15px;
-		width: 2px;
-		height: 1.1rem;
+		display: none;
 	}
 	.Post > header {
-		padding: 5px 0;
-		height: 70px;
+		margin: 0 -20px;
+		padding: 0.5em 20px;
+		height: auto;
+		display: block;
 	}
 	.Post > header > .Avatar {
-		margin-right: 16px;
+		margin-right: 8px;
+		float: right;
 	}
 	.Post > header > .Avatar,
 	.Post > header > .Avatar img {
-		width: 32px !important;
-		height: 32px !important;
+		width: 24px !important;
+		height: 24px !important;
+	}
+	.Post > header > .actions {
+		display: none;
 	}
 
 	.Post-content-wrap {
-		margin-left: 48px;
+		margin-left: 0;
+	}
+}
+
+@media ( min-width: 600px ) {
+	.Post-footer-actions .actions {
+		display: none;
 	}
 }

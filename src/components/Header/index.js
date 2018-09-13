@@ -52,6 +52,7 @@ class Header extends Component {
 					/>
 
 					<HeaderLabel
+						className="Header-changelog"
 						icon="mail"
 						title={ newLabel }
 						onClick={ this.props.onShowChanges }
