@@ -126,10 +126,7 @@ body.admin-bar .Post > header {
 
 @media ( max-width: 600px ) {
 	.Post:before {
-		/* ( avatar_width - width ) / 2 */
-		left: 15px;
-		width: 2px;
-		height: 1.1rem;
+		display: none;
 	}
 	.Post > header {
 		margin: 0 -20px;
