@@ -59,6 +59,10 @@ body.admin-bar .Post > header {
 	overflow: hidden;
 }
 
+.Post .actions .btn {
+	margin-bottom: 0;
+}
+
 .Post > header > .byline > a > h2 {
 	margin: 0 0.5em 0 0;
 	text-overflow: ellipsis;
@@ -139,6 +143,6 @@ body.admin-bar .Post > header {
 	}
 
 	.Post-content-wrap {
-		margin-left: 48px;
+		margin-left: 0;
 	}
 }
