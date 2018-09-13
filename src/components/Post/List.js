@@ -1,51 +1,16 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import ContentLoader from 'react-content-loader';
 import { connect } from 'react-redux';
-import { generatePath } from 'react-router-dom';
 import qs from 'qs';
 
 import Button from '../Button';
 import PageTitle from '../PageTitle';
+import Pagination from '../Pagination';
 import PostComponent from './index';
 import { setDefaultPostView } from '../../actions';
 import { withApiData } from '../../with-api-data';
 
 import './List.css';
-
-const Pagination = props => {
-	const { params, path } = props;
-	const page = Number( params.page || 1 );
-	const olderPage = generatePath(
-		path,
-		{
-			...params,
-			hasPage: 'page',
-			page: page + 1,
-		}
-	);
-	const newerPage = generatePath(
-		path,
-		{
-			...params,
-			hasPage: 'page',
-			page: page - 1,
-		}
-	);
-
-	return (
-		<div className="pagination">
-			<Link to={ olderPage }>Older</Link>
-			{ page > 1 ? (
-				<Link to={ newerPage }>Newer</Link>
-			) : (
-				/* Hack to get pagination to float correctly */
-				/* eslint-disable-next-line jsx-a11y/anchor-is-valid */
-				<a style={ { display: 'none' } }>&nbsp;</a>
-			) }
-		</div>
-	);
-};
 
 class PostsList extends Component {
 	render() {
