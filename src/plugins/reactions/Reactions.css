@@ -1,5 +1,6 @@
 .reactions {
 	display: flex;
+	flex-wrap: wrap;
 }
 
 .Comment .reactions {
