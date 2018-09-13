@@ -65,12 +65,12 @@ body.admin-bar .Comment > header {
 	padding-bottom: 1rem;
 }
 
-.Comment  > header .actions {
+.Comment > header .actions-wrap {
 	display: none;
 	align-items: center;
 }
 
-.Comment:hover > header .actions {
+.Comment:hover > header .actions-wrap {
 	display: flex;
 }
 
@@ -86,6 +86,13 @@ body.admin-bar .Comment > header {
 
 .Comment > header button {
 	margin-bottom: 0;
+}
+
+.Comment-footer-actions {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	margin: 1.666rem 0 1.248rem;
 }
 
 @media ( max-width: 600px ) {
@@ -109,8 +116,12 @@ body.admin-bar .Comment > header {
 		margin-right: 15px;
 	}
 
-	.Comment > header .actions,
-	.Comment:hover > header .actions {
+	.Comment > header .actions-wrap,
+	.Comment:hover > header .actions-wrap {
+		display: block;
+	}
+
+	.Comment > header .actions {
 		display: none;
 	}
 }

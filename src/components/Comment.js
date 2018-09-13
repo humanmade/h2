@@ -129,7 +129,7 @@ export class Comment extends Component {
 							<AuthorLink user={ author }>{ author.name }</AuthorLink>
 						) : comment.author_name }
 					</strong>
-					<div>
+					<div className="actions-wrap">
 						<a
 							className="Comment-date"
 							href={ `${ post.link }#comment-${ comment.id }` }
