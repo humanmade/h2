@@ -102,6 +102,16 @@ export class Comment extends Component {
 			post,
 		};
 
+		const Actions = (
+			<div className="actions">
+				{ ! this.state.isEditing && (
+					<Button onClick={ this.onClickEdit }>Edit</Button>
+				) }
+				<Button onClick={ () => this.setState( { isShowingReply: true } ) }>Reply</Button>
+				<Slot name="Comment.actions" fillChildProps={ fillProps } />
+			</div>
+		);
+
 		return (
 			<div
 				className="Comment"
@@ -119,7 +129,7 @@ export class Comment extends Component {
 							<AuthorLink user={ author }>{ author.name }</AuthorLink>
 						) : comment.author_name }
 					</strong>
-					<div className="actions">
+					<div>
 						<a
 							className="Comment-date"
 							href={ `${ post.link }#comment-${ comment.id }` }
@@ -131,11 +141,7 @@ export class Comment extends Component {
 								<FormattedRelative value={ comment.date_gmt + 'Z' } />
 							</time>
 						</a>
-						{ ! this.state.isEditing && (
-							<Button onClick={ this.onClickEdit }>Edit</Button>
-						) }
-						<Button onClick={ () => this.setState( { isShowingReply: true } ) }>Reply</Button>
-						<Slot name="Comment.actions" fillChildProps={ fillProps } />
+						{ Actions }
 					</div>
 				</header>
 				<div className="body">
@@ -156,6 +162,10 @@ export class Comment extends Component {
 						<MessageContent html={ this.props.comment.content.rendered } />
 					) }
 					<Slot name="Comment.after_content" fillChildProps={ fillProps } />
+					<div className="Comment-footer-actions">
+						{ Actions }
+						<Slot name="Comment.footer_actions" fillChildProps={ fillProps } />
+					</div>
 				</div>
 				<CommentsList
 					allComments={ this.props.comments }

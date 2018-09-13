@@ -65,12 +65,12 @@ body.admin-bar .Comment > header {
 	padding-bottom: 1rem;
 }
 
-.Comment  > header > .actions {
+.Comment  > header .actions {
 	display: none;
 	align-items: center;
 }
 
-.Comment:hover > header > .actions {
+.Comment:hover > header .actions {
 	display: flex;
 }
 
@@ -109,9 +109,14 @@ body.admin-bar .Comment > header {
 		margin-right: 15px;
 	}
 
-	.Comment > header > .actions {
-		display: flex;
-		flex-grow: 1;
-		justify-content: space-between;
+	.Comment > header .actions,
+	.Comment:hover > header .actions {
+		display: none;
+	}
+}
+
+@media ( min-width: 600px ) {
+	.Comment-footer-actions .actions {
+		display: none;
 	}
 }
