@@ -120,12 +120,36 @@ class App extends Component {
 							/>
 						) : null }
 
-						<Route path="/" exact component={ PostsList } />
-						<Route path="/author/:authorSlug" exact component={ PostsList } />
-						<Route path="/category/:categorySlug" exact component={ PostsList } />
-						<Route path="/page/:page" exact component={ PostsList } />
-						<Route path="/search/:search" exact component={ PostsList } />
-						<Route path="/:year/:month/:day/:slug/:comment_page(comment-page-\d+)?" exact component={ PostsList } />
+						<Route
+							path="/"
+							exact
+							component={ PostsList }
+						/>
+						<Route
+							path="/page/:page"
+							exact
+							component={ PostsList }
+						/>
+						<Route
+							path="/author/:authorSlug"
+							exact
+							component={ PostsList }
+						/>
+						<Route
+							path="/category/:categorySlug"
+							exact
+							component={ PostsList }
+						/>
+						<Route
+							path="/search/:search"
+							exact
+							component={ PostsList }
+						/>
+						<Route
+							path="/:year/:month/:day/:slug/:comment_page(comment-page-\d+)?"
+							exact
+							component={ PostsList }
+						/>
 					</div>
 					{ this.renderSidebar() }
 				</div>
