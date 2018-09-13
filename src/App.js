@@ -137,7 +137,7 @@ class App extends Component {
 								component={ PostsList }
 							/>
 							<Route
-								path="/:year/:month/:day/:slug/:comment_page(comment-page-\d+)?"
+								path="/:year(\d{4})/:month(\d{2})/:day(\d{2})/:slug/:comment_page(comment-page-\d+)?"
 								exact
 								component={ PostsList }
 							/>
