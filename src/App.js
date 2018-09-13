@@ -121,12 +121,7 @@ class App extends Component {
 						) : null }
 
 						<Route
-							path="/"
-							exact
-							component={ PostsList }
-						/>
-						<Route
-							path="/page/:page"
+							path="/:hasPage(page)?/:page(\d+)?"
 							exact
 							component={ PostsList }
 						/>
