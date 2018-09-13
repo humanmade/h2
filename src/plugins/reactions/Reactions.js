@@ -41,10 +41,18 @@ class PickerWrap extends Component {
 
 	componentDidMount() {
 		document.body.appendChild( this.container );
+		this.container.addEventListener( 'click', this.onClose );
 	}
 
 	componentWillUnmount() {
+		this.container.removeEventListener( 'click', this.onClose );
 		document.body.removeChild( this.container );
+	}
+
+	onClose = e => {
+		e.preventDefault();
+
+		this.props.onClose();
 	}
 
 	onQueryChange = e => {
@@ -194,7 +202,7 @@ export class Reactions extends Component {
 					) }
 				</button>
 				{ this.state.isOpen && (
-					<PickerWrap>
+					<PickerWrap onClose={ () => this.setState( { isOpen: false } ) }>
 						<Picker
 							key="picker"
 							onClick={ data => {
