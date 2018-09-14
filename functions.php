@@ -7,6 +7,7 @@ require __DIR__ . '/inc/emoji/namespace.php';
 require __DIR__ . '/inc/loader/namespace.php';
 require __DIR__ . '/inc/rest_api/class-widgets-controller.php';
 
+add_action( 'after_setup_theme', __NAMESPACE__ . '\\adjust_default_filters' );
 add_action( 'after_setup_theme', __NAMESPACE__ . '\\set_up_theme' );
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_assets' );
 add_filter( 'pre_option_permalink_structure', __NAMESPACE__ . '\\get_permalink_structure' );

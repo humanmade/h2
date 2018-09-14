@@ -6,6 +6,17 @@ use WP_Error;
 use WP_REST_Request;
 
 /**
+ * Adjust default filters in WordPress
+ *
+ * Adds and removes default filters and callbacks from various formatting
+ * filters.
+ */
+function adjust_default_filters() {
+	// Add make_clickable to posts
+	add_filter( 'the_content', 'make_clickable', 9 );
+}
+
+/**
  * Set up theme global settings
  */
 function set_up_theme() {
