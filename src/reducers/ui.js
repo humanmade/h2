@@ -1,7 +1,7 @@
 import {
 	SHOW_META_SIDEBAR,
 	SHOW_SIDEBAR_PROFILE,
-	HIDE_SIDEBAR_PROFILE,
+	HIDE_SIDEBAR,
 	SHOW_SUPER_SIDEBAR,
 	HIDE_SUPER_SIDEBAR,
 	SET_DEFAULT_POST_VIEW,
@@ -28,7 +28,7 @@ export default function ui( state = DEFAULT_STATE, action ) {
 				sidebarProfile: action.id,
 			};
 
-		case HIDE_SIDEBAR_PROFILE:
+		case HIDE_SIDEBAR:
 			return {
 				...state,
 				sidebarView: null,

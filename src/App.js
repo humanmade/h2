@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
 
 import {
-	hideSidebarProfile,
+	hideSidebar,
 	hideSuperSidebar,
 	showSuperSidebar,
 } from './actions';
@@ -75,7 +75,7 @@ class App extends Component {
 			case 'meta':
 				return (
 					<MetaSidebar
-						onClose={ this.props.onDismissSidebarProfile }
+						onClose={ this.props.onDismissSidebar }
 						onLogOut={ () => this.onLogOut() }
 					/>
 				);
@@ -84,7 +84,7 @@ class App extends Component {
 				return (
 					<Profile
 						id={ this.props.sidebarProfile }
-						onClose={ this.props.onDismissSidebarProfile }
+						onClose={ this.props.onDismissSidebar }
 					/>
 				);
 
@@ -173,7 +173,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onDismissSidebarProfile: () => dispatch( hideSidebarProfile() ),
+		onDismissSidebar: () => dispatch( hideSidebar() ),
 		onHideSuperSidebar: () => dispatch( hideSuperSidebar() ),
 		onShowSuperSidebar: () => dispatch( showSuperSidebar() ),
 	};
