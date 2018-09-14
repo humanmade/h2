@@ -1,0 +1,24 @@
+.Comment-Mini {
+	border: 1px solid var( --hm-beige );
+	padding: 0.5em;
+	box-shadow: 0 0 4px var( --hm-light-grey );
+	border-radius: 4px;
+}
+
+.Comment-Mini__context a {
+	color: inherit;
+}
+
+.Comment-Mini__context {
+	margin: 0;
+	font-size: 0.9em;
+	color: var( --hm-medium-grey );
+}
+
+.Comment-Mini__context-post {
+	font-weight: bold;
+}
+
+.Comment-Mini__comment {
+	margin-left: 30px;
+}
