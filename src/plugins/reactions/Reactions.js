@@ -30,8 +30,6 @@ class PickerWrap extends Component {
 		super( props );
 
 		this.container = document.createElement( 'div' );
-		this.container.className = 'reactions-picker-wrap';
-
 		this.mediaQuery = window.matchMedia( '(max-width: 600px)' );
 		this.state = {
 			needsPortal: this.mediaQuery.matches,
@@ -41,11 +39,9 @@ class PickerWrap extends Component {
 
 	componentDidMount() {
 		document.body.appendChild( this.container );
-		this.container.addEventListener( 'click', this.onClose );
 	}
 
 	componentWillUnmount() {
-		this.container.removeEventListener( 'click', this.onClose );
 		document.body.removeChild( this.container );
 	}
 
@@ -71,7 +67,12 @@ class PickerWrap extends Component {
 		}
 
 		return ReactDOM.createPortal(
-			this.props.children,
+			<div
+				className="reactions-picker-wrap"
+				onClick={ this.onClose }
+			>
+				{ this.props.children }
+			</div>,
 			this.container
 		);
 	}
