@@ -95,8 +95,14 @@ class Profile extends React.Component {
 					zoom="2.0"
 				/>
 
-				<p><RelativeLink to={ user.link }>View all posts →</RelativeLink></p>
-				<p><LinkButton onClick={ () => this.props.onViewComments( user.id ) }>View all comments →</LinkButton></p>
+				<ul className="Profile-navigation">
+					<li>
+						<RelativeLink to={ user.link }>View all posts →</RelativeLink>
+					</li>
+					<li>
+						<LinkButton onClick={ () => this.props.onViewComments( user.id ) }>View all comments →</LinkButton>
+					</li>
+				</ul>
 
 				<div className="Profile-fields">
 					<LocalTime user={ user } />
