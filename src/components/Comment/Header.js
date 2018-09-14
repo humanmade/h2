@@ -7,10 +7,14 @@ import AuthorLink from '../Message/AuthorLink';
 import './Header.css';
 
 export default function CommentHeader( props ) {
-	const { author, children, comment, post } = props;
+	const { author, children, comment, mini, post } = props;
 
+	const classes = [
+		'Comment-Header',
+		mini && 'Comment-Header--mini',
+	];
 	return (
-		<header className="Comment-Header">
+		<header className={ classes.filter( Boolean ).join( ' ' ) }>
 			<Avatar
 				url={ author ? author.avatar_urls['96'] : '' }
 				user={ author }
@@ -41,5 +45,6 @@ export default function CommentHeader( props ) {
 }
 
 CommentHeader.defaultProps = {
+	mini: false,
 	withAvatar: true,
 };

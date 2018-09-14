@@ -39,6 +39,26 @@
 	margin-bottom: 0;
 }
 
+.Comment-Header--mini {
+	margin-left: 0;
+	height: auto;
+	flex-wrap: wrap;
+}
+.Comment-Header--mini > .Avatar,
+.Comment-Header--mini > .Avatar img {
+	height: 24px !important;
+	width: 24px !important;
+}
+.Comment-Header--mini > .Avatar {
+	margin-left: -30px;
+	margin-right: 6px;
+	padding: 8px 0;
+	background: #fff;
+}
+.Comment-Header--mini .Avatar:after {
+	top: 8px;
+}
+
 @media ( max-width: 600px ) {
 	.Comment-Header {
 		margin-left: 0;
