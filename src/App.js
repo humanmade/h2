@@ -14,6 +14,7 @@ import WritePost from './components/Post/Write';
 import MetaSidebar from './components/MetaSidebar';
 import Profile from './components/Profile';
 import Sidebar from './components/Sidebar';
+import CommentsSidebar from './components/Sidebar/Comments';
 import { RenderPlugins } from './plugins';
 
 import SuperMenu from './components/SuperMenu';
@@ -83,6 +84,14 @@ class App extends Component {
 			case 'profile':
 				return (
 					<Profile
+						id={ this.props.sidebarProfile }
+						onClose={ this.props.onDismissSidebar }
+					/>
+				);
+
+			case 'comments':
+				return (
+					<CommentsSidebar
 						id={ this.props.sidebarProfile }
 						onClose={ this.props.onDismissSidebar }
 					/>
