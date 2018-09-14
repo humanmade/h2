@@ -21,8 +21,18 @@
 	align-items: center;
 }
 
-.Comment:hover > .Comment-Header .actions-wrap {
+.Comment-Header:hover .actions-wrap {
 	display: flex;
+}
+
+.Comment-Header .Comment-date {
+	color: var( --hm-medium-grey );
+	font-size: 0.75em;
+	margin-right: 0.5em;
+}
+.Comment-Header a.Comment-date:hover {
+	border: none;
+	text-decoration: underline;
 }
 
 .Comment-Header button {
