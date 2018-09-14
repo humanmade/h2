@@ -6,6 +6,22 @@ use WP_Error;
 use WP_REST_Request;
 
 /**
+ * Adjust default filters in WordPress
+ *
+ * Adds and removes default filters and callbacks from various formatting
+ * filters.
+ */
+function adjust_default_filters() {
+	// Add make_clickable to posts
+	add_filter( 'the_content', 'make_clickable', 9 );
+
+	// Render embeds in comments
+	global $wp_embed;
+	add_filter( 'comment_text', [ $wp_embed, 'run_shortcode' ], 8 );
+	add_filter( 'comment_text', [ $wp_embed, 'autoembed' ], 8 );
+}
+
+/**
  * Set up theme global settings
  */
 function set_up_theme() {
