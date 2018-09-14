@@ -39,11 +39,9 @@ class PickerWrap extends Component {
 
 	componentDidMount() {
 		document.body.appendChild( this.container );
-		this.container.addEventListener( 'click', this.onClose );
 	}
 
 	componentWillUnmount() {
-		this.container.removeEventListener( 'click', this.onClose );
 		document.body.removeChild( this.container );
 	}
 
@@ -69,7 +67,10 @@ class PickerWrap extends Component {
 		}
 
 		return ReactDOM.createPortal(
-			<div className="reactions-picker-wrap">
+			<div
+				className="reactions-picker-wrap"
+				onClick={ this.onClose }
+			>
 				{ this.props.children }
 			</div>,
 			this.container
