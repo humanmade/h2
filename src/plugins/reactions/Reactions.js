@@ -30,8 +30,6 @@ class PickerWrap extends Component {
 		super( props );
 
 		this.container = document.createElement( 'div' );
-		this.container.className = 'reactions-picker-wrap';
-
 		this.mediaQuery = window.matchMedia( '(max-width: 600px)' );
 		this.state = {
 			needsPortal: this.mediaQuery.matches,
@@ -71,7 +69,9 @@ class PickerWrap extends Component {
 		}
 
 		return ReactDOM.createPortal(
-			this.props.children,
+			<div className="reactions-picker-wrap">
+				{ this.props.children }
+			</div>,
 			this.container
 		);
 	}
