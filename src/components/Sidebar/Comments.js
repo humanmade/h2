@@ -1,7 +1,9 @@
+import qs from 'qs';
 import React from 'react';
 import { connect } from 'react-redux';
 
 import Container from './Container';
+import Pagination from './Pagination';
 import MiniComment from '../Comment/Mini';
 import LinkButton from '../LinkButton';
 import { showSidebarProfile } from '../../actions';
@@ -53,6 +55,13 @@ class SidebarComments extends React.Component {
 
 		containerProps.title = `${ user.name }’s Comments`;
 
+		// TODO: Add proper pagination support:
+		// https://github.com/joehoyle/with-api-data/issues/3
+		// In the meantime, if we have less than the requested number, it's likely
+		// that we don't have a next page.
+		const hasNext = this.props.comments.data.length === 10;
+		const hasPrevious = this.props.page > 1;
+
 		return (
 			<Container { ...containerProps }>
 				<p className="Sidebar-Comments__navigation">
@@ -70,6 +79,13 @@ class SidebarComments extends React.Component {
 						/>
 					) ) }
 				</div>
+
+				<Pagination
+					hasNext={ hasNext }
+					hasPrevious={ hasPrevious }
+					onNext={ this.props.onNext }
+					onPrevious={ this.props.onPrevious }
+				/>
 			</Container>
 		);
 	}
@@ -80,14 +96,42 @@ const mapDispatchtoProps = dispatch => ( {
 	onShowProfile: id => dispatch( showSidebarProfile( id ) ),
 } );
 
-const mapPropsToData = props => ( {
-	comments: `/wp/v2/comments?author=${ props.id }`,
-	user: `/wp/v2/users/${ props.id }`,
-} );
+const mapPropsToData = props => {
+	const args = {
+		author: props.id,
+		page: props.page,
+	};
 
-export default connect(
+	return {
+		comments: `/wp/v2/comments?${ qs.stringify( args ) }`,
+		user: `/wp/v2/users/${ props.id }`,
+	};
+};
+
+const ConnectedComments = connect(
 	mapStateToProps,
 	mapDispatchtoProps
 )(
 	withApiData( mapPropsToData )( SidebarComments )
 );
+
+export default class SidebarCommentsWrap extends React.Component {
+	constructor( props ) {
+		super( props );
+
+		this.state = {
+			page: 1,
+		};
+	}
+
+	render() {
+		return (
+			<ConnectedComments
+				{ ...this.props }
+				page={ this.state.page }
+				onNext={ () => this.setState( state => ( { page: state.page + 1 } ) ) }
+				onPrevious={ () => this.setState( state => ( { page: state.page - 1 } ) ) }
+			/>
+		);
+	}
+}

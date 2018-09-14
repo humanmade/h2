@@ -1,3 +1,7 @@
+.Sidebar-Comments > .Sidebar-Pagination {
+	margin-bottom: 2rem;
+}
+
 .Sidebar-Comments__wrap {
 	margin: 0 -10px;
 }
