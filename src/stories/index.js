@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf, action } from '@storybook/react';
 
-import { comment, post, user, users } from './stubs';
+import { comment, post, user } from './stubs';
 import Avatar from '../components/Avatar';
-import Editor from '../components/Editor';
 import Status from '../components/Status';
 import Post from '../components/Post';
 import Comment from '../components/Comment';
@@ -59,9 +58,3 @@ storiesOf( 'Components', module )
 			onCancel={ () => {} }
 		/>
 	) )
-	.add( 'Editor', () => (
-		<Editor
-			onSubmit={ action( 'submit' ) }
-			users={ users }
-		/>
-	) );
