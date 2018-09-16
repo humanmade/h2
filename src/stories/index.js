@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf, action } from '@storybook/react';
 
+import { comment, post, user, users } from './stubs';
 import Avatar from '../components/Avatar';
 import Editor from '../components/Editor';
 import Status from '../components/Status';
@@ -10,55 +11,6 @@ import WriteComment from '../components/Message/WriteComment';
 import WritePost from '../components/Post/Write';
 
 import '../hm-pattern-library/assets/styles/juniper.css';
-
-const comment = {
-	id: 1,
-	post: 1,
-	date_gmt: new Date().toISOString(),
-	author: 1,
-	content: {
-		rendered: 'Heading up to Oregon for my brother and sister-in-law’s birthday celebrations! I’ll be out May 4-7!',
-		raw: 'awd',
-	},
-};
-
-const post = {
-	id: 1,
-	date_gmt: new Date().toISOString(),
-	author: 1,
-	title: { rendered: 'Exploring the idea of Platform' },
-	content: { rendered: 'Heading up to Oregon for my brother and sister-in-law’s birthday celebrations! I’ll be out May 4-7!' },
-	related: {
-		comments: {
-			items: [],
-			isLoading: false,
-			hasLoaded: false,
-		},
-	},
-};
-
-const user = {
-	name: 'Noel',
-	slug: 'noel',
-	avatar_urls: {
-		'48': 'https://secure.gravatar.com/avatar/c57c8945079831fa3c19caef02e44614?s=48&d=mm&r=g',
-		'96': 'https://secure.gravatar.com/avatar/c57c8945079831fa3c19caef02e44614?s=96&d=mm&r=g',
-	},
-};
-
-const users = [
-	user,
-	{
-		...user,
-		name: 'Joe',
-		slug: 'joe',
-	},
-	{
-		...user,
-		name: 'Tom',
-		slug: 'tomwillmot',
-	},
-];
 
 storiesOf( 'Components', module )
 	.add( 'Avatar', () => (
