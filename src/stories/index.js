@@ -1,10 +1,7 @@
 import React from 'react';
 import { storiesOf, action } from '@storybook/react';
-import { IntlProvider } from 'react-intl';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Provider as SlotFillProvider } from 'react-slot-fill';
 
-import storeDecorator from './store-decorator';
+import rootDecorator from './root-decorator';
 import Header from '../components/Header';
 import Logo from '../components/Header/Logo';
 import Avatar from '../components/Avatar';
@@ -14,7 +11,6 @@ import Post from '../components/Post';
 import Comment from '../components/Comment';
 import WriteComment from '../components/Message/WriteComment';
 import WritePost from '../components/Post/Write';
-import { Provider as RestApiProvider } from '../with-api-data';
 
 import '../hm-pattern-library/assets/styles/juniper.css';
 
@@ -68,30 +64,7 @@ const users = [
 ];
 
 storiesOf( 'Components', module )
-	.addDecorator( storeDecorator() )
-	.addDecorator( story => {
-		return <SlotFillProvider>{ story() }</SlotFillProvider>;
-	} )
-	.addDecorator( story => {
-		return <IntlProvider locale="en">{story()}</IntlProvider>;
-	} )
-	.addDecorator( story => {
-		const dummyFetch = ( url, ...args ) => {
-			console.log( url, ...args );
-			return Promise.reject( new Error( 'Cannot request API data in Storybook context' ) );
-		};
-		return (
-			<RestApiProvider
-				fetch={ dummyFetch }
-				initialData={ null }
-			>
-				{ story() }
-			</RestApiProvider>
-		);
-	} )
-	.addDecorator( story => {
-		return <Router>{ story() }</Router>;
-	} )
+	.addDecorator( rootDecorator() )
 	.add( 'Header', () => (
 		<Header onWritePost={ () => {} } onWriteStatus={ () => {} }><Logo /></Header>
 	) )
