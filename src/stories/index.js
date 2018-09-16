@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf, action } from '@storybook/react';
 import { IntlProvider } from 'react-intl';
+import { Provider as SlotFillProvider } from 'react-slot-fill';
 
 import storeDecorator from './store-decorator';
 import Header from '../components/Header';
@@ -66,6 +67,9 @@ const users = [
 
 storiesOf( 'Components', module )
 	.addDecorator( storeDecorator() )
+	.addDecorator( story => {
+		return <SlotFillProvider>{ story() }</SlotFillProvider>;
+	} )
 	.addDecorator( story => {
 		return <IntlProvider locale="en">{story()}</IntlProvider>;
 	} )
