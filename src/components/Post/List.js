@@ -41,12 +41,6 @@ class PostsList extends Component {
 		return (
 			<PageTitle title={ getTitle() }>
 				<div className="PostsList">
-					{ this.props.posts.isLoading && (
-						<React.Fragment>
-							<Loader />
-							<Loader />
-						</React.Fragment>
-					) }
 					{ summaryEnabled ? (
 						<div className="PostsList--settings">
 							<Button
@@ -65,6 +59,12 @@ class PostsList extends Component {
 					) : (
 						/* Dummy settings div to ensure markup matches */
 						<div className="PostsList--settings" />
+					) }
+					{ this.props.posts.isLoading && (
+						<React.Fragment>
+							<Loader />
+							<Loader />
+						</React.Fragment>
 					) }
 					{ this.props.posts.data &&
 						this.props.posts.data.map( post => (
