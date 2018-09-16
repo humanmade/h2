@@ -2,15 +2,9 @@ import React from 'react';
 import { storiesOf, action } from '@storybook/react';
 
 import { comment, editablePost, post, user } from './stubs';
+import { apiResponse } from './util';
 import { Post } from '../components/Post';
 import WritePost from '../components/Post/Write';
-
-const apiResponse = ( data, loading = false ) => {
-	return {
-		isLoading: loading,
-		data,
-	};
-};
 
 const defaultProps = {
 	author: apiResponse( user ),
