@@ -1,7 +1,6 @@
 import React from 'react';
 import { storiesOf, action } from '@storybook/react';
 
-import rootDecorator from './root-decorator';
 import Header from '../components/Header';
 import Logo from '../components/Header/Logo';
 import Avatar from '../components/Avatar';
@@ -64,7 +63,6 @@ const users = [
 ];
 
 storiesOf( 'Components', module )
-	.addDecorator( rootDecorator() )
 	.add( 'Header', () => (
 		<Header onWritePost={ () => {} } onWriteStatus={ () => {} }><Logo /></Header>
 	) )
