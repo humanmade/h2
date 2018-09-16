@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import ContentLoader from 'react-content-loader';
 import { connect } from 'react-redux';
 import qs from 'qs';
 
+import Loader from './Loader';
 import Button from '../Button';
 import PageTitle from '../PageTitle';
 import Pagination from '../Pagination';
@@ -41,9 +41,9 @@ class PostsList extends Component {
 		return (
 			<PageTitle title={ getTitle() }>
 				<div className="PostsList">
-					{ this.props.posts.isLoading &&
-						<ContentLoader type="list" width={ 300 } />
-					}
+					{ this.props.posts.isLoading && (
+						<Loader />
+					) }
 					{ summaryEnabled ? (
 						<div className="PostsList--settings">
 							<Button
