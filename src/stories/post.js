@@ -36,6 +36,7 @@ storiesOf( 'Post', module )
 			<div style={ { width: '800px' } }>
 				{ lengths.map( length => (
 					<Post
+						key={ length }
 						{ ...defaultProps }
 						data={ {
 							...post,
