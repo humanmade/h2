@@ -109,6 +109,15 @@ export const post = {
 	},
 };
 
+export const editablePost = {
+	...post,
+	title: editableTitle,
+	content: editableContent,
+	meta: {
+		unprocessed_content: editableContent.raw,
+	},
+};
+
 export const user = {
 	name: 'Noel',
 	slug: 'noel',
