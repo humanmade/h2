@@ -3,7 +3,6 @@ import { storiesOf, action } from '@storybook/react';
 
 import { comment, post, user } from './stubs';
 import Avatar from '../components/Avatar';
-import Status from '../components/Status';
 import Post from '../components/Post';
 import Comment from '../components/Comment';
 import WriteComment from '../components/Message/WriteComment';
@@ -18,7 +17,6 @@ storiesOf( 'Components', module )
 			url="https://secure.gravatar.com/avatar/0ceb885cc3d306af93c9764b2936d618?s=300&d=mm&r=g"
 		/>
 	) )
-	.add( 'Status', () => <Status author={ user } post={ post } /> )
 	.add( 'Post', () => <Post author={ user } post={ post } /> )
 	.add( 'Post Titles', () => {
 		const lengths = [ 20, 22, 24, 26, 28, 30, 32, 34 ];
