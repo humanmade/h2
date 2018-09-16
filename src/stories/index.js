@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf, action } from '@storybook/react';
 import { IntlProvider } from 'react-intl';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider as SlotFillProvider } from 'react-slot-fill';
 
 import storeDecorator from './store-decorator';
@@ -72,6 +73,9 @@ storiesOf( 'Components', module )
 	} )
 	.addDecorator( story => {
 		return <IntlProvider locale="en">{story()}</IntlProvider>;
+	} )
+	.addDecorator( story => {
+		return <Router>{ story() }</Router>;
 	} )
 	.add( 'Header', () => (
 		<Header onWritePost={ () => {} } onWriteStatus={ () => {} }><Logo /></Header>
