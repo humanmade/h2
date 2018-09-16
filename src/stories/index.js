@@ -1,8 +1,6 @@
 import React from 'react';
 import { storiesOf, action } from '@storybook/react';
 
-import Header from '../components/Header';
-import Logo from '../components/Header/Logo';
 import Avatar from '../components/Avatar';
 import Editor from '../components/Editor';
 import Status from '../components/Status';
@@ -63,10 +61,6 @@ const users = [
 ];
 
 storiesOf( 'Components', module )
-	.add( 'Header', () => (
-		<Header onWritePost={ () => {} } onWriteStatus={ () => {} }><Logo /></Header>
-	) )
-	.add( 'Logo', () => <Logo /> )
 	.add( 'Avatar', () => (
 		<Avatar
 			size={ 32 }

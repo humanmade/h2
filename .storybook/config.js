@@ -4,8 +4,9 @@ import rootDecorator from '../src/stories/root-decorator';
 
 function loadStories() {
   addDecorator( rootDecorator() )
-  require('../src/stories');
-  require('../src/stories/editor');
+  require( '../src/stories' );
+  require( '../src/stories/editor' );
+  require( '../src/stories/header' );
 }
 
 configure(loadStories, module);
