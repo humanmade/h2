@@ -90,6 +90,7 @@ export const comment = {
 	post: 1,
 	date_gmt: now,
 	author: 1,
+	parent: 0,
 	content,
 };
 

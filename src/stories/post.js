@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf, action } from '@storybook/react';
 
-import { editablePost, post, user } from './stubs';
+import { comment, editablePost, post, user } from './stubs';
 import { Post } from '../components/Post';
 import WritePost from '../components/Post/Write';
 
@@ -40,6 +40,12 @@ storiesOf( 'Post', module )
 		<Post
 			{ ...defaultProps }
 			editable={ apiResponse( editablePost ) }
+		/>
+	) )
+	.add( 'Post (With Comments)', () => (
+		<Post
+			{ ...defaultProps }
+			comments={ apiResponse( [ comment ] ) }
 		/>
 	) )
 	.add( 'Post Titles', () => {
