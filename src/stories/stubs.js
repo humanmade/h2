@@ -15,6 +15,8 @@ export const post = {
 	id: 1,
 	date_gmt: now,
 	author: 1,
+	categories: [],
+	link: 'http://example.com/2018/01/01/exploring/',
 	title: { rendered: 'Exploring the idea of Platform' },
 	content: { rendered: 'Heading up to Oregon for my brother and sister-in-law’s birthday celebrations! I’ll be out May 4-7!' },
 	related: {
