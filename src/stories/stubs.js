@@ -1,7 +1,9 @@
+const now = new Date().toISOString().replace( 'Z', '' );
+
 export const comment = {
 	id: 1,
 	post: 1,
-	date_gmt: new Date().toISOString(),
+	date_gmt: now,
 	author: 1,
 	content: {
 		rendered: 'Heading up to Oregon for my brother and sister-in-law’s birthday celebrations! I’ll be out May 4-7!',
@@ -11,7 +13,7 @@ export const comment = {
 
 export const post = {
 	id: 1,
-	date_gmt: new Date().toISOString(),
+	date_gmt: now,
 	author: 1,
 	title: { rendered: 'Exploring the idea of Platform' },
 	content: { rendered: 'Heading up to Oregon for my brother and sister-in-law’s birthday celebrations! I’ll be out May 4-7!' },
