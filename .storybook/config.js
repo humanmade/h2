@@ -7,6 +7,7 @@ function loadStories() {
   require( '../src/stories' );
   require( '../src/stories/editor' );
   require( '../src/stories/header' );
+  require( '../src/stories/post' );
 }
 
 configure(loadStories, module);
