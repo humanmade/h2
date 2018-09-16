@@ -42,7 +42,10 @@ class PostsList extends Component {
 			<PageTitle title={ getTitle() }>
 				<div className="PostsList">
 					{ this.props.posts.isLoading && (
-						<Loader />
+						<React.Fragment>
+							<Loader />
+							<Loader />
+						</React.Fragment>
 					) }
 					{ summaryEnabled ? (
 						<div className="PostsList--settings">
