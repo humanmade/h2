@@ -12,7 +12,7 @@ import { getChangesForUser } from '../../changelog';
 
 import './index.css';
 
-class Header extends Component {
+export class Header extends Component {
 	render() {
 		const newChanges = this.props.currentUser && this.props.currentUser.data ? getChangesForUser( this.props.currentUser.data ) : [];
 

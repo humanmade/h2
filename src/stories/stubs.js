@@ -121,11 +121,15 @@ export const editablePost = {
 };
 
 export const user = {
+	id: 1,
 	name: 'Noel',
 	slug: 'noel',
 	avatar_urls: {
 		'48': 'https://secure.gravatar.com/avatar/c57c8945079831fa3c19caef02e44614?s=48&d=mm&r=g',
 		'96': 'https://secure.gravatar.com/avatar/c57c8945079831fa3c19caef02e44614?s=96&d=mm&r=g',
+	},
+	meta: {
+		h2_last_updated: now,
 	},
 };
 
