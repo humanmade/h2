@@ -217,8 +217,12 @@ export class Post extends Component {
 }
 
 Post.propTypes = {
-	collapsed: PropTypes.bool.isRequired,
 	data: PostShape.isRequired,
+	expanded: PropTypes.bool.isRequired,
+};
+
+Post.defaultProps = {
+	expanded: true,
 };
 
 const mapPropsToData = props => {
