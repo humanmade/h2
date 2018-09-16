@@ -4,14 +4,14 @@ import { IntlProvider } from 'react-intl';
 
 import storeDecorator from './store-decorator';
 import Header from '../components/Header';
-import Logo from '../components/Logo';
+import Logo from '../components/Header/Logo';
 import Avatar from '../components/Avatar';
 import Editor from '../components/Editor';
 import Status from '../components/Status';
 import Post from '../components/Post';
 import Comment from '../components/Comment';
-import WriteComment from '../components/WriteComment';
-import WritePost from '../components/WritePost';
+import WriteComment from '../components/Message/WriteComment';
+import WritePost from '../components/Post/Write';
 
 import '../hm-pattern-library/assets/styles/juniper.css';
 
