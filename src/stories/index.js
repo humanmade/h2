@@ -14,6 +14,7 @@ import Post from '../components/Post';
 import Comment from '../components/Comment';
 import WriteComment from '../components/Message/WriteComment';
 import WritePost from '../components/Post/Write';
+import { Provider as RestApiProvider } from '../with-api-data';
 
 import '../hm-pattern-library/assets/styles/juniper.css';
 
@@ -73,6 +74,20 @@ storiesOf( 'Components', module )
 	} )
 	.addDecorator( story => {
 		return <IntlProvider locale="en">{story()}</IntlProvider>;
+	} )
+	.addDecorator( story => {
+		const dummyFetch = ( url, ...args ) => {
+			console.log( url, ...args );
+			return Promise.reject( new Error( 'Cannot request API data in Storybook context' ) );
+		};
+		return (
+			<RestApiProvider
+				fetch={ dummyFetch }
+				initialData={ null }
+			>
+				{ story() }
+			</RestApiProvider>
+		);
 	} )
 	.addDecorator( story => {
 		return <Router>{ story() }</Router>;
