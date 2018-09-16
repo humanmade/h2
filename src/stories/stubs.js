@@ -11,6 +11,7 @@ export const editableTitle = {
 };
 
 export const content = {
+	count: 330,
 	rendered: outdent`
 		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Collige omnia, quae soletis: Praesidium amicorum. Si est nihil nisi corpus, summa erunt illa: valitudo, vacuitas doloris, pulchritudo, cetera. Duo Reges: constructio interrete. Itaque hic ipse iam pridem est reiectus; Nemo nostrum istius generis asotos iucunde putat vivere. </p>
 
