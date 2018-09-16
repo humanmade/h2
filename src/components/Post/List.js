@@ -13,6 +13,24 @@ import { withApiData } from '../../with-api-data';
 import './List.css';
 
 class PostsList extends Component {
+	constructor( props ) {
+		super( props );
+
+		this.state = {
+			containerWidth: 740,
+		};
+	}
+
+	onUpdateWidth = ref => {
+		if ( ! ref ) {
+			return;
+		}
+
+		this.setState( {
+			containerWidth: ref.clientWidth,
+		} );
+	}
+
 	render() {
 		const { defaultPostView, summaryEnabled } = this.props;
 
@@ -62,8 +80,10 @@ class PostsList extends Component {
 					) }
 					{ this.props.posts.isLoading && (
 						<React.Fragment>
-							<Loader />
-							<Loader />
+							{/* Dummy div to measure width */}
+							<div ref={ this.onUpdateWidth } />
+							<Loader width={ this.state.containerWidth } />
+							<Loader width={ this.state.containerWidth } />
 						</React.Fragment>
 					) }
 					{ this.props.posts.data &&
