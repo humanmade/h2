@@ -107,8 +107,10 @@ export default connect( mapStateToProps, mapDispatchToProps )( withApiData( prop
 		filters.search = props.match.params.search;
 	}
 	if ( props.match.params.categorySlug && props.categories.data ) {
-		const category = props.categories.data.filter( category => category.slug === props.match.params.categorySlug )[0];
-		filters.categories = [ category.id ];
+		const matchingCategories = props.categories.data.filter( category => category.slug === props.match.params.categorySlug );
+		if ( matchingCategories ) {
+			filters.categories = [ matchingCategories[0].id ];
+		}
 	}
 
 	if ( props.match.params.authorSlug && props.users.data ) {
