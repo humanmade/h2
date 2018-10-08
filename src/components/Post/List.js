@@ -114,7 +114,7 @@ const mapDispatchToProps = dispatch => ( {
 } );
 
 export default connect( mapStateToProps, mapDispatchToProps )( withApiData( props => ( {
-	categories: props.match.params.categorySlug ? '/wp/v2/categories' : null,
+	categories: props.match.params.categorySlug ? '/wp/v2/categories?per_page=100' : null,
 	users: props.match.params.authorSlug ? '/wp/v2/users?per_page=100' : null,
 } ) )( withApiData( props => {
 	const filters = {};
