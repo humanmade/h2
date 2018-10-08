@@ -4,6 +4,10 @@ import ContentLoader from 'react-content-loader';
 import './Loader.css';
 
 export default class Loader extends React.Component {
+	static defaultProps = {
+		width: 740,
+	}
+
 	constructor( props ) {
 		super( props );
 		this.mediaQuery = window.matchMedia( '(max-width: 600px)' );
@@ -89,7 +93,3 @@ export default class Loader extends React.Component {
 		);
 	}
 }
-
-Loader.defaultProps = {
-	width: 740,
-};

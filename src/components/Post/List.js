@@ -13,12 +13,8 @@ import { withApiData } from '../../with-api-data';
 import './List.css';
 
 class PostsList extends Component {
-	constructor( props ) {
-		super( props );
-
-		this.state = {
-			containerWidth: 740,
-		};
+	state = {
+		containerWidth: 740,
 	}
 
 	onUpdateWidth = ref => {
