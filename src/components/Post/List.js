@@ -78,6 +78,8 @@ class PostsList extends Component {
 						<React.Fragment>
 							{/* Dummy div to measure width */}
 							<div ref={ this.onUpdateWidth } />
+
+							{ /* Show two faux posts loading */ }
 							<Loader width={ this.state.containerWidth } />
 							<Loader width={ this.state.containerWidth } />
 						</React.Fragment>
