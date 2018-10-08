@@ -1,10 +1,13 @@
 import React from 'react';
 import { FormattedDate, FormattedTime } from 'react-intl';
+import { connect } from 'react-redux';
 
 import Map from './Map';
+import LinkButton from './LinkButton';
 import RelativeLink from './RelativeLink';
 import UserBlock from './UserBlock';
 import Container from './Sidebar/Container';
+import { showSidebarComments } from '../actions';
 import { withApiData } from '../with-api-data';
 
 import './Profile.css';
@@ -92,7 +95,14 @@ class Profile extends React.Component {
 					zoom="2.0"
 				/>
 
-				<p><RelativeLink to={ user.link }>View all posts →</RelativeLink></p>
+				<ul className="Profile-navigation">
+					<li>
+						<RelativeLink to={ user.link }>View all posts →</RelativeLink>
+					</li>
+					<li>
+						<LinkButton onClick={ () => this.props.onViewComments( user.id ) }>View all comments →</LinkButton>
+					</li>
+				</ul>
 
 				<div className="Profile-fields">
 					<LocalTime user={ user } />
@@ -108,4 +118,17 @@ class Profile extends React.Component {
 	}
 }
 
-export default withApiData( props => ( { user: `/wp/v2/users/${ props.id }` } ) )( Profile );
+const mapStateToProps = () => ( {} );
+
+const mapDispatchToProps = dispatch => {
+	return {
+		onViewComments: id => dispatch( showSidebarComments( id ) ),
+	};
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(
+	withApiData( props => ( { user: `/wp/v2/users/${ props.id }` } ) )( Profile )
+);
