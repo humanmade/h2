@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import ContentLoader from 'react-content-loader';
 import { connect } from 'react-redux';
 import qs from 'qs';
 
+import Loader from './Loader';
 import Button from '../Button';
 import PageTitle from '../PageTitle';
 import Pagination from '../Pagination';
@@ -13,6 +13,20 @@ import { withApiData } from '../../with-api-data';
 import './List.css';
 
 class PostsList extends Component {
+	state = {
+		containerWidth: 740,
+	}
+
+	onUpdateWidth = ref => {
+		if ( ! ref ) {
+			return;
+		}
+
+		this.setState( {
+			containerWidth: ref.clientWidth,
+		} );
+	}
+
 	render() {
 		const { defaultPostView, summaryEnabled } = this.props;
 
@@ -41,9 +55,6 @@ class PostsList extends Component {
 		return (
 			<PageTitle title={ getTitle() }>
 				<div className="PostsList">
-					{ this.props.posts.isLoading &&
-						<ContentLoader type="list" width={ 300 } />
-					}
 					{ summaryEnabled ? (
 						<div className="PostsList--settings">
 							<Button
@@ -62,6 +73,16 @@ class PostsList extends Component {
 					) : (
 						/* Dummy settings div to ensure markup matches */
 						<div className="PostsList--settings" />
+					) }
+					{ this.props.posts.isLoading && (
+						<React.Fragment>
+							{/* Dummy div to measure width */}
+							<div ref={ this.onUpdateWidth } />
+
+							{ /* Show two faux posts loading */ }
+							<Loader width={ this.state.containerWidth } />
+							<Loader width={ this.state.containerWidth } />
+						</React.Fragment>
 					) }
 					{ this.props.posts.data &&
 						this.props.posts.data.map( post => (
