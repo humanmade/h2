@@ -56,5 +56,5 @@ class SelectDraft extends React.Component {
 }
 
 export default withApiData( () => ( {
-	drafts: '/wp/v2/posts?status=draft',
+	drafts: '/wp/v2/posts?status=draft&context=edit',
 } ) )( SelectDraft );
