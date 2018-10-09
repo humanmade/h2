@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import SelectDraft from './SelectDraft';
 import RemotePreview from '../RemotePreview';
 import { withApiData } from '../../with-api-data';
 import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
@@ -17,7 +18,9 @@ export class WritePost extends Component {
 		super( props );
 
 		this.state = {
+			draftId: null,
 			title: '',
+			initialContent: '',
 			error: null,
 			category: null,
 			isSubmitting: false,
@@ -84,11 +87,23 @@ export class WritePost extends Component {
 		return this.props.fetch( '/wp/v2/media', options )
 			.then( parseResponse );
 	}
+
+	onSelect = draft => {
+		this.setState( {
+			draftId: draft.id,
+			title: draft.title.raw,
+			initialContent: draft.meta.unprocessed_content || draft.content.raw,
+		} );
+	}
+
 	render() {
 		const user = this.props.user.data;
 		const categories = this.props.categories.data || [];
 		return (
 			<div className="WritePost" ref={ ref => this.container = ref }>
+				<SelectDraft
+					onSelect={ this.onSelect }
+				/>
 				<header>
 					<Avatar
 						url={ user ? user.avatar_urls['96'] : '' }
@@ -125,6 +140,8 @@ export class WritePost extends Component {
 					<div className="actions"></div>
 				</header>
 				<Editor
+					key={ this.state.draftId || '__none' }
+					initialValue={ this.state.initialContent }
 					previewComponent={ props => <RemotePreview type="post" { ...props } /> }
 					submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
 					onCancel={ this.props.onCancel }

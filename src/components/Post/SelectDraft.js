@@ -9,8 +9,12 @@ class SelectDraft extends React.Component {
 		showingSelector: false,
 	}
 
+	onSelect = post => {
+		this.setState( { showingSelector: false } );
+		this.props.onSelect( post );
+	}
+
 	render() {
-		const { onSelect } = this.props;
 		const { data, isLoading } = this.props.drafts;
 
 		if ( ! this.state.showingSelector ) {
@@ -40,7 +44,7 @@ class SelectDraft extends React.Component {
 									dangerouslySetInnerHTML={ { __html: post.title.rendered } }
 								/>
 								<Button
-									onClick={ () => onSelect( post ) }
+									onClick={ () => this.onSelect( post ) }
 								>Edit</Button>
 							</li>
 						) ) }
