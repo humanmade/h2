@@ -57,6 +57,7 @@ function get_script_data() {
 		'/wp/v2/posts',
 		'/h2/v1/site-switcher/sites',
 		'/h2/v1/widgets?sidebar=sidebar',
+		'/wp/v2/categories?per_page=100',
 		'/wp/v2/users/me',
 		'/wp/v2/users?per_page=100',
 	];

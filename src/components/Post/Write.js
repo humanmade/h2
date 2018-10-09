@@ -151,5 +151,5 @@ WritePost.propTypes = {
 
 export default withApiData( props => ( {
 	user: '/wp/v2/users/me',
-	categories: '/wp/v2/categories',
+	categories: '/wp/v2/categories?per_page=100',
 } ) )( WritePost )
