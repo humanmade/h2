@@ -39,12 +39,16 @@ class ErrorBoundary extends React.Component {
 	}
 }
 
-const transform = ( node, children ) => {
+const transform = node => {
 	switch ( node.tagName ) {
 		// Trust embeds and iframes, as they have already passed through WP's validation.
 		case 'EMBED':
 		case 'IFRAME':
 			return <SafeEmbed node={ node } />;
+
+		default:
+			// Use built-in handling.
+			return;
 	}
 };
 
