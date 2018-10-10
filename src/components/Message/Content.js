@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import SafeEmbed from './SafeEmbed';
 import Notification from '../Notification';
 import matchers from '../../matchers';
 
@@ -38,6 +39,19 @@ class ErrorBoundary extends React.Component {
 	}
 }
 
+const transform = node => {
+	switch ( node.tagName ) {
+		// Trust embeds and iframes, as they have already passed through WP's validation.
+		case 'EMBED':
+		case 'IFRAME':
+			return <SafeEmbed node={ node } />;
+
+		default:
+			// Use built-in handling.
+			return;
+	}
+};
+
 function Content( props ) {
 	if ( ! props.useInterweave ) {
 		return (
@@ -61,6 +75,7 @@ function Content( props ) {
 					content={ html }
 					matchers={ matchers }
 					tagName="fragment"
+					transform={ transform }
 				/>
 			</ErrorBoundary>
 		</div>
