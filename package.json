@@ -4,8 +4,9 @@
   "private": true,
   "homepage": "https://makeh2.hmn.md/content/themes/h2/build",
   "devDependencies": {
-    "@storybook/react": "3.2.12",
+    "@storybook/react": "^3.4.10",
     "babel-eslint": "^7.2.3",
+    "bundlesize": "^0.17.0",
     "eslint": "^4.19.1",
     "eslint-config-humanmade": "^0.5.0",
     "eslint-config-react-app": "^2.1.0",
@@ -13,37 +14,31 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.0",
     "eslint-plugin-react": "^7.10.0",
-    "react-scripts": "^1.1.4"
+    "react-scripts": "^1.1.5"
   },
   "dependencies": {
     "@iarna/word-count": "^1.0.3",
-    "emoji-mart": "^2.5.0",
+    "emoji-mart": "^2.8.1",
     "interweave": "^9.2.0",
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
-    "mousetrap": "^1.6.1",
-    "postcss-loader": "^2.0.8",
+    "mousetrap": "^1.6.2",
     "prop-types": "^15.6.0",
-    "react": "^16.2.0",
+    "react": "^16.4.2",
     "react-content-loader": "^2.0.2",
-    "react-document-title": "^2.0.2",
-    "react-dom": "^16.2.0",
-    "react-infinite-scroll-component": "^2.4.0",
+    "react-dom": "^16.4.2",
     "react-intl": "^2.4.0",
     "react-redux": "^5.0.6",
-    "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2",
+    "react-router-dom": "^4.3.1",
     "react-side-effect": "^1.1.5",
     "react-slot-fill": "^2.0.0",
-    "react-storybook": "^1.0.0",
-    "react-timeago": "^3.4.3",
-    "react-transition-group": "^2.2.1",
+    "react-transition-group": "^2.4.0",
     "react-wp-scripts": "^0.2.0",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
-    "redux-logger": "^2.7.0",
     "redux-thunk": "^2.2.0",
-    "textarea-caret": "^3.0.2"
+    "textarea-caret": "^3.0.2",
+    "turndown": "^5.0.1"
   },
   "scripts": {
     "start": "react-wp-scripts start",
@@ -51,6 +46,12 @@
     "lint": "eslint src/",
     "test": "react-scripts test --env=jsdom",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
-  }
+    "build-storybook": "build-storybook -s public",
+    "check-size": "bundlesize"
+  },
+  "bundlesize": [
+    {
+      "path": "./build/static/js/main.js"
+    }
+  ]
 }

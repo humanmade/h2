@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { Picker } from 'emoji-mart'
 
 import { withApiData } from '../../with-api-data';
@@ -23,6 +24,59 @@ const Emoji = props => {
 
 	return props.type;
 };
+
+class PickerWrap extends Component {
+	constructor( props ) {
+		super( props );
+
+		this.container = document.createElement( 'div' );
+		this.mediaQuery = window.matchMedia( '(max-width: 600px)' );
+		this.state = {
+			needsPortal: this.mediaQuery.matches,
+		};
+		this.mediaQuery.addListener( this.onQueryChange );
+	}
+
+	componentDidMount() {
+		document.body.appendChild( this.container );
+	}
+
+	componentWillUnmount() {
+		document.body.removeChild( this.container );
+	}
+
+	onClose = e => {
+		e.preventDefault();
+
+		this.props.onClose();
+	}
+
+	onQueryChange = e => {
+		this.setState( { needsPortal: e.matches } );
+	}
+
+	render() {
+		const { needsPortal } = this.state;
+
+		if ( ! needsPortal ) {
+			return (
+				<React.Fragment>
+					{ this.props.children }
+				</React.Fragment>
+			);
+		}
+
+		return ReactDOM.createPortal(
+			<div
+				className="reactions-picker-wrap"
+				onClick={ this.onClose }
+			>
+				{ this.props.children }
+			</div>,
+			this.container
+		);
+	}
+}
 
 export class Reactions extends Component {
 	constructor( props ) {
@@ -107,36 +161,34 @@ export class Reactions extends Component {
 
 		return (
 			<div className="reactions">
-				<div key="reactions">
-					{ Object.entries( reactions ).map( ( [ emoji, users ] ) => {
-						let isActive = reactions[ emoji ].indexOf( this.props.currentUser.data.id ) >= 0 ? true : false;
-						return (
-							<button
-								className={ 'btn btn--small btn--tertiary' + ( isActive ? ' btn--active' : '' ) }
-								onClick={ () => this.toggleReaction( emoji ) }
-								key={ emoji }
-							>
-								<span className="reactions__emoji" key="emoji">
-									<Emoji type={ emoji } />
-								</span>
-								<span className="reactions__count" key="count">{ users.length }</span>
-								<span className="reactions__users" key="users">
-									{ users.map( reactionAuthorId => {
-										const user = this.props.users.data && this.props.users.data.filter( user => user.id === reactionAuthorId );
-										return (
-											<UserDisplayName
-												className="reactions__user"
-												userId={ reactionAuthorId }
-												userName={ user && user.length > 0 ? user[0].name : 'Unknown' }
-												key={ this.props.postId + reactionAuthorId }
-											/>
-										);
-									} ) }
-								</span>
-							</button>
-						);
-					} ) }
-				</div>
+				{ Object.entries( reactions ).map( ( [ emoji, users ] ) => {
+					let isActive = reactions[ emoji ].indexOf( this.props.currentUser.data.id ) >= 0 ? true : false;
+					return (
+						<button
+							className={ 'btn btn--small btn--tertiary' + ( isActive ? ' btn--active' : '' ) }
+							onClick={ () => this.toggleReaction( emoji ) }
+							key={ emoji }
+						>
+							<span className="reactions__emoji" key="emoji">
+								<Emoji type={ emoji } />
+							</span>
+							<span className="reactions__count" key="count">{ users.length }</span>
+							<span className="reactions__users" key="users">
+								{ users.map( reactionAuthorId => {
+									const user = this.props.users.data && this.props.users.data.filter( user => user.id === reactionAuthorId );
+									return (
+										<UserDisplayName
+											className="reactions__user"
+											userId={ reactionAuthorId }
+											userName={ user && user.length > 0 ? user[0].name : 'Unknown' }
+											key={ this.props.postId + reactionAuthorId }
+										/>
+									);
+								} ) }
+							</span>
+						</button>
+					);
+				} ) }
 				<button
 					className={ 'btn btn--small btn--tertiary' + ( loading ? ' loading' : '' ) }
 					onClick={ value => this.setState( { isOpen: ! this.state.isOpen  } ) }
@@ -150,19 +202,21 @@ export class Reactions extends Component {
 					) }
 				</button>
 				{ this.state.isOpen && (
-					<Picker
-						key="picker"
-						onClick={ data => {
-							this.setState( { isOpen: false } );
-							this.toggleReaction( data.native || data.name );
-						} }
-						title={ false }
-						emoji="upside_down_face"
-						autoFocus={ true }
-						color="#D24632"
-						custom={ window.H2Data.site.emoji }
-						set="twitter"
-					/>
+					<PickerWrap onClose={ () => this.setState( { isOpen: false } ) }>
+						<Picker
+							key="picker"
+							onClick={ data => {
+								this.setState( { isOpen: false } );
+								this.toggleReaction( data.native || data.name );
+							} }
+							title={ false }
+							emoji="upside_down_face"
+							autoFocus={ true }
+							color="#D24632"
+							custom={ window.H2Data.site.emoji }
+							set="twitter"
+						/>
+					</PickerWrap>
 				)}
 			</div>
 		);

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import ContentLoader from 'react-content-loader';
 import { connect } from 'react-redux';
 import qs from 'qs';
 
+import Loader from './Loader';
 import Button from '../Button';
 import PageTitle from '../PageTitle';
+import Pagination from '../Pagination';
 import PostComponent from './index';
 import { setDefaultPostView } from '../../actions';
 import { withApiData } from '../../with-api-data';
@@ -13,9 +13,22 @@ import { withApiData } from '../../with-api-data';
 import './List.css';
 
 class PostsList extends Component {
+	state = {
+		containerWidth: 740,
+	}
+
+	onUpdateWidth = ref => {
+		if ( ! ref ) {
+			return;
+		}
+
+		this.setState( {
+			containerWidth: ref.clientWidth,
+		} );
+	}
+
 	render() {
 		const { defaultPostView, summaryEnabled } = this.props;
-		const { page } = this.props.match.params;
 
 		const isSingular = !! this.props.match.params.slug;
 		const getTitle = () => {
@@ -42,9 +55,6 @@ class PostsList extends Component {
 		return (
 			<PageTitle title={ getTitle() }>
 				<div className="PostsList">
-					{ this.props.posts.isLoading &&
-						<ContentLoader type="list" width={ 300 } />
-					}
 					{ summaryEnabled ? (
 						<div className="PostsList--settings">
 							<Button
@@ -64,6 +74,16 @@ class PostsList extends Component {
 						/* Dummy settings div to ensure markup matches */
 						<div className="PostsList--settings" />
 					) }
+					{ this.props.posts.isLoading && (
+						<React.Fragment>
+							{/* Dummy div to measure width */}
+							<div ref={ this.onUpdateWidth } />
+
+							{ /* Show two faux posts loading */ }
+							<Loader width={ this.state.containerWidth } />
+							<Loader width={ this.state.containerWidth } />
+						</React.Fragment>
+					) }
 					{ this.props.posts.data &&
 						this.props.posts.data.map( post => (
 							<PostComponent
@@ -74,16 +94,10 @@ class PostsList extends Component {
 							/>
 						) )
 					}
-					<div className="pagination">
-						<Link to={ `/page/${ page ? Number( page ) + 1 : 2 }` }>Older</Link>
-						{ page && page > 1 ? (
-							<Link to={ `/page/${ page - 1 }` }>Newer</Link>
-						) : (
-							/* Hack to get pagination to float correctly */
-							/* eslint-disable-next-line jsx-a11y/anchor-is-valid */
-							<a style={ { display: 'none' } }>&nbsp;</a>
-						) }
-					</div>
+					<Pagination
+						params={ this.props.match.params }
+						path={ this.props.match.path }
+					/>
 				</div>
 			</PageTitle>
 		);
@@ -100,7 +114,7 @@ const mapDispatchToProps = dispatch => ( {
 } );
 
 export default connect( mapStateToProps, mapDispatchToProps )( withApiData( props => ( {
-	categories: props.match.params.categorySlug ? '/wp/v2/categories' : null,
+	categories: props.match.params.categorySlug ? '/wp/v2/categories?per_page=100' : null,
 	users: props.match.params.authorSlug ? '/wp/v2/users?per_page=100' : null,
 } ) )( withApiData( props => {
 	const filters = {};
@@ -114,8 +128,10 @@ export default connect( mapStateToProps, mapDispatchToProps )( withApiData( prop
 		filters.search = props.match.params.search;
 	}
 	if ( props.match.params.categorySlug && props.categories.data ) {
-		const category = props.categories.data.filter( category => category.slug === props.match.params.categorySlug )[0];
-		filters.categories = [ category.id ];
+		const matchingCategories = props.categories.data.filter( category => category.slug === props.match.params.categorySlug );
+		if ( matchingCategories ) {
+			filters.categories = [ matchingCategories[0].id ];
+		}
 	}
 
 	if ( props.match.params.authorSlug && props.users.data ) {

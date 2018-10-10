@@ -1,7 +1,8 @@
 import {
 	SHOW_META_SIDEBAR,
+	SHOW_SIDEBAR_COMMENTS,
 	SHOW_SIDEBAR_PROFILE,
-	HIDE_SIDEBAR_PROFILE,
+	HIDE_SIDEBAR,
 	SHOW_SUPER_SIDEBAR,
 	HIDE_SUPER_SIDEBAR,
 	SET_DEFAULT_POST_VIEW,
@@ -21,6 +22,13 @@ export default function ui( state = DEFAULT_STATE, action ) {
 				sidebarView: 'meta',
 			};
 
+		case SHOW_SIDEBAR_COMMENTS:
+			return {
+				...state,
+				sidebarView: 'comments',
+				sidebarProfile: action.id,
+			};
+
 		case SHOW_SIDEBAR_PROFILE:
 			return {
 				...state,
@@ -28,7 +36,7 @@ export default function ui( state = DEFAULT_STATE, action ) {
 				sidebarProfile: action.id,
 			};
 
-		case HIDE_SIDEBAR_PROFILE:
+		case HIDE_SIDEBAR:
 			return {
 				...state,
 				sidebarView: null,

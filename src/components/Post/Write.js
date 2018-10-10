@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import RemotePreview from '../RemotePreview';
 import { withApiData } from '../../with-api-data';
 import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 
@@ -124,6 +125,7 @@ export class WritePost extends Component {
 					<div className="actions"></div>
 				</header>
 				<Editor
+					previewComponent={ props => <RemotePreview type="post" { ...props } /> }
 					submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
 					onCancel={ this.props.onCancel }
 					onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
@@ -149,5 +151,5 @@ WritePost.propTypes = {
 
 export default withApiData( props => ( {
 	user: '/wp/v2/users/me',
-	categories: '/wp/v2/categories',
+	categories: '/wp/v2/categories?per_page=100',
 } ) )( WritePost )

@@ -14,6 +14,38 @@
 	margin-bottom: 10px;
 }
 
-.WriteComment .Notification {
+.WriteComment > .body > .Notification {
 	margin-top: -1.36667rem;
+}
+
+
+@media ( max-width: 600px ) {
+	.WriteComment > header {
+		margin-left: 0;
+		position: static;
+		height: auto;
+		flex-wrap: wrap;
+	}
+
+	.Comment:before {
+		left: -20px;
+	}
+	.WriteComment > header > .Avatar,
+	.WriteComment > header > .Avatar img {
+		height: 24px !important;
+		width: 24px !important;
+	}
+	.WriteComment > header > .Avatar {
+		margin-left: -30px;
+		margin-right: 6px;
+		padding: 8px 0;
+		background: #fff;
+	}
+	.WriteComment > header .Avatar:after {
+		top: 8px;
+	}
+
+	.WriteComment > .body {
+		margin-left: -20px;
+	}
 }

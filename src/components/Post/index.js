@@ -116,6 +116,16 @@ class Post extends Component {
 			collapsed && 'Post--collapsed',
 		];
 
+		const Actions = (
+			<div className="actions">
+				{ ! this.state.isEditing &&
+					<Button onClick={ this.onClickEdit }>Edit</Button>
+				}
+				<Button onClick={ () => this.onClickReply() }>Reply</Button>
+				<Slot name="Post.actions" fillChildProps={ fillProps } />
+			</div>
+		);
+
 		return (
 			<div className={ classes.filter( Boolean ).join( ' ' ) }>
 				<header>
@@ -153,13 +163,7 @@ class Post extends Component {
 						}
 						<Slot name="Post.byline" fillChildProps={ fillProps } />
 					</div>
-					<div className="actions">
-						{! this.state.isEditing &&
-							<Button onClick={ this.onClickEdit }>Edit</Button>
-						}
-						<Button onClick={ () => this.onClickReply() }>Reply</Button>
-						<Slot name="Post.actions" fillChildProps={ fillProps } />
-					</div>
+					{ Actions }
 				</header>
 				<div className="Post-content-wrap">
 					<Slot name="Post.before_content" fillChildProps={ fillProps } />
@@ -179,6 +183,10 @@ class Post extends Component {
 						<MessageContent html={ post.content.rendered } />
 					) }
 					<Slot name="Post.after_content" fillChildProps={ fillProps } />
+					<div className="Post-footer-actions">
+						{ Actions }
+						<Slot name="Post.footer_actions" fillChildProps={ fillProps } />
+					</div>
 				</div>
 				{ collapsed ? (
 					<Summary

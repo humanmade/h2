@@ -63,11 +63,21 @@
 	font-size: 14px;
 }
 
-.WritePost .Notification {
+.WritePost > .Notification {
 	margin-left: 90px;
 	margin-top: -1.36667rem;
 }
 
 .WritePost > .Editor {
 	margin-left: 90px;
+}
+
+@media ( max-width: 600px ) {
+	.WritePost > header > .Avatar {
+		display: none;
+	}
+
+	.WritePost > .Editor {
+		margin-left: 0;
+	}
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import qs from 'qs';
 
-import LinkButton from '../LinkButton';
 import Link from '../RelativeLink';
+import Pagination from '../Sidebar/Pagination';
 import { withApiData } from '../../with-api-data';
 
 import './RecentPosts.css';
@@ -38,24 +38,12 @@ class PostList extends React.Component {
 					) ) }
 				</ul>
 
-				<div className="RecentPosts-pagination">
-					{ hasNext && (
-						<div className="RecentPosts-pagination-older">
-							<LinkButton
-								className="cta cta--small cta--arrow-left"
-								onClick={ this.props.onNext }
-							>Older</LinkButton>
-						</div>
-					) }
-					{ hasPrevious && (
-						<div className="RecentPosts-pagination-newer">
-							<LinkButton
-								className="cta cta--small cta--arrow"
-								onClick={ this.props.onPrevious }
-							>Newer</LinkButton>
-						</div>
-					) }
-				</div>
+				<Pagination
+					hasNext={ hasNext }
+					hasPrevious={ hasPrevious }
+					onNext={ this.props.onNext }
+					onPrevious={ this.props.onPrevious }
+				/>
 			</div>
 		);
 	}

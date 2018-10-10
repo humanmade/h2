@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { FormattedRelative } from 'react-intl';
 import { Slot } from 'react-slot-fill';
 import PropTypes from 'prop-types';
 
-import Avatar from './Avatar';
-import Button from './Button';
+import Actions from './Comment/Actions';
+import CommentHeader from './Comment/Header';
 import CommentsList from './CommentsList';
 import Editor from './Editor';
-import AuthorLink from './Message/AuthorLink';
 import MessageContent from './Message/Content';
 import WriteComment from './Message/WriteComment';
 import Notification from './Notification';
@@ -108,36 +106,19 @@ export class Comment extends Component {
 				id={ `comment-${ comment.id }` }
 				ref={ el => this.element = el }
 			>
-				<header>
-					<Avatar
-						url={ author ? author.avatar_urls['96'] : '' }
-						user={ author }
-						size={ 40 }
+				<CommentHeader
+					author={ author }
+					comment={ comment }
+					post={ post }
+				>
+					<Actions
+						fillProps={ fillProps }
+						isEditing={ this.state.isEditing }
+						onEdit={ this.onClickEdit }
+						onReply={ () => this.setState( { isShowingReply: true } ) }
 					/>
-					<strong>
-						{ author ? (
-							<AuthorLink user={ author }>{ author.name }</AuthorLink>
-						) : comment.author_name }
-					</strong>
-					<div className="actions">
-						<a
-							className="Comment-date"
-							href={ `${ post.link }#comment-${ comment.id }` }
-						>
-							<time
-								dateTime={ comment.date_gmt + 'Z' }
-								title={ comment.date_gmt + 'Z' }
-							>
-								<FormattedRelative value={ comment.date_gmt + 'Z' } />
-							</time>
-						</a>
-						{ ! this.state.isEditing && (
-							<Button onClick={ this.onClickEdit }>Edit</Button>
-						) }
-						<Button onClick={ () => this.setState( { isShowingReply: true } ) }>Reply</Button>
-						<Slot name="Comment.actions" fillChildProps={ fillProps } />
-					</div>
-				</header>
+				</CommentHeader>
+
 				<div className="body">
 					<Slot name="Comment.before_content" fillChildProps={ fillProps } />
 					{ this.state.isEditing ? (
@@ -156,6 +137,16 @@ export class Comment extends Component {
 						<MessageContent html={ this.props.comment.content.rendered } />
 					) }
 					<Slot name="Comment.after_content" fillChildProps={ fillProps } />
+					<div className="Comment-footer-actions">
+						<Actions
+							fillProps={ fillProps }
+							isEditing={ this.state.isEditing }
+							onEdit={ this.onClickEdit }
+							onReply={ () => this.setState( { isShowingReply: true } ) }
+						/>
+
+						<Slot name="Comment.footer_actions" fillChildProps={ fillProps } />
+					</div>
 				</div>
 				<CommentsList
 					allComments={ this.props.comments }

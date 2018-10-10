@@ -1,8 +1,8 @@
 import countWords from '@iarna/word-count';
-import marked from 'marked';
 import PropTypes from 'prop-types';
 import React from 'react';
 import getCaretCoordinates from 'textarea-caret';
+import Turndown from 'turndown';
 
 import Button from '../Button';
 import DropUpload from '../DropUpload';
@@ -10,12 +10,16 @@ import EmojiCompletion from './EmojiCompletion';
 import MentionCompletion from './MentionCompletion';
 import MessageContent from '../Message/Content';
 import Shortcuts from '../Shortcuts';
+import compileMarkdown from '../../compile-markdown';
 
 import './index.css';
 
 const apply = ( selection, start, end ) => {
 	return selection.length ? start + selection + end : start;
 };
+
+const URL_REGEX = /^https?:\/\/\S+$/i;
+const isAbsoluteUrl = text => URL_REGEX.test( text );
 
 const BUTTONS = {
 	bold: {
@@ -55,7 +59,7 @@ const completions = {
 };
 
 const Preview = props => {
-	const compiled = marked( props.children );
+	const compiled = compileMarkdown( props.children );
 	return <div className="Editor-preview"><MessageContent html={ compiled } /></div>;
 };
 Preview.propTypes = { children: PropTypes.string.isRequired };
@@ -173,10 +177,38 @@ export default class Editor extends React.PureComponent {
 		}
 	}
 
+	onPaste = e => {
+		const html = e.clipboardData.getData( 'text/html' );
+		if ( ! html ) {
+			const text = e.clipboardData.getData( 'text/plain' );
+			if ( isAbsoluteUrl( text ) ) {
+				e.preventDefault();
+				this.onPasteLink( text );
+				return;
+			}
+
+			// Use default browser handling.
+			return;
+		}
+
+		e.preventDefault();
+
+		// Convert HTML content to Markdown
+		const turndown = new Turndown();
+		const markdown = turndown.turndown( html );
+
+		// Insert at the current selection point
+		this.onButton( null, () => markdown );
+	}
+
+	onPasteLink( url ) {
+		this.onButton( null, text => text ? `[${ text }](${ url })` : url );
+	}
+
 	onSubmit( e ) {
 		e.preventDefault();
 
-		this.props.onSubmit( marked( this.state.content ), this.state.content );
+		this.props.onSubmit( compileMarkdown( this.state.content ), this.state.content );
 	}
 
 	onBlur() {
@@ -332,6 +364,8 @@ export default class Editor extends React.PureComponent {
 			};
 		} );
 
+		const PreviewComponent = this.props.previewComponent || Preview;
+
 		return (
 			<form
 				className={ mode === 'preview' ? 'Editor previewing' : 'Editor' }
@@ -397,7 +431,7 @@ export default class Editor extends React.PureComponent {
 						onUpload={ file => this.onUpload( file ) }
 					>
 						{ mode === 'preview' ? (
-							<Preview>{ content || '*Nothing to preview*' }</Preview>
+							<PreviewComponent>{ content || '*Nothing to preview*' }</PreviewComponent>
 						) : (
 							<textarea
 								ref={ el => this.updateTextarea( el ) }
@@ -410,6 +444,7 @@ export default class Editor extends React.PureComponent {
 								onChange={ e => this.setState( { content: e.target.value } ) }
 								onKeyDown={ e => this.onKeyDown( e ) }
 								onKeyUp={ e => this.onKeyUp( e ) }
+								onPaste={ this.onPaste }
 							/>
 						) }
 					</DropUpload>
@@ -447,6 +482,7 @@ Editor.defaultProps = {
 };
 
 Editor.propTypes = {
+	previewComponent: PropTypes.func,
 	submitText: PropTypes.string,
 	onCancel: PropTypes.func,
 	onSubmit: PropTypes.func.isRequired,
