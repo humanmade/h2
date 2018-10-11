@@ -1,8 +1,58 @@
 .SearchInput {
 	flex: 1;
+	position: relative;
 }
 
 .SearchInput input[type=search] {
 	margin: 0;
 	width: 100%;
+}
+
+.SearchInput__results {
+	position: absolute;
+	left: -20px;
+	right: -20px;
+	z-index: 10;
+
+	display: none;
+
+	margin-top: 6px;
+	padding: 0.5rem 0;
+
+	background: var( --hm-beige );
+}
+
+.SearchInput__results--visible {
+	display: block;
+}
+
+.SearchInput__results p,
+.SearchInput__results ul {
+	margin: 0;
+	padding: 0;
+}
+
+.SearchInput__results > p {
+	padding: 0 20px;
+}
+
+.SearchInput__results ul {
+	list-style: none;
+}
+
+.SearchInput__result {
+	margin: 0;
+	padding: 0;
+}
+
+.SearchInput__result > a {
+	display: flex;
+	justify-content: space-between;
+	padding: 0.25rem 20px;
+}
+
+.SearchInput__result > a:hover {
+	border: none;
+	background: var( --hm-red );
+	color: #fff;
 }
