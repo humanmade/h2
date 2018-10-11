@@ -26,7 +26,7 @@ class Results extends React.Component {
 				case 'ArrowUp':
 					e.preventDefault();
 					this.setState( state => {
-						const nextSelection = Math.max( 0, selected - 1 );
+						const nextSelection = Math.max( -1, selected - 1 );
 						return { selected: nextSelection };
 					} );
 					return;
@@ -40,12 +40,15 @@ class Results extends React.Component {
 					return;
 
 				case 'Enter': {
-					e.preventDefault();
-
 					if ( selected === items.length ) {
 						this.props.onShowResults( e );
 					} else {
 						const item = items[ selected ];
+						if ( ! item ) {
+							return;
+						}
+
+						e.preventDefault();
 						this.props.onSelect( item );
 					}
 
