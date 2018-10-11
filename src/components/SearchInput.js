@@ -56,6 +56,14 @@ class Results extends React.Component {
 					return;
 				}
 
+				case 'Escape':
+					if ( selected >= 0 ) {
+						e.preventDefault();
+						this.setState( { selected: -1 } );
+					}
+
+					return;
+
 				default:
 					// No-op
 					return;
