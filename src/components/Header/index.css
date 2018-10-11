@@ -31,9 +31,10 @@
 	align-self: center;
 }
 
-.Header .SearchInput {
-	margin: 0 20px;
-	align-self: center;
+.Header .SearchInput__wrap,
+.Header .SearchInput__result {
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 @media ( max-width: 600px ) {

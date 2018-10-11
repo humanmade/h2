@@ -29,9 +29,9 @@ const Results = props => {
 					{ props.results.data.map( post => (
 						<li
 							key={ post.id }
-							className="SearchInput__result"
 						>
 							<RelativeLink
+								className="SearchInput__result"
 								to={ post.link }
 							>
 								<p>
@@ -108,14 +108,16 @@ class SearchInput extends React.Component {
 				className="SearchInput"
 				onSubmit={ this.onSubmit }
 			>
-				<input
-					type="search"
-					placeholder="Search..."
-					value={ term }
-					onChange={ e => this.setState( { value: e.target.value } ) }
-					onFocus={ () => this.setState( { showSuggest: true } ) }
-					onBlur={ this.onBlur }
-				/>
+				<div className="SearchInput__wrap">
+					<input
+						type="search"
+						placeholder="Search..."
+						value={ term }
+						onChange={ e => this.setState( { value: e.target.value } ) }
+						onFocus={ () => this.setState( { showSuggest: true } ) }
+						onBlur={ this.onBlur }
+					/>
+				</div>
 
 				<ConnectedResults
 					term={ term }

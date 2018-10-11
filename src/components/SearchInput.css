@@ -1,6 +1,16 @@
 .SearchInput {
 	flex: 1;
 	position: relative;
+	align-self: stretch;
+}
+
+.SearchInput__wrap {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	background: var( --hm-beige );
+	position: relative;
+	z-index: 11;
 }
 
 .SearchInput input[type=search] {
@@ -10,16 +20,16 @@
 
 .SearchInput__results {
 	position: absolute;
-	left: -20px;
-	right: -20px;
+	left: 0;
+	right: 0;
 	z-index: 10;
 
 	display: none;
 
-	margin-top: 6px;
 	padding: 0.5rem 0;
 
 	background: var( --hm-beige );
+	box-shadow: 0 0 8px rgba( 0, 0, 0, 0.3 );
 }
 
 .SearchInput__results--visible {
@@ -40,18 +50,18 @@
 	list-style: none;
 }
 
-.SearchInput__result {
+.SearchInput__results li {
 	margin: 0;
 	padding: 0;
 }
 
-.SearchInput__result > a {
+.SearchInput__result {
 	display: flex;
 	justify-content: space-between;
-	padding: 0.25rem 20px;
+	padding: 0.25rem 0;
 }
 
-.SearchInput__result > a:hover {
+.SearchInput__result:hover {
 	border: none;
 	background: var( --hm-red );
 	color: #fff;
