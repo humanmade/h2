@@ -195,7 +195,7 @@ class SearchInput extends React.Component {
 
 	render() {
 		const termFromURL = this.props.location.pathname.match( /\/search\/(.+)/ );
-		const term = this.state.value || ( termFromURL && termFromURL[1] ) || '';
+		const term = this.state.value === null ? ( termFromURL && termFromURL[1] ) || '' : this.state.value;
 
 		return (
 			<form
