@@ -67,3 +67,8 @@
 	background: var( --hm-red );
 	color: #fff;
 }
+
+.SearchInput__result time {
+	flex-shrink: 0;
+	margin-left: 1rem;
+}
