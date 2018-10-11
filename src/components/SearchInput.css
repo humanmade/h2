@@ -72,3 +72,16 @@
 	flex-shrink: 0;
 	margin-left: 1rem;
 }
+
+@media ( max-width: 600px ) {
+	.SearchInput__result {
+		display: block;
+		margin: 0 0 0.5rem;
+	}
+	.SearchInput__results .SearchInput__result p {
+		margin: 0 0 0.25rem;
+	}
+	.SearchInput__result time {
+		margin: 0;
+	}
+}
