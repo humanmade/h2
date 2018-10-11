@@ -235,6 +235,11 @@ function register_custom_meta() {
 function add_word_count_to_api( $response ) {
 	$data = $response->get_data();
 
+	// Skip contexts without any content.
+	if ( empty( $data['content'] ) ) {
+		return $response;
+	}
+
 	// Convert HTML to text.
 	$text = wp_strip_all_tags( $data['content']['rendered'] );
 	$text = wp_kses_decode_entities( ent2ncr( $text ) );
