@@ -176,6 +176,10 @@ class SearchInput extends React.Component {
 		e.preventDefault();
 		this.props.onSearch( this.state.value );
 		this.setState( { value: null } );
+
+		if ( this.inputEl ) {
+			this.inputEl.blur();
+		}
 	}
 
 	render() {
