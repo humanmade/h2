@@ -61,7 +61,8 @@
 	padding: 0.25rem 0;
 }
 
-.SearchInput__result:hover {
+.SearchInput__result:hover,
+.SearchInput__results .SearchInput__result--selected {
 	border: none;
 	background: var( --hm-red );
 	color: #fff;
