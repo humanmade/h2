@@ -34,7 +34,7 @@ class Results extends React.Component {
 				case 'ArrowDown':
 					e.preventDefault();
 					this.setState( state => {
-						const nextSelection = Math.min( selected + 1, items.length - 1 );
+						const nextSelection = Math.min( selected + 1, items.length );
 						return { selected: nextSelection };
 					} );
 					return;
@@ -42,8 +42,13 @@ class Results extends React.Component {
 				case 'Enter': {
 					e.preventDefault();
 
-					const item = items[ selected ];
-					this.props.onSelect( item );
+					if ( selected === items.length ) {
+						this.props.onShowResults( e );
+					} else {
+						const item = items[ selected ];
+						this.props.onSelect( item );
+					}
+
 					this.setState( { selected: -1 } );
 					return;
 				}
@@ -103,6 +108,15 @@ class Results extends React.Component {
 								</RelativeLink>
 							</li>
 						) ) }
+						<li>
+							<a
+								href={ `/search/${ term }` }
+								onClick={ this.props.onShowResults }
+								className={ `SearchInput__result ${ selected === results.data.length ? 'SearchInput__result--selected' : '' }` }
+							>
+								Show all results →
+							</a>
+						</li>
 					</ul>
 				) : (
 					<p>No results found.</p>
@@ -189,6 +203,7 @@ class SearchInput extends React.Component {
 					term={ term }
 					visible={ this.state.showSuggest }
 					onSelect={ this.onSelect }
+					onShowResults={ this.onSubmit }
 				/>
 			</form>
 		);
