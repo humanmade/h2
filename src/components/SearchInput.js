@@ -94,14 +94,12 @@ class Results extends React.Component {
 									<p>
 										{ post.title.rendered }
 									</p>
-									<p>
-										<time
-											dateTime={ post.date + 'Z' }
-											title={ post.date + 'Z' }
-										>
-											<FormattedRelative value={ post.date + 'Z' } />
-										</time>
-									</p>
+									<time
+										dateTime={ post.date + 'Z' }
+										title={ post.date + 'Z' }
+									>
+										<FormattedRelative value={ post.date + 'Z' } />
+									</time>
 								</RelativeLink>
 							</li>
 						) ) }
