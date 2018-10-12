@@ -18,6 +18,7 @@ import Link from '../RelativeLink';
 import AuthorLink from '../Message/AuthorLink';
 import MessageContent from '../Message/Content';
 import WriteComment from '../Message/WriteComment';
+import { decodeEntities } from '../../util';
 import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 
 import './index.css';
@@ -137,9 +138,10 @@ class Post extends Component {
 					<div className="byline">
 						<Link to={ post.link }>
 							<h2
-								dangerouslySetInnerHTML={ { __html: post.title.rendered } }
 								style={ headerStyle }
-							/>
+							>
+								{ decodeEntities( post.title.rendered ) }
+							</h2>
 						</Link>
 						<span className="date">
 							{ author ? (
