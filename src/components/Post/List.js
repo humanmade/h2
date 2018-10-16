@@ -8,6 +8,7 @@ import PageTitle from '../PageTitle';
 import Pagination from '../Pagination';
 import PostComponent from './index';
 import { setDefaultPostView } from '../../actions';
+import { decodeEntities } from '../../util';
 import { withApiData } from '../../with-api-data';
 
 import './List.css';
@@ -49,7 +50,7 @@ class PostsList extends Component {
 				return 'Not Found';
 			}
 
-			return this.props.posts.data[0].title.rendered;
+			return decodeEntities( this.props.posts.data[0].title.rendered );
 		}
 
 		return (

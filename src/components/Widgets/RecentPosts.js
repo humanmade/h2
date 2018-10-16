@@ -3,6 +3,7 @@ import qs from 'qs';
 
 import Link from '../RelativeLink';
 import Pagination from '../Sidebar/Pagination';
+import { decodeEntities } from '../../util';
 import { withApiData } from '../../with-api-data';
 
 import './RecentPosts.css';
@@ -30,9 +31,7 @@ class PostList extends React.Component {
 					{ this.props.posts.data.map( post => (
 						<li key={ post.id }>
 							<Link to={ post.link }>
-								<span
-									dangerouslySetInnerHTML={ { __html: post.title.rendered } }
-								/>
+								{ decodeEntities( post.title.rendered ) }
 							</Link>
 						</li>
 					) ) }

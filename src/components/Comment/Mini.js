@@ -5,6 +5,7 @@ import Header from './Header';
 import MessageContent from '../Message/Content';
 import { withApiData } from '../../with-api-data';
 import RelativeLink from '../RelativeLink';
+import { decodeEntities } from '../../util';
 
 import './Mini.css';
 
@@ -34,7 +35,7 @@ function MiniComment( props ) {
 					to={ `${ parentPost.data.link }#comment-${ comment.id }` }
 				>
 					<span className="Comment-Mini__context-post">
-						{ parentPost.data.title.rendered }
+						{ decodeEntities( parentPost.data.title.rendered ) }
 					</span>
 					{ ' ' }&mdash;{ ' ' }
 					<time

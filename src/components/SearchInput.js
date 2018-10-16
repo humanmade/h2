@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import qs from 'qs';
 
 import RelativeLink from './RelativeLink';
+import { decodeEntities } from '../util';
 import { withApiData } from '../with-api-data';
 
 import './SearchInput.css';
@@ -108,7 +109,7 @@ class Results extends React.Component {
 									to={ post.link }
 								>
 									<p>
-										{ post.title.rendered }
+										{ decodeEntities( post.title.rendered ) }
 									</p>
 									<time
 										dateTime={ post.date + 'Z' }
