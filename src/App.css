@@ -64,9 +64,16 @@ body.admin-bar .App > .Outer > aside {
 	top: 32px;
 }
 
+@media ( min-width: 800px ) {
+	body.admin-bar .App > .Outer > aside {
+		height: calc( -32px + 100vh );
+	}
+}
+
 @media screen and ( max-width: 782px ) {
 	body.admin-bar .App > .Outer > aside {
 		top: 48px;
+		height: calc( -48px + 100vh );
 	}
 }
 
