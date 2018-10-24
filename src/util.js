@@ -56,14 +56,14 @@ export function isWordContent( content ) {
 		/class="OutlineElement/.test( content ) ||
 		/id="?docs-internal-guid-/.test( content )
 	);
-};
+}
 
 /**
  * From https://github.com/euangoddard/clipboard2markdown
  */
 export function cleanConvertedMarkdown( str ) {
 	return str
-		.replace( /[\u2018\u2019\u00b4]/g, "'" )
+		.replace( /[\u2018\u2019\u00b4]/g, '\'' )
 		.replace( /[\u201c\u201d\u2033]/g, '"' )
 		.replace( /[\u2212\u2022\u00b7\u25aa]/g, '-' )
 		.replace( /[\u2013\u2015]/g, '--' )
@@ -78,4 +78,4 @@ export function cleanConvertedMarkdown( str ) {
 		.replace( /\n\n\n*/g, '\n\n' )
 		.replace( /[ ]+$/gm, '' )
 		.replace( /^\s+|[\s\\]+$/g, '' );
-};
+}
