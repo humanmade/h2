@@ -195,7 +195,11 @@ export default class Editor extends React.PureComponent {
 		e.preventDefault();
 
 		// Convert HTML content to Markdown
-		const turndown = new Turndown();
+		const turndown = new Turndown( {
+			headingStyle: 'atx',
+			hr: '---',
+			codeBlockStyle: 'fenced',
+		} );
 		const markdown = cleanConvertedMarkdown( turndown.turndown( html ) );
 
 		// Insert at the current selection point
