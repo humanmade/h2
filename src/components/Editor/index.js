@@ -11,6 +11,7 @@ import MentionCompletion from './MentionCompletion';
 import MessageContent from '../Message/Content';
 import Shortcuts from '../Shortcuts';
 import compileMarkdown from '../../compile-markdown';
+import { isWordContent } from '../../util';
 
 import './index.css';
 
@@ -179,7 +180,7 @@ export default class Editor extends React.PureComponent {
 
 	onPaste = e => {
 		const html = e.clipboardData.getData( 'text/html' );
-		if ( ! html ) {
+		if ( ! html || ! isWordContent( html ) ) {
 			const text = e.clipboardData.getData( 'text/plain' );
 			if ( isAbsoluteUrl( text ) ) {
 				e.preventDefault();

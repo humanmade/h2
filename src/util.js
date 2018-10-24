@@ -46,3 +46,15 @@ export function codePointToSymbol( codePoint ) {
 	output += String.fromCharCode( codePoint );
 	return output;
 }
+
+/**
+ * From TinyMCE: https://github.com/tinymce/tinymce/blob/master/src/plugins/paste/main/ts/core/WordFilter.ts
+ */
+export function isWordContent( content ) {
+	return (
+		/<font face="Times New Roman"|class="?Mso|style="[^"]*\bmso-|style='[^'']*\bmso-|w:WordDocument/i.test( content ) ||
+		/class="OutlineElement/.test( content ) ||
+		/id="?docs-internal-guid-/.test( content )
+	);
+};
+
