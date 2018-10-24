@@ -11,7 +11,7 @@ import MentionCompletion from './MentionCompletion';
 import MessageContent from '../Message/Content';
 import Shortcuts from '../Shortcuts';
 import compileMarkdown from '../../compile-markdown';
-import { isWordContent } from '../../util';
+import { cleanConvertedMarkdown, isWordContent } from '../../util';
 
 import './index.css';
 
@@ -196,7 +196,7 @@ export default class Editor extends React.PureComponent {
 
 		// Convert HTML content to Markdown
 		const turndown = new Turndown();
-		const markdown = turndown.turndown( html );
+		const markdown = cleanConvertedMarkdown( turndown.turndown( html ) );
 
 		// Insert at the current selection point
 		this.onButton( null, () => markdown );
