@@ -11,6 +11,7 @@ import MentionCompletion from './MentionCompletion';
 import MessageContent from '../Message/Content';
 import Shortcuts from '../Shortcuts';
 import compileMarkdown from '../../compile-markdown';
+import { cleanConvertedMarkdown, isWordContent } from '../../util';
 
 import './index.css';
 
@@ -179,7 +180,7 @@ export default class Editor extends React.PureComponent {
 
 	onPaste = e => {
 		const html = e.clipboardData.getData( 'text/html' );
-		if ( ! html ) {
+		if ( ! html || ! isWordContent( html ) ) {
 			const text = e.clipboardData.getData( 'text/plain' );
 			if ( isAbsoluteUrl( text ) ) {
 				e.preventDefault();
@@ -194,8 +195,12 @@ export default class Editor extends React.PureComponent {
 		e.preventDefault();
 
 		// Convert HTML content to Markdown
-		const turndown = new Turndown();
-		const markdown = turndown.turndown( html );
+		const turndown = new Turndown( {
+			headingStyle: 'atx',
+			hr: '---',
+			codeBlockStyle: 'fenced',
+		} );
+		const markdown = cleanConvertedMarkdown( turndown.turndown( html ) );
 
 		// Insert at the current selection point
 		this.onButton( null, () => markdown );

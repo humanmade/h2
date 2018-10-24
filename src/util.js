@@ -46,3 +46,36 @@ export function codePointToSymbol( codePoint ) {
 	output += String.fromCharCode( codePoint );
 	return output;
 }
+
+/**
+ * From TinyMCE: https://github.com/tinymce/tinymce/blob/master/src/plugins/paste/main/ts/core/WordFilter.ts
+ */
+export function isWordContent( content ) {
+	return (
+		/<font face="Times New Roman"|class="?Mso|style="[^"]*\bmso-|style='[^'']*\bmso-|w:WordDocument/i.test( content ) ||
+		/class="OutlineElement/.test( content ) ||
+		/id="?docs-internal-guid-/.test( content )
+	);
+}
+
+/**
+ * From https://github.com/euangoddard/clipboard2markdown
+ */
+export function cleanConvertedMarkdown( str ) {
+	return str
+		.replace( /[\u2018\u2019\u00b4]/g, '\'' )
+		.replace( /[\u201c\u201d\u2033]/g, '"' )
+		.replace( /[\u2212\u2022\u00b7\u25aa]/g, '-' )
+		.replace( /[\u2013\u2015]/g, '--' )
+		.replace( /\u2014/g, '---' )
+		.replace( /\u2026/g, '...' )
+		.replace( /[ ]+\n/g, '\n' )
+		.replace( /\s*\\\n/g, '\\\n' )
+		.replace( /\s*\\\n\s*\\\n/g, '\n\n' )
+		.replace( /\s*\\\n\n/g, '\n\n' )
+		.replace( /\n-\n/g, '\n' )
+		.replace( /\n\n\s*\\\n/g, '\n\n' )
+		.replace( /\n\n\n*/g, '\n\n' )
+		.replace( /[ ]+$/gm, '' )
+		.replace( /^\s+|[\s\\]+$/g, '' );
+}
