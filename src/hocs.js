@@ -5,7 +5,7 @@ import { withApiData } from './with-api-data';
 
 export const withCategories = withApiData(
 	props => ( {
-		categories: '/wp/v2/categories',
+		categories: '/wp/v2/categories?per_page=100',
 	} )
 );
 
