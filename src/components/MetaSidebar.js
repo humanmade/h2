@@ -12,7 +12,7 @@ import {
 	showSidebarComments,
 	showSidebarProfile,
 } from '../actions';
-import { withApiData } from '../with-api-data';
+import { withCurrentUser } from '../hocs';
 
 import './MetaSidebar.css';
 
@@ -45,14 +45,14 @@ const BetaFeature = props => (
 
 class MetaSidebar extends React.Component {
 	render() {
-		const { features, onDisableFeature, onEnableFeature } = this.props;
+		const { currentUser, features, onDisableFeature, onEnableFeature } = this.props;
 		const containerProps = {
 			className: 'MetaSidebar',
 			title: 'All About You',
 			onClose: this.props.onClose,
 		};
 
-		if ( this.props.user.isLoading ) {
+		if ( this.props.loadingCurrentUser ) {
 			return (
 				<Container { ...containerProps }>
 					<p>Loading…</p>
@@ -60,8 +60,7 @@ class MetaSidebar extends React.Component {
 			);
 		}
 
-		const user = this.props.user.data;
-		if ( ! user ) {
+		if ( ! currentUser ) {
 			return (
 				<Container { ...containerProps }>
 					<p>Could not find details for user</p>
@@ -71,12 +70,12 @@ class MetaSidebar extends React.Component {
 
 		return (
 			<Container { ...containerProps }>
-				<UserBlock user={ user } />
+				<UserBlock user={ currentUser } />
 
 				<ul>
-					<li><LinkButton onClick={ () => this.props.onViewProfile( user.id ) }>View your profile →</LinkButton></li>
-					<li><RelativeLink to={ user.link }>View all posts →</RelativeLink></li>
-					<li><LinkButton onClick={ () => this.props.onViewComments( user.id ) }>View all comments →</LinkButton></li>
+					<li><LinkButton onClick={ () => this.props.onViewProfile( currentUser.id ) }>View your profile →</LinkButton></li>
+					<li><RelativeLink to={ currentUser.link }>View all posts →</RelativeLink></li>
+					<li><LinkButton onClick={ () => this.props.onViewComments( currentUser.id ) }>View all comments →</LinkButton></li>
 				</ul>
 
 				<Button onClick={ this.props.onLogOut }>Log out</Button>
@@ -114,5 +113,5 @@ export default connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(
-	withApiData( props => ( { user: '/wp/v2/users/me' } ) )( MetaSidebar )
+	withCurrentUser( MetaSidebar )
 );
