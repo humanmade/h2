@@ -22,21 +22,23 @@ const PostComments = props => {
 		props.onDidCreateComment();
 	};
 
-	return <CommentsList
-		allComments={ props.posts }
-		comments={ topLevel }
-		post={ props.post }
-		onComment={ props.onComment }
-		onDidCreateComment={ onDidCreateComment }
-	>
-		{ props.showingReply && (
-			<WriteComment
-				parentPost={ props.post }
-				onCancel={ props.onCancelReply }
-				onDidCreateComment={ onDidCreateComment }
-			/>
-		) }
-	</CommentsList>;
+	return (
+		<CommentsList
+			allComments={ props.posts }
+			comments={ topLevel }
+			post={ props.post }
+			onComment={ props.onComment }
+			onDidCreateComment={ onDidCreateComment }
+		>
+			{ props.showingReply && (
+				<WriteComment
+					parentPost={ props.post }
+					onCancel={ props.onCancelReply }
+					onDidCreateComment={ onDidCreateComment }
+				/>
+			) }
+		</CommentsList>
+	);
 };
 
 export default withArchive(
