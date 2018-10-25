@@ -241,7 +241,7 @@ export class Reactions extends Component {
 const mapStateToProps = state => ( {
 	users: state.users.posts,
 } );
-const mapDispatchToProps = ( dispatch ) => ( {
+const mapDispatchToProps = dispatch => ( {
 	onCreate: data => dispatch( reactions.createSingle( data ) ),
 	onDelete: id => dispatch( reactions.deleteSingle( id ) ),
 } );
@@ -249,11 +249,14 @@ const mapPropsToId = props => {
 	const post = props.postId;
 	const comment = props.commentId || null;
 	const id = [ post, comment ].filter( Boolean ).join( '+' );
-	reactions.registerArchive( id, { post, comment } );
+	reactions.registerArchive( id, {
+		post,
+		comment,
+	} );
 	return id;
 };
 const mapDataToProps = data => ( {
-	loading:   data.loading,
+	loading: data.loading,
 	reactions: data.posts,
 } );
 

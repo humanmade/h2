@@ -10,6 +10,6 @@ export const withCategories = withApiData(
 );
 
 export const withCurrentUser = connect( state => ( {
-	currentUser:        users.getSingle( state.users, state.users.current ),
+	currentUser: users.getSingle( state.users, state.users.current ),
 	loadingCurrentUser: users.isPostLoading( state.users, state.users.current ),
 } ) );

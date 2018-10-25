@@ -59,7 +59,10 @@ export class WritePost extends Component {
 				this.props.onDidCreatePost( data );
 			} )
 			.catch( error => {
-				this.setState( { isSubmitting: false, error } );
+				this.setState( {
+					isSubmitting: false,
+					error,
+				} );
 			} );
 	}
 

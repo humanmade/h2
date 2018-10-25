@@ -150,7 +150,7 @@ const MoreConnectedPostsList = withArchive(
 	state => state.users,
 	'all',
 	{
-		mapDataToProps:    data => ( { users: data.posts } ),
+		mapDataToProps: data => ( { users: data.posts } ),
 		mapActionsToProps: () => ( {} ),
 	}
 )( ConnectedPostsList );

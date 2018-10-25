@@ -53,7 +53,10 @@ class WriteComment extends React.Component {
 				this.props.onDidCreateComment();
 			} )
 			.catch( error => {
-				this.setState( { isSubmitting: false, error } );
+				this.setState( {
+					isSubmitting: false,
+					error,
+				} );
 			} );
 	}
 

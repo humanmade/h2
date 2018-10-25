@@ -22,10 +22,10 @@ const initialState = {
 	users: {
 		archives: {
 			all: window.H2Data.preload['/wp/v2/users?per_page=100'].map( user => user.id ),
-			me:  currentUser ? [ currentUser ] : [],
+			me: currentUser ? [ currentUser ] : [],
 		},
 		current: currentUser,
-		posts:   window.H2Data.preload['/wp/v2/users?per_page=100'],
+		posts: window.H2Data.preload['/wp/v2/users?per_page=100'],
 	},
 };
 
