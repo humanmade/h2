@@ -171,7 +171,6 @@ class Post extends Component {
 				</div>
 				{ collapsed ? (
 					<Summary
-						comments={ [] }
 						post={ post }
 						onExpand={ () => this.setState( { expanded: true } ) }
 					/>
