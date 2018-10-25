@@ -6,6 +6,25 @@ use WP_Error;
 use WP_REST_Request;
 
 /**
+ * Adjust default filters in WordPress
+ *
+ * Adds and removes default filters and callbacks from various formatting
+ * filters.
+ */
+function adjust_default_filters() {
+	// Add make_clickable to posts
+	add_filter( 'the_content', 'make_clickable', 9 );
+
+	// Normalize entities for easier decoding.
+	add_filter( 'the_title', 'ent2ncr', 11 );
+
+	// Render embeds in comments
+	global $wp_embed;
+	add_filter( 'comment_text', [ $wp_embed, 'run_shortcode' ], 8 );
+	add_filter( 'comment_text', [ $wp_embed, 'autoembed' ], 8 );
+}
+
+/**
  * Set up theme global settings
  */
 function set_up_theme() {
@@ -41,6 +60,7 @@ function get_script_data() {
 		'/wp/v2/posts',
 		'/h2/v1/site-switcher/sites',
 		'/h2/v1/widgets?sidebar=sidebar',
+		'/wp/v2/categories?per_page=100',
 		'/wp/v2/users/me',
 		'/wp/v2/users?per_page=100',
 	];
@@ -217,6 +237,11 @@ function register_custom_meta() {
  */
 function add_word_count_to_api( $response ) {
 	$data = $response->get_data();
+
+	// Skip contexts without any content.
+	if ( empty( $data['content'] ) ) {
+		return $response;
+	}
 
 	// Convert HTML to text.
 	$text = wp_strip_all_tags( $data['content']['rendered'] );

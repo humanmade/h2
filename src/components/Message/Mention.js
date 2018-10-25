@@ -19,8 +19,6 @@ class Mention extends React.Component {
 
 Mention.propTypes = { user: PropTypes.object };
 
-const mapPropsToData = props => ( { user: `/wp/v2/users?slug=${ props.username }` } );
-
 export default withArchive(
 	users,
 	state => state.users,

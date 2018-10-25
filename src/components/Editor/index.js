@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import getCaretCoordinates from 'textarea-caret';
+import Turndown from 'turndown';
 
 import Button from '../Button';
 import DropUpload from '../DropUpload';
@@ -11,6 +12,7 @@ import MentionCompletion from './MentionCompletion';
 import MessageContent from '../Message/Content';
 import Shortcuts from '../Shortcuts';
 import compileMarkdown from '../../compile-markdown';
+import { cleanConvertedMarkdown, isWordContent } from '../../util';
 import { media } from '../../types';
 
 import './index.css';
@@ -18,6 +20,9 @@ import './index.css';
 const apply = ( selection, start, end ) => {
 	return selection.length ? start + selection + end : start;
 };
+
+const URL_REGEX = /^https?:\/\/\S+$/i;
+const isAbsoluteUrl = text => URL_REGEX.test( text );
 
 const BUTTONS = {
 	bold: {
@@ -173,6 +178,38 @@ class Editor extends React.PureComponent {
 				},
 			} );
 		}
+	}
+
+	onPaste = e => {
+		const html = e.clipboardData.getData( 'text/html' );
+		if ( ! html || ! isWordContent( html ) ) {
+			const text = e.clipboardData.getData( 'text/plain' );
+			if ( isAbsoluteUrl( text ) ) {
+				e.preventDefault();
+				this.onPasteLink( text );
+				return;
+			}
+
+			// Use default browser handling.
+			return;
+		}
+
+		e.preventDefault();
+
+		// Convert HTML content to Markdown
+		const turndown = new Turndown( {
+			headingStyle: 'atx',
+			hr: '---',
+			codeBlockStyle: 'fenced',
+		} );
+		const markdown = cleanConvertedMarkdown( turndown.turndown( html ) );
+
+		// Insert at the current selection point
+		this.onButton( null, () => markdown );
+	}
+
+	onPasteLink( url ) {
+		this.onButton( null, text => text ? `[${ text }](${ url })` : url );
 	}
 
 	onSubmit( e ) {
@@ -415,6 +452,7 @@ class Editor extends React.PureComponent {
 								onChange={ e => this.setState( { content: e.target.value } ) }
 								onKeyDown={ e => this.onKeyDown( e ) }
 								onKeyUp={ e => this.onKeyUp( e ) }
+								onPaste={ this.onPaste }
 							/>
 						) }
 					</DropUpload>

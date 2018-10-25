@@ -1,4 +1,4 @@
-import { uniq } from 'lodash/array';
+import uniq from 'lodash/uniq';
 import React from 'react';
 
 import Avatar from '../Avatar';

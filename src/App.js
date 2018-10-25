@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 
 import {
-	hideSidebarProfile,
+	hideSidebar,
 	hideSuperSidebar,
 	showSuperSidebar,
 } from './actions';
@@ -14,6 +14,7 @@ import WritePost from './components/Post/Write';
 import MetaSidebar from './components/MetaSidebar';
 import Profile from './components/Profile';
 import Sidebar from './components/Sidebar';
+import CommentsSidebar from './components/Sidebar/Comments';
 import { RenderPlugins } from './plugins';
 
 import SuperMenu from './components/SuperMenu';
@@ -75,7 +76,7 @@ class App extends Component {
 			case 'meta':
 				return (
 					<MetaSidebar
-						onClose={ this.props.onDismissSidebarProfile }
+						onClose={ this.props.onDismissSidebar }
 						onLogOut={ () => this.onLogOut() }
 					/>
 				);
@@ -84,7 +85,15 @@ class App extends Component {
 				return (
 					<Profile
 						id={ this.props.sidebarProfile }
-						onClose={ this.props.onDismissSidebarProfile }
+						onClose={ this.props.onDismissSidebar }
+					/>
+				);
+
+			case 'comments':
+				return (
+					<CommentsSidebar
+						id={ this.props.sidebarProfile }
+						onClose={ this.props.onDismissSidebar }
 					/>
 				);
 
@@ -103,6 +112,7 @@ class App extends Component {
 				<SuperMenu
 					visible={ this.props.showingSuper }
 					onClose={ this.props.onHideSuperSidebar }
+					onSearch={ search => this.onSearch( search ) }
 				/>
 				<Header
 					onLogOut={ () => this.onLogOut() }
@@ -120,12 +130,33 @@ class App extends Component {
 							/>
 						) : null }
 
-						<Route path="/" exact component={ PostsList } />
-						<Route path="/author/:authorSlug" exact component={ PostsList } />
-						<Route path="/category/:categorySlug" exact component={ PostsList } />
-						<Route path="/page/:page" exact component={ PostsList } />
-						<Route path="/search/:search" exact component={ PostsList } />
-						<Route path="/:year/:month/:day/:slug/:comment_page(comment-page-\d+)?" exact component={ PostsList } />
+						<Switch>
+							<Route
+								path="/author/:authorSlug/:hasPage(page)?/:page(\d+)?"
+								exact
+								component={ PostsList }
+							/>
+							<Route
+								path="/category/:categorySlug/:hasPage(page)?/:page(\d+)?"
+								exact
+								component={ PostsList }
+							/>
+							<Route
+								path="/search/:search/:hasPage(page)?/:page(\d+)?"
+								exact
+								component={ PostsList }
+							/>
+							<Route
+								path="/:year(\d{4})/:month(\d{2})/:day(\d{2})/:slug/:comment_page(comment-page-\d+)?"
+								exact
+								component={ PostsList }
+							/>
+							<Route
+								path="/:hasPage(page)?/:page(\d+)?"
+								exact
+								component={ PostsList }
+							/>
+						</Switch>
 					</div>
 					{ this.renderSidebar() }
 				</div>
@@ -151,7 +182,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onDismissSidebarProfile: () => dispatch( hideSidebarProfile() ),
+		onDismissSidebar: () => dispatch( hideSidebar() ),
 		onHideSuperSidebar: () => dispatch( hideSuperSidebar() ),
 		onShowSuperSidebar: () => dispatch( showSuperSidebar() ),
 	};

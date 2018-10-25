@@ -2,9 +2,10 @@ import { withArchive } from '@humanmade/repress';
 import React from 'react';
 import qs from 'qs';
 
-import LinkButton from '../LinkButton';
 import Link from '../RelativeLink';
+import Pagination from '../Sidebar/Pagination';
 import { posts } from '../../types';
+import { decodeEntities } from '../../util';
 
 import './RecentPosts.css';
 
@@ -27,32 +28,18 @@ class PostList extends React.Component {
 					{ this.props.posts.map( post => (
 						<li key={ post.id }>
 							<Link to={ post.link }>
-								<span
-									dangerouslySetInnerHTML={ { __html: post.title.rendered } }
-								/>
+								{ decodeEntities( post.title.rendered ) }
 							</Link>
 						</li>
 					) ) }
 				</ul>
 
-				<div className="RecentPosts-pagination">
-					{ hasNext && (
-						<div className="RecentPosts-pagination-older">
-							<LinkButton
-								className="cta cta--small cta--arrow-left"
-								onClick={ this.props.onNext }
-							>Older</LinkButton>
-						</div>
-					) }
-					{ hasPrevious && (
-						<div className="RecentPosts-pagination-newer">
-							<LinkButton
-								className="cta cta--small cta--arrow"
-								onClick={ this.props.onPrevious }
-							>Newer</LinkButton>
-						</div>
-					) }
-				</div>
+				<Pagination
+					hasNext={ hasNext }
+					hasPrevious={ hasPrevious }
+					onNext={ this.props.onNext }
+					onPrevious={ this.props.onPrevious }
+				/>
 			</div>
 		);
 	}

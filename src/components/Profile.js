@@ -1,11 +1,14 @@
 import { withSingle } from '@humanmade/repress';
 import React from 'react';
 import { FormattedDate, FormattedTime } from 'react-intl';
+import { connect } from 'react-redux';
 
 import Map from './Map';
+import LinkButton from './LinkButton';
 import RelativeLink from './RelativeLink';
 import UserBlock from './UserBlock';
 import Container from './Sidebar/Container';
+import { showSidebarComments } from '../actions';
 import { users } from '../types';
 
 import './Profile.css';
@@ -93,7 +96,14 @@ class Profile extends React.Component {
 					zoom="2.0"
 				/>
 
-				<p><RelativeLink to={ user.link }>View all posts →</RelativeLink></p>
+				<ul className="Profile-navigation">
+					<li>
+						<RelativeLink to={ user.link }>View all posts →</RelativeLink>
+					</li>
+					<li>
+						<LinkButton onClick={ () => this.props.onViewComments( user.id ) }>View all comments →</LinkButton>
+					</li>
+				</ul>
 
 				<div className="Profile-fields">
 					<LocalTime user={ user } />
@@ -109,7 +119,7 @@ class Profile extends React.Component {
 	}
 }
 
-export default withSingle(
+const ConnectedProfile = withSingle(
 	users,
 	state => state.users,
 	props => props.id,
@@ -120,3 +130,18 @@ export default withSingle(
 		} ),
 	}
 )( Profile );
+
+const mapStateToProps = () => ( {} );
+
+const mapDispatchToProps = dispatch => {
+	return {
+		onViewComments: id => dispatch( showSidebarComments( id ) ),
+	};
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(
+	ConnectedProfile
+);

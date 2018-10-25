@@ -9,6 +9,7 @@ import Container from './Sidebar/Container';
 import {
 	disableBetaFeature,
 	enableBetaFeature,
+	showSidebarComments,
 	showSidebarProfile,
 } from '../actions';
 import { withApiData } from '../with-api-data';
@@ -75,6 +76,7 @@ class MetaSidebar extends React.Component {
 				<ul>
 					<li><LinkButton onClick={ () => this.props.onViewProfile( user.id ) }>View your profile →</LinkButton></li>
 					<li><RelativeLink to={ user.link }>View all posts →</RelativeLink></li>
+					<li><LinkButton onClick={ () => this.props.onViewComments( user.id ) }>View all comments →</LinkButton></li>
 				</ul>
 
 				<Button onClick={ this.props.onLogOut }>Log out</Button>
@@ -103,6 +105,7 @@ const mapDispatchToProps = dispatch => {
 	return {
 		onDisableFeature: id => dispatch( disableBetaFeature( id ) ),
 		onEnableFeature: id => dispatch( enableBetaFeature( id ) ),
+		onViewComments: id => dispatch( showSidebarComments( id ) ),
 		onViewProfile: id => dispatch( showSidebarProfile( id ) ),
 	};
 }

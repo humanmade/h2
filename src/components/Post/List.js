@@ -1,27 +1,47 @@
 import { withArchive } from '@humanmade/repress';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import ContentLoader from 'react-content-loader';
 import { connect } from 'react-redux';
 import qs from 'qs';
 
+import Loader from './Loader';
 import Button from '../Button';
 import PageTitle from '../PageTitle';
+import Pagination from '../Pagination';
 import PostComponent from './index';
 import { setDefaultPostView } from '../../actions';
 import { withCategories } from '../../hocs';
 import { posts, users } from '../../types';
+import { decodeEntities } from '../../util';
 
 import './List.css';
 
 class PostsList extends Component {
+	state = {
+		containerWidth: 740,
+	}
+
+	onUpdateWidth = ref => {
+		if ( ! ref ) {
+			return;
+		}
+
+		this.setState( {
+			containerWidth: ref.clientWidth,
+		} );
+	}
+
 	render() {
 		const { defaultPostView, summaryEnabled } = this.props;
 		if ( this.props.loading ) {
 			return (
 				<PageTitle title="Loading…">
 					<div className="PostsList">
-						<ContentLoader type="list" width={300} />
+						{/* Dummy div to measure width */}
+						<div ref={ this.onUpdateWidth } />
+
+						{ /* Show two faux posts loading */ }
+						<Loader width={ this.state.containerWidth } />
+						<Loader width={ this.state.containerWidth } />
 					</div>
 				</PageTitle>
 			);
@@ -36,8 +56,6 @@ class PostsList extends Component {
 			);
 		}
 
-		const { page } = this.props.match.params;
-
 		const isSingular = !! this.props.match.params.slug;
 		const getTitle = () => {
 			if ( this.props.match.params.search ) {
@@ -49,15 +67,12 @@ class PostsList extends Component {
 				return null;
 			}
 
-			return this.props.posts[0].title.rendered;
+			return decodeEntities( this.props.posts[0].title.rendered );
 		};
 
 		return (
 			<PageTitle title={ getTitle() }>
 				<div className="PostsList">
-					{ this.props.loading &&
-						<ContentLoader type="list" width={ 300 } />
-					}
 					{ summaryEnabled ? (
 						<div className="PostsList--settings">
 							<Button
@@ -87,18 +102,11 @@ class PostsList extends Component {
 							/>
 						) )
 					}
-					<div className="pagination">
-						{ this.props.hasMore && (
-							<Link to={ `/page/${ page ? Number( page ) + 1 : 2 }` }>Older</Link>
-						) }
-						{ page && page > 1 ? (
-							<Link to={ `/page/${ page - 1 }` }>Newer</Link>
-						) : (
-							/* Hack to get pagination to float correctly */
-							/* eslint-disable-next-line jsx-a11y/anchor-is-valid */
-							<a style={ { display: 'none' } }>&nbsp;</a>
-						) }
-					</div>
+					<Pagination
+						hasNext={ this.props.hasMore }
+						params={ this.props.match.params }
+						path={ this.props.match.path }
+					/>
 				</div>
 			</PageTitle>
 		);
@@ -120,8 +128,10 @@ const ConnectedPostsList = withArchive(
 			filters.search = props.match.params.search;
 		}
 		if ( props.match.params.categorySlug && props.categories.data ) {
-			const category = props.categories.data.filter( category => category.slug === props.match.params.categorySlug )[0];
-			filters.categories = [ category.id ];
+			const matchingCategories = props.categories.data.filter( category => category.slug === props.match.params.categorySlug );
+			if ( matchingCategories ) {
+				filters.categories = [ matchingCategories[0].id ];
+			}
 		}
 
 		if ( props.match.params.authorSlug && props.users ) {

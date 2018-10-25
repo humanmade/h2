@@ -62,6 +62,16 @@ export const changes = [
 				Simply click the red H button in the top left to show the navigation.</p>
 		),
 	},
+	{
+		date: '2018-09-14',
+		title: 'View Comments for a User',
+		content: () => (
+			<React.Fragment>
+				<p>You can now view a user's comment history. Simply click their profile, then click through to view their comments.</p>
+				<p>You can also view your own comments via your sidebar. Click your avatar in the top right.</p>
+			</React.Fragment>
+		),
+	},
 ];
 
 export function getChanges( lastView ) {

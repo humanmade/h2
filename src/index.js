@@ -6,7 +6,6 @@ import { Fill, Provider as SlotFillProvider } from 'react-slot-fill';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
-import createLogger from 'redux-logger';
 import { Provider as RestApiProvider } from './with-api-data';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -18,13 +17,14 @@ import loadPlugins from './plugins/load';
 
 import './hm-pattern-library/assets/styles/juniper.css';
 
+const currentUser = window.H2Data.preload['/wp/v2/users/me'] ? window.H2Data.preload['/wp/v2/users/me'].id : null;
 const initialState = {
 	users: {
 		archives: {
 			all: window.H2Data.preload['/wp/v2/users?per_page=100'].map( user => user.id ),
-			me:  [ window.H2Data.preload['/wp/v2/users/me'].id ],
+			me:  currentUser ? [ currentUser ] : [],
 		},
-		current: window.H2Data.preload['/wp/v2/users/me'].id,
+		current: currentUser,
 		posts:   window.H2Data.preload['/wp/v2/users?per_page=100'],
 	},
 };
@@ -32,7 +32,7 @@ const initialState = {
 let store = createStore(
 	reducers,
 	initialState,
-	composeWithDevTools( applyMiddleware( thunk, createLogger( { collapsed: true } ) ) )
+	composeWithDevTools( applyMiddleware( thunk ) )
 );
 
 // Expose the plugin API globally.

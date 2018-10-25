@@ -1,8 +1,7 @@
 .reactions {
-	position: relative;
-	width: 100%;
 	display: flex;
-	margin: 1.666rem 0 1.248rem;
+	flex-wrap: wrap;
+	position: relative;
 }
 
 .reactions .btn {
@@ -101,4 +100,19 @@
 .Reactions-custom {
 	height: 1em;
 	max-height: 1em;
+}
+
+.reactions-picker-wrap {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 10;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgb(79, 70, 65, 0.7);
+	backdrop-filter: blur( 2px );
 }
