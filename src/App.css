@@ -73,7 +73,7 @@ body.admin-bar .App > .Outer > aside {
 @media screen and ( max-width: 782px ) {
 	body.admin-bar .App > .Outer > aside {
 		top: 48px;
-		height: calc( -48px + 100vh );
+		height: calc( 100vh - 48px );
 	}
 }
 
