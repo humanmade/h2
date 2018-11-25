@@ -216,6 +216,10 @@ export default class Editor extends React.PureComponent {
 		this.props.onSubmit( compileMarkdown( this.state.content ), this.state.content );
 	}
 
+	onSave = () => {
+		this.props.onSave( compileMarkdown( this.state.content ), this.state.content );
+	}
+
 	onBlur() {
 		const { selectionStart, selectionEnd } = this.textarea;
 
@@ -473,6 +477,9 @@ export default class Editor extends React.PureComponent {
 						{ this.props.onCancel ? (
 							<Button onClick={ this.props.onCancel }>Cancel</Button>
 						) : null }
+						{ this.props.onSave && (
+							<Button onClick={ this.onSave }>{ this.props.saveText || 'Save' }</Button>
+						) }
 						<Button submit type="primary">{ this.props.submitText }</Button>
 					</span>
 				</p>
@@ -488,6 +495,7 @@ Editor.defaultProps = {
 
 Editor.propTypes = {
 	previewComponent: PropTypes.func,
+	saveText: PropTypes.string,
 	submitText: PropTypes.string,
 	onCancel: PropTypes.func,
 	onSubmit: PropTypes.func.isRequired,
