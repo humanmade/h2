@@ -123,6 +123,7 @@ export class WritePost extends Component {
 				isSubmitting: true,
 				title: '',
 			} );
+			this.props.invalidateDataForUrl( '/wp/v2/posts?status=draft&context=edit' );
 			this.props.invalidateDataForUrl( '/wp/v2/posts?page=1' );
 			this.props.onDidCreatePost( data );
 		} ) );
