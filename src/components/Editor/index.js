@@ -1,6 +1,7 @@
 import countWords from '@iarna/word-count';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { FormattedRelative } from 'react-intl';
 import getCaretCoordinates from 'textarea-caret';
 import Turndown from 'turndown';
 
@@ -472,6 +473,13 @@ export default class Editor extends React.PureComponent {
 						>
 							Format with Markdown
 						</a>
+						{ this.props.lastSave && (
+							<React.Fragment>
+								<br />
+								{ 'Last saved ' }
+								<FormattedRelative value={ this.props.lastSave } />
+							</React.Fragment>
+						) }
 					</small>
 					<span className="Editor-submit-buttons">
 						{ this.props.onCancel ? (

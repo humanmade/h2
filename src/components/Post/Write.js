@@ -191,6 +191,7 @@ export class WritePost extends Component {
 				<Editor
 					key={ this.state.draftId || '__none' }
 					initialValue={ this.state.initialContent }
+					lastSave={ this.state.lastSave }
 					previewComponent={ props => <RemotePreview type="post" { ...props } /> }
 					saveText={ this.state.isSaving ? 'Saving…' : 'Save' }
 					submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
