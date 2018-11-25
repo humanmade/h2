@@ -13,8 +13,12 @@ class SelectDraft extends React.Component {
 	}
 
 	onSelect = post => {
+		const didSelect = this.props.onSelect( post );
+		if ( didSelect === false ) {
+			return;
+		}
+
 		this.setState( { showingSelector: false } );
-		this.props.onSelect( post );
 	}
 
 	render() {

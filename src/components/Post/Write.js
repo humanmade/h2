@@ -138,6 +138,13 @@ export class WritePost extends Component {
 	}
 
 	onSelect = draft => {
+		if ( this.state.title !== '' || this.state.draftId !== null ) {
+			const proceed = window.confirm( 'This will erase your current draft. Proceed?' );
+			if ( ! proceed ) {
+				return false;
+			}
+		}
+
 		this.setState( {
 			draftId: draft.id,
 			title: draft.title.raw,
