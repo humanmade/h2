@@ -18,7 +18,7 @@ class SelectDraft extends React.Component {
 	}
 
 	render() {
-		const { data, isLoading } = this.props.drafts;
+		const { data, isLoading } = this.props.drafts || {};
 
 		if ( ! this.state.showingSelector ) {
 			return (
@@ -37,10 +37,10 @@ class SelectDraft extends React.Component {
 		return (
 			<Modal
 				className="Post-SelectDraft"
-				title="Drafts"
+				title="Your Drafts"
 				onDismiss={ () => this.setState( { showingSelector: false } ) }
 			>
-				{ isLoading ? (
+				{ ( ! this.props.drafts || isLoading ) ? (
 					<p>Loading</p>
 				) : data.length === 0 ? (
 					<p>No drafts found!</p>
@@ -75,6 +75,13 @@ class SelectDraft extends React.Component {
 	}
 }
 
-export default withApiData( () => ( {
-	drafts: '/wp/v2/posts?status=draft&context=edit',
-} ) )( SelectDraft );
+const mapDataToProps = props => {
+	if ( ! props.user ) {
+		return {};
+	}
+
+	return {
+		drafts: `/wp/v2/posts?status=draft&context=edit&author=${ props.user.id }`,
+	};
+};
+export default withApiData( mapDataToProps )( SelectDraft );

@@ -153,6 +153,7 @@ export class WritePost extends Component {
 				<div className="WritePost__title">
 					<h2>Write a New Post</h2>
 					<SelectDraft
+						user={ user || null }
 						onSelect={ this.onSelect }
 					/>
 				</div>
