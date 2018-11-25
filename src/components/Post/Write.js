@@ -45,7 +45,7 @@ export class WritePost extends Component {
 			content,
 			title: this.state.title,
 			categories: this.state.category ? [ this.state.category ] : [],
-			meta: { unprocessed_content: unprocessedContent },
+			unprocessed_content: unprocessedContent,
 		};
 	}
 
@@ -138,7 +138,7 @@ export class WritePost extends Component {
 		this.setState( {
 			draftId: draft.id,
 			title: draft.title.raw,
-			initialContent: draft.meta.unprocessed_content || draft.content.raw,
+			initialContent: draft.unprocessed_content || draft.content.raw,
 		} );
 	}
 
