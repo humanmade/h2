@@ -1,8 +1,11 @@
 import React from 'react';
+import { FormattedRelative } from 'react-intl';
 
 import Button from '../Button';
 import Modal from '../Modal';
 import { withApiData } from '../../with-api-data';
+
+import './SelectDraft.css';
 
 class SelectDraft extends React.Component {
 	state = {
@@ -22,14 +25,19 @@ class SelectDraft extends React.Component {
 				<Button
 					onClick={ () => this.setState( { showingSelector: true } ) }
 				>
-					Resume Existing Draft
+					Drafts
+
+					{ data && (
+						<span className="label__count">{ data.length }</span>
+					) }
 				</Button>
 			);
 		}
 
 		return (
 			<Modal
-				title="Select draft to resume editing"
+				className="Post-SelectDraft"
+				title="Drafts"
 				onDismiss={ () => this.setState( { showingSelector: false } ) }
 			>
 				{ isLoading ? (
@@ -37,15 +45,27 @@ class SelectDraft extends React.Component {
 				) : data.length === 0 ? (
 					<p>No drafts found!</p>
 				) : (
-					<ul>
+					<ul className="Post-SelectDraft__list">
 						{ data.map( post => (
-							<li key={ post.id }>
-								<span
-									dangerouslySetInnerHTML={ { __html: post.title.rendered } }
-								/>
-								<Button
+							<li
+								key={ post.id }
+								className="Post-SelectDraft__draft"
+							>
+								<button
+									className="Post-SelectDraft__draft-main"
+									title={ `Edit "${ post.title.rendered }"` }
+									type="button"
 									onClick={ () => this.onSelect( post ) }
-								>Edit</Button>
+								>
+									<span
+										className="Post-SelectDraft__draft-title"
+										dangerouslySetInnerHTML={ { __html: post.title.rendered } }
+									/>
+									<span className="Post-SelectDraft__draft-meta">
+										{ 'Last edited ' }
+										<FormattedRelative value={ post.date_gmt + 'Z' } />
+									</span>
+								</button>
 							</li>
 						) ) }
 					</ul>
