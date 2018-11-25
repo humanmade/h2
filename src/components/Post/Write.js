@@ -101,9 +101,12 @@ export class WritePost extends Component {
 		const categories = this.props.categories.data || [];
 		return (
 			<div className="WritePost" ref={ ref => this.container = ref }>
-				<SelectDraft
-					onSelect={ this.onSelect }
-				/>
+				<div className="WritePost__title">
+					<h2>Write a New Post</h2>
+					<SelectDraft
+						onSelect={ this.onSelect }
+					/>
+				</div>
 				<header>
 					<Avatar
 						url={ user ? user.avatar_urls['96'] : '' }

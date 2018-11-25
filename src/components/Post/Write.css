@@ -7,11 +7,34 @@
 	border-bottom: 5px solid #F1F2EE;
 }
 
+.WritePost__title {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	border-bottom: 2px solid var( --hm-beige );
+	padding: 0.5em 0;
+}
+
+.WritePost__title h2 {
+	font-size: 1.5em;
+	line-height: 1.4;
+	text-transform: none;
+	margin: 0;
+}
+
+.WritePost__title .btn {
+	margin: 0;
+}
+
+.WritePost__title .btn .label__count {
+	margin-left: 0.5em;
+	margin-top: -3px;
+}
+
 .WritePost > header {
 	position: sticky;
 	top: 0;
 	z-index: 3;
-	margin-top: -15px;
 	padding: 15px 0;
 	background: #fff;
 	display: flex;
