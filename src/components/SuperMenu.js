@@ -8,7 +8,7 @@ import { withApiData } from '../with-api-data';
 import './SuperMenu.css';
 
 const Category = ( { all, category }) => {
-	const children = all.filter( cat => cat.parent === category.id );
+	const childCategories = all.filter( cat => cat.parent === category.id );
 
 	return (
 		<li key={ category.id }>
@@ -16,10 +16,10 @@ const Category = ( { all, category }) => {
 				{ category.name }
 			</Link>
 
-			{ children && (
+			{ childCategories && (
 				<CategoryList
 					all={ all }
-					categories={ children }
+					categories={ childCategories }
 				/>
 			) }
 		</li>
