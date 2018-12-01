@@ -7,7 +7,7 @@ import { withApiData } from '../with-api-data';
 
 import './SuperMenu.css';
 
-const Category = ( { all, category }) => {
+const Category = ( { all, category } ) => {
 	const childCategories = all.filter( cat => cat.parent === category.id );
 
 	return (
