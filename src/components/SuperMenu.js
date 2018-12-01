@@ -7,6 +7,37 @@ import { withApiData } from '../with-api-data';
 
 import './SuperMenu.css';
 
+const Category = ( { all, category } ) => {
+	const childCategories = all.filter( cat => cat.parent === category.id );
+
+	return (
+		<li key={ category.id }>
+			<Link to={ category.link }>
+				{ category.name }
+			</Link>
+
+			{ childCategories && (
+				<CategoryList
+					all={ all }
+					categories={ childCategories }
+				/>
+			) }
+		</li>
+	);
+};
+
+const CategoryList = ( { all, categories } ) => (
+	<ul>
+		{ categories && categories.map( category => (
+			<Category
+				key={ category.id }
+				all={ all }
+				category={ category }
+			/>
+		) ) }
+	</ul>
+);
+
 class SuperMenu extends React.Component {
 	render() {
 		const { categories, visible } = this.props;
@@ -41,16 +72,15 @@ class SuperMenu extends React.Component {
 						<li><a href="/wp-admin/">Dashboard</a></li>
 					</ul>
 
-					<h3>Categories</h3>
-					<ul>
-						{ categories.data && categories.data.map( category => (
-							<li key={ category.id }>
-								<Link to={ category.link }>
-									{ category.name }
-								</Link>
-							</li>
-						) ) }
-					</ul>
+					{ categories.data && (
+						<React.Fragment>
+							<h3>Categories</h3>
+							<CategoryList
+								all={ categories.data }
+								categories={ categories.data.filter( cat => cat.parent === 0 ) }
+							/>
+						</React.Fragment>
+					) }
 
 					{ sites ? (
 						<React.Fragment>
