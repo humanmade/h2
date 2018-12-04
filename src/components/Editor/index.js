@@ -1,6 +1,7 @@
 import countWords from '@iarna/word-count';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { FormattedRelative } from 'react-intl';
 import getCaretCoordinates from 'textarea-caret';
 import Turndown from 'turndown';
 
@@ -214,6 +215,10 @@ export default class Editor extends React.PureComponent {
 		e.preventDefault();
 
 		this.props.onSubmit( compileMarkdown( this.state.content ), this.state.content );
+	}
+
+	onSave = () => {
+		this.props.onSave( compileMarkdown( this.state.content ), this.state.content );
 	}
 
 	onBlur() {
@@ -468,11 +473,21 @@ export default class Editor extends React.PureComponent {
 						>
 							Format with Markdown
 						</a>
+						{ this.props.lastSave && (
+							<React.Fragment>
+								<br />
+								{ 'Last saved ' }
+								<FormattedRelative value={ this.props.lastSave } />
+							</React.Fragment>
+						) }
 					</small>
 					<span className="Editor-submit-buttons">
 						{ this.props.onCancel ? (
 							<Button onClick={ this.props.onCancel }>Cancel</Button>
 						) : null }
+						{ this.props.onSave && (
+							<Button onClick={ this.onSave }>{ this.props.saveText || 'Save' }</Button>
+						) }
 						<Button submit type="primary">{ this.props.submitText }</Button>
 					</span>
 				</p>
@@ -488,6 +503,7 @@ Editor.defaultProps = {
 
 Editor.propTypes = {
 	previewComponent: PropTypes.func,
+	saveText: PropTypes.string,
 	submitText: PropTypes.string,
 	onCancel: PropTypes.func,
 	onSubmit: PropTypes.func.isRequired,

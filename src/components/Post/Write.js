@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import SelectDraft from './SelectDraft';
 import RemotePreview from '../RemotePreview';
 import { withApiData } from '../../with-api-data';
 import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
@@ -17,10 +18,14 @@ export class WritePost extends Component {
 		super( props );
 
 		this.state = {
+			draftId: null,
 			title: '',
+			initialContent: '',
 			error: null,
 			category: null,
 			isSubmitting: false,
+			isSaving: false,
+			lastSave: null,
 		};
 	}
 
@@ -33,6 +38,53 @@ export class WritePost extends Component {
 			}
 		}
 	}
+
+	getPostData( content, unprocessedContent ) {
+		return {
+			id: this.state.draftId || null,
+			content,
+			title: this.state.title,
+			categories: this.state.category ? [ this.state.category ] : [],
+			unprocessed_content: unprocessedContent,
+		};
+	}
+
+	onSave = ( content, unprocessedContent ) => {
+		this.setState( {
+			isSaving: true,
+			error: null,
+		} );
+
+		const body = this.getPostData( content, unprocessedContent );
+		const url = body.id ? `/wp/v2/posts/${ body.id }` : '/wp/v2/posts';
+		const method = body.id ? 'PUT' : 'POST';
+
+		this.props.fetch( url, {
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify( body ),
+			method,
+		} ).then( r => r.json().then( data => {
+			if ( ! r.ok ) {
+				this.setState( {
+					isSaving: false,
+					error: data,
+				} );
+				return;
+			}
+
+			this.setState( {
+				draftId: data.id,
+				initialContent: unprocessedContent,
+				isSaving: false,
+				lastSave: Date.now(),
+			} );
+			this.props.invalidateDataForUrl( '/wp/v2/posts?status=draft&context=edit' );
+		} ) );
+	}
+
 	onSubmit( content, unprocessedContent ) {
 		if ( ! this.state.title ) {
 			this.setState( { error: { message: 'Your post needs a title!' } } );
@@ -45,20 +97,19 @@ export class WritePost extends Component {
 		} );
 
 		const body = {
-			content,
+			...this.getPostData( content, unprocessedContent ),
 			status: 'publish',
-			title: this.state.title,
-			categories: this.state.category ? [ this.state.category ] : [],
-			meta: { unprocessed_content: unprocessedContent },
 		};
+		const url = body.id ? `/wp/v2/posts/${ body.id }` : '/wp/v2/posts';
+		const method = body.id ? 'PUT' : 'POST';
 
-		this.props.fetch( '/wp/v2/posts', {
+		this.props.fetch( url, {
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify( body ),
-			method: 'POST',
+			method,
 		} ).then( r => r.json().then( data => {
 			if ( ! r.ok ) {
 				this.setState( {
@@ -72,6 +123,7 @@ export class WritePost extends Component {
 				isSubmitting: true,
 				title: '',
 			} );
+			this.props.invalidateDataForUrl( '/wp/v2/posts?status=draft&context=edit' );
 			this.props.invalidateDataForUrl( '/wp/v2/posts?page=1' );
 			this.props.onDidCreatePost( data );
 		} ) );
@@ -84,11 +136,34 @@ export class WritePost extends Component {
 		return this.props.fetch( '/wp/v2/media', options )
 			.then( parseResponse );
 	}
+
+	onSelect = draft => {
+		if ( this.state.title !== '' || this.state.draftId !== null ) {
+			const proceed = window.confirm( 'This will erase your current draft. Proceed?' );
+			if ( ! proceed ) {
+				return false;
+			}
+		}
+
+		this.setState( {
+			draftId: draft.id,
+			title: draft.title.raw,
+			initialContent: draft.unprocessed_content || draft.content.raw,
+		} );
+	}
+
 	render() {
 		const user = this.props.user.data;
 		const categories = this.props.categories.data || [];
 		return (
 			<div className="WritePost" ref={ ref => this.container = ref }>
+				<div className="WritePost__title">
+					<h2>Write a New Post</h2>
+					<SelectDraft
+						user={ user || null }
+						onSelect={ this.onSelect }
+					/>
+				</div>
 				<header>
 					<Avatar
 						url={ user ? user.avatar_urls['96'] : '' }
@@ -125,9 +200,14 @@ export class WritePost extends Component {
 					<div className="actions"></div>
 				</header>
 				<Editor
+					key={ this.state.draftId || '__none' }
+					initialValue={ this.state.initialContent }
+					lastSave={ this.state.lastSave }
 					previewComponent={ props => <RemotePreview type="post" { ...props } /> }
+					saveText={ this.state.isSaving ? 'Saving…' : 'Save' }
 					submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
 					onCancel={ this.props.onCancel }
+					onSave={ this.onSave }
 					onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
 					onUpload={ ( ...args ) => this.onUpload( ...args ) }
 				/>
