@@ -119,6 +119,14 @@ export default connect( mapStateToProps, mapDispatchToProps )( withApiData( prop
 	users: props.match.params.authorSlug ? '/wp/v2/users?per_page=100' : null,
 } ) )( withApiData( props => {
 	const filters = {};
+	const querystring = qs.parse( props.location.search, { ignoreQueryPrefix: true } );
+
+	// Post previews.
+	if ( querystring.preview && querystring.p ) {
+		filters.include = [ querystring.p ];
+		filters.status = 'draft';
+	}
+
 	if ( props.match.params.page ) {
 		filters.page = props.match.params.page;
 	}
