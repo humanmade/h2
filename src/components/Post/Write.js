@@ -49,6 +49,10 @@ export class WritePost extends Component {
 		};
 	}
 
+	getDraftUrl() {
+		return `${ window.H2Data.site.url }?p=${ this.state.draftId }`;
+	}
+
 	onSave = ( content, unprocessedContent ) => {
 		this.setState( {
 			isSaving: true,
@@ -216,6 +220,20 @@ export class WritePost extends Component {
 					<Notification type="error">
 						Could not submit: { this.state.error.message }
 					</Notification>
+				) }
+
+				{ this.state.draftId && (
+					<p className="WritePost__preview-link">
+						Preview URL:
+						<code>
+							<a
+								href={ this.getDraftUrl() }
+								onClick={ e => e.preventDefault() }
+							>
+								{ this.getDraftUrl() }
+							</a>
+						</code>
+					</p>
 				) }
 
 				{ this.props.children }

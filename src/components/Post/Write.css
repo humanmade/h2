@@ -95,6 +95,19 @@
 	margin-left: 90px;
 }
 
+.WritePost__preview-link {
+	margin-left: 90px;
+	margin-top: -20px;
+	margin-bottom: 1em;
+	padding: 0 5px;
+	font-size: 0.777777778em;
+}
+
+.WritePost__preview-link code {
+	margin-left: 1em;
+	font-size: inherit;
+}
+
 @media ( max-width: 600px ) {
 	.WritePost > header > .Avatar {
 		display: none;
