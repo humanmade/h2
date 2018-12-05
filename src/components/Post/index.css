@@ -85,6 +85,11 @@ body.admin-bar .Post > header {
 	margin-left: 10px;
 }
 
+.Post__status {
+	font-size: 14px;
+	margin-left: 10px;
+}
+
 .Post-content-wrap {
 	margin-left: 90px;
 }

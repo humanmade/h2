@@ -163,6 +163,12 @@ class Post extends Component {
 								) ) }
 							</ul>
 						}
+						{ post.status === 'draft' && (
+							<span className="Post__status">
+								<span role="img" aria-label="">🔒</span>
+								Unpublished
+							</span>
+						) }
 						<Slot name="Post.byline" fillChildProps={ fillProps } />
 					</div>
 					{ Actions }
