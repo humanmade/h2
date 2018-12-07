@@ -51,7 +51,7 @@ export class WritePost extends Component {
 	}
 
 	getDraftUrl() {
-		return `${ window.H2Data.site.url }?p=${ this.state.draftId }`;
+		return `${ window.H2Data.site.url.replace( /([^/])$/, '$1/' ) }?p=${ this.state.draftId }`;
 	}
 
 	onSave = ( content, unprocessedContent ) => {
