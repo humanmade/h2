@@ -72,6 +72,19 @@ export const changes = [
 			</React.Fragment>
 		),
 	},
+	{
+		date: '2018-12-07',
+		title: 'Draft Before You Post',
+		content: () =>(
+			<React.Fragment>
+				<p>You can now save posts for later editing rather than
+					publishing immediately, and resume them whenever you're
+					ready. Hit the New Post button to get started.</p>
+				<p>When you're ready, you can also share a preview link for
+					your draft with other editors.</p>
+			</React.Fragment>
+		)
+	}
 ];
 
 export function getChanges( lastView ) {
