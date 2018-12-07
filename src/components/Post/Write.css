@@ -103,9 +103,22 @@
 	font-size: 0.777777778em;
 }
 
-.WritePost__preview-link code {
-	margin-left: 1em;
+.WritePost__preview-link input[type="text"] {
+	display: inline-block;
+	background: var( --hm-light-grey );
+	padding: 0px 5px;
+	margin: 0 1em;
+	border: none;
 	font-size: inherit;
+}
+
+.WritePost__preview-copied {
+	opacity: 0;
+	transition: opacity 100ms;
+}
+
+.WritePost__preview-copied.active {
+	opacity: 1;
 }
 
 @media ( max-width: 600px ) {

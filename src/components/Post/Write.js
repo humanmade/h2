@@ -26,6 +26,7 @@ export class WritePost extends Component {
 			isSubmitting: false,
 			isSaving: false,
 			lastSave: null,
+			didCopy: false,
 		};
 	}
 
@@ -156,6 +157,17 @@ export class WritePost extends Component {
 		} );
 	}
 
+	onClickPreview = e => {
+		e.preventDefault();
+		const input = e.target;
+		input.select();
+		document.execCommand( 'copy' );
+
+		// Show copy indicator, and hide after 1 second.
+		this.setState( { didCopy: true } );
+		window.setTimeout( () => this.setState( { didCopy: false } ), 1000 );
+	}
+
 	render() {
 		const user = this.props.user.data;
 		const categories = this.props.categories.data || [];
@@ -225,14 +237,19 @@ export class WritePost extends Component {
 				{ this.state.draftId && (
 					<p className="WritePost__preview-link">
 						Preview URL:
-						<code>
-							<a
-								href={ this.getDraftUrl() }
-								onClick={ e => e.preventDefault() }
-							>
-								{ this.getDraftUrl() }
-							</a>
-						</code>
+						<input
+							className="form__field--code"
+							type="text"
+							value={ this.getDraftUrl() }
+							onClick={ this.onClickPreview }
+							onMouseOver={ e => e.target.select() }
+						/>
+
+						<span
+							className={ `WritePost__preview-copied ${ this.state.didCopy ? 'active' : '' } ` }
+						>
+							Copied!
+						</span>
 					</p>
 				) }
 
