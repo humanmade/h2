@@ -83,7 +83,7 @@ export const changes = [
 				<p>When you're ready, you can also share a preview link for
 					your draft with other editors.</p>
 			</React.Fragment>
-		)
+		),
 	}
 ];
 
