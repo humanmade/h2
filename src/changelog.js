@@ -75,7 +75,7 @@ export const changes = [
 	{
 		date: '2018-12-07',
 		title: 'Draft Before You Post',
-		content: () =>(
+		content: () => (
 			<React.Fragment>
 				<p>You can now save posts for later editing rather than
 					publishing immediately, and resume them whenever you're
@@ -84,7 +84,7 @@ export const changes = [
 					your draft with other editors.</p>
 			</React.Fragment>
 		),
-	}
+	},
 ];
 
 export function getChanges( lastView ) {
