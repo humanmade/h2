@@ -96,8 +96,7 @@
 .PostContent h4,
 .PostContent h5,
 .PostContent h6 {
-	font-size: 1rem;
-	line-height: 1.555rem;
+	line-height: 1.555;
 	margin: 1rem 0;
 	text-transform: none;
 }
