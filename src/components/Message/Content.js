@@ -58,6 +58,9 @@ const transform = ( node, children ) => {
 				);
 			}
 
+			// For regular blockquotes, use built-in handling.
+			return;
+
 		default:
 			// Use built-in handling.
 			return;
