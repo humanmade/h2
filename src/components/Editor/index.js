@@ -214,7 +214,7 @@ export default class Editor extends React.PureComponent {
 			}
 
 			// If we're replacing an existing link, don't format.
-			if ( text.match( /https?:\/\// ) ) {
+			if ( text.match( /^https?:\/\/\S*$/ ) ) {
 				return url;
 			}
 
