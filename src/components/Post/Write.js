@@ -26,6 +26,7 @@ export class WritePost extends Component {
 			isSubmitting: false,
 			isSaving: false,
 			lastSave: null,
+			didCopy: false,
 		};
 	}
 
@@ -47,6 +48,10 @@ export class WritePost extends Component {
 			categories: this.state.category ? [ this.state.category ] : [],
 			unprocessed_content: unprocessedContent,
 		};
+	}
+
+	getDraftUrl() {
+		return `${ window.H2Data.site.url.replace( /([^/])$/, '$1/' ) }?p=${ this.state.draftId }&preview=true`;
 	}
 
 	onSave = ( content, unprocessedContent ) => {
@@ -152,6 +157,17 @@ export class WritePost extends Component {
 		} );
 	}
 
+	onClickPreview = e => {
+		e.preventDefault();
+		const input = e.target;
+		input.select();
+		document.execCommand( 'copy' );
+
+		// Show copy indicator, and hide after 1 second.
+		this.setState( { didCopy: true } );
+		window.setTimeout( () => this.setState( { didCopy: false } ), 1000 );
+	}
+
 	render() {
 		const user = this.props.user.data;
 		const categories = this.props.categories.data || [];
@@ -216,6 +232,25 @@ export class WritePost extends Component {
 					<Notification type="error">
 						Could not submit: { this.state.error.message }
 					</Notification>
+				) }
+
+				{ this.state.draftId && (
+					<p className="WritePost__preview-link">
+						Preview URL:
+						<input
+							className="form__field--code"
+							type="text"
+							value={ this.getDraftUrl() }
+							onClick={ this.onClickPreview }
+							onMouseOver={ e => e.target.select() }
+						/>
+
+						<span
+							className={ `WritePost__preview-copied ${ this.state.didCopy ? 'active' : '' } ` }
+						>
+							Copied!
+						</span>
+					</p>
 				) }
 
 				{ this.props.children }

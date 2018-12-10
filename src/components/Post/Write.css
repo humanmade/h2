@@ -95,6 +95,32 @@
 	margin-left: 90px;
 }
 
+.WritePost__preview-link {
+	margin-left: 90px;
+	margin-top: -20px;
+	margin-bottom: 1em;
+	padding: 0 5px;
+	font-size: 0.777777778em;
+}
+
+.WritePost__preview-link input[type="text"] {
+	display: inline-block;
+	background: var( --hm-light-grey );
+	padding: 0px 5px;
+	margin: 0 1em;
+	border: none;
+	font-size: inherit;
+}
+
+.WritePost__preview-copied {
+	opacity: 0;
+	transition: opacity 100ms;
+}
+
+.WritePost__preview-copied.active {
+	opacity: 1;
+}
+
 @media ( max-width: 600px ) {
 	.WritePost > header > .Avatar {
 		display: none;
