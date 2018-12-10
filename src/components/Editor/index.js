@@ -208,7 +208,18 @@ export default class Editor extends React.PureComponent {
 	}
 
 	onPasteLink( url ) {
-		this.onButton( null, text => text ? `[${ text }](${ url })` : url );
+		this.onButton( null, text => {
+			if ( ! text ) {
+				return url;
+			}
+
+			// If we're replacing an existing link, don't format.
+			if ( text.match( /^https?:\/\/\S*$/ ) ) {
+				return url;
+			}
+
+			return `[${ text }](${ url })`;
+		} );
 	}
 
 	onSubmit( e ) {
