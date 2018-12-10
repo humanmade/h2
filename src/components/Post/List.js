@@ -129,7 +129,8 @@ export default connect( mapStateToProps, mapDispatchToProps )( withApiData( prop
 		filters.search = props.match.params.search;
 	}
 	if ( props.match.params.categorySlug && props.categories.data ) {
-		const matchingCategories = props.categories.data.filter( category => category.slug === props.match.params.categorySlug );
+		const expectedLink = `${ window.H2Data.site.home.replace( /\/$/, '' ) }/category/${ props.match.params.categorySlug }/`;
+		const matchingCategories = props.categories.data.filter( category => category.link === expectedLink );
 		if ( matchingCategories ) {
 			filters.categories = [ matchingCategories[0].id ];
 		}
