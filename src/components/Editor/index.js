@@ -282,17 +282,19 @@ export default class Editor extends React.PureComponent {
 					],
 				};
 			},
-			() => {
-				// Force the selection back.
-				const [ selectionStart, selectionEnd ] = this.state.lastSelection;
-				if ( this.textarea ) {
-					this.textarea.selectionStart = selectionStart;
-					this.textarea.selectionEnd = selectionEnd;
-					this.focus();
-					this.setState( { lastSelection: null } );
-				}
-			}
+			this.restoreSelection
 		);
+	}
+
+	restoreSelection = () => {
+		// Force the selection back.
+		const [ selectionStart, selectionEnd ] = this.state.lastSelection;
+		if ( this.textarea ) {
+			this.textarea.selectionStart = selectionStart;
+			this.textarea.selectionEnd = selectionEnd;
+			this.focus();
+			this.setState( { lastSelection: null } );
+		}
 	}
 
 	onUpload( files ) {
