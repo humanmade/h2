@@ -178,7 +178,7 @@ class Post extends Component {
 					{ this.state.isEditing ? (
 						editable ? (
 							<Editor
-								initialValue={ editable.meta.unprocessed_content || editable.content.raw }
+								initialValue={ editable.unprocessed_content || editable.content.raw }
 								submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
 								onCancel={ () => this.setState( { isEditing: false } ) }
 								onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
