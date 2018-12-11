@@ -282,17 +282,19 @@ export default class Editor extends React.PureComponent {
 					],
 				};
 			},
-			() => {
-				// Force the selection back.
-				const [ selectionStart, selectionEnd ] = this.state.lastSelection;
-				if ( this.textarea ) {
-					this.textarea.selectionStart = selectionStart;
-					this.textarea.selectionEnd = selectionEnd;
-					this.focus();
-					this.setState( { lastSelection: null } );
-				}
-			}
+			this.restoreSelection
 		);
+	}
+
+	restoreSelection = () => {
+		// Force the selection back.
+		const [ selectionStart, selectionEnd ] = this.state.lastSelection;
+		if ( this.textarea ) {
+			this.textarea.selectionStart = selectionStart;
+			this.textarea.selectionEnd = selectionEnd;
+			this.focus();
+			this.setState( { lastSelection: null } );
+		}
 	}
 
 	onUpload( files ) {
@@ -339,17 +341,23 @@ export default class Editor extends React.PureComponent {
 			trigger: completion.key,
 			onSelect: val => {
 				const content = this.state.content;
+				const before = content.substring( 0, completion.start );
 
 				const nextParts = [
-					content.substring( 0, completion.start ),
+					before,
 					val,
 					content.substring( completion.end ),
 				];
+				const nextCursor = before.length + val.length;
 
-				this.setState( {
-					completion: null,
-					content: nextParts.join( '' ),
-				} );
+				this.setState(
+					{
+						completion: null,
+						content: nextParts.join( '' ),
+						lastSelection: [ nextCursor, nextCursor ],
+					},
+					this.restoreSelection
+				);
 			},
 			onCancel: () => this.setState( { completion: null } ),
 		};
