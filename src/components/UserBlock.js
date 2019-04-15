@@ -19,9 +19,11 @@ export default function UserBlock( props ) {
 			<div>
 				<h2>{ user.name }</h2>
 				<p>@{ user.slug }</p>
-				<p className={ user.facts.job_title ? 'UserBlock-title' : 'UserBlock-title missing' }>
-					{ user.facts.job_title || 'Unknown Role' }
-				</p>
+				{ user.facts && (
+					<p className={ user.facts.job_title ? 'UserBlock-title' : 'UserBlock-title missing' }>
+						{ user.facts.job_title || 'Unknown Role' }
+					</p>
+				) }
 			</div>
 		</div>
 	);
