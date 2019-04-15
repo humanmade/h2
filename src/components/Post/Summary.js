@@ -11,7 +11,6 @@ import './Summary.css';
 const _n = ( single, plural, count ) => count === 1 ? `1 ${ single }` : `${ count } ${ plural }`;
 
 const Person = props => {
-	console.log( props );
 	if ( ! props.user ) {
 		return null;
 	}
@@ -33,7 +32,7 @@ const ConnectedPerson = withSingle(
 	{
 		mapDataToProps: data => ( {
 			user: data.post,
-		} )
+		} ),
 	}
 )( Person );
 
@@ -86,6 +85,6 @@ export default withArchive(
 		mapDataToProps: data => ( {
 			comments: data.posts,
 			loadingComments: data.loading,
-		} )
+		} ),
 	}
 )( Summary );
