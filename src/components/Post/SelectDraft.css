@@ -1,0 +1,37 @@
+.Post-SelectDraft__list {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+	margin: 0 -1rem;
+	padding: 0;
+}
+
+.Post-SelectDraft__draft {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1em;
+}
+
+.Post-SelectDraft__draft-main {
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	text-align: left;
+	flex-grow: 1;
+	padding: 0.5rem 0.5em;
+}
+
+.Post-SelectDraft__draft-main:hover {
+	background: var( --hm-red );
+	color: #fff;
+}
+
+.Post-SelectDraft__draft-title {
+	display: block;
+}
+
+.Post-SelectDraft__draft-meta {
+	opacity: 0.7;
+	font-size: 0.75em;
+}

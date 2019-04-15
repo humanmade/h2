@@ -66,6 +66,7 @@ function get_script_data() {
 	];
 
 	$data = [
+		'asset_url' => get_theme_file_uri( 'build/' ),
 		'site' => [
 			'name'           => get_bloginfo( 'name' ),
 			'url'            => site_url(),

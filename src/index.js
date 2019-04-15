@@ -1,3 +1,7 @@
+// Load asset paths from a variable instead.
+// This has to be the first import to ensure correct loading order.
+import './path';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { IntlProvider } from 'react-intl';

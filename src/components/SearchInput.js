@@ -164,7 +164,7 @@ class SearchInput extends React.Component {
 	onBlur = () => {
 		window.setTimeout( () => {
 			this.setState( { showSuggest: false } );
-		}, 100 );
+		}, 200 );
 	}
 
 	onSelect = item => {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TitleBar from './Sidebar/TitleBar';
+import Modal from './Modal';
 import { changes, getChangesForUser } from '../changelog';
 import { withCurrentUser } from '../hocs';
 
@@ -16,44 +16,35 @@ function Changes( props ) {
 	oldChanges.reverse();
 
 	return (
-		<div
-			className="Changes"
-			onClick={ onDismiss }
+		<Modal
+			title={ <span><i className="icon icon--mail" /> Latest Changes</span> }
+			onDismiss={ onDismiss }
 		>
-			<div
-				className="Changes-inner"
-				onClick={ e => e.stopPropagation() }
-			>
-				<TitleBar
-					title={ <span><i className="icon icon--mail" /> Latest Changes</span> }
-					onClose={ onDismiss }
-				/>
 
-				{ newChanges.map( change => (
-					<div
-						key={ change.title }
-						className="Changes-change"
-					>
-						<h3>{ change.title }</h3>
-						<change.content />
-					</div>
-				) ) }
+			{ newChanges.map( change => (
+				<div
+					key={ change.title }
+					className="Changes-change"
+				>
+					<h3>{ change.title }</h3>
+					<change.content />
+				</div>
+			) ) }
 
-				{ newChanges.length > 0 && oldChanges.length > 0 ? (
-					<h2 className="Changes-previous">Previous Changes</h2>
-				) : null }
+			{ newChanges.length > 0 && oldChanges.length > 0 ? (
+				<h2 className="Changes-previous">Previous Changes</h2>
+			) : null }
 
-				{ oldChanges.map( change => (
-					<div
-						key={ change.title }
-						className="Changes-change"
-					>
-						<h3>{ change.title }</h3>
-						<change.content />
-					</div>
-				) ) }
-			</div>
-		</div>
+			{ oldChanges.map( change => (
+				<div
+					key={ change.title }
+					className="Changes-change"
+				>
+					<h3>{ change.title }</h3>
+					<change.content />
+				</div>
+			) ) }
+		</Modal>
 	);
 }
 

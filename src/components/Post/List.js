@@ -118,6 +118,14 @@ const ConnectedPostsList = withArchive(
 	state => state.posts,
 	props => {
 		const filters = {};
+		const querystring = qs.parse( props.location.search, { ignoreQueryPrefix: true } );
+
+		// Post previews.
+		if ( querystring.preview && querystring.p ) {
+			filters.include = [ querystring.p ];
+			filters.status = 'draft';
+		}
+
 		if ( props.match.params.page ) {
 			filters.page = props.match.params.page;
 		}

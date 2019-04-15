@@ -107,7 +107,7 @@ export class Comment extends Component {
 							<Notification>Loading…</Notification>
 						) : (
 							<Editor
-								initialValue={ comment.meta.unprocessed_content || comment.content.raw }
+								initialValue={ comment.unprocessed_content || comment.content.raw }
 								submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
 								onCancel={ () => this.setState( { isEditing: false } ) }
 								onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }

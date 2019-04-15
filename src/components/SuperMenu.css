@@ -19,6 +19,7 @@
 
 .SuperMenu header {
 	margin: -1rem -20px 1rem;
+	flex-shrink: 0;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -64,6 +65,11 @@
 .SuperMenu ul {
 	list-style: none;
 	padding: 0;
+}
+
+.SuperMenu ul ul {
+	margin-left: 1em;
+	margin-bottom: 0;
 }
 
 @media ( min-width: 600px ) {

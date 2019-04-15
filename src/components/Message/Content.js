@@ -39,12 +39,27 @@ class ErrorBoundary extends React.Component {
 	}
 }
 
-const transform = node => {
+const transform = ( node, children ) => {
 	switch ( node.tagName ) {
 		// Trust embeds and iframes, as they have already passed through WP's validation.
 		case 'EMBED':
 		case 'IFRAME':
 			return <SafeEmbed node={ node } />;
+
+		case 'BLOCKQUOTE':
+			// Support WordPress embeds.
+			if ( node.dataset && node.dataset.secret ) {
+				return (
+					<blockquote
+						data-secret={ node.dataset.secret }
+					>
+						{ children }
+					</blockquote>
+				);
+			}
+
+			// For regular blockquotes, use built-in handling.
+			return;
 
 		default:
 			// Use built-in handling.

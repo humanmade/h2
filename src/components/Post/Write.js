@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 
+import SelectDraft from './SelectDraft';
 import RemotePreview from '../RemotePreview';
 import { withCategories, withCurrentUser } from '../../hocs';
 import { posts } from '../../types';
@@ -18,10 +19,15 @@ export class WritePost extends Component {
 		super( props );
 
 		this.state = {
+			draftId: null,
 			title: '',
+			initialContent: '',
 			error: null,
 			category: null,
 			isSubmitting: false,
+			isSaving: false,
+			lastSave: null,
+			didCopy: false,
 		};
 	}
 
@@ -34,6 +40,49 @@ export class WritePost extends Component {
 			}
 		}
 	}
+
+	getPostData( content, unprocessedContent ) {
+		return {
+			id: this.state.draftId || null,
+			content,
+			title: this.state.title,
+			categories: this.state.category ? [ this.state.category ] : [],
+			unprocessed_content: unprocessedContent,
+		};
+	}
+
+	getDraftUrl() {
+		return `${ window.H2Data.site.url.replace( /([^/])$/, '$1/' ) }?p=${ this.state.draftId }&preview=true`;
+	}
+
+	onSave = ( content, unprocessedContent ) => {
+		this.setState( {
+			isSaving: true,
+			error: null,
+		} );
+
+		const body = this.getPostData( content, unprocessedContent );
+
+		const onDoSave = body.id ? this.props.onUpdate : this.props.onCreate;
+		onDoSave( body )
+			.then( id => {
+				// const data = posts.getSingle( this.props.posts, id );
+
+				this.setState( {
+					draftId: id,
+					initialContent: unprocessedContent,
+					isSaving: false,
+					lastSave: Date.now(),
+				} );
+			} )
+			.catch( error => {
+				this.setState( {
+					isSaving: false,
+					error,
+				} );
+			} );
+	}
+
 	onSubmit( content, unprocessedContent ) {
 		if ( ! this.state.title ) {
 			this.setState( { error: { message: 'Your post needs a title!' } } );
@@ -46,14 +95,12 @@ export class WritePost extends Component {
 		} );
 
 		const body = {
-			content,
+			...this.getPostData( content, unprocessedContent ),
 			status: 'publish',
-			title: this.state.title,
-			categories: this.state.category ? [ this.state.category ] : [],
-			meta: { unprocessed_content: unprocessedContent },
 		};
 
-		this.props.onCreate( body )
+		const onDoSave = body.id ? this.props.onUpdate : this.props.onCreate;
+		onDoSave( body )
 			.then( id => {
 				const data = posts.getSingle( this.props.posts, id );
 				this.props.onDidCreatePost( data );
@@ -66,11 +113,44 @@ export class WritePost extends Component {
 			} );
 	}
 
+	onSelect = draft => {
+		if ( this.state.title !== '' || this.state.draftId !== null ) {
+			const proceed = window.confirm( 'This will erase your current draft. Proceed?' );
+			if ( ! proceed ) {
+				return false;
+			}
+		}
+
+		this.setState( {
+			draftId: draft.id,
+			title: draft.title.raw,
+			initialContent: draft.unprocessed_content || draft.content.raw,
+		} );
+	}
+
+	onClickPreview = e => {
+		e.preventDefault();
+		const input = e.target;
+		input.select();
+		document.execCommand( 'copy' );
+
+		// Show copy indicator, and hide after 1 second.
+		this.setState( { didCopy: true } );
+		window.setTimeout( () => this.setState( { didCopy: false } ), 1000 );
+	}
+
 	render() {
 		const user = this.props.currentUser;
 		const categories = this.props.categories.data || [];
 		return (
 			<div className="WritePost" ref={ ref => this.container = ref }>
+				<div className="WritePost__title">
+					<h2>Write a New Post</h2>
+					<SelectDraft
+						user={ user || null }
+						onSelect={ this.onSelect }
+					/>
+				</div>
 				<header>
 					<Avatar
 						url={ user ? user.avatar_urls['96'] : '' }
@@ -107,9 +187,14 @@ export class WritePost extends Component {
 					<div className="actions"></div>
 				</header>
 				<Editor
+					key={ this.state.draftId || '__none' }
+					initialValue={ this.state.initialContent }
+					lastSave={ this.state.lastSave }
 					previewComponent={ props => <RemotePreview type="post" { ...props } /> }
+					saveText={ this.state.isSaving ? 'Saving…' : 'Save' }
 					submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
 					onCancel={ this.props.onCancel }
+					onSave={ this.onSave }
 					onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
 				/>
 
@@ -117,6 +202,25 @@ export class WritePost extends Component {
 					<Notification type="error">
 						Could not submit: { this.state.error.message }
 					</Notification>
+				) }
+
+				{ this.state.draftId && (
+					<p className="WritePost__preview-link">
+						Preview URL:
+						<input
+							className="form__field--code"
+							type="text"
+							value={ this.getDraftUrl() }
+							onClick={ this.onClickPreview }
+							onMouseOver={ e => e.target.select() }
+						/>
+
+						<span
+							className={ `WritePost__preview-copied ${ this.state.didCopy ? 'active' : '' } ` }
+						>
+							Copied!
+						</span>
+					</p>
 				) }
 
 				{ this.props.children }
@@ -139,6 +243,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		onCreate: data => dispatch( posts.createSingle( data ) ),
+		onUpdate: data => dispatch( posts.updateSingle( data ) ),
 	};
 };
 

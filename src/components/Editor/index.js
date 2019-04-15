@@ -1,6 +1,7 @@
 import countWords from '@iarna/word-count';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { FormattedRelative } from 'react-intl';
 import { connect } from 'react-redux';
 import getCaretCoordinates from 'textarea-caret';
 import Turndown from 'turndown';
@@ -209,13 +210,28 @@ class Editor extends React.PureComponent {
 	}
 
 	onPasteLink( url ) {
-		this.onButton( null, text => text ? `[${ text }](${ url })` : url );
+		this.onButton( null, text => {
+			if ( ! text ) {
+				return url;
+			}
+
+			// If we're replacing an existing link, don't format.
+			if ( text.match( /^https?:\/\/\S*$/ ) ) {
+				return url;
+			}
+
+			return `[${ text }](${ url })`;
+		} );
 	}
 
 	onSubmit( e ) {
 		e.preventDefault();
 
 		this.props.onSubmit( compileMarkdown( this.state.content ), this.state.content );
+	}
+
+	onSave = () => {
+		this.props.onSave( compileMarkdown( this.state.content ), this.state.content );
 	}
 
 	onBlur() {
@@ -268,17 +284,19 @@ class Editor extends React.PureComponent {
 					],
 				};
 			},
-			() => {
-				// Force the selection back.
-				const [ selectionStart, selectionEnd ] = this.state.lastSelection;
-				if ( this.textarea ) {
-					this.textarea.selectionStart = selectionStart;
-					this.textarea.selectionEnd = selectionEnd;
-					this.focus();
-					this.setState( { lastSelection: null } );
-				}
-			}
+			this.restoreSelection
 		);
+	}
+
+	restoreSelection = () => {
+		// Force the selection back.
+		const [ selectionStart, selectionEnd ] = this.state.lastSelection;
+		if ( this.textarea ) {
+			this.textarea.selectionStart = selectionStart;
+			this.textarea.selectionEnd = selectionEnd;
+			this.focus();
+			this.setState( { lastSelection: null } );
+		}
 	}
 
 	onUpload( files ) {
@@ -326,17 +344,23 @@ class Editor extends React.PureComponent {
 			trigger: completion.key,
 			onSelect: val => {
 				const content = this.state.content;
+				const before = content.substring( 0, completion.start );
 
 				const nextParts = [
-					content.substring( 0, completion.start ),
+					before,
 					val,
 					content.substring( completion.end ),
 				];
+				const nextCursor = before.length + val.length;
 
-				this.setState( {
-					completion: null,
-					content: nextParts.join( '' ),
-				} );
+				this.setState(
+					{
+						completion: null,
+						content: nextParts.join( '' ),
+						lastSelection: [ nextCursor, nextCursor ],
+					},
+					this.restoreSelection
+				);
 			},
 			onCancel: () => this.setState( { completion: null } ),
 		};
@@ -471,11 +495,21 @@ class Editor extends React.PureComponent {
 						>
 							Format with Markdown
 						</a>
+						{ this.props.lastSave && (
+							<React.Fragment>
+								<br />
+								{ 'Last saved ' }
+								<FormattedRelative value={ this.props.lastSave } />
+							</React.Fragment>
+						) }
 					</small>
 					<span className="Editor-submit-buttons">
 						{ this.props.onCancel ? (
 							<Button onClick={ this.props.onCancel }>Cancel</Button>
 						) : null }
+						{ this.props.onSave && (
+							<Button onClick={ this.onSave }>{ this.props.saveText || 'Save' }</Button>
+						) }
 						<Button submit type="primary">{ this.props.submitText }</Button>
 					</span>
 				</p>
@@ -491,6 +525,7 @@ Editor.defaultProps = {
 
 Editor.propTypes = {
 	previewComponent: PropTypes.func,
+	saveText: PropTypes.string,
 	submitText: PropTypes.string,
 	onCancel: PropTypes.func,
 	onSubmit: PropTypes.func.isRequired,

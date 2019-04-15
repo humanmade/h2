@@ -143,6 +143,12 @@ class Post extends Component {
 								) ) }
 							</ul>
 						}
+						{ post.status === 'draft' && (
+							<span className="Post__status">
+								<span role="img" aria-label="">🔒</span>
+								Unpublished
+							</span>
+						) }
 						<Slot name="Post.byline" fillChildProps={ fillProps } />
 					</div>
 					{ Actions }
@@ -154,7 +160,7 @@ class Post extends Component {
 							<Notification>Loading…</Notification>
 						) : (
 							<Editor
-								initialValue={ post.meta.unprocessed_content || post.content.raw }
+								initialValue={ post.unprocessed_content || post.content.raw }
 								submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
 								onCancel={ () => this.setState( { isEditing: false } ) }
 								onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
