@@ -136,9 +136,15 @@ const ConnectedPostsList = withArchive(
 			filters.search = props.match.params.search;
 		}
 		if ( props.match.params.categorySlug && props.categories.data ) {
-			const matchingCategories = props.categories.data.filter( category => category.slug === props.match.params.categorySlug );
-			if ( matchingCategories ) {
+			const matchingCategories = props.categories.data.filter( category => {
+				const expected = `${ window.H2Data.site.home }/category/${ props.match.params.categorySlug }/`;
+				return category.link === expected;
+			} );
+			if ( matchingCategories.length ) {
 				filters.categories = [ matchingCategories[0].id ];
+			} else {
+				// Force the category not to match.
+				filters.categories = [ 0 ];
 			}
 		}
 
