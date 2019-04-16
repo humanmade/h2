@@ -75,7 +75,7 @@ class Post extends Component {
 
 	render() {
 		const { author, post } = this.props;
-		const categories = this.props.categories.data ? this.props.categories.data : [];
+		const categories = this.props.categories.data ? this.props.categories.data.filter( category => post.categories.indexOf( category.id ) >= 0 ) : [];
 		// Scale title down slightly for longer titles.
 		const headerStyle = {};
 		if ( post.title.rendered.length > 22 ) {
