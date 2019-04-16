@@ -46,7 +46,7 @@ export class WritePost extends Component {
 			id: this.state.draftId || null,
 			content,
 			title: this.state.title,
-			categories: this.state.category ? [ this.state.category ] : [],
+			categories: this.state.category ? [ this.state.category ] : undefined,
 			unprocessed_content: unprocessedContent,
 		};
 	}
