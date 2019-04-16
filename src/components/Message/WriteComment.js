@@ -37,7 +37,7 @@ class WriteComment extends React.Component {
 		const body = {
 			content,
 			post: this.props.parentPost.id,
-			meta: { unprocessed_content: unprocessedContent },
+			unprocessed_content: unprocessedContent,
 		};
 
 		if ( this.props.comment ) {
