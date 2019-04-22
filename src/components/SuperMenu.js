@@ -102,8 +102,7 @@ class SuperMenu extends React.Component {
 	}
 }
 
-export default withApiData( props => ( {
+export default withApiData( () => ( {
 	sites: '/h2/v1/site-switcher/sites',
-	user: '/wp/v2/users/me',
 	categories: '/wp/v2/categories?per_page=100',
 } ) )( SuperMenu );
