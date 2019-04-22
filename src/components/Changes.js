@@ -7,7 +7,17 @@ import { withCurrentUser } from '../hocs';
 import './Changes.css';
 
 function Changes( props ) {
-	const { newChanges, onDismiss } = props;
+	if ( ! props.currentUser ) {
+		return null;
+	}
+
+	const newChanges = getChangesForUser( props.currentUser );
+
+	const onDismiss = () => {
+		const meta = { h2_last_updated: ( new Date() ).toISOString() };
+		props.onUpdateCurrentUser( { meta } );
+		props.onDismiss();
+	};
 
 	// Separate old changes.
 	const oldChanges = changes.filter( change => newChanges.indexOf( change ) === -1 );
@@ -48,27 +58,4 @@ function Changes( props ) {
 	);
 }
 
-class ConnectedChanges extends React.Component {
-	render() {
-		if ( ! this.props.currentUser ) {
-			return null;
-		}
-
-		const newChanges = getChangesForUser( this.props.currentUser );
-
-		const onDismiss = () => {
-			const meta = { h2_last_updated: ( new Date() ).toISOString() };
-			this.props.onUpdateCurrentUser( { meta } );
-			this.props.onDismiss();
-		}
-
-		return (
-			<Changes
-				newChanges={ newChanges }
-				onDismiss={ onDismiss }
-			/>
-		);
-	}
-}
-
-export default withCurrentUser( ConnectedChanges );
+export default withCurrentUser( Changes );
