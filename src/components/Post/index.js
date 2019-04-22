@@ -2,14 +2,13 @@ import PropTypes from 'prop-types';
 import { withSingle } from '@humanmade/repress';
 import React, { Component } from 'react';
 import { FormattedRelative } from 'react-intl';
-import { connect } from 'react-redux';
 import { Slot } from 'react-slot-fill';
 
-import { withCategories } from '../../hocs';
+import { withCategories, withUser } from '../../hocs';
 import {
 	Post as PostShape,
 } from '../../shapes';
-import { posts, users } from '../../types';
+import { posts } from '../../types';
 
 import Summary from './Summary';
 import PostComments from './Comments';
@@ -74,7 +73,7 @@ class Post extends Component {
 	}
 
 	render() {
-		const { author, post } = this.props;
+		const { post, user } = this.props;
 		const categories = this.props.categories.data ? this.props.categories.data.filter( category => post.categories.indexOf( category.id ) >= 0 ) : [];
 		// Scale title down slightly for longer titles.
 		const headerStyle = {};
@@ -85,7 +84,7 @@ class Post extends Component {
 		const collapsed = ! ( this.state.expanded || this.props.expanded );
 
 		const fillProps = {
-			author,
+			author: user,
 			collapsed,
 			// comments,
 			categories,
@@ -111,8 +110,8 @@ class Post extends Component {
 			<div className={ classes.filter( Boolean ).join( ' ' ) }>
 				<header>
 					<Avatar
-						url={ author ? author.avatar_urls['96'] : '' }
-						user={ author }
+						url={ user ? user.avatar_urls['96'] : '' }
+						user={ user }
 						size={ 60 }
 					/>
 					<div className="byline">
@@ -124,8 +123,8 @@ class Post extends Component {
 							</h2>
 						</Link>
 						<span className="date">
-							{ author ? (
-								<AuthorLink user={ author }>{ author.name }</AuthorLink>
+							{ user ? (
+								<AuthorLink user={ user }>{ user.name }</AuthorLink>
 							) : ''},&nbsp;
 							<time
 								dateTime={ post.date_gmt + 'Z' }
@@ -199,22 +198,12 @@ Post.propTypes = {
 	data: PostShape.isRequired,
 };
 
-const mapStateToProps = ( state, props ) => {
-	if ( ! props.post ) {
-		return {};
-	}
-
-	return {
-		author: users.getSingle( state.users, props.post.author ),
-	};
-};
-
 export default withCategories(
 	withSingle(
 		posts,
 		state => state.posts,
 		props => props.data.id
 	)(
-		connect( mapStateToProps )( Post )
+		withUser( props => props.post.author )( Post )
 	)
 );
