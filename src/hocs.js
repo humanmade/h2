@@ -4,10 +4,15 @@ import { connect } from 'react-redux';
 import { users } from './types';
 import { withApiData } from './with-api-data';
 
-export const withCurrentUser = connect( state => ( {
-	currentUser: users.getSingle( state.users, state.users.current ),
-	loadingCurrentUser: users.isPostLoading( state.users, state.users.current ),
-} ) );
+export const withCurrentUser = connect(
+	state => ( {
+		currentUser: users.getSingle( state.users, state.users.current ),
+		loadingCurrentUser: users.isPostLoading( state.users, state.users.current ),
+	} ),
+	dispatch => ( {
+		onUpdateCurrentUser: data => dispatch( users.updateCurrent( data ) ),
+	} )
+);
 
 export const withUser = id => withSingle(
 	users,

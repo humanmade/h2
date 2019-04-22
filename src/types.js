@@ -25,6 +25,16 @@ export const users = new handler( {
 } );
 users.registerArchive( 'me', state => ( { include: state.users.current } ) );
 users.registerArchive( 'all', { per_page: 100 } );
+users.updateCurrent = ( function ( data ) {
+	return ( dispatch, getState ) => {
+		return dispatch(
+			users.updateSingle( {
+				...data,
+				id: getState().users.current,
+			} )
+		);
+	};
+} ).bind( users );
 
 export const media = new handler( {
 	nonce: window.wpApiSettings.nonce,
