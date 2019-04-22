@@ -9,7 +9,7 @@ import PageTitle from '../PageTitle';
 import Pagination from '../Pagination';
 import PostComponent from './index';
 import { setDefaultPostView } from '../../actions';
-import { withCategories } from '../../hocs';
+import { withCategories, withUsers } from '../../hocs';
 import { posts, users } from '../../types';
 import { decodeEntities } from '../../util';
 
@@ -161,15 +161,7 @@ const ConnectedPostsList = withPagedArchive(
 	}
 )( PostsList );
 
-const MoreConnectedPostsList = withArchive(
-	users,
-	state => state.users,
-	'all',
-	{
-		mapDataToProps: data => ( { users: data.posts } ),
-		mapActionsToProps: () => ( {} ),
-	}
-)( ConnectedPostsList );
+const MoreConnectedPostsList = withUsers( ConnectedPostsList );
 
 const mapStateToProps = state => ( {
 	defaultPostView: state.ui.defaultPostView,
