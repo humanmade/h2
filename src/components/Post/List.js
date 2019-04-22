@@ -1,4 +1,4 @@
-import { withArchive } from '@humanmade/repress';
+import { withArchive, withPagedArchive } from '@humanmade/repress';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import qs from 'qs';
@@ -32,7 +32,7 @@ class PostsList extends Component {
 
 	render() {
 		const { defaultPostView, summaryEnabled } = this.props;
-		if ( this.props.loading ) {
+		if ( this.props.loading || this.props.loadingMore ) {
 			return (
 				<PageTitle title="Loading…">
 					<div className="PostsList">
@@ -113,7 +113,9 @@ class PostsList extends Component {
 	}
 }
 
-const ConnectedPostsList = withArchive(
+const getPage = props => Number( props.match.params.page || 1 );
+
+const ConnectedPostsList = withPagedArchive(
 	posts,
 	state => state.posts,
 	props => {
@@ -126,9 +128,6 @@ const ConnectedPostsList = withArchive(
 			filters.status = 'draft';
 		}
 
-		if ( props.match.params.page ) {
-			filters.page = props.match.params.page;
-		}
 		if ( props.match.params.slug ) {
 			filters.slug = props.match.params.slug;
 		}
@@ -156,6 +155,9 @@ const ConnectedPostsList = withArchive(
 		const id = qs.stringify( filters );
 		posts.registerArchive( id, filters );
 		return id;
+	},
+	{
+		getPage,
 	}
 )( PostsList );
 
