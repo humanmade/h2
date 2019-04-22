@@ -1,4 +1,4 @@
-import { withArchive, withPagedArchive } from '@humanmade/repress';
+import { withPagedArchive } from '@humanmade/repress';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import qs from 'qs';
@@ -10,7 +10,7 @@ import Pagination from '../Pagination';
 import PostComponent from './index';
 import { setDefaultPostView } from '../../actions';
 import { withCategories, withUsers } from '../../hocs';
-import { posts, users } from '../../types';
+import { posts } from '../../types';
 import { decodeEntities } from '../../util';
 
 import './List.css';
