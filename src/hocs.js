@@ -39,3 +39,6 @@ export const withUsers = withArchive(
 		mapActionsToProps: () => ( {} ),
 	}
 );
+
+export const withSites = withApiData( () => ( { sites: '/h2/v1/site-switcher/sites' } ) );
+export const withWidgets = withApiData( () => ( { widgets: '/h2/v1/widgets?sidebar=sidebar' } ) );
