@@ -3,6 +3,7 @@ import React from 'react';
 import Logo from './Header/Logo';
 import Link from './RelativeLink';
 import SearchInput from './SearchInput';
+import { withCategories } from '../hocs';
 import { withApiData } from '../with-api-data';
 
 import './SuperMenu.css';
@@ -104,5 +105,4 @@ class SuperMenu extends React.Component {
 
 export default withApiData( () => ( {
 	sites: '/h2/v1/site-switcher/sites',
-	categories: '/wp/v2/categories?per_page=100',
-} ) )( SuperMenu );
+} ) )( withCategories( SuperMenu ) );
