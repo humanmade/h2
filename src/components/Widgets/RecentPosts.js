@@ -1,4 +1,4 @@
-import { withArchive } from '@humanmade/repress';
+import { withPagedArchive } from '@humanmade/repress';
 import React from 'react';
 import qs from 'qs';
 
@@ -11,7 +11,7 @@ import './RecentPosts.css';
 
 class PostList extends React.Component {
 	render() {
-		if ( this.props.loading ) {
+		if ( this.props.loading || this.props.loadingMore ) {
 			return <p>Loading…</p>;
 		}
 
@@ -48,7 +48,6 @@ class PostList extends React.Component {
 const mapPropsToArchive = props => {
 	const args = {
 		per_page: props.per_page,
-		page: props.page,
 	};
 
 	const id = qs.stringify( args );
@@ -56,7 +55,7 @@ const mapPropsToArchive = props => {
 	return id;
 };
 
-const ConnectedPostList = withArchive( posts, state => state.posts, mapPropsToArchive )( PostList );
+const ConnectedPostList = withPagedArchive( posts, state => state.posts, mapPropsToArchive )( PostList );
 
 export default class RecentPosts extends React.Component {
 	constructor( props ) {
