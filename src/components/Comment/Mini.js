@@ -6,15 +6,16 @@ import { compose } from 'redux';
 import Header from './Header';
 import MessageContent from '../Message/Content';
 import RelativeLink from '../RelativeLink';
-import { posts, users } from '../../types';
+import { withUser } from '../../hocs';
+import { posts } from '../../types';
 import { decodeEntities } from '../../util';
 
 import './Mini.css';
 
 function MiniComment( props ) {
-	const { author, comment, parentPost } = props;
+	const { comment, parentPost, user } = props;
 
-	if ( props.loadingParent || props.loadingAuthor ) {
+	if ( props.loadingParent || props.loadingUser ) {
 		return (
 			<div className="Comment-Mini">
 				Loading…
@@ -22,7 +23,7 @@ function MiniComment( props ) {
 		);
 	}
 
-	if ( ! parentPost || ! author ) {
+	if ( ! parentPost || ! user ) {
 		return (
 			<div className="Comment-Mini">
 				Unable to load comment
@@ -54,7 +55,7 @@ function MiniComment( props ) {
 			</p>
 			<div className="Comment-Mini__comment">
 				<Header
-					author={ author }
+					author={ user }
 					comment={ comment }
 					mini
 					post={ parentPost }
@@ -79,15 +80,5 @@ export default compose(
 			} ),
 		}
 	),
-	withSingle(
-		users,
-		state => state.users,
-		props => props.comment.author,
-		{
-			mapDataToProps: data => ( {
-				author: data.post,
-				loadingAuthor: data.loading,
-			} ),
-		}
-	)
+	withUser( props => props.comment.author )
 )( MiniComment );

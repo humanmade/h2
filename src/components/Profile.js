@@ -1,4 +1,3 @@
-import { withSingle } from '@humanmade/repress';
 import React from 'react';
 import { FormattedDate, FormattedTime } from 'react-intl';
 import { connect } from 'react-redux';
@@ -9,7 +8,7 @@ import RelativeLink from './RelativeLink';
 import UserBlock from './UserBlock';
 import Container from './Sidebar/Container';
 import { showSidebarComments } from '../actions';
-import { users } from '../types';
+import { withUser } from '../hocs';
 
 import './Profile.css';
 
@@ -68,7 +67,7 @@ class Profile extends React.Component {
 			onClose: this.props.onClose,
 		};
 
-		if ( this.props.loading ) {
+		if ( this.props.loadingUser ) {
 			return (
 				<Container { ...containerProps }>
 					<p>Loading…</p>
@@ -119,17 +118,7 @@ class Profile extends React.Component {
 	}
 }
 
-const ConnectedProfile = withSingle(
-	users,
-	state => state.users,
-	props => props.id,
-	{
-		mapDataToProps: data => ( {
-			loading: data.loading,
-			user: data.post,
-		} ),
-	}
-)( Profile );
+const ConnectedProfile = withUser( props => props.id )( Profile );
 
 const mapStateToProps = () => ( {} );
 

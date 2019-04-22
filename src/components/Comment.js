@@ -10,8 +10,9 @@ import Editor from './Editor';
 import MessageContent from './Message/Content';
 import WriteComment from './Message/WriteComment';
 import Notification from './Notification';
+import { withUser } from '../hocs';
 import { Comment as CommentShape } from '../shapes';
-import { comments, users } from '../types';
+import { comments } from '../types';
 
 import './Comment.css';
 
@@ -70,12 +71,12 @@ export class Comment extends Component {
 	}
 
 	render() {
-		const { author, comment, loading } = this.props;
+		const { comment, loading, user } = this.props;
 		const post = this.props.parentPost;
 		const directComments = this.props.comments.filter( c => c.parent === comment.id );
 
 		const fillProps = {
-			author,
+			author: user,
 			comment,
 			comments: this.props.comments,
 			post,
@@ -88,7 +89,7 @@ export class Comment extends Component {
 				ref={ el => this.element = el }
 			>
 				<CommentHeader
-					author={ author }
+					author={ user }
 					comment={ comment }
 					post={ post }
 				>
@@ -154,18 +155,7 @@ Comment.propTypes = {
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 
-export default withSingle(
-	users,
-	state => state.users,
-	props => props.comment.author,
-	{
-		mapDataToProps: data => ( {
-			author: data.post,
-			loadingAuthor: data.loading,
-		} ),
-		mapActionsToProps: () => ( {} ),
-	}
-)( withSingle(
+export default withUser( props => props.comment.author )( withSingle(
 	comments,
 	state => state.comments,
 	props => props.comment.id,

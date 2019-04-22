@@ -1,4 +1,4 @@
-import { withArchive } from '@humanmade/repress';
+import { withArchive, withSingle } from '@humanmade/repress';
 import { connect } from 'react-redux';
 
 import { users } from './types';
@@ -14,6 +14,18 @@ export const withCurrentUser = connect( state => ( {
 	currentUser: users.getSingle( state.users, state.users.current ),
 	loadingCurrentUser: users.isPostLoading( state.users, state.users.current ),
 } ) );
+
+export const withUser = id => withSingle(
+	users,
+	state => state.users,
+	id,
+	{
+		mapDataToProps: data => ( {
+			loadingUser: data.loading,
+			user: data.post,
+		} ),
+	}
+);
 
 export const withUsers = withArchive(
 	users,

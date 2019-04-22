@@ -1,10 +1,11 @@
-import { withArchive, withSingle } from '@humanmade/repress';
+import { withArchive } from '@humanmade/repress';
 import uniq from 'lodash/uniq';
 import React from 'react';
 
 import Avatar from '../Avatar';
 import Button from '../Button';
-import { comments, users } from '../../types';
+import { withUser } from '../../hocs';
+import { comments } from '../../types';
 
 import './Summary.css';
 
@@ -25,16 +26,7 @@ const Person = props => {
 	);
 };
 
-const ConnectedPerson = withSingle(
-	users,
-	state => state.users,
-	props => props.id,
-	{
-		mapDataToProps: data => ( {
-			user: data.post,
-		} ),
-	}
-)( Person );
+const ConnectedPerson = withUser( props => props.id )( Person );
 
 function Summary( props ) {
 	const { comments, post, onExpand } = props;

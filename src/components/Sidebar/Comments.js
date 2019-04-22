@@ -1,4 +1,4 @@
-import { withPagedArchive, withSingle } from '@humanmade/repress';
+import { withPagedArchive } from '@humanmade/repress';
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -8,8 +8,8 @@ import Pagination from './Pagination';
 import MiniComment from '../Comment/Mini';
 import LinkButton from '../LinkButton';
 import { showSidebarProfile } from '../../actions';
-
-import { comments, users } from '../../types';
+import { withUser } from '../../hocs';
+import { comments } from '../../types';
 
 import './Comments.css';
 
@@ -92,17 +92,7 @@ const mapDispatchtoProps = dispatch => ( {
 } );
 
 const withData = compose(
-	withSingle(
-		users,
-		state => state.users,
-		props => props.id,
-		{
-			mapDataToProps: data => ( {
-				loadingUser: data.loading,
-				user: data.post,
-			} ),
-		}
-	),
+	withUser( props => props.id ),
 	withPagedArchive(
 		comments,
 		state => state.comments,
