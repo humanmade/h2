@@ -23,8 +23,12 @@ export default function Pagination( props ) {
 
 	return (
 		<div className="pagination">
-			{ hasNext && (
+			{ hasNext ? (
 				<Link to={ olderPage }>Older</Link>
+			) : (
+				/* Hack to get pagination to float correctly */
+				/* eslint-disable-next-line jsx-a11y/anchor-is-valid */
+				<a style={ { display: 'none' } }>&nbsp;</a>
 			) }
 			{ page && page > 1 ? (
 				<Link to={ newerPage }>Newer</Link>
