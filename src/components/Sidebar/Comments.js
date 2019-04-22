@@ -1,13 +1,15 @@
-import qs from 'qs';
+import { withPagedArchive, withSingle } from '@humanmade/repress';
 import React from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 
 import Container from './Container';
 import Pagination from './Pagination';
 import MiniComment from '../Comment/Mini';
 import LinkButton from '../LinkButton';
 import { showSidebarProfile } from '../../actions';
-import { withApiData } from '../../with-api-data';
+
+import { comments, users } from '../../types';
 
 import './Comments.css';
 
@@ -18,7 +20,7 @@ class SidebarComments extends React.Component {
 			onClose: this.props.onClose,
 		};
 
-		if ( this.props.user.isLoading || this.props.comments.isLoading ) {
+		if ( this.props.loadingUser || this.props.loading || this.props.loadingMore ) {
 			return (
 				<Container
 					{ ...containerProps }
@@ -29,7 +31,7 @@ class SidebarComments extends React.Component {
 			);
 		}
 
-		const user = this.props.user.data;
+		const { comments, user } = this.props;
 		if ( ! user ) {
 			return (
 				<Container
@@ -41,7 +43,6 @@ class SidebarComments extends React.Component {
 			);
 		}
 
-		const comments = this.props.comments.data;
 		if ( ! comments ) {
 			return (
 				<Container
@@ -54,12 +55,6 @@ class SidebarComments extends React.Component {
 		}
 
 		containerProps.title = `${ user.name }’s Comments`;
-
-		// TODO: Add proper pagination support:
-		// https://github.com/joehoyle/with-api-data/issues/3
-		// In the meantime, if we have less than the requested number, it's likely
-		// that we don't have a next page.
-		const hasNext = this.props.comments.data.length === 10;
 		const hasPrevious = this.props.page > 1;
 
 		return (
@@ -81,7 +76,7 @@ class SidebarComments extends React.Component {
 				</div>
 
 				<Pagination
-					hasNext={ hasNext }
+					hasNext={ this.props.hasMore }
 					hasPrevious={ hasPrevious }
 					onNext={ this.props.onNext }
 					onPrevious={ this.props.onPrevious }
@@ -96,24 +91,44 @@ const mapDispatchtoProps = dispatch => ( {
 	onShowProfile: id => dispatch( showSidebarProfile( id ) ),
 } );
 
-const mapPropsToData = props => {
-	const args = {
-		author: props.id,
-		page: props.page,
-	};
-
-	return {
-		comments: `/wp/v2/comments?${ qs.stringify( args ) }`,
-		user: `/wp/v2/users/${ props.id }`,
-	};
-};
-
-const ConnectedComments = connect(
-	mapStateToProps,
-	mapDispatchtoProps
-)(
-	withApiData( mapPropsToData )( SidebarComments )
+const withData = compose(
+	withSingle(
+		users,
+		state => state.users,
+		props => props.id,
+		{
+			mapDataToProps: data => ( {
+				loadingUser: data.loading,
+				user: data.post,
+			} ),
+		}
+	),
+	withPagedArchive(
+		comments,
+		state => state.comments,
+		props => {
+			const id = `user/${ props.id }`;
+			comments.registerArchive( id, {
+				author: props.id,
+			} );
+			return id;
+		},
+		{
+			mapDataToProps: data => ( {
+				comments: data.posts,
+				hasMore: data.hasMore,
+				loading: data.loading,
+				loadingMore: data.loadingMore,
+			} ),
+		}
+	),
+	connect(
+		mapStateToProps,
+		mapDispatchtoProps
+	)
 );
+
+const ConnectedComments = withData( SidebarComments );
 
 export default class SidebarCommentsWrap extends React.Component {
 	constructor( props ) {
