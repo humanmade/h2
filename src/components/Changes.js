@@ -50,7 +50,7 @@ function Changes( props ) {
 
 class ConnectedChanges extends React.Component {
 	render() {
-		if ( ! this.props.currentUser || ! this.props.currentUser ) {
+		if ( ! this.props.currentUser ) {
 			return null;
 		}
 
@@ -58,13 +58,7 @@ class ConnectedChanges extends React.Component {
 
 		const onDismiss = () => {
 			const meta = { h2_last_updated: ( new Date() ).toISOString() };
-			this.props.fetch( '/wp/v2/users/me', {
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify( { meta } ),
-				method: 'PUT',
-			} ).then( r => r.json().then( data => {
-				this.props.invalidateData();
-			} ) );
+			this.props.onUpdateCurrentUser( { meta } );
 			this.props.onDismiss();
 		}
 
