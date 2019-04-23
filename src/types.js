@@ -28,7 +28,7 @@ users.registerArchive( 'all', { per_page: 100 } );
 users.updateCurrent = ( function ( data ) {
 	return ( dispatch, getState ) => {
 		return dispatch(
-			users.updateSingle( {
+			this.updateSingle( {
 				...data,
 				id: getState().users.current,
 			} )
