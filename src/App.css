@@ -60,20 +60,22 @@
 	}
 }
 
-body.admin-bar .App > .Outer > aside {
-	top: 32px;
+@media screen and ( min-width: 600px ) and ( max-width: 782px ) {
+	body.admin-bar .App > .Outer > aside {
+		top: 46px;
+		height: calc( 100vh - 46px );
+	}
+}
+
+@media ( min-width: 783px ) {
+	body.admin-bar .App > .Outer > aside {
+		top: 32px;
+	}
 }
 
 @media ( min-width: 800px ) {
 	body.admin-bar .App > .Outer > aside {
 		height: calc( 100vh - 32px );
-	}
-}
-
-@media screen and ( max-width: 782px ) {
-	body.admin-bar .App > .Outer > aside {
-		top: 48px;
-		height: calc( 100vh - 48px );
 	}
 }
 
