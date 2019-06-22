@@ -35,13 +35,15 @@
 	z-index: 3;
 }
 
-body.admin-bar .Comment .Comment-Header {
-	top: 131px; /* 32 + 99 */
+@media screen and ( min-width: 600px ) and ( max-width: 782px ) {
+	body.admin-bar .Comment .Comment-Header {
+		top: 145px; /* 46 + 99 */
+	}
 }
 
-@media screen and ( max-width: 782px ) {
+@media screen and ( min-width: 783px ) {
 	body.admin-bar .Comment .Comment-Header {
-		top: 147px; /* 48 + 99 */
+		top: 131px; /* 32 + 99 */
 	}
 }
 
