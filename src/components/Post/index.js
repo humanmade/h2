@@ -12,10 +12,8 @@ import { posts } from '../../types';
 import Summary from './Summary';
 import PostComments from './Comments';
 import Button from '../Button';
-import Editor from '../Editor';
-import Notification from '../Notification';
-import MessageContent from '../Message/Content';
 import MessageHeader from '../Message/Header';
+import MessageMain from '../Message/Main';
 
 import './index.css';
 
@@ -107,28 +105,21 @@ class Post extends Component {
 				>
 					{ Actions }
 				</MessageHeader>
-				<div className="Post-content-wrap">
-					<Slot name="Post.before_content" fillChildProps={ fillProps } />
-					{ this.state.isEditing ? (
-						this.props.loading ? (
-							<Notification>Loading…</Notification>
-						) : (
-							<Editor
-								initialValue={ post.unprocessed_content || post.content.raw }
-								submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
-								onCancel={ () => this.setState( { isEditing: false } ) }
-								onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
-							/>
-						)
-					) : (
-						<MessageContent html={ post.content.rendered } />
-					) }
-					<Slot name="Post.after_content" fillChildProps={ fillProps } />
-					<div className="Post-footer-actions">
-						{ Actions }
-						<Slot name="Post.footer_actions" fillChildProps={ fillProps } />
-					</div>
-				</div>
+
+				<MessageMain
+					author={ user }
+					categories={ categories }
+					collapsed={ collapsed }
+					post={ post }
+					isEditing={ this.state.isEditing }
+					isLoading={ this.props.loading }
+					isSubmitting={ this.state.isSubmitting }
+					onCancel={ () => this.setState( { isEditing: false } ) }
+					onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
+				>
+					{ Actions }
+				</MessageMain>
+
 				{ collapsed ? (
 					<Summary
 						post={ post }
