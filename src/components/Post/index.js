@@ -27,22 +27,27 @@ class Post extends Component {
 			isSubmitting: false,
 		};
 	}
-	onClickReply() {
+
+	onClickReply = () => {
 		this.setState( { isShowingReply: true } )
 	}
-	onClickCancelReply() {
+
+	onClickCancelReply = () => {
 		this.setState( { isShowingReply: false } )
 	}
+
 	onClickEdit = () => {
 		this.setState( { isEditing: true } );
 		if ( ! ( 'raw' in this.props.post.content ) ) {
 			this.props.onLoad( 'edit' );
 		}
 	}
-	onDidCreateComment( ...args ) {
+
+	onDidCreateComment = ( ...args ) => {
 		this.setState( { isShowingReply: false } )
 	}
-	onSubmitEditing( content, unprocessedContent ) {
+
+	onSubmitEditing = ( content, unprocessedContent ) => {
 		this.setState( { isSubmitting: true } );
 
 		const body = {
@@ -90,7 +95,7 @@ class Post extends Component {
 				{ ! this.state.isEditing &&
 					<Button onClick={ this.onClickEdit }>Edit</Button>
 				}
-				<Button onClick={ () => this.onClickReply() }>Reply</Button>
+				<Button onClick={ this.onClickReply }>Reply</Button>
 				<Slot name="Post.actions" fillChildProps={ fillProps } />
 			</div>
 		);
@@ -115,7 +120,7 @@ class Post extends Component {
 					isLoading={ this.props.loading }
 					isSubmitting={ this.state.isSubmitting }
 					onCancel={ () => this.setState( { isEditing: false } ) }
-					onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
+					onSubmit={ this.onSubmitEditing }
 				>
 					{ Actions }
 				</MessageMain>
@@ -129,9 +134,8 @@ class Post extends Component {
 					<PostComments
 						post={ post }
 						showingReply={ this.state.isShowingReply }
-						onCancelReply={ () => this.onClickCancelReply() }
-						onComment={ () => this.onComment() }
-						onDidCreateComment={ ( ...args ) => this.onDidCreateComment( ...args ) }
+						onCancelReply={ this.onClickCancelReply }
+						onDidCreateComment={ this.onDidCreateComment }
 					/>
 				) }
 			</div>
