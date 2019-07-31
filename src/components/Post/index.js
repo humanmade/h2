@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { withSingle } from '@humanmade/repress';
 import React, { Component } from 'react';
-import { FormattedRelative } from 'react-intl';
 import { Slot } from 'react-slot-fill';
 
 import { withCategories, withUser } from '../../hocs';
@@ -12,14 +11,11 @@ import { posts } from '../../types';
 
 import Summary from './Summary';
 import PostComments from './Comments';
-import Avatar from '../Avatar';
 import Button from '../Button';
 import Editor from '../Editor';
 import Notification from '../Notification';
-import Link from '../RelativeLink';
-import AuthorLink from '../Message/AuthorLink';
 import MessageContent from '../Message/Content';
-import { decodeEntities } from '../../util';
+import MessageHeader from '../Message/Header';
 
 import './index.css';
 
@@ -108,50 +104,14 @@ class Post extends Component {
 
 		return (
 			<div className={ classes.filter( Boolean ).join( ' ' ) }>
-				<header>
-					<Avatar
-						url={ user ? user.avatar_urls['96'] : '' }
-						user={ user }
-						size={ 60 }
-					/>
-					<div className="byline">
-						<Link to={ post.link }>
-							<h2
-								style={ headerStyle }
-							>
-								{ decodeEntities( post.title.rendered ) }
-							</h2>
-						</Link>
-						<span className="date">
-							{ user ? (
-								<AuthorLink user={ user }>{ user.name }</AuthorLink>
-							) : ''},&nbsp;
-							<time
-								dateTime={ post.date_gmt + 'Z' }
-								title={ post.date_gmt + 'Z' }
-							>
-								<FormattedRelative value={ post.date_gmt + 'Z' } />
-							</time>
-						</span>
-						{categories.length > 0 &&
-							<ul className="categories">
-								{ categories.map( category => (
-									<li key={ category.id }>
-										<Link to={ category.link }>{ category.name }</Link>
-									</li>
-								) ) }
-							</ul>
-						}
-						{ post.status === 'draft' && (
-							<span className="Post__status">
-								<span role="img" aria-label="">🔒</span>
-								Unpublished
-							</span>
-						) }
-						<Slot name="Post.byline" fillChildProps={ fillProps } />
-					</div>
+				<MessageHeader
+					author={ user }
+					categories={ categories }
+					collapsed={ collapsed }
+					post={ post }
+				>
 					{ Actions }
-				</header>
+				</MessageHeader>
 				<div className="Post-content-wrap">
 					<Slot name="Post.before_content" fillChildProps={ fillProps } />
 					{ this.state.isEditing ? (

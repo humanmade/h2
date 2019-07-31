@@ -1,0 +1,95 @@
+.Message-Header {
+	position: sticky;
+	top: 0;
+	z-index: 5;
+	padding: 15px 0;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	height: 99px;
+}
+
+@media screen and ( min-width: 600px ) and ( max-width: 782px ) {
+	body.admin-bar .Message-Header {
+		top: 46px;
+	}
+}
+
+@media screen and ( min-width: 783px ) {
+	body.admin-bar .Message-Header {
+		top: 32px;
+	}
+}
+
+.PostsList .Message-Header {
+	margin-top: -15px;
+}
+
+.Message-Header .Avatar {
+	margin-right: 30px;
+	width: 3.333rem;
+	height: 3.333rem;
+	border-radius: 100%;
+	align-self: flex-start;
+}
+
+.Message-Header__byline {
+	flex-direction: column;
+	flex-grow: 1;
+	min-width: 0;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.Message-Header__title {
+	margin: 0 0.5em 0 0;
+	text-overflow: ellipsis;
+	text-transform: inherit;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.Message-Header__date {
+	color: #AAA;
+	font-size: 14px;
+}
+
+.Message-Header__categories {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: inline;
+	font-size: 14px;
+}
+
+.Message-Header__categories li {
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.Message-Header__status {
+	font-size: 14px;
+	margin-left: 10px;
+}
+
+@media ( max-width: 600px ) {
+	.Message-Header {
+		margin: 0 -20px;
+		padding: 0.5em 20px;
+		height: auto;
+		display: block;
+	}
+	.Message-Header .Avatar {
+		margin-left: 8px;
+		margin-right: 0;
+		float: right;
+	}
+	.Message-Header .Avatar,
+	.Message-Header .Avatar img {
+		width: 24px !important;
+		height: 24px !important;
+	}
+	.Message-Header > .actions {
+		display: none;
+	}
+}
