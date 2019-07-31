@@ -88,12 +88,14 @@ class Profile extends React.Component {
 			<Container { ...containerProps }>
 				<UserBlock user={ user } />
 
-				<Map
-					height="200"
-					location={ user.facts.location }
-					width="300"
-					zoom="2.0"
-				/>
+				{ user.facts && (
+					<Map
+						height="200"
+						location={ user.facts.location }
+						width="300"
+						zoom="2.0"
+					/>
+				) }
 
 				<ul className="Profile-navigation">
 					<li>
@@ -109,7 +111,7 @@ class Profile extends React.Component {
 				</div>
 
 				<div className="Profile-description">
-					{ user.facts.long_description.split( '\n' ).map( ( text, idx ) =>
+					{ user.facts && user.facts.long_description.split( '\n' ).map( ( text, idx ) =>
 						<p key={ idx }>{ text }</p>
 					) }
 				</div>

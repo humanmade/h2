@@ -2,7 +2,7 @@
   "name": "h2",
   "version": "0.0.1",
   "private": true,
-  "homepage": "https://makeh2.hmn.md/content/themes/h2/build",
+  "homepage": ".",
   "devDependencies": {
     "@storybook/react": "^3.4.10",
     "babel-eslint": "^7.2.3",
