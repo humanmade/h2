@@ -71,11 +71,6 @@ class Post extends Component {
 	render() {
 		const { post, user } = this.props;
 		const categories = this.props.categories.data ? this.props.categories.data.filter( category => post.categories.indexOf( category.id ) >= 0 ) : [];
-		// Scale title down slightly for longer titles.
-		const headerStyle = {};
-		if ( post.title.rendered.length > 22 ) {
-			headerStyle.fontSize = '1.333333333rem';
-		}
 
 		const collapsed = ! ( this.state.expanded || this.props.expanded );
 

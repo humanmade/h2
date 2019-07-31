@@ -10,7 +10,7 @@ import { decodeEntities } from '../../util';
 import './Header.css';
 
 export default function MessageHeader( props ) {
-	const { author, categories, collapsed, post } = props;
+	const { author, categories, post } = props;
 	const { children, ...fillProps } = props;
 
 	// Scale title down slightly for longer titles.
