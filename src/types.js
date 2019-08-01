@@ -80,3 +80,27 @@ media.uploadSingle = ( function ( file ) {
 			} );
 	};
 } ).bind( media );
+
+export const pages = new handler( {
+	nonce: window.wpApiSettings.nonce,
+	type: 'pages',
+	url: `${ window.wpApiSettings.root }wp/v2/pages`,
+} );
+
+const normalizePath = path => path.replace( /^\/+|\/+$/g, '' );
+pages.idForPath = path => {
+	// Query by slug for the final path component.
+	const normalized = normalizePath( path );
+	const components = normalized.split( '/' );
+	pages.registerArchive( normalized, {
+		slug: components.slice( -1 )[0],
+	} );
+	return normalized;
+};
+
+const pathForPage = page => normalizePath( page.link.substr( window.H2Data.site.home.length ) );
+// Whittle down to the only page that matches fully.
+pages.findPage = ( pages, path ) => {
+	const normalized = normalizePath( path );
+	return pages.find( page => pathForPage( page ) === normalized );
+};
