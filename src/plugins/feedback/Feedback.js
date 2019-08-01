@@ -52,7 +52,7 @@ class Feedback extends React.Component {
 				title="Feedback"
 				onDismiss={ this.props.onDismiss }
 			>
-				<p>Found a problem? Missing a feature? Submit quick feedback in seconds right here!</p>
+				<p>Found a problem? Missing a feature? Submit quick feedback in seconds right here! Your name and current page will be shared automatically when you submit the form.</p>
 				<p>You can also <a href="https://github.com/humanmade/H2/issues/new">file a bug on GitHub</a>.</p>
 
 				<form
