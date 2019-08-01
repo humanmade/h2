@@ -58,6 +58,8 @@ class Header extends Component {
 						onClick={ this.props.onShowChanges }
 					/>
 
+					<Slot name="Header.secondary_buttons" />
+
 					{ this.props.currentUser ? (
 						<CurrentUser
 							user={ this.props.currentUser.data }
