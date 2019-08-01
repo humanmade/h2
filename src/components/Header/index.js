@@ -7,8 +7,8 @@ import HeaderButton from './HeaderButton';
 import HeaderLabel from './HeaderLabel';
 import Logo from './Logo';
 import SearchInput from '../SearchInput';
-import { withApiData } from '../../with-api-data';
 import { getChangesForUser } from '../../changelog';
+import { withCurrentUser } from '../../hocs';
 
 import './index.css';
 
@@ -58,7 +58,7 @@ class Header extends Component {
 						onClick={ this.props.onShowChanges }
 					/>
 
-					{ this.props.currentUser.data ? (
+					{ this.props.currentUser ? (
 						<CurrentUser
 							user={ this.props.currentUser.data }
 							onLogOut={ this.props.onLogOut }
@@ -83,4 +83,4 @@ Header.propTypes = {
 	onSearch: PropTypes.func.isRequired,
 };
 
-export default withApiData( props => ( { currentUser: '/wp/v2/users/me' } ) )( Header );
+export default withCurrentUser( Header );

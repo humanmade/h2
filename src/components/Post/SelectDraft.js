@@ -1,9 +1,10 @@
+import { withArchive } from '@humanmade/repress';
 import React from 'react';
 import { FormattedRelative } from 'react-intl';
 
 import Button from '../Button';
 import Modal from '../Modal';
-import { withApiData } from '../../with-api-data';
+import { posts } from '../../types';
 
 import './SelectDraft.css';
 
@@ -22,7 +23,7 @@ class SelectDraft extends React.Component {
 	}
 
 	render() {
-		const { data, isLoading } = this.props.drafts || {};
+		const { loading, posts } = this.props;
 
 		if ( ! this.state.showingSelector ) {
 			return (
@@ -31,8 +32,8 @@ class SelectDraft extends React.Component {
 				>
 					Drafts
 
-					{ data && (
-						<span className="label__count">{ data.length }</span>
+					{ posts && (
+						<span className="label__count">{ posts.length }</span>
 					) }
 				</Button>
 			);
@@ -44,13 +45,13 @@ class SelectDraft extends React.Component {
 				title="Your Drafts"
 				onDismiss={ () => this.setState( { showingSelector: false } ) }
 			>
-				{ ( ! this.props.drafts || isLoading ) ? (
+				{ ( ! posts || loading ) ? (
 					<p>Loading</p>
-				) : data.length === 0 ? (
+				) : posts.length === 0 ? (
 					<p>No drafts found!</p>
 				) : (
 					<ul className="Post-SelectDraft__list">
-						{ data.map( post => (
+						{ posts.map( post => (
 							<li
 								key={ post.id }
 								className="Post-SelectDraft__draft"
@@ -79,13 +80,18 @@ class SelectDraft extends React.Component {
 	}
 }
 
-const mapDataToProps = props => {
-	if ( ! props.user ) {
-		return {};
-	}
+export default withArchive(
+	posts,
+	state => state.posts,
+	props => {
+		const args = {
+			status: 'draft',
+			context: 'edit',
+			author: props.user.id,
+		};
 
-	return {
-		drafts: `/wp/v2/posts?status=draft&context=edit&author=${ props.user.id }`,
-	};
-};
-export default withApiData( mapDataToProps )( SelectDraft );
+		const id = `drafts/${ props.user.id }`;
+		posts.registerArchive( id, args );
+		return id;
+	}
+)( SelectDraft );

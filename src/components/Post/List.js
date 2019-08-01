@@ -1,3 +1,4 @@
+import { withPagedArchive } from '@humanmade/repress';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import qs from 'qs';
@@ -8,8 +9,9 @@ import PageTitle from '../PageTitle';
 import Pagination from '../Pagination';
 import PostComponent from './index';
 import { setDefaultPostView } from '../../actions';
+import { withCategories, withUsers } from '../../hocs';
+import { posts } from '../../types';
 import { decodeEntities } from '../../util';
-import { withApiData } from '../../with-api-data';
 
 import './List.css';
 
@@ -30,6 +32,29 @@ class PostsList extends Component {
 
 	render() {
 		const { defaultPostView, summaryEnabled } = this.props;
+		if ( this.props.loading || this.props.loadingMore ) {
+			return (
+				<PageTitle title="Loading…">
+					<div className="PostsList">
+						{/* Dummy div to measure width */}
+						<div ref={ this.onUpdateWidth } />
+
+						{ /* Show two faux posts loading */ }
+						<Loader width={ this.state.containerWidth } />
+						<Loader width={ this.state.containerWidth } />
+					</div>
+				</PageTitle>
+			);
+		}
+		if ( ! this.props.posts || ! this.props.posts[0] ) {
+			return (
+				<PageTitle title="Not Found">
+					<div className="PostsList">
+						Error
+					</div>
+				</PageTitle>
+			);
+		}
 
 		const isSingular = !! this.props.match.params.slug;
 		const getTitle = () => {
@@ -42,16 +67,8 @@ class PostsList extends Component {
 				return null;
 			}
 
-			if ( this.props.posts.isLoading ) {
-				return 'Loading…';
-			}
-
-			if ( ! this.props.posts.data || ! this.props.posts.data[0] ) {
-				return 'Not Found';
-			}
-
-			return decodeEntities( this.props.posts.data[0].title.rendered );
-		}
+			return decodeEntities( this.props.posts[0].title.rendered );
+		};
 
 		return (
 			<PageTitle title={ getTitle() }>
@@ -75,18 +92,8 @@ class PostsList extends Component {
 						/* Dummy settings div to ensure markup matches */
 						<div className="PostsList--settings" />
 					) }
-					{ this.props.posts.isLoading && (
-						<React.Fragment>
-							{/* Dummy div to measure width */}
-							<div ref={ this.onUpdateWidth } />
-
-							{ /* Show two faux posts loading */ }
-							<Loader width={ this.state.containerWidth } />
-							<Loader width={ this.state.containerWidth } />
-						</React.Fragment>
-					) }
-					{ this.props.posts.data &&
-						this.props.posts.data.map( post => (
+					{ this.props.posts &&
+						this.props.posts.map( post => (
 							<PostComponent
 								key={ post.id }
 								data={ post }
@@ -96,6 +103,7 @@ class PostsList extends Component {
 						) )
 					}
 					<Pagination
+						hasNext={ this.props.hasMore }
 						params={ this.props.match.params }
 						path={ this.props.match.path }
 					/>
@@ -104,6 +112,56 @@ class PostsList extends Component {
 		);
 	}
 }
+
+const getPage = props => Number( props.match.params.page || 1 );
+
+const ConnectedPostsList = withPagedArchive(
+	posts,
+	state => state.posts,
+	props => {
+		const filters = {};
+		const querystring = qs.parse( props.location.search, { ignoreQueryPrefix: true } );
+
+		// Post previews.
+		if ( querystring.preview && querystring.p ) {
+			filters.include = [ querystring.p ];
+			filters.status = 'draft';
+		}
+
+		if ( props.match.params.slug ) {
+			filters.slug = props.match.params.slug;
+		}
+		if ( props.match.params.search ) {
+			filters.search = props.match.params.search;
+		}
+		if ( props.match.params.categorySlug && props.categories.data ) {
+			const matchingCategories = props.categories.data.filter( category => {
+				const expected = `${ window.H2Data.site.home }/category/${ props.match.params.categorySlug }/`;
+				return category.link === expected;
+			} );
+			if ( matchingCategories.length ) {
+				filters.categories = [ matchingCategories[0].id ];
+			} else {
+				// Force the category not to match.
+				filters.categories = [ 0 ];
+			}
+		}
+
+		if ( props.match.params.authorSlug && props.users ) {
+			const user = props.users.filter( user => user.slug === props.match.params.authorSlug )[0];
+			filters.author = user.id;
+		}
+
+		const id = qs.stringify( filters );
+		posts.registerArchive( id, filters );
+		return id;
+	},
+	{
+		getPage,
+	}
+)( PostsList );
+
+const MoreConnectedPostsList = withUsers( ConnectedPostsList );
 
 const mapStateToProps = state => ( {
 	defaultPostView: state.ui.defaultPostView,
@@ -114,45 +172,4 @@ const mapDispatchToProps = dispatch => ( {
 	setDefaultPostView: view => dispatch( setDefaultPostView( view ) ),
 } );
 
-export default connect( mapStateToProps, mapDispatchToProps )( withApiData( props => ( {
-	categories: props.match.params.categorySlug ? '/wp/v2/categories?per_page=100' : null,
-	users: props.match.params.authorSlug ? '/wp/v2/users?per_page=100' : null,
-} ) )( withApiData( props => {
-	const filters = {};
-	const querystring = qs.parse( props.location.search, { ignoreQueryPrefix: true } );
-
-	// Post previews.
-	if ( querystring.preview && querystring.p ) {
-		filters.include = [ querystring.p ];
-		filters.status = 'draft';
-	}
-
-	if ( props.match.params.page ) {
-		filters.page = props.match.params.page;
-	}
-	if ( props.match.params.slug ) {
-		filters.slug = props.match.params.slug;
-	}
-	if ( props.match.params.search ) {
-		filters.search = props.match.params.search;
-	}
-	if ( props.match.params.categorySlug && props.categories.data ) {
-		const expectedLink = `${ window.H2Data.site.home.replace( /\/$/, '' ) }/category/${ props.match.params.categorySlug }/`;
-		const matchingCategories = props.categories.data.filter( category => category.link === expectedLink );
-		if ( matchingCategories ) {
-			filters.categories = [ matchingCategories[0].id ];
-		}
-	}
-
-	if ( props.match.params.authorSlug && props.users.data ) {
-		const user = props.users.data.filter( user => user.slug === props.match.params.authorSlug )[0];
-		filters.author = user.id;
-	}
-
-	let postsRoute = '/wp/v2/posts';
-	if ( Object.keys( filters ).length > 0 ) {
-		postsRoute += '?' + qs.stringify( filters );
-	}
-
-	return { posts: postsRoute };
-} )( PostsList ) ) );
+export default connect( mapStateToProps, mapDispatchToProps )( withCategories( MoreConnectedPostsList ) );

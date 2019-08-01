@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 
 import SelectDraft from './SelectDraft';
 import RemotePreview from '../RemotePreview';
-import { withApiData } from '../../with-api-data';
-import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
+import { withCategories, withCurrentUser } from '../../hocs';
+import { posts } from '../../types';
 
 import Avatar from '../Avatar';
 import Editor from '../Editor';
@@ -45,7 +46,7 @@ export class WritePost extends Component {
 			id: this.state.draftId || null,
 			content,
 			title: this.state.title,
-			categories: this.state.category ? [ this.state.category ] : [],
+			categories: this.state.category ? [ this.state.category ] : undefined,
 			unprocessed_content: unprocessedContent,
 		};
 	}
@@ -61,33 +62,25 @@ export class WritePost extends Component {
 		} );
 
 		const body = this.getPostData( content, unprocessedContent );
-		const url = body.id ? `/wp/v2/posts/${ body.id }` : '/wp/v2/posts';
-		const method = body.id ? 'PUT' : 'POST';
 
-		this.props.fetch( url, {
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify( body ),
-			method,
-		} ).then( r => r.json().then( data => {
-			if ( ! r.ok ) {
+		const onDoSave = body.id ? this.props.onUpdate : this.props.onCreate;
+		onDoSave( body )
+			.then( id => {
+				// const data = posts.getSingle( this.props.posts, id );
+
+				this.setState( {
+					draftId: id,
+					initialContent: unprocessedContent,
+					isSaving: false,
+					lastSave: Date.now(),
+				} );
+			} )
+			.catch( error => {
 				this.setState( {
 					isSaving: false,
-					error: data,
+					error,
 				} );
-				return;
-			}
-
-			this.setState( {
-				draftId: data.id,
-				initialContent: unprocessedContent,
-				isSaving: false,
-				lastSave: Date.now(),
 			} );
-			this.props.invalidateDataForUrl( '/wp/v2/posts?status=draft&context=edit' );
-		} ) );
 	}
 
 	onSubmit( content, unprocessedContent ) {
@@ -105,41 +98,19 @@ export class WritePost extends Component {
 			...this.getPostData( content, unprocessedContent ),
 			status: 'publish',
 		};
-		const url = body.id ? `/wp/v2/posts/${ body.id }` : '/wp/v2/posts';
-		const method = body.id ? 'PUT' : 'POST';
 
-		this.props.fetch( url, {
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify( body ),
-			method,
-		} ).then( r => r.json().then( data => {
-			if ( ! r.ok ) {
+		const onDoSave = body.id ? this.props.onUpdate : this.props.onCreate;
+		onDoSave( body )
+			.then( id => {
+				const data = posts.getSingle( this.props.posts, id );
+				this.props.onDidCreatePost( data );
+			} )
+			.catch( error => {
 				this.setState( {
 					isSubmitting: false,
-					error: data,
+					error,
 				} );
-				return;
-			}
-
-			this.setState( {
-				isSubmitting: true,
-				title: '',
 			} );
-			this.props.invalidateDataForUrl( '/wp/v2/posts?status=draft&context=edit' );
-			this.props.invalidateDataForUrl( '/wp/v2/posts?page=1' );
-			this.props.onDidCreatePost( data );
-		} ) );
-	}
-	onUpload( file ) {
-		const options = { method: 'POST' };
-		options.body = new FormData();
-		options.body.append( 'file', file );
-
-		return this.props.fetch( '/wp/v2/media', options )
-			.then( parseResponse );
 	}
 
 	onSelect = draft => {
@@ -169,7 +140,7 @@ export class WritePost extends Component {
 	}
 
 	render() {
-		const user = this.props.user.data;
+		const user = this.props.currentUser;
 		const categories = this.props.categories.data || [];
 		return (
 			<div className="WritePost" ref={ ref => this.container = ref }>
@@ -225,7 +196,6 @@ export class WritePost extends Component {
 					onCancel={ this.props.onCancel }
 					onSave={ this.onSave }
 					onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
-					onUpload={ ( ...args ) => this.onUpload( ...args ) }
 				/>
 
 				{ this.state.error && (
@@ -264,7 +234,24 @@ WritePost.propTypes = {
 	onDidCreatePost: PropTypes.func.isRequired,
 };
 
-export default withApiData( props => ( {
-	user: '/wp/v2/users/me',
-	categories: '/wp/v2/categories?per_page=100',
-} ) )( WritePost )
+const mapStateToProps = state => {
+	return {
+		posts: state.posts,
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		onCreate: data => dispatch( posts.createSingle( data ) ),
+		onUpdate: data => dispatch( posts.updateSingle( data ) ),
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(
+	withCategories(
+		withCurrentUser( WritePost )
+	)
+);

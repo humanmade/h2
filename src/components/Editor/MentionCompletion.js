@@ -1,8 +1,8 @@
 import memoize from 'lodash/memoize';
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Completion from './Completion';
-import { withApiData } from '../../with-api-data';
 
 import './MentionCompletion.css';
 
@@ -32,7 +32,7 @@ const MentionCompletion = props => {
 	return (
 		<Completion
 			{ ...props }
-			items={ Object.values( props.users.data || [] ) }
+			items={ props.users }
 			insert={ insert }
 			matcher={ matcher }
 			renderItem={ renderItem }
@@ -40,4 +40,6 @@ const MentionCompletion = props => {
 	);
 };
 
-export default withApiData( props => ( { users: '/wp/v2/users?per_page=100' } ) )( MentionCompletion );
+export default connect(
+	state => ( { users: state.users.posts } )
+)( MentionCompletion );

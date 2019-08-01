@@ -1,9 +1,12 @@
+import { withArchive } from '@humanmade/repress';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 import { Picker } from 'emoji-mart'
 
-import { withApiData } from '../../with-api-data';
+import { withCurrentUser } from '../../hocs';
+import { reactions } from '../../types';
 
 import UserDisplayName from '../../components/UserDisplayName';
 
@@ -100,26 +103,19 @@ export class Reactions extends Component {
 
 		this.setState( { isLoading: true } );
 
-		this.props.fetch( '/h2/v1/reactions', {
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify( body ),
-			method: 'POST',
-		} ).then( r => r.json() ).then( post  => {
+		this.props.onCreate( body ).then( () => {
 			this.setState( { isLoading: false } );
-			this.props.refreshData();
+			this.props.onLoad();
 		} );
 
 	}
 
 	onRemoveReaction( emoji ) {
-		const reactions = this.props.reactions.data;
+		const reactions = this.props.reactions;
 
 		let matches = reactions.filter( reaction => {
 			return (
-				reaction.author === this.props.currentUser.data.id &&
+				reaction.author === this.props.currentUser.id &&
 				reaction.type === emoji
 			);
 		} );
@@ -127,7 +123,9 @@ export class Reactions extends Component {
 		if ( matches.length < 1 ) {
 			return;
 		}
-		this.props.fetch( `/h2/v1/reactions/${ matches[0].id }`, { method: 'DELETE' } ).then( () => this.props.refreshData() );
+		this.props.onDelete( matches[0].id ).then( () => {
+			this.props.onLoad();
+		} );
 	}
 
 	/**
@@ -137,10 +135,10 @@ export class Reactions extends Component {
 	 */
 	getGroupedReactions() {
 		let reactions = {};
-		if ( ! this.props.reactions.data ) {
+		if ( ! this.props.reactions ) {
 			return reactions;
 		}
-		this.props.reactions.data.forEach( reaction => {
+		this.props.reactions.forEach( reaction => {
 			if ( ! ( reaction.type in reactions ) ) {
 				reactions[ reaction.type ] = [ reaction.author ];
 			} else {
@@ -153,16 +151,16 @@ export class Reactions extends Component {
 
 	render() {
 		const reactions = this.getGroupedReactions();
-		if ( ! this.props.currentUser.data ) {
+		if ( ! this.props.currentUser ) {
 			return null;
 		}
 
-		const loading = this.props.reactions.isLoading || this.state.isLoading;
+		const loading = this.props.loading || this.state.isLoading;
 
 		return (
 			<div className="reactions">
 				{ Object.entries( reactions ).map( ( [ emoji, users ] ) => {
-					let isActive = reactions[ emoji ].indexOf( this.props.currentUser.data.id ) >= 0 ? true : false;
+					let isActive = reactions[ emoji ].indexOf( this.props.currentUser.id ) >= 0 ? true : false;
 					return (
 						<button
 							className={ 'btn btn--small btn--tertiary' + ( isActive ? ' btn--active' : '' ) }
@@ -175,7 +173,7 @@ export class Reactions extends Component {
 							<span className="reactions__count" key="count">{ users.length }</span>
 							<span className="reactions__users" key="users">
 								{ users.map( reactionAuthorId => {
-									const user = this.props.users.data && this.props.users.data.filter( user => user.id === reactionAuthorId );
+									const user = this.props.users && this.props.users.filter( user => user.id === reactionAuthorId );
 									return (
 										<UserDisplayName
 											className="reactions__user"
@@ -226,7 +224,7 @@ export class Reactions extends Component {
 		const reactions = this.getGroupedReactions();
 		if (
 			! ( emoji in reactions ) ||
-			reactions[ emoji ].indexOf( this.props.currentUser.data.id ) < 0
+			reactions[ emoji ].indexOf( this.props.currentUser.id ) < 0
 		) {
 			if ( Object.keys( reactions ).length >= 10 ) {
 				alert( 'Sorry! You are only allowed 10 reactions per post!' );
@@ -240,11 +238,36 @@ export class Reactions extends Component {
 	}
 }
 
-export default withApiData( props => ( {
-	reactions: `/h2/v1/reactions?post=${ props.postId }${ props.commentId ? `&comment=${ props.commentId }` : '' }`,
-	currentUser: '/wp/v2/users/me',
-	users: '/wp/v2/users?per_page=100',
-} ) )( Reactions );
+const mapStateToProps = state => ( {
+	users: state.users.posts,
+} );
+const mapDispatchToProps = dispatch => ( {
+	onCreate: data => dispatch( reactions.createSingle( data ) ),
+	onDelete: id => dispatch( reactions.deleteSingle( id ) ),
+} );
+const mapPropsToId = props => {
+	const post = props.postId;
+	const comment = props.commentId || null;
+	const id = [ post, comment ].filter( Boolean ).join( '+' );
+	reactions.registerArchive( id, {
+		post,
+		comment,
+	} );
+	return id;
+};
+const mapDataToProps = data => ( {
+	loading: data.loading,
+	reactions: data.posts,
+} );
+
+export default withArchive(
+	reactions,
+	state => state.reactions,
+	mapPropsToId,
+	{ mapDataToProps }
+)(
+	connect( mapStateToProps, mapDispatchToProps )( withCurrentUser( Reactions ) )
+);
 
 Reactions.propTypes = {
 	userId: PropTypes.number,

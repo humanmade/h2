@@ -1,3 +1,4 @@
+import { withSingle } from '@humanmade/repress';
 import React, { Component } from 'react';
 import { Slot } from 'react-slot-fill';
 import PropTypes from 'prop-types';
@@ -9,9 +10,9 @@ import Editor from './Editor';
 import MessageContent from './Message/Content';
 import WriteComment from './Message/WriteComment';
 import Notification from './Notification';
+import { withUser } from '../hocs';
 import { Comment as CommentShape } from '../shapes';
-import { withApiData } from '../with-api-data';
-import { parseResponse } from '../wordpress-rest-api-cookie-auth';
+import { comments } from '../types';
 
 import './Comment.css';
 
@@ -36,7 +37,9 @@ export class Comment extends Component {
 
 	onClickEdit = () => {
 		this.setState( { isEditing: true } );
-		this.props.onLoadEditable();
+		if ( ! ( 'raw' in this.props.comment.content ) ) {
+			this.props.onLoad( 'edit' );
+		}
 	}
 
 	onDidCreateComment( ...args ) {
@@ -52,49 +55,28 @@ export class Comment extends Component {
 			unprocessed_content: unprocessedContent,
 		};
 
-		this.props.fetch( `/wp/v2/comments/${ this.props.comment.id }`, {
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify( body ),
-			method: 'POST',
-		} ).then( r => r.json().then( data => {
-			if ( ! r.ok ) {
+		this.props.onUpdate( body )
+			.then( data => {
+				this.setState( {
+					isEditing: false,
+					isSubmitting: false,
+				} );
+			} )
+			.catch( error => {
 				this.setState( {
 					isSubmitting: false,
-					error: data,
+					error,
 				} );
-				return;
-			}
-
-			this.setState( {
-				isEditing: false,
-				isSubmitting: false,
 			} );
-			this.props.invalidateDataForUrl( `/wp/v2/comments?post=${ this.props.parentPost.id }&per_page=100` );
-			this.props.invalidateDataForUrl( `/wp/v2/comments/${ this.props.comment.id }?context=edit` );
-		} ) );
-	}
-
-	onUpload = file => {
-		const options = { method: 'POST' };
-		options.body = new FormData();
-		options.body.append( 'file', file );
-
-		return this.props.fetch( '/wp/v2/media', options )
-			.then( parseResponse );
 	}
 
 	render() {
-		const comment = this.props.comment;
-		const editable = this.props.editable ? this.props.editable.data : null;
+		const { comment, loading, user } = this.props;
 		const post = this.props.parentPost;
-		const author = this.props.author.data;
 		const directComments = this.props.comments.filter( c => c.parent === comment.id );
 
 		const fillProps = {
-			author,
+			author: user,
 			comment,
 			comments: this.props.comments,
 			post,
@@ -107,7 +89,7 @@ export class Comment extends Component {
 				ref={ el => this.element = el }
 			>
 				<CommentHeader
-					author={ author }
+					author={ user }
 					comment={ comment }
 					post={ post }
 				>
@@ -122,19 +104,18 @@ export class Comment extends Component {
 				<div className="body">
 					<Slot name="Comment.before_content" fillChildProps={ fillProps } />
 					{ this.state.isEditing ? (
-						editable ? (
+						loading ? (
+							<Notification>Loading…</Notification>
+						) : (
 							<Editor
-								initialValue={ editable.unprocessed_content || editable.content.raw }
+								initialValue={ comment.unprocessed_content || comment.content.raw }
 								submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
 								onCancel={ () => this.setState( { isEditing: false } ) }
 								onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
-								onUpload={ this.onUpload }
 							/>
-						) : (
-							<Notification>Loading…</Notification>
 						)
 					) : (
-						<MessageContent html={ this.props.comment.content.rendered } />
+						<MessageContent html={ comment.content.rendered } />
 					) }
 					<Slot name="Comment.after_content" fillChildProps={ fillProps } />
 					<div className="Comment-footer-actions">
@@ -174,34 +155,18 @@ Comment.propTypes = {
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 
-const mapPropsToData = props => {
-	const urls = {
-		author: `/wp/v2/users/${ props.comment.author }`,
-	};
-
-	if ( props.needsEditable ) {
-		urls.editable = `/wp/v2/comments/${ props.comment.id }?context=edit`;
+export default withUser( props => props.comment.author )( withSingle(
+	comments,
+	state => state.comments,
+	props => props.comment.id,
+	{
+		mapDataToProps: data => ( {
+			comment: data.post,
+			loading: data.loading,
+		} ),
+		mapActionsToProps: actions => ( {
+			onLoad: actions.onLoad,
+			onUpdate: actions.onUpdatePost,
+		} ),
 	}
-
-	return urls;
-}
-
-const CommentWithData = withApiData( mapPropsToData )( Comment );
-
-class EditablePost extends React.Component {
-	state = {
-		needsEditable: false,
-	};
-
-	render() {
-		return (
-			<CommentWithData
-				{ ...this.props }
-				needsEditable={ this.state.needsEditable }
-				onLoadEditable={ () => this.setState( { needsEditable: true } ) }
-			/>
-		);
-	}
-}
-
-export default EditablePost;
+)( Comment ) );

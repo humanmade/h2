@@ -1,18 +1,21 @@
+import { withSingle } from '@humanmade/repress';
 import React from 'react';
 import { FormattedDate } from 'react-intl';
+import { compose } from 'redux';
 
 import Header from './Header';
 import MessageContent from '../Message/Content';
-import { withApiData } from '../../with-api-data';
 import RelativeLink from '../RelativeLink';
+import { withUser } from '../../hocs';
+import { posts } from '../../types';
 import { decodeEntities } from '../../util';
 
 import './Mini.css';
 
 function MiniComment( props ) {
-	const { author, comment, parentPost } = props;
+	const { comment, parentPost, user } = props;
 
-	if ( parentPost.isLoading || author.isLoading ) {
+	if ( props.loadingParent || props.loadingUser ) {
 		return (
 			<div className="Comment-Mini">
 				Loading…
@@ -20,7 +23,7 @@ function MiniComment( props ) {
 		);
 	}
 
-	if ( ! parentPost.data || ! author.data ) {
+	if ( ! parentPost || ! user ) {
 		return (
 			<div className="Comment-Mini">
 				Unable to load comment
@@ -32,10 +35,10 @@ function MiniComment( props ) {
 		<div className="Comment-Mini">
 			<p className="Comment-Mini__context">
 				<RelativeLink
-					to={ `${ parentPost.data.link }#comment-${ comment.id }` }
+					to={ `${ parentPost.link }#comment-${ comment.id }` }
 				>
 					<span className="Comment-Mini__context-post">
-						{ decodeEntities( parentPost.data.title.rendered ) }
+						{ decodeEntities( parentPost.title.rendered ) }
 					</span>
 					{ ' ' }&mdash;{ ' ' }
 					<time
@@ -52,10 +55,10 @@ function MiniComment( props ) {
 			</p>
 			<div className="Comment-Mini__comment">
 				<Header
-					author={ author.data }
+					author={ user }
 					comment={ comment }
 					mini
-					post={ parentPost.data }
+					post={ parentPost }
 				/>
 				<MessageContent
 					html={ comment.content.rendered }
@@ -65,9 +68,17 @@ function MiniComment( props ) {
 	);
 }
 
-const mapPropsToData = props => ( {
-	author: `/wp/v2/users/${ props.comment.author }`,
-	parentPost: `/wp/v2/posts/${ props.comment.post }`,
-} );
-
-export default withApiData( mapPropsToData )( MiniComment );
+export default compose(
+	withSingle(
+		posts,
+		state => state.posts,
+		props => props.comment.post,
+		{
+			mapDataToProps: data => ( {
+				parentPost: data.post,
+				loadingParent: data.loading,
+			} ),
+		}
+	),
+	withUser( props => props.comment.author )
+)( MiniComment );

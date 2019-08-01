@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 
 import Avatar from '../Avatar';
 import Editor from '../Editor';
 import Notification from '../Notification';
 import RemotePreview from '../RemotePreview';
-import { withApiData } from '../../with-api-data';
-import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
+import { withCurrentUser } from '../../hocs';
 import { Post } from '../../shapes';
+import { comments } from '../../types';
 
 import './WriteComment.css';
 
@@ -32,20 +33,11 @@ class WriteComment extends React.Component {
 		}
 	}
 
-	onUpload( file ) {
-		const options = { method: 'POST' };
-		options.body = new FormData();
-		options.body.append( 'file', file );
-
-		return this.props.fetch( '/wp/v2/media', options )
-			.then( parseResponse );
-	}
-
 	onSubmit( content, unprocessedContent ) {
 		const body = {
 			content,
 			post: this.props.parentPost.id,
-			meta: { unprocessed_content: unprocessedContent },
+			unprocessed_content: unprocessedContent,
 		};
 
 		if ( this.props.comment ) {
@@ -54,26 +46,18 @@ class WriteComment extends React.Component {
 
 		this.setState( { isSubmitting: true } );
 
-		this.props.fetch( '/wp/v2/comments', {
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify( body ),
-			method: 'POST',
-		} ).then( r => r.json().then( data => {
-			if ( ! r.ok ) {
+		this.props.onCreate( body )
+			.then( data => {
+				this.setState( { isSubmitting: false } );
+
+				this.props.onDidCreateComment();
+			} )
+			.catch( error => {
 				this.setState( {
 					isSubmitting: false,
-					error: data,
+					error,
 				} );
-				return;
-			}
-
-			this.setState( { isSubmitting: false } );
-
-			this.props.onDidCreateComment();
-		} ) );
+			} );
 	}
 
 	render() {
@@ -81,11 +65,11 @@ class WriteComment extends React.Component {
 			<div className="WriteComment" ref={ ref => this.container = ref }>
 				<header>
 					<Avatar
-						url={ this.props.user.data ? this.props.user.data.avatar_urls['96'] : '' }
-						user={ this.props.user.data }
+						url={ this.props.currentUser ? this.props.currentUser.avatar_urls['96'] : '' }
+						user={ this.props.currentUser }
 						size={ 40 }
 					/>
-					<strong>{ this.props.user.data ? this.props.user.data.name : '' }</strong>
+					<strong>{ this.props.currentUser ? this.props.currentUser.name : '' }</strong>
 				</header>
 				<div className="body">
 					<Editor
@@ -94,7 +78,6 @@ class WriteComment extends React.Component {
 						submitText={ this.state.isSubmitting ? 'Commenting...' : 'Comment' }
 						onCancel={ this.props.onCancel }
 						onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
-						onUpload={ ( ...args ) => this.onUpload( ...args ) }
 					/>
 
 					{ this.state.error && (
@@ -114,4 +97,10 @@ WriteComment.propTypes = {
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 
-export default withApiData( props => ( { user: '/wp/v2/users/me' } ) )( WriteComment )
+const mapDispatchToProps = dispatch => {
+	return {
+		onCreate: data => dispatch( comments.createSingle( data ) ),
+	};
+};
+
+export default connect( () => ( {} ), mapDispatchToProps )( withCurrentUser( WriteComment ) );

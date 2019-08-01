@@ -1,7 +1,7 @@
 import React from 'react';
 
 import AuthorLink from './components/Message/AuthorLink';
-import { withApiData } from './with-api-data';
+import { withCurrentUser } from './hocs';
 
 export const changes = [
 	// Add new changes to the bottom of this list, in the following format:
@@ -23,13 +23,13 @@ export const changes = [
 	{
 		date: '2018-03-26',
 		title: 'More Useful Hovercards',
-		content: withApiData( props => ( { user: '/wp/v2/users/me' } ) )( props => (
+		content: withCurrentUser( props => (
 			<React.Fragment>
 				<p>Hovercards are now more useful, and will be displayed on usernames and avatars.</p>
-				{ props.user.isLoading ? (
+				{ props.loadingCurrentUser ? (
 					<p>For example, hover over your name to see yours: <em>loading…</em></p>
 				) : (
-					<p>For example, hover over your name to see yours: <AuthorLink user={ props.user.data }>{ props.user.data.name }</AuthorLink></p>
+					<p>For example, hover over your name to see yours: <AuthorLink user={ props.currentUser }>{ props.currentUser.name }</AuthorLink></p>
 				) }
 				<p>You can also click linked names to show a full profile.</p>
 			</React.Fragment>

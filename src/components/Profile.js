@@ -8,7 +8,7 @@ import RelativeLink from './RelativeLink';
 import UserBlock from './UserBlock';
 import Container from './Sidebar/Container';
 import { showSidebarComments } from '../actions';
-import { withApiData } from '../with-api-data';
+import { withUser } from '../hocs';
 
 import './Profile.css';
 
@@ -67,7 +67,7 @@ class Profile extends React.Component {
 			onClose: this.props.onClose,
 		};
 
-		if ( this.props.user.isLoading ) {
+		if ( this.props.loadingUser ) {
 			return (
 				<Container { ...containerProps }>
 					<p>Loading…</p>
@@ -75,7 +75,7 @@ class Profile extends React.Component {
 			);
 		}
 
-		const user = this.props.user.data;
+		const user = this.props.user;
 		if ( ! user ) {
 			return (
 				<Container { ...containerProps }>
@@ -120,6 +120,8 @@ class Profile extends React.Component {
 	}
 }
 
+const ConnectedProfile = withUser( props => props.id )( Profile );
+
 const mapStateToProps = () => ( {} );
 
 const mapDispatchToProps = dispatch => {
@@ -132,5 +134,5 @@ export default connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(
-	withApiData( props => ( { user: `/wp/v2/users/${ props.id }` } ) )( Profile )
+	ConnectedProfile
 );

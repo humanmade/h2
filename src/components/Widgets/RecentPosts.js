@@ -1,34 +1,31 @@
+import { withPagedArchive } from '@humanmade/repress';
 import React from 'react';
 import qs from 'qs';
 
 import Link from '../RelativeLink';
 import Pagination from '../Sidebar/Pagination';
+import { posts } from '../../types';
 import { decodeEntities } from '../../util';
-import { withApiData } from '../../with-api-data';
 
 import './RecentPosts.css';
 
 class PostList extends React.Component {
 	render() {
-		if ( this.props.posts.isLoading ) {
+		if ( this.props.loading || this.props.loadingMore ) {
 			return <p>Loading…</p>;
 		}
 
-		if ( this.props.posts.error ) {
+		if ( ! this.props.posts ) {
 			return <p>Error!</p>;
 		}
 
-		// TODO: Add proper pagination support:
-		// https://github.com/joehoyle/with-api-data/issues/3
-		// In the meantime, if we have less than the requested number, it's likely
-		// that we don't have a next page.
-		const hasNext = this.props.posts.data.length === this.props.per_page;
+		const hasNext = this.props.hasMore;
 		const hasPrevious = this.props.page > 1;
 
 		return (
 			<div>
 				<ul>
-					{ this.props.posts.data.map( post => (
+					{ this.props.posts.map( post => (
 						<li key={ post.id }>
 							<Link to={ post.link }>
 								{ decodeEntities( post.title.rendered ) }
@@ -48,17 +45,17 @@ class PostList extends React.Component {
 	}
 }
 
-const mapPropsToApi = props => {
+const mapPropsToArchive = props => {
 	const args = {
 		per_page: props.per_page,
-		page: props.page,
 	};
 
-	const posts = `/wp/v2/posts?${ qs.stringify( args ) }`;
-	return { posts };
+	const id = qs.stringify( args );
+	posts.registerArchive( id, args );
+	return id;
 };
 
-const ConnectedPostList = withApiData( mapPropsToApi )( PostList );
+const ConnectedPostList = withPagedArchive( posts, state => state.posts, mapPropsToArchive )( PostList );
 
 export default class RecentPosts extends React.Component {
 	constructor( props ) {

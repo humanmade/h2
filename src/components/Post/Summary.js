@@ -1,35 +1,41 @@
+import { withArchive } from '@humanmade/repress';
 import uniq from 'lodash/uniq';
 import React from 'react';
 
 import Avatar from '../Avatar';
 import Button from '../Button';
-import { withApiData } from '../../with-api-data';
+import { withUser } from '../../hocs';
+import { comments } from '../../types';
 
 import './Summary.css';
 
 const _n = ( single, plural, count ) => count === 1 ? `1 ${ single }` : `${ count } ${ plural }`;
 
 const Person = props => {
-	if ( ! props.user.data ) {
+	if ( ! props.user ) {
 		return null;
 	}
 
 	return (
 		<Avatar
 			size={ 30 }
-			url={ props.user.data ? props.user.data.avatar_urls['96'] : '' }
-			user={ props.user.data }
+			url={ props.user.avatar_urls['96'] }
+			user={ props.user }
 			withHovercard={ false }
 		/>
 	);
 };
 
-const ConnectedPerson = withApiData( props => ( { user: `/wp/v2/users/${ props.id }` } ) )( Person );
+const ConnectedPerson = withUser( props => props.id )( Person );
 
-export default function Summary( props ) {
+function Summary( props ) {
 	const { comments, post, onExpand } = props;
 
-	const people = uniq( comments.map( comment => comment.author ) ).filter( Boolean );
+	if ( props.loadingComments ) {
+		return null;
+	}
+
+	const people = comments ? uniq( comments.map( comment => comment.author ) ).filter( Boolean ) : [];
 
 	const peopleClass = [
 		'Post-Summary-people',
@@ -57,3 +63,20 @@ export default function Summary( props ) {
 		</div>
 	);
 }
+
+export default withArchive(
+	comments,
+	state => state.comments,
+	props => {
+		const { post } = props;
+
+		comments.registerArchive( post.id, { post: post.id } );
+		return post.id;
+	},
+	{
+		mapDataToProps: data => ( {
+			comments: data.posts,
+			loadingComments: data.loading,
+		} ),
+	}
+)( Summary );

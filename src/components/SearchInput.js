@@ -1,12 +1,12 @@
+import { withArchive } from '@humanmade/repress';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedRelative } from 'react-intl';
 import { withRouter } from 'react-router-dom';
-import qs from 'qs';
 
 import RelativeLink from './RelativeLink';
+import { posts } from '../types';
 import { decodeEntities } from '../util';
-import { withApiData } from '../with-api-data';
 
 import './SearchInput.css';
 
@@ -84,7 +84,7 @@ class Results extends React.Component {
 
 	render() {
 		const { selected } = this.state;
-		const { results, term, visible } = this.props;
+		const { loading, posts, term, visible } = this.props;
 
 		const classes = [
 			'SearchInput__results',
@@ -94,13 +94,11 @@ class Results extends React.Component {
 			<div className={ classes.filter( Boolean ).join( ' ' ) }>
 				{ term === '' ? (
 					<p>Start typing to search.</p>
-				) : results.isLoading ? (
+				) : loading ? (
 					<p>Loading results for “{ term }”</p>
-				) : results.error ? (
-					<p>Error while loading results. <span aria-label="Sorry." role="img">😰</span></p>
-				) : ( results.data && results.data.length > 0 ) ? (
+				) : ( posts && posts.length > 0 ) ? (
 					<ul>
-						{ results.data.map( ( post, index ) => (
+						{ posts.map( ( post, index ) => (
 							<li
 								key={ post.id }
 							>
@@ -124,7 +122,7 @@ class Results extends React.Component {
 							<a
 								href={ `/search/${ term }` }
 								onClick={ this.props.onShowResults }
-								className={ `SearchInput__result ${ selected === results.data.length ? 'SearchInput__result--selected' : '' }` }
+								className={ `SearchInput__result ${ selected === posts.length ? 'SearchInput__result--selected' : '' }` }
 							>
 								Show all results →
 							</a>
@@ -138,26 +136,20 @@ class Results extends React.Component {
 	}
 }
 
-const ConnectedResults = withApiData(
+const ConnectedResults = withArchive(
+	posts,
+	state => state.posts,
 	props => {
-		if ( ! props.term ) {
-			return {};
-		}
-
 		const query = {
 			search: props.term,
 			per_page: 5,
-			context: 'embed',
-			_embed: 'true',
 		};
 
-		return {
-			results: `/wp/v2/posts?${ qs.stringify( query ) }`,
-		};
+		const id = `searchPreview/${ props.term }`;
+		posts.registerArchive( id, query );
+		return id;
 	}
-)(
-	Results
-);
+)( Results );
 
 class SearchInput extends React.Component {
 	constructor( props ) {

@@ -3,12 +3,17 @@ import { connect } from 'react-redux';
 
 import Avatar from '../Avatar';
 import { showMetaSidebar } from '../../actions';
+import { withCurrentUser } from '../../hocs';
 import { User } from '../../shapes';
 
 import './CurrentUser.css';
 
 function CurrentUser( props ) {
-	const { user } = props;
+	const { currentUser } = props;
+
+	if ( ! currentUser ) {
+		return null;
+	}
 
 	return (
 		<button
@@ -18,16 +23,18 @@ function CurrentUser( props ) {
 			<Avatar
 				key="avatar"
 				size={ 40 }
-				url={ user.avatar_urls['96'] }
+				url={ currentUser.avatar_urls['96'] }
 			/>
 		</button>
 	);
 }
 
-CurrentUser.propTypes = { user: User.isRequired };
+CurrentUser.propTypes = {
+	currentUser: User.isRequired,
+};
 
 const mapDispatchToProps = dispatch => {
 	return { onShowSidebar: () => dispatch( showMetaSidebar() ) };
 };
 
-export default connect( () => ( {} ), mapDispatchToProps )( CurrentUser );
+export default connect( () => ( {} ), mapDispatchToProps )( withCurrentUser( CurrentUser ) );

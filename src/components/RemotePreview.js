@@ -4,9 +4,9 @@ import React from 'react';
 import Notification from './Notification';
 import MessageContent from './Message/Content';
 import compileMarkdown from '../compile-markdown';
-import { withApiData } from '../with-api-data';
+import { posts } from '../types';
 
-class RemotePreview extends React.Component {
+export default class RemotePreview extends React.Component {
 	constructor( props ) {
 		super( props );
 
@@ -32,7 +32,7 @@ class RemotePreview extends React.Component {
 			type: this.props.type,
 		};
 
-		this.props.fetch( '/h2/v1/preview', {
+		posts.fetch( `${ window.wpApiSettings.root }h2/v1/preview`, {}, {
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -40,28 +40,17 @@ class RemotePreview extends React.Component {
 			body: JSON.stringify( body ),
 			method: 'POST',
 		} )
-			.then( r => {
-				r.json()
-					.then( response => {
-						if ( ! r.ok ) {
-							this.setState( {
-								isLoading: false,
-								error: response.message || 'Unknown error occurred',
-							} );
-							return;
-						}
-
-						this.setState( {
-							compiledPreview: response.html,
-							isLoading: false,
-						} );
-					} )
-					.catch( err =>  {
-						this.setState( {
-							isLoading: false,
-							error: err.message,
-						} );
-					} );
+			.then( response => {
+				this.setState( {
+					compiledPreview: response.html,
+					isLoading: false,
+				} );
+			} )
+			.catch( err =>  {
+				this.setState( {
+					isLoading: false,
+					error: err.message,
+				} );
 			} );
 	}
 
@@ -88,5 +77,3 @@ RemotePreview.propTypes = {
 		'post',
 	] ),
 };
-
-export default withApiData( () => ( {} ) )( RemotePreview );

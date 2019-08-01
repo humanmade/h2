@@ -2,12 +2,22 @@ import React from 'react';
 
 import Modal from './Modal';
 import { changes, getChangesForUser } from '../changelog';
-import { withApiData } from '../with-api-data';
+import { withCurrentUser } from '../hocs';
 
 import './Changes.css';
 
 function Changes( props ) {
-	const { newChanges, onDismiss } = props;
+	if ( ! props.currentUser ) {
+		return null;
+	}
+
+	const newChanges = getChangesForUser( props.currentUser );
+
+	const onDismiss = () => {
+		const meta = { h2_last_updated: ( new Date() ).toISOString() };
+		props.onUpdateCurrentUser( { meta } );
+		props.onDismiss();
+	};
 
 	// Separate old changes.
 	const oldChanges = changes.filter( change => newChanges.indexOf( change ) === -1 );
@@ -48,33 +58,4 @@ function Changes( props ) {
 	);
 }
 
-class ConnectedChanges extends React.Component {
-	render() {
-		if ( ! this.props.currentUser || ! this.props.currentUser.data ) {
-			return null;
-		}
-
-		const newChanges = getChangesForUser( this.props.currentUser.data );
-
-		const onDismiss = () => {
-			const meta = { h2_last_updated: ( new Date() ).toISOString() };
-			this.props.fetch( '/wp/v2/users/me', {
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify( { meta } ),
-				method: 'PUT',
-			} ).then( r => r.json().then( data => {
-				this.props.invalidateData();
-			} ) );
-			this.props.onDismiss();
-		}
-
-		return (
-			<Changes
-				newChanges={ newChanges }
-				onDismiss={ onDismiss }
-			/>
-		);
-	}
-}
-
-export default withApiData( props => ( { currentUser: '/wp/v2/users/me' } ) )( ConnectedChanges );
+export default withCurrentUser( Changes );

@@ -1,12 +1,13 @@
+import { withArchive } from '@humanmade/repress';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import AuthorLink from './AuthorLink';
-import { withApiData } from '../../with-api-data';
+import { users } from '../../types';
 
 class Mention extends React.Component {
 	render() {
-		const user = this.props.user.data ? this.props.user.data[0] : null;
+		const user = this.props.users && this.props.users.length ? this.props.users[0] : null;
 
 		return (
 			<AuthorLink user={ user }>
@@ -18,6 +19,15 @@ class Mention extends React.Component {
 
 Mention.propTypes = { user: PropTypes.object };
 
-const mapPropsToData = props => ( { user: `/wp/v2/users?slug=${ props.username }` } );
-
-export default withApiData( mapPropsToData )( Mention );
+export default withArchive(
+	users,
+	state => state.users,
+	props => {
+		const { username } = props;
+		users.registerArchive( `slug/${ username }`, { slug: username } );
+		return `slug/${ username }`;
+	},
+	{
+		mapDataToProps: data => ( { users: data.posts } ),
+	}
+)( Mention );

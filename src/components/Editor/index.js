@@ -2,6 +2,7 @@ import countWords from '@iarna/word-count';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedRelative } from 'react-intl';
+import { connect } from 'react-redux';
 import getCaretCoordinates from 'textarea-caret';
 import Turndown from 'turndown';
 
@@ -13,6 +14,7 @@ import MessageContent from '../Message/Content';
 import Shortcuts from '../Shortcuts';
 import compileMarkdown from '../../compile-markdown';
 import { cleanConvertedMarkdown, isWordContent } from '../../util';
+import { media } from '../../types';
 
 import './index.css';
 
@@ -66,7 +68,7 @@ const Preview = props => {
 };
 Preview.propTypes = { children: PropTypes.string.isRequired };
 
-export default class Editor extends React.PureComponent {
+class Editor extends React.PureComponent {
 	constructor( props ) {
 		super( props );
 
@@ -304,7 +306,8 @@ export default class Editor extends React.PureComponent {
 		const placeholders = files.map( file => {
 			const placeholder = `<img alt="Uploading ${ file.name }…" />`;
 
-			this.props.onUpload( file ).then( data => {
+			this.props.onUpload( file ).then( id => {
+				const data = media.getSingle( this.props.media, id );
 				this.setState( state => {
 					const content = state.content.replace(
 						placeholder,
@@ -527,3 +530,29 @@ Editor.propTypes = {
 	onCancel: PropTypes.func,
 	onSubmit: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = state => {
+	return {
+		media: state.media,
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		onUpload: file => dispatch( media.uploadSingle( file ) ),
+	};
+};
+
+const ConnectedEditor = connect(
+	mapStateToProps,
+	mapDispatchToProps,
+	null,
+	{
+		withRef: true,
+	}
+)( Editor );
+ConnectedEditor.prototype.focus = function () {
+	// Pass through focus()
+	this.getWrappedInstance().focus();
+};
+export default ConnectedEditor;
