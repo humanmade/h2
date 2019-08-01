@@ -47,7 +47,7 @@ class Feedback extends React.Component {
 		const { currentUser } = this.props;
 		const { status } = this.state;
 
-		if ( status == STATUS.SUCCESS ) {
+		if ( status === STATUS.SUCCESS ) {
 			return (
 				<Modal
 					title="Feedback"
