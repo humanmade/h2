@@ -94,6 +94,7 @@ class Feedback extends React.Component {
 						Your Message
 					</label>
 					<textarea
+						disabled={ status === STATUS.PENDING }
 						id="Feedback__feedback"
 						name="message"
 						rows={ 8 }
