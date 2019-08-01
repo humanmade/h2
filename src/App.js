@@ -104,12 +104,8 @@ class App extends Component {
 	}
 
 	render() {
-		const classes = [
-			'App',
-			this.props.showingSuper && 'App--showing-super',
-		];
 		return (
-			<div className={ classes.filter( Boolean ).join( ' ' ) }>
+			<div className="App">
 				<OverlayContainer />
 				<SuperMenu
 					visible={ this.props.showingSuper }
