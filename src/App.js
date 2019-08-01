@@ -12,6 +12,7 @@ import Header from './components/Header';
 import PostsList from './components/Post/List';
 import WritePost from './components/Post/Write';
 import MetaSidebar from './components/MetaSidebar';
+import { OverlayContainer } from './components/Overlay';
 import Profile from './components/Profile';
 import Sidebar from './components/Sidebar';
 import CommentsSidebar from './components/Sidebar/Comments';
@@ -109,6 +110,7 @@ class App extends Component {
 		];
 		return (
 			<div className={ classes.filter( Boolean ).join( ' ' ) }>
+				<OverlayContainer />
 				<SuperMenu
 					visible={ this.props.showingSuper }
 					onClose={ this.props.onHideSuperSidebar }
