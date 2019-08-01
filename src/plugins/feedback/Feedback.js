@@ -54,7 +54,13 @@ class Feedback extends React.Component {
 					onDismiss={ this.props.onDismiss }
 				>
 					<p>Feedback submitted. Thanks!</p>
-					<Button onClick={ this.props.onDismiss }>Close Feedback</Button>
+
+					<Button
+						type="primary"
+						onClick={ this.props.onDismiss }
+					>
+						Close Feedback
+					</Button>
 				</Modal>
 			);
 		}
