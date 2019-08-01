@@ -47,6 +47,18 @@ class Feedback extends React.Component {
 		const { currentUser } = this.props;
 		const { status } = this.state;
 
+		if ( status == STATUS.SUCCESS ) {
+			return (
+				<Modal
+					title="Feedback"
+					onDismiss={ this.props.onDismiss }
+				>
+					<p>Feedback submitted. Thanks!</p>
+					<Button onClick={ this.props.onDismiss }>Close Feedback</Button>
+				</Modal>
+			);
+		}
+
 		return (
 			<Modal
 				title="Feedback"
@@ -95,9 +107,6 @@ class Feedback extends React.Component {
 						Submit Feedback
 					</Button>
 
-					{ status === STATUS.SUCCESS && (
-						<p>Feedback submitted. Thanks!</p>
-					) }
 					{ status === STATUS.ERROR && (
 						<p>Could not submit your feedback. Try again.</p>
 					) }
