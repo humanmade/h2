@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Logo from './Header/Logo';
+import Overlay from './Overlay';
 import Link from './RelativeLink';
 import SearchInput from './SearchInput';
 import { withCategories, withSites } from '../hocs';
@@ -50,6 +51,12 @@ class SuperMenu extends React.Component {
 
 		return (
 			<nav className={ classes.filter( Boolean ).join( ' ' ) }>
+				{ visible && (
+					<Overlay
+						onClick={ this.props.onClose }
+					/>
+				) }
+
 				<header>
 					<Logo />
 					<button

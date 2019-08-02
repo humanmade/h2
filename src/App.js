@@ -12,6 +12,7 @@ import Header from './components/Header';
 import PostsList from './components/Post/List';
 import WritePost from './components/Post/Write';
 import MetaSidebar from './components/MetaSidebar';
+import { OverlayContainer } from './components/Overlay';
 import Profile from './components/Profile';
 import Sidebar from './components/Sidebar';
 import CommentsSidebar from './components/Sidebar/Comments';
@@ -103,12 +104,9 @@ class App extends Component {
 	}
 
 	render() {
-		const classes = [
-			'App',
-			this.props.showingSuper && 'App--showing-super',
-		];
 		return (
-			<div className={ classes.filter( Boolean ).join( ' ' ) }>
+			<div className="App">
+				<OverlayContainer />
 				<SuperMenu
 					visible={ this.props.showingSuper }
 					onClose={ this.props.onHideSuperSidebar }

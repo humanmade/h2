@@ -1,0 +1,24 @@
+.Overlay {
+	position: absolute;
+	display: block;
+	content: ' ';
+	background: rgba( 0, 0, 0, 0.25 );
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 15;
+	opacity: 0;
+	transition: opacity 150ms;
+	pointer-events: none;
+}
+
+body.--overlay-visible {
+	overflow: hidden;
+	height: 100vh;
+}
+
+body.--overlay-visible .Overlay {
+	opacity: 1;
+	pointer-events: auto;
+}
