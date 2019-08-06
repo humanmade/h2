@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedRelative } from 'react-intl';
 import { Slot } from 'react-slot-fill';
@@ -5,6 +6,11 @@ import { Slot } from 'react-slot-fill';
 import AuthorLink from './AuthorLink';
 import Avatar from '../Avatar';
 import Link from '../RelativeLink';
+import {
+	Category as CategoryShape,
+	Post as PostShape,
+	User as UserShape,
+} from '../../shapes';
 import { decodeEntities } from '../../util';
 
 import './Header.css';
@@ -68,9 +74,9 @@ export default function MessageHeader( props ) {
 	);
 }
 
-// MessageHeader.propTypes = {
-// 	author,
-// 	categories,
-// 	collapsed,
-// 	post,
-// };
+MessageHeader.propTypes = {
+	author: UserShape.isRequired,
+	categories: PropTypes.arrayOf( CategoryShape ).isRequired,
+	collapsed: PropTypes.bool.isRequired,
+	post: PostShape.isRequired,
+};

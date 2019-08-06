@@ -6,7 +6,9 @@ import Editor from '../Editor';
 import Notification from '../Notification';
 import MessageContent from './Content';
 import {
+	Category as CategoryShape,
 	Post as PostShape,
+	User as UserShape,
 } from '../../shapes';
 
 import './Main.css';
@@ -55,6 +57,8 @@ export default function MessageMain( props ) {
 }
 
 MessageMain.propTypes = {
+	author: UserShape.isRequired,
+	categories: PropTypes.arrayOf( CategoryShape ).isRequired,
 	collapsed: PropTypes.bool.isRequired,
 	post: PostShape.isRequired,
 	isSubmitting: PropTypes.bool.isRequired,
