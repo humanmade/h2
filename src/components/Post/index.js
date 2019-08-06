@@ -120,7 +120,7 @@ class Post extends Component {
 					isLoading={ this.props.loading }
 					isSubmitting={ this.state.isSubmitting }
 					onCancel={ () => this.setState( { isEditing: false } ) }
-					onSubmit={ this.onSubmitEditing }
+					onSubmitEditing={ this.onSubmitEditing }
 				>
 					{ Actions }
 				</MessageMain>
