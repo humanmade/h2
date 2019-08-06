@@ -31,8 +31,8 @@ const BetaFeature = props => (
 	<div className="MetaSidebar--feature">
 		<label>
 			<input
+				checked={ props.enabled }
 				type="checkbox"
-				value={ props.enabled }
 				onChange={ e => e.target.checked ? props.onEnable() : props.onDisable() }
 			/>
 			<span>{ props.name }</span>

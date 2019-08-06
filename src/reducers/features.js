@@ -4,6 +4,7 @@ import {
 } from '../actions';
 
 const DEFAULT_STATE = {
+	use_interweave: window.H2Data.features.interweave || false,
 	summary_view: false,
 };
 

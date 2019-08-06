@@ -79,6 +79,9 @@ function get_script_data() {
 			'mapbox_key'     => defined( 'MAPBOX_KEY' ) ? MAPBOX_KEY : null,
 			'emoji'          => apply_filters( 'h2.custom_emoji', [] ),
 		],
+		'features' => [
+			'interweave' => (bool) get_site_option( 'h2_use_interweave', false ),
+		],
 		'plugins' => [
 			'reactions' => \class_exists( 'H2\\Reactions\\Reaction' ),
 		],
