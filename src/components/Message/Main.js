@@ -1,9 +1,13 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Slot } from 'react-slot-fill';
 
 import Editor from '../Editor';
 import Notification from '../Notification';
 import MessageContent from './Content';
+import {
+	Post as PostShape,
+} from '../../shapes';
 
 import './Main.css';
 
@@ -50,12 +54,10 @@ export default function MessageMain( props ) {
 	);
 }
 
-// MessageMain.propTypes = {
-// 	author,
-// 	categories,
-// 	collapsed,
-// 	post,
-//	isSubmitting,
-//	onCancelEdit,
-//	onSubmitEditing,
-// };
+MessageMain.propTypes = {
+	collapsed: PropTypes.bool.isRequired,
+	post: PostShape.isRequired,
+	isSubmitting: PropTypes.bool.isRequired,
+	onCancelEdit: PropTypes.func,
+	onSubmitEditing: PropTypes.func.isRequired,
+};
