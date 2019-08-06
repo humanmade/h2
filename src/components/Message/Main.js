@@ -39,7 +39,7 @@ export default function MessageMain( props ) {
 				) : (
 					<Editor
 						initialValue={ post.unprocessed_content || post.content.raw }
-						submitText={ isSubmitting }
+						submitText={ isSubmitting ? 'Updating…' : 'Update' }
 						onCancel={ onCancelEdit }
 						onSubmit={ onSubmitEditing }
 					/>
