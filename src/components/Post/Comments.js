@@ -27,7 +27,6 @@ const PostComments = props => {
 			allComments={ props.posts }
 			comments={ topLevel }
 			post={ props.post }
-			onComment={ props.onComment }
 			onDidCreateComment={ onDidCreateComment }
 		>
 			{ props.showingReply && (

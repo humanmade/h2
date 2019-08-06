@@ -45,57 +45,6 @@
 	margin-top: -15px;
 }
 
-.Post > header > .Avatar {
-	margin-right: 30px;
-	width: 3.333rem;
-	height: 3.333rem;
-	border-radius: 100%;
-	align-self: flex-start;
-}
-
-.Post > header > .byline {
-	flex-direction: column;
-	flex-grow: 1;
-	min-width: 0;
-	white-space: nowrap;
-	overflow: hidden;
-}
-
-.Post > header > .byline > a > h2 {
-	margin: 0 0.5em 0 0;
-	text-overflow: ellipsis;
-	text-transform: inherit;
-	white-space: nowrap;
-	overflow: hidden;
-}
-
-.Post > header > .byline > .date {
-	color: #AAA;
-	font-size: 14px;
-}
-
-.Post > header > .byline > .categories {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	display: inline;
-	font-size: 14px;
-}
-
-.Post > header > .byline > .categories > li {
-	display: inline-block;
-	margin-left: 10px;
-}
-
-.Post__status {
-	font-size: 14px;
-	margin-left: 10px;
-}
-
-.Post-content-wrap {
-	margin-left: 90px;
-}
-
 .Post-footer-actions {
 	display: flex;
 	margin: 1.666rem 0 1.248rem;
@@ -106,27 +55,6 @@
 	margin-right: 0;
 }
 
-.Post--collapsed .Post-content-wrap {
-	min-height: 70px;
-	max-height: 150px;
-	overflow: hidden;
-	position: relative;
-}
-.Post--collapsed .Post-content-wrap::after {
-	display: block;
-	content: ' ';
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	height: 100%;
-	background: linear-gradient(
-		to bottom,
-		rgba( 255, 255, 255, 0 ),
-		rgba( 255, 255, 255, 0.9 ) 50%,
-		#fff
-	);
-}
 .Post--collapsed .reactions {
 	display: none;
 }
@@ -134,29 +62,6 @@
 @media ( max-width: 600px ) {
 	.Post:before {
 		display: none;
-	}
-	.Post > header {
-		margin: 0 -20px;
-		padding: 0.5em 20px;
-		height: auto;
-		display: block;
-	}
-	.Post > header > .Avatar {
-		margin-left: 8px;
-		margin-right: 0;
-		float: right;
-	}
-	.Post > header > .Avatar,
-	.Post > header > .Avatar img {
-		width: 24px !important;
-		height: 24px !important;
-	}
-	.Post > header > .actions {
-		display: none;
-	}
-
-	.Post-content-wrap {
-		margin-left: 0;
 	}
 }
 

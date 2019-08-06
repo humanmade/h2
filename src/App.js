@@ -9,6 +9,7 @@ import {
 } from './actions';
 import Changes from './components/Changes';
 import Header from './components/Header';
+import PageContainer from './components/Page/Container';
 import PostsList from './components/Post/List';
 import WritePost from './components/Post/Write';
 import MetaSidebar from './components/MetaSidebar';
@@ -158,6 +159,11 @@ class App extends Component {
 								path="/:hasPage(page)?/:page(\d+)?"
 								exact
 								component={ PostsList }
+							/>
+							<Route
+								path="/:pageName+"
+								exact
+								component={ PageContainer }
 							/>
 						</Switch>
 					</div>

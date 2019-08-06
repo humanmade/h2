@@ -1,23 +1,17 @@
 import PropTypes from 'prop-types';
-import { withSingle } from '@humanmade/repress';
 import React, { Component } from 'react';
 import { Slot } from 'react-slot-fill';
 
-import { withCategories, withUser } from '../../hocs';
+import { withUser } from '../../hocs';
 import {
 	Post as PostShape,
 } from '../../shapes';
-import { posts } from '../../types';
 
-import Summary from './Summary';
-import PostComments from './Comments';
 import Button from '../Button';
 import MessageHeader from '../Message/Header';
 import MessageMain from '../Message/Main';
 
-import './index.css';
-
-class Post extends Component {
+class Page extends Component {
 	constructor( props ) {
 		super( props );
 		this.state = {
@@ -26,14 +20,6 @@ class Post extends Component {
 			isEditing: false,
 			isSubmitting: false,
 		};
-	}
-
-	onClickReply = () => {
-		this.setState( { isShowingReply: true } )
-	}
-
-	onClickCancelReply = () => {
-		this.setState( { isShowingReply: false } )
 	}
 
 	onClickEdit = () => {
@@ -73,21 +59,19 @@ class Post extends Component {
 
 	render() {
 		const { post, user } = this.props;
-		const categories = this.props.categories.data ? this.props.categories.data.filter( category => post.categories.indexOf( category.id ) >= 0 ) : [];
+		const categories = [];
 
-		const collapsed = ! ( this.state.expanded || this.props.expanded );
-
+		const collapsed = false;
 		const fillProps = {
 			author: user,
 			collapsed,
-			// comments,
 			categories,
 			post,
 		};
 
 		const classes = [
-			'Post',
-			collapsed && 'Post--collapsed',
+			'Page',
+			collapsed && 'Page--collapsed',
 		];
 
 		const Actions = (
@@ -95,8 +79,7 @@ class Post extends Component {
 				{ ! this.state.isEditing &&
 					<Button onClick={ this.onClickEdit }>Edit</Button>
 				}
-				<Button onClick={ this.onClickReply }>Reply</Button>
-				<Slot name="Post.actions" fillChildProps={ fillProps } />
+				<Slot name="Page.actions" fillChildProps={ fillProps } />
 			</div>
 		);
 
@@ -124,36 +107,14 @@ class Post extends Component {
 				>
 					{ Actions }
 				</MessageMain>
-
-				{ collapsed ? (
-					<Summary
-						post={ post }
-						onExpand={ () => this.setState( { expanded: true } ) }
-					/>
-				) : (
-					<PostComments
-						post={ post }
-						showingReply={ this.state.isShowingReply }
-						onCancelReply={ this.onClickCancelReply }
-						onDidCreateComment={ this.onDidCreateComment }
-					/>
-				) }
 			</div>
 		);
 	}
 }
 
-Post.propTypes = {
+Page.propTypes = {
 	collapsed: PropTypes.bool.isRequired,
 	data: PostShape.isRequired,
 };
 
-export default withCategories(
-	withSingle(
-		posts,
-		state => state.posts,
-		props => props.data.id
-	)(
-		withUser( props => props.post.author )( Post )
-	)
-);
+export default withUser( props => props.post.author )( Page );

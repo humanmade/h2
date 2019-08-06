@@ -1,0 +1,31 @@
+.Message-Main {
+	margin-left: 90px;
+}
+
+.Message-Main--collapsed {
+	min-height: 70px;
+	max-height: 150px;
+	overflow: hidden;
+	position: relative;
+}
+.Message-Main--collapsed::after {
+	display: block;
+	content: ' ';
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 100%;
+	background: linear-gradient(
+		to bottom,
+		rgba( 255, 255, 255, 0 ),
+		rgba( 255, 255, 255, 0.9 ) 50%,
+		#fff
+	);
+}
+
+@media ( max-width: 600px ) {
+	.Message-Main {
+		margin-left: 0;
+	}
+}
