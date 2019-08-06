@@ -23,6 +23,10 @@ export const withUser = id => withSingle(
 			loadingUser: data.loading,
 			user: data.post,
 		} ),
+		mapActionsToProps: actions => ( {
+			onLoadUser: actions.onLoad,
+			onUpdateUser: actions.onUpdatePost,
+		} ),
 	}
 );
 
