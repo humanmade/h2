@@ -21,7 +21,7 @@ function bootstrap_gravityforms() {
 		return;
 	}
 
-	add_action( 'parse_request', __NAMESPACE__ . '\\handle_gravityform_request' );
+	add_action( 'template_redirect', __NAMESPACE__ . '\\handle_gravityform_request' );
 	add_filter( 'gform_shortcode_form', __NAMESPACE__ . '\\filter_gravityform_shortcode', 10, 2 );
 }
 
