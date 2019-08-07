@@ -3,8 +3,8 @@
 namespace H2\Compat;
 
 use GFCommon;
-use GFFormsModel;
 use GFFormDisplay;
+use GFFormsModel;
 
 /**
  * Bootstrap compatibility support helpers.
@@ -50,7 +50,7 @@ function filter_gravityform_shortcode( $html, $attributes ) {
 		$url = add_query_arg( 'description', '1', $url );
 	}
 
-	$url = add_query_arg( '_wpnonce', wp_create_nonce( 'h2_gravityform:' . $attrs['id' ] ), $url );
+	$url = add_query_arg( '_wpnonce', wp_create_nonce( 'h2_gravityform:' . $attrs['id'] ), $url );
 
 	return sprintf(
 		'<iframe src="%s" width="100%%" height="500" frameborder="0" scrolling="no" class="gfiframe"></iframe>',
@@ -66,8 +66,8 @@ function handle_gravityform_request() {
 		return;
 	}
 
-	$id = absint( wp_unslash( $_GET['h2_gravityform'] ) );
-	$nonce = wp_unslash( $_GET['_wpnonce'] ?? '' );
+	$id    = absint( wp_unslash( $_GET['h2_gravityform'] ) ); // WPCS: CSRF OK
+	$nonce = wp_unslash( $_GET['_wpnonce'] ?? '' ); // WPCS: CSRF OK
 	if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'h2_gravityform:' . $id ) ) {
 		wp_die( 'Invalid nonce.' );
 	}
