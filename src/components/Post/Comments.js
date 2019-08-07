@@ -5,40 +5,56 @@ import CommentsList from '../CommentsList';
 import WriteComment from '../Message/WriteComment';
 import { comments } from '../../types';
 
-const PostComments = props => {
-	if ( props.isLoading ) {
-		return null;
-	}
-	if ( ! props.posts ) {
-		return null;
+class PostComments extends React.Component {
+	componentDidUpdate() {
+		this.ensureAllLoaded();
 	}
 
-	const topLevel = props.posts.filter( comment => comment.parent === 0 );
-	const onDidCreateComment = () => {
-		// Reload comments.
-		props.onLoad();
+	ensureAllLoaded() {
+		if ( this.props.loading || this.props.loadingMore || ! this.props.hasMore ) {
+			return;
+		}
 
-		// And pass up.
-		props.onDidCreateComment();
-	};
+		this.props.onLoadMore( null );
+	}
 
-	return (
-		<CommentsList
-			allComments={ props.posts }
-			comments={ topLevel }
-			post={ props.post }
-			onDidCreateComment={ onDidCreateComment }
-		>
-			{ props.showingReply && (
-				<WriteComment
-					parentPost={ props.post }
-					onCancel={ props.onCancelReply }
-					onDidCreateComment={ onDidCreateComment }
-				/>
-			) }
-		</CommentsList>
-	);
-};
+	render() {
+		const props = this.props;
+		if ( props.loading || props.loadingMore ) {
+			return null;
+		}
+
+		if ( ! props.posts ) {
+			return null;
+		}
+
+		const topLevel = props.posts.filter( comment => comment.parent === 0 );
+		const onDidCreateComment = () => {
+			// Reload comments.
+			props.onLoad();
+
+			// And pass up.
+			props.onDidCreateComment();
+		};
+
+		return (
+			<CommentsList
+				allComments={ props.posts }
+				comments={ topLevel }
+				post={ props.post }
+				onDidCreateComment={ onDidCreateComment }
+			>
+				{ props.showingReply && (
+					<WriteComment
+						parentPost={ props.post }
+						onCancel={ props.onCancelReply }
+						onDidCreateComment={ onDidCreateComment }
+					/>
+				) }
+			</CommentsList>
+		);
+	}
+}
 
 export default withArchive(
 	comments,
