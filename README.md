@@ -63,3 +63,12 @@ H2 includes a site selector in the sidebar to facilitate using networks of H2 si
 Install and activate the [H2 Site Selector](https://github.com/humanmade/h2-site-selector/tree/e4741ff0f6b35d0e8d2282a61710daaf79408965) plugin. This must be activated network-wide.
 
 Once the plugin has been activated, access the Settings > H2 Sites page in your Network Admin to enable and disable sites.
+
+
+## Credits
+
+Created by Human Made. Licensed under the GPLv2+.
+
+Uses ideas and concepts from P2 by Automattic. Licensed under the GPLv2+.
+
+Support for Gravity Forms is derived from [Gravity Forms Iframe Add-On](https://github.com/cedaro/gravity-forms-iframe) by Brady Vercher. Licensed under the GPLv2+.
