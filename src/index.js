@@ -48,6 +48,7 @@ window.H2.plugins = new PluginAPI( store );
 // Load our default plugins.
 loadPlugins();
 
+const root = document.getElementById( 'root' );
 const render = Main => {
 	ReactDOM.render(
 		<Provider store={ store }>
@@ -64,15 +65,17 @@ const render = Main => {
 				</IntlProvider>
 			</SlotFillProvider>
 		</Provider>,
-		document.getElementById( 'root' )
+		root
 	);
 };
 
-render( App );
+if ( root ) {
+	render( App );
 
-if ( module.hot ) {
-	module.hot.accept( './App', () => {
-		const NextApp = require( './App' ).default;
-		render( NextApp );
-	} );
+	if ( module.hot ) {
+		module.hot.accept( './App', () => {
+			const NextApp = require( './App' ).default;
+			render( NextApp );
+		} );
+	}
 }
