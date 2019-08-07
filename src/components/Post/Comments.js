@@ -46,7 +46,10 @@ export default withArchive(
 	props => {
 		const { post } = props;
 
-		comments.registerArchive( post.id, { post: post.id } );
+		comments.registerArchive( post.id, {
+			post: post.id,
+			per_page: 100,
+		} );
 		return post.id;
 	},
 )( PostComments );
