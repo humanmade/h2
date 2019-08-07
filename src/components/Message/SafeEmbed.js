@@ -6,19 +6,51 @@ import React from 'react';
  * These are rendered on the backend, so we don't need to worry about them here.
  */
 export default class SafeEmbed extends React.Component {
+	constructor( props ) {
+		super( props );
+
+		this.removeResizeEvent = () => {};
+	}
+
 	componentDidMount() {
 		this.container.appendChild( this.props.node );
+		this.attachResizeEvent();
 	}
 
 	componentDidUpdate( prevProps ) {
 		if ( prevProps.node !== this.props.node ) {
 			this.container.removeChild( prevProps.node );
+			this.removeResizeEvent();
 			this.container.appendChild( this.props.node );
+			this.attachResizeEvent();
 		}
 	}
 
 	componentWillUnmount() {
 		this.container.removeChild( this.props.node );
+		this.removeResizeEvent();
+	}
+
+	attachResizeEvent() {
+		let doc;
+		const { node } = this.props;
+
+		const handleResize = () => {
+			try {
+				doc = node.contentDocument || node.contentWindow.document;
+			} catch ( err ) {
+				return;
+			}
+
+			node.style.height = doc.documentElement.offsetHeight + 'px';
+		};
+
+		node.addEventListener( 'load', handleResize );
+		node.contentWindow.addEventListener( 'resize', handleResize );
+		this.removeResizeEvent = () => {
+			node.removeEventListener( 'load', handleResize );
+			node.contentWindow.removeEventListener( 'resize', handleResize );
+		};
 	}
 
 	render() {
