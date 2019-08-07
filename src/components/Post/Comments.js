@@ -1,6 +1,7 @@
 import { withArchive } from '@humanmade/repress';
-import React from 'react';
+import React, { Fragment } from 'react';
 
+import CommentLoader from '../Comment/Loader';
 import CommentsList from '../CommentsList';
 import WriteComment from '../Message/WriteComment';
 import { comments } from '../../types';
@@ -21,7 +22,11 @@ class PostComments extends React.Component {
 	render() {
 		const props = this.props;
 		if ( props.loading || props.loadingMore ) {
-			return null;
+			return (
+				<Fragment>
+					<CommentLoader />
+				</Fragment>
+			);
 		}
 
 		if ( ! props.posts ) {
