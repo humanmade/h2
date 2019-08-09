@@ -45,6 +45,15 @@ export default class SafeEmbed extends React.Component {
 			node.style.height = doc.documentElement.offsetHeight + 'px';
 		};
 
+		// Check that the node isn't cross-origin first.
+		try {
+			// eslint-disable-next-line no-unused-vars
+			const doc = node.contentDocument || node.contentWindow.document;
+		} catch ( err ) {
+			console.log( err );
+			return;
+		}
+
 		node.addEventListener( 'load', handleResize );
 		node.contentWindow.addEventListener( 'resize', handleResize );
 		this.removeResizeEvent = () => {
