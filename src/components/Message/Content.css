@@ -4,7 +4,8 @@
 	word-break: break-word;
 }
 
-.PostContent img {
+.PostContent img,
+.PostContent video {
 	max-width: 100%;
 	height: auto;
 }
