@@ -130,6 +130,12 @@ export const user = {
 	},
 	meta: {
 		h2_last_updated: now,
+		hm_time_timezone: 'Europe/Zurich',
+	},
+	facts: {
+		job_title: 'Chief Growth Officer',
+		short_bio: 'This is a short description of the user.',
+		location: '47.3769,8.5417',
 	},
 };
 
