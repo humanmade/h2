@@ -1,7 +1,17 @@
 import React from 'react';
 import { storiesOf, action } from '@storybook/react';
 
+import { users } from './stubs';
+import Editor from '../components/Editor';
 import DropUpload from '../components/DropUpload';
+
+storiesOf( 'Editor', module )
+	.add( 'Editor', () => (
+		<Editor
+			onSubmit={ action( 'submit' ) }
+			users={ users }
+		/>
+	) );
 
 storiesOf( 'Editor/Upload', module )
 	.addDecorator( story => <div style={ { margin: '10px' } }>{ story() }</div> )

@@ -14,6 +14,7 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.0",
     "eslint-plugin-react": "^7.10.0",
+    "outdent": "^0.7.0",
     "react-scripts": "^1.1.5"
   },
   "dependencies": {
