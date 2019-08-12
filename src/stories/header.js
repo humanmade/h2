@@ -3,12 +3,12 @@ import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 
 import { user } from './stubs';
-import { apiResponse } from './util';
+import withStore from './withStore';
 import { Header } from '../components/Header';
 import Logo from '../components/Header/Logo';
 
 const defaultProps = {
-	currentUser: apiResponse( user ),
+	currentUser: user,
 	onLogOut: action( 'onLogOut' ),
 	onSearch: action( 'onSearch' ),
 	onShowChanges: action( 'onShowChanges' ),
@@ -16,7 +16,10 @@ const defaultProps = {
 	onWritePost: action( 'onWritePost' ),
 };
 
+const state = {};
+
 storiesOf( 'Header', module )
+	.addDecorator( withStore( state ) )
 	.add( 'Header', () => (
 		<Header
 			{ ...defaultProps }
