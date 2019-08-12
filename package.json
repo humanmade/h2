@@ -4,6 +4,7 @@
   "private": true,
   "homepage": ".",
   "devDependencies": {
+    "@babel/core": "^7.5.5",
     "@storybook/react": "^5.1.10",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^8.0.6",
