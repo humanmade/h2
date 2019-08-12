@@ -21,6 +21,7 @@
   "dependencies": {
     "@humanmade/repress": "^0.5.0",
     "@iarna/word-count": "^1.0.3",
+    "@storybook/addon-actions": "^5.1.10",
     "emoji-mart": "^2.8.1",
     "interweave": "^9.2.0",
     "lodash": "^4.17.13",
