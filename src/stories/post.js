@@ -1,6 +1,7 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
+import withStore from './withStore';
 
 import { comment, editablePost, post, user } from './stubs';
 import { apiResponse } from './util';
@@ -8,18 +9,19 @@ import { Post } from '../components/Post';
 import WritePost from '../components/Post/Write';
 
 const defaultProps = {
-	author: apiResponse( user ),
-	comments: apiResponse( [] ),
+	user: user,
 	categories: apiResponse( [] ),
-	data: post,
+	post,
+};
 
-	invalidateDataForUrl: action( 'invalidateDataForUrl' ),
-	refreshData: action( 'refreshData' ),
-	onInvalidate: action( 'onInvalidate' ),
-	onLoadEditable: action( 'onLoadEditable' ),
+const state = {
+	posts: {
+		posts: [ post ],
+	}
 };
 
 storiesOf( 'Post', module )
+	.addDecorator( withStore( state ) )
 	.add( 'Post', () => (
 		<Post
 			{ ...defaultProps }
@@ -51,7 +53,7 @@ storiesOf( 'Post', module )
 					<Post
 						key={ length }
 						{ ...defaultProps }
-						data={ {
+						post={ {
 							...post,
 							title: { rendered: 'm'.repeat( length ) },
 							content: { rendered: `Post with title of length ${ length }` },
