@@ -80,7 +80,6 @@ export default class UserHovercard extends React.Component {
 		return (
 			<Hovercard
 				cardContent={ () => <UserCard user={ user } /> }
-				width={ 425 }
 			>
 				{ children }
 			</Hovercard>

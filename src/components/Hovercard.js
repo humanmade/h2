@@ -93,7 +93,7 @@ export function Card( { children, positions, width } ) {
 }
 
 Card.defaultProps = {
-	width: 300,
+	width: 425,
 };
 
 export default class Hovercard extends React.Component {
@@ -182,5 +182,5 @@ export default class Hovercard extends React.Component {
 }
 
 Hovercard.defaultProps = {
-	width: 300,
+	width: 425,
 };
