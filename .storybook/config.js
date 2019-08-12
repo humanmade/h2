@@ -5,6 +5,7 @@ import rootDecorator from '../src/stories/root-decorator';
 function loadStories() {
   addDecorator( rootDecorator() )
   require( '../src/stories' );
+  require( '../src/stories/comments' );
   require( '../src/stories/editor' );
   require( '../src/stories/header' );
   require( '../src/stories/Hovercard' );
