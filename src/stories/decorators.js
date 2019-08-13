@@ -29,12 +29,25 @@ export function withStore( state, actions = [] ) {
 
 export const withPadding = story => {
 	const style = {
-		margin: '40px',
+		padding: '40px',
+		backgroundImage: `
+			linear-gradient(45deg, #f3f3f3 25%, transparent 25%),
+			linear-gradient(-45deg, #f3f3f3 25%, transparent 25%),
+			linear-gradient(45deg, transparent 75%, #f3f3f3 75%),
+			linear-gradient(-45deg, transparent 75%, #f3f3f3 75%)
+		`,
+		backgroundSize: '20px 20px',
+		backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
+	};
+	const innerStyle = {
+		background: '#fff',
 	};
 
 	return (
 		<div style={ style }>
-			{ story() }
+			<div style={ innerStyle }>
+				{ story() }
+			</div>
 		</div>
 	);
 }
