@@ -9,4 +9,8 @@ function loadStories() {
 	req.keys().forEach( filename => req( filename ) );
 }
 
+if ( process.env.STORYBOOK_MAPBOX_KEY ) {
+	window.H2Data.site.mapbox_key = process.env.STORYBOOK_MAPBOX_KEY;
+}
+
 configure(loadStories, module);
