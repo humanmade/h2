@@ -13,7 +13,7 @@ const commonProps = {
 	},
 };
 
-storiesOf( 'Components/Hovercard' )
+storiesOf( 'Components/Hovercard', module )
 	.addDecorator( withStore( {} ) )
 	.add( 'Base', () => (
 		<div>

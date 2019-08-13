@@ -9,7 +9,7 @@ import SearchInput, { Results } from '../components/SearchInput';
 
 import '../hm-pattern-library/assets/styles/juniper.css';
 
-storiesOf( 'Components' )
+storiesOf( 'Components', module )
 	.addDecorator( withStore( {} ) )
 	.add( 'Avatar', () => (
 		<Avatar
@@ -18,7 +18,7 @@ storiesOf( 'Components' )
 		/>
 	) );
 
-storiesOf( 'Components/Search' )
+storiesOf( 'Components/Search', module )
 	.addDecorator( withStore( {} ) )
 	.addDecorator( withPadding )
 	.add( 'Input', () => {
