@@ -2,7 +2,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 
-import { withStore } from './decorators';
+import { withPadding, withStore } from './decorators';
 import { users } from './stubs';
 import Editor from '../components/Editor';
 import DropUpload from '../components/DropUpload';
@@ -18,7 +18,7 @@ storiesOf( 'Editor', module )
 
 storiesOf( 'Editor/Upload', module )
 	.addDecorator( withStore( {} ) )
-	.addDecorator( story => <div style={ { margin: '10px' } }>{ story() }</div> )
+	.addDecorator( withPadding )
 	.add( 'Normal', () => (
 		<DropUpload
 			files={ [] }
