@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import withStore from './withStore';
+import { withStore } from './decorators';
 import { user } from './stubs';
 import Hovercard, { Card } from '../components/Hovercard';
 import UserHovercard, { UserCard } from '../components/UserHovercard';

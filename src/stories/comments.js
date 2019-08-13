@@ -2,8 +2,8 @@ import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 
+import { withStore } from './decorators';
 import { comment, post, user } from './stubs';
-import withStore from './withStore';
 import { Comment } from '../components/Comment';
 import WriteComment from '../components/Message/WriteComment';
 

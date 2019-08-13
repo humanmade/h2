@@ -1,8 +1,8 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
-import withStore from './withStore';
 
+import { withStore } from './decorators';
 import { comment, editablePost, post, user } from './stubs';
 import { apiResponse } from './util';
 import { Post } from '../components/Post';

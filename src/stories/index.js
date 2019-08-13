@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import React from 'react';
 
 import { post } from './stubs';
-import withStore from './withStore';
+import { withStore } from './decorators';
 import Avatar from '../components/Avatar';
 import SearchInput, { Results } from '../components/SearchInput';
 

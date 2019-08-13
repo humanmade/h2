@@ -15,7 +15,7 @@ const store = createStore(
 	)
 );
 
-export default function withStore( state, actions = [] ) {
+export function withStore( state, actions = [] ) {
 	const settings = {
 		Provider,
 		store,

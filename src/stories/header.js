@@ -2,8 +2,8 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 
+import { withStore } from './decorators';
 import { user } from './stubs';
-import withStore from './withStore';
 import { Header } from '../components/Header';
 import Logo from '../components/Header/Logo';
 
