@@ -6,7 +6,7 @@ import { withStore } from './decorators';
 import { comment, editablePost, post, user } from './stubs';
 import { apiResponse } from './util';
 import { Post } from '../components/Post';
-import WritePost from '../components/Post/Write';
+import { WritePost } from '../components/Post/Write';
 
 const defaultProps = {
 	user: user,
@@ -17,6 +17,11 @@ const defaultProps = {
 const state = {
 	posts: {
 		posts: [ post ],
+
+		// TODO: fix this in Repress.
+		archivePages: {},
+		loadingArchive: [],
+		loadingMore: [],
 	}
 };
 
@@ -65,10 +70,12 @@ storiesOf( 'Post', module )
 	} )
 	.add( 'WritePost', () => (
 		<WritePost
-			author={ user }
+			categories={ [] }
+			currentUser={ user }
 			post={ post }
-			onChange={ () => {} }
-			onSave={ () => {} }
-			onCancel={ () => {} }
+			onCancel={ action( 'onCancel' ) }
+			onCreate={ action( 'onCreate' ) }
+			onDidCreatePost={ action( 'onDidCreatePost' ) }
+			onUpdate={ action( 'onUpdate' ) }
 		/>
 	) );
