@@ -27,6 +27,7 @@ storiesOf( 'Components/Search' )
 				{ ...props }
 				loading={ false }
 				posts={ [ post ] }
+				visible
 			/>
 		);
 		return (
@@ -42,6 +43,7 @@ storiesOf( 'Components/Search' )
 			<Results
 				{ ...props }
 				loading={ true }
+				visible
 			/>
 		);
 		return (
