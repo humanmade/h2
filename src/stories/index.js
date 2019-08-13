@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import React from 'react';
 
 import { post } from './stubs';
-import { withStore } from './decorators';
+import { withPadding, withStore } from './decorators';
 import Avatar from '../components/Avatar';
 import SearchInput, { Results } from '../components/SearchInput';
 
@@ -20,6 +20,7 @@ storiesOf( 'Components' )
 
 storiesOf( 'Components/Search' )
 	.addDecorator( withStore( {} ) )
+	.addDecorator( withPadding )
 	.add( 'Input', () => {
 		const ResultsComponent = props => (
 			<Results
