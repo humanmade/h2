@@ -220,8 +220,11 @@ class SearchInput extends React.Component {
 }
 
 SearchInput.propTypes = {
-	resultsComponent: ConnectedResults,
+	resultsComponent: PropTypes.elementType,
 	onSearch: PropTypes.func.isRequired,
+};
+SearchInput.defaultProps = {
+	resultsComponent: ConnectedResults,
 };
 
 export default withRouter( SearchInput );
