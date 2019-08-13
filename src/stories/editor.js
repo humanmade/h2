@@ -11,7 +11,7 @@ storiesOf( 'Editor', module )
 	.addDecorator( withStore( {} ) )
 	.add( 'Editor', () => (
 		<Editor
-			onSubmit={ action( 'submit' ) }
+			onSubmit={ action( 'onSubmit' ) }
 			users={ users }
 		/>
 	) );
@@ -22,8 +22,8 @@ storiesOf( 'Editor/Upload', module )
 	.add( 'Normal', () => (
 		<DropUpload
 			files={ [] }
-			onCancel={ action( 'upload' ) }
-			onUpload={ action( 'upload' ) }
+			onCancel={ action( 'onCancel' ) }
+			onUpload={ action( 'onUpload' ) }
 		>
 			<p style={ { background: '#eee' } }>DropUpload children.</p>
 		</DropUpload>
@@ -31,8 +31,8 @@ storiesOf( 'Editor/Upload', module )
 	.add( 'In Progress', () => (
 		<DropUpload
 			files={ [ { name: 'filename.ext' } ] }
-			onCancel={ action( 'upload' ) }
-			onUpload={ action( 'upload' ) }
+			onCancel={ action( 'onCancel' ) }
+			onUpload={ action( 'onUpload' ) }
 		>
 			<p style={ { background: '#eee' } }>DropUpload children.</p>
 		</DropUpload>
@@ -40,8 +40,8 @@ storiesOf( 'Editor/Upload', module )
 	.add( 'In Progress (Multiple)', () => (
 		<DropUpload
 			files={ [ { name: 'filename.ext' }, { name: 'other.ext' } ] }
-			onCancel={ action( 'upload' ) }
-			onUpload={ action( 'upload' ) }
+			onCancel={ action( 'onCancel' ) }
+			onUpload={ action( 'onUpload' ) }
 		>
 			<p style={ { background: '#eee' } }>DropUpload children.</p>
 		</DropUpload>
