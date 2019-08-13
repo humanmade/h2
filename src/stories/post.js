@@ -22,7 +22,7 @@ const state = {
 		archivePages: {},
 		loadingArchive: [],
 		loadingMore: [],
-	}
+	},
 };
 
 storiesOf( 'Post', module )

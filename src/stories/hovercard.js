@@ -28,7 +28,7 @@ storiesOf( 'Components/Hovercard', module )
 		<Hovercard
 			cardContent={ () => <p>Card content.</p> }
 		>
-			<a>Target element, hover to activate.</a>
+			<a href="http://example.com/">Target element, hover to activate.</a>
 		</Hovercard>
 	) )
 	.add( 'User', () => (

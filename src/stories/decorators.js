@@ -25,7 +25,7 @@ export function withStore( state, actions = [] ) {
 	};
 
 	return withRedux( addons )( settings );
-};
+}
 
 export const withPadding = story => {
 	const style = {
