@@ -36,4 +36,13 @@ storiesOf( 'Editor/Upload', module )
 		>
 			<p style={ { background: '#eee' } }>DropUpload children.</p>
 		</DropUpload>
+	) )
+	.add( 'In Progress (Multiple)', () => (
+		<DropUpload
+			files={ [ { name: 'filename.ext' }, { name: 'other.ext' } ] }
+			onCancel={ action( 'upload' ) }
+			onUpload={ action( 'upload' ) }
+		>
+			<p style={ { background: '#eee' } }>DropUpload children.</p>
+		</DropUpload>
 	) );
