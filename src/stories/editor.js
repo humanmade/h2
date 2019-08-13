@@ -21,6 +21,7 @@ storiesOf( 'Editor/Upload', module )
 	.addDecorator( story => <div style={ { margin: '10px' } }>{ story() }</div> )
 	.add( 'Normal', () => (
 		<DropUpload
+			files={ [] }
 			onCancel={ action( 'upload' ) }
 			onUpload={ action( 'upload' ) }
 		>
@@ -29,7 +30,7 @@ storiesOf( 'Editor/Upload', module )
 	) )
 	.add( 'In Progress', () => (
 		<DropUpload
-			file={ { name: 'filename.ext' } }
+			files={ [ { name: 'filename.ext' } ] }
 			onCancel={ action( 'upload' ) }
 			onUpload={ action( 'upload' ) }
 		>
