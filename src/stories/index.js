@@ -27,6 +27,22 @@ storiesOf( 'Components/Search' )
 				{ ...props }
 				loading={ false }
 				posts={ [ post ] }
+			/>
+		);
+		return (
+			<SearchInput
+				value="value"
+				onSearch={ action( 'onSearch' ) }
+				resultsComponent={ ResultsComponent }
+			/>
+		);
+	} )
+	.add( 'Input (Showing Results)', () => {
+		const ResultsComponent = props => (
+			<Results
+				{ ...props }
+				loading={ false }
+				posts={ [ post ] }
 				visible
 			/>
 		);
