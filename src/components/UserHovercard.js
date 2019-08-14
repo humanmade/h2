@@ -36,42 +36,40 @@ const LocalTime = props => {
 	);
 }
 
-export default class UserHovercard extends React.Component {
-	renderCard() {
-		const { user } = this.props;
-
-		return (
-			<aside className="UserHovercard">
-				<div className="UserHovercard-details">
-					<header>
-						<Avatar
-							url={ user.avatar_urls['96'] }
-							size={ 40 }
-							withHovercard={ false }
-						/>
-						<div>
-							<h3>{ user.name }</h3>
-							<p className="UserHovercard-slug">@{ user.slug }</p>
-							<p className={ user.facts.job_title ? 'UserHovercard-title' : 'UserHovercard-title missing' }>
-								{ user.facts.job_title || 'Unknown Role' }
-							</p>
-						</div>
-					</header>
-
-					<div className="UserHovercard-description">
-						<LocalTime user={ user } />
-						<p>{ user.facts.short_bio }</p>
+export function UserCard( { user } ) {
+	return (
+		<aside className="UserHovercard">
+			<div className="UserHovercard-details">
+				<header>
+					<Avatar
+						url={ user.avatar_urls['96'] }
+						size={ 40 }
+						withHovercard={ false }
+					/>
+					<div>
+						<h3>{ user.name }</h3>
+						<p className="UserHovercard-slug">@{ user.slug }</p>
+						<p className={ user.facts.job_title ? 'UserHovercard-title' : 'UserHovercard-title missing' }>
+							{ user.facts.job_title || 'Unknown Role' }
+						</p>
 					</div>
-				</div>
-				<Map
-					height="150"
-					location={ user.facts.location }
-					width="150"
-				/>
-			</aside>
-		);
-	}
+				</header>
 
+				<div className="UserHovercard-description">
+					<LocalTime user={ user } />
+					<p>{ user.facts.short_bio }</p>
+				</div>
+			</div>
+			<Map
+				height="150"
+				location={ user.facts.location }
+				width="150"
+			/>
+		</aside>
+	);
+}
+
+export default class UserHovercard extends React.Component {
 	render() {
 		const { children, user } = this.props;
 
@@ -81,8 +79,7 @@ export default class UserHovercard extends React.Component {
 
 		return (
 			<Hovercard
-				cardContent={ () => this.renderCard() }
-				width={ 425 }
+				cardContent={ () => <UserCard user={ user } /> }
 			>
 				{ children }
 			</Hovercard>

@@ -68,6 +68,34 @@ class CardPortal extends React.Component {
 	}
 }
 
+export function Card( { children, positions, width } ) {
+	const cardStyle = {
+		left: positions.left,
+		top: positions.top,
+		width,
+	};
+	const pointerStyle = {};
+	pointerStyle.transform = positions.pointerOffset ? `translate( ${ positions.pointerOffset}px, 0 )` : null;
+
+	return (
+		<div
+			className="Hovercard-Card"
+			style={ cardStyle }
+		>
+			<div
+				className="Hovercard-Card-pointer"
+				style={ pointerStyle }
+			/>
+
+			{ children }
+		</div>
+	);
+}
+
+Card.defaultProps = {
+	width: 425,
+};
+
 export default class Hovercard extends React.Component {
 	constructor( props ) {
 		super( props );
@@ -113,19 +141,12 @@ export default class Hovercard extends React.Component {
 
 	render() {
 		const {
-			cardContent: Card,
+			cardContent: CardContent,
 			width,
 		} = this.props;
 		const { active } = this.state;
 
 		const positions = getPosition( this.target, width );
-		const cardStyle = {
-			left: positions.left,
-			top: positions.top,
-			width,
-		};
-		const pointerStyle = {};
-		pointerStyle.transform = positions.pointerOffset ? `translate( ${ positions.pointerOffset}px, 0 )` : null;
 
 		return (
 			<React.Fragment>
@@ -137,16 +158,12 @@ export default class Hovercard extends React.Component {
 				>
 					{ () => (
 						<CardPortal>
-							<div
-								className="Hovercard-Card"
-								style={ cardStyle }
+							<Card
+								positions={ positions }
+								width={ width }
 							>
-								<div
-									className="Hovercard-Card-pointer"
-									style={ pointerStyle }
-								/>
-								<Card />
-							</div>
+								<CardContent />
+							</Card>
 						</CardPortal>
 					) }
 				</CSSTransition>
@@ -165,5 +182,5 @@ export default class Hovercard extends React.Component {
 }
 
 Hovercard.defaultProps = {
-	width: 300,
+	width: 425,
 };

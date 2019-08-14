@@ -1,23 +1,47 @@
 import React from 'react';
-import { storiesOf, action } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+import { storiesOf } from '@storybook/react';
 
+import { withPadding, withStore } from './decorators';
+import { users } from './stubs';
+import Editor from '../components/Editor';
 import DropUpload from '../components/DropUpload';
 
+storiesOf( 'Editor', module )
+	.addDecorator( withStore( {} ) )
+	.add( 'Editor', () => (
+		<Editor
+			onSubmit={ action( 'onSubmit' ) }
+			users={ users }
+		/>
+	) );
+
 storiesOf( 'Editor/Upload', module )
-	.addDecorator( story => <div style={ { margin: '10px' } }>{ story() }</div> )
+	.addDecorator( withStore( {} ) )
+	.addDecorator( withPadding )
 	.add( 'Normal', () => (
 		<DropUpload
-			onCancel={ action( 'upload' ) }
-			onUpload={ action( 'upload' ) }
+			files={ [] }
+			onCancel={ action( 'onCancel' ) }
+			onUpload={ action( 'onUpload' ) }
 		>
 			<p style={ { background: '#eee' } }>DropUpload children.</p>
 		</DropUpload>
 	) )
 	.add( 'In Progress', () => (
 		<DropUpload
-			file={ { name: 'filename.ext' } }
-			onCancel={ action( 'upload' ) }
-			onUpload={ action( 'upload' ) }
+			files={ [ { name: 'filename.ext' } ] }
+			onCancel={ action( 'onCancel' ) }
+			onUpload={ action( 'onUpload' ) }
+		>
+			<p style={ { background: '#eee' } }>DropUpload children.</p>
+		</DropUpload>
+	) )
+	.add( 'In Progress (Multiple)', () => (
+		<DropUpload
+			files={ [ { name: 'filename.ext' }, { name: 'other.ext' } ] }
+			onCancel={ action( 'onCancel' ) }
+			onUpload={ action( 'onUpload' ) }
 		>
 			<p style={ { background: '#eee' } }>DropUpload children.</p>
 		</DropUpload>
