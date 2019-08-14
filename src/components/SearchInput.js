@@ -17,7 +17,7 @@ export class Results extends React.Component {
 
 	componentDidMount() {
 		this.keyHandler = e => {
-			const items = this.props.results && this.props.results.data;
+			const items = this.props.posts;
 			if ( ! this.props.visible || ! items || ! items.length ) {
 				return;
 			}
