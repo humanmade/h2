@@ -32,7 +32,7 @@
 	z-index: 10;
 }
 
-.reactions .emoji-mart input[type="text"] {
+.reactions .emoji-mart input[type="search"] {
 	width: 100%;
 	margin-bottom: 0;
 	border-width: 1px;
