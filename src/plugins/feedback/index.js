@@ -4,6 +4,8 @@ import { Fill } from 'react-slot-fill';
 import HeaderLabel from '../../components/Header/HeaderLabel';
 import Feedback from './Feedback';
 
+import './index.css';
+
 export default class Plugin extends React.Component {
 	state = {
 		active: false,
@@ -14,6 +16,7 @@ export default class Plugin extends React.Component {
 			<React.Fragment>
 				<Fill name="Header.secondary_buttons">
 					<HeaderLabel
+						className="Header__feedback"
 						icon="arrow-right"
 						title="Feedback"
 						onClick={ () => this.setState( { active: true } ) }

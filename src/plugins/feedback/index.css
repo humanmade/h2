@@ -1,0 +1,5 @@
+@media ( max-width: 600px ) {
+	.Header .Header__feedback {
+		display: none;
+	}
+}
