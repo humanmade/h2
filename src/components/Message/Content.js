@@ -86,7 +86,6 @@ function Content( props ) {
 		<div className="PostContent">
 			<ErrorBoundary>
 				<Interweave
-					commonClass={ null }
 					content={ html }
 					matchers={ matchers }
 					tagName="fragment"
