@@ -13,6 +13,8 @@ import UserDisplayName from '../../components/UserDisplayName';
 import 'emoji-mart/css/emoji-mart.css';
 import './Reactions.css';
 
+const customEmoji = Object.values( window.H2Data.site.emoji );
+
 const Emoji = props => {
 	const custom = window.H2Data.site.emoji[ props.type ];
 	if ( custom ) {
@@ -211,7 +213,7 @@ export class Reactions extends Component {
 							emoji="upside_down_face"
 							autoFocus={ true }
 							color="#D24632"
-							custom={ window.H2Data.site.emoji }
+							custom={ customEmoji }
 							set="twitter"
 						/>
 					</PickerWrap>
