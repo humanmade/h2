@@ -51,6 +51,14 @@ class PickerWrap extends Component {
 	}
 
 	onClose = e => {
+		if ( ! this.contentEl ) {
+			return;
+		}
+
+		if ( this.contentEl.contains( e.target ) ) {
+			return;
+		}
+
 		e.preventDefault();
 
 		this.props.onClose();
@@ -76,7 +84,11 @@ class PickerWrap extends Component {
 				className="reactions-picker-wrap"
 				onClick={ this.onClose }
 			>
-				{ this.props.children }
+				<div
+					ref={ r => this.contentEl = r }
+				>
+					{ this.props.children }
+				</div>
 			</div>,
 			this.container
 		);
