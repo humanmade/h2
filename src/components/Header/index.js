@@ -12,9 +12,9 @@ import { withCurrentUser } from '../../hocs';
 
 import './index.css';
 
-class Header extends Component {
+export class Header extends Component {
 	render() {
-		const newChanges = this.props.currentUser && this.props.currentUser.data ? getChangesForUser( this.props.currentUser.data ) : [];
+		const newChanges = this.props.currentUser ? getChangesForUser( this.props.currentUser ) : [];
 
 		const newLabel = (
 			<span>
@@ -62,7 +62,7 @@ class Header extends Component {
 
 					{ this.props.currentUser ? (
 						<CurrentUser
-							user={ this.props.currentUser.data }
+							user={ this.props.currentUser }
 							onLogOut={ this.props.onLogOut }
 						/>
 					) : null }

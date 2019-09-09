@@ -1,8 +1,16 @@
-import { configure } from '@storybook/react';
+import { addDecorator, configure } from '@storybook/react';
+
+import rootDecorator from '../src/stories/root-decorator';
 
 function loadStories() {
-  require('../src/stories');
-  require('../src/stories/editor');
+	addDecorator( rootDecorator() );
+
+	const req = require.context( '../src/stories', true, /\.js$/ );
+	req.keys().forEach( filename => req( filename ) );
+}
+
+if ( process.env.STORYBOOK_MAPBOX_KEY ) {
+	window.H2Data.site.mapbox_key = process.env.STORYBOOK_MAPBOX_KEY;
 }
 
 configure(loadStories, module);

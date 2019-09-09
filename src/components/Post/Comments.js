@@ -12,7 +12,7 @@ class PostComments extends React.Component {
 	}
 
 	ensureAllLoaded() {
-		if ( this.props.loading || this.props.loadingMore || ! this.props.hasMore ) {
+		if ( this.props.loading || this.props.loadingMore || ! this.props.posts || ! this.props.hasMore ) {
 			return;
 		}
 

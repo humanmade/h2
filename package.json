@@ -4,8 +4,11 @@
   "private": true,
   "homepage": ".",
   "devDependencies": {
-    "@storybook/react": "^3.4.10",
+    "@babel/core": "^7.5.5",
+    "@storybook/react": "^5.1.10",
+    "addon-redux": "^1.0.0",
     "babel-eslint": "^7.2.3",
+    "babel-loader": "^8.0.6",
     "bundlesize": "^0.17.0",
     "eslint": "^4.19.1",
     "eslint-config-humanmade": "^0.5.0",
@@ -14,11 +17,13 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.0",
     "eslint-plugin-react": "^7.10.0",
+    "outdent": "^0.7.0",
     "react-scripts": "^1.1.5"
   },
   "dependencies": {
     "@humanmade/repress": "^0.5.0",
     "@iarna/word-count": "^1.0.3",
+    "@storybook/addon-actions": "^5.1.10",
     "emoji-mart": "^2.8.1",
     "interweave": "^11.1.0",
     "lodash": "^4.17.13",

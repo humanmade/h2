@@ -17,7 +17,7 @@ import MessageMain from '../Message/Main';
 
 import './index.css';
 
-class Post extends Component {
+export class Post extends Component {
 	constructor( props ) {
 		super( props );
 		this.state = {
@@ -144,8 +144,12 @@ class Post extends Component {
 }
 
 Post.propTypes = {
-	collapsed: PropTypes.bool.isRequired,
 	data: PostShape.isRequired,
+	expanded: PropTypes.bool.isRequired,
+};
+
+Post.defaultProps = {
+	expanded: true,
 };
 
 export default withCategories(

@@ -10,14 +10,14 @@ import { decodeEntities } from '../util';
 
 import './SearchInput.css';
 
-class Results extends React.Component {
+export class Results extends React.Component {
 	state = {
 		selected: -1,
 	}
 
 	componentDidMount() {
 		this.keyHandler = e => {
-			const items = this.props.results && this.props.results.data;
+			const items = this.props.posts;
 			if ( ! this.props.visible || ! items || ! items.length ) {
 				return;
 			}
@@ -189,6 +189,7 @@ class SearchInput extends React.Component {
 	render() {
 		const termFromURL = this.props.location.pathname.match( /\/search\/(.+)/ );
 		const term = this.state.value === null ? ( termFromURL && termFromURL[1] ) || '' : this.state.value;
+		const Results = this.props.resultsComponent;
 
 		return (
 			<form
@@ -207,7 +208,7 @@ class SearchInput extends React.Component {
 					/>
 				</div>
 
-				<ConnectedResults
+				<Results
 					term={ term }
 					visible={ this.state.showSuggest }
 					onSelect={ this.onSelect }
@@ -218,6 +219,12 @@ class SearchInput extends React.Component {
 	}
 }
 
-SearchInput.propTypes = { onSearch: PropTypes.func.isRequired };
+SearchInput.propTypes = {
+	resultsComponent: PropTypes.elementType,
+	onSearch: PropTypes.func.isRequired,
+};
+SearchInput.defaultProps = {
+	resultsComponent: ConnectedResults,
+};
 
 export default withRouter( SearchInput );
