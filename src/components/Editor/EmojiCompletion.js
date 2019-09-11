@@ -36,7 +36,7 @@ const EmojiCompletion = props => {
 			`:${ search }`,
 			{
 				custom: customEmoji,
-				maxResults: 1
+				maxResults: 1,
 			}
 		);
 
