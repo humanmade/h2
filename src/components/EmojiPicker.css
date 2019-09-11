@@ -1,0 +1,22 @@
+.EmojiPicker.EmojiPicker--mobile {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 10;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgb(79, 70, 65, 0.7);
+	backdrop-filter: blur( 2px );
+}
+
+.EmojiPicker .emoji-mart input[type="search"] {
+	width: 100%;
+	margin-bottom: 0;
+	border-width: 1px;
+	margin-bottom: 5px;
+	font: inherit;
+}
