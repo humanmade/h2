@@ -6,7 +6,6 @@
 	background: #fff;
 	display: flex;
 	align-items: center;
-	height: 99px;
 }
 
 @media screen and ( min-width: 600px ) and ( max-width: 782px ) {
@@ -37,16 +36,12 @@
 	flex-direction: column;
 	flex-grow: 1;
 	min-width: 0;
-	white-space: nowrap;
 	overflow: hidden;
 }
 
 .Message-Header__title {
 	margin: 0 0.5em 0 0;
-	text-overflow: ellipsis;
 	text-transform: inherit;
-	white-space: nowrap;
-	overflow: hidden;
 }
 
 .Message-Header__date {
