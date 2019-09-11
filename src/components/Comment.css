@@ -32,6 +32,7 @@
 .Comment .Comment-Header {
 	position: sticky;
 	top: 99px;
+	top: var( --message-header-size, 99px );
 	z-index: 3;
 }
 
