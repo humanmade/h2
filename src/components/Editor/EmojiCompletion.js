@@ -26,13 +26,35 @@ const EmojiCompletion = props => {
 		);
 	};
 
-	const getItems = search => emojiIndex.search(
-		search,
-		{
-			custom: customEmoji,
-			maxResults: 5,
+	const getItems = search => {
+		if ( ! search.length ) {
+			return null;
 		}
-	);
+
+		// Check if this is a special emoji first.
+		const withPrefixSearch = emojiIndex.search(
+			`:${ search }`,
+			{
+				custom: customEmoji,
+				maxResults: 1
+			}
+		);
+
+		// Then run a regular search.
+		const regularSearch = emojiIndex.search(
+			search,
+			{
+				custom: customEmoji,
+				maxResults: 5,
+			}
+		);
+
+		// Finally, combine and return.
+		return [
+			...withPrefixSearch,
+			...regularSearch,
+		].slice( 0, 5 );
+	};
 
 	return (
 		<Completion
