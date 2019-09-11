@@ -6,7 +6,7 @@ import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
 import './EmojiPicker.css';
 
-const customEmoji = Object.values( window.H2Data.site.emoji );
+export const customEmoji = Object.values( window.H2Data.site.emoji );
 
 class PickerWrap extends Component {
 	constructor( props ) {

@@ -2,6 +2,7 @@ import { emojiIndex } from 'emoji-mart';
 import React from 'react';
 
 import Completion from './Completion';
+import { customEmoji } from '../EmojiPicker';
 
 import './EmojiCompletion.css';
 
@@ -28,7 +29,7 @@ const EmojiCompletion = props => {
 	const getItems = search => emojiIndex.search(
 		search,
 		{
-			custom: Object.values( window.H2Data.site.emoji ),
+			custom: customEmoji,
 			maxResults: 5,
 		}
 	);
