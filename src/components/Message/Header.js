@@ -16,6 +16,23 @@ import { decodeEntities } from '../../util';
 import './Header.css';
 
 export default class MessageHeader extends React.Component {
+	componentDidUpdate() {
+		this.onUpdateLayout();
+	}
+
+	onUpdateLayout() {
+		if ( ! this.ref || ! this.props.onUpdateHeight ) {
+			return;
+		}
+
+		this.props.onUpdateHeight( this.ref.offsetHeight );
+	}
+
+	onUpdateRef = ref => {
+		this.ref = ref;
+		this.onUpdateLayout();
+	}
+
 	render() {
 		const { author, categories, post } = this.props;
 		const { children, ...fillProps } = this.props;
@@ -27,7 +44,10 @@ export default class MessageHeader extends React.Component {
 		}
 
 		return (
-			<header className="Message-Header">
+			<header
+				className="Message-Header"
+				ref={ this.onUpdateRef }
+			>
 				<Avatar
 					url={ author ? author.avatar_urls['96'] : '' }
 					user={ author }
@@ -81,4 +101,5 @@ MessageHeader.propTypes = {
 	categories: PropTypes.arrayOf( CategoryShape ).isRequired,
 	collapsed: PropTypes.bool.isRequired,
 	post: PostShape.isRequired,
+	onUpdateHeight: PropTypes.func,
 };
