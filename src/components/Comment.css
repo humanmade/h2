@@ -31,19 +31,19 @@
 
 .Comment .Comment-Header {
 	position: sticky;
-	top: var( --message-header-size, 99px );
+	top: 99px;
 	z-index: 3;
 }
 
 @media screen and ( min-width: 600px ) and ( max-width: 782px ) {
 	body.admin-bar .Comment .Comment-Header {
-		top: calc( 46px + var( --message-header-size, 99px ) );
+		top: 145px; /* 46 + 99 */
 	}
 }
 
 @media screen and ( min-width: 783px ) {
 	body.admin-bar .Comment .Comment-Header {
-		top: calc( 32px + var( --message-header-size, 99px ) );
+		top: 131px; /* 32 + 99 */
 	}
 }
 

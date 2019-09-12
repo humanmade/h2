@@ -5,7 +5,6 @@
 	margin-bottom: 1.667rem;
 	min-height: 144px;
 	border-bottom: 5px solid #F1F2EE;
-	--message-header-size: 99px;
 }
 
 .Post:before {
