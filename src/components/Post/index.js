@@ -21,7 +21,6 @@ export class Post extends Component {
 	constructor( props ) {
 		super( props );
 		this.state = {
-			headerHeight: null,
 			expanded: false,
 			isShowingReply: false,
 			isEditing: false,
@@ -72,14 +71,6 @@ export class Post extends Component {
 			} )
 	}
 
-	onUpdateHeaderHeight = headerHeight => {
-		if ( this.state.headerHeight === headerHeight ) {
-			return;
-		}
-
-		this.setState( { headerHeight } );
-	}
-
 	render() {
 		const { post, user } = this.props;
 		const categories = this.props.categories.data ? this.props.categories.data.filter( category => post.categories.indexOf( category.id ) >= 0 ) : [];
@@ -109,16 +100,8 @@ export class Post extends Component {
 			</div>
 		);
 
-		const style = {};
-		if ( this.state.headerHeight ) {
-			style['--message-header-size'] = `${ this.state.headerHeight }px`;
-		}
-
 		return (
-			<div
-				className={ classes.filter( Boolean ).join( ' ' ) }
-				style={ style }
-			>
+			<div className={ classes.filter( Boolean ).join( ' ' ) }>
 				<MessageHeader
 					author={ user }
 					categories={ categories }
