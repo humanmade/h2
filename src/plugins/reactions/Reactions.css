@@ -25,18 +25,11 @@
 	margin: 0;
 }
 
-.reactions .emoji-mart {
+.reactions .EmojiPicker {
 	position: absolute;
 	top: 100%;
 	left: 0;
 	z-index: 10;
-}
-
-.reactions .emoji-mart input[type="text"] {
-	width: 100%;
-	margin-bottom: 0;
-	border-width: 1px;
-	margin-bottom: 5px;
 }
 
 .reactions .reactions__emoji {
@@ -100,19 +93,4 @@
 .Reactions-custom {
 	height: 1em;
 	max-height: 1em;
-}
-
-.reactions-picker-wrap {
-	position: fixed;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	z-index: 10;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background: rgb(79, 70, 65, 0.7);
-	backdrop-filter: blur( 2px );
 }

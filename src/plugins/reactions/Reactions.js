@@ -1,16 +1,14 @@
 import { withArchive } from '@humanmade/repress';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { Picker } from 'emoji-mart'
 
+import EmojiPicker from '../../components/EmojiPicker';
 import { withCurrentUser } from '../../hocs';
 import { reactions } from '../../types';
 
 import UserDisplayName from '../../components/UserDisplayName';
 
-import 'emoji-mart/css/emoji-mart.css';
 import './Reactions.css';
 
 const Emoji = props => {
@@ -27,59 +25,6 @@ const Emoji = props => {
 
 	return props.type;
 };
-
-class PickerWrap extends Component {
-	constructor( props ) {
-		super( props );
-
-		this.container = document.createElement( 'div' );
-		this.mediaQuery = window.matchMedia( '(max-width: 600px)' );
-		this.state = {
-			needsPortal: this.mediaQuery.matches,
-		};
-		this.mediaQuery.addListener( this.onQueryChange );
-	}
-
-	componentDidMount() {
-		document.body.appendChild( this.container );
-	}
-
-	componentWillUnmount() {
-		document.body.removeChild( this.container );
-	}
-
-	onClose = e => {
-		e.preventDefault();
-
-		this.props.onClose();
-	}
-
-	onQueryChange = e => {
-		this.setState( { needsPortal: e.matches } );
-	}
-
-	render() {
-		const { needsPortal } = this.state;
-
-		if ( ! needsPortal ) {
-			return (
-				<React.Fragment>
-					{ this.props.children }
-				</React.Fragment>
-			);
-		}
-
-		return ReactDOM.createPortal(
-			<div
-				className="reactions-picker-wrap"
-				onClick={ this.onClose }
-			>
-				{ this.props.children }
-			</div>,
-			this.container
-		);
-	}
-}
 
 export class Reactions extends Component {
 	constructor( props ) {
@@ -200,21 +145,13 @@ export class Reactions extends Component {
 					) }
 				</button>
 				{ this.state.isOpen && (
-					<PickerWrap onClose={ () => this.setState( { isOpen: false } ) }>
-						<Picker
-							key="picker"
-							onClick={ data => {
-								this.setState( { isOpen: false } );
-								this.toggleReaction( data.native || data.name );
-							} }
-							title={ false }
-							emoji="upside_down_face"
-							autoFocus={ true }
-							color="#D24632"
-							custom={ window.H2Data.site.emoji }
-							set="twitter"
-						/>
-					</PickerWrap>
+					<EmojiPicker
+						onClose={ () => this.setState( { isOpen: false } ) }
+						onSelect={ data => {
+							this.setState( { isOpen: false } );
+							this.toggleReaction( data.native || data.name );
+						} }
+					/>
 				)}
 			</div>
 		);
