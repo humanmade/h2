@@ -37,12 +37,6 @@ export class MessageHeader extends React.Component {
 		const { author, categories, post } = this.props;
 		const { children, constrainTitle, sticky, ...fillProps } = this.props;
 
-		// Scale title down slightly for longer titles.
-		const headerStyle = {};
-		if ( post.title.rendered.length > 22 ) {
-			headerStyle.fontSize = '1.333333333rem';
-		}
-
 		const classes = [
 			'Message-Header',
 			constrainTitle && 'Message-Header--constrained',
@@ -61,10 +55,7 @@ export class MessageHeader extends React.Component {
 				/>
 				<div className="Message-Header__byline">
 					<Link to={ post.link }>
-						<h2
-							className="Message-Header__title"
-							style={ headerStyle }
-						>
+						<h2 className="Message-Header__title">
 							{ decodeEntities( post.title.rendered ) }
 						</h2>
 					</Link>
