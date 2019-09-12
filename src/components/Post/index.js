@@ -124,7 +124,6 @@ export class Post extends Component {
 					categories={ categories }
 					collapsed={ collapsed }
 					post={ post }
-					onUpdateHeight={ this.onUpdateHeaderHeight }
 				>
 					{ Actions }
 				</MessageHeader>

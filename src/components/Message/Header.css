@@ -1,27 +1,40 @@
 .Message-Header {
-	position: sticky;
+	position: relative;
 	top: 0;
-	z-index: 5;
+	z-index: 6;
 	padding: 15px 0;
 	background: #fff;
 	display: flex;
 	align-items: center;
 }
 
+.Message-Header--constrained {
+	height: 99px;
+}
+
+.Message-Header--sticky {
+	position: sticky;
+	z-index: 5;
+}
+
 @media screen and ( min-width: 600px ) and ( max-width: 782px ) {
-	body.admin-bar .Message-Header {
+	body.admin-bar .Message-Header--sticky {
 		top: 46px;
 	}
 }
 
 @media screen and ( min-width: 783px ) {
-	body.admin-bar .Message-Header {
+	body.admin-bar .Message-Header--sticky {
 		top: 32px;
 	}
 }
 
 .PostsList .Message-Header {
 	margin-top: -15px;
+}
+
+.Message-Header--constrained.Message-Header--sticky {
+	margin-top: -99px;
 }
 
 .Message-Header .Avatar {
@@ -42,6 +55,12 @@
 .Message-Header__title {
 	margin: 0 0.5em 0 0;
 	text-transform: inherit;
+}
+
+.Message-Header--constrained .Message-Header__title {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 .Message-Header__date {

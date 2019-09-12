@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import { FormattedRelative } from 'react-intl';
 import { Slot } from 'react-slot-fill';
 
@@ -15,7 +15,7 @@ import { decodeEntities } from '../../util';
 
 import './Header.css';
 
-export default class MessageHeader extends React.Component {
+export class MessageHeader extends React.Component {
 	componentDidUpdate() {
 		this.onUpdateLayout();
 	}
@@ -35,7 +35,7 @@ export default class MessageHeader extends React.Component {
 
 	render() {
 		const { author, categories, post } = this.props;
-		const { children, ...fillProps } = this.props;
+		const { children, constrainTitle, sticky, ...fillProps } = this.props;
 
 		// Scale title down slightly for longer titles.
 		const headerStyle = {};
@@ -43,9 +43,15 @@ export default class MessageHeader extends React.Component {
 			headerStyle.fontSize = '1.333333333rem';
 		}
 
+		const classes = [
+			'Message-Header',
+			constrainTitle && 'Message-Header--constrained',
+			sticky && 'Message-Header--sticky',
+		];
+
 		return (
 			<header
-				className="Message-Header"
+				className={ classes.filter( Boolean ).join( ' ' ) }
 				ref={ this.onUpdateRef }
 			>
 				<Avatar
@@ -96,10 +102,44 @@ export default class MessageHeader extends React.Component {
 	}
 }
 
+MessageHeader.defaultProps = {
+	constrainTitle: false,
+	sticky: true,
+};
+
 MessageHeader.propTypes = {
 	author: UserShape.isRequired,
 	categories: PropTypes.arrayOf( CategoryShape ).isRequired,
 	collapsed: PropTypes.bool.isRequired,
+	constrainTitle: PropTypes.bool,
 	post: PostShape.isRequired,
+	sticky: PropTypes.bool,
 	onUpdateHeight: PropTypes.func,
 };
+
+export default function AdapatableMessageHeader( props ) {
+	const [ height, setHeight ] = useState( null );
+
+	if ( ! height || height <= 99 ) {
+		return (
+			<MessageHeader
+				{ ...props }
+				onUpdateHeight={ setHeight }
+			/>
+		);
+	}
+	return (
+		<Fragment>
+			<MessageHeader
+				{ ...props }
+				sticky={ false }
+				onUpdateHeight={ setHeight }
+			/>
+			<MessageHeader
+				{ ...props }
+				constrainTitle
+				sticky
+			/>
+		</Fragment>
+	);
+}
