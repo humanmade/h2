@@ -6,6 +6,7 @@
 	background: #fff;
 	display: flex;
 	align-items: center;
+	min-height: 99px;
 }
 
 .Message-Header--constrained {
@@ -54,6 +55,7 @@
 
 .Message-Header__title {
 	font-size: 1.333333333rem;
+	line-height: 1.4em;
 	margin: 0 0.5em 0 0;
 	text-transform: inherit;
 }
