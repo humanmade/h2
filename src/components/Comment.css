@@ -70,7 +70,7 @@
 		flex-wrap: wrap;
 	}
 
-	.Comment-Header .actions {
+	.Comment-Header .Comment-Actions {
 		display: none;
 	}
 
@@ -80,7 +80,7 @@
 }
 
 @media ( min-width: 600px ) {
-	.Comment-footer-actions .actions {
+	.Comment-footer-actions .Comment-Actions {
 		display: none;
 	}
 }

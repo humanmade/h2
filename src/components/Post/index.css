@@ -18,14 +18,14 @@
 	z-index: 2;
 }
 
+.Post__actions {
+	min-width: 6rem;
+}
+
 .Post-footer-actions {
 	display: flex;
 	margin: 1.666rem 0 1.248rem;
 	justify-content: space-between;
-}
-
-.Post .actions button:last-child {
-	margin-right: 0;
 }
 
 .Post--collapsed .reactions {
@@ -39,7 +39,7 @@
 }
 
 @media ( min-width: 600px ) {
-	.Post-footer-actions .actions {
+	.Post-footer-actions .Post__actions {
 		display: none;
 	}
 }

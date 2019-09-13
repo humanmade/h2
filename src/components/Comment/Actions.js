@@ -2,8 +2,9 @@ import React from 'react';
 import { Slot } from 'react-slot-fill';
 
 import Button from '../Button';
-import ButtonGroup from '../ButtonGroup';
-import Dropdown from '../Dropdown';
+import { Dropdown, DropdownContent } from '../Dropdown';
+
+import './Actions.css';
 
 export default function Actions( props ) {
 	const { fillProps, isEditing, onEdit, onReply } = props;
@@ -14,26 +15,25 @@ export default function Actions( props ) {
 		}
 
 		return (
-			<Dropdown>
+			<DropdownContent>
 				{ ! isEditing && (
 					<Button onClick={ onEdit }>Edit</Button>
 				) }
 
 				{ items }
-			</Dropdown>
+			</DropdownContent>
 		);
 	}
 
 	return (
-		<ButtonGroup className="actions">
+		<Dropdown className="Comment-Actions">
 			<Button onClick={ onReply }>Reply</Button>
-			<Slot name="Comment.actions" fillChildProps={ fillProps } />
 			<Slot
-				name="Comment.secondary_actions"
+				name="Comment.actions"
 				fillChildProps={ fillProps }
 			>
 				{ renderItems }
 			</Slot>
-		</ButtonGroup>
+		</Dropdown>
 	);
 }

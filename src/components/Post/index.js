@@ -12,8 +12,7 @@ import { posts } from '../../types';
 import Summary from './Summary';
 import PostComments from './Comments';
 import Button from '../Button';
-import ButtonGroup from '../ButtonGroup';
-import Dropdown from '../Dropdown';
+import { Dropdown, DropdownContent } from '../Dropdown';
 import MessageHeader from '../Message/Header';
 import MessageMain from '../Message/Main';
 
@@ -28,19 +27,19 @@ const SecondaryActions = props => {
 		}
 
 		return (
-			<Dropdown>
+			<DropdownContent>
 				{ showEdit && (
 					<Button onClick={ onClickEdit }>Edit</Button>
 				) }
 
 				{ items }
-			</Dropdown>
+			</DropdownContent>
 		);
 	}
 
 	return (
 		<Slot
-			name="Post.secondary_actions"
+			name="Post.actions"
 			fillChildProps={ fillProps }
 		>
 			{ renderItems }
@@ -122,15 +121,14 @@ export class Post extends Component {
 		];
 
 		const Actions = (
-			<ButtonGroup className="actions">
+			<Dropdown className="Post__actions">
 				<Button onClick={ this.onClickReply }>Reply</Button>
-				<Slot name="Post.actions" fillChildProps={ fillProps } />
 				<SecondaryActions
 					fillProps={ fillProps }
 					showEdit={ ! this.state.isEditing }
 					onClickEdit={ this.onClickEdit }
 				/>
-			</ButtonGroup>
+			</Dropdown>
 		);
 
 		return (
