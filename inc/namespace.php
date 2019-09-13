@@ -52,13 +52,7 @@ function enqueue_assets() {
 	wp_localize_script( 'h2', 'H2Data', get_script_data() );
 
 	if ( defined( 'H2_TYPEKIT_URL' ) ) {
-		add_action( 'wp_head', function () {
-			printf(
-				'<script src="%s"></script>',
-				esc_url( H2_TYPEKIT_URL )
-			);
-			echo '<script>try{Typekit.load({ async: true });}catch(e){}</script>';
-		} );
+		wp_enqueue_style( 'h2-fonts', H2_TYPEKIT_URL );
 	}
 }
 
