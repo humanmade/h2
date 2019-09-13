@@ -28,12 +28,7 @@ export default class Dropdown extends React.PureComponent {
 		document.removeEventListener( 'click', this.documentClickListener );
 	}
 
-	onDocumentClick( e ) {
-		// Ignore events inside the dropdown.
-		if ( ! this.root || this.root.contains( e.target ) ) {
-			return;
-		}
-
+	onDocumentClick() {
 		// Remove handler.
 		document.removeEventListener( 'click', this.documentClickListener );
 
@@ -72,10 +67,7 @@ export default class Dropdown extends React.PureComponent {
 		].filter( Boolean ).join( ' ' );
 
 		return (
-			<div
-				className={ className }
-				ref={ ref => this.root = ref }
-			>
+			<div className={ className }>
 				<button
 					className="Dropdown__trigger"
 					onClick={ e => this.onToggle( e ) }
