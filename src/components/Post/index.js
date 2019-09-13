@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { withSingle } from '@humanmade/repress';
 import React, { Component } from 'react';
-import { Fill, Slot } from 'react-slot-fill';
+import { Slot } from 'react-slot-fill';
 
 import { withCategories, withUser } from '../../hocs';
 import {

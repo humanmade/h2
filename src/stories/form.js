@@ -65,4 +65,4 @@ storiesOf( 'Components/Form' )
 				</Dropdown>
 			</ButtonGroup>
 		</div>
-	));
+	) );
