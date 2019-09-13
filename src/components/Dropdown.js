@@ -9,12 +9,16 @@ import './Dropdown.css';
 export const Arrow = () => (
 	<svg
 		className="Dropdown__arrow"
-		viewBox="0 0 9 9"
+		viewBox="0 0 12 7"
 	>
 		<title>Select other actions…</title>
-		<polygon
-			points="0,0 9,0 4.5,4.5"
-			fill="currentColor"
+		<path
+			d="M1 1 6 6 11 1"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
 		/>
 	</svg>
 );

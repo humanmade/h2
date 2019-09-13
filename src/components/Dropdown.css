@@ -34,9 +34,8 @@
 }
 
 .Dropdown__arrow {
-	height: 0.55em;
+	width: 0.55em;
 	vertical-align: middle;
-	margin-top: 0.1em;
 }
 
 .Dropdown__content {
