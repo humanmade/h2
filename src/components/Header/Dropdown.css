@@ -1,0 +1,42 @@
+.Dropdown {
+	position: relative;
+}
+
+.Dropdown-trigger {
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	text-shadow: inherit;
+}
+
+.Dropdown-content {
+	display: none;
+
+	position: absolute;
+	left: 0;
+	z-index: 10;
+
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	min-height: 5rem;
+	max-height: 50vh;
+	overflow: scroll;
+
+	background: var( --hm-beige );
+	border: 1px solid rgba( 210, 70, 50, 0.2 );
+	border-top: 0;
+	box-shadow: 0 2px 3px rgba(53, 53, 63, 0.2);
+}
+
+.Dropdown.reverse .Dropdown-content {
+	left: auto;
+	right: 0;
+}
+
+.Dropdown.expanded .Dropdown-content {
+	display: block;
+}
