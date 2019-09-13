@@ -59,6 +59,7 @@
 .Comment-footer-actions {
 	display: flex;
 	justify-content: space-between;
+	align-items: flex-start;
 	flex-wrap: wrap;
 	margin: 1.666rem 0 1.248rem;
 }
