@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { withSingle } from '@humanmade/repress';
 import React, { Component } from 'react';
-import { Slot } from 'react-slot-fill';
+import { Fill, Slot } from 'react-slot-fill';
 
 import { withCategories, withUser } from '../../hocs';
 import {
@@ -12,10 +12,41 @@ import { posts } from '../../types';
 import Summary from './Summary';
 import PostComments from './Comments';
 import Button from '../Button';
+import ButtonGroup from '../ButtonGroup';
+import Dropdown from '../Dropdown';
 import MessageHeader from '../Message/Header';
 import MessageMain from '../Message/Main';
 
 import './index.css';
+
+const SecondaryActions = props => {
+	const { fillProps, showEdit, onClickEdit } = props;
+
+	const renderItems = items => {
+		if ( ! items.length && ! showEdit ) {
+			return null;
+		}
+
+		return (
+			<Dropdown>
+				{ showEdit && (
+					<Button onClick={ onClickEdit }>Edit</Button>
+				) }
+
+				{ items }
+			</Dropdown>
+		);
+	}
+
+	return (
+		<Slot
+			name="Post.secondary_actions"
+			fillChildProps={ fillProps }
+		>
+			{ renderItems }
+		</Slot>
+	);
+}
 
 export class Post extends Component {
 	constructor( props ) {
@@ -91,17 +122,20 @@ export class Post extends Component {
 		];
 
 		const Actions = (
-			<div className="actions">
-				{ ! this.state.isEditing &&
-					<Button onClick={ this.onClickEdit }>Edit</Button>
-				}
+			<ButtonGroup className="actions">
 				<Button onClick={ this.onClickReply }>Reply</Button>
 				<Slot name="Post.actions" fillChildProps={ fillProps } />
-			</div>
+				<SecondaryActions
+					fillProps={ fillProps }
+					showEdit={ ! this.state.isEditing }
+					onClickEdit={ this.onClickEdit }
+				/>
+			</ButtonGroup>
 		);
 
 		return (
 			<div className={ classes.filter( Boolean ).join( ' ' ) }>
+
 				<MessageHeader
 					author={ user }
 					categories={ categories }
