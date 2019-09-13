@@ -1,15 +1,20 @@
 .Dropdown {
 	position: relative;
+	display: flex;
+	min-width: 5em;
 }
 
-.btn.Dropdown--expanded {
+.Dropdown > .btn:first-child {
+	text-align: left;
+	flex-grow: 1;
+}
+
+.Dropdown--expanded > .btn:first-child {
+	border-bottom-left-radius: 0;
+}
+
+.Dropdown--expanded > .btn:last-child {
 	border-bottom-right-radius: 0;
-}
-
-.btn--secondary.Dropdown--expanded {
-	color: #fff;
-	background: var( --hm-red );
-	border: 1px solid var( --hm-red );
 }
 
 .Dropdown__trigger {
@@ -37,15 +42,15 @@
 	display: none;
 
 	position: absolute;
-	left: auto;
-	right: -1px; /* Adjusted for border */
+	left: 0;
+	right: 0;
 	z-index: 10;
 
 	margin: 0;
 	/* padding: 0.5em 0; */
 	padding: 0;
 	width: 100%;
-	min-width: 10rem;
+	min-width: 6rem;
 	max-height: 50vh;
 	overflow: scroll;
 	overflow-x: hidden;
@@ -53,21 +58,23 @@
 
 	color: var( --hm-warm-grey );
 	background: #fff;
-	border: 1px solid rgba( 210, 70, 50, 0.2 );
-	border-top: 0;
 	border: 1px solid var( --hm-red );
-	box-shadow: 0 2px 3px rgba(53, 53, 63, 0.2);
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
 
 	cursor: auto;
 	text-align: left;
+}
+
+.btn--tertiary .Dropdown__content {
+	border-color: var( --hm-warm-grey );
 }
 
 .Dropdown--expanded .Dropdown__content {
 	display: block;
 }
 
-.Dropdown__content > .btn,
-.Dropdown__content > .LinkButton {
+.Dropdown__content > .btn {
 	display: block;
 	width: 100%;
 	padding: 0.3em 0.5em;
@@ -81,8 +88,11 @@
 	white-space: initial;
 }
 
-.Dropdown__content > .btn:hover,
-.Dropdown__content > .LinkButton:hover {
+.Dropdown__content > .btn:hover {
 	border: none;
 	background: var( --hm-red );
+}
+
+.btn--tertiary .Dropdown__content > .btn:hover {
+	background: var( --hm-warm-grey );
 }

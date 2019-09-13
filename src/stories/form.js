@@ -5,7 +5,7 @@ import React, { Fragment } from 'react';
 import { withPadding } from './decorators';
 import Button from '../components/Button';
 import ButtonGroup from '../components/ButtonGroup';
-import Dropdown from '../components/Dropdown';
+import { Dropdown, DropdownContent } from '../components/Dropdown';
 
 const buttonTypes = [
 	'primary',
@@ -55,14 +55,27 @@ storiesOf( 'Components/Form' )
 			style={ {
 				display: 'flex',
 				justifyContent: 'center',
+				flexDirection: 'column',
+				maxWidth: '20rem',
 			} }
 		>
-			<ButtonGroup>
-				<Button onClick={ action( 'main' ) }>Main</Button>
-				<Dropdown>
-					<Button onClick={ action( 'test' ) }>Test...</Button>
-					<Button onClick={ action( 'long' ) }>This is a much longer action name</Button>
-				</Dropdown>
-			</ButtonGroup>
+			{ buttonTypes.map( type => (
+				<div style={ { marginBottom: '1em' } }>
+					<Dropdown
+						type={ type }
+					>
+						<Button
+							type={ type }
+							onClick={ action( 'main' ) }
+						>
+							{ type } button
+						</Button>
+						<DropdownContent>
+							<Button onClick={ action( 'test' ) }>Test...</Button>
+							<Button onClick={ action( 'long' ) }>This is a much longer action name</Button>
+						</DropdownContent>
+					</Dropdown>
+				</div>
+			) ) }
 		</div>
 	) );

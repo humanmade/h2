@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import ButtonGroup from './ButtonGroup';
+
 import './Dropdown.css';
 
 export const Arrow = () => (
@@ -16,7 +18,42 @@ export const Arrow = () => (
 	</svg>
 );
 
-export default class Dropdown extends React.PureComponent {
+const DropdownContext = React.createContext( null );
+
+export const DropdownContent = props => {
+	const { children } = props;
+
+	return (
+		<DropdownContext.Consumer>
+			{ context => {
+				const { size, type, onToggle } = context;
+				const className = [
+					'btn',
+					`btn--${ size }`,
+					`btn--${ type }`,
+				].join( ' ' );
+
+				return (
+					<div className={ className }>
+						<button
+							className="Dropdown__trigger"
+							onClick={ onToggle }
+							type="button"
+						>
+							<Arrow />
+						</button>
+
+						<div className="Dropdown__content">
+							{ children }
+						</div>
+					</div>
+				);
+			} }
+		</DropdownContext.Consumer>
+	);
+}
+
+export class Dropdown extends React.PureComponent {
 	constructor( props ) {
 		super( props );
 
@@ -33,10 +70,9 @@ export default class Dropdown extends React.PureComponent {
 		document.removeEventListener( 'click', this.documentClickListener );
 
 		this.setState( { expanded: false } );
-		this.props.onToggle( false );
 	}
 
-	onToggle( e ) {
+	onToggle = e => {
 		e.preventDefault();
 
 		const { expanded } = this.state;
@@ -49,7 +85,6 @@ export default class Dropdown extends React.PureComponent {
 		}
 
 		this.setState( { expanded: ! expanded } );
-		this.props.onToggle( ! expanded );
 	}
 
 	render() {
@@ -59,27 +94,22 @@ export default class Dropdown extends React.PureComponent {
 		const className = [
 			'Dropdown',
 			expanded && 'Dropdown--expanded',
-			'btn',
-			`btn--${ size }`,
-			`btn--${ type }`,
 
 			this.props.className,
 		].filter( Boolean ).join( ' ' );
 
-		return (
-			<div className={ className }>
-				<button
-					className="Dropdown__trigger"
-					onClick={ e => this.onToggle( e ) }
-					type="button"
-				>
-					<Arrow />
-				</button>
+		const context = {
+			size,
+			type,
+			onToggle: this.onToggle,
+		};
 
-				<div className="Dropdown__content">
+		return (
+			<DropdownContext.Provider value={ context }>
+				<ButtonGroup className={ className }>
 					{ children }
-				</div>
-			</div>
+				</ButtonGroup>
+			</DropdownContext.Provider>
 		);
 	}
 }
@@ -94,5 +124,4 @@ Dropdown.defaultProps = {
 	className: '',
 	size: 'small',
 	type: 'secondary',
-	onToggle: () => {},
 };
