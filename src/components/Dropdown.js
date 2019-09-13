@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import Button from './Button';
 import ButtonGroup from './ButtonGroup';
 
 import './Dropdown.css';
@@ -27,21 +28,17 @@ export const DropdownContent = props => {
 		<DropdownContext.Consumer>
 			{ context => {
 				const { size, type, onToggle } = context;
-				const className = [
-					'btn',
-					`btn--${ size }`,
-					`btn--${ type }`,
-				].join( ' ' );
 
 				return (
-					<div className={ className }>
-						<button
+					<div>
+						<Button
 							className="Dropdown__trigger"
+							size={ size }
+							type={ type }
 							onClick={ onToggle }
-							type="button"
 						>
 							<Arrow />
-						</button>
+						</Button>
 
 						<div className="Dropdown__content">
 							{ children }

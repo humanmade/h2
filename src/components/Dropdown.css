@@ -4,6 +4,11 @@
 	min-width: 5em;
 }
 
+.Dropdown .btn--small {
+	/* Avoid dumb rounding errors */
+	min-height: 31px;
+}
+
 .Dropdown > .btn:first-child {
 	text-align: left;
 	flex-grow: 1;
@@ -17,19 +22,15 @@
 	border-bottom-right-radius: 0;
 }
 
-.Dropdown__trigger {
-	background: transparent;
-	color: inherit;
-	font: inherit;
-	border: none;
-	padding: 0;
-	cursor: pointer;
-	text-shadow: inherit;
+.btn.Dropdown__trigger {
+	height: 100%;
+	margin: 0 0 0 -1px;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
 }
 
-.Dropdown.btn--small .Dropdown__trigger {
-	margin: 0 -7.5px;
-	padding: 0 7.5px;
+.Dropdown--expanded .Dropdown__trigger {
+	border-bottom-right-radius: 0;
 }
 
 .Dropdown__arrow {
@@ -47,10 +48,9 @@
 	z-index: 10;
 
 	margin: 0;
-	/* padding: 0.5em 0; */
+	margin-top: -1px;
 	padding: 0;
 	width: 100%;
-	min-width: 6rem;
 	max-height: 50vh;
 	overflow: scroll;
 	overflow-x: hidden;
