@@ -12,10 +12,40 @@ import { posts } from '../../types';
 import Summary from './Summary';
 import PostComments from './Comments';
 import Button from '../Button';
+import { Dropdown, DropdownContent } from '../Dropdown';
 import MessageHeader from '../Message/Header';
 import MessageMain from '../Message/Main';
 
 import './index.css';
+
+const SecondaryActions = props => {
+	const { fillProps, showEdit, onClickEdit } = props;
+
+	const renderItems = items => {
+		if ( ! items.length && ! showEdit ) {
+			return null;
+		}
+
+		return (
+			<DropdownContent>
+				{ showEdit && (
+					<Button onClick={ onClickEdit }>Edit</Button>
+				) }
+
+				{ items }
+			</DropdownContent>
+		);
+	}
+
+	return (
+		<Slot
+			name="Post.actions"
+			fillChildProps={ fillProps }
+		>
+			{ renderItems }
+		</Slot>
+	);
+}
 
 export class Post extends Component {
 	constructor( props ) {
@@ -91,17 +121,19 @@ export class Post extends Component {
 		];
 
 		const Actions = (
-			<div className="actions">
-				{ ! this.state.isEditing &&
-					<Button onClick={ this.onClickEdit }>Edit</Button>
-				}
+			<Dropdown className="Post__actions">
 				<Button onClick={ this.onClickReply }>Reply</Button>
-				<Slot name="Post.actions" fillChildProps={ fillProps } />
-			</div>
+				<SecondaryActions
+					fillProps={ fillProps }
+					showEdit={ ! this.state.isEditing }
+					onClickEdit={ this.onClickEdit }
+				/>
+			</Dropdown>
 		);
 
 		return (
 			<div className={ classes.filter( Boolean ).join( ' ' ) }>
+
 				<MessageHeader
 					author={ user }
 					categories={ categories }

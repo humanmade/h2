@@ -22,8 +22,7 @@ export default class Loader extends React.Component {
 	}
 
 	render() {
-		const editButtonWidth = 48;
-		const replyButtonWidth = 63;
+		const replyButtonWidth = 88;
 		const contentOffset = 89;
 		const textLineHeight = 28;
 
@@ -67,14 +66,6 @@ export default class Loader extends React.Component {
 				<rect x="90" y="46" rx="3" ry="3" width="160" height="10.5" />
 
 				{/* Buttons */}
-				<rect
-					x={ width - replyButtonWidth - 10 - editButtonWidth }
-					y="12"
-					rx="3"
-					ry="3"
-					width={ editButtonWidth }
-					height="30"
-				/>
 				<rect
 					x={ width - replyButtonWidth }
 					y="12"
