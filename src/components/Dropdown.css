@@ -6,6 +6,12 @@
 	border-bottom-right-radius: 0;
 }
 
+.btn--secondary.Dropdown--expanded {
+	color: #fff;
+	background: var( --hm-red );
+	border: 1px solid var( --hm-red );
+}
+
 .Dropdown__trigger {
 	background: transparent;
 	color: inherit;
