@@ -50,6 +50,16 @@ function enqueue_assets() {
 		'nonce'         => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 	] );
 	wp_localize_script( 'h2', 'H2Data', get_script_data() );
+
+	if ( defined( 'H2_TYPEKIT_URL' ) ) {
+		add_action( 'wp_head', function () {
+			printf(
+				'<script src="%s"></script>',
+				esc_url( H2_TYPEKIT_URL )
+			);
+			echo '<script>try{Typekit.load({ async: true });}catch(e){}</script>';
+		} );
+	}
 }
 
 /**
