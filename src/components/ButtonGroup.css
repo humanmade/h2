@@ -1,3 +1,7 @@
+.ButtonGroup {
+	white-space: nowrap;
+}
+
 .ButtonGroup > .btn {
 	margin: 0;
 }

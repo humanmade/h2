@@ -40,9 +40,10 @@
 	padding: 0;
 	width: 100%;
 	min-width: 10rem;
-	min-height: 5rem;
 	max-height: 50vh;
 	overflow: scroll;
+	overflow-x: hidden;
+	overflow-y: scroll;
 
 	color: var( --hm-warm-grey );
 	background: #fff;
@@ -71,6 +72,7 @@
 
 	line-height: 1.4;
 	text-align: left;
+	white-space: initial;
 }
 
 .Dropdown__content > .btn:hover,
