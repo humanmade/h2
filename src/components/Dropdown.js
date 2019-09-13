@@ -3,6 +3,19 @@ import React from 'react';
 
 import './Dropdown.css';
 
+export const Arrow = () => (
+	<svg
+		className="Dropdown__arrow"
+		viewBox="0 0 9 9"
+	>
+		<title>Select other actions…</title>
+		<polygon
+			points="0,0 9,0 4.5,4.5"
+			fill="currentColor"
+		/>
+	</svg>
+);
+
 export default class Dropdown extends React.PureComponent {
 	constructor( props ) {
 		super( props );
@@ -45,43 +58,49 @@ export default class Dropdown extends React.PureComponent {
 	}
 
 	render() {
-		const { children, label, reverse } = this.props;
+		const { children, size, type } = this.props;
 		const { expanded } = this.state;
 
 		const className = [
-			this.props.className,
 			'Dropdown',
-			expanded && 'expanded',
-			reverse && 'reverse',
+			expanded && 'Dropdown--expanded',
+			'btn',
+			`btn--${ size }`,
+			`btn--${ type }`,
+
+			this.props.className,
 		].filter( Boolean ).join( ' ' );
 
-		return <div className={ className } ref={ ref => this.root = ref }>
-			<button
-				className="Dropdown-trigger"
-				onClick={ e => this.onToggle( e ) }
-				type="button"
+		return (
+			<div
+				className={ className }
+				ref={ ref => this.root = ref }
 			>
-				{ label }
-			</button>
+				<button
+					className="Dropdown__trigger"
+					onClick={ e => this.onToggle( e ) }
+					type="button"
+				>
+					<Arrow />
+				</button>
 
-			<div className="Dropdown-content">
-				{ children }
+				<div className="Dropdown__content">
+					{ children }
+				</div>
 			</div>
-		</div>;
+		);
 	}
 }
 
 Dropdown.propTypes = {
 	className: PropTypes.string,
-	label: PropTypes.oneOfType( [
-		PropTypes.element,
-		PropTypes.string,
-	] ).isRequired,
-	reverse:   PropTypes.bool,
+	size: PropTypes.string,
+	type: PropTypes.string,
 };
 
 Dropdown.defaultProps = {
 	className: '',
-	reverse: false,
+	size: 'small',
+	type: 'secondary',
 	onToggle: () => {},
 };

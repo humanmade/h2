@@ -1,0 +1,80 @@
+.Dropdown {
+	position: relative;
+}
+
+.btn.Dropdown--expanded {
+	border-bottom-right-radius: 0;
+}
+
+.Dropdown__trigger {
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	text-shadow: inherit;
+}
+
+.Dropdown.btn--small .Dropdown__trigger {
+	margin: 0 -7.5px;
+	padding: 0 7.5px;
+}
+
+.Dropdown__arrow {
+	height: 0.55em;
+	vertical-align: middle;
+	margin-top: 0.1em;
+}
+
+.Dropdown__content {
+	display: none;
+
+	position: absolute;
+	left: auto;
+	right: -1px; /* Adjusted for border */
+	z-index: 10;
+
+	margin: 0;
+	/* padding: 0.5em 0; */
+	padding: 0;
+	width: 100%;
+	min-width: 10rem;
+	min-height: 5rem;
+	max-height: 50vh;
+	overflow: scroll;
+
+	color: var( --hm-warm-grey );
+	background: #fff;
+	border: 1px solid rgba( 210, 70, 50, 0.2 );
+	border-top: 0;
+	border: 1px solid var( --hm-red );
+	box-shadow: 0 2px 3px rgba(53, 53, 63, 0.2);
+
+	cursor: auto;
+	text-align: left;
+}
+
+.Dropdown--expanded .Dropdown__content {
+	display: block;
+}
+
+.Dropdown__content > .btn,
+.Dropdown__content > .LinkButton {
+	display: block;
+	width: 100%;
+	padding: 0.3em 0.5em;
+	margin: 0;
+
+	border: none;
+	border-radius: 0;
+
+	line-height: 1.4;
+	text-align: left;
+}
+
+.Dropdown__content > .btn:hover,
+.Dropdown__content > .LinkButton:hover {
+	border: none;
+	background: var( --hm-red );
+}
