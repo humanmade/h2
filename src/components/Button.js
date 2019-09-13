@@ -15,6 +15,10 @@ export default function Button( props ) {
 		classes.push( 'btn--' + props.size );
 	}
 
+	if ( props.className ) {
+		classes.push( props.className );
+	}
+
 	return (
 		<button
 			className={ classes.join( ' ' ) }
@@ -29,6 +33,7 @@ export default function Button( props ) {
 
 Button.propTypes = {
 	children: PropTypes.any,
+	className: PropTypes.string,
 	disabled: PropTypes.bool,
 	submit: PropTypes.bool,
 	onClick: PropTypes.func,
@@ -37,6 +42,7 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
+	className: null,
 	disabled: false,
 	type: 'secondary',
 	size: 'small',
