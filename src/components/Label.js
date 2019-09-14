@@ -13,7 +13,7 @@ export default function Label( props ) {
 	return (
 		<Element
 			{ ...props }
-			className={ `Label ${ props.className || '' }`}
+			className={ `Label ${ props.className || '' }` }
 		>
 			{ props.children }
 			{ Boolean( props.count && props.count > 0 ) && (
