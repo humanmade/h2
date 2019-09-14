@@ -40,7 +40,7 @@ export class Header extends Component {
 					<HeaderButton
 						onClick={ this.props.onWritePost }
 						title="New Post"
-						icon="icon icon--plus-alt"
+						icon="plus-alt"
 						path="new-post"
 					/>
 

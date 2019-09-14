@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import EmojiPicker from '../../components/EmojiPicker';
+import Icon from '../../components/Icon';
 import { withCurrentUser } from '../../hocs';
 import { reactions } from '../../types';
 
@@ -141,7 +142,7 @@ export class Reactions extends Component {
 					{ loading ? (
 						<span className="loading loading--active"></span>
 					) : (
-						<span className="icon icon--smiley-wink">Add reaction</span>
+						<Icon color="black" type="smiley-wink">Add reaction</Icon>
 					) }
 				</button>
 				{ this.state.isOpen && (

@@ -1,4 +1,4 @@
-.icon {
+.Icon {
 	display: inline-block;
 	width: 1.555rem;
 	height: 1.555rem;
@@ -12,15 +12,11 @@
 	overflow: hidden;
 }
 
-.icon:not(.NewIcon) {
-	display: none;
-}
-
-.icon:hover, .icon:focus {
+.Icon:hover, .Icon:focus {
 	border: none;
 }
 
-.icon:focus {
+.Icon:focus {
 	outline: none;
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Icon from './Icon';
 import Logo from './Header/Logo';
 import Overlay from './Overlay';
 import Link from './RelativeLink';
@@ -64,7 +65,7 @@ class SuperMenu extends React.Component {
 						type="button"
 						onClick={ this.props.onClose }
 					>
-						<i className="icon icon--close icon--white" />
+						<Icon color="white" type="close" />
 					</button>
 				</header>
 

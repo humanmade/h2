@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Icon from './Icon';
 import Modal from './Modal';
 import { changes, getChangesForUser } from '../changelog';
 import { withCurrentUser } from '../hocs';
@@ -27,7 +28,7 @@ function Changes( props ) {
 
 	return (
 		<Modal
-			title={ <span><i className="icon icon--mail" /> Latest Changes</span> }
+			title={ <span><Icon color="black" type="mail" /> Latest Changes</span> }
 			onDismiss={ onDismiss }
 		>
 

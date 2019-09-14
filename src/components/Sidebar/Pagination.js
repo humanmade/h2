@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Icon from '../Icon';
 import LinkButton from '../LinkButton';
 
 import './Pagination.css';
@@ -13,7 +14,7 @@ export default function SidebarPagination( props ) {
 					<LinkButton
 						onClick={ onNext }
 					>
-						<i className="icon icon--arrow-left icon--small icon--red" />
+						<Icon type="arrow-left" />
 						Older
 					</LinkButton>
 				</div>
@@ -24,7 +25,7 @@ export default function SidebarPagination( props ) {
 						onClick={ onPrevious }
 					>
 						Newer
-						<i className="icon icon--arrow-right icon--small icon--red" />
+						<Icon type="arrow-right" />
 					</LinkButton>
 				</div>
 			) }

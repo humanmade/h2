@@ -5,8 +5,7 @@ import './Icon.css';
 
 export default function Icon( props ) {
 	const classes = [
-		'NewIcon',
-		'icon',
+		'Icon',
 		`icon--${ props.type }`,
 		props.color !== 'black' && `icon--${ props.color }`,
 	];
