@@ -19,8 +19,8 @@
 	border-bottom: 2px solid transparent;
 }
 
-.pagination .icon,
-.pagination .icon {
+.pagination .Icon,
+.pagination .Icon {
 	transition: transform 0.2s ease-in-out;
 	background-size: 100%;
 }
@@ -33,20 +33,20 @@
 	float: right;
 }
 
-.pagination .icon--arrow-left {
+.pagination .Icon--type-arrow-left {
 	margin-right: 7.5px;
 }
 
-.pagination :hover .icon--arrow-left,
-.pagination :focus .icon--arrow-left {
+.pagination :hover .Icon--type-arrow-left,
+.pagination :focus .Icon--type-arrow-left {
 	transform: translate( -7.5px, 0 ) rotate( 180deg );
 }
 
-.pagination .icon--arrow-right {
+.pagination .Icon--type-arrow-right {
 	margin-left: 7.5px;
 }
 
-.pagination :hover .icon--arrow-right,
-.pagination :focus .icon--arrow-right {
+.pagination :hover .Icon--type-arrow-right,
+.pagination :focus .Icon--type-arrow-right {
 	transform: translate( 7.5px, 0 );
 }
