@@ -3,6 +3,7 @@ import React from 'react';
 import { FormattedRelative } from 'react-intl';
 
 import Button from '../Button';
+import { LabelCount } from '../Label';
 import Modal from '../Modal';
 import { posts } from '../../types';
 
@@ -33,7 +34,7 @@ class SelectDraft extends React.Component {
 					Drafts
 
 					{ posts && (
-						<span className="label__count">{ posts.length }</span>
+						<LabelCount count={ posts.length } />
 					) }
 				</Button>
 			);

@@ -26,11 +26,6 @@
 	margin: 0;
 }
 
-.WritePost__title .btn .label__count {
-	margin-left: 0.5em;
-	margin-top: -3px;
-}
-
 .WritePost > header {
 	position: sticky;
 	top: 0;

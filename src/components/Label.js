@@ -2,6 +2,12 @@ import React from 'react';
 
 import './Label.css';
 
+export function LabelCount( props ) {
+	return (
+		<span class="Label__count">{ props.count }</span>
+	);
+}
+
 export default function Label( props ) {
 	const Element = props.tagName;
 	return (
@@ -11,7 +17,7 @@ export default function Label( props ) {
 		>
 			{ props.children }
 			{ Boolean( props.count && props.count > 0 ) && (
-				<span class="Label__count">{ props.count }</span>
+				<LabelCount count={ props.count } />
 			) }
 		</Element>
 	);
