@@ -6,7 +6,7 @@ import './Icon.css';
 export default function Icon( props ) {
 	const classes = [
 		'Icon',
-		`icon--${ props.type }`,
+		`Icon--type-${ props.type }`,
 		props.color !== 'black' && `Icon--color-${ props.color }`,
 	];
 

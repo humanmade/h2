@@ -20,311 +20,311 @@
 	outline: none;
 }
 
-.icon--mail {
+.Icon--type-mail {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-mail-black.svg");
 }
 
-.icon--mail.Icon--color-white {
+.Icon--type-mail.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-mail-white.svg");
 }
 
-.icon--mail.Icon--color-red {
+.Icon--type-mail.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-mail-red.svg");
 }
 
-.icon--wordpress {
+.Icon--type-wordpress {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-wordpress-black.svg");
 }
 
-.icon--wordpress.Icon--color-white {
+.Icon--type-wordpress.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-wordpress-white.svg");
 }
 
-.icon--wordpress.Icon--color-red {
+.Icon--type-wordpress.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-wordpress-red.svg");
 }
 
-.icon--server {
+.Icon--type-server {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-server-black.svg");
 }
 
-.icon--server.Icon--color-white {
+.Icon--type-server.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-server-white.svg");
 }
 
-.icon--server.Icon--color-red {
+.Icon--type-server.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-server-red.svg");
 }
 
-.icon--facebook {
+.Icon--type-facebook {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-facebook-black.svg");
 }
 
-.icon--facebook.Icon--color-white {
+.Icon--type-facebook.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-facebook-white.svg");
 }
 
-.icon--facebook.Icon--color-red {
+.Icon--type-facebook.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-facebook-red.svg");
 }
 
-.icon--twitter {
+.Icon--type-twitter {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-twitter-black.svg");
 }
 
-.icon--twitter.Icon--color-white {
+.Icon--type-twitter.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-twitter-white.svg");
 }
 
-.icon--twitter.Icon--color-red {
+.Icon--type-twitter.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-twitter-red.svg");
 }
 
-.icon--youtube {
+.Icon--type-youtube {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-youtube-black.svg");
 }
 
-.icon--youtube.Icon--color-white {
+.Icon--type-youtube.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-youtube-white.svg");
 }
 
-.icon--youtube.Icon--color-red {
+.Icon--type-youtube.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-youtube-red.svg");
 }
 
-.icon--strategy {
+.Icon--type-strategy {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-strategy-black.svg");
 }
 
-.icon--strategy.Icon--color-white {
+.Icon--type-strategy.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-strategy-white.svg");
 }
 
-.icon--strategy.Icon--color-red {
+.Icon--type-strategy.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-strategy-red.svg");
 }
 
-.icon--comment {
+.Icon--type-comment {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-comment-black.svg");
 }
 
-.icon--comment.Icon--color-white {
+.Icon--type-comment.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-comment-white.svg");
 }
 
-.icon--comment.Icon--color-red {
+.Icon--type-comment.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-comment-red.svg");
 }
 
-.icon--link {
+.Icon--type-link {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-link-black.svg");
 }
 
-.icon--link.Icon--color-white {
+.Icon--type-link.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-link-white.svg");
 }
 
-.icon--link.Icon--color-red {
+.Icon--type-link.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-link-red.svg");
 }
 
-.icon--lock {
+.Icon--type-lock {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-lock-black.svg");
 }
 
-.icon--lock.Icon--color-white {
+.Icon--type-lock.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-lock-white.svg");
 }
 
-.icon--lock.Icon--color-red {
+.Icon--type-lock.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-lock-red.svg");
 }
 
-.icon--minus {
+.Icon--type-minus {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-minus-black.svg");
 }
 
-.icon--minus.Icon--color-white {
+.Icon--type-minus.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-minus-white.svg");
 }
 
-.icon--minus.Icon--color-red {
+.Icon--type-minus.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-minus-red.svg");
 }
 
-.icon--plus {
+.Icon--type-plus {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-plus-black.svg");
 }
 
-.icon--plus.Icon--color-white {
+.Icon--type-plus.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-plus-white.svg");
 }
 
-.icon--plus.Icon--color-red {
+.Icon--type-plus.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-plus-red.svg");
 }
 
-.icon--minus-alt {
+.Icon--type-minus-alt {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-minus-alt-black.svg");
 }
 
-.icon--minus-alt.Icon--color-white {
+.Icon--type-minus-alt.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-minus-alt-white.svg");
 }
 
-.icon--minus-alt.Icon--color-red {
+.Icon--type-minus-alt.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-minus-alt-red.svg");
 }
 
-.icon--plus-alt {
+.Icon--type-plus-alt {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-plus-alt-black.svg");
 }
 
-.icon--plus-alt.Icon--color-white {
+.Icon--type-plus-alt.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-plus-alt-white.svg");
 }
 
-.icon--plus-alt.Icon--color-red {
+.Icon--type-plus-alt.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-plus-alt-red.svg");
 }
 
-.icon--search {
+.Icon--type-search {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-search-black.svg");
 }
 
-.icon--search.Icon--color-white {
+.Icon--type-search.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-search-white.svg");
 }
 
-.icon--search.Icon--color-red {
+.Icon--type-search.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-search-red.svg");
 }
 
-.icon--spinner {
+.Icon--type-spinner {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-spinner-black.svg");
 }
 
-.icon--spinner.Icon--color-white {
+.Icon--type-spinner.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-spinner-white.svg");
 }
 
-.icon--spinner.Icon--color-red {
+.Icon--type-spinner.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-spinner-red.svg");
 }
 
-.icon--arrow-right, .icon--arrow-left {
+.Icon--type-arrow-right, .Icon--type-arrow-left {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-arrow-right-black.svg");
 }
 
-.icon--arrow-right.Icon--color-white, .Icon--color-white.icon--arrow-left {
+.Icon--type-arrow-right.Icon--color-white, .Icon--color-white.Icon--type-arrow-left {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-arrow-right-white.svg");
 }
 
-.icon--arrow-right.Icon--color-red, .Icon--color-red.icon--arrow-left {
+.Icon--type-arrow-right.Icon--color-red, .Icon--color-red.Icon--type-arrow-left {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-arrow-right-red.svg");
 }
 
-.icon--arrow-down, .icon--arrow-up {
+.Icon--type-arrow-down, .Icon--type-arrow-up {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-arrow-down-black.svg");
 }
 
-.icon--arrow-down.Icon--color-white, .Icon--color-white.icon--arrow-up {
+.Icon--type-arrow-down.Icon--color-white, .Icon--color-white.Icon--type-arrow-up {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-arrow-down-white.svg");
 }
 
-.icon--arrow-down.Icon--color-red, .Icon--color-red.icon--arrow-up {
+.Icon--type-arrow-down.Icon--color-red, .Icon--color-red.Icon--type-arrow-up {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-arrow-down-red.svg");
 }
 
-.icon--github {
+.Icon--type-github {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-github-black.svg");
 }
 
-.icon--github.Icon--color-white {
+.Icon--type-github.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-github-white.svg");
 }
 
-.icon--github.Icon--color-red {
+.Icon--type-github.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-github-red.svg");
 }
 
-.icon--linkedin {
+.Icon--type-linkedin {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-linkedin-black.svg");
 }
 
-.icon--linkedin.Icon--color-white {
+.Icon--type-linkedin.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-linkedin-white.svg");
 }
 
-.icon--linkedin.Icon--color-red {
+.Icon--type-linkedin.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-linkedin-red.svg");
 }
 
-.icon--instagram {
+.Icon--type-instagram {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-instagram-black.svg");
 }
 
-.icon--instagram.Icon--color-white {
+.Icon--type-instagram.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-instagram-white.svg");
 }
 
-.icon--instagram.Icon--color-red {
+.Icon--type-instagram.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-instagram-red.svg");
 }
 
-.icon--pin {
+.Icon--type-pin {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-pin-black.svg");
 }
 
-.icon--pin.Icon--color-white {
+.Icon--type-pin.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-pin-white.svg");
 }
 
-.icon--pin.Icon--color-red {
+.Icon--type-pin.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-pin-red.svg");
 }
 
-.icon--close {
+.Icon--type-close {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-close-black.svg");
 }
 
-.icon--close.Icon--color-white {
+.Icon--type-close.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-close-white.svg");
 }
 
-.icon--close.Icon--color-red {
+.Icon--type-close.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-close-red.svg");
 }
 
-.icon--download {
+.Icon--type-download {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-download-black.svg");
 }
 
-.icon--download.Icon--color-white {
+.Icon--type-download.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-download-white.svg");
 }
 
-.icon--download.Icon--color-red {
+.Icon--type-download.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-download-red.svg");
 }
 
-.icon--smiley-wink {
+.Icon--type-smiley-wink {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-smiley-wink-black.svg");
 }
 
-.icon--smiley-wink.Icon--color-white {
+.Icon--type-smiley-wink.Icon--color-white {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-smiley-wink-white.svg");
 }
 
-.icon--smiley-wink.Icon--color-red {
+.Icon--type-smiley-wink.Icon--color-red {
 	background-image: url("../hm-pattern-library/assets/images/icons/icon-smiley-wink-red.svg");
 }
 
-.icon--arrow-left {
+.Icon--type-arrow-left {
 	transform: rotate(180deg);
 }
 
-.icon--arrow-up {
+.Icon--type-arrow-up {
 	transform: rotate(180deg);
 }
 
