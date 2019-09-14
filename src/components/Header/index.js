@@ -46,13 +46,12 @@ export class Header extends Component {
 
 					<Label
 						className="Header-changelog"
+						count={ newChanges.length }
 						tagName="button"
 						onClick={ this.props.onShowChanges }
 					>
 						<Icon type="mail" />
 						What's New?
-						{ ' ' }
-						{ newChanges.length > 0 ? <span class="Label__count">{ newChanges.length }</span> : null }
 					</Label>
 
 					<Slot name="Header.secondary_buttons" />

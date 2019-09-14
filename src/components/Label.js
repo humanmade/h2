@@ -10,6 +10,9 @@ export default function Label( props ) {
 			className={ `Label ${ props.className || '' }`}
 		>
 			{ props.children }
+			{ Boolean( props.count && props.count > 0 ) && (
+				<span class="Label__count">{ props.count }</span>
+			) }
 		</Element>
 	);
 }
