@@ -7,8 +7,6 @@ import { withPadding, withStore } from './decorators';
 import Avatar from '../components/Avatar';
 import SearchInput, { Results } from '../components/SearchInput';
 
-import '../hm-pattern-library/assets/styles/juniper.css';
-
 storiesOf( 'Components', module )
 	.addDecorator( withStore( {} ) )
 	.add( 'Avatar', () => (
