@@ -6,13 +6,16 @@
 }
 
 .pagination a,
+.pagination button,
 .pagination__item {
 	white-space: nowrap;
 	border-bottom: 2px solid transparent;
 }
 
 .pagination a:hover,
-.pagination a:focus {
+.pagination a:focus,
+.pagination button:hover,
+.pagination button:focus {
 	border-bottom: 2px solid transparent;
 }
 
@@ -22,11 +25,11 @@
 	background-size: 100%;
 }
 
-.pagination a:first-child {
+.pagination > :first-child {
 	float: left;
 }
 
-.pagination a:last-child {
+.pagination > :last-child {
 	float: right;
 }
 
