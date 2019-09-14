@@ -22,6 +22,10 @@
 	border-bottom-right-radius: 0;
 }
 
+.Dropdown__trigger-container {
+	display: flex;
+}
+
 .btn.Dropdown__trigger {
 	height: 100%;
 	margin: 0 0 0 -1px;
