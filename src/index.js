@@ -21,7 +21,6 @@ import loadPlugins from './plugins/load';
 
 import './pattern-lib/normalize.css';
 import './pattern-lib/core.css';
-import './pattern-lib/buttons.css';
 import './pattern-lib/forms.css';
 import './pattern-lib/labels.css';
 import './pattern-lib/icons.css';
