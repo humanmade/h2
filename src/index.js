@@ -22,7 +22,6 @@ import loadPlugins from './plugins/load';
 import './pattern-lib/normalize.css';
 import './pattern-lib/core.css';
 import './pattern-lib/forms.css';
-import './pattern-lib/labels.css';
 
 const currentUser = window.H2Data.preload['/wp/v2/users/me'] ? window.H2Data.preload['/wp/v2/users/me'].id : null;
 const initialState = {
