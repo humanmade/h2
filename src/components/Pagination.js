@@ -1,6 +1,8 @@
 import React from 'react';
 import { generatePath, Link } from 'react-router-dom';
 
+import './Pagination.css';
+
 export default function Pagination( props ) {
 	const { hasNext, params, path } = props;
 	const page = Number( params.page || 1 );
@@ -22,16 +24,22 @@ export default function Pagination( props ) {
 	);
 
 	return (
-		<div className="pagination">
+		<div className="pagination util-clearfix">
 			{ hasNext ? (
-				<Link to={ olderPage }>Older</Link>
+				<Link to={ olderPage }>
+					<i className="icon icon--arrow-left icon--red" />
+					Older
+				</Link>
 			) : (
 				/* Hack to get pagination to float correctly */
 				/* eslint-disable-next-line jsx-a11y/anchor-is-valid */
 				<a style={ { display: 'none' } }>&nbsp;</a>
 			) }
 			{ page && page > 1 ? (
-				<Link to={ newerPage }>Newer</Link>
+				<Link to={ newerPage }>
+					Newer
+					<i className="icon icon--arrow-right icon--red" />
+				</Link>
 			) : (
 				/* Hack to get pagination to float correctly */
 				/* eslint-disable-next-line jsx-a11y/anchor-is-valid */
