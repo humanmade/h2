@@ -7,7 +7,7 @@ export default function Icon( props ) {
 	const classes = [
 		'Icon',
 		`icon--${ props.type }`,
-		props.color !== 'black' && `icon--${ props.color }`,
+		props.color !== 'black' && `Icon--color-${ props.color }`,
 	];
 
 	return (
