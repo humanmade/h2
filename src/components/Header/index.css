@@ -26,6 +26,11 @@
 	color: rgba( 255, 255, 255, 0.6 );
 }
 
+.Header .Label {
+	margin: 0 1em 0 0;
+	align-self: center;
+}
+
 .Header .Header-CurrentUser {
 	margin-left: auto;
 	align-self: center;

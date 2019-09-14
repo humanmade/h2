@@ -4,8 +4,9 @@ import { Slot } from 'react-slot-fill';
 
 import CurrentUser from './CurrentUser';
 import HeaderButton from './HeaderButton';
-import HeaderLabel from './HeaderLabel';
 import Logo from './Logo';
+import Icon from '../Icon';
+import Label from '../Label';
 import SearchInput from '../SearchInput';
 import { getChangesForUser } from '../../changelog';
 import { withCurrentUser } from '../../hocs';
@@ -15,14 +16,6 @@ import './index.css';
 export class Header extends Component {
 	render() {
 		const newChanges = this.props.currentUser ? getChangesForUser( this.props.currentUser ) : [];
-
-		const newLabel = (
-			<span>
-				What's New?
-				{ ' ' }
-				{ newChanges.length > 0 ? <span class="label__count">{ newChanges.length }</span> : null }
-			</span>
-		);
 
 		return (
 			<div className="Header">
@@ -51,12 +44,16 @@ export class Header extends Component {
 						onSearch={ this.props.onSearch }
 					/>
 
-					<HeaderLabel
+					<Label
 						className="Header-changelog"
-						icon="mail"
-						title={ newLabel }
+						tagName="button"
 						onClick={ this.props.onShowChanges }
-					/>
+					>
+						<Icon type="mail" />
+						What's New?
+						{ ' ' }
+						{ newChanges.length > 0 ? <span class="Label__count">{ newChanges.length }</span> : null }
+					</Label>
 
 					<Slot name="Header.secondary_buttons" />
 

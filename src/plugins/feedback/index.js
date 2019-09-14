@@ -1,7 +1,8 @@
 import React from 'react';
 import { Fill } from 'react-slot-fill';
 
-import HeaderLabel from '../../components/Header/HeaderLabel';
+import Icon from '../../components/Icon';
+import Label from '../../components/Label';
 import Feedback from './Feedback';
 
 import './index.css';
@@ -15,12 +16,14 @@ export default class Plugin extends React.Component {
 		return (
 			<React.Fragment>
 				<Fill name="Header.secondary_buttons">
-					<HeaderLabel
+					<Label
 						className="Header__feedback"
-						icon="arrow-right"
-						title="Feedback"
+						tagName="button"
 						onClick={ () => this.setState( { active: true } ) }
-					/>
+					>
+						<Icon type="arrow-right" />
+						Feedback
+					</Label>
 				</Fill>
 
 				{ this.state.active && (
