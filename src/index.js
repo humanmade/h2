@@ -19,7 +19,12 @@ import api from './api';
 import PluginAPI from './plugins';
 import loadPlugins from './plugins/load';
 
-import './hm-pattern-library/assets/styles/juniper.css';
+import './pattern-lib/normalize.css';
+import './pattern-lib/core.css';
+import './pattern-lib/buttons.css';
+import './pattern-lib/forms.css';
+import './pattern-lib/labels.css';
+import './pattern-lib/icons.css';
 
 const currentUser = window.H2Data.preload['/wp/v2/users/me'] ? window.H2Data.preload['/wp/v2/users/me'].id : null;
 const initialState = {
