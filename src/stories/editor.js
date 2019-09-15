@@ -9,7 +9,7 @@ import DropUpload from '../components/DropUpload';
 
 storiesOf( 'Editor', module )
 	.addDecorator( withStore( {} ) )
-	.addDecorator( withPadding )
+	.addDecorator( withPadding() )
 	.add( 'Editor', () => (
 		<Editor
 			onSubmit={ action( 'onSubmit' ) }

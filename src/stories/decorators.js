@@ -38,13 +38,14 @@ const checkerboardStyle = {
 	backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
 };
 
-export const withPadding = story => {
+export const withPadding = ( extraStyle = {} ) => story => {
 	const style = {
 		padding: '40px',
 		...checkerboardStyle,
 	};
 	const innerStyle = {
 		background: '#fff',
+		...extraStyle,
 	};
 
 	return (

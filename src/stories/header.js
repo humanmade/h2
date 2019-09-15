@@ -20,7 +20,7 @@ const state = {};
 
 storiesOf( 'Header', module )
 	.addDecorator( withStore( state ) )
-	.addDecorator( withPadding )
+	.addDecorator( withPadding() )
 	.add( 'Header', () => (
 		<Header
 			{ ...defaultProps }

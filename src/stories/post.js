@@ -27,7 +27,7 @@ const state = {
 
 storiesOf( 'Post', module )
 	.addDecorator( withStore( state ) )
-	.addDecorator( withPadding )
+	.addDecorator( withPadding() )
 	.add( 'Post', () => (
 		<Post
 			{ ...defaultProps }
