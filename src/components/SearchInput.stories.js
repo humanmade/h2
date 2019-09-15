@@ -6,7 +6,7 @@ import { withCentering, withStore } from '../stories/decorators';
 import { post } from '../stories/stubs';
 
 export default {
-	title: 'Search',
+	title: 'Interface|Search',
 	decorators: [
 		withStore( {} ),
 		withCentering( { width: '50vw' } ),

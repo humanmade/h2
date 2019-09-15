@@ -3,7 +3,7 @@ import React from 'react';
 import Logo from './Logo';
 
 export default {
-	title: 'Header/Logo',
+	title: 'Interface|Header/Logo',
 }
 
 export const Basic = () => <Logo />;

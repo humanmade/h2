@@ -6,7 +6,7 @@ import { withCentering, withStore } from '../stories/decorators';
 import { user } from '../stories/stubs';
 
 export default {
-	title: 'Profile',
+	title: 'Interface|Profile',
 	decorators: [
 		withStore(),
 		withCentering( {

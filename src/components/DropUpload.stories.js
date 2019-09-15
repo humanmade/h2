@@ -5,7 +5,7 @@ import { withCentering, withStore } from '../stories/decorators';
 import DropUpload from '../components/DropUpload';
 
 export default {
-	title: 'Editor/Upload',
+	title: 'Components|DropUpload',
 	decorators: [
 		withStore(),
 		withCentering( { minWidth: '30vw' } ),

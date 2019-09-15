@@ -13,7 +13,7 @@ const buttonTypes = [
 ];
 
 export default {
-	title: 'Components/Form/Dropdown',
+	title: 'Components|Form/Dropdown',
 	decorators: [
 		withCentering(),
 	],

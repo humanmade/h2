@@ -16,7 +16,7 @@ const buttonSizes = [
 ];
 
 export default {
-	title: 'Components/Form/Button',
+	title: 'Components|Form/Button',
 	decorators: [
 		withCentering(),
 	],

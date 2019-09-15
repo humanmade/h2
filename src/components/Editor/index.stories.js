@@ -6,7 +6,7 @@ import { withPadding, withStore } from '../../stories/decorators';
 import { users } from '../../stories/stubs';
 
 export default {
-	title: 'Editor',
+	title: 'Interface|Editor',
 	decorators: [
 		withStore(),
 		withPadding(),

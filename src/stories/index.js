@@ -7,7 +7,7 @@ import { Content } from '../components/Message/Content';
 
 import '../hm-pattern-library/assets/styles/juniper.css';
 
-storiesOf( 'Base Styles' )
+storiesOf( 'Components|Base Styles' )
 	.addDecorator( withPadding() )
 	.add( 'Elements', () => (
 		<div

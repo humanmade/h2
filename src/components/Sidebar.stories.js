@@ -5,7 +5,7 @@ import { withCentering } from '../stories/decorators';
 import { apiResponse } from '../stories/util';
 
 export default {
-	title: 'Sidebar',
+	title: 'Interface|Sidebar',
 	decorators: [
 		withCentering( { width: '30vw' } ),
 	],

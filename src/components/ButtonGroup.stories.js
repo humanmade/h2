@@ -5,7 +5,7 @@ import ButtonGroup from './ButtonGroup';
 import { withCentering } from '../stories/decorators';
 
 export default {
-	title: 'Components/Form/Button/Group',
+	title: 'Components|Form/Button/Group',
 	decorators: [
 		withCentering(),
 	],

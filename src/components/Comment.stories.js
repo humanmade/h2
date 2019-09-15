@@ -7,7 +7,7 @@ import { withPadding, withStore } from '../stories/decorators';
 import { comment, post, user } from '../stories/stubs';
 
 export default {
-	title: 'Comments',
+	title: 'Content|Comments',
 	decorators: [
 		withStore( {} ),
 		withPadding( {

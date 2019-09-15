@@ -5,7 +5,7 @@ import Overlay, { OverlayContainer } from './Overlay';
 import { withCentering } from '../stories/decorators';
 
 export default {
-	title: 'Overlay',
+	title: 'Components|Overlay',
 	decorators: [
 		withCentering(),
 	],

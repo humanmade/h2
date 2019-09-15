@@ -5,7 +5,7 @@ import { SuperMenu } from './SuperMenu';
 import { withStore } from '../stories/decorators';
 
 export default {
-	title: 'Super Menu',
+	title: 'Interface|Super Menu',
 	decorators: [
 		withStore(),
 	],

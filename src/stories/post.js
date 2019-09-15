@@ -25,7 +25,7 @@ const state = {
 	},
 };
 
-storiesOf( 'Post', module )
+storiesOf( 'Content|Post', module )
 	.addDecorator( withStore( state ) )
 	.addDecorator( withPadding() )
 	.add( 'Post', () => (

@@ -15,7 +15,7 @@ const defaultProps = {
 };
 
 export default {
-	title: 'Header',
+	title: 'Interface|Header',
 	decorators: [
 		withStore(),
 		withPadding(),
