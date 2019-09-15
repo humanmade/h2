@@ -2,12 +2,26 @@ import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 
-import { post } from './stubs';
-import { withCentering, withStore } from './decorators';
+import { htmlTester, post } from './stubs';
+import { withCentering, withPadding, withStore } from './decorators';
 import Avatar from '../components/Avatar';
+import { Content } from '../components/Message/Content';
 import SearchInput, { Results } from '../components/SearchInput';
 
 import '../hm-pattern-library/assets/styles/juniper.css';
+
+storiesOf( 'Base Styles' )
+	.addDecorator( withPadding() )
+	.add( 'Elements', () => (
+		<div
+			dangerouslySetInnerHTML={ { __html: htmlTester } }
+		/>
+	) )
+	.add( 'Content', () => (
+		<Content
+			html={ htmlTester }
+		/>
+	) );
 
 storiesOf( 'Components', module )
 	.addDecorator( withStore( {} ) )

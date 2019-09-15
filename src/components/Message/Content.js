@@ -67,7 +67,7 @@ const transform = ( node, children ) => {
 	}
 };
 
-function Content( props ) {
+export function Content( props ) {
 	if ( ! props.useInterweave ) {
 		return (
 			<div
