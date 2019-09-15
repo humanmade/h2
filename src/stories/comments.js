@@ -2,13 +2,17 @@ import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 
-import { withStore } from './decorators';
+import { withPadding, withStore } from './decorators';
 import { comment, post, user } from './stubs';
 import { Comment } from '../components/Comment';
 import WriteComment from '../components/Message/WriteComment';
 
 storiesOf( 'Comments', module )
 	.addDecorator( withStore( {} ) )
+	.addDecorator( withPadding( {
+		paddingLeft: 60,
+		marginTop: 99,
+	} ) )
 	.add( 'Comment', () => (
 		<Comment
 			author={ user }
