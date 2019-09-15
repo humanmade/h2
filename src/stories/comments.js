@@ -15,10 +15,10 @@ storiesOf( 'Comments', module )
 	} ) )
 	.add( 'Comment', () => (
 		<Comment
-			author={ user }
 			comment={ comment }
 			comments={ [ comment ] }
 			parentPost={ post }
+			user={ user }
 			onDidCreateComment={ action( 'onDidCreateComment' ) }
 			onUpdate={ action( 'onUpdate' ) }
 		/>
