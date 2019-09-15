@@ -34,7 +34,7 @@ export const DropdownContent = props => {
 				const { size, type, onToggle } = context;
 
 				return (
-					<div>
+					<div className="Dropdown__trigger-container">
 						<Button
 							className="Dropdown__trigger"
 							size={ size }
