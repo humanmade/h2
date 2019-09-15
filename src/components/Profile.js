@@ -59,7 +59,7 @@ const LocalTime = props => {
 	);
 }
 
-class Profile extends React.Component {
+export class Profile extends React.Component {
 	render() {
 		const containerProps = {
 			className: 'Profile',

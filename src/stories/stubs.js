@@ -268,6 +268,7 @@ export const user = {
 	id: 1,
 	name: 'Noel',
 	slug: 'noel',
+	link: 'http://example.com/',
 	avatar_urls: {
 		'48': 'https://secure.gravatar.com/avatar/c57c8945079831fa3c19caef02e44614?s=48&d=mm&r=g',
 		'96': 'https://secure.gravatar.com/avatar/c57c8945079831fa3c19caef02e44614?s=96&d=mm&r=g',
@@ -279,6 +280,7 @@ export const user = {
 	facts: {
 		job_title: 'Chief Growth Officer',
 		short_bio: 'This is a short description of the user.',
+		long_description: 'This is a long description of the user.',
 		location: '47.3769,8.5417',
 	},
 };
