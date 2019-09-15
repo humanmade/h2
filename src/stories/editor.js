@@ -2,13 +2,14 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 
-import { withPadding, withStore } from './decorators';
+import { withCentering, withPadding, withStore } from './decorators';
 import { users } from './stubs';
 import Editor from '../components/Editor';
 import DropUpload from '../components/DropUpload';
 
 storiesOf( 'Editor', module )
 	.addDecorator( withStore( {} ) )
+	.addDecorator( withPadding )
 	.add( 'Editor', () => (
 		<Editor
 			onSubmit={ action( 'onSubmit' ) }
@@ -18,7 +19,7 @@ storiesOf( 'Editor', module )
 
 storiesOf( 'Editor/Upload', module )
 	.addDecorator( withStore( {} ) )
-	.addDecorator( withPadding )
+	.addDecorator( withCentering( { minWidth: '30vw' } ) )
 	.add( 'Normal', () => (
 		<DropUpload
 			files={ [] }

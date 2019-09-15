@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React, { Fragment } from 'react';
 
-import { withPadding } from './decorators';
+import { withCentering } from './decorators';
 import Button from '../components/Button';
 import ButtonGroup from '../components/ButtonGroup';
 import { Dropdown, DropdownContent } from '../components/Dropdown';
@@ -18,7 +18,7 @@ const buttonSizes = [
 	'regular',
 ];
 storiesOf( 'Components/Form' )
-	.addDecorator( withPadding )
+	.addDecorator( withCentering() )
 	.add( 'Button', () => (
 		<Fragment>
 			{ buttonSizes.map( size => (

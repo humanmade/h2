@@ -2,7 +2,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 
-import { withStore } from './decorators';
+import { withPadding, withStore } from './decorators';
 import { user } from './stubs';
 import { Header } from '../components/Header';
 import Logo from '../components/Header/Logo';
@@ -20,6 +20,7 @@ const state = {};
 
 storiesOf( 'Header', module )
 	.addDecorator( withStore( state ) )
+	.addDecorator( withPadding )
 	.add( 'Header', () => (
 		<Header
 			{ ...defaultProps }
