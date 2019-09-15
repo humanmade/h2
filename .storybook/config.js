@@ -7,6 +7,9 @@ function loadStories() {
 
 	const req = require.context( '../src/stories', true, /\.js$/ );
 	req.keys().forEach( filename => req( filename ) );
+
+	const newStories = require.context( '../src/components', true, /\.stories\.js$/ );
+	return newStories.keys().map( filename => newStories( filename ) );
 }
 
 if ( process.env.STORYBOOK_MAPBOX_KEY ) {
