@@ -42,7 +42,13 @@ export default class SafeEmbed extends React.Component {
 				return;
 			}
 
-			node.style.height = doc.documentElement.offsetHeight + 'px';
+			const height = doc.documentElement.offsetHeight;
+			if ( height < 100 ) {
+				// Likely about:blank, skip until the document has loaded.
+				return;
+			}
+
+			node.style.height = height + 'px';
 		};
 
 		// Check that the node isn't cross-origin first.
