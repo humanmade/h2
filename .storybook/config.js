@@ -30,6 +30,17 @@ addParameters( {
 		},
 		{ name: 'White', value: '#fff' },
 		{ name: 'Black', value: '#000' },
+
+		{ name: 'red', value: '#D24632' },
+		{ name: 'blue', value: '#7DC9DA' },
+		{ name: 'warm-grey', value: '#504C4C' },
+		{ name: 'dark-grey', value: '#353535' },
+		{ name: 'beige', value: '#F4EFE6' },
+		{ name: 'medium-grey', value: '#737373' },
+		{ name: 'light-grey', value: '#f7f7f7' },
+		{ name: 'brown', value: '#4F4641' },
+		{ name: 'red-light', value: '#e06857' },
+		{ name: 'red-dark', value: '#b34332' },
 	],
 } );
 
