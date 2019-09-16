@@ -27,25 +27,9 @@ export function withStore( state, actions = [] ) {
 	return withRedux( addons )( settings );
 }
 
-const checkerboardStyle = {
-	backgroundImage: `
-		linear-gradient(45deg, #f3f3f3 25%, transparent 25%),
-		linear-gradient(-45deg, #f3f3f3 25%, transparent 25%),
-		linear-gradient(45deg, transparent 75%, #f3f3f3 75%),
-		linear-gradient(-45deg, transparent 75%, #f3f3f3 75%)
-	`,
-	backgroundSize: '20px 20px',
-	backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
-};
-
-export const withPadding = ( extraStyle = {} ) => story => {
+export const withPadding = ( innerStyle = {} ) => story => {
 	const style = {
 		padding: '40px',
-		...checkerboardStyle,
-	};
-	const innerStyle = {
-		background: '#fff',
-		...extraStyle,
 	};
 
 	return (
@@ -68,11 +52,8 @@ export const withCentering = ( extraStyle = {} ) => story => {
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-
-		...checkerboardStyle,
 	};
 	const innerStyle = {
-		background: '#fff',
 		position: 'relative',
 		...extraStyle,
 	};

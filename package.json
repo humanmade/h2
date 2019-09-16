@@ -5,6 +5,7 @@
   "homepage": ".",
   "devDependencies": {
     "@babel/core": "^7.5.5",
+    "@storybook/addon-backgrounds": "^5.2.0",
     "@storybook/addon-viewport": "^5.2.0",
     "@storybook/react": "^5.2.0",
     "addon-redux": "^1.0.0",
