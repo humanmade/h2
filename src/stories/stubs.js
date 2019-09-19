@@ -273,8 +273,8 @@ export const user = {
 	slug: 'noel',
 	link: 'http://example.com/',
 	avatar_urls: {
-		'48': 'https://secure.gravatar.com/avatar/c57c8945079831fa3c19caef02e44614?s=48&d=mm&r=g',
-		'96': 'https://secure.gravatar.com/avatar/c57c8945079831fa3c19caef02e44614?s=96&d=mm&r=g',
+		'48': 'https://www.gravatar.com/avatar/1?d=identicon&f=y&s=48',
+		'96': 'https://www.gravatar.com/avatar/1?d=identicon&f=y&s=96',
 	},
 	meta: {
 		h2_last_updated: now,
@@ -295,12 +295,20 @@ export const users = [
 		id: 2,
 		name: 'Joe',
 		slug: 'joe',
+		avatar_urls: {
+			'48': 'https://www.gravatar.com/avatar/2?d=identicon&f=y&s=48',
+			'96': 'https://www.gravatar.com/avatar/2?d=identicon&f=y&s=96',
+		},
 	},
 	{
 		...user,
 		id: 3,
 		name: 'Tom',
 		slug: 'tomwillmot',
+		avatar_urls: {
+			'48': 'https://www.gravatar.com/avatar/3?d=identicon&f=y&s=48',
+			'96': 'https://www.gravatar.com/avatar/3?d=identicon&f=y&s=96',
+		},
 	},
 ];
 
