@@ -20,6 +20,35 @@ const state = {
 		loadingArchive: [],
 		loadingMore: [],
 	},
+	comments: {
+		posts: [
+			comment,
+		],
+		archives: {
+			[ post.id ]: [
+				comment.id,
+			],
+		},
+		archivePages: {
+			[ post.id ]: {
+				total: 1,
+				current: 1,
+				// comment.id,
+			},
+		},
+		loadingArchive: [],
+		loadingMore: [],
+		loadingPost: [],
+		saving: [],
+	},
+	users: {
+		posts: [
+			user,
+		],
+		loadingArchive: [],
+		loadingPost: [],
+		saving: [],
+	}
 };
 
 export default {
@@ -47,13 +76,6 @@ export const Editable = () => (
 	<Post
 		{ ...defaultProps }
 		editable={ apiResponse( editablePost ) }
-	/>
-);
-
-export const withComments = () => (
-	<Post
-		{ ...defaultProps }
-		comments={ apiResponse( [ comment ] ) }
 	/>
 );
 
