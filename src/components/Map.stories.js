@@ -13,7 +13,7 @@ export default {
 const commonProps = {
 	height: 400,
 	location: '-1.5728748,53.1405427',
-	width: 400
+	width: 400,
 };
 
 export const Basic = () => (

@@ -7,7 +7,7 @@ export default {
 	title: 'Components|Notification',
 	decorators: [
 		withCentering( { minWidth: '40vw' } ),
-	]
+	],
 }
 
 export const status = () => (

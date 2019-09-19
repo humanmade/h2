@@ -48,7 +48,7 @@ const state = {
 		loadingArchive: [],
 		loadingPost: [],
 		saving: [],
-	}
+	},
 };
 
 export default {
