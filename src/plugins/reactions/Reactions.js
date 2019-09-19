@@ -7,9 +7,19 @@ import EmojiPicker from '../../components/EmojiPicker';
 import { withCurrentUser } from '../../hocs';
 import { reactions } from '../../types';
 
-import UserDisplayName from '../../components/UserDisplayName';
-
 import './Reactions.css';
+
+function UserDisplayName( props ) {
+	if ( props.userId === 0 ) {
+		return null;
+	}
+
+	return (
+		<span className={ 'user-display-name ' + props.className }>
+			{ props.userName }
+		</span>
+	);
+}
 
 const Emoji = props => {
 	const custom = window.H2Data.site.emoji[ props.type ];
