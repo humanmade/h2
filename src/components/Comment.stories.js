@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions';
 import React from 'react';
 
 import { Comment as CommentComponent } from './Comment';
-import WriteCommentComponent from './Message/WriteComment';
+import { WriteComment as WriteCommentComponent } from './Message/WriteComment';
 import { withPadding, withStore } from '../stories/decorators';
 import { comment, post, user } from '../stories/stubs';
 
@@ -30,7 +30,7 @@ export const Comment = () => (
 
 export const WriteComment = () => (
 	<WriteCommentComponent
-		author={ user }
+		currentUser={ user }
 		comment={ comment }
 		post={ post }
 		onChange={ () => {} }

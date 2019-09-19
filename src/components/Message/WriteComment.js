@@ -13,7 +13,7 @@ import { comments } from '../../types';
 
 import './WriteComment.css';
 
-class WriteComment extends React.Component {
+export class WriteComment extends React.Component {
 	constructor( props ) {
 		super( props );
 
