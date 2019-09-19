@@ -292,11 +292,13 @@ export const users = [
 	user,
 	{
 		...user,
+		id: 2,
 		name: 'Joe',
 		slug: 'joe',
 	},
 	{
 		...user,
+		id: 3,
 		name: 'Tom',
 		slug: 'tomwillmot',
 	},
