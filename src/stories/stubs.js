@@ -1,5 +1,8 @@
 import outdent from 'outdent';
 
+import omgEmoji from './assets/omg.png';
+import polyglotsEmoji from './assets/polyglots.png';
+
 const now = new Date().toISOString().replace( 'Z', '' );
 
 export const title = {
@@ -296,5 +299,28 @@ export const users = [
 		...user,
 		name: 'Tom',
 		slug: 'tomwillmot',
+	},
+];
+
+export const emoji = [
+	{
+		colons: ':smile:',
+		native: '😃',
+	},
+	{
+		colons: ':laugh:',
+		native: '😄',
+	},
+	{
+		colons: ':polyglots:',
+		imageUrl: polyglotsEmoji,
+	},
+	{
+		colons: ':tongue_poking_out_face:',
+		native: '😛',
+	},
+	{
+		colons: ':omg:',
+		imageUrl: omgEmoji,
 	},
 ];

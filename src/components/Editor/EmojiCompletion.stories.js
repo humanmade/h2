@@ -3,6 +3,7 @@ import React from 'react';
 
 import { Item } from './EmojiCompletion';
 import { withCentering } from '../../stories/decorators';
+import { emoji } from '../../stories/stubs';
 
 export default {
 	title: 'Interface|Editor/Completion/Emoji',
@@ -10,21 +11,6 @@ export default {
 		withCentering(),
 	],
 }
-
-const emoji = [
-	{
-		colons: ':smile:',
-		native: '😃',
-	},
-	{
-		colons: ':laugh:',
-		native: '😄',
-	},
-	{
-		colons: ':tongue_poking_out_face:',
-		native: '😛',
-	},
-];
 
 export const List = () => (
 	<ol className="Completion">
