@@ -37,12 +37,9 @@ export const Empty = () => (
 	/>
 );
 
-export const Sites = () => (
+export const WithSites = () => (
 	<SuperMenu
 		{ ...commonProps }
 		sites={ { data: sites } }
 	/>
 );
-Sites.story = {
-	name: 'With Sites',
-};

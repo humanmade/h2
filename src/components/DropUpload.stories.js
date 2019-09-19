@@ -22,7 +22,7 @@ export const Normal = () => (
 	</DropUpload>
 );
 
-export const Progress = () => (
+export const InProgress = () => (
 	<DropUpload
 		files={ [ { name: 'filename.ext' } ] }
 		onCancel={ action( 'onCancel' ) }
@@ -31,11 +31,8 @@ export const Progress = () => (
 		<p style={ { background: '#eee' } }>DropUpload children.</p>
 	</DropUpload>
 );
-Progress.story = {
-	title: 'In Progress',
-};
 
-export const ProgressMulti = () => (
+export const InProgressMultiple = () => (
 	<DropUpload
 		files={ [ { name: 'filename.ext' }, { name: 'other.ext' } ] }
 		onCancel={ action( 'onCancel' ) }
@@ -44,6 +41,6 @@ export const ProgressMulti = () => (
 		<p style={ { background: '#eee' } }>DropUpload children.</p>
 	</DropUpload>
 );
-ProgressMulti.story = {
+InProgressMultiple.story = {
 	title: 'In Progress (Multiple)',
 };

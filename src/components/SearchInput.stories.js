@@ -47,9 +47,6 @@ export const ShowingResults = () => {
 		/>
 	);
 }
-ShowingResults.story = {
-	title: 'Input (Showing Results)',
-};
 
 export const Loading = () => {
 	const ResultsComponent = props => (
@@ -67,9 +64,6 @@ export const Loading = () => {
 		/>
 	);
 }
-Loading.story = {
-	title: 'Input (Loading)',
-};
 
 export const SearchResults = () => (
 	<Results
@@ -79,6 +73,3 @@ export const SearchResults = () => (
 		visible
 	/>
 );
-SearchResults.story = {
-	title: 'Results',
-};
