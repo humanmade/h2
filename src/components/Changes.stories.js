@@ -40,8 +40,6 @@ const userHasChanges = {
 	},
 };
 
-console.log( userHasChanges );
-
 export const WithNew = () => (
 	<Changes
 		{ ...commonProps }
