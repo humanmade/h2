@@ -50,7 +50,6 @@ export default class SafeEmbed extends React.Component {
 			// eslint-disable-next-line no-unused-vars
 			const doc = node.contentDocument || node.contentWindow.document;
 		} catch ( err ) {
-			console.log( err );
 			return;
 		}
 
