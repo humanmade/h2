@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions';
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Item } from './EmojiCompletion';
+import EmojiCompletion, { Item } from './EmojiCompletion';
 import { withCentering } from '../../stories/decorators';
 import { emoji } from '../../stories/stubs';
 
@@ -36,3 +36,28 @@ export const Selected = () => (
 		) ) }
 	</ol>
 );
+
+export const Interactive = () => {
+	const [ value, setValue ] = useState( '' );
+	const coords = {
+		top: 28,
+		left: 0,
+	};
+	return (
+		<form>
+			<input
+				className="form__field--lg"
+				type="text"
+				value={ value }
+				onChange={ e => setValue( e.target.value ) }
+			/>
+
+			<EmojiCompletion
+				coords={ coords }
+				text={ value }
+				trigger=":"
+				onSelect={ action( 'select' ) }
+			/>
+		</form>
+	);
+};
