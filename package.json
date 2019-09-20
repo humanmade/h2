@@ -55,6 +55,7 @@
     "test": "react-scripts test --env=jsdom",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
+    "storybook:deploy": "npm run build-storybook && aws s3 sync ./storybook-static s3://make.hmn.md/h2-storybook --acl public-read",
     "check-size": "bundlesize"
   },
   "bundlesize": [
