@@ -12,10 +12,6 @@ function loadStories() {
 	return newStories.keys().map( filename => newStories( filename ) );
 }
 
-if ( process.env.STORYBOOK_MAPBOX_KEY ) {
-	window.H2Data.site.mapbox_key = process.env.STORYBOOK_MAPBOX_KEY;
-}
-
 addParameters( {
 	backgrounds: [
 		{
