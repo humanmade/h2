@@ -29,7 +29,7 @@ class ErrorBoundary extends React.Component {
 		if ( this.state.error ) {
 			return (
 				<Notification type="error">
-					A problem occurred while rendering this content. Please report this as a bug.<br />
+					A problem occurred while rendering this content. Please <a href="https://github.com/humanmade/H2/issues/new" taget="_blank">report this as a bug</a>.<br />
 					<code>{ this.state.error.toString() }</code>
 				</Notification>
 			);
