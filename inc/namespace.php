@@ -38,6 +38,8 @@ function set_up_theme() {
 		'before_widget' => '',
 		'after_widget'  => '',
 	] );
+
+	show_admin_bar( false );
 }
 
 /**
