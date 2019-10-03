@@ -65,6 +65,9 @@ function get_script_data() {
 	$preload = [
 		'/wp/v2/users/me',
 		'/wp/v2/users?per_page=100',
+		'/h2/v1/site-switcher/sites',
+		'/h2/v1/widgets?sidebar=sidebar',
+		'/wp/v2/categories?per_page=100',
 	];
 
 	$data = [
