@@ -62,13 +62,18 @@ function enqueue_assets() {
  * Gather data for H2
  */
 function get_script_data() {
-	$preload = [
+	$legacy_preload = [
 		'/wp/v2/users/me',
 		'/wp/v2/users?per_page=100',
 		'/h2/v1/site-switcher/sites',
 		'/h2/v1/widgets?sidebar=sidebar',
 		'/wp/v2/categories?per_page=100',
 	];
+
+	$posts = [];
+	if ( is_single() ) {
+		$posts = preload_request( '/wp/v2/posts', [ 'include' => [ get_the_ID() ] ] );
+	}
 
 	$data = [
 		'asset_url' => get_theme_file_uri( 'build/' ),
@@ -90,10 +95,32 @@ function get_script_data() {
 		'plugins' => [
 			'reactions' => \class_exists( 'H2\\Reactions\\Reaction' ),
 		],
-		'preload' => prefetch_urls( $preload ),
+		'legacyPreload' => prefetch_urls( $legacy_preload ),
+		'preload' => [
+			'posts' => $posts,
+		],
 	];
 
 	return $data;
+}
+
+/**
+ * Pre-load a REST API request
+ *
+ * Runs the REST API request and returns the data, if available.
+ *
+ * @return mixed|null Response data on success, null otherwise
+ */
+function preload_request( $route, $args = [] ) {
+	$request = new WP_REST_Request( 'GET', $route );
+	foreach ( $args as $key => $value ) {
+		$request[ $key ] = $value;
+	}
+	$response = rest_do_request( $request );
+	if ( is_wp_error( $response ) || $response->is_error() ) {
+		return null;
+	}
+	return $response->get_data();
 }
 
 function prefetch_urls( $urls ) {
