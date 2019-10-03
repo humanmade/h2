@@ -39,7 +39,7 @@ const CategoryList = ( { all, categories } ) => (
 	</ul>
 );
 
-class SuperMenu extends React.Component {
+export class SuperMenu extends React.Component {
 	render() {
 		const { categories, visible } = this.props;
 		const sites = this.props.sites && this.props.sites.data;

@@ -6,26 +6,26 @@ import { customEmoji } from '../EmojiPicker';
 
 import './EmojiCompletion.css';
 
-const EmojiCompletion = props => {
-	const renderItem = ( { item, selected, onSelect } ) => {
-		return (
-			<li
-				key={ item.colons }
-				className={ selected ? 'selected' : null }
-				onClick={ onSelect }
-			>
-				{ item.imageUrl ? (
-					<img
-						alt={ item.colons }
-						className="EmojiCompletion-custom"
-						src={ item.imageUrl }
-					/>
-				) : item.native }
-				{ item.colons }
-			</li>
-		);
-	};
+export const Item = ( { item, selected, onSelect } ) => {
+	return (
+		<li
+			key={ item.colons }
+			className={ selected ? 'selected' : null }
+			onClick={ onSelect }
+		>
+			{ item.imageUrl ? (
+				<img
+					alt={ item.colons }
+					className="EmojiCompletion-custom"
+					src={ item.imageUrl }
+				/>
+			) : item.native }
+			{ item.colons }
+		</li>
+	);
+};
 
+const EmojiCompletion = props => {
 	const getItems = search => {
 		if ( ! search.length ) {
 			return null;
@@ -60,7 +60,7 @@ const EmojiCompletion = props => {
 		<Completion
 			{ ...props }
 			getItems={ getItems }
-			renderItem={ renderItem }
+			renderItem={ props => <Item { ...props } /> }
 			insert={ item => ( item.native || item.colons ) + ' ' }
 		/>
 	);

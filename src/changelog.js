@@ -44,7 +44,7 @@ export const changes = [
 
 				{ ' ' }
 
-				{ window.H2Data.site.emoji['mindblown'] ? (
+				{ ( window.H2Data.site.emoji && window.H2Data.site.emoji['mindblown'] ) ? (
 					<img
 						alt=":mindblown:"
 						src={ window.H2Data.site.emoji['mindblown'].imageUrl }

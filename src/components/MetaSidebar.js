@@ -43,7 +43,7 @@ const BetaFeature = props => (
 	</div>
 );
 
-class MetaSidebar extends React.Component {
+export class MetaSidebar extends React.Component {
 	render() {
 		const { currentUser, features, onDisableFeature, onEnableFeature } = this.props;
 		const containerProps = {
