@@ -60,10 +60,15 @@ export default class SafeEmbed extends React.Component {
 		}
 
 		node.addEventListener( 'load', handleResize );
-		node.contentWindow.addEventListener( 'resize', handleResize );
+		if ( node.contentWindow ) {
+			node.contentWindow.addEventListener( 'resize', handleResize );
+		}
+
 		this.removeResizeEvent = () => {
 			node.removeEventListener( 'load', handleResize );
-			node.contentWindow.removeEventListener( 'resize', handleResize );
+			if ( node.contentWindow ) {
+				node.contentWindow.removeEventListener( 'resize', handleResize );
+			}
 		};
 	}
 
