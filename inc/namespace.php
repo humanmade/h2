@@ -38,6 +38,8 @@ function set_up_theme() {
 		'before_widget' => '',
 		'after_widget'  => '',
 	] );
+
+	show_admin_bar( false );
 }
 
 /**
@@ -60,14 +62,18 @@ function enqueue_assets() {
  * Gather data for H2
  */
 function get_script_data() {
-	$preload = [
-		'/wp/v2/posts',
+	$legacy_preload = [
+		'/wp/v2/users/me',
+		'/wp/v2/users?per_page=100',
 		'/h2/v1/site-switcher/sites',
 		'/h2/v1/widgets?sidebar=sidebar',
 		'/wp/v2/categories?per_page=100',
-		'/wp/v2/users/me',
-		'/wp/v2/users?per_page=100',
 	];
+
+	$posts = [];
+	if ( is_single() ) {
+		$posts = preload_request( '/wp/v2/posts', [ 'include' => [ get_the_ID() ] ] );
+	}
 
 	$data = [
 		'asset_url' => get_theme_file_uri( 'build/' ),
@@ -90,31 +96,32 @@ function get_script_data() {
 		'plugins' => [
 			'reactions' => \class_exists( 'H2\\Reactions\\Reaction' ),
 		],
-		'preload' => prefetch_urls( $preload ),
+		'legacyPreload' => prefetch_urls( $legacy_preload ),
+		'preload' => [
+			'posts' => $posts,
+		],
 	];
 
-	// Preload the comments and reactions for the posts too.
-	if ( isset( $data['preload']['/wp/v2/posts'] ) ) {
-		foreach ( $data['preload']['/wp/v2/posts'] as $post_data ) {
-			$id   = $post_data['id'];
-			$urls = [
-				sprintf( '/h2/v1/reactions?post=%d', $post_data['id'] ),
-				sprintf( '/wp/v2/comments?post=%d&per_page=100', $post_data['id'] ),
-				sprintf( '/wp/v2/users/%d', $post_data['author'] ),
-				sprintf( '/wp/v2/categories?include=%s', implode( ',', $post_data['categories'] ) ),
-			];
-
-			// Only fetch new URLs we don't already have.
-			$urls = array_filter( $urls, function ( $url ) use ( $data ) {
-				return empty( $data['preload'][ $url ] );
-			} );
-
-			$results         = prefetch_urls( $urls );
-			$data['preload'] = array_merge( $data['preload'], $results );
-		}
-	}
-
 	return $data;
+}
+
+/**
+ * Pre-load a REST API request
+ *
+ * Runs the REST API request and returns the data, if available.
+ *
+ * @return mixed|null Response data on success, null otherwise
+ */
+function preload_request( $route, $args = [] ) {
+	$request = new WP_REST_Request( 'GET', $route );
+	foreach ( $args as $key => $value ) {
+		$request[ $key ] = $value;
+	}
+	$response = rest_do_request( $request );
+	if ( is_wp_error( $response ) || $response->is_error() ) {
+		return null;
+	}
+	return $response->get_data();
 }
 
 function prefetch_urls( $urls ) {

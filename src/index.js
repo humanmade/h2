@@ -21,15 +21,18 @@ import loadPlugins from './plugins/load';
 
 import './hm-pattern-library/assets/styles/juniper.css';
 
-const currentUser = window.H2Data.preload['/wp/v2/users/me'] ? window.H2Data.preload['/wp/v2/users/me'].id : null;
+const currentUser = window.H2Data.legacyPreload['/wp/v2/users/me'] ? window.H2Data.legacyPreload['/wp/v2/users/me'].id : null;
 const initialState = {
 	users: {
 		archives: {
-			all: window.H2Data.preload['/wp/v2/users?per_page=100'].map( user => user.id ),
+			all: window.H2Data.legacyPreload['/wp/v2/users?per_page=100'].map( user => user.id ),
 			me: currentUser ? [ currentUser ] : [],
 		},
 		current: currentUser,
-		posts: window.H2Data.preload['/wp/v2/users?per_page=100'],
+		posts: window.H2Data.legacyPreload['/wp/v2/users?per_page=100'],
+	},
+	posts: {
+		posts: window.H2Data.preload.posts,
 	},
 };
 
@@ -56,7 +59,7 @@ const render = Main => {
 				<IntlProvider locale="en">
 					<RestApiProvider
 						fetch={ ( url, ...args ) => api.fetch( url, ...args ) }
-						initialData={ window.H2Data.preload }
+						initialData={ window.H2Data.legacyPreload }
 					>
 						<Router>
 							<Main />

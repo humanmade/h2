@@ -1,6 +1,6 @@
 import { withArchive } from '@humanmade/repress';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { FormattedRelative } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 
@@ -84,17 +84,11 @@ export class Results extends React.Component {
 
 	render() {
 		const { selected } = this.state;
-		const { loading, posts, term, visible } = this.props;
+		const { loading, posts, term } = this.props;
 
-		const classes = [
-			'SearchInput__results',
-			visible && 'SearchInput__results--visible',
-		];
 		return (
-			<div className={ classes.filter( Boolean ).join( ' ' ) }>
-				{ term === '' ? (
-					<p>Start typing to search.</p>
-				) : loading ? (
+			<Fragment>
+				{ loading ? (
 					<p>Loading results for “{ term }”</p>
 				) : ( posts && posts.length > 0 ) ? (
 					<ul>
@@ -131,7 +125,7 @@ export class Results extends React.Component {
 				) : (
 					<p>No results found.</p>
 				) }
-			</div>
+			</Fragment>
 		);
 	}
 }
@@ -191,6 +185,11 @@ class SearchInput extends React.Component {
 		const term = this.state.value === null ? ( termFromURL && termFromURL[1] ) || '' : this.state.value;
 		const Results = this.props.resultsComponent;
 
+		const classes = [
+			'SearchInput__results',
+			this.state.showSuggest && 'SearchInput__results--visible',
+		];
+
 		return (
 			<form
 				className="SearchInput"
@@ -208,12 +207,17 @@ class SearchInput extends React.Component {
 					/>
 				</div>
 
-				<Results
-					term={ term }
-					visible={ this.state.showSuggest }
-					onSelect={ this.onSelect }
-					onShowResults={ this.onSubmit }
-				/>
+				<div className={ classes.filter( Boolean ).join( ' ' ) }>
+					{ term === '' ? (
+						<p>Start typing to search.</p>
+					) : (
+						<Results
+							term={ term }
+							onSelect={ this.onSelect }
+							onShowResults={ this.onSubmit }
+						/>
+					) }
+				</div>
 			</form>
 		);
 	}
