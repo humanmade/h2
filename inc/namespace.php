@@ -81,6 +81,7 @@ function get_script_data() {
 				'force_default' => true,
 			] ),
 			'mapbox_key'     => defined( 'MAPBOX_KEY' ) ? MAPBOX_KEY : null,
+			'sentry_key'     => defined( 'H2_SENTRY_KEY' ) ? H2_SENTRY_KEY : null,
 			'emoji'          => apply_filters( 'h2.custom_emoji', [] ),
 		],
 		'features' => [
