@@ -36,6 +36,7 @@ export default function register() {
 
 	Sentry.init( {
 		dsn: window.H2Data.site.sentry_key,
+		environment: window.H2Data.site.environment || 'unknown',
 	} );
 
 	window.H2.plugins.register( ConnectedSentryPlugin );
