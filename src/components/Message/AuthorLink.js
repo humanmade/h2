@@ -6,6 +6,8 @@ import LinkButton from '../LinkButton';
 import UserHovercard from '../UserHovercard';
 import { showSidebarProfile } from '../../actions';
 
+import './AuthorLink.css';
+
 function AuthorLink( props ) {
 	const { children, user, withHovercard } = props;
 
