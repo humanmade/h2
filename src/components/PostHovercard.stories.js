@@ -3,7 +3,7 @@ import React from 'react';
 import { withCentering, withStore } from '../stories/decorators';
 import { post, user } from '../stories/stubs';
 import { Card } from './Hovercard';
-import { PostCard } from './PostHovercard';
+import { PostCard, PostCardAuthor } from './PostHovercard';
 
 const commonProps = {
 	width: 425,
@@ -26,8 +26,29 @@ export const Basic = () => (
 		{ ...commonProps }
 	>
 		<PostCard
-			author={ user }
+			loading={ false }
 			post={ post }
+			AuthorComponent={ () => (
+				<PostCardAuthor
+					author={ user }
+				/>
+			) }
+		/>
+	</Card>
+);
+
+export const Loading = () => (
+	<Card
+		{ ...commonProps }
+	>
+		<PostCard
+			loading
+			post={ null }
+			AuthorComponent={ () => (
+				<PostCardAuthor
+					author={ null }
+				/>
+			) }
 		/>
 	</Card>
 );
@@ -37,8 +58,29 @@ export const WithoutAuthor = () => (
 		{ ...commonProps }
 	>
 		<PostCard
-			author={ null }
+			loading={ false }
 			post={ post }
+			AuthorComponent={ () => (
+				<PostCardAuthor
+					author={ null }
+				/>
+			) }
+		/>
+	</Card>
+);
+
+export const NotFound = () => (
+	<Card
+		{ ...commonProps }
+	>
+		<PostCard
+			loading={ false }
+			post={ null }
+			AuthorComponent={ () => (
+				<PostCardAuthor
+					author={ null }
+				/>
+			) }
 		/>
 	</Card>
 );
