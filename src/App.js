@@ -65,7 +65,7 @@ class App extends Component {
 	}
 
 	onSearch( string ) {
-		this.props.history.push( string ? `/search/${ string }` : '/' );
+		this.props.history.push( string ? `/search/${ encodeURIComponent( string ) }` : '/' );
 	}
 
 	onDidCreatePost( post ) {
