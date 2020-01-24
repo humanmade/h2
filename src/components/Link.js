@@ -1,7 +1,10 @@
 import React from 'react';
-import { Link as InternalLink } from 'react-router-dom';
+import { Link as InternalLink, matchPath } from 'react-router-dom';
 
-export default function Link( { children, href, ...props } ) {
+import PostLink from './PostLink';
+import { POST_ROUTE } from '../App';
+
+export default function Link( { children, disablePreviews, href, ...props } ) {
 	const root = window.H2Data.site.home;
 
 	if ( ! href.startsWith( root ) ) {
@@ -17,7 +20,7 @@ export default function Link( { children, href, ...props } ) {
 
 	const relativeTo = href.replace( /^(?:\/\/|[^/]+)*\//, '/' );
 
-	return (
+	const link = (
 		<InternalLink
 			to={ relativeTo }
 			{ ...props }
@@ -25,4 +28,29 @@ export default function Link( { children, href, ...props } ) {
 			{ children }
 		</InternalLink>
 	);
+
+	if ( disablePreviews ) {
+		return link;
+	}
+
+	// Is this an internal link to a post?
+	const args = {
+		path: POST_ROUTE,
+		exact: true,
+	};
+	const postMatch = matchPath( relativeTo, args );
+	if ( postMatch ) {
+		return (
+			<PostLink
+				{ ...props }
+				href={ relativeTo }
+				match={ postMatch }
+			>
+				{ link }
+			</PostLink>
+		);
+	}
+
+	// No other preview, just return the link.
+	return link;
 }

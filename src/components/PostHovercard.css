@@ -1,0 +1,39 @@
+.PostHovercard {
+	font-size: 0.77778rem;
+}
+
+.PostHovercard h3 {
+	font-size: 1em;
+	line-height: 1.6;
+	text-transform: none;
+	margin: 0 0 1em;
+}
+
+.PostHovercard__description {
+	font-size: 0.9em;
+	line-height: 1.7;
+}
+
+.PostHovercard__description p {
+	margin: 0 0 1em;
+}
+
+.PostHovercard-description p:last-child {
+	margin-bottom: 0;
+}
+
+.PostHovercard__meta {
+	margin: 0;
+	font-size: 0.9em;
+	color: #AAA;
+}
+
+.PostHovercard__meta .Avatar {
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 0.5em;
+}
+
+.PostHovercard__author {
+	color: var( --hm-red );
+}
