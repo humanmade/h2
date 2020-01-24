@@ -2,6 +2,12 @@
 	font-size: 0.77778rem;
 }
 
+.PostHovercard__loading,
+.PostHovercard__error {
+	margin: 0;
+	font-style: italic;
+}
+
 .PostHovercard h3 {
 	font-size: 1em;
 	line-height: 1.6;

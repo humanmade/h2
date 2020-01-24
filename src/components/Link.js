@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link as InternalLink, matchPath } from 'react-router-dom';
 
-import PostLink from './PostLink';
+import PostHovercard from './PostHovercard';
 import { POST_ROUTE } from '../App';
 
 export default function Link( { children, disablePreviews, href, ...props } ) {
@@ -41,13 +41,12 @@ export default function Link( { children, disablePreviews, href, ...props } ) {
 	const postMatch = matchPath( relativeTo, args );
 	if ( postMatch ) {
 		return (
-			<PostLink
+			<PostHovercard
 				{ ...props }
-				href={ relativeTo }
 				match={ postMatch }
 			>
 				{ link }
-			</PostLink>
+			</PostHovercard>
 		);
 	}
 
