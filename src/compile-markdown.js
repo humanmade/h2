@@ -1,7 +1,6 @@
 import marked from 'marked';
 
 class CustomRender extends marked.Renderer {
-	// eslint-disable-next-line no-undef
 	tasklisttoken = '<!-- H2_TASKLIST_ITEM -->';
 
 	link( href, title, text ) {
