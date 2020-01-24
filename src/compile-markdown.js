@@ -1,8 +1,8 @@
 import marked from 'marked';
 
-class CustomRender extends marked.Renderer {
-	tasklisttoken = '<!-- H2_TASKLIST_ITEM -->';
+const TASK_LIST_TOKEN = '<!-- H2_TASKLIST_ITEM -->';
 
+class CustomRender extends marked.Renderer {
 	link( href, title, text ) {
 		if ( href === text && ! title ) {
 			// Autolinked, so skip it.
@@ -13,8 +13,8 @@ class CustomRender extends marked.Renderer {
 	}
 
 	list( body, ordered ) {
-		if ( body.indexOf( this.tasklisttoken ) >= 0 ) {
-			return '<ul class="Tasklist">' + body.replace( new RegExp( this.tasklisttoken, 'g' ), '' ) + '</ul>';
+		if ( body.indexOf( TASK_LIST_TOKEN ) >= 0 ) {
+			return '<ul class="Tasklist">' + body.replace( new RegExp( TASK_LIST_TOKEN, 'g' ), '' ) + '</ul>';
 		}
 
 		return super.list( body, ordered );
@@ -24,7 +24,7 @@ class CustomRender extends marked.Renderer {
 		const listMatch = text.match( /^\[(x| )] ?(.+)/i );
 		if ( listMatch ) {
 			const checked = listMatch[1] !== ' ';
-			return `<li class="Tasklist-Item"${ checked ? ' data-checked' : '' }>${ listMatch[2] }</li>\n` + this.tasklisttoken;
+			return `<li class="Tasklist-Item"${ checked ? ' data-checked' : '' }>${ listMatch[2] }</li>\n` + TASK_LIST_TOKEN;
 		}
 
 		return super.listitem( text );
