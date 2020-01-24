@@ -54,7 +54,10 @@ export class MessageHeader extends React.Component {
 					size={ 60 }
 				/>
 				<div className="Message-Header__byline">
-					<Link href={ post.link }>
+					<Link
+						disablePreviews
+						href={ post.link }
+					>
 						<h2 className="Message-Header__title">
 							{ decodeEntities( post.title.rendered ) }
 						</h2>
