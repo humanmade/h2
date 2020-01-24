@@ -35,7 +35,7 @@ function MiniComment( props ) {
 		<div className="Comment-Mini">
 			<p className="Comment-Mini__context">
 				<Link
-					href={ `${ parentPost.link }#comment-${ comment.id }` }
+					href={ comment.link }
 				>
 					<span className="Comment-Mini__context-post">
 						{ decodeEntities( parentPost.title.rendered ) }
@@ -58,7 +58,6 @@ function MiniComment( props ) {
 					author={ user }
 					comment={ comment }
 					mini
-					post={ parentPost }
 				/>
 				<MessageContent
 					html={ comment.content.rendered }

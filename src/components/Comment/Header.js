@@ -8,7 +8,7 @@ import Link from '../Link';
 import './Header.css';
 
 export default function CommentHeader( props ) {
-	const { author, children, comment, mini, post } = props;
+	const { author, children, comment, mini } = props;
 
 	const classes = [
 		'Comment-Header',
@@ -29,7 +29,7 @@ export default function CommentHeader( props ) {
 			<div className="actions-wrap">
 				<Link
 					className="Comment-date"
-					href={ `${ post.link }#comment-${ comment.id }` }
+					href={ comment.link }
 				>
 					<time
 						dateTime={ comment.date_gmt + 'Z' }
