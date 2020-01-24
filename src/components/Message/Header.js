@@ -5,7 +5,7 @@ import { Slot } from 'react-slot-fill';
 
 import AuthorLink from './AuthorLink';
 import Avatar from '../Avatar';
-import Link from '../RelativeLink';
+import Link from '../Link';
 import {
 	Category as CategoryShape,
 	Post as PostShape,
@@ -54,7 +54,7 @@ export class MessageHeader extends React.Component {
 					size={ 60 }
 				/>
 				<div className="Message-Header__byline">
-					<Link to={ post.link }>
+					<Link href={ post.link }>
 						<h2 className="Message-Header__title">
 							{ decodeEntities( post.title.rendered ) }
 						</h2>
@@ -74,7 +74,7 @@ export class MessageHeader extends React.Component {
 						<ul className="Message-Header__categories">
 							{ categories.map( category => (
 								<li key={ category.id }>
-									<Link to={ category.link }>{ category.name }</Link>
+									<Link href={ category.link }>{ category.name }</Link>
 								</li>
 							) ) }
 						</ul>

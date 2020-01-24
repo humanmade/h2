@@ -1,8 +1,8 @@
 import React from 'react';
 
+import Link from './Link';
 import Logo from './Header/Logo';
 import Overlay from './Overlay';
-import Link from './RelativeLink';
 import SearchInput from './SearchInput';
 import { withCategories, withSites } from '../hocs';
 
@@ -13,7 +13,7 @@ const Category = ( { all, category } ) => {
 
 	return (
 		<li key={ category.id }>
-			<Link to={ category.link }>
+			<Link href={ category.link }>
 				{ category.name }
 			</Link>
 
@@ -75,7 +75,7 @@ export class SuperMenu extends React.Component {
 
 					<h2 className="screen-reader-text">Navigation</h2>
 					<ul>
-						<li><Link to="/">All Posts</Link></li>
+						<li><Link href="/">All Posts</Link></li>
 						<li><a href="/wp-admin/">Dashboard</a></li>
 					</ul>
 
