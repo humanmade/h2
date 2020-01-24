@@ -17,7 +17,7 @@
 
 @media ( max-width: 600px ) {
 	.CommentsList {
-		margin-left: 48px;
+		margin-left: 20px;
 	}
 	.CommentsList .CommentsList {
 		margin-left: 32px;

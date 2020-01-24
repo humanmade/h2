@@ -2,6 +2,7 @@
 	font-family: 'Proxima-Nova', sans-serif;
 	flex-direction: column;
 	flex: 1;
+	transition: transform 300ms;
 }
 
 .App .WritePost {
@@ -21,16 +22,38 @@
 	max-width: 800px;
 }
 
-.App > .Outer > aside {
-	position: sticky;
-	top: 0;
-	height: 100vh;
-	margin-left: 5%;
-	overflow: hidden;
-	overflow-y: scroll;
-	width: 30%;
-	flex-shrink: 0;
+@media ( min-width: 800px ) {
+	.App > .Outer > aside {
+		position: sticky;
+		top: 0;
+		height: 100vh;
+		margin-left: 5%;
+		overflow: hidden;
+		overflow-y: scroll;
+		width: 30%;
+		flex-shrink: 0;
+	}
 }
+
+@media screen and ( min-width: 600px ) and ( max-width: 782px ) {
+	body.admin-bar .App > .Outer > aside {
+		top: 46px;
+		height: calc( 100vh - 46px );
+	}
+}
+
+@media ( min-width: 783px ) {
+	body.admin-bar .App > .Outer > aside {
+		top: 32px;
+	}
+}
+
+@media ( min-width: 800px ) {
+	body.admin-bar .App > .Outer > aside {
+		height: calc( 100vh - 32px );
+	}
+}
+
 .App a {
 	border: none;
 }
@@ -43,8 +66,7 @@
 		width: 100%;
 	}
 	.Sidebar {
-		position: static;
 		width: 100%;
-		padding: 0 2%;
+		padding: 0 20px;
 	}
 }

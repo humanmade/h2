@@ -19,7 +19,7 @@
  * - `allowInInput` (boolean, default `false`): Should the callback fire if an
  *   input is focussed?
  */
-import { isFunction } from 'lodash';
+import isFunction from 'lodash/isFunction';
 import Mousetrap from 'mousetrap';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -36,9 +36,11 @@ class Shortcuts extends React.Component {
 			return null;
 		}
 
-		return <React.Fragment>
-			{ this.props.children }
-		</React.Fragment>;
+		return (
+			<React.Fragment>
+				{ this.props.children }
+			</React.Fragment>
+		);
 	}
 }
 
@@ -47,7 +49,7 @@ Shortcuts.propTypes = {
 		PropTypes.oneOfType( [
 			PropTypes.func,
 			PropTypes.shape( {
-				callback:     PropTypes.func.isRequired,
+				callback: PropTypes.func.isRequired,
 				allowInInput: PropTypes.bool,
 			} ),
 		] )
@@ -75,7 +77,7 @@ const reducePropsToState = propsList => {
 			if ( isFunction( props.keys[ key ] ) ) {
 				keys[ key ] = {
 					allowInInput: false,
-					callback:     props.keys[ key ],
+					callback: props.keys[ key ],
 				};
 			} else {
 				keys[ key ] = {

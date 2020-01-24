@@ -1,0 +1,26 @@
+.Modal {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 20;
+	pointer-events: none;
+}
+
+.Modal-inner {
+	position: relative;
+	background: #fff;
+	width: 60vw;
+	max-width: 600px;
+	height: 80vh;
+	max-height: 600px;
+	padding: 0 1rem;
+	box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.3 );
+	border-radius: 4px;
+	overflow: auto;
+	pointer-events: initial;
+}

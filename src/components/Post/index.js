@@ -1,119 +1,195 @@
+import PropTypes from 'prop-types';
+import { withSingle } from '@humanmade/repress';
 import React, { Component } from 'react';
-import { FormattedRelative } from 'react-intl';
 import { Slot } from 'react-slot-fill';
 
-import { withApiData } from '../../with-api-data';
+import { withCategories, withUser } from '../../hocs';
 import {
 	Post as PostShape,
 } from '../../shapes';
+import { posts } from '../../types';
 
-import Avatar from '../Avatar';
+import Summary from './Summary';
+import PostComments from './Comments';
 import Button from '../Button';
-import CommentsList from '../../components/CommentsList';
-import Link from '../RelativeLink';
-import AuthorLink from '../Message/AuthorLink';
-import MessageContent from '../Message/Content';
-import WriteComment from '../Message/WriteComment';
+import { Dropdown, DropdownContent } from '../Dropdown';
+import MessageHeader from '../Message/Header';
+import MessageMain from '../Message/Main';
 
 import './index.css';
 
-class Post extends Component {
-	constructor( props ) {
-		super( props );
-		this.state = { isShowingReply: false };
-	}
-	onClickReply() {
-		this.setState( { isShowingReply: true } )
-	}
-	onClickCancelReply() {
-		this.setState( { isShowingReply: false } )
-	}
-	onDidCreateComment( ...args ) {
-		this.setState( { isShowingReply: false } )
-		this.props.refreshData();
-	}
-	render() {
-		const post = this.props.data;
-		const author = this.props.author.data;
-		const comments = this.props.comments.data ? this.props.comments.data.filter( comment => comment.parent === 0 ) : [];
-		const categories = this.props.categories.data ? this.props.categories.data : [];
-		// Scale title down slightly for longer titles.
-		const headerStyle = {};
-		if ( post.title.rendered.length > 22 ) {
-			headerStyle.fontSize = '1.333333333rem';
+const SecondaryActions = props => {
+	const { fillProps, showEdit, onClickEdit } = props;
+
+	const renderItems = items => {
+		if ( ! items.length && ! showEdit ) {
+			return null;
 		}
 
-		const fillProps = { author, comments, categories, post };
+		return (
+			<DropdownContent>
+				{ showEdit && (
+					<Button onClick={ onClickEdit }>Edit</Button>
+				) }
 
-		return <div className="Post">
-			<header>
-				<Avatar
-					url={author ? author.avatar_urls['96'] : ''}
-					user={author}
-					size={60}
+				{ items }
+			</DropdownContent>
+		);
+	}
+
+	return (
+		<Slot
+			name="Post.actions"
+			fillChildProps={ fillProps }
+		>
+			{ renderItems }
+		</Slot>
+	);
+}
+
+export class Post extends Component {
+	constructor( props ) {
+		super( props );
+		this.state = {
+			expanded: false,
+			isShowingReply: false,
+			isEditing: false,
+			isSubmitting: false,
+		};
+	}
+
+	onClickReply = () => {
+		this.setState( { isShowingReply: true } )
+	}
+
+	onClickCancelReply = () => {
+		this.setState( { isShowingReply: false } )
+	}
+
+	onClickEdit = () => {
+		this.setState( { isEditing: true } );
+		if ( ! ( 'raw' in this.props.post.content ) ) {
+			this.props.onLoad( 'edit' );
+		}
+	}
+
+	onDidCreateComment = ( ...args ) => {
+		this.setState( { isShowingReply: false } )
+	}
+
+	onSubmitEditing = ( content, unprocessedContent ) => {
+		this.setState( { isSubmitting: true } );
+
+		const body = {
+			content,
+			status: 'publish',
+			unprocessed_content: unprocessedContent,
+		};
+
+		this.props.onUpdatePost( body )
+			.then( () => {
+				this.setState( {
+					isSubmitting: false,
+					isEditing: false,
+				} );
+			} )
+			.catch( error => {
+				this.setState( {
+					isSubmitting: false,
+					error,
+				} );
+			} )
+	}
+
+	render() {
+		const { post, user } = this.props;
+		const categories = this.props.categories.data ? this.props.categories.data.filter( category => post.categories.indexOf( category.id ) >= 0 ) : [];
+
+		const collapsed = ! ( this.state.expanded || this.props.expanded );
+
+		const fillProps = {
+			author: user,
+			collapsed,
+			// comments,
+			categories,
+			post,
+		};
+
+		const classes = [
+			'Post',
+			collapsed && 'Post--collapsed',
+		];
+
+		const Actions = (
+			<Dropdown className="Post__actions">
+				<Button onClick={ this.onClickReply }>Reply</Button>
+				<SecondaryActions
+					fillProps={ fillProps }
+					showEdit={ ! this.state.isEditing }
+					onClickEdit={ this.onClickEdit }
 				/>
-				<div className="byline">
-					<Link to={ post.link }>
-						<h2
-							dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-							style={ headerStyle }
-						/>
-					</Link>
-					<span className="date">
-						{ author ? (
-							<AuthorLink user={ author }>{ author.name }</AuthorLink>
-						) : ''},&nbsp;
-						<time
-							dateTime={ post.date_gmt + 'Z' }
-							title={ post.date_gmt + 'Z' }
-						>
-							<FormattedRelative value={ post.date_gmt + 'Z' } />
-						</time>
-					</span>
-					{categories.length > 0 &&
-						<ul className="categories">
-							{categories.map( category => (
-								<li key={category.id}><Link to={category.link}>{category.name}</Link></li>
-							) )}
-						</ul>
-					}
-					<Slot name="Post.byline" fillChildProps={ fillProps } />
-				</div>
-				<div className="actions">
-					<Button onClick={() => this.onClickReply()}>Reply</Button>
-					<Slot name="Post.actions" fillChildProps={ fillProps } />
-				</div>
-			</header>
-			<div className="Post-content-wrap">
-				<Slot name="Post.before_content" fillChildProps={ fillProps } />
-				<MessageContent html={ post.content.rendered } />
-				<Slot name="Post.after_content" fillChildProps={ fillProps } />
-			</div>
-			<CommentsList
-				allComments={this.props.comments.data ? this.props.comments.data : []}
-				comments={comments}
-				post={ post }
-				onComment={() => this.onComment()}
-				onDidCreateComment={( ...args ) => this.onDidCreateComment( ...args )}
-			>
-				{this.state.isShowingReply &&
-					<WriteComment
-						parentPost={post}
-						onCancel={() => this.onClickCancelReply()}
-						onDidCreateComment={( ...args ) => this.onDidCreateComment( ...args )}
+			</Dropdown>
+		);
+
+		return (
+			<div className={ classes.filter( Boolean ).join( ' ' ) }>
+
+				<MessageHeader
+					author={ user }
+					categories={ categories }
+					collapsed={ collapsed }
+					post={ post }
+				>
+					{ Actions }
+				</MessageHeader>
+
+				<MessageMain
+					author={ user }
+					categories={ categories }
+					collapsed={ collapsed }
+					post={ post }
+					isEditing={ this.state.isEditing }
+					isLoading={ this.props.loading }
+					isSubmitting={ this.state.isSubmitting }
+					onCancel={ () => this.setState( { isEditing: false } ) }
+					onSubmitEditing={ this.onSubmitEditing }
+				>
+					{ Actions }
+				</MessageMain>
+
+				{ collapsed ? (
+					<Summary
+						post={ post }
+						onExpand={ () => this.setState( { expanded: true } ) }
 					/>
-				}
-			</CommentsList>
-		</div>;
+				) : (
+					<PostComments
+						post={ post }
+						showingReply={ this.state.isShowingReply }
+						onCancelReply={ this.onClickCancelReply }
+						onDidCreateComment={ this.onDidCreateComment }
+					/>
+				) }
+			</div>
+		);
 	}
 }
 
-Post.propTypes = { data: PostShape.isRequired };
+Post.propTypes = {
+	data: PostShape.isRequired,
+	expanded: PropTypes.bool.isRequired,
+};
 
-const mapPropsToData = props => ( {
-	comments:   `/wp/v2/comments?post=${ props.data.id }&per_page=100`,
-	author:     `/wp/v2/users/${ props.data.author }`,
-	categories: `/wp/v2/categories?include=${ props.data.categories.join( ',' ) }`,
-} );
+Post.defaultProps = {
+	expanded: true,
+};
 
-export default withApiData( mapPropsToData )( Post );
+export default withCategories(
+	withSingle(
+		posts,
+		state => state.posts,
+		props => props.data.id
+	)(
+		withUser( props => props.post.author )( Post )
+	)
+);

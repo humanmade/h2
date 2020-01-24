@@ -1,61 +1,88 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { Slot } from 'react-slot-fill';
 
-import CurrentUserDropDown from './CurrentUserDropDown';
+import CurrentUser from './CurrentUser';
 import HeaderButton from './HeaderButton';
+import HeaderLabel from './HeaderLabel';
 import Logo from './Logo';
 import SearchInput from '../SearchInput';
-import { withApiData } from '../../with-api-data';
+import { getChangesForUser } from '../../changelog';
+import { withCurrentUser } from '../../hocs';
 
 import './index.css';
 
-class Header extends Component {
+export class Header extends Component {
 	render() {
-		return <div className="Header">
-			<div className="Header-inner">
-				<Link to="/" className="Header-site-name">
-					<Logo />
-					{ window.H2Data.site.name }
-				</Link>
-				<HeaderButton
-					onClick={this.props.onWritePost}
-					title="New Post"
-					icon="icon icon--plus-alt"
-					path="new-post"
-				/>
+		const newChanges = this.props.currentUser ? getChangesForUser( this.props.currentUser ) : [];
 
-				<HeaderButton
-					icon="mail"
-					title="What's New"
-					onClick={ this.props.onShowChanges }
-				/>
+		const newLabel = (
+			<span>
+				What's New?
+				{ ' ' }
+				{ newChanges.length > 0 ? <span class="label__count">{ newChanges.length }</span> : null }
+			</span>
+		);
 
-				<Slot name="Header.buttons" />
+		return (
+			<div className="Header">
+				<div className="Header-inner">
+					<button
+						className="Header-site-name"
+						type="button"
+						onClick={ this.props.onShowSuper }
+					>
+						<Logo />
 
-				<SearchInput onSearch={this.props.onSearch} value={this.props.searchValue} />
+						{ window.H2Data.site.name }
+					</button>
 
-				{ this.props.currentUser.data ? (
-					<CurrentUserDropDown
-						user={ this.props.currentUser.data }
-						onLogOut={ this.props.onLogOut }
+					<HeaderButton
+						onClick={ this.props.onWritePost }
+						title="New Post"
+						icon="icon icon--plus-alt"
+						path="new-post"
 					/>
-				) : null }
 
-				<Slot name="Header.meta" />
+					<Slot name="Header.buttons" />
+
+					<SearchInput
+						value={ this.props.searchValue }
+						onSearch={ this.props.onSearch }
+					/>
+
+					<HeaderLabel
+						className="Header-changelog"
+						icon="mail"
+						title={ newLabel }
+						onClick={ this.props.onShowChanges }
+					/>
+
+					<Slot name="Header.secondary_buttons" />
+
+					{ this.props.currentUser ? (
+						<CurrentUser
+							user={ this.props.currentUser }
+							onLogOut={ this.props.onLogOut }
+						/>
+					) : null }
+
+					<Slot name="Header.meta" />
+				</div>
 			</div>
-		</div>;
+		);
 	}
 }
 
-Header.defaultProps = { searchValue: '' };
+Header.defaultProps = {
+	searchValue: '',
+};
 
 Header.propTypes = {
 	searchValue: PropTypes.string,
-	onLogOut:    PropTypes.func.isRequired,
+	onLogOut: PropTypes.func.isRequired,
 	onWritePost: PropTypes.func.isRequired,
-	onSearch:    PropTypes.func.isRequired,
+	onSearch: PropTypes.func.isRequired,
 };
 
-export default withApiData( props => ( { currentUser: '/wp/v2/users/me' } ) )( Header );
+export default withCurrentUser( Header );

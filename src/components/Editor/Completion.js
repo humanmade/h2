@@ -9,17 +9,17 @@ export default class Completion extends React.Component {
 
 		this.state = {
 			selected: 0,
-			items:    props.getItems( props.text, props.items, props.matcher ),
 		};
 	}
 
 	componentDidMount() {
 		this.keyHandler = e => {
-			const { items, selected } = this.state;
+			const items = this.getItems();
 			if ( ! items || ! items.length ) {
 				return;
 			}
 
+			const { selected } = this.state;
 			switch ( e.key ) {
 				case 'ArrowUp':
 					e.preventDefault();
@@ -60,17 +60,16 @@ export default class Completion extends React.Component {
 		window.addEventListener( 'keydown', this.keyHandler );
 	}
 
-	componentWillReceiveProps( nextProps ) {
-		const items = nextProps.getItems( nextProps.text, nextProps.items, nextProps.matcher );
-		this.setState( { items } );
-	}
-
 	componentWillUnmount() {
 		if ( ! this.keyHandler ) {
 			return;
 		}
 
 		window.removeEventListener( 'keydown', this.keyHandler );
+	}
+
+	getItems() {
+		return this.props.getItems( this.props.text, this.props.items, this.props.matcher );
 	}
 
 	render() {
@@ -81,51 +80,55 @@ export default class Completion extends React.Component {
 			onSelect,
 		} = this.props;
 
-		const { items } = this.state;
+		const items = this.getItems();
 
 		if ( ! items || ! items.length ) {
 			return null;
 		}
 
-		return <ol
-			className="Completion"
-			style={ {
-				top:  coords.top,
-				left: coords.left,
-			} }
-		>
-			{ items.map( ( item, idx ) => renderItem( {
-				item,
-				selected: idx === this.state.selected,
-				onHover:  () => this.setState( { selected: idx } ),
-				onSelect: () => onSelect( insert( item, this.props ) ),
-			} ) ) }
-		</ol>;
+		return (
+			<ol
+				className="Completion"
+				style={ {
+					top: coords.top,
+					left: coords.left,
+				} }
+			>
+				{ items.map( ( item, idx ) => renderItem( {
+					item,
+					selected: idx === this.state.selected,
+					onHover: () => this.setState( { selected: idx } ),
+					onSelect: () => onSelect( insert( item, this.props ) ),
+				} ) ) }
+			</ol>
+		);
 	}
 }
 
 Completion.propTypes = {
 	coords: PropTypes.shape( {
-		top:  PropTypes.number.isRequired,
+		top: PropTypes.number.isRequired,
 		left: PropTypes.number.isRequired,
 	} ).isRequired,
-	items:    PropTypes.array,
-	text:     PropTypes.string.isRequired,
-	trigger:  PropTypes.string.isRequired,
+	items: PropTypes.array,
+	text: PropTypes.string.isRequired,
+	trigger: PropTypes.string.isRequired,
 	onCancel: PropTypes.func.isRequired,
 	onSelect: PropTypes.func.isRequired,
 };
 
 Completion.defaultProps = {
-	items:      [],
-	insert:     ( item, props ) => `${ props.trigger }${ item } `,
-	matcher:    ( item, search ) => item.toLowerCase().indexOf( search.toLowerCase() ) >= 0,
-	getItems:   ( search, items, matcher ) => items.filter( item => matcher( item, search ) ).slice( 0, 5 ),
+	items: [],
+	insert: ( item, props ) => `${ props.trigger }${ item } `,
+	matcher: ( item, search ) => item.toLowerCase().indexOf( search.toLowerCase() ) >= 0,
+	getItems: ( search, items, matcher ) => items.filter( item => matcher( item, search ) ).slice( 0, 5 ),
 	renderItem: ( { item, selected, onSelect } ) => {
-		return <li
-			key={ item }
-			className={ selected ? 'selected' : null }
-			onClick={ () => onSelect( item ) }
-		>{ item }</li>;
+		return (
+			<li
+				key={ item }
+				className={ selected ? 'selected' : null }
+				onClick={ () => onSelect( item ) }
+			>{ item }</li>
+		);
 	},
 };

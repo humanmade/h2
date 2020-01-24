@@ -1,12 +1,19 @@
+import memoize from 'lodash/memoize';
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Completion from './Completion';
-import { withApiData } from '../../with-api-data';
 
 import './MentionCompletion.css';
 
-const MentionCompletion = props => {
-	const renderItem = ( { item, selected, onSelect } ) => <li
+const insert = ( item, props ) => `${ props.trigger }${ item.slug } `;
+const matcher = memoize(
+	( item, search ) => `${ item.slug } ${ item.name }`.toLowerCase().indexOf( search.toLowerCase() ) >= 0,
+	( item, search ) => `${ item.id }:${ search }`
+);
+
+export const Item = ( { item, selected, onSelect } ) => (
+	<li
 		key={ item.slug }
 		className={ selected ? 'MentionCompletion-item selected' : 'MentionCompletion-item' }
 		onClick={ onSelect }
@@ -18,15 +25,21 @@ const MentionCompletion = props => {
 		/>
 		<span className="name">{ item.name }</span>
 		<span className="username">@{ item.slug }</span>
-	</li>;
+	</li>
+);
 
-	return <Completion
-		{ ...props }
-		items={ Object.values( props.users.data || [] ) }
-		insert={ ( item, props ) => `${ props.trigger }${ item.slug } ` }
-		matcher={ ( item, search ) => `${ item.slug } ${ item.name }`.toLowerCase().indexOf( search.toLowerCase() ) >= 0 }
-		renderItem={ renderItem }
-	/>;
+export const MentionCompletion = props => {
+	return (
+		<Completion
+			{ ...props }
+			items={ props.users }
+			insert={ insert }
+			matcher={ matcher }
+			renderItem={ props => <Item { ...props } /> }
+		/>
+	);
 };
 
-export default withApiData( props => ( { users: '/wp/v2/users?per_page=100' } ) )( MentionCompletion );
+export default connect(
+	state => ( { users: state.users.posts } )
+)( MentionCompletion );

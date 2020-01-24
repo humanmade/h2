@@ -1,29 +1,115 @@
 import Interweave from 'interweave';
+import memoize from 'lodash/memoize';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 
-import { MentionMatcher } from './Mention';
-import getEmbedTransform from '../../embeds';
+import SafeEmbed from './SafeEmbed';
+import Notification from '../Notification';
+import { parseList, parseListItem } from '../../embeds/tasklist';
+import matchers from '../../matchers';
 
 import '@humanmade/react-tasklist/css/index.css';
 import './Content.css';
 
-const MATCHERS = [
-	new MentionMatcher( 'mention' ),
-];
+const preparseEmoji = window.wp && window.wp.emoji ? memoize( content => window.wp.emoji.parse( content ) ) : content => content;
 
-export default function Content( props ) {
-	const transform = getEmbedTransform( props );
+class ErrorBoundary extends React.Component {
+	constructor( props ) {
+		super( props );
 
-	return <div className="PostContent">
-		<Interweave
-			commonClass={ null }
-			content={ props.html }
-			matchers={ MATCHERS }
-			tagName="fragment"
-			transform={ transform }
-		/>
-	</div>;
+		this.state = {
+			error: false,
+		};
+	}
+
+	componentDidCatch( error, info ) {
+		this.setState( { error } );
+	}
+
+	render() {
+		if ( this.state.error ) {
+			return (
+				<Notification type="error">
+					A problem occurred while rendering this content. Please <a href="https://github.com/humanmade/H2/issues/new" taget="_blank">report this as a bug</a>.<br />
+					<code>{ this.state.error.toString() }</code>
+				</Notification>
+			);
+		}
+
+		return this.props.children;
+	}
 }
 
-Content.propTypes = { html: PropTypes.string.isRequired };
+const transform = ( node, children ) => {
+	switch ( node.tagName ) {
+		// Trust embeds and iframes, as they have already passed through WP's validation.
+		case 'EMBED':
+		case 'IFRAME':
+			return <SafeEmbed node={ node } />;
+
+		case 'BLOCKQUOTE':
+			// Support WordPress embeds.
+			if ( node.dataset && node.dataset.secret ) {
+				return (
+					<blockquote
+						data-secret={ node.dataset.secret }
+					>
+						{ children }
+					</blockquote>
+				);
+			}
+
+			// For regular blockquotes, use built-in handling.
+			return;
+
+		case 'LI':
+			return parseListItem( node, children );
+
+		case 'UL':
+			return parseList( node, children );
+
+		default:
+			// Use built-in handling.
+			return;
+	}
+};
+
+export function Content( props ) {
+	if ( ! props.useInterweave ) {
+		return (
+			<div
+				className="PostContent"
+				dangerouslySetInnerHTML={ { __html: props.html } }
+			/>
+		);
+	}
+
+	// Parse emoji early to ensure it doesn't get replaced later by wp-emoji,
+	// which breaks React's rendering.
+	// https://github.com/humanmade/H2/issues/250
+	const html = preparseEmoji( props.html );
+
+	return (
+		<div className="PostContent">
+			<ErrorBoundary>
+				<Interweave
+					content={ html }
+					matchers={ matchers }
+					tagName="fragment"
+					transform={ transform }
+				/>
+			</ErrorBoundary>
+		</div>
+	);
+}
+
+Content.propTypes = {
+	html: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = state => ( {
+	useInterweave: state.features.use_interweave,
+} );
+
+export default connect( mapStateToProps )( Content );

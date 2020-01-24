@@ -1,0 +1,22 @@
+.Sidebar-Pagination {
+	display: flex;
+	align-items: baseline;
+	padding: 0 1em;
+	max-width: 20em;
+}
+
+.Sidebar-Pagination > div {
+	width: 50%;
+}
+
+.Sidebar-Pagination .cta {
+	font-size: inherit;
+}
+
+.Sidebar-Pagination .cta:after {
+	width: 1em;
+}
+
+.Sidebar-Pagination__newer:first-child {
+	margin-left: 50%;
+}

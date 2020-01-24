@@ -9,46 +9,55 @@ class DummyComponent extends React.Component {
 	}
 }
 
-export default props => ( node, children, config ) => {
-	if ( node.tagName === 'LI' && node.className === 'Tasklist-Item' ) {
-		// If it's a tasklist item, wrap in a dummy component and return,
-		// allowing us to use the children later.
-		return <DummyComponent
-			checked={ 'checked' in node.dataset }
-			children={ children }
-			config={ config }
-			node={ node }
-		/>;
+export const parseListItem = ( node, children ) => {
+	if ( node.className !== 'Tasklist-Item' ) {
+		return;
 	}
 
-	if ( node.tagName === 'UL' && node.className === 'Tasklist' ) {
-		// Parse out our tasks.
-		const items = children.map( child => {
-			if ( ! React.isValidElement( child ) || typeof child !== 'object' ) {
-				return null;
-			}
+	// If it's a tasklist item, wrap in a dummy component and return,
+	// allowing us to use the children later.
+	return (
+		<DummyComponent
+			checked={ 'checked' in node.dataset }
+			children={ children }
+			node={ node }
+		/>
+	);
+}
 
-			if ( child.type !== DummyComponent ) {
-				return {
-					id:    child.key,
-					label: <React.Fragment>{ child.props.children }</React.Fragment>,
-					task:  false,
-				};
-			}
+export const parseList = ( node, children ) => {
+	if ( node.className !== 'Tasklist' ) {
+		return null;
+	}
 
+	// Parse out our tasks.
+	const items = children.map( child => {
+		if ( ! React.isValidElement( child ) || typeof child !== 'object' ) {
+			return null;
+		}
+
+		if ( child.type !== DummyComponent ) {
 			return {
-				id:       child.key,
-				label:    <React.Fragment>{ child.props.children }</React.Fragment>,
-				checked:  child.props.checked,
-				disabled: true,
+				id: child.key,
+				label: <React.Fragment>{ child.props.children }</React.Fragment>,
+				task: false,
 			};
-		} ).filter( Boolean );
+		}
 
-		return <Tasklist
+		return {
+			id: child.key,
+			label: <React.Fragment>{ child.props.children }</React.Fragment>,
+			checked: child.props.checked,
+			disabled: true,
+		};
+	} ).filter( Boolean );
+
+	return (
+		<Tasklist
 			disableSort={ true }
 			items={ items }
 			onChange={ () => {} }
 			onReorder={ () => {} }
-		/>;
-	}
+		/>
+	);
 }

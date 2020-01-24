@@ -1,0 +1,66 @@
+.Post-Summary {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	bottom: 1em;
+	left: 90px;
+	right: 0;
+	font-size: 14px;
+	color: #aaa;
+}
+
+.Post-Summary .btn {
+	font: inherit;
+	margin-bottom: 0;
+}
+
+.Post-Summary-comments {
+	display: flex;
+	align-items: center;
+}
+
+.Post-Summary-people {
+	position: relative;
+	list-style-type: none;
+	margin: 0 0 0 0.5em;
+	/* Pad the left to avoid the box-shadow overflowing */
+	padding: 0 0 0 3px;
+	align-self: baseline;
+}
+
+.Post-Summary-people li {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	display: inline-block;
+	border: 1px solid #fff;
+	background: #fff;
+	position: relative;
+	box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2);
+	-webkit-transition: .2s ease;
+	transition: .2s ease;
+	z-index: 1;
+}
+
+.Post-Summary-people li:nth-child(n+2) {
+	margin-left: -12px;
+}
+
+.Post-Summary-people__overflow::before {
+	display: block;
+	content: " ";
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	/* Fade out over the last 3 avatars + 3px box shadow */
+	width: 63px;
+	z-index: 2;
+	background: linear-gradient(
+		to right,
+		rgba( 255, 255, 255, 1 ),
+		rgba( 255, 255, 255, 0 )
+	);
+	pointer-events: none;
+}

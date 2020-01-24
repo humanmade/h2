@@ -1,23 +1,29 @@
+import { withSingle } from '@humanmade/repress';
 import React, { Component } from 'react';
-import { FormattedRelative } from 'react-intl';
 import { Slot } from 'react-slot-fill';
 import PropTypes from 'prop-types';
 
-import Avatar from './Avatar';
-import Button from './Button';
+import Actions from './Comment/Actions';
+import CommentHeader from './Comment/Header';
 import CommentsList from './CommentsList';
-import AuthorLink from './Message/AuthorLink';
+import Editor from './Editor';
 import MessageContent from './Message/Content';
 import WriteComment from './Message/WriteComment';
+import Notification from './Notification';
+import { withUser } from '../hocs';
 import { Comment as CommentShape } from '../shapes';
-import { withApiData } from '../with-api-data';
+import { comments } from '../types';
 
 import './Comment.css';
 
 export class Comment extends Component {
 	constructor( props ) {
 		super( props );
-		this.state = { isShowingReply: false };
+		this.state = {
+			isShowingReply: false,
+			isEditing: false,
+			isSubmitting: false,
+		};
 		this.element = null;
 	}
 
@@ -29,78 +35,138 @@ export class Comment extends Component {
 		}
 	}
 
+	onClickEdit = () => {
+		this.setState( { isEditing: true } );
+		if ( ! ( 'raw' in this.props.comment.content ) ) {
+			this.props.onLoad( 'edit' );
+		}
+	}
+
 	onDidCreateComment( ...args ) {
 		this.setState( { isShowingReply: false } )
 		this.props.onDidCreateComment( ...args );
 	}
+
+	onSubmitEditing( content, unprocessedContent ) {
+		this.setState( { isSubmitting: true } );
+
+		const body = {
+			content,
+			unprocessed_content: unprocessedContent,
+		};
+
+		this.props.onUpdate( body )
+			.then( data => {
+				this.setState( {
+					isEditing: false,
+					isSubmitting: false,
+				} );
+			} )
+			.catch( error => {
+				this.setState( {
+					isSubmitting: false,
+					error,
+				} );
+			} );
+	}
+
 	render() {
-		const comment = this.props.comment;
+		const { comment, loading, user } = this.props;
 		const post = this.props.parentPost;
-		const author = this.props.author.data;
 		const directComments = this.props.comments.filter( c => c.parent === comment.id );
 
-		const fillProps = { author, comment, comments: this.props.comments, post };
+		const fillProps = {
+			author: user,
+			comment,
+			comments: this.props.comments,
+			post,
+		};
 
-		return <div
-			className="Comment"
-			id={ `comment-${ comment.id }` }
-			ref={ el => this.element = el }
-		>
-			<header>
-				<Avatar
-					url={author ? author.avatar_urls['96'] : ''}
-					user={ author }
-					size={40}
-				/>
-				<strong>
-					{ author ? (
-						<AuthorLink user={ author }>{ author.name }</AuthorLink>
-					) : comment.author_name }
-				</strong>
-				<div className="actions">
-					<a
-						className="Comment-date"
-						href={ `${ post.link }#comment-${ comment.id }` }
-					>
-						<time
-							dateTime={ comment.date_gmt + 'Z' }
-							title={ comment.date_gmt + 'Z' }
-						>
-							<FormattedRelative value={ comment.date_gmt + 'Z' } />
-						</time>
-					</a>
-					<Button onClick={() => this.setState( { isShowingReply: true } )}>Reply</Button>
-					<Slot name="Comment.actions" fillChildProps={ fillProps } />
-				</div>
-			</header>
-			<div className="body">
-				<Slot name="Comment.before_content" fillChildProps={ fillProps } />
-				<MessageContent html={this.props.comment.content.rendered} />
-				<Slot name="Comment.after_content" fillChildProps={ fillProps } />
-			</div>
-			<CommentsList
-				allComments={this.props.comments}
-				comments={directComments}
-				post={post}
-				showWriteComment={false}
-				onDidCreateComment={this.props.onDidCreateComment}
+		return (
+			<div
+				className="Comment"
+				id={ `comment-${ comment.id }` }
+				ref={ el => this.element = el }
 			>
-				{this.state.isShowingReply &&
-					<WriteComment
-						comment={comment}
-						parentPost={post}
-						onCancel={() => this.setState( { isShowingReply: false } )}
-						onDidCreateComment={( ...args ) => this.onDidCreateComment( ...args )}
+				<CommentHeader
+					author={ user }
+					comment={ comment }
+					post={ post }
+				>
+					<Actions
+						fillProps={ fillProps }
+						isEditing={ this.state.isEditing }
+						onEdit={ this.onClickEdit }
+						onReply={ () => this.setState( { isShowingReply: true } ) }
 					/>
-				}
-			</CommentsList>
-		</div>;
+				</CommentHeader>
+
+				<div className="body">
+					<Slot name="Comment.before_content" fillChildProps={ fillProps } />
+					{ this.state.isEditing ? (
+						loading ? (
+							<Notification>Loading…</Notification>
+						) : (
+							<Editor
+								initialValue={ comment.unprocessed_content || comment.content.raw }
+								submitText={ this.state.isSubmitting ? 'Updating…' : 'Update' }
+								onCancel={ () => this.setState( { isEditing: false } ) }
+								onSubmit={ ( ...args ) => this.onSubmitEditing( ...args ) }
+							/>
+						)
+					) : (
+						<MessageContent html={ comment.content.rendered } />
+					) }
+					<Slot name="Comment.after_content" fillChildProps={ fillProps } />
+					<div className="Comment-footer-actions">
+						<Actions
+							fillProps={ fillProps }
+							isEditing={ this.state.isEditing }
+							onEdit={ this.onClickEdit }
+							onReply={ () => this.setState( { isShowingReply: true } ) }
+						/>
+
+						<Slot name="Comment.footer_actions" fillChildProps={ fillProps } />
+					</div>
+				</div>
+				<CommentsList
+					allComments={ this.props.comments }
+					comments={ directComments }
+					post={ post }
+					showWriteComment={ false }
+					onDidCreateComment={ this.props.onDidCreateComment }
+				>
+					{ this.state.isShowingReply && (
+						<WriteComment
+							comment={ comment }
+							parentPost={ post }
+							onCancel={ () => this.setState( { isShowingReply: false } ) }
+							onDidCreateComment={ ( ...args ) => this.onDidCreateComment( ...args ) }
+						/>
+					) }
+				</CommentsList>
+			</div>
+		);
 	}
 }
 
 Comment.propTypes = {
-	comment:            CommentShape.isRequired,
+	comment: CommentShape.isRequired,
 	onDidCreateComment: PropTypes.func.isRequired,
 };
 
-export default withApiData( props => ( { author: `/wp/v2/users/${ props.comment.author }` } ) )( Comment );
+export default withUser( props => props.comment.author )( withSingle(
+	comments,
+	state => state.comments,
+	props => props.comment.id,
+	{
+		mapDataToProps: data => ( {
+			comment: data.post,
+			loading: data.loading,
+		} ),
+		mapActionsToProps: actions => ( {
+			onLoad: actions.onLoad,
+			onUpdate: actions.onUpdatePost,
+		} ),
+	}
+)( Comment ) );

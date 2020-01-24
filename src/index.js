@@ -1,3 +1,7 @@
+// Load asset paths from a variable instead.
+// This has to be the first import to ensure correct loading order.
+import './path';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { IntlProvider } from 'react-intl';
@@ -6,7 +10,6 @@ import { Fill, Provider as SlotFillProvider } from 'react-slot-fill';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
-import createLogger from 'redux-logger';
 import { Provider as RestApiProvider } from './with-api-data';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -18,9 +21,22 @@ import loadPlugins from './plugins/load';
 
 import './hm-pattern-library/assets/styles/juniper.css';
 
+const currentUser = window.H2Data.preload['/wp/v2/users/me'] ? window.H2Data.preload['/wp/v2/users/me'].id : null;
+const initialState = {
+	users: {
+		archives: {
+			all: window.H2Data.preload['/wp/v2/users?per_page=100'].map( user => user.id ),
+			me: currentUser ? [ currentUser ] : [],
+		},
+		current: currentUser,
+		posts: window.H2Data.preload['/wp/v2/users?per_page=100'],
+	},
+};
+
 let store = createStore(
 	reducers,
-	composeWithDevTools( applyMiddleware( thunk, createLogger( { collapsed: true } ) ) )
+	initialState,
+	composeWithDevTools( applyMiddleware( thunk ) )
 );
 
 // Expose the plugin API globally.
@@ -32,13 +48,14 @@ window.H2.plugins = new PluginAPI( store );
 // Load our default plugins.
 loadPlugins();
 
+const root = document.getElementById( 'root' );
 const render = Main => {
 	ReactDOM.render(
-		<Provider store={store}>
+		<Provider store={ store }>
 			<SlotFillProvider>
 				<IntlProvider locale="en">
 					<RestApiProvider
-						fetch={( url, ...args ) => api.fetch( url, ...args )}
+						fetch={ ( url, ...args ) => api.fetch( url, ...args ) }
 						initialData={ window.H2Data.preload }
 					>
 						<Router>
@@ -48,15 +65,17 @@ const render = Main => {
 				</IntlProvider>
 			</SlotFillProvider>
 		</Provider>,
-		document.getElementById( 'root' )
+		root
 	);
 };
 
-render( App );
+if ( root ) {
+	render( App );
 
-if ( module.hot ) {
-	module.hot.accept( './App', () => {
-		const NextApp = require( './App' ).default;
-		render( NextApp );
-	} );
+	if ( module.hot ) {
+		module.hot.accept( './App', () => {
+			const NextApp = require( './App' ).default;
+			render( NextApp );
+		} );
+	}
 }

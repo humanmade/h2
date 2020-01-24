@@ -1,6 +1,11 @@
 language: node_js
 node_js:
-  - "6"
+  - "10"
 
 script:
   - npm run lint
+  - npm run build
+
+  # Move main JS file to a static name
+  - cp $(find ./build/static/js -name 'main.*.js') ./build/static/js/main.js
+  - npm run check-size

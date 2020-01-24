@@ -11,32 +11,34 @@ import './UserHovercard.css';
 const LocalTime = props => {
 	const timeZone = props.user.meta.hm_time_timezone;
 	if ( ! timeZone ) {
-		return <p className="UserHovercard-local-time missing">
-			<strong>Local time:</strong>
-			{ ' ' }
-			<span>Unknown timezone</span>
-		</p>;
+		return (
+			<p className="UserHovercard-local-time missing">
+				<strong>Local time:</strong>
+				{ ' ' }
+				<span>Unknown timezone</span>
+			</p>
+		);
 	}
 
 	const now = new Date();
-	return <p className="UserHovercard-local-time">
-		<strong>Local time:</strong>
+	return (
+		<p className="UserHovercard-local-time">
+			<strong>Local time:</strong>
 
-		{ ' ' }
+			{ ' ' }
 
-		<FormattedTime
-			value={ now }
-			timeZone={ timeZone }
-			timeZoneName="short"
-		/>
-	</p>;
+			<FormattedTime
+				value={ now }
+				timeZone={ timeZone }
+				timeZoneName="short"
+			/>
+		</p>
+	);
 }
 
-export default class UserHovercard extends React.Component {
-	renderCard() {
-		const { user } = this.props;
-
-		return <aside className="UserHovercard">
+export function UserCard( { user } ) {
+	return (
+		<aside className="UserHovercard">
 			<div className="UserHovercard-details">
 				<header>
 					<Avatar
@@ -63,9 +65,11 @@ export default class UserHovercard extends React.Component {
 				location={ user.facts.location }
 				width="150"
 			/>
-		</aside>;
-	}
+		</aside>
+	);
+}
 
+export default class UserHovercard extends React.Component {
 	render() {
 		const { children, user } = this.props;
 
@@ -73,18 +77,19 @@ export default class UserHovercard extends React.Component {
 			return children;
 		}
 
-		return <Hovercard
-			cardContent={ () => this.renderCard() }
-			width={ 425 }
-		>
-			{ children }
-		</Hovercard>;
+		return (
+			<Hovercard
+				cardContent={ () => <UserCard user={ user } /> }
+			>
+				{ children }
+			</Hovercard>
+		);
 	}
 }
 
 UserHovercard.propTypes = {
 	user: PropTypes.shape( {
-		id:   PropTypes.number.isRequired,
+		id: PropTypes.number.isRequired,
 		name: PropTypes.string.isRequired,
 	} ).isRequired,
 };

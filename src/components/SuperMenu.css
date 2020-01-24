@@ -1,0 +1,79 @@
+.SuperMenu {
+	background: var( --hm-beige );
+	position: absolute;
+	transform: translate( -300px, 0 );
+	width: 300px;
+	height: 100vh;
+	overflow: auto;
+	z-index: 30;
+	padding: 1rem 20px;
+	box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.15 );
+	transition: transform 150ms;
+	display: flex;
+	flex-direction: column;
+}
+
+.SuperMenu--visible {
+	transform: translate( 0, 0 );
+}
+
+.SuperMenu header {
+	margin: -1rem -20px 1rem;
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: var( --hm-red );
+	padding-right: 1em;
+	color: #fff;
+}
+
+.SuperMenu--closer {
+	background: transparent;
+	border: none;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+}
+
+.SuperMenu__content {
+	overflow: auto;
+}
+
+.SuperMenu__content .SearchInput {
+	margin-bottom: 1rem;
+}
+
+/* Use relative units for headers/margins */
+.SuperMenu h2 {
+	font-size: 1rem;
+	margin: 0 0 1rem;
+}
+.SuperMenu h3 {
+	color: var( --hm-warm-grey );
+	text-transform: uppercase;
+	font-size: 1rem;
+	margin: 0 0 0.75em;
+}
+
+.SuperMenu p,
+.SuperMenu ul,
+.SuperMenu ol {
+	margin: 0 0 1.66667em;
+}
+
+.SuperMenu ul {
+	list-style: none;
+	padding: 0;
+}
+
+.SuperMenu ul ul {
+	margin-left: 1em;
+	margin-bottom: 0;
+}
+
+@media ( min-width: 600px ) {
+	.SuperMenu__content .SearchInput {
+		display: none;
+	}
+}
