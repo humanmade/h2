@@ -3,12 +3,12 @@ import { FormattedRelative } from 'react-intl';
 
 import Avatar from '../Avatar';
 import AuthorLink from '../Message/AuthorLink';
-import RelativeLink from '../RelativeLink';
+import Link from '../Link';
 
 import './Header.css';
 
 export default function CommentHeader( props ) {
-	const { author, children, comment, mini, post } = props;
+	const { author, children, comment, mini } = props;
 
 	const classes = [
 		'Comment-Header',
@@ -27,9 +27,9 @@ export default function CommentHeader( props ) {
 				) : comment.author_name }
 			</strong>
 			<div className="actions-wrap">
-				<RelativeLink
+				<Link
 					className="Comment-date"
-					to={ `${ post.link }#comment-${ comment.id }` }
+					href={ comment.link }
 				>
 					<time
 						dateTime={ comment.date_gmt + 'Z' }
@@ -37,7 +37,7 @@ export default function CommentHeader( props ) {
 					>
 						<FormattedRelative value={ comment.date_gmt + 'Z' } />
 					</time>
-				</RelativeLink>
+				</Link>
 
 				{ children }
 			</div>

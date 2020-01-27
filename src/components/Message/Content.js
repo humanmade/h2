@@ -5,6 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import SafeEmbed from './SafeEmbed';
+import Link from '../Link';
 import Notification from '../Notification';
 import { parseList, parseListItem } from '../../embeds/tasklist';
 import matchers from '../../matchers';
@@ -68,6 +69,17 @@ const transform = ( node, children ) => {
 
 		case 'UL':
 			return parseList( node, children );
+
+		case 'A':
+			return (
+				<Link
+					href={ node.href }
+					rel={ node.rel || undefined }
+					target={ node.target || undefined }
+				>
+					{ children }
+				</Link>
+			);
 
 		default:
 			// Use built-in handling.

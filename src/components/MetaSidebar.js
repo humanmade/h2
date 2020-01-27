@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Button from './Button';
+import Link from './Link';
 import LinkButton from './LinkButton';
-import RelativeLink from './RelativeLink';
 import UserBlock from './UserBlock';
 import Container from './Sidebar/Container';
 import {
@@ -74,7 +74,7 @@ export class MetaSidebar extends React.Component {
 
 				<ul>
 					<li><LinkButton onClick={ () => this.props.onViewProfile( currentUser.id ) }>View your profile →</LinkButton></li>
-					<li><RelativeLink to={ currentUser.link }>View all posts →</RelativeLink></li>
+					<li><Link href={ currentUser.link }>View all posts →</Link></li>
 					<li><LinkButton onClick={ () => this.props.onViewComments( currentUser.id ) }>View all comments →</LinkButton></li>
 				</ul>
 

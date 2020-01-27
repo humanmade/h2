@@ -3,8 +3,8 @@ import { FormattedDate, FormattedTime } from 'react-intl';
 import { connect } from 'react-redux';
 
 import Map from './Map';
+import Link from './Link';
 import LinkButton from './LinkButton';
-import RelativeLink from './RelativeLink';
 import UserBlock from './UserBlock';
 import Container from './Sidebar/Container';
 import { showSidebarComments } from '../actions';
@@ -99,7 +99,7 @@ export class Profile extends React.Component {
 
 				<ul className="Profile-navigation">
 					<li>
-						<RelativeLink to={ user.link }>View all posts →</RelativeLink>
+						<Link href={ user.link }>View all posts →</Link>
 					</li>
 					<li>
 						<LinkButton onClick={ () => this.props.onViewComments( user.id ) }>View all comments →</LinkButton>
