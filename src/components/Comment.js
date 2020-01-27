@@ -91,7 +91,6 @@ export class Comment extends Component {
 				<CommentHeader
 					author={ user }
 					comment={ comment }
-					post={ post }
 				>
 					<Actions
 						fillProps={ fillProps }

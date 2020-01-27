@@ -5,6 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import SafeEmbed from './SafeEmbed';
+import Link from '../Link';
 import Notification from '../Notification';
 import matchers from '../../matchers';
 
@@ -60,6 +61,17 @@ const transform = ( node, children ) => {
 
 			// For regular blockquotes, use built-in handling.
 			return;
+
+		case 'A':
+			return (
+				<Link
+					href={ node.href }
+					rel={ node.rel || undefined }
+					target={ node.target || undefined }
+				>
+					{ children }
+				</Link>
+			);
 
 		default:
 			// Use built-in handling.

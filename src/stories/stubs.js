@@ -88,6 +88,15 @@ export const editableContent = {
 	`,
 };
 
+export const excerpt = {
+	rendered: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Collige omnia, quae soletis: Praesidium amicorum. Si est nihil nisi corpus, summa erunt illa: valitudo, vacuitas doloris, pulchritudo, cetera. Duo Reges: constructio interrete. Itaque hic ipse iam pridem est reiectus; Nemo nostrum istius generis asotos iucunde putat vivere. Praetereo multos, in bis doctum hominem et suavem, Hieronymum, [&#8230;]</p>',
+};
+
+export const editableExcerpt = {
+	...excerpt,
+	raw: '',
+};
+
 export const htmlTester = `
 <h2>Headings</h2>
 <h1>Header one</h1>
@@ -249,6 +258,7 @@ export const post = {
 	link: 'http://example.com/2018/01/01/tecum-optime/',
 	title,
 	content,
+	excerpt,
 	related: {
 		comments: {
 			items: [],
@@ -262,6 +272,7 @@ export const editablePost = {
 	...post,
 	title: editableTitle,
 	content: editableContent,
+	excerpt: editableExcerpt,
 	meta: {
 		unprocessed_content: editableContent.raw,
 	},

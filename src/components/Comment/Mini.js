@@ -4,8 +4,8 @@ import { FormattedDate } from 'react-intl';
 import { compose } from 'redux';
 
 import Header from './Header';
+import Link from '../Link';
 import MessageContent from '../Message/Content';
-import RelativeLink from '../RelativeLink';
 import { withUser } from '../../hocs';
 import { posts } from '../../types';
 import { decodeEntities } from '../../util';
@@ -34,8 +34,8 @@ function MiniComment( props ) {
 	return (
 		<div className="Comment-Mini">
 			<p className="Comment-Mini__context">
-				<RelativeLink
-					to={ `${ parentPost.link }#comment-${ comment.id }` }
+				<Link
+					href={ comment.link }
 				>
 					<span className="Comment-Mini__context-post">
 						{ decodeEntities( parentPost.title.rendered ) }
@@ -51,14 +51,13 @@ function MiniComment( props ) {
 							value={ comment.date_gmt + 'Z' }
 						/>
 					</time>
-				</RelativeLink>
+				</Link>
 			</p>
 			<div className="Comment-Mini__comment">
 				<Header
 					author={ user }
 					comment={ comment }
 					mini
-					post={ parentPost }
 				/>
 				<MessageContent
 					html={ comment.content.rendered }
