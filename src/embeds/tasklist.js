@@ -27,7 +27,7 @@ export const parseListItem = ( node, children ) => {
 
 export const parseList = ( node, children ) => {
 	if ( node.className !== 'Tasklist' ) {
-		return null;
+		return;
 	}
 
 	// Parse out our tasks.
