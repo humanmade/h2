@@ -23,6 +23,7 @@
 }
 
 .Post-footer-actions {
+	clear: both;
 	display: flex;
 	margin: 1.666rem 0 1.248rem;
 	justify-content: space-between;
