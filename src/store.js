@@ -8,15 +8,20 @@ import thunk from 'redux-thunk';
 import reducers from './reducers';
 
 export const createStore = preload => {
-	const currentUser = preload['/wp/v2/users/me'] ? preload['/wp/v2/users/me'].id : null;
+	const currentUser = preload['/wp/v2/users/me'] ? preload['/wp/v2/users/me'] : null;
+	const users = [
+		...preload['/wp/v2/users?per_page=100'],
+		...( currentUser ? [ currentUser ] : [] ),
+	];
+
 	const initialState = {
 		users: {
 			archives: {
-				all: preload['/wp/v2/users?per_page=100'].map( user => user.id ),
-				me: currentUser ? [ currentUser ] : [],
+				all: users.map( user => user.id ),
+				me: currentUser ? [ currentUser.id ] : [],
 			},
-			current: currentUser,
-			posts: preload['/wp/v2/users?per_page=100'],
+			current: currentUser ? currentUser.id : null,
+			posts: users,
 		},
 	};
 
