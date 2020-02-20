@@ -194,6 +194,17 @@ function register_rest_routes() {
 		'schema'          => $markdown_schema,
 	] );
 
+	// Add permissions to objects.
+	register_rest_field( 'comment', 'user_can', [
+		'get_callback' => function ( $data ) {
+			$current_user = get_current_user_id();
+			$comment = get_comment( $data['id'] );
+			return [
+				'edit' => current_user_can( 'moderate_comments' ) || $current_user === (int) $comment->user_id,
+			];
+		},
+	] );
+
 	register_rest_route( 'h2', 'v1/preview', [
 		'methods' => 'POST',
 		'callback' => __NAMESPACE__ . '\\render_preview',
