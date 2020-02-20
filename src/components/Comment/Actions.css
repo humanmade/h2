@@ -1,3 +1,8 @@
 .Comment-Actions {
 	min-width: 6rem;
 }
+
+.Comment-Actions > .btn:last-child {
+	flex-grow: 0;
+	margin-left: auto;
+}
