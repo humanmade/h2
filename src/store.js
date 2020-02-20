@@ -1,3 +1,4 @@
+import uniqBy from 'lodash/uniqBy';
 import {
 	applyMiddleware,
 	createStore as createReduxStore,
@@ -9,10 +10,10 @@ import reducers from './reducers';
 
 export const createStore = preload => {
 	const currentUser = preload['/wp/v2/users/me'] ? preload['/wp/v2/users/me'] : null;
-	const users = [
+	const users = uniqBy( [
 		...preload['/wp/v2/users?per_page=100'],
 		...( currentUser ? [ currentUser ] : [] ),
-	];
+	], user => user.id );
 
 	const initialState = {
 		users: {
