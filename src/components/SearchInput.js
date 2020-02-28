@@ -4,7 +4,7 @@ import React from 'react';
 import { FormattedRelative } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 
-import RelativeLink from './RelativeLink';
+import Link from './Link';
 import { posts } from '../types';
 import { decodeEntities } from '../util';
 
@@ -102,9 +102,9 @@ export class Results extends React.Component {
 							<li
 								key={ post.id }
 							>
-								<RelativeLink
+								<Link
 									className={ `SearchInput__result ${ index === selected ? 'SearchInput__result--selected' : '' }` }
-									to={ post.link }
+									href={ post.link }
 								>
 									<p>
 										{ decodeEntities( post.title.rendered ) }
@@ -115,12 +115,12 @@ export class Results extends React.Component {
 									>
 										<FormattedRelative value={ post.date + 'Z' } />
 									</time>
-								</RelativeLink>
+								</Link>
 							</li>
 						) ) }
 						<li>
 							<a
-								href={ `/search/${ term }` }
+								href={ `/search/${ encodeURIComponent( term ) }` }
 								onClick={ this.props.onShowResults }
 								className={ `SearchInput__result ${ selected === posts.length ? 'SearchInput__result--selected' : '' }` }
 							>
@@ -188,7 +188,7 @@ class SearchInput extends React.Component {
 
 	render() {
 		const termFromURL = this.props.location.pathname.match( /\/search\/(.+)/ );
-		const term = this.state.value === null ? ( termFromURL && termFromURL[1] ) || '' : this.state.value;
+		const term = this.state.value === null ? ( termFromURL && decodeURIComponent( termFromURL[1] ) ) || '' : this.state.value;
 		const Results = this.props.resultsComponent;
 
 		return (

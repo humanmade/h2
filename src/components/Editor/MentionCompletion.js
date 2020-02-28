@@ -12,30 +12,30 @@ const matcher = memoize(
 	( item, search ) => `${ item.id }:${ search }`
 );
 
-const MentionCompletion = props => {
-	const renderItem = ( { item, selected, onSelect } ) => (
-		<li
-			key={ item.slug }
-			className={ selected ? 'MentionCompletion-item selected' : 'MentionCompletion-item' }
-			onClick={ onSelect }
-		>
-			<img
-				alt=""
-				className="avatar"
-				src={ item.avatar_urls[48] }
-			/>
-			<span className="name">{ item.name }</span>
-			<span className="username">@{ item.slug }</span>
-		</li>
-	);
+export const Item = ( { item, selected, onSelect } ) => (
+	<li
+		key={ item.slug }
+		className={ selected ? 'MentionCompletion-item selected' : 'MentionCompletion-item' }
+		onClick={ onSelect }
+	>
+		<img
+			alt=""
+			className="avatar"
+			src={ item.avatar_urls[48] }
+		/>
+		<span className="name">{ item.name }</span>
+		<span className="username">@{ item.slug }</span>
+	</li>
+);
 
+export const MentionCompletion = props => {
 	return (
 		<Completion
 			{ ...props }
 			items={ props.users }
 			insert={ insert }
 			matcher={ matcher }
-			renderItem={ renderItem }
+			renderItem={ props => <Item { ...props } /> }
 		/>
 	);
 };

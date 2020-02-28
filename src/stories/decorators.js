@@ -27,20 +27,35 @@ export function withStore( state, actions = [] ) {
 	return withRedux( addons )( settings );
 }
 
-export const withPadding = story => {
+export const withPadding = ( innerStyle = {} ) => story => {
 	const style = {
 		padding: '40px',
-		backgroundImage: `
-			linear-gradient(45deg, #f3f3f3 25%, transparent 25%),
-			linear-gradient(-45deg, #f3f3f3 25%, transparent 25%),
-			linear-gradient(45deg, transparent 75%, #f3f3f3 75%),
-			linear-gradient(-45deg, transparent 75%, #f3f3f3 75%)
-		`,
-		backgroundSize: '20px 20px',
-		backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
+	};
+
+	return (
+		<div style={ style }>
+			<div style={ innerStyle }>
+				{ story() }
+			</div>
+		</div>
+	);
+}
+
+export const withCentering = ( extraStyle = {} ) => story => {
+	const style = {
+		position: 'absolute',
+		top: 0,
+		bottom: 0,
+		left: 0,
+		right: 0,
+
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
 	};
 	const innerStyle = {
-		background: '#fff',
+		position: 'relative',
+		...extraStyle,
 	};
 
 	return (

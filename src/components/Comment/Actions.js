@@ -7,16 +7,16 @@ import { Dropdown, DropdownContent } from '../Dropdown';
 import './Actions.css';
 
 export default function Actions( props ) {
-	const { fillProps, isEditing, onEdit, onReply } = props;
+	const { canEdit, fillProps, isEditing, onEdit, onReply } = props;
 
 	const renderItems = items => {
-		if ( ! items.length && isEditing ) {
+		if ( ! items.length && ( isEditing || ! canEdit ) ) {
 			return null;
 		}
 
 		return (
 			<DropdownContent>
-				{ ! isEditing && (
+				{ canEdit && ! isEditing && (
 					<Button onClick={ onEdit }>Edit</Button>
 				) }
 

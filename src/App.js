@@ -23,6 +23,8 @@ import SuperMenu from './components/SuperMenu';
 
 import './App.css';
 
+export const POST_ROUTE = '/:year(\\d{4})/:month(\\d{2})/:day(\\d{2})/:slug/:comment_page(comment-page-\\d+)?';
+
 class App extends Component {
 	constructor( props ) {
 		super( props );
@@ -65,7 +67,7 @@ class App extends Component {
 	}
 
 	onSearch( string ) {
-		this.props.history.push( string ? `/search/${ string }` : '/' );
+		this.props.history.push( string ? `/search/${ encodeURIComponent( string ) }` : '/' );
 	}
 
 	onDidCreatePost( post ) {
@@ -151,7 +153,7 @@ class App extends Component {
 								component={ PostsList }
 							/>
 							<Route
-								path="/:year(\d{4})/:month(\d{2})/:day(\d{2})/:slug/:comment_page(comment-page-\d+)?"
+								path={ POST_ROUTE }
 								exact
 								component={ PostsList }
 							/>

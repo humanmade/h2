@@ -6,6 +6,8 @@ H2 is the internal communications tool for Human Made.
 
 H2 is a WordPress theme, inspired by the design and principles of [P2](https://p2theme.com/) by Automattic.
 
+(Also check out the [contributing documentation](CONTRIBUTING.md).)
+
 
 ## Getting Started
 

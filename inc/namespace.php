@@ -81,6 +81,8 @@ function get_script_data() {
 				'force_default' => true,
 			] ),
 			'mapbox_key'     => defined( 'MAPBOX_KEY' ) ? MAPBOX_KEY : null,
+			'sentry_key'     => defined( 'H2_SENTRY_KEY' ) ? H2_SENTRY_KEY : null,
+			'environment'    => defined( 'HM_ENV_TYPE' ) ? HM_ENV_TYPE : ( WP_DEBUG ? 'development' : 'production' ),
 			'emoji'          => apply_filters( 'h2.custom_emoji', [] ),
 		],
 		'features' => [
@@ -190,6 +192,17 @@ function register_rest_routes() {
 			update_comment_meta( $comment->comment_ID, 'unprocessed_content', wp_slash( $value ) );
 		},
 		'schema'          => $markdown_schema,
+	] );
+
+	// Add permissions to objects.
+	register_rest_field( 'comment', 'user_can', [
+		'get_callback' => function ( $data ) {
+			$current_user = get_current_user_id();
+			$comment = get_comment( $data['id'] );
+			return [
+				'edit' => current_user_can( 'moderate_comments' ) || $current_user === (int) $comment->user_id,
+			];
+		},
 	] );
 
 	register_rest_route( 'h2', 'v1/preview', [

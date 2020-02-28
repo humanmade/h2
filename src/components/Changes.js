@@ -7,7 +7,7 @@ import { withCurrentUser } from '../hocs';
 
 import './Changes.css';
 
-function Changes( props ) {
+export function Changes( props ) {
 	if ( ! props.currentUser ) {
 		return null;
 	}

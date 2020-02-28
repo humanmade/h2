@@ -5,9 +5,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import SafeEmbed from './SafeEmbed';
+import Link from '../Link';
 import Notification from '../Notification';
+import { parseList, parseListItem } from '../../embeds/tasklist';
 import matchers from '../../matchers';
 
+import '@humanmade/react-tasklist/css/index.css';
 import './Content.css';
 
 const preparseEmoji = window.wp && window.wp.emoji ? memoize( content => window.wp.emoji.parse( content ) ) : content => content;
@@ -29,7 +32,7 @@ class ErrorBoundary extends React.Component {
 		if ( this.state.error ) {
 			return (
 				<Notification type="error">
-					A problem occurred while rendering this content. Please report this as a bug.<br />
+					A problem occurred while rendering this content. Please <a href="https://github.com/humanmade/H2/issues/new" taget="_blank">report this as a bug</a>.<br />
 					<code>{ this.state.error.toString() }</code>
 				</Notification>
 			);
@@ -61,13 +64,30 @@ const transform = ( node, children ) => {
 			// For regular blockquotes, use built-in handling.
 			return;
 
+		case 'LI':
+			return parseListItem( node, children );
+
+		case 'UL':
+			return parseList( node, children );
+
+		case 'A':
+			return (
+				<Link
+					href={ node.href }
+					rel={ node.rel || undefined }
+					target={ node.target || undefined }
+				>
+					{ children }
+				</Link>
+			);
+
 		default:
 			// Use built-in handling.
 			return;
 	}
 };
 
-function Content( props ) {
+export function Content( props ) {
 	if ( ! props.useInterweave ) {
 		return (
 			<div

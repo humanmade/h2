@@ -91,9 +91,9 @@ export class Comment extends Component {
 				<CommentHeader
 					author={ user }
 					comment={ comment }
-					post={ post }
 				>
 					<Actions
+						canEdit={ comment.user_can.edit }
 						fillProps={ fillProps }
 						isEditing={ this.state.isEditing }
 						onEdit={ this.onClickEdit }

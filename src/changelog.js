@@ -1,6 +1,7 @@
 import React from 'react';
 
 import AuthorLink from './components/Message/AuthorLink';
+import Content from './components/Message/Content';
 import { withCurrentUser } from './hocs';
 
 export const changes = [
@@ -44,7 +45,7 @@ export const changes = [
 
 				{ ' ' }
 
-				{ window.H2Data.site.emoji['mindblown'] ? (
+				{ ( window.H2Data.site.emoji && window.H2Data.site.emoji['mindblown'] ) ? (
 					<img
 						alt=":mindblown:"
 						src={ window.H2Data.site.emoji['mindblown'].imageUrl }
@@ -82,6 +83,29 @@ export const changes = [
 					ready. Hit the New Post button to get started.</p>
 				<p>When you're ready, you can also share a preview link for
 					your draft with other editors.</p>
+			</React.Fragment>
+		),
+	},
+	{
+		date: '2020-01-27',
+		title: 'Preview Posts Before You Click',
+		content: () => (
+			<p>Internal links to other posts will now display a quick preview,
+				allowing you to quickly see what's being linked to.</p>
+		),
+	},
+	{
+		date: '2020-01-27',
+		title: 'Get Tasks Done',
+		content: () => (
+			<React.Fragment>
+				<p>H2 now supports (read-only) task lists.
+					Use <code>[ ]</code> or <code>[x]</code> at the start of
+					your list items to display the task status inline, just
+					like this:</p>
+				<pre>{ '* [ ] Do a task!\n* [x] Did a task!' }</pre>
+				<Content html="<ul class='Tasklist'><li class='Tasklist-Item'>Do a task!</li><li class='Tasklist-Item' data-checked>Did a task!</li></ul>" />
+				<p>The ability to toggle tasks inline and reorder them is coming soon; in the meantime, you'll need to edit your post/comment manually.</p>
 			</React.Fragment>
 		),
 	},

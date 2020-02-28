@@ -2,7 +2,7 @@ import { withPagedArchive } from '@humanmade/repress';
 import React from 'react';
 import qs from 'qs';
 
-import Link from '../RelativeLink';
+import Link from '../Link';
 import Pagination from '../Sidebar/Pagination';
 import { posts } from '../../types';
 import { decodeEntities } from '../../util';
@@ -27,7 +27,7 @@ class PostList extends React.Component {
 				<ul>
 					{ this.props.posts.map( post => (
 						<li key={ post.id }>
-							<Link to={ post.link }>
+							<Link href={ post.link }>
 								{ decodeEntities( post.title.rendered ) }
 							</Link>
 						</li>
