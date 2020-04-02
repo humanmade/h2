@@ -77,7 +77,9 @@ export class MessageHeader extends React.Component {
 						<ul className="Message-Header__categories">
 							{ categories.map( category => (
 								<li key={ category.id }>
-									<Link href={ category.link }>{ category.name }</Link>
+									<Link href={ category.link }>
+										{ decodeEntities( category.name ) }
+									</Link>
 								</li>
 							) ) }
 						</ul>
