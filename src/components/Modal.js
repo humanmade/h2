@@ -6,10 +6,10 @@ import TitleBar from './Sidebar/TitleBar';
 import './Modal.css';
 
 export default function Modal( props ) {
-	const { children, title, onDismiss } = props;
+	const { children, title, className, onDismiss } = props;
 
 	return (
-		<div className="Modal">
+		<div className={ `Modal ${ className }` }>
 			<Overlay
 				onClick={ onDismiss }
 			/>

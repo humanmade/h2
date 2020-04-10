@@ -3,6 +3,7 @@ import { Link as InternalLink, matchPath } from 'react-router-dom';
 
 import PostHovercard from './PostHovercard';
 import { POST_ROUTE } from '../App';
+import ImageLink from './ImageLink';
 
 export default function Link( { children, disablePreviews, href, ...props } ) {
 	const root = window.H2Data.site.home;
@@ -15,6 +16,14 @@ export default function Link( { children, disablePreviews, href, ...props } ) {
 			>
 				{ children }
 			</a>
+		);
+	}
+
+	if ( href.match( /\.(png|jpg|jpeg)$/ ) ) {
+		return (
+			<ImageLink { ...props } href={ href }>
+				{ children }
+			</ImageLink>
 		);
 	}
 
