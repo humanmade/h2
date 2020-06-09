@@ -104,7 +104,7 @@ export const changes = [
 					your list items to display the task status inline, just
 					like this:</p>
 				<pre>{ '* [ ] Do a task!\n* [x] Did a task!' }</pre>
-				<Content html="<ul class='Tasklist'><li class='Tasklist-Item'>Do a task!</li><li class='Tasklist-Item' data-checked>Did a task!</li></ul>" />
+				<Content html="<ul><li>Do a task!</li><li><input type='checkbox' checked disabled> Did a task!</li></ul>" />
 				<p>The ability to toggle tasks inline and reorder them is coming soon; in the meantime, you'll need to edit your post/comment manually.</p>
 			</React.Fragment>
 		),
