@@ -101,8 +101,6 @@ export function Content( props ) {
 	// https://github.com/humanmade/H2/issues/250
 	const html = preparseEmoji( props.html );
 
-	console.log( props.html );
-
 	return (
 		<div className="PostContent">
 			<ErrorBoundary>
