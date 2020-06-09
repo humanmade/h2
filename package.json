@@ -19,7 +19,7 @@
     "eslint-plugin-jsx-a11y": "^5",
     "eslint-plugin-react": "^7.10.0",
     "outdent": "^0.7.0",
-    "react-scripts": "^1.0.5"
+    "react-scripts": "^1.1.5"
   },
   "dependencies": {
     "@humanmade/react-tasklist": "^0.0.4",
