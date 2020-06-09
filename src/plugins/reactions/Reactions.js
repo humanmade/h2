@@ -220,7 +220,7 @@ Reactions.propTypes = {
 	userId: PropTypes.number,
 	postId: PropTypes.number.isRequired,
 	commentId: PropTypes.number,
-	reactions: PropTypes.object.isRequired,
+	reactions: PropTypes.array.isRequired,
 };
 
 Reactions.defaultProps = {
