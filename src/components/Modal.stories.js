@@ -6,7 +6,7 @@ import { OverlayContainer } from './Overlay';
 
 export default {
 	title: 'Components|Modal',
-}
+};
 
 export const Basic = () => (
 	<Fragment>

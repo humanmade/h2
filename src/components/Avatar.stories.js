@@ -9,7 +9,7 @@ export default {
 		withStore(),
 		withCentering(),
 	],
-}
+};
 
 export const Size32 = () => (
 	<Avatar

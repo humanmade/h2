@@ -13,7 +13,7 @@ export default {
 			width: 360,
 		} ),
 	],
-}
+};
 
 const commonProps = {
 	currentUser: user,
@@ -25,7 +25,7 @@ const commonProps = {
 	onLogOut: action( 'onLogOut' ),
 	onViewComments: action( 'onViewComments' ),
 	onViewProfile: action( 'onViewProfile' ),
-}
+};
 
 export const Basic = () => (
 	<MetaSidebar

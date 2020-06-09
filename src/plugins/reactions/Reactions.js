@@ -162,7 +162,7 @@ export class Reactions extends Component {
 							this.toggleReaction( data.native || data.name );
 						} }
 					/>
-				)}
+				) }
 			</div>
 		);
 	}
@@ -211,9 +211,9 @@ export default withArchive(
 	reactions,
 	state => state.reactions,
 	mapPropsToId,
-	{ mapDataToProps }
+	{ mapDataToProps },
 )(
-	connect( mapStateToProps, mapDispatchToProps )( withCurrentUser( Reactions ) )
+	connect( mapStateToProps, mapDispatchToProps )( withCurrentUser( Reactions ) ),
 );
 
 Reactions.propTypes = {
@@ -226,4 +226,4 @@ Reactions.propTypes = {
 Reactions.defaultProps = {
 	userId: 0,
 	isLoading: false,
-}
+};

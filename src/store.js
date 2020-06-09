@@ -29,6 +29,6 @@ export const createStore = preload => {
 	return createReduxStore(
 		reducers,
 		initialState,
-		composeWithDevTools( applyMiddleware( thunk ) )
+		composeWithDevTools( applyMiddleware( thunk ) ),
 	);
-}
+};

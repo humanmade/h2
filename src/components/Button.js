@@ -26,7 +26,7 @@ export default function Button( props ) {
 			type={ props.submit ? 'submit' : 'button' }
 			onClick={ props.onClick || undefined }
 		>
-			{props.children}
+			{ props.children }
 		</button>
 	);
 }
@@ -47,4 +47,4 @@ Button.defaultProps = {
 	type: 'secondary',
 	size: 'small',
 	submit: false,
-}
+};

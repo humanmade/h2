@@ -52,7 +52,7 @@ export const DropdownContent = props => {
 			} }
 		</DropdownContext.Consumer>
 	);
-}
+};
 
 export class Dropdown extends React.PureComponent {
 	constructor( props ) {

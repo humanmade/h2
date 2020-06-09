@@ -23,7 +23,7 @@ export const parseListItem = ( node, children ) => {
 			node={ node }
 		/>
 	);
-}
+};
 
 export const parseList = ( node, children ) => {
 	if ( node.className !== 'Tasklist' ) {
@@ -60,4 +60,4 @@ export const parseList = ( node, children ) => {
 			onReorder={ () => {} }
 		/>
 	);
-}
+};

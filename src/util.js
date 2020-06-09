@@ -18,7 +18,7 @@ export function decodeEntities( text ) {
 		( _, decimal, hex ) => {
 			const codePoint = decimal ? parseInt( decimal, 10 ): parseInt( hex, 16 );
 			return codePointToSymbol( codePoint );
-		}
+		},
 	);
 }
 

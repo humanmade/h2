@@ -36,7 +36,7 @@ class PostsList extends Component {
 			return (
 				<PageTitle title="Loading…">
 					<div className="PostsList">
-						{/* Dummy div to measure width */}
+						{ /* Dummy div to measure width */ }
 						<div ref={ this.onUpdateWidth } />
 
 						{ /* Show two faux posts loading */ }
@@ -100,8 +100,7 @@ class PostsList extends Component {
 								expanded={ ! summaryEnabled || defaultPostView === 'expanded' }
 								onInvalidate={ () => this.props.invalidateData() }
 							/>
-						) )
-					}
+						) ) }
 					<Pagination
 						hasNext={ this.props.hasMore }
 						params={ this.props.match.params }
@@ -158,7 +157,7 @@ const ConnectedPostsList = withPagedArchive(
 	},
 	{
 		getPage,
-	}
+	},
 )( PostsList );
 
 const MoreConnectedPostsList = withUsers( ConnectedPostsList );

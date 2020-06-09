@@ -23,7 +23,7 @@ const reducePropsToState = propsList => {
 	if ( innermostProps ) {
 		return innermostProps.title;
 	}
-}
+};
 
 const handleChange = title => {
 	document.title = title ? `${ title } - ${ SITE_NAME }` : SITE_NAME;
@@ -31,5 +31,5 @@ const handleChange = title => {
 
 export default withSideEffect(
 	reducePropsToState,
-	handleChange
+	handleChange,
 )( PageTitle );

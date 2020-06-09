@@ -18,7 +18,7 @@ export default {
 		// withCentering( { position: 'static' } ),
 		withCentering(),
 	],
-}
+};
 
 export const Base = () => (
 	<Card

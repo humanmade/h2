@@ -43,7 +43,7 @@ const LocalTime = props => {
 					timeZone={ timeZone }
 				/>
 
-				{ ', '}
+				{ ', ' }
 
 				<FormattedDate
 					day="numeric"
@@ -57,7 +57,7 @@ const LocalTime = props => {
 			</Field>
 		</React.Fragment>
 	);
-}
+};
 
 export class Profile extends React.Component {
 	render() {
@@ -112,7 +112,7 @@ export class Profile extends React.Component {
 
 				<div className="Profile-description">
 					{ user.facts && user.facts.long_description.split( '\n' ).map( ( text, idx ) =>
-						<p key={ idx }>{ text }</p>
+						<p key={ idx }>{ text }</p>,
 					) }
 				</div>
 			</Container>
@@ -128,11 +128,11 @@ const mapDispatchToProps = dispatch => {
 	return {
 		onViewComments: id => dispatch( showSidebarComments( id ) ),
 	};
-}
+};
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps
+	mapDispatchToProps,
 )(
-	ConnectedProfile
+	ConnectedProfile,
 );

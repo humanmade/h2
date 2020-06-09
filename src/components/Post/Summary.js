@@ -78,5 +78,5 @@ export default withArchive(
 			comments: data.posts,
 			loadingComments: data.loading,
 		} ),
-	}
+	},
 )( Summary );

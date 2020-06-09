@@ -43,7 +43,7 @@ export class Comment extends Component {
 	}
 
 	onDidCreateComment( ...args ) {
-		this.setState( { isShowingReply: false } )
+		this.setState( { isShowingReply: false } );
 		this.props.onDidCreateComment( ...args );
 	}
 
@@ -168,5 +168,5 @@ export default withUser( props => props.comment.author )( withSingle(
 			onLoad: actions.onLoad,
 			onUpdate: actions.onUpdatePost,
 		} ),
-	}
+	},
 )( Comment ) );

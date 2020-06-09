@@ -34,7 +34,7 @@ class App extends Component {
 		};
 	}
 	onLogOut() {
-		window.location.href = '/wp-login.php?action=logout'
+		window.location.href = '/wp-login.php?action=logout';
 	}
 
 	componentDidMount() {
@@ -200,5 +200,5 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default withRouter(
-	connect( mapStateToProps, mapDispatchToProps )( App )
+	connect( mapStateToProps, mapDispatchToProps )( App ),
 );

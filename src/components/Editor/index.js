@@ -284,7 +284,7 @@ class Editor extends React.PureComponent {
 					],
 				};
 			},
-			this.restoreSelection
+			this.restoreSelection,
 		);
 	}
 
@@ -311,7 +311,7 @@ class Editor extends React.PureComponent {
 				this.setState( state => {
 					const content = state.content.replace(
 						placeholder,
-						`<img alt="${ data.title.raw }" src="${ data.source_url }" />`
+						`<img alt="${ data.title.raw }" src="${ data.source_url }" />`,
 					);
 
 					const nextUploading = state.uploading.filter( item => item !== file );
@@ -359,7 +359,7 @@ class Editor extends React.PureComponent {
 						content: nextParts.join( '' ),
 						lastSelection: [ nextCursor, nextCursor ],
 					},
-					this.restoreSelection
+					this.restoreSelection,
 				);
 			},
 			onCancel: () => this.setState( { completion: null } ),
@@ -448,7 +448,7 @@ class Editor extends React.PureComponent {
 										type="button"
 									>
 										<span className="svg-icon" dangerouslySetInnerHTML={ { __html: BUTTONS[ type ].icon } }></span>
-										<span className="screen-reader-text">{type}</span>
+										<span className="screen-reader-text">{ type }</span>
 									</button>
 								);
 							} ) }
@@ -549,7 +549,7 @@ const ConnectedEditor = connect(
 	null,
 	{
 		withRef: true,
-	}
+	},
 )( Editor );
 ConnectedEditor.prototype.focus = function () {
 	// Pass through focus()

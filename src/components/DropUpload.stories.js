@@ -10,7 +10,7 @@ export default {
 		withStore(),
 		withCentering( { minWidth: '30vw' } ),
 	],
-}
+};
 
 export const Normal = () => (
 	<DropUpload

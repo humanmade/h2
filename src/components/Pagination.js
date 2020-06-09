@@ -10,7 +10,7 @@ export default function Pagination( props ) {
 			...params,
 			hasPage: 'page',
 			page: page + 1,
-		}
+		},
 	);
 	const newerPage = generatePath(
 		path,
@@ -18,7 +18,7 @@ export default function Pagination( props ) {
 			...params,
 			hasPage: 'page',
 			page: page - 1,
-		}
+		},
 	);
 
 	return (

@@ -92,7 +92,7 @@ export const PostsState = PropTypes.shape( {
 			items: PropTypes.arrayOf( PropTypes.number ),
 			isLoading: PropTypes.bool.isRequired,
 			hasLoaded: PropTypes.bool.isRequired,
-		} )
+		} ),
 	).isRequired,
 } );
 

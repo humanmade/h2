@@ -1,6 +1,6 @@
-import addons from '@storybook/addons'
-import withRedux from 'addon-redux/withRedux'
-import withReduxEnhancer from 'addon-redux/enhancer'
+import addons from '@storybook/addons';
+import withRedux from 'addon-redux/withRedux';
+import withReduxEnhancer from 'addon-redux/enhancer';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
@@ -12,8 +12,8 @@ const store = createStore(
 	reducers,
 	compose(
 		withReduxEnhancer,
-		applyMiddleware( thunk )
-	)
+		applyMiddleware( thunk ),
+	),
 );
 
 export function withStore( state, actions = [] ) {
@@ -39,7 +39,7 @@ export const withPadding = ( innerStyle = {} ) => story => {
 			</div>
 		</div>
 	);
-}
+};
 
 export const withCentering = ( extraStyle = {} ) => story => {
 	const style = {
@@ -65,4 +65,4 @@ export const withCentering = ( extraStyle = {} ) => story => {
 			</div>
 		</div>
 	);
-}
+};

@@ -168,9 +168,9 @@ export class WritePost extends Component {
 							/>
 						</h2>
 						<span className="date">
-							{user ? user.name : ''}, now
+							{ user ? user.name : '' }, now
 						</span>
-						{categories.length > 0 &&
+						{ categories.length > 0 &&
 							<select onChange={ e => this.setState( { category: e.target.value } ) } value={ this.state.cateogry } className="categories">
 								<option key="none" value={ null }>- Category-</option>
 								{ categories.map( category => (
@@ -181,8 +181,7 @@ export class WritePost extends Component {
 										{ category.name }
 									</option>
 								) ) }
-							</select>
-						}
+							</select> }
 					</div>
 					<div className="actions"></div>
 				</header>
@@ -249,9 +248,9 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps
+	mapDispatchToProps,
 )(
 	withCategories(
-		withCurrentUser( WritePost )
-	)
+		withCurrentUser( WritePost ),
+	),
 );
