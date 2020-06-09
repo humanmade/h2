@@ -20,7 +20,7 @@ export class Header extends Component {
 			<span>
 				What's New?
 				{ ' ' }
-				{ newChanges.length > 0 ? <span class="label__count">{ newChanges.length }</span> : null }
+				{ newChanges.length > 0 ? <span className="label__count">{ newChanges.length }</span> : null }
 			</span>
 		);
 
