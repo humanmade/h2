@@ -88,7 +88,12 @@
 
 .PostContent ul,
 .PostContent ol {
-	padding-left: 20px;
+	padding-left: 0;
+}
+
+.PostContent ul li,
+.PostContent ol li {
+	margin-left: 20px;
 }
 
 .PostContent h1,
@@ -107,15 +112,12 @@
 	margin: 1.66667rem 0;
 }
 
-.Tasklist-Item > label {
-	/* Unset all the default styles we don't need */
-	font: unset;
-	margin: 0;
-	letter-spacing: unset;
-	line-height: unset;
-	text-transform: unset;
+.PostContent ul .Tasklist-Item,
+.PostContent ol .Tasklist-Item {
+	margin-left: 0;
+	list-style-type: none;
 }
 
-.Tasklist-Item > label > input[type="checkbox"] {
-	margin: 3px 3px 3px 4px;
+.Tasklist-Item input[type="checkbox"] {
+	margin: 3px 1px 3px 0;
 }

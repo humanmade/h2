@@ -7,10 +7,10 @@ import { connect } from 'react-redux';
 import SafeEmbed from './SafeEmbed';
 import Link from '../Link';
 import Notification from '../Notification';
-import { parseList, parseListItem } from '../../embeds/tasklist';
+import { parseCheckboxInput, parseListItem } from '../../embeds/tasklist';
 import matchers from '../../matchers';
 
-import '@humanmade/react-tasklist/css/index.css';
+// import '@humanmade/react-tasklist/css/index.css';
 import './Content.css';
 
 const preparseEmoji = window.wp && window.wp.emoji ? memoize( content => window.wp.emoji.parse( content ) ) : content => content;
@@ -64,11 +64,11 @@ const transform = ( node, children ) => {
 			// For regular blockquotes, use built-in handling.
 			return;
 
+		case 'INPUT':
+			return parseCheckboxInput( node, children );
+
 		case 'LI':
 			return parseListItem( node, children );
-
-		case 'UL':
-			return parseList( node, children );
 
 		case 'A':
 			return (
@@ -101,6 +101,8 @@ export function Content( props ) {
 	// which breaks React's rendering.
 	// https://github.com/humanmade/H2/issues/250
 	const html = preparseEmoji( props.html );
+
+	console.log( props.html );
 
 	return (
 		<div className="PostContent">
