@@ -10,7 +10,6 @@ import Notification from '../Notification';
 import { parseCheckboxInput, parseListItem } from '../../embeds/tasklist';
 import matchers from '../../matchers';
 
-// import '@humanmade/react-tasklist/css/index.css';
 import './Content.css';
 
 const preparseEmoji = window.wp && window.wp.emoji ? memoize( content => window.wp.emoji.parse( content ) ) : content => content;

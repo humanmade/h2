@@ -22,7 +22,6 @@
     "react-scripts": "^1.1.5"
   },
   "dependencies": {
-    "@humanmade/react-tasklist": "^0.0.4",
     "@humanmade/repress": "^0.5.0",
     "@iarna/word-count": "^1.0.3",
     "@sentry/browser": "^5.9.1",
