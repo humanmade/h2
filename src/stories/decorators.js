@@ -1,6 +1,6 @@
 import addons from '@storybook/addons';
-import withRedux from 'addon-redux/withRedux';
 import withReduxEnhancer from 'addon-redux/enhancer';
+import withRedux from 'addon-redux/withRedux';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
