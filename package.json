@@ -11,7 +11,7 @@
     "addon-redux": "^1.0.0",
     "babel-loader": "^8.1.0",
     "bundlesize": "^0.17.0",
-    "eslint": "6",
+    "eslint": "^5.16.0",
     "eslint-config-humanmade": "^0.8.0",
     "eslint-config-react-app": "^2.1.0",
     "eslint-plugin-flowtype": "^2.50.0",
