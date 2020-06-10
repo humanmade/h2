@@ -35,7 +35,7 @@ const SecondaryActions = props => {
 				{ items }
 			</DropdownContent>
 		);
-	}
+	};
 
 	return (
 		<Slot
@@ -45,7 +45,7 @@ const SecondaryActions = props => {
 			{ renderItems }
 		</Slot>
 	);
-}
+};
 
 export class Post extends Component {
 	constructor( props ) {
@@ -59,11 +59,11 @@ export class Post extends Component {
 	}
 
 	onClickReply = () => {
-		this.setState( { isShowingReply: true } )
+		this.setState( { isShowingReply: true } );
 	}
 
 	onClickCancelReply = () => {
-		this.setState( { isShowingReply: false } )
+		this.setState( { isShowingReply: false } );
 	}
 
 	onClickEdit = () => {
@@ -74,7 +74,7 @@ export class Post extends Component {
 	}
 
 	onDidCreateComment = ( ...args ) => {
-		this.setState( { isShowingReply: false } )
+		this.setState( { isShowingReply: false } );
 	}
 
 	onSubmitEditing = ( content, unprocessedContent ) => {
@@ -98,7 +98,7 @@ export class Post extends Component {
 					isSubmitting: false,
 					error,
 				} );
-			} )
+			} );
 	}
 
 	render() {

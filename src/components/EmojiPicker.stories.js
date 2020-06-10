@@ -9,7 +9,7 @@ export default {
 	decorators: [
 		withCentering(),
 	],
-}
+};
 
 export const Basic = () => (
 	<EmojiPicker

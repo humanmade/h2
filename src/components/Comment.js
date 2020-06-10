@@ -43,7 +43,7 @@ export class Comment extends Component {
 	}
 
 	onDidCreateComment( ...args ) {
-		this.setState( { isShowingReply: false } )
+		this.setState( { isShowingReply: false } );
 		this.props.onDidCreateComment( ...args );
 	}
 

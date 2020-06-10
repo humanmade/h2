@@ -20,7 +20,7 @@ export default {
 	decorators: [
 		withCentering(),
 	],
-}
+};
 
 export const All = () => (
 	<Fragment>

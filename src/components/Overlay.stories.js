@@ -5,7 +5,7 @@ import Overlay, { OverlayContainer } from './Overlay';
 
 export default {
 	title: 'Components|Overlay',
-}
+};
 
 export const Basic = () => (
 	<Fragment>

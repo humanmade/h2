@@ -11,7 +11,7 @@ export default {
 		withStore( {} ),
 		withCentering( { width: '50vw' } ),
 	],
-}
+};
 
 export const Input = () => {
 	const ResultsComponent = props => (
@@ -28,7 +28,7 @@ export const Input = () => {
 			resultsComponent={ ResultsComponent }
 		/>
 	);
-}
+};
 
 export const ShowingResults = () => {
 	const ResultsComponent = props => (
@@ -46,7 +46,7 @@ export const ShowingResults = () => {
 			resultsComponent={ ResultsComponent }
 		/>
 	);
-}
+};
 
 export const Loading = () => {
 	const ResultsComponent = props => (
@@ -63,7 +63,7 @@ export const Loading = () => {
 			resultsComponent={ ResultsComponent }
 		/>
 	);
-}
+};
 
 export const SearchResults = () => (
 	<Results

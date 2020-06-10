@@ -34,7 +34,7 @@ class App extends Component {
 		};
 	}
 	onLogOut() {
-		window.location.href = '/wp-login.php?action=logout'
+		window.location.href = '/wp-login.php?action=logout';
 	}
 
 	componentDidMount() {

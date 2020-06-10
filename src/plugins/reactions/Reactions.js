@@ -162,7 +162,7 @@ export class Reactions extends Component {
 							this.toggleReaction( data.native || data.name );
 						} }
 					/>
-				)}
+				) }
 			</div>
 		);
 	}

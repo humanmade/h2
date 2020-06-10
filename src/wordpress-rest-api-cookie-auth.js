@@ -8,11 +8,11 @@ export const parseResponse = resp => resp.json().then( data => {
 	}
 
 	// Build an error
-	const err = new Error( data.message )
-	err.code = data.code
-	err.data = data.data
-	throw err
-} )
+	const err = new Error( data.message );
+	err.code = data.code;
+	err.data = data.data;
+	throw err;
+} );
 
 export default class {
 	constructor( config ) {

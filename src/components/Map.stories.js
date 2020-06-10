@@ -8,7 +8,7 @@ export default {
 	decorators: [
 		withCentering(),
 	],
-}
+};
 
 const commonProps = {
 	height: 400,
@@ -27,4 +27,4 @@ export const Zoomed = () => (
 		{ ...commonProps }
 		zoom={ 6 }
 	/>
-)
+);

@@ -68,13 +68,13 @@ export const WriteCommentsState = {
 		PropTypes.shape( {
 			isShowing: PropTypes.bool.isRequired,
 			comment: Comment.isRequired,
-		} ),
+		} )
 	),
 	comments: PropTypes.objectOf(
 		PropTypes.shape( {
 			isShowing: PropTypes.bool.isRequired,
 			comment: Comment.isRequired,
-		} ),
+		} )
 	),
 };
 

@@ -14,7 +14,7 @@ export default {
 			marginBottom: 40,
 		} ),
 	],
-}
+};
 
 const commonProps = {
 	loadingUser: false,

@@ -10,7 +10,7 @@ export default {
 	decorators: [
 		withCentering(),
 	],
-}
+};
 
 export const List = () => (
 	<ol className="Completion">

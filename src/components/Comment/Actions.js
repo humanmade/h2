@@ -23,7 +23,7 @@ export default function Actions( props ) {
 				{ items }
 			</DropdownContent>
 		);
-	}
+	};
 
 	return (
 		<Dropdown className="Comment-Actions">

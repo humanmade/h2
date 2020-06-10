@@ -448,7 +448,7 @@ class Editor extends React.PureComponent {
 										type="button"
 									>
 										<span className="svg-icon" dangerouslySetInnerHTML={ { __html: BUTTONS[ type ].icon } }></span>
-										<span className="screen-reader-text">{type}</span>
+										<span className="screen-reader-text">{ type }</span>
 									</button>
 								);
 							} ) }

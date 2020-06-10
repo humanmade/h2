@@ -9,7 +9,7 @@ export default {
 	decorators: [
 		withCentering( { width: '30vw' } ),
 	],
-}
+};
 
 const commonProps = {
 	widgets: [],

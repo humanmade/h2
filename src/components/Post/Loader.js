@@ -35,14 +35,14 @@ export default class Loader extends React.Component {
 					width={ width }
 					style={ { width } }
 				>
-					{/* Avatar */ }
+					{ /* Avatar */ }
 					<circle cx={ width - 12 } cy="12" r="12" />
 
-					{/* Title */ }
+					{ /* Title */ }
 					<rect x="0" y="0" rx="4" ry="4" width="315" height="23.5" />
 					<rect x="0" y="40" rx="3" ry="3" width="160" height="10.5" />
 
-					{/* Text */ }
+					{ /* Text */ }
 					<rect x="0" y={ contentOffset } rx="3" ry="3" width="625" height="13" />
 					<rect x="0" y={ contentOffset + textLineHeight } rx="3" ry="3" width="613" height="13" />
 					<rect x="0" y={ contentOffset + 2 * textLineHeight } rx="3" ry="3" width="580" height="13" />
@@ -58,14 +58,14 @@ export default class Loader extends React.Component {
 				width={ width }
 				style={ { width } }
 			>
-				{/* Avatar */}
+				{ /* Avatar */ }
 				<circle x="0" cx="30" cy="30" r="30" />
 
-				{/* Title */}
+				{ /* Title */ }
 				<rect x="90" y="6" rx="4" ry="4" width="315" height="23.5" />
 				<rect x="90" y="46" rx="3" ry="3" width="160" height="10.5" />
 
-				{/* Buttons */}
+				{ /* Buttons */ }
 				<rect
 					x={ width - replyButtonWidth }
 					y="12"
@@ -75,7 +75,7 @@ export default class Loader extends React.Component {
 					height="30"
 				/>
 
-				{/* Text */}
+				{ /* Text */ }
 				<rect x="90" y={ contentOffset } rx="3" ry="3" width="625" height="13" />
 				<rect x="90" y={ contentOffset + textLineHeight } rx="3" ry="3" width="613" height="13" />
 				<rect x="90" y={ contentOffset + 2 * textLineHeight } rx="3" ry="3" width="580" height="13" />

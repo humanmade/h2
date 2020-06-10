@@ -28,7 +28,7 @@ class Container extends Component {
 			return (
 				<PageTitle title="Loading…">
 					<div className="PostsList">
-						{/* Dummy div to measure width */}
+						{ /* Dummy div to measure width */ }
 						<div ref={ this.onUpdateWidth } />
 
 						{ /* Show two faux posts loading */ }

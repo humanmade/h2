@@ -54,7 +54,7 @@ Shortcuts.propTypes = {
 			} ),
 		] )
 	),
-}
+};
 
 const defaultStopCallback = Mousetrap.prototype.stopCallback;
 Mousetrap.prototype.stopCallback = function ( e, element, combo, sequence ) {
@@ -88,7 +88,7 @@ const reducePropsToState = propsList => {
 		} );
 	} );
 	return keys;
-}
+};
 
 const handleStateChange = state => {
 	const toUnbind = { ...shortcutState.currentBindings };

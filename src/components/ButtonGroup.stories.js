@@ -9,7 +9,7 @@ export default {
 	decorators: [
 		withCentering(),
 	],
-}
+};
 
 const buttonTypes = [
 	'primary',

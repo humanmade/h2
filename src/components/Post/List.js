@@ -36,7 +36,7 @@ class PostsList extends Component {
 			return (
 				<PageTitle title="Loading…">
 					<div className="PostsList">
-						{/* Dummy div to measure width */}
+						{ /* Dummy div to measure width */ }
 						<div ref={ this.onUpdateWidth } />
 
 						{ /* Show two faux posts loading */ }
@@ -92,16 +92,14 @@ class PostsList extends Component {
 						/* Dummy settings div to ensure markup matches */
 						<div className="PostsList--settings" />
 					) }
-					{ this.props.posts &&
-						this.props.posts.map( post => (
-							<PostComponent
-								key={ post.id }
-								data={ post }
-								expanded={ ! summaryEnabled || defaultPostView === 'expanded' }
-								onInvalidate={ () => this.props.invalidateData() }
-							/>
-						) )
-					}
+					{ this.props.posts && this.props.posts.map( post => (
+						<PostComponent
+							key={ post.id }
+							data={ post }
+							expanded={ ! summaryEnabled || defaultPostView === 'expanded' }
+							onInvalidate={ () => this.props.invalidateData() }
+						/>
+					) ) }
 					<Pagination
 						hasNext={ this.props.hasMore }
 						params={ this.props.match.params }
