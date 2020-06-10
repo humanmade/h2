@@ -73,7 +73,7 @@ export class MessageHeader extends React.Component {
 							<FormattedRelative value={ post.date_gmt + 'Z' } />
 						</time>
 					</span>
-					{ categories.length > 0 &&
+					{ categories.length > 0 && (
 						<ul className="Message-Header__categories">
 							{ categories.map( category => (
 								<li key={ category.id }>
@@ -82,7 +82,8 @@ export class MessageHeader extends React.Component {
 									</Link>
 								</li>
 							) ) }
-						</ul> }
+						</ul>
+					) }
 					{ post.status === 'draft' && (
 						<span className="Message-Header__status">
 							<span role="img" aria-label="">🔒</span>

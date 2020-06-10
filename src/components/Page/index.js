@@ -76,8 +76,9 @@ class Page extends Component {
 
 		const Actions = (
 			<div className="actions">
-				{ ! this.state.isEditing &&
-					<Button onClick={ this.onClickEdit }>Edit</Button> }
+				{ ! this.state.isEditing && (
+					<Button onClick={ this.onClickEdit }>Edit</Button>
+				) }
 				<Slot name="Page.actions" fillChildProps={ fillProps } />
 			</div>
 		);
