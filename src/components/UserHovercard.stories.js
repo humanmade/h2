@@ -19,7 +19,7 @@ export default {
 		withStore(),
 		withCentering(),
 	],
-}
+};
 
 export const Basic = () => (
 	<Card

@@ -34,7 +34,7 @@ const LocalTime = props => {
 			/>
 		</p>
 	);
-}
+};
 
 export function UserCard( { user } ) {
 	return (

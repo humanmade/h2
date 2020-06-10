@@ -47,6 +47,6 @@ const mapDispatchToProps = ( dispatch, props ) => {
 	return {
 		onSelect: () => dispatch( showSidebarProfile( props.user.id ) ),
 	};
-}
+};
 
 export default connect( mapStateToProps, mapDispatchToProps )( AuthorLink );

@@ -72,5 +72,5 @@ export default withArchive(
 			per_page: 100,
 		} );
 		return post.id;
-	},
+	}
 )( PostComments );

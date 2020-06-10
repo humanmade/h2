@@ -8,7 +8,7 @@ export default {
 	decorators: [
 		withCentering( { minWidth: '40vw' } ),
 	],
-}
+};
 
 export const status = () => (
 	<Notification type="status">

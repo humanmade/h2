@@ -30,7 +30,7 @@ class Page extends Component {
 	}
 
 	onDidCreateComment = ( ...args ) => {
-		this.setState( { isShowingReply: false } )
+		this.setState( { isShowingReply: false } );
 	}
 
 	onSubmitEditing = ( content, unprocessedContent ) => {
@@ -54,7 +54,7 @@ class Page extends Component {
 					isSubmitting: false,
 					error,
 				} );
-			} )
+			} );
 	}
 
 	render() {
@@ -76,9 +76,9 @@ class Page extends Component {
 
 		const Actions = (
 			<div className="actions">
-				{ ! this.state.isEditing &&
+				{ ! this.state.isEditing && (
 					<Button onClick={ this.onClickEdit }>Edit</Button>
-				}
+				) }
 				<Slot name="Page.actions" fillChildProps={ fillProps } />
 			</div>
 		);

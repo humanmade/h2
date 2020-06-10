@@ -162,7 +162,7 @@ export class Reactions extends Component {
 							this.toggleReaction( data.native || data.name );
 						} }
 					/>
-				)}
+				) }
 			</div>
 		);
 	}
@@ -226,4 +226,4 @@ Reactions.propTypes = {
 Reactions.defaultProps = {
 	userId: 0,
 	isLoading: false,
-}
+};

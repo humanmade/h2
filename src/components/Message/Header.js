@@ -65,7 +65,7 @@ export class MessageHeader extends React.Component {
 					<span className="Message-Header__date">
 						{ author ? (
 							<AuthorLink user={ author }>{ author.name }</AuthorLink>
-						) : ''},&nbsp;
+						) : '' },&nbsp;
 						<time
 							dateTime={ post.date_gmt + 'Z' }
 							title={ post.date_gmt + 'Z' }
@@ -73,7 +73,7 @@ export class MessageHeader extends React.Component {
 							<FormattedRelative value={ post.date_gmt + 'Z' } />
 						</time>
 					</span>
-					{categories.length > 0 &&
+					{ categories.length > 0 && (
 						<ul className="Message-Header__categories">
 							{ categories.map( category => (
 								<li key={ category.id }>
@@ -83,7 +83,7 @@ export class MessageHeader extends React.Component {
 								</li>
 							) ) }
 						</ul>
-					}
+					) }
 					{ post.status === 'draft' && (
 						<span className="Message-Header__status">
 							<span role="img" aria-label="">🔒</span>

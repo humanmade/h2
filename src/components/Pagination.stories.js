@@ -10,7 +10,7 @@ export default {
 			minWidth: '30vw',
 		} ),
 	],
-}
+};
 
 const commonProps = {
 	hasNext: true,

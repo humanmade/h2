@@ -31,4 +31,4 @@ export const createStore = preload => {
 		initialState,
 		composeWithDevTools( applyMiddleware( thunk ) )
 	);
-}
+};

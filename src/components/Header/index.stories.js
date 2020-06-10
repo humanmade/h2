@@ -20,7 +20,7 @@ export default {
 		withStore(),
 		withPadding(),
 	],
-}
+};
 
 export const Default = () => (
 	<Header

@@ -57,7 +57,7 @@ export default {
 		withStore( state ),
 		withPadding(),
 	],
-}
+};
 
 export const Basic = () => (
 	<Post

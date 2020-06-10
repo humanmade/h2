@@ -33,7 +33,7 @@ const reducePropsToState = propsList => {
 		isVisible: propsList.length > 0,
 		clickHandlers: propsList.map( component => component.onClick ).filter( Boolean ),
 	};
-}
+};
 
 const handleChange = props => {
 	document.body.classList.toggle( '--overlay-visible', props.isVisible );

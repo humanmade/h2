@@ -25,7 +25,7 @@ const FEATURES = {
 		name: 'Use Experimental Content Parser',
 		description: 'Allows for rich content in text like @-mentions.',
 	},
-}
+};
 
 const BetaFeature = props => (
 	<div className="MetaSidebar--feature">
@@ -107,7 +107,7 @@ const mapDispatchToProps = dispatch => {
 		onViewComments: id => dispatch( showSidebarComments( id ) ),
 		onViewProfile: id => dispatch( showSidebarProfile( id ) ),
 	};
-}
+};
 
 export default connect(
 	mapStateToProps,

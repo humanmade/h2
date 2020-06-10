@@ -11,7 +11,7 @@ export default {
 		withStore(),
 		withPadding(),
 	],
-}
+};
 
 export const Write = () => (
 	<WritePost
