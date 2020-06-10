@@ -9,7 +9,9 @@ import { withWidgets } from '../hocs';
 import './Sidebar.css';
 
 const widgetMap = {
-	default: ( { html } ) => <div dangerouslySetInnerHTML={ { __html: html } } />,
+	default: ( { html } ) => (
+		<div dangerouslySetInnerHTML={ { __html: html } } />
+	),
 	'recent-posts': RecentPostsWidget,
 	search: SearchWidget,
 	text: TextWidget,
