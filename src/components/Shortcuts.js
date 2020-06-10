@@ -52,7 +52,7 @@ Shortcuts.propTypes = {
 				callback: PropTypes.func.isRequired,
 				allowInInput: PropTypes.bool,
 			} ),
-		] ),
+		] )
 	),
 };
 

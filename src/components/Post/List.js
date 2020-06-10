@@ -157,7 +157,7 @@ const ConnectedPostsList = withPagedArchive(
 	},
 	{
 		getPage,
-	},
+	}
 )( PostsList );
 
 const MoreConnectedPostsList = withUsers( ConnectedPostsList );

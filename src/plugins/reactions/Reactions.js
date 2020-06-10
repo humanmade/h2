@@ -211,9 +211,9 @@ export default withArchive(
 	reactions,
 	state => state.reactions,
 	mapPropsToId,
-	{ mapDataToProps },
+	{ mapDataToProps }
 )(
-	connect( mapStateToProps, mapDispatchToProps )( withCurrentUser( Reactions ) ),
+	connect( mapStateToProps, mapDispatchToProps )( withCurrentUser( Reactions ) )
 );
 
 Reactions.propTypes = {

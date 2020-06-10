@@ -68,7 +68,7 @@ class PickerWrap extends Component {
 					{ this.props.children }
 				</div>
 			</div>,
-			this.container,
+			this.container
 		);
 	}
 }

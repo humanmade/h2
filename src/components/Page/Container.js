@@ -67,7 +67,7 @@ class Container extends Component {
 const ConnectedPostsList = withArchive(
 	pages,
 	state => state.pages,
-	props => pages.idForPath( props.match.params.pageName ),
+	props => pages.idForPath( props.match.params.pageName )
 )( Container );
 
 export default withUsers( ConnectedPostsList );

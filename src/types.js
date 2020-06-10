@@ -31,7 +31,7 @@ users.updateCurrent = ( function ( data ) {
 			this.updateSingle( {
 				...data,
 				id: getState().users.current,
-			} ),
+			} )
 		);
 	};
 } ).bind( users );

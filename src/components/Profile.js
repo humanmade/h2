@@ -112,7 +112,7 @@ export class Profile extends React.Component {
 
 				<div className="Profile-description">
 					{ user.facts && user.facts.long_description.split( '\n' ).map( ( text, idx ) =>
-						<p key={ idx }>{ text }</p>,
+						<p key={ idx }>{ text }</p>
 					) }
 				</div>
 			</Container>
@@ -132,7 +132,7 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
+	mapDispatchToProps
 )(
-	ConnectedProfile,
+	ConnectedProfile
 );

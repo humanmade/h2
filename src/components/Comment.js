@@ -168,5 +168,5 @@ export default withUser( props => props.comment.author )( withSingle(
 			onLoad: actions.onLoad,
 			onUpdate: actions.onUpdatePost,
 		} ),
-	},
+	}
 )( Comment ) );

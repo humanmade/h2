@@ -37,7 +37,7 @@ const EmojiCompletion = props => {
 			{
 				custom: customEmoji,
 				maxResults: 1,
-			},
+			}
 		);
 
 		// Then run a regular search.
@@ -46,7 +46,7 @@ const EmojiCompletion = props => {
 			{
 				custom: customEmoji,
 				maxResults: 5,
-			},
+			}
 		);
 
 		// Finally, combine and return.

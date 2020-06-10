@@ -188,8 +188,8 @@ export default withCategories(
 	withSingle(
 		posts,
 		state => state.posts,
-		props => props.data.id,
+		props => props.data.id
 	)(
-		withUser( props => props.post.author )( Post ),
-	),
+		withUser( props => props.post.author )( Post )
+	)
 );

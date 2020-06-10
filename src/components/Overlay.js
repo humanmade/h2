@@ -42,5 +42,5 @@ const handleChange = props => {
 
 export default withSideEffect(
 	reducePropsToState,
-	handleChange,
+	handleChange
 )( Overlay );

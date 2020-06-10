@@ -110,12 +110,12 @@ const withData = compose(
 				loading: data.loading,
 				loadingMore: data.loadingMore,
 			} ),
-		},
+		}
 	),
 	connect(
 		mapStateToProps,
-		mapDispatchtoProps,
-	),
+		mapDispatchtoProps
+	)
 );
 
 const ConnectedComments = withData( SidebarComments );

@@ -148,7 +148,7 @@ const ConnectedResults = withArchive(
 		const id = `searchPreview/${ props.term }`;
 		posts.registerArchive( id, query );
 		return id;
-	},
+	}
 )( Results );
 
 class SearchInput extends React.Component {

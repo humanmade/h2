@@ -43,7 +43,7 @@ export const ConnectedPostCardAuthor = withSingle(
 			loading: data.loading,
 		} ),
 		mapActionsToProps: () => ( {} ),
-	},
+	}
 )( PostCardAuthor );
 
 export function PostCard( { loading, post, AuthorComponent = ConnectedPostCardAuthor } ) {
@@ -113,7 +113,7 @@ export const ConnectedPostCard = withArchive(
 			loading: data.loading,
 		} ),
 		mapActionsToProps: () => ( {} ),
-	},
+	}
 )( PostCard );
 
 export default class PostHovercard extends React.Component {

@@ -11,7 +11,7 @@ export const withCurrentUser = connect(
 	} ),
 	dispatch => ( {
 		onUpdateCurrentUser: data => dispatch( users.updateCurrent( data ) ),
-	} ),
+	} )
 );
 
 export const withUser = id => withSingle(
@@ -27,7 +27,7 @@ export const withUser = id => withSingle(
 			onLoadUser: actions.onLoad,
 			onUpdateUser: actions.onUpdatePost,
 		} ),
-	},
+	}
 );
 
 export const withUsers = withArchive(
@@ -40,7 +40,7 @@ export const withUsers = withArchive(
 			users: data.posts,
 		} ),
 		mapActionsToProps: () => ( {} ),
-	},
+	}
 );
 
 export const withCategories = withApiData( () => ( { categories: '/wp/v2/categories?per_page=100' } ) );

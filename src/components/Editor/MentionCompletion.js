@@ -9,7 +9,7 @@ import './MentionCompletion.css';
 const insert = ( item, props ) => `${ props.trigger }${ item.slug } `;
 const matcher = memoize(
 	( item, search ) => `${ item.slug } ${ item.name }`.toLowerCase().indexOf( search.toLowerCase() ) >= 0,
-	( item, search ) => `${ item.id }:${ search }`,
+	( item, search ) => `${ item.id }:${ search }`
 );
 
 export const Item = ( { item, selected, onSelect } ) => (
@@ -41,5 +41,5 @@ export const MentionCompletion = props => {
 };
 
 export default connect(
-	state => ( { users: state.users.posts } ),
+	state => ( { users: state.users.posts } )
 )( MentionCompletion );

@@ -93,5 +93,5 @@ export default withArchive(
 		const id = `drafts/${ props.user.id }`;
 		posts.registerArchive( id, args );
 		return id;
-	},
+	}
 )( SelectDraft );

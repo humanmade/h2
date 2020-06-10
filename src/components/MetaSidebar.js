@@ -111,7 +111,7 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
+	mapDispatchToProps
 )(
-	withCurrentUser( MetaSidebar ),
+	withCurrentUser( MetaSidebar )
 );

@@ -31,5 +31,5 @@ const handleChange = title => {
 
 export default withSideEffect(
 	reducePropsToState,
-	handleChange,
+	handleChange
 )( PageTitle );

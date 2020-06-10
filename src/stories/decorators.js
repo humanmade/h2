@@ -12,8 +12,8 @@ const store = createStore(
 	reducers,
 	compose(
 		withReduxEnhancer,
-		applyMiddleware( thunk ),
-	),
+		applyMiddleware( thunk )
+	)
 );
 
 export function withStore( state, actions = [] ) {

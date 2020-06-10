@@ -77,7 +77,7 @@ export default compose(
 				parentPost: data.post,
 				loadingParent: data.loading,
 			} ),
-		},
+		}
 	),
-	withUser( props => props.comment.author ),
+	withUser( props => props.comment.author )
 )( MiniComment );

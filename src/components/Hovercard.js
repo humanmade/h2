@@ -63,7 +63,7 @@ class CardPortal extends React.Component {
 	render() {
 		return ReactDOM.createPortal(
 			this.props.children,
-			this.container,
+			this.container
 		);
 	}
 }
@@ -174,7 +174,7 @@ export default class Hovercard extends React.Component {
 						ref: this.onUpdateRef,
 						onMouseOver: this.onMouseOver,
 						onMouseOut: this.onMouseOut,
-					},
+					}
 				) }
 			</React.Fragment>
 		);

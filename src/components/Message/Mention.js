@@ -29,5 +29,5 @@ export default withArchive(
 	},
 	{
 		mapDataToProps: data => ( { users: data.posts } ),
-	},
+	}
 )( Mention );

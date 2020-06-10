@@ -48,7 +48,7 @@ const render = Main => {
 				</IntlProvider>
 			</SlotFillProvider>
 		</Provider>,
-		root,
+		root
 	);
 };
 
