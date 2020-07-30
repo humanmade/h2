@@ -70,16 +70,24 @@ const transform = ( node, children ) => {
 		case 'UL':
 			return parseList( node, children );
 
-		case 'A':
+		case 'A': {
+			let href = node.href;
+
+			if ( href.startsWith( 'about:blank#' ) ) {
+				// Correct relative anchors back to what they should be.
+				href = href.replace( 'about:blank#', '#' );
+			}
+
 			return (
 				<Link
-					href={ node.href }
+					href={ href }
 					rel={ node.rel || undefined }
 					target={ node.target || undefined }
 				>
 					{ children }
 				</Link>
 			);
+		}
 
 		default:
 			// Use built-in handling.
