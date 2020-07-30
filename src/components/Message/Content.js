@@ -70,7 +70,7 @@ const transform = ( node, children ) => {
 		case 'UL':
 			return parseList( node, children );
 
-		case 'A':
+		case 'A': {
 			let href = node.href;
 
 			if ( href.startsWith( 'about:blank#' ) ) {
@@ -87,6 +87,7 @@ const transform = ( node, children ) => {
 					{ children }
 				</Link>
 			);
+		}
 
 		default:
 			// Use built-in handling.
