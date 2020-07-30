@@ -7,6 +7,19 @@ import { POST_ROUTE } from '../App';
 export default function Link( { children, disablePreviews, href, ...props } ) {
 	const root = window.H2Data.site.home;
 
+	if ( href.startsWith( 'about:blank#' ) ) {
+		// Correct relative anchors back to what they should be.
+		const anchorHref = href.replace( 'about:blank#', '#' );
+		return (
+			<a
+				href={ anchorHref }
+				{ ...props }
+			>
+				{ children }
+			</a>
+		);
+	}
+
 	if ( ! href.startsWith( root ) ) {
 		return (
 			<a
