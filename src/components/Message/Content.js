@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import SafeEmbed from './SafeEmbed';
 import Link from '../Link';
 import Notification from '../Notification';
+import TimeHovercard from '../TimeHovercard';
 import { parseList, parseListItem } from '../../embeds/tasklist';
 import matchers from '../../matchers';
 
@@ -63,6 +64,15 @@ const transform = ( node, children ) => {
 
 			// For regular blockquotes, use built-in handling.
 			return;
+
+		case 'TIME':
+			return (
+				<TimeHovercard
+					dateTime={ node.dateTime }
+				>
+					{ children }
+				</TimeHovercard>
+			);
 
 		case 'LI':
 			return parseListItem( node, children );
