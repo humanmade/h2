@@ -17,13 +17,13 @@ const getTimezone = ( date, format = 'long' ) => {
 	const tzNameFormatter = new Intl.DateTimeFormat( 'default', {
 		timeZoneName: format,
 	} );
-	const namePart = tzNameFormatter.formatToParts( date ).find( p => p.type === 'timeZoneName');
+	const namePart = tzNameFormatter.formatToParts( date ).find( p => p.type === 'timeZoneName' );
 	if ( ! namePart ) {
 		return null;
 	}
 
 	return namePart.value;
-}
+};
 
 export const TimeCard = props => {
 	const { date, original } = props;
@@ -56,7 +56,7 @@ export const TimeCard = props => {
 			</dl>
 		</div>
 	);
-}
+};
 
 export default function TimeHovercard( props ) {
 	const { children, dateTime } = props;
