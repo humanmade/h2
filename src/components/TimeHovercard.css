@@ -1,0 +1,31 @@
+.TimeHovercard__time {
+	border-bottom: 1px dotted var( --hm-red );
+}
+
+.TimeHovercard__clock-indicator {
+	margin-right: 0.4em;
+	font-size: 0.77778rem;
+}
+
+.TimeHovercard {
+	font-size: 0.77778rem;
+}
+
+.TimeHovercard p {
+	line-height: 1.6;
+	margin: 0;
+}
+
+.TimeHovercard__times {
+	display: grid;
+	grid-template-columns: min-content auto;
+}
+
+.TimeHovercard__times dt {
+	font-weight: bold;
+	text-align: right;
+}
+
+.TimeHovercard__times dd {
+	margin-left: 1em;
+}
