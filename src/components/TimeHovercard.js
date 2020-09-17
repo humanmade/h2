@@ -88,7 +88,13 @@ export default function TimeHovercard( props ) {
 				className="TimeHovercard__time"
 				dateTime={ dateTime }
 			>
-				<span className="TimeHovercard__clock-indicator">🕑</span>
+				<span
+					aria-label="Time"
+					className="TimeHovercard__clock-indicator"
+					role="img"
+				>
+					🕑
+				</span>
 				<FormattedTime
 					{ ...DATE_FORMAT }
 					value={ date }
