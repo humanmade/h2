@@ -25,7 +25,7 @@ const getTimezone = ( date, format = 'long' ) => {
 	return namePart.value;
 }
 
-const TimeHovercardContent = props => {
+export const TimeCard = props => {
 	const { date, original } = props;
 	const tzName = getTimezone( date, 'long' );
 	const tzShortName = getTimezone( date, 'short' );
@@ -74,7 +74,7 @@ export default function TimeHovercard( props ) {
 	}
 
 	const cardContent = () => (
-		<TimeHovercardContent
+		<TimeCard
 			date={ date }
 			original={ children }
 		/>
