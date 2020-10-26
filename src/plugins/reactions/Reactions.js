@@ -94,7 +94,7 @@ export class Reactions extends Component {
 			return reactions;
 		}
 		this.props.reactions.forEach( reaction => {
-			if ( ! ( reaction.type in reactions ) ) {
+			if ( ! ( reaction.type in reactions ) || reactions[ reaction.type ].includes( reaction.author ) ) {
 				reactions[ reaction.type ] = [ reaction.author ];
 			} else {
 				reactions[ reaction.type ].push( reaction.author );
