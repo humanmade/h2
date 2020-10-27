@@ -57,6 +57,7 @@ class PostsList extends Component {
 		}
 
 		const isSingular = !! this.props.match.params.slug;
+		console.log( isSingular );
 		const getTitle = () => {
 			if ( this.props.match.params.search ) {
 				return `Search Results for “${ this.props.match.params.search }”`;
@@ -96,7 +97,7 @@ class PostsList extends Component {
 						<PostComponent
 							key={ post.id }
 							data={ post }
-							expanded={ ! summaryEnabled || defaultPostView === 'expanded' }
+							expanded={ isSingular || ! summaryEnabled || defaultPostView === 'expanded' }
 							onInvalidate={ () => this.props.invalidateData() }
 						/>
 					) ) }
