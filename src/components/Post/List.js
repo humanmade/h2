@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import qs from 'qs';
 
 import Loader from './Loader';
-import Button from '../Button';
 import PageTitle from '../PageTitle';
 import Pagination from '../Pagination';
 import PostComponent from './index';
@@ -31,7 +30,6 @@ class PostsList extends Component {
 	}
 
 	render() {
-		const { defaultPostView, summaryEnabled } = this.props;
 		if ( this.props.loading || this.props.loadingMore ) {
 			return (
 				<PageTitle title="Loading…">
@@ -73,31 +71,11 @@ class PostsList extends Component {
 		return (
 			<PageTitle title={ getTitle() }>
 				<div className="PostsList">
-					{ summaryEnabled ? (
-						<div className="PostsList--settings">
-							<Button
-								disabled={ defaultPostView === 'summary' }
-								onClick={ () => this.props.setDefaultPostView( 'summary' ) }
-							>
-								Summary
-							</Button>
-							<Button
-								disabled={ defaultPostView === 'expanded' }
-								onClick={ () => this.props.setDefaultPostView( 'expanded' ) }
-							>
-								Expanded
-							</Button>
-						</div>
-					) : (
-						/* Dummy settings div to ensure markup matches */
-						<div className="PostsList--settings" />
-					) }
 					{ this.props.posts && this.props.posts.map( post => (
 						<PostComponent
 							key={ post.id }
 							data={ post }
 							viewMode={ isSingular ? 'full' : this.props.viewMode }
-							expanded={ isSingular || ! summaryEnabled || defaultPostView === 'expanded' }
 							onInvalidate={ () => this.props.invalidateData() }
 						/>
 					) ) }
@@ -166,8 +144,6 @@ const mapStateToProps = state => {
 	const currentUser = state.users.posts.find( user => state.users.current === user.id );
 
 	return {
-		defaultPostView: state.ui.defaultPostView,
-		summaryEnabled: state.features.summary_view,
 		viewMode: currentUser ? currentUser.meta.h2_view_preference : 'compact',
 	};
 };
