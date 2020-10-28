@@ -51,7 +51,7 @@ export class Post extends Component {
 	constructor( props ) {
 		super( props );
 		this.state = {
-			expanded: false,
+			expanded: props.viewMode !== 'compact',
 			isShowingReply: false,
 			isEditing: false,
 			isSubmitting: false,
@@ -102,23 +102,19 @@ export class Post extends Component {
 	}
 
 	render() {
-		const { post, user } = this.props;
+		const { post, user, viewMode } = this.props;
+		const { expanded, isShowingReply } = this.state;
 		const categories = this.props.categories.data ? this.props.categories.data.filter( category => post.categories.indexOf( category.id ) >= 0 ) : [];
-
-		const collapsed = ! ( this.state.expanded || this.props.expanded );
 
 		const fillProps = {
 			author: user,
-			collapsed,
+			collapsed: ! expanded,
 			// comments,
 			categories,
 			post,
 		};
 
-		const classes = [
-			'Post',
-			collapsed && 'Post--collapsed',
-		];
+		const classes = expanded ? 'Post' : 'Post Post--collapsed';
 
 		const Actions = (
 			<Dropdown className="Post__actions">
@@ -131,13 +127,14 @@ export class Post extends Component {
 			</Dropdown>
 		);
 
+		const hideComments = ! ( viewMode === 'full' || isShowingReply || expanded );
+
 		return (
-			<div className={ classes.filter( Boolean ).join( ' ' ) }>
+			<div className={ classes }>
 
 				<MessageHeader
 					author={ user }
 					categories={ categories }
-					collapsed={ collapsed }
 					post={ post }
 				>
 					{ Actions }
@@ -146,7 +143,7 @@ export class Post extends Component {
 				<MessageMain
 					author={ user }
 					categories={ categories }
-					collapsed={ collapsed }
+					collapsed={ viewMode === 'compact' && ! isShowingReply && ! expanded }
 					post={ post }
 					isEditing={ this.state.isEditing }
 					isLoading={ this.props.loading }
@@ -157,7 +154,7 @@ export class Post extends Component {
 					{ Actions }
 				</MessageMain>
 
-				{ collapsed ? (
+				{ hideComments ? (
 					<Summary
 						post={ post }
 						onExpand={ () => this.setState( { expanded: true } ) }
@@ -165,7 +162,7 @@ export class Post extends Component {
 				) : (
 					<PostComments
 						post={ post }
-						showingReply={ this.state.isShowingReply }
+						showingReply={ isShowingReply }
 						onCancelReply={ this.onClickCancelReply }
 						onDidCreateComment={ this.onDidCreateComment }
 					/>

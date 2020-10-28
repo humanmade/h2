@@ -57,7 +57,6 @@ class PostsList extends Component {
 		}
 
 		const isSingular = !! this.props.match.params.slug;
-		console.log( isSingular );
 		const getTitle = () => {
 			if ( this.props.match.params.search ) {
 				return `Search Results for “${ this.props.match.params.search }”`;
@@ -97,6 +96,7 @@ class PostsList extends Component {
 						<PostComponent
 							key={ post.id }
 							data={ post }
+							viewMode={ isSingular ? 'full' : this.props.viewMode }
 							expanded={ isSingular || ! summaryEnabled || defaultPostView === 'expanded' }
 							onInvalidate={ () => this.props.invalidateData() }
 						/>
@@ -162,10 +162,15 @@ const ConnectedPostsList = withPagedArchive(
 
 const MoreConnectedPostsList = withUsers( ConnectedPostsList );
 
-const mapStateToProps = state => ( {
-	defaultPostView: state.ui.defaultPostView,
-	summaryEnabled: state.features.summary_view,
-} );
+const mapStateToProps = state => {
+	const currentUser = state.users.posts.find( user => state.users.current === user.id );
+
+	return {
+		defaultPostView: state.ui.defaultPostView,
+		summaryEnabled: state.features.summary_view,
+		viewMode: currentUser ? currentUser.meta.h2_view_preference : 'compact',
+	};
+};
 
 const mapDispatchToProps = dispatch => ( {
 	setDefaultPostView: view => dispatch( setDefaultPostView( view ) ),
