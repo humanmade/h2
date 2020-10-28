@@ -2,7 +2,7 @@
 	display: block;
 	background: rgba(0,0,0,0.05);
 	color: rgba(0,0,0,0.5);
-	height: 60px;
+	padding: 0;
 	width: 180px;
 	text-transform: uppercase;
 	font-weight: 600;
