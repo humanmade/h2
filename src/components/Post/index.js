@@ -51,7 +51,7 @@ export class Post extends Component {
 	constructor( props ) {
 		super( props );
 		this.state = {
-			expanded: props.viewMode !== 'compact',
+			expanded: props.viewMode === 'full',
 			isShowingReply: false,
 			isEditing: false,
 			isSubmitting: false,
@@ -157,6 +157,7 @@ export class Post extends Component {
 				{ hideComments ? (
 					<Summary
 						post={ post }
+						postVisible={ viewMode !== 'compact' || isShowingReply }
 						onExpand={ () => this.setState( { expanded: true } ) }
 					/>
 				) : (
