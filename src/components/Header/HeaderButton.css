@@ -44,6 +44,7 @@
 @media ( max-width: 600px ) {
 	.HeaderButton {
 		width: auto;
+		min-width: 60px;
 	}
 	.HeaderButton .icon {
 		margin: 0;
