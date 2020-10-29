@@ -18,10 +18,6 @@ import { withCurrentUser } from '../hocs';
 import './MetaSidebar.css';
 
 const FEATURES = {
-	use_interweave: {
-		name: 'Use Experimental Content Parser',
-		description: 'Allows for rich content in text like @-mentions.',
-	},
 };
 
 const BetaFeature = props => (
@@ -79,7 +75,9 @@ export class MetaSidebar extends React.Component {
 
 				<UserSettings />
 
-				<h3>Beta Features</h3>
+				{ Object.keys( FEATURES ).length > 0 && (
+					<h3>Beta Features</h3>
+				) }
 				{ Object.keys( FEATURES ).map( key => (
 					<BetaFeature
 						key={ key }
