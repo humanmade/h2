@@ -58,6 +58,15 @@ export class Post extends Component {
 		};
 	}
 
+	componentDidUpdate( prevProps ) {
+		// Permit a change in the user view mode to override current post-level state.
+		if ( this.props.viewMode !== prevProps.viewMode ) {
+			this.setState( {
+				expanded: this.props.viewMode === 'full',
+			} );
+		}
+	}
+
 	onClickReply = () => {
 		this.setState( { isShowingReply: true } );
 	}
