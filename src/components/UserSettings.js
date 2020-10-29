@@ -34,7 +34,7 @@ export class UserSettings extends PureComponent {
 			return null;
 		}
 
-		const viewPreference = currentUser.meta.h2_view_preference;
+		const viewPreference = currentUser.meta.h2_view_preference || 'full';
 
 		return (
 			<div className="UserSettings">
