@@ -4,7 +4,7 @@
 
 .Message-Main--collapsed {
 	min-height: 70px;
-	max-height: 150px;
+	max-height: 190px;
 	overflow: hidden;
 	position: relative;
 }
@@ -15,7 +15,7 @@
 	left: 0;
 	bottom: 0;
 	right: 0;
-	height: 100%;
+	height: 70px;
 	background: linear-gradient(
 		to bottom,
 		rgba( 255, 255, 255, 0 ),

@@ -2,20 +2,9 @@
 	flex-direction: column;
 	position: relative;
 	padding-bottom: 1.667rem;
-	margin-bottom: 1.667rem;
+	margin: 1.667rem 0;
 	min-height: 144px;
 	border-bottom: 5px solid #F1F2EE;
-}
-
-.Post:before {
-	position: absolute;
-	content: '';
-	background: #F1F2EE;
-	left: 27.5px;
-	height: 1.667rem;
-	top: -.8335rem;
-	width: 5px;
-	z-index: 2;
 }
 
 .Post__actions {
@@ -32,12 +21,6 @@
 
 .Post--collapsed .reactions {
 	display: none;
-}
-
-@media ( max-width: 600px ) {
-	.Post:before {
-		display: none;
-	}
 }
 
 @media ( min-width: 600px ) {

@@ -230,6 +230,18 @@ function register_rest_routes() {
  * Register custom metadata.
  */
 function register_custom_meta() {
+	register_meta( 'user', 'h2_view_preference', [
+		'single'            => true,
+		'show_in_rest'      => true,
+		'default'           => 'compact',
+		'sanitize_callback' => function ( string $value ) : string {
+			$value = strtolower( $value );
+			if ( ! in_array( $value, [ 'compact', 'nocomments', 'full' ], true ) ) {
+				return 'full';
+			}
+			return $value;
+		},
+	] );
 	register_meta( 'user', 'h2_last_updated', [
 		'single'       => true,
 		'show_in_rest' => true,

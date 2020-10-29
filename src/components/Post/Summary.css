@@ -1,11 +1,8 @@
 .Post-Summary {
-	position: absolute;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	bottom: 1em;
-	left: 90px;
-	right: 0;
+	margin: 1em 0 1em 90px;
 	font-size: 14px;
 	color: #aaa;
 }
@@ -63,4 +60,17 @@
 		rgba( 255, 255, 255, 0 )
 	);
 	pointer-events: none;
+}
+
+@media (max-width: 600px) {
+	.Post-Summary {
+		margin-left: 0;
+	}
+}
+
+@media (max-width: 480px) {
+	.Post-Summary {
+		flex-direction: column;
+		align-items: flex-start;
+	}
 }

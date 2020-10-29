@@ -5,6 +5,7 @@ import Button from './Button';
 import Link from './Link';
 import LinkButton from './LinkButton';
 import UserBlock from './UserBlock';
+import UserSettings from './UserSettings';
 import Container from './Sidebar/Container';
 import {
 	disableBetaFeature,
@@ -17,10 +18,6 @@ import { withCurrentUser } from '../hocs';
 import './MetaSidebar.css';
 
 const FEATURES = {
-	summary_view: {
-		name: 'Summary View',
-		description: 'Adds a summary view to the post list screen.',
-	},
 	use_interweave: {
 		name: 'Use Experimental Content Parser',
 		description: 'Allows for rich content in text like @-mentions.',
@@ -79,6 +76,8 @@ export class MetaSidebar extends React.Component {
 				</ul>
 
 				<Button onClick={ this.props.onLogOut }>Log out</Button>
+
+				<UserSettings />
 
 				<h3>Beta Features</h3>
 				{ Object.keys( FEATURES ).map( key => (

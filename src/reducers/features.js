@@ -5,7 +5,6 @@ import {
 
 const DEFAULT_STATE = {
 	use_interweave: window.H2Data.features.interweave || false,
-	summary_view: false,
 };
 
 export default function features( state = DEFAULT_STATE, action ) {

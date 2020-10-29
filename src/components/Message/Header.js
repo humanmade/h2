@@ -106,7 +106,6 @@ MessageHeader.defaultProps = {
 MessageHeader.propTypes = {
 	author: UserShape.isRequired,
 	categories: PropTypes.arrayOf( CategoryShape ).isRequired,
-	collapsed: PropTypes.bool.isRequired,
 	constrainTitle: PropTypes.bool,
 	post: PostShape.isRequired,
 	sticky: PropTypes.bool,

@@ -29,7 +29,7 @@ const Person = props => {
 const ConnectedPerson = withUser( props => props.id )( Person );
 
 function Summary( props ) {
-	const { comments, post, onExpand } = props;
+	const { comments, post, postVisible, onExpand } = props;
 
 	if ( props.loadingComments ) {
 		return null;
@@ -45,7 +45,11 @@ function Summary( props ) {
 	return (
 		<div className="Post-Summary">
 			<Button onClick={ onExpand }>
-				Continue reading ({ _n( 'word', 'words', post.content.count ) })
+				{ postVisible ? (
+					'Show comments'
+				 ) : (
+					`Continue reading (${ _n( 'word', 'words', post.content.count ) })`
+				 ) }
 			</Button>
 
 			{ ( comments && comments.length > 0 ) && (
