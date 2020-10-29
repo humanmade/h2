@@ -18,23 +18,23 @@ const viewOptions = [
 ];
 
 export class UserSettings extends PureComponent {
+	onUpdateViewPreference = event => {
+		const value = event.target.value;
+		this.props.onUpdateCurrentUser( {
+			meta: {
+				h2_view_preference: value,
+			},
+		} );
+	}
+
 	render() {
-		const { currentUser, onUpdateCurrentUser } = this.props;
+		const { currentUser } = this.props;
 
 		if ( ! currentUser ) {
 			return null;
 		}
 
 		const viewPreference = currentUser.meta.h2_view_preference;
-
-		const onUpdateViewPreference = event => {
-			const value = event.target.value;
-			onUpdateCurrentUser( {
-				meta: {
-					h2_view_preference: value,
-				},
-			} );
-		};
 
 		return (
 			<div className="UserSettings">
@@ -43,7 +43,7 @@ export class UserSettings extends PureComponent {
 					I prefer archive pages to display
 					<select
 						value={ viewPreference }
-						onChange={ onUpdateViewPreference }
+						onChange={ this.onUpdateViewPreference }
 					>
 						{ viewOptions.map( ( { value, label } ) => (
 							<option
