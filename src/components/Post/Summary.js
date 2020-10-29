@@ -29,7 +29,7 @@ const Person = props => {
 const ConnectedPerson = withUser( props => props.id )( Person );
 
 function Summary( props ) {
-	const { postVisible, comments, post, onExpand } = props;
+	const { comments, post, postVisible, onExpand } = props;
 
 	if ( props.loadingComments ) {
 		return null;

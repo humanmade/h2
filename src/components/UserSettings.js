@@ -24,7 +24,7 @@ export const UserSettings = ( { currentUser, onUpdateCurrentUser } ) => {
 
 	const viewPreference = currentUser.meta.h2_view_preference;
 
-	const updateViewPreference = event => {
+	const onUpdateViewPreference = event => {
 		const value = event.target.value;
 		onUpdateCurrentUser( {
 			meta: {
@@ -36,8 +36,12 @@ export const UserSettings = ( { currentUser, onUpdateCurrentUser } ) => {
 	return (
 		<div className="UserSettings">
 			<h3>Settings</h3>
-			<label>I prefer archive pages to display
-				<select value={ viewPreference } onChange={ updateViewPreference }>
+			<label>
+				I prefer archive pages to display
+				<select
+					value={ viewPreference }
+					onChange={ onUpdateViewPreference }
+				>
 					{ viewOptions.map( ( { value, label } ) => (
 						<option
 							key={ value }
