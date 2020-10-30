@@ -78,6 +78,10 @@
 	.Comment:before {
 		left: -20px;
 	}
+
+	.Comment:last-child:after {
+		left: -23px;
+	}
 }
 
 @media ( min-width: 600px ) {
