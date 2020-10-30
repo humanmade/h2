@@ -43,7 +43,7 @@
 
 @media screen and ( min-width: 783px ) {
 	body.admin-bar .Comment .Comment-Header {
-		top: 132px; /* 32 + 99 + 1 aesthetic pixel */
+		top: 131px; /* 32 + 99 */
 	}
 }
 
