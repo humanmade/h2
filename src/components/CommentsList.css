@@ -6,8 +6,10 @@
 .CommentsList .CommentsList {
 	margin-left: 60px;
 }
-
 .CommentsList .CommentsList .CommentsList {
+	margin-left: 50px;
+}
+.CommentsList .CommentsList .CommentsList .CommentsList {
 	margin-left: 40px;
 }
 
