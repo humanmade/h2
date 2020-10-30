@@ -29,6 +29,7 @@
 	color: var( --hm-medium-grey );
 	font-size: 0.75em;
 	margin-right: 0.5em;
+	line-height: 1.1;
 }
 .Comment-Header a.Comment-date:hover {
 	border: none;
