@@ -25,10 +25,12 @@
 	.CommentsList {
 		margin-left: 20px;
 	}
-	.CommentsList .CommentsList {
+	.CommentsList .CommentsList,
+	.CommentsList .CommentsList .CommentsList,
+	.CommentsList .CommentsList .CommentsList .CommentsList {
 		margin-left: 14px;
 	}
-	.CommentsList .CommentsList .CommentsList {
+	.CommentsList .CommentsList .CommentsList .CommentsList .CommentsList {
 		margin-left: 0;
 	}
 }
