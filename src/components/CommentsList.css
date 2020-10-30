@@ -7,6 +7,10 @@
 	margin-left: 60px;
 }
 
+.CommentsList .CommentsList .CommentsList {
+	margin-left: 40px;
+}
+
 .CommentsList .post-reply {
 	align-self: flex-end;
 }
@@ -21,5 +25,8 @@
 	}
 	.CommentsList .CommentsList {
 		margin-left: 14px;
+	}
+	.CommentsList .CommentsList .CommentsList {
+		margin-left: 0;
 	}
 }
