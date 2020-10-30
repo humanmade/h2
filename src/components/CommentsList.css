@@ -32,3 +32,10 @@
 		margin-left: 0;
 	}
 }
+
+/* Match behavior of .Message-Main in narrow two-column layouts */
+@media ( min-width: 800px ) and ( max-width: 960px ) {
+	.CommentsList {
+		margin-left: 69px; /* center under post author icon */
+	}
+}
