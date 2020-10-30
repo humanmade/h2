@@ -29,3 +29,9 @@
 		margin-left: 0;
 	}
 }
+
+@media ( min-width: 800px ) and ( max-width: 960px ) {
+	.Message-Main {
+		margin-left: 0;
+	}
+}
