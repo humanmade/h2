@@ -1,5 +1,5 @@
 extends:
-  - humanmade
+  - '@humanmade'
 rules:
   comma-dangle:
   - error
