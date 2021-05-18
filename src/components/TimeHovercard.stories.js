@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { withCentering, withStore } from '../stories/decorators';
+
 import { Card } from './Hovercard';
 import TimeHovercard, { TimeCard } from './TimeHovercard';
 

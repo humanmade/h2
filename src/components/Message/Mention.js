@@ -2,8 +2,9 @@ import { withArchive } from '@humanmade/repress';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import AuthorLink from './AuthorLink';
 import { users } from '../../types';
+
+import AuthorLink from './AuthorLink';
 
 class Mention extends React.Component {
 	render() {

@@ -3,12 +3,13 @@ import React from 'react';
 import { FormattedDate } from 'react-intl';
 import { compose } from 'redux';
 
-import Header from './Header';
-import Link from '../Link';
-import MessageContent from '../Message/Content';
 import { withUser } from '../../hocs';
 import { posts } from '../../types';
 import { decodeEntities } from '../../util';
+import Link from '../Link';
+import MessageContent from '../Message/Content';
+
+import Header from './Header';
 
 import './Mini.css';
 

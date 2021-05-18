@@ -1,12 +1,13 @@
 import { withArchive } from '@humanmade/repress';
 import React, { Component } from 'react';
 
-import Page from './index';
-import Loader from '../Post/Loader';
-import PageTitle from '../PageTitle';
 import { withUsers } from '../../hocs';
 import { pages } from '../../types';
 import { decodeEntities } from '../../util';
+import PageTitle from '../PageTitle';
+import Loader from '../Post/Loader';
+
+import Page from './index';
 
 class Container extends Component {
 	state = {

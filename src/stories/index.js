@@ -1,9 +1,10 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 
-import { htmlTester } from './stubs';
-import { withPadding } from './decorators';
 import { Content } from '../components/Message/Content';
+
+import { withPadding } from './decorators';
+import { htmlTester } from './stubs';
 
 import '../hm-pattern-library/assets/styles/juniper.css';
 

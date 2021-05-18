@@ -153,8 +153,8 @@ export default class Hovercard extends React.Component {
 				<CSSTransition
 					{ ...transition }
 					in={ !! ( active && this.target ) }
-					mountOnEnter={ true }
-					unmountOnExit={ true }
+					mountOnEnter
+					unmountOnExit
 				>
 					{ () => (
 						<CardPortal>

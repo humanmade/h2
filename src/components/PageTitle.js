@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import withSideEffect from 'react-side-effect';
 
 const SITE_NAME = window.H2Data.site.name;

@@ -1,9 +1,10 @@
 import { action } from '@storybook/addon-actions';
 import React from 'react';
 
-import SearchInput, { Results } from './SearchInput';
 import { withCentering, withStore } from '../stories/decorators';
 import { post } from '../stories/stubs';
+
+import SearchInput, { Results } from './SearchInput';
 
 export default {
 	title: 'Interface|Search',
@@ -52,7 +53,7 @@ export const Loading = () => {
 	const ResultsComponent = props => (
 		<Results
 			{ ...props }
-			loading={ true }
+			loading
 			visible
 		/>
 	);

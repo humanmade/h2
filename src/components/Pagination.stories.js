@@ -1,7 +1,8 @@
 import React from 'react';
-import Pagination from './Pagination';
 
 import { withCentering } from '../stories/decorators';
+
+import Pagination from './Pagination';
 
 export default {
 	title: 'Components|Pagination',

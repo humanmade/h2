@@ -3,13 +3,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import Container from './Container';
-import Pagination from './Pagination';
-import MiniComment from '../Comment/Mini';
-import LinkButton from '../LinkButton';
 import { showSidebarProfile } from '../../actions';
 import { withUser } from '../../hocs';
 import { comments } from '../../types';
+import MiniComment from '../Comment/Mini';
+import LinkButton from '../LinkButton';
+
+import Container from './Container';
+import Pagination from './Pagination';
 
 import './Comments.css';
 

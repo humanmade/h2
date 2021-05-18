@@ -1,8 +1,9 @@
 import React from 'react';
 
-import UserBlock from './UserBlock';
 import { withCentering, withStore } from '../stories/decorators';
 import { user } from '../stories/stubs';
+
+import UserBlock from './UserBlock';
 
 export default {
 	title: 'Components|UserBlock',

@@ -54,7 +54,7 @@ export const parseList = ( node, children ) => {
 
 	return (
 		<Tasklist
-			disableSort={ true }
+			disableSort
 			items={ items }
 			onChange={ () => {} }
 			onReorder={ () => {} }

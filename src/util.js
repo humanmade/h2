@@ -10,7 +10,7 @@ const ENTITY_REGEX = /&#(?:([0-9]+)|x([a-fA-F0-9]+));/g;
  * handling, as we control the server-side representation.
  *
  * @param {string} text
- * @return {string}
+ * @returns {string}
  */
 export function decodeEntities( text ) {
 	return text.replace(
@@ -27,8 +27,8 @@ export function decodeEntities( text ) {
  *
  * From https://github.com/mathiasbynens/he
  *
- * @param {Number} codePoint Unicode code point for a symbol
- * @return {string} Symbol represented by the code point
+ * @param {number} codePoint Unicode code point for a symbol
+ * @returns {string} Symbol represented by the code point
  */
 export function codePointToSymbol( codePoint ) {
 	let output = '';
@@ -49,6 +49,8 @@ export function codePointToSymbol( codePoint ) {
 
 /**
  * From TinyMCE: https://github.com/tinymce/tinymce/blob/master/src/plugins/paste/main/ts/core/WordFilter.ts
+ *
+ * @param content
  */
 export function isWordContent( content ) {
 	return (
@@ -60,6 +62,8 @@ export function isWordContent( content ) {
 
 /**
  * From https://github.com/euangoddard/clipboard2markdown
+ *
+ * @param str
  */
 export function cleanConvertedMarkdown( str ) {
 	return str

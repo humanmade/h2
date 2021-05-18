@@ -2,9 +2,9 @@ import { withArchive } from '@humanmade/repress';
 import React from 'react';
 import { FormattedRelative } from 'react-intl';
 
+import { posts } from '../../types';
 import Button from '../Button';
 import Modal from '../Modal';
-import { posts } from '../../types';
 
 import './SelectDraft.css';
 

@@ -6,7 +6,6 @@ import { withUser } from '../../hocs';
 import {
 	Post as PostShape,
 } from '../../shapes';
-
 import Button from '../Button';
 import MessageHeader from '../Message/Header';
 import MessageMain from '../Message/Main';

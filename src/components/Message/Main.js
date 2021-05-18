@@ -2,14 +2,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Slot } from 'react-slot-fill';
 
-import Editor from '../Editor';
-import Notification from '../Notification';
-import MessageContent from './Content';
 import {
 	Category as CategoryShape,
 	Post as PostShape,
 	User as UserShape,
 } from '../../shapes';
+import Editor from '../Editor';
+import Notification from '../Notification';
+
+import MessageContent from './Content';
 
 import './Main.css';
 

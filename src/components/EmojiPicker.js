@@ -1,7 +1,7 @@
+import { Picker } from 'emoji-mart';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Picker } from 'emoji-mart';
 
 import 'emoji-mart/css/emoji-mart.css';
 import './EmojiPicker.css';

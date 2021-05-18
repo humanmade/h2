@@ -1,12 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Button from './Button';
-import Link from './Link';
-import LinkButton from './LinkButton';
-import UserBlock from './UserBlock';
-import UserSettings from './UserSettings';
-import Container from './Sidebar/Container';
 import {
 	disableBetaFeature,
 	enableBetaFeature,
@@ -14,6 +8,13 @@ import {
 	showSidebarProfile,
 } from '../actions';
 import { withCurrentUser } from '../hocs';
+
+import Button from './Button';
+import Link from './Link';
+import LinkButton from './LinkButton';
+import Container from './Sidebar/Container';
+import UserBlock from './UserBlock';
+import UserSettings from './UserSettings';
 
 import './MetaSidebar.css';
 

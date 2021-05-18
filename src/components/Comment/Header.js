@@ -2,8 +2,8 @@ import React from 'react';
 import { FormattedRelative } from 'react-intl';
 
 import Avatar from '../Avatar';
-import AuthorLink from '../Message/AuthorLink';
 import Link from '../Link';
+import AuthorLink from '../Message/AuthorLink';
 
 import './Header.css';
 

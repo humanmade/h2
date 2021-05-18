@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import SafeEmbed from './SafeEmbed';
+import { parseList, parseListItem } from '../../embeds/tasklist';
+import matchers from '../../matchers';
 import Link from '../Link';
 import Notification from '../Notification';
 import TimeHovercard from '../TimeHovercard';
-import { parseList, parseListItem } from '../../embeds/tasklist';
-import matchers from '../../matchers';
+
+import SafeEmbed from './SafeEmbed';
 
 import '@humanmade/react-tasklist/css/index.css';
 import './Content.css';

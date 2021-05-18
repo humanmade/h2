@@ -2,6 +2,7 @@ import React from 'react';
 
 import { withCentering, withStore } from '../stories/decorators';
 import { post, user } from '../stories/stubs';
+
 import { Card } from './Hovercard';
 import { PostCard, PostCardAuthor } from './PostHovercard';
 

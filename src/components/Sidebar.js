@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Slot } from 'react-slot-fill';
 
+import { withWidgets } from '../hocs';
+
 import RecentPostsWidget from './Widgets/RecentPosts';
 import SearchWidget from './Widgets/Search';
 import TextWidget from './Widgets/Text';
-import { withWidgets } from '../hocs';
 
 import './Sidebar.css';
 

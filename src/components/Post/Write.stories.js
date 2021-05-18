@@ -1,9 +1,10 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
+import React from 'react';
 
-import { WritePost } from './Write';
 import { withPadding, withStore } from '../../stories/decorators';
 import { post, user } from '../../stories/stubs';
+
+import { WritePost } from './Write';
 
 export default {
 	title: 'Content|Post/Write',

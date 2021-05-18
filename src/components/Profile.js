@@ -2,13 +2,14 @@ import React from 'react';
 import { FormattedDate, FormattedTime } from 'react-intl';
 import { connect } from 'react-redux';
 
-import Map from './Map';
-import Link from './Link';
-import LinkButton from './LinkButton';
-import UserBlock from './UserBlock';
-import Container from './Sidebar/Container';
 import { showSidebarComments } from '../actions';
 import { withUser } from '../hocs';
+
+import Link from './Link';
+import LinkButton from './LinkButton';
+import Map from './Map';
+import Container from './Sidebar/Container';
+import UserBlock from './UserBlock';
 
 import './Profile.css';
 

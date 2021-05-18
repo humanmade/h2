@@ -1,8 +1,9 @@
 import { emojiIndex } from 'emoji-mart';
 import React from 'react';
 
-import Completion from './Completion';
 import { customEmoji } from '../EmojiPicker';
+
+import Completion from './Completion';
 
 import './EmojiCompletion.css';
 
