@@ -7,3 +7,6 @@ phpcs:
 eslint:
     enabled: true
     version: inherit
+
+stylelint:
+    enabled: false
