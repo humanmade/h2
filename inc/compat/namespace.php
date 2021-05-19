@@ -70,14 +70,17 @@ function handle_gravityform_request() {
 		return;
 	}
 
-	$id    = absint( wp_unslash( $_GET['h2_gravityform'] ) );
+	$id = absint( wp_unslash( $_GET['h2_gravityform'] ) );
+	// phpcs:ignore HM.Security.ValidatedSanitizedInput.InputNotSanitized
 	$nonce = wp_unslash( $_GET['_wpnonce'] ?? '' );
 	if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'h2_gravityform:' . $id ) ) {
 		wp_die( 'Invalid nonce.' );
 	}
 
 	$options = [
+		// phpcs:ignore HM.Security.ValidatedSanitizedInput.InputNotSanitized
 		'title' => (bool) isset( $_GET['title'] ) ? wp_unslash( $_GET['title'] ) : false,
+		// phpcs:ignore HM.Security.ValidatedSanitizedInput.InputNotSanitized
 		'description' => (bool) isset( $_GET['description'] ) ? wp_unslash( $_GET['description'] ) : false,
 	];
 
