@@ -162,8 +162,15 @@ function update_wp_rewrite_permalink_structure() {
 	$wp_rewrite->permalink_structure = get_option( 'permalink_structure' );
 }
 
+/**
+ * Register H2-specific REST endpoints.
+ *
+ * @return void
+ */
 function register_rest_routes() {
 	/**
+	 * Global WP widget factory.
+	 *
 	 * @type WP_Widget_Factory $wp_widget_factory
 	 */
 	global $wp_widget_factory;
@@ -305,7 +312,7 @@ function add_word_count_to_api( $response ) {
  * Applies `the_content` filter to arbitrary input text to enable more accurate
  * previews of the final output while editing.
  *
- * @param WP_REST_Request $request
+ * @param WP_REST_Request $request Full details about the request.
  * @return array
  */
 function render_preview( WP_REST_Request $request ) {

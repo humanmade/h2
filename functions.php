@@ -1,4 +1,7 @@
 <?php
+/**
+ * Theme functions file. Requires files from inc/ and bootstraps the theme.
+ */
 
 namespace H2;
 
