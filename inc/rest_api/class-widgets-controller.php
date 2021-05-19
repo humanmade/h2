@@ -1,4 +1,7 @@
 <?php
+/**
+ * Register REST endpoints for widgets.
+ */
 
 namespace H2\REST_API;
 
@@ -19,11 +22,15 @@ class Widgets_Controller extends WP_REST_Controller {
 
 	/**
 	 * Widget instances.
+	 *
+	 * @var array[]
 	 */
 	public $instances = [];
 
 	/**
-	 * Sidebars
+	 * Sidebars.
+	 *
+	 * @var array
 	 */
 	public $sidebars;
 
@@ -42,6 +49,11 @@ class Widgets_Controller extends WP_REST_Controller {
 		// @todo Now given $this->widgets, inject schema information for Core widgets in lieu of them being in core now. See #35574.
 	}
 
+	/**
+	 * Register widget routes.
+	 *
+	 * @return void
+	 */
 	public function register_routes() {
 		// /wp/v2/widgets
 		register_rest_route( $this->namespace, '/' . $this->rest_base, [
@@ -134,6 +146,12 @@ class Widgets_Controller extends WP_REST_Controller {
 		] );
 	}
 
+	/**
+	 * Force the collection permission check to return true.
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return bool True.
+	 */
 	public function get_items_permissions_check( $request ) {
 		return true;
 	}
@@ -165,7 +183,7 @@ class Widgets_Controller extends WP_REST_Controller {
 		$args            = [];
 		$args['sidebar'] = $request['sidebar'];
 
-		// TODO pagination
+		// TODO pagination.
 
 		$instances = [];
 		foreach ( $this->instances as $instance ) {
@@ -186,6 +204,12 @@ class Widgets_Controller extends WP_REST_Controller {
 		return rest_ensure_response( $instances );
 	}
 
+	/**
+	 * Force the single-item permission check to return true.
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return bool True.
+	 */
 	public function get_item_permissions_check( $request ) {
 		return true;
 	}
@@ -197,7 +221,7 @@ class Widgets_Controller extends WP_REST_Controller {
 	 * @return bool
 	 */
 	public function get_instance_permissions_check( $instance_id ) {
-		// Require `edit_theme_options` to view unassigned widgets
+		// Require `edit_theme_options` to view unassigned widgets.
 		$sidebar = $this->get_instance_sidebar( $instance_id );
 		if ( $sidebar === false || $sidebar === 'wp_inactive_widgets' ) {
 			return current_user_can( 'edit_theme_options' );
@@ -209,7 +233,7 @@ class Widgets_Controller extends WP_REST_Controller {
 	/**
 	 * Get the sidebar a widget instance is assigned to
 	 *
-	 * @param string id Widget instance id
+	 * @param string $id Widget instance id
 	 * @return bool|string Sidebar id it is assigned to or false if not found. Will
 	 *  return `wp_inactive_widgets` as sidebar for unassigned widgets
 	 */
@@ -228,8 +252,8 @@ class Widgets_Controller extends WP_REST_Controller {
 	 *
 	 * Widgets not assigned to the specified sidebar will be discarded.
 	 *
-	 * @param string sidebar Sidebar id
-	 * @param array instances Widget instances to sort
+	 * @param string $sidebar   Sidebar id
+	 * @param array  $instances Widget instances to sort
 	 * @return array
 	 */
 	public function sort_widgets_by_sidebar_order( $sidebar, $instances ) {
@@ -250,14 +274,30 @@ class Widgets_Controller extends WP_REST_Controller {
 		return $new_widgets;
 	}
 
+	/**
+	 * One does not simply get_item. (Empty method)
+	 *
+	 * @param WP_REST_Request $request Request object.
+	 */
 	public function get_item( $request ) {
 
 	}
 
+	/**
+	 * Return true for any deletion request (although delete_item does nothing).
+	 *
+	 * @param WP_REST_Request $request Request object.
+	 * @return bool
+	 */
 	public function delete_item_permission_check( $request ) {
 		return true;
 	}
 
+	/**
+	 * Empty method, deletion is not supported.
+	 *
+	 * @param WP_REST_Request $request Request object.
+	 */
 	public function delete_item( $request ) {
 
 	}
@@ -316,6 +356,9 @@ class Widgets_Controller extends WP_REST_Controller {
 		return apply_filters( 'rest_prepare_widget', $response, $instance, $request );
 	}
 
+	/**
+	 * Empty method. Why is it here? We may never know.
+	 */
 	public function get_item_schema() {
 
 	}
