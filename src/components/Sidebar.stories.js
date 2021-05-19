@@ -1,8 +1,9 @@
 import React from 'react';
-import { Sidebar } from './Sidebar';
 
 import { withCentering } from '../stories/decorators';
 import { apiResponse } from '../stories/util';
+
+import { Sidebar } from './Sidebar';
 
 export default {
 	title: 'Interface|Sidebar',

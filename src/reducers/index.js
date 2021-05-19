@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 
-import features from './features';
 import { reducer as plugins } from '../plugins';
 import { comments, media, pages, posts, reactions } from '../types';
+
+import features from './features';
 import ui from './ui';
 import users from './users';
 

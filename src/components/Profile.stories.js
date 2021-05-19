@@ -1,9 +1,10 @@
 import { action } from '@storybook/addon-actions';
 import React from 'react';
-import { Profile } from './Profile';
 
 import { withCentering, withStore } from '../stories/decorators';
 import { user } from '../stories/stubs';
+
+import { Profile } from './Profile';
 
 export default {
 	title: 'Interface|Profile',

@@ -2,10 +2,10 @@ import { withArchive } from '@humanmade/repress';
 import uniq from 'lodash/uniq';
 import React from 'react';
 
-import Avatar from '../Avatar';
-import Button from '../Button';
 import { withUser } from '../../hocs';
 import { comments } from '../../types';
+import Avatar from '../Avatar';
+import Button from '../Button';
 
 import './Summary.css';
 

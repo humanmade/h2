@@ -6,17 +6,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Fill, Provider as SlotFillProvider } from 'react-slot-fill';
 
-import { Provider as RestApiProvider } from './with-api-data';
-import { BrowserRouter as Router } from 'react-router-dom';
-
-import App from './App';
-
 import api from './api';
+import App from './App';
 import PluginAPI from './plugins';
 import loadPlugins from './plugins/load';
 import { createStore } from './store';
+import { Provider as RestApiProvider } from './with-api-data';
 
 import './hm-pattern-library/assets/styles/juniper.css';
 

@@ -6,15 +6,16 @@ import { connect } from 'react-redux';
 import getCaretCoordinates from 'textarea-caret';
 import Turndown from 'turndown';
 
+import compileMarkdown from '../../compile-markdown';
+import { media } from '../../types';
+import { cleanConvertedMarkdown, isWordContent } from '../../util';
 import Button from '../Button';
 import DropUpload from '../DropUpload';
-import EmojiCompletion from './EmojiCompletion';
-import MentionCompletion from './MentionCompletion';
 import MessageContent from '../Message/Content';
 import Shortcuts from '../Shortcuts';
-import compileMarkdown from '../../compile-markdown';
-import { cleanConvertedMarkdown, isWordContent } from '../../util';
-import { media } from '../../types';
+
+import EmojiCompletion from './EmojiCompletion';
+import MentionCompletion from './MentionCompletion';
 
 import './index.css';
 

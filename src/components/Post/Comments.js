@@ -1,10 +1,10 @@
 import { withArchive } from '@humanmade/repress';
 import React, { Fragment } from 'react';
 
+import { comments } from '../../types';
 import CommentLoader from '../Comment/Loader';
 import CommentsList from '../CommentsList';
 import WriteComment from '../Message/WriteComment';
-import { comments } from '../../types';
 
 class PostComments extends React.Component {
 	componentDidUpdate() {

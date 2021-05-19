@@ -3,15 +3,16 @@ import React, { Fragment, useState } from 'react';
 import { FormattedRelative } from 'react-intl';
 import { Slot } from 'react-slot-fill';
 
-import AuthorLink from './AuthorLink';
-import Avatar from '../Avatar';
-import Link from '../Link';
 import {
 	Category as CategoryShape,
 	Post as PostShape,
 	User as UserShape,
 } from '../../shapes';
 import { decodeEntities } from '../../util';
+import Avatar from '../Avatar';
+import Link from '../Link';
+
+import AuthorLink from './AuthorLink';
 
 import './Header.css';
 

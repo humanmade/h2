@@ -1,7 +1,8 @@
 import React from 'react';
 
-import Avatar from './Avatar';
 import { withCentering, withStore } from '../stories/decorators';
+
+import Avatar from './Avatar';
 
 export default {
 	title: 'Components|Avatar',

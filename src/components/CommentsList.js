@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import Comment from './Comment';
 import { Comment as CommentShape, Post } from '../shapes';
+
+import Comment from './Comment';
 
 import './CommentsList.css';
 

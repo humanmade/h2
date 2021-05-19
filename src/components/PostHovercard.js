@@ -5,11 +5,12 @@ import qs from 'qs';
 import React from 'react';
 import { FormattedRelative } from 'react-intl';
 
-import Avatar from './Avatar';
-import Hovercard from './Hovercard';
 import { Post as PostShape, User as UserShape } from '../shapes';
 import { posts, users } from '../types';
 import { decodeEntities } from '../util';
+
+import Avatar from './Avatar';
+import Hovercard from './Hovercard';
 
 import './PostHovercard.css';
 

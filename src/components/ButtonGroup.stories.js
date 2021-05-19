@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react';
 
+import { withCentering } from '../stories/decorators';
+
 import Button from './Button';
 import ButtonGroup from './ButtonGroup';
-import { withCentering } from '../stories/decorators';
 
 export default {
 	title: 'Components|Form/Button/Group',

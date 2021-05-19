@@ -1,9 +1,10 @@
 import { action } from '@storybook/addon-actions';
 import React from 'react';
 
-import { Changes } from './Changes';
 import { withStore } from '../stories/decorators';
 import { user } from '../stories/stubs';
+
+import { Changes } from './Changes';
 
 export default {
 	title: 'Interface|Changes',

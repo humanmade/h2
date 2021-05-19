@@ -3,14 +3,14 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 
-import SelectDraft from './SelectDraft';
-import RemotePreview from '../RemotePreview';
 import { withCategories, withCurrentUser } from '../../hocs';
 import { posts } from '../../types';
-
 import Avatar from '../Avatar';
 import Editor from '../Editor';
 import Notification from '../Notification';
+import RemotePreview from '../RemotePreview';
+
+import SelectDraft from './SelectDraft';
 
 import './Write.css';
 

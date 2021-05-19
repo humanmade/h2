@@ -1,9 +1,10 @@
 import { action } from '@storybook/addon-actions';
 import React from 'react';
 
+import { withCentering } from '../stories/decorators';
+
 import Button from './Button';
 import { Dropdown, DropdownContent } from './Dropdown';
-import { withCentering } from '../stories/decorators';
 
 const buttonTypes = [
 	'primary',

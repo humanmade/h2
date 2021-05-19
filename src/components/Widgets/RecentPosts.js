@@ -1,11 +1,11 @@
 import { withPagedArchive } from '@humanmade/repress';
-import React from 'react';
 import qs from 'qs';
+import React from 'react';
 
-import Link from '../Link';
-import Pagination from '../Sidebar/Pagination';
 import { posts } from '../../types';
 import { decodeEntities } from '../../util';
+import Link from '../Link';
+import Pagination from '../Sidebar/Pagination';
 
 import './RecentPosts.css';
 

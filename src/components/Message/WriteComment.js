@@ -3,13 +3,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 
+import { withCurrentUser } from '../../hocs';
+import { Post } from '../../shapes';
+import { comments } from '../../types';
 import Avatar from '../Avatar';
 import Editor from '../Editor';
 import Notification from '../Notification';
 import RemotePreview from '../RemotePreview';
-import { withCurrentUser } from '../../hocs';
-import { Post } from '../../shapes';
-import { comments } from '../../types';
 
 import './WriteComment.css';
 

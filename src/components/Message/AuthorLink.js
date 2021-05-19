@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { showSidebarProfile } from '../../actions';
 import LinkButton from '../LinkButton';
 import UserHovercard from '../UserHovercard';
-import { showSidebarProfile } from '../../actions';
 
 import './AuthorLink.css';
 

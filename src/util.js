@@ -9,8 +9,8 @@ const ENTITY_REGEX = /&#(?:([0-9]+)|x([a-fA-F0-9]+));/g;
  * This is a much more lightweight decoder than is needed for generic HTML
  * handling, as we control the server-side representation.
  *
- * @param {string} text
- * @return {string}
+ * @param {string} text String to be decoded.
+ * @returns {string} Decoded string.
  */
 export function decodeEntities( text ) {
 	return text.replace(
@@ -27,8 +27,8 @@ export function decodeEntities( text ) {
  *
  * From https://github.com/mathiasbynens/he
  *
- * @param {Number} codePoint Unicode code point for a symbol
- * @return {string} Symbol represented by the code point
+ * @param {number} codePoint Unicode code point for a symbol
+ * @returns {string} Symbol represented by the code point
  */
 export function codePointToSymbol( codePoint ) {
 	let output = '';
@@ -49,6 +49,9 @@ export function codePointToSymbol( codePoint ) {
 
 /**
  * From TinyMCE: https://github.com/tinymce/tinymce/blob/master/src/plugins/paste/main/ts/core/WordFilter.ts
+ *
+ * @param {string} content String of content.
+ * @returns {boolean} Whether the content is Word content.
  */
 export function isWordContent( content ) {
 	return (
@@ -60,6 +63,9 @@ export function isWordContent( content ) {
 
 /**
  * From https://github.com/euangoddard/clipboard2markdown
+ *
+ * @param {string} str Input string.
+ * @returns {string} Cleaned string.
  */
 export function cleanConvertedMarkdown( str ) {
 	return str

@@ -1,9 +1,10 @@
 import { action } from '@storybook/addon-actions';
 import React from 'react';
 
-import { MetaSidebar } from './MetaSidebar';
 import { withCentering, withStore } from '../stories/decorators';
 import { user } from '../stories/stubs';
+
+import { MetaSidebar } from './MetaSidebar';
 
 export default {
 	title: 'Interface|Meta Sidebar',
@@ -36,6 +37,6 @@ export const Basic = () => (
 export const Loading = () => (
 	<MetaSidebar
 		{ ...commonProps }
-		loadingCurrentUser={ true }
+		loadingCurrentUser
 	/>
 );

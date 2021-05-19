@@ -1,7 +1,11 @@
 import { withSingle } from '@humanmade/repress';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Slot } from 'react-slot-fill';
-import PropTypes from 'prop-types';
+
+import { withUser } from '../hocs';
+import { Comment as CommentShape } from '../shapes';
+import { comments } from '../types';
 
 import Actions from './Comment/Actions';
 import CommentHeader from './Comment/Header';
@@ -10,9 +14,6 @@ import Editor from './Editor';
 import MessageContent from './Message/Content';
 import WriteComment from './Message/WriteComment';
 import Notification from './Notification';
-import { withUser } from '../hocs';
-import { Comment as CommentShape } from '../shapes';
-import { comments } from '../types';
 
 import './Comment.css';
 

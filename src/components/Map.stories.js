@@ -1,7 +1,8 @@
 import React from 'react';
 
-import Map from './Map';
 import { withCentering } from '../stories/decorators';
+
+import Map from './Map';
 
 export default {
 	title: 'Components|Map',
