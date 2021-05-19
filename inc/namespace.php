@@ -24,6 +24,7 @@ function adjust_default_filters() {
 	// Render embeds in comments.
 	global $wp_embed;
 	add_filter( 'comment_text', [ $wp_embed, 'run_shortcode' ], 8 );
+	add_filter( 'comment_text', 'do_shortcode', 8 );
 	add_filter( 'comment_text', [ $wp_embed, 'autoembed' ], 8 );
 }
 
