@@ -18,12 +18,7 @@ import UserSettings from './UserSettings';
 
 import './MetaSidebar.css';
 
-const FEATURES = {
-	use_interweave: {
-		name: 'Use Experimental Content Parser',
-		description: 'Allows for rich content in text like @-mentions.',
-	},
-};
+const FEATURES = {};
 
 const BetaFeature = props => (
 	<div className="MetaSidebar--feature">

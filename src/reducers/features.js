@@ -3,9 +3,7 @@ import {
 	DISABLE_BETA_FEATURE,
 } from '../actions';
 
-const DEFAULT_STATE = {
-	use_interweave: window.H2Data.features.interweave || false,
-};
+const DEFAULT_STATE = {};
 
 export default function features( state = DEFAULT_STATE, action ) {
 	switch ( action.type ) {
