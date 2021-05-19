@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import {
@@ -18,12 +18,7 @@ import UserSettings from './UserSettings';
 
 import './MetaSidebar.css';
 
-const FEATURES = {
-	use_interweave: {
-		name: 'Use Experimental Content Parser',
-		description: 'Allows for rich content in text like @-mentions.',
-	},
-};
+const FEATURES = {};
 
 const BetaFeature = props => (
 	<div className="MetaSidebar--feature">
@@ -80,17 +75,21 @@ export class MetaSidebar extends React.Component {
 
 				<UserSettings />
 
-				<h3>Beta Features</h3>
-				{ Object.keys( FEATURES ).map( key => (
-					<BetaFeature
-						key={ key }
-						enabled={ features[ key ] }
-						description={ FEATURES[ key ].description || null }
-						name={ FEATURES[ key ].name }
-						onEnable={ () => onEnableFeature( key ) }
-						onDisable={ () => onDisableFeature( key ) }
-					/>
-				) ) }
+				{ Object.keys( FEATURES ).length ? (
+					<Fragment>
+						<h3>Beta Features</h3>
+						{ Object.keys( FEATURES ).map( key => (
+							<BetaFeature
+								key={ key }
+								enabled={ features[ key ] }
+								description={ FEATURES[ key ].description || null }
+								name={ FEATURES[ key ].name }
+								onEnable={ () => onEnableFeature( key ) }
+								onDisable={ () => onDisableFeature( key ) }
+							/>
+						) ) }
+					</Fragment>
+				) : null }
 			</Container>
 		);
 	}

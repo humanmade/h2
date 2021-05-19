@@ -89,9 +89,7 @@ function get_script_data() {
 			'environment'    => defined( 'HM_ENV_TYPE' ) ? HM_ENV_TYPE : ( WP_DEBUG ? 'development' : 'production' ),
 			'emoji'          => apply_filters( 'h2.custom_emoji', [] ),
 		],
-		'features' => [
-			'interweave' => (bool) get_site_option( 'h2_use_interweave', false ),
-		],
+		'features' => [],
 		'plugins' => [
 			'reactions' => \class_exists( 'H2\\Reactions\\Reaction' ),
 		],
