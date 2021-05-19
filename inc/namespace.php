@@ -1,4 +1,7 @@
 <?php
+/**
+ * Key theme logic.
+ */
 
 namespace H2;
 
@@ -6,26 +9,26 @@ use WP_Error;
 use WP_REST_Request;
 
 /**
- * Adjust default filters in WordPress
+ * Adjust default filters in WordPress.
  *
  * Adds and removes default filters and callbacks from various formatting
  * filters.
  */
 function adjust_default_filters() {
-	// Add make_clickable to posts
+	// Add make_clickable to posts.
 	add_filter( 'the_content', 'make_clickable', 9 );
 
 	// Normalize entities for easier decoding.
 	add_filter( 'the_title', 'ent2ncr', 11 );
 
-	// Render embeds in comments
+	// Render embeds in comments.
 	global $wp_embed;
 	add_filter( 'comment_text', [ $wp_embed, 'run_shortcode' ], 8 );
 	add_filter( 'comment_text', [ $wp_embed, 'autoembed' ], 8 );
 }
 
 /**
- * Set up theme global settings
+ * Set up theme global settings.
  */
 function set_up_theme() {
 	add_theme_support( 'title-tag' );
@@ -41,7 +44,7 @@ function set_up_theme() {
 }
 
 /**
- * Enqueue frontend CSS and JS
+ * Enqueue frontend CSS and JS.
  */
 function enqueue_assets() {
 	Loader\enqueue_assets( get_stylesheet_directory() );
@@ -57,7 +60,7 @@ function enqueue_assets() {
 }
 
 /**
- * Gather data for H2
+ * Gather data for H2.
  */
 function get_script_data() {
 	$preload = [
@@ -118,6 +121,12 @@ function get_script_data() {
 	return $data;
 }
 
+/**
+ * Trigger anticipatory requests against the REST server for a list of URLs.
+ *
+ * @param string[] $urls List of REST endpoint URLs.
+ * @return array Array of returned data for each requested endpoint.
+ */
 function prefetch_urls( $urls ) {
 	$server = rest_get_server();
 	$data   = [];
@@ -135,6 +144,9 @@ function prefetch_urls( $urls ) {
 
 /**
  * Override the permalink structure, as it's hard-set in the React app.
+ *
+ * @param string $current_value Whatever permalink scheme is set (overridden).
+ * @return string A permalink structure that matches the React router.
  */
 function get_permalink_structure( $current_value ) : string {
 	return '/%year%/%monthnum%/%day%/%postname%/';
