@@ -87,6 +87,13 @@
 	margin: 1rem 0;
 }
 
+.PostContent ul ul,
+.PostContent ul ol,
+.PostContent ol ul,
+.PostContent ol ol {
+	margin: 0.25rem 0 0.5rem;
+}
+
 .PostContent ul,
 .PostContent ol {
 	padding-left: 20px;
