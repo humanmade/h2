@@ -1,4 +1,7 @@
 <?php
+/**
+ * Register REST endpoints for widgets.
+ */
 
 namespace H2\REST_API;
 
@@ -19,11 +22,13 @@ class Widgets_Controller extends WP_REST_Controller {
 
 	/**
 	 * Widget instances.
+	 * @var array[]
 	 */
 	public $instances = [];
 
 	/**
 	 * Sidebars
+	 * @var array
 	 */
 	public $sidebars;
 
@@ -42,6 +47,11 @@ class Widgets_Controller extends WP_REST_Controller {
 		// @todo Now given $this->widgets, inject schema information for Core widgets in lieu of them being in core now. See #35574.
 	}
 
+	/**
+	 * Register widget routes.
+	 *
+	 * @return void
+	 */
 	public function register_routes() {
 		// /wp/v2/widgets
 		register_rest_route( $this->namespace, '/' . $this->rest_base, [
