@@ -6,7 +6,7 @@ import { Content } from '../components/Message/Content';
 import { withPadding } from './decorators';
 import { htmlTester } from './stubs';
 
-import '../hm-pattern-library/assets/styles/juniper.css';
+import '../pattern-library/assets/styles/juniper.css';
 
 storiesOf( 'Components|Base Styles', module )
 	.addDecorator( withPadding() )

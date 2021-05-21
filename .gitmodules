@@ -1,6 +1,3 @@
-[submodule "src/hm-pattern-library"]
-	path = src/hm-pattern-library
-	url = https://github.com/humanmade/hm-pattern-library
 [submodule "src/with-api-data"]
 	path = src/with-api-data
 	url = git@github.com:joehoyle/with-api-data.git
