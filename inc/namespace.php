@@ -123,10 +123,10 @@ function get_script_data() {
 /**
  * Increase the maximum limit for users on REST API to 200.
  */
-add_filter("rest_user_collection_params", function($params) {
-    $params['per_page']['maximum'] = 200;
-    return $params;
-});
+function increase_api_user_limit( $params ) {
+	$params['per_page']['maximum'] = 200;
+	return $params;
+};
 
 /**
  * Trigger anticipatory requests against the REST server for a list of URLs.
