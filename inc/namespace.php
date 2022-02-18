@@ -122,6 +122,10 @@ function get_script_data() {
 
 /**
  * Increase the maximum limit for users on REST API to 200.
+ * 
+ * @param array $params REST API parameters.
+ * 
+ * @return array The updates REST API parameters.
  */
 function increase_api_user_limit( $params ) {
 	$params['per_page']['maximum'] = 200;
