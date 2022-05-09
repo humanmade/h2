@@ -1,7 +1,8 @@
 import React from 'react';
 
-import Notification from './Notification';
 import { withCentering } from '../stories/decorators';
+
+import Notification from './Notification';
 
 export default {
 	title: 'Components|Notification',

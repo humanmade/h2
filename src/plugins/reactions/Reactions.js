@@ -86,7 +86,7 @@ export class Reactions extends Component {
 	/**
 	 * Return the raw reactions grouped by emoji.
 	 *
-	 * @return {object} Reaction emoji : array of user IDs. eg 🌭:[ 1, 2 ].
+	 * @returns {object} Reaction emoji : array of user IDs. eg 🌭:[ 1, 2 ].
 	 */
 	getGroupedReactions() {
 		let reactions = {};

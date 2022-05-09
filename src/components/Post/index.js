@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import { withSingle } from '@humanmade/repress';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Slot } from 'react-slot-fill';
 
@@ -8,13 +8,13 @@ import {
 	Post as PostShape,
 } from '../../shapes';
 import { posts } from '../../types';
-
-import Summary from './Summary';
-import PostComments from './Comments';
 import Button from '../Button';
 import { Dropdown, DropdownContent } from '../Dropdown';
 import MessageHeader from '../Message/Header';
 import MessageMain from '../Message/Main';
+
+import PostComments from './Comments';
+import Summary from './Summary';
 
 import './index.css';
 

@@ -4,9 +4,10 @@ import React from 'react';
 import { FormattedRelative } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 
-import Link from './Link';
 import { posts } from '../types';
 import { decodeEntities } from '../util';
+
+import Link from './Link';
 
 import './SearchInput.css';
 

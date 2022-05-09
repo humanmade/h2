@@ -1,8 +1,8 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
+import React from 'react';
 
-import { withCentering, withStore } from '../stories/decorators';
 import DropUpload from '../components/DropUpload';
+import { withCentering, withStore } from '../stories/decorators';
 
 export default {
 	title: 'Components|DropUpload',

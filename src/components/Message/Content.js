@@ -2,14 +2,14 @@ import Interweave from 'interweave';
 import memoize from 'lodash/memoize';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
 
-import SafeEmbed from './SafeEmbed';
+import { parseList, parseListItem } from '../../embeds/tasklist';
+import matchers from '../../matchers';
 import Link from '../Link';
 import Notification from '../Notification';
 import TimeHovercard from '../TimeHovercard';
-import { parseList, parseListItem } from '../../embeds/tasklist';
-import matchers from '../../matchers';
+
+import SafeEmbed from './SafeEmbed';
 
 import '@humanmade/react-tasklist/css/index.css';
 import './Content.css';
@@ -106,15 +106,6 @@ const transform = ( node, children ) => {
 };
 
 export function Content( props ) {
-	if ( ! props.useInterweave ) {
-		return (
-			<div
-				className="PostContent"
-				dangerouslySetInnerHTML={ { __html: props.html } }
-			/>
-		);
-	}
-
 	// Parse emoji early to ensure it doesn't get replaced later by wp-emoji,
 	// which breaks React's rendering.
 	// https://github.com/humanmade/H2/issues/250
@@ -138,8 +129,4 @@ Content.propTypes = {
 	html: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = state => ( {
-	useInterweave: state.features.use_interweave,
-} );
-
-export default connect( mapStateToProps )( Content );
+export default Content;

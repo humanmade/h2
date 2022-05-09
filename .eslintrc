@@ -1,5 +1,5 @@
 extends:
-  - humanmade
+  - '@humanmade'
 rules:
   comma-dangle:
   - error
@@ -8,3 +8,7 @@ rules:
     imports: always-multiline
     exports: always-multiline
     functions: never
+  jsdoc/require-jsdoc:
+  - off
+  react/jsx-sort-props:
+  - off

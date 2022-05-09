@@ -1,8 +1,9 @@
 import { action } from '@storybook/addon-actions';
 import React from 'react';
-import { SuperMenu } from './SuperMenu';
 
 import { withStore } from '../stories/decorators';
+
+import { SuperMenu } from './SuperMenu';
 
 export default {
 	title: 'Interface|Super Menu',

@@ -2,13 +2,14 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Slot } from 'react-slot-fill';
 
+import { getChangesForUser } from '../../changelog';
+import { withCurrentUser } from '../../hocs';
+import SearchInput from '../SearchInput';
+
 import CurrentUser from './CurrentUser';
 import HeaderButton from './HeaderButton';
 import HeaderLabel from './HeaderLabel';
 import Logo from './Logo';
-import SearchInput from '../SearchInput';
-import { getChangesForUser } from '../../changelog';
-import { withCurrentUser } from '../../hocs';
 
 import './index.css';
 

@@ -1,9 +1,10 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
+import React from 'react';
 
-import { Header } from './index';
 import { withPadding, withStore } from '../../stories/decorators';
 import { user } from '../../stories/stubs';
+
+import { Header } from './index';
 
 const defaultProps = {
 	currentUser: user,

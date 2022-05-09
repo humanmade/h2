@@ -1,8 +1,9 @@
 import { action } from '@storybook/addon-actions';
 import React from 'react';
 
-import EmojiPicker from './EmojiPicker';
 import { withCentering } from '../stories/decorators';
+
+import EmojiPicker from './EmojiPicker';
 
 export default {
 	title: 'Components|EmojiPicker',

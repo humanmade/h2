@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Avatar from '../Avatar';
 import { showMetaSidebar } from '../../actions';
 import { User } from '../../shapes';
+import Avatar from '../Avatar';
 
 import './CurrentUser.css';
 

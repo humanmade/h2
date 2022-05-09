@@ -9,17 +9,16 @@ import {
 } from './actions';
 import Changes from './components/Changes';
 import Header from './components/Header';
+import MetaSidebar from './components/MetaSidebar';
+import { OverlayContainer } from './components/Overlay';
 import PageContainer from './components/Page/Container';
 import PostsList from './components/Post/List';
 import WritePost from './components/Post/Write';
-import MetaSidebar from './components/MetaSidebar';
-import { OverlayContainer } from './components/Overlay';
 import Profile from './components/Profile';
 import Sidebar from './components/Sidebar';
 import CommentsSidebar from './components/Sidebar/Comments';
-import { RenderPlugins } from './plugins';
-
 import SuperMenu from './components/SuperMenu';
+import { RenderPlugins } from './plugins';
 
 import './App.css';
 

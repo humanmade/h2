@@ -1,4 +1,7 @@
 <?php
+/**
+ * Theme functions file. Requires files from inc/ and bootstraps the theme.
+ */
 
 namespace H2;
 
@@ -15,6 +18,7 @@ add_filter( 'pre_option_permalink_structure', __NAMESPACE__ . '\\get_permalink_s
 add_action( 'init', __NAMESPACE__ . '\\update_wp_rewrite_permalink_structure' );
 add_action( 'init', __NAMESPACE__ . '\\register_custom_meta' );
 add_action( 'rest_api_init', __NAMESPACE__ . '\\register_rest_routes' );
+add_filter( 'rest_user_collection_params', __NAMESPACE__ . '\\increase_api_user_limit' );
 
 Compat\bootstrap();
 Emoji\bootstrap();

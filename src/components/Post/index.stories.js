@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { Post } from './index';
 import { withPadding, withStore } from '../../stories/decorators';
 import { comment, editablePost, post, user } from '../../stories/stubs';
 import { apiResponse } from '../../stories/util';
+
+import { Post } from './index';
 
 const defaultProps = {
 	user: user,

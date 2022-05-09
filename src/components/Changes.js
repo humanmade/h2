@@ -1,8 +1,9 @@
 import React from 'react';
 
-import Modal from './Modal';
 import { changes, getChangesForUser } from '../changelog';
 import { withCurrentUser } from '../hocs';
+
+import Modal from './Modal';
 
 import './Changes.css';
 

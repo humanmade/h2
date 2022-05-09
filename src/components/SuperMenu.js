@@ -1,10 +1,11 @@
 import React from 'react';
 
-import Link from './Link';
+import { withCategories, withSites } from '../hocs';
+
 import Logo from './Header/Logo';
+import Link from './Link';
 import Overlay from './Overlay';
 import SearchInput from './SearchInput';
-import { withCategories, withSites } from '../hocs';
 
 import './SuperMenu.css';
 

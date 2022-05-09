@@ -105,6 +105,8 @@ function get_asset_uri( string $asset_path, string $base_url ) {
 }
 
 /**
+ * Enqueue the assets used to run the frontend application.
+ *
  * @param string $directory Root directory containing `src` and `build` directory.
  * @param array $opts {
  *     @type string $base_url Root URL containing `src` and `build` directory. Only needed for production.
@@ -116,7 +118,7 @@ function get_asset_uri( string $asset_path, string $base_url ) {
 function enqueue_assets( $directory, $opts = [] ) {
 	$defaults = [
 		'base_url' => '',
-		'handle'   => basename( $directory ),
+		'handle'   => strtolower( basename( $directory ) ),
 		'scripts'  => [],
 		'styles'   => [],
 	];

@@ -1,7 +1,8 @@
 import React from 'react';
 
-import Hovercard, { Card } from './Hovercard';
 import { withCentering, withStore } from '../stories/decorators';
+
+import Hovercard, { Card } from './Hovercard';
 
 const commonProps = {
 	width: 425,

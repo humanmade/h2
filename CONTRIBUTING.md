@@ -18,12 +18,10 @@ Storybook can be run without a WordPress setup. To run it:
 
 ```sh
 # Install dependencies
-yarn install
-# (or `npm install`)
+npm install
 
 # Run Storybook
-yarn run storybook
-# (or `npm run storybook`)
+npm run storybook
 ```
 
 This will give you a component-level view of the project.
@@ -37,12 +35,10 @@ To develop with live reloading, run:
 
 ```sh
 # Install dependencies
-yarn install
-# (or `npm install`)
+npm install
 
 # Run the server
-yarn start
-# (or `npm start`)
+npm start
 ```
 
 You may also wish to install the various plugins as noted in the README for testing further functionality such as emoji reactions.

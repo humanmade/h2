@@ -1,8 +1,9 @@
 import { action } from '@storybook/addon-actions';
 import React, { Fragment } from 'react';
 
-import Button from './Button';
 import { withCentering } from '../stories/decorators';
+
+import Button from './Button';
 
 const buttonTypes = [
 	'primary',

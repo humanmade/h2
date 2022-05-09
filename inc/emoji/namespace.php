@@ -1,4 +1,7 @@
 <?php
+/**
+ * Control and enhance emoji support in H2.
+ */
 
 namespace H2\Emoji;
 
@@ -36,6 +39,7 @@ function schedule_updates() {
 /**
  * Get custom emoji, formatted for Emoji Mart
  *
+ * @param array $emoji Array of emoji.
  * @return array List of emoji objects
  */
 function get_custom_emoji( $emoji ) {
@@ -46,7 +50,7 @@ function get_custom_emoji( $emoji ) {
 
 	$custom = [];
 	foreach ( $slack as $key => $url ) {
-		// Set aliases as short_names
+		// Set aliases as short_names.
 		if ( strpos( $url, 'alias:' ) === 0 ) {
 			$original = (string) substr( $url, 6 );
 			if ( isset( $custom[ $original ] ) ) {
@@ -161,22 +165,22 @@ function replace_custom_emoji( $content ) {
 	$emoji  = get_slack_emoji();
 	$search = '#:(' . join( '|', array_map( 'preg_quote', array_keys( $emoji ) ) ) . '):#';
 
-	// HTML loop taken from texturize function, could possible be consolidated
-	$textarr = preg_split( '/(<.*>)/U', $content, -1, PREG_SPLIT_DELIM_CAPTURE ); // capture the tags as well as in between
-	$stop    = count( $textarr );// loop stuff
+	// HTML loop taken from texturize function, could possible be consolidated.
+	$textarr = preg_split( '/(<.*>)/U', $content, -1, PREG_SPLIT_DELIM_CAPTURE ); // capture the tags as well as in between.
+	$stop    = count( $textarr ); // loop stuff.
 
-	// Ignore proessing of specific tags
+	// Ignore proessing of specific tags.
 	$tags_to_ignore       = 'code|pre|style|script|textarea';
 	$ignore_block_element = '';
 
 	$output = '';
 	foreach ( $textarr as $content ) {
-		// If we're in an ignore block, wait until we find its closing tag
+		// If we're in an ignore block, wait until we find its closing tag.
 		if ( '' === $ignore_block_element && preg_match( '/^<(' . $tags_to_ignore . ')>/', $content, $matches ) ) {
 			$ignore_block_element = $matches[1];
 		}
 
-		// If it's not a tag and not in ignore block
+		// If it's not a tag and not in ignore block.
 		if ( '' === $ignore_block_element && strlen( $content ) > 0 && '<' !== $content[0] ) {
 			$content = preg_replace_callback(
 				$search,
@@ -202,7 +206,7 @@ function replace_custom_emoji( $content ) {
 			);
 		}
 
-		// did we exit ignore block
+		// did we exit ignore block.
 		if ( '' !== $ignore_block_element && '</' . $ignore_block_element . '>' === $content ) {
 			$ignore_block_element = '';
 		}

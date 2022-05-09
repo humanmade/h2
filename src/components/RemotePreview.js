@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Notification from './Notification';
-import MessageContent from './Message/Content';
 import compileMarkdown from '../compile-markdown';
 import { posts } from '../types';
+
+import MessageContent from './Message/Content';
+import Notification from './Notification';
 
 export default class RemotePreview extends React.Component {
 	constructor( props ) {
