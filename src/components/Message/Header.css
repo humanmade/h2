@@ -51,12 +51,13 @@
 	flex-grow: 1;
 	min-width: 0;
 	overflow: hidden;
+	line-height: 1.1;
 }
 
 .Message-Header__title {
 	font-size: 1.333333333rem;
-	line-height: 1.4em;
-	margin: 0 0.5em 0 0;
+	line-height: 1.2;
+	margin: 0 0.5em 10px 0;
 	text-transform: inherit;
 }
 
@@ -67,6 +68,8 @@
 }
 
 .Message-Header__date {
+	display: inline-block;
+	margin-right: 10px;
 	color: #AAA;
 	font-size: 14px;
 }
@@ -81,7 +84,7 @@
 
 .Message-Header__categories li {
 	display: inline-block;
-	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .Message-Header__status {
