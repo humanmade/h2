@@ -13,7 +13,7 @@ const ENTITY_REGEX = /&#(?:([0-9]+)|x([a-fA-F0-9]+));/g;
  * @returns {string} Decoded string.
  */
 export function decodeEntities( text ) {
-	return text.replace(
+	return text.replace( '&amp;', '&' ).replace(
 		ENTITY_REGEX,
 		( _, decimal, hex ) => {
 			const codePoint = decimal ? parseInt( decimal, 10 ): parseInt( hex, 16 );
