@@ -17,12 +17,8 @@
 }
 
 .Comment-Header .actions-wrap {
-	display: none;
+	display: block;
 	align-items: center;
-}
-
-.Comment-Header:hover .actions-wrap {
-	display: flex;
 }
 
 .Comment-Header .Comment-date {
@@ -80,9 +76,14 @@
 	.Comment-Header .Avatar:after {
 		top: 8px;
 	}
+}
 
-	.Comment-Header .actions-wrap,
-	.Comment:hover > .Comment-Header .actions-wrap {
-		display: block;
+@media ( min-width: 600px ) {
+	.Comment-Header .actions-wrap {
+		display: none;
+	}
+
+	.Comment-Header:hover .actions-wrap {
+		display: flex;
 	}
 }

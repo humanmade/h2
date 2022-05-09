@@ -52,10 +52,6 @@
 	padding-bottom: 1rem;
 }
 
-.Comment:hover > .Comment-Header .actions-wrap {
-	display: flex;
-}
-
 .Comment-footer-actions {
 	display: flex;
 	justify-content: space-between;
@@ -87,5 +83,9 @@
 @media ( min-width: 600px ) {
 	.Comment-footer-actions .Comment-Actions {
 		display: none;
+	}
+
+	.Comment:hover > .Comment-Header .actions-wrap {
+		display: flex;
 	}
 }
