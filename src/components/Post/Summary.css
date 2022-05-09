@@ -68,9 +68,13 @@
 	}
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
 	.Post-Summary {
 		flex-direction: column;
 		align-items: flex-start;
+	}
+
+	.Post-Summary-comments {
+		margin-top: 1em;
 	}
 }
