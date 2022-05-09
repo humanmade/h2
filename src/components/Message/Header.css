@@ -54,6 +54,10 @@
 	line-height: 1.1;
 }
 
+.App .Message-Header__byline > a:hover {
+	text-decoration: none;
+}
+
 .Message-Header__title {
 	font-size: 1.333333333rem;
 	line-height: 1.2;
