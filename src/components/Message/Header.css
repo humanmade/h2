@@ -83,12 +83,11 @@
 }
 
 .Message-Header__categories li {
-	display: inline-block;
-	margin-right: 10px;
+	display: inline;
 }
 
 .Message-Header__categories li::after {
-	content: ",";
+	content: ", ";
 }
 
 .Message-Header__categories li:last-of-type::after {
