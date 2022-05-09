@@ -62,7 +62,7 @@
 	pointer-events: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 960px) {
 	.Post-Summary {
 		margin-left: 0;
 	}
