@@ -61,16 +61,35 @@ function enqueue_assets() {
 }
 
 /**
+ * Return a simplified version of the URL for use as the preload array key.
+ *
+ * @param string $url URL being fetched.
+ * @return string Simplified URL with some params removed.
+ */
+function get_preload_key( string $url ) : string {
+	$url_params_to_remove = [ '_fields' ];
+	return array_reduce(
+		$url_params_to_remove,
+		function( $url, $param_to_remove ) {
+			return preg_replace( "/[\?&]$param_to_remove=[^&]+/", '', $url );
+		},
+		$url
+	);
+}
+
+/**
  * Gather data for H2.
  */
 function get_script_data() {
 	$preload = [
-		'/wp/v2/posts',
-		'/h2/v1/site-switcher/sites',
-		'/h2/v1/widgets?sidebar=sidebar',
-		'/wp/v2/categories?per_page=100',
-		'/wp/v2/users/me',
-		'/wp/v2/users?per_page=200',
+		// @TODO: This preloaded data is not used (the client makes the same requests),
+		// need to investigate why. For now, these only increase TTFB with no gain.
+		// '/wp/v2/posts',
+		// '/h2/v1/site-switcher/sites',
+		// '/h2/v1/widgets?sidebar=sidebar',
+		// '/wp/v2/categories?per_page=100',
+		'/wp/v2/users/me?_fields=id,name,link,slug,avatar_urls,meta',
+		'/wp/v2/users?per_page=200&_fields=id,name,link,slug,avatar_urls,meta',
 	];
 
 	$data = [
@@ -99,7 +118,6 @@ function get_script_data() {
 	// Preload the comments and reactions for the posts too.
 	if ( isset( $data['preload']['/wp/v2/posts'] ) ) {
 		foreach ( $data['preload']['/wp/v2/posts'] as $post_data ) {
-			$id   = $post_data['id'];
 			$urls = [
 				sprintf( '/h2/v1/reactions?post=%d', $post_data['id'] ),
 				sprintf( '/wp/v2/comments?post=%d&per_page=100', $post_data['id'] ),
@@ -109,7 +127,7 @@ function get_script_data() {
 
 			// Only fetch new URLs we don't already have.
 			$urls = array_filter( $urls, function ( $url ) use ( $data ) {
-				return empty( $data['preload'][ $url ] );
+				return empty( $data['preload'][ get_preload_key( $url ) ] );
 			} );
 
 			$results         = prefetch_urls( $urls );
@@ -147,7 +165,7 @@ function prefetch_urls( $urls ) {
 			continue;
 		}
 
-		$data[ $url ] = $server->response_to_data( $response, false );
+		$data[ get_preload_key( $url ) ] = $server->response_to_data( $response, false );
 	}
 	return $data;
 }
