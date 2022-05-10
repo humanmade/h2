@@ -19,7 +19,7 @@ export default function Link( { children, disablePreviews, href, ...props } ) {
 		);
 	}
 
-	const relativeTo = href.replace( /^(?:\/\/|[^/]+)*\//, '/' );
+	const relativeTo = href.replace( root, '' );
 
 	const link = (
 		<InternalLink
