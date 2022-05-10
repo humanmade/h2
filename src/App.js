@@ -113,12 +113,15 @@ class App extends Component {
 					visible={ this.props.showingSuper }
 					onClose={ this.props.onHideSuperSidebar }
 					onSearch={ search => this.onSearch( search ) }
+					onShowChanges={ () => {
+						this.setState( { showChanges: true } );
+						this.props.onHideSuperSidebar();
+					} }
 				/>
 				<Header
 					onLogOut={ () => this.onLogOut() }
 					onWritePost={ () => this.onClickWritePost() }
 					onSearch={ search => this.onSearch( search ) }
-					onShowChanges={ () => this.setState( { showChanges: true } ) }
 					onShowSuper={ this.props.onShowSuperSidebar }
 				/>
 				<div className="Outer">
