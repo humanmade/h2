@@ -36,6 +36,13 @@ class App extends Component {
 		window.location.href = '/wp-login.php?action=logout';
 	}
 
+	componentDidUpdate( prevProps ) {
+		// Scroll back to top when navigating to a new page.
+		if ( prevProps.location && this.props.location && prevProps.location !== this.props.location ) {
+			window.scrollTo( { top: 0 } );
+		}
+	}
+
 	componentDidMount() {
 		this.unsubscribeFromHistory = this.props.history.listen( this.handleLocationChange );
 	}
