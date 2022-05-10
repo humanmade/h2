@@ -1,0 +1,11 @@
+.Modal--Image .Modal-inner {
+   max-width: 90vw;
+   max-height: 90vh;
+   width: auto;
+   height: auto;
+}
+
+.Modal--Image img {
+   height: auto !important;
+   width: auto !important;
+}
