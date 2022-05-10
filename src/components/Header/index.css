@@ -49,6 +49,12 @@
 	}
 }
 
+@media ( max-width: 600px ) {
+	.Header-inner {
+		padding-right: 5px;
+	}
+}
+
 @media ( max-width: 782px ) {
 	/* Align header height increase with WP admin bar breakpoint */
 	.Header .Header-CurrentUser {
