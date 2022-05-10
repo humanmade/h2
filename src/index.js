@@ -27,7 +27,7 @@ window.H2.React = React;
 window.H2.plugins = new PluginAPI( store );
 
 // Determine the base URL of the site so that subdirectory installs work.
-const routerBasename = window.H2Data.site.url.replace(
+const routerBasename = window.H2Data.site.home.replace(
 	new RegExp( `https?://${ window.location.host }` ),
 	''
 );
