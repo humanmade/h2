@@ -1,8 +1,8 @@
 .Logo {
 	background-color: var(--hm-red);
-	padding: .5rem 0;
-	height: 60px;
-	width: 60px;
+	padding: 5px 0;
+	height: 45px;
+	width: 45px;
 	display: inline-block;
 }
 
@@ -12,10 +12,21 @@
 }
 
 @media ( max-width: 600px ) {
-	.Logo {
-		width: 45px;
-	}
 	.Logo .hm-logo {
 		margin-left: 5px;
+	}
+}
+
+@media ( min-width: 601px ) {
+	.Logo {
+		width: 60px;
+	}
+}
+
+/* Align header height increase with WP admin bar breakpoint */
+@media ( min-width: 783px ) {
+	.Logo {
+		padding: .5rem 0;
+		height: 60px;
 	}
 }

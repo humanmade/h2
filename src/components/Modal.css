@@ -14,7 +14,7 @@
 .Modal-inner {
 	position: relative;
 	background: #fff;
-	width: 60vw;
+	width: 90vw;
 	max-width: 600px;
 	height: 80vh;
 	max-height: 600px;
@@ -23,4 +23,10 @@
 	border-radius: 4px;
 	overflow: auto;
 	pointer-events: initial;
+}
+
+@media ( min-width: 480px ) {
+	.Modal-inner {
+		width: 80vw;
+	}
 }
