@@ -7,7 +7,6 @@ import SearchInput from '../SearchInput';
 
 import CurrentUser from './CurrentUser';
 import HeaderButton from './HeaderButton';
-import HeaderLabel from './HeaderLabel';
 import Logo from './Logo';
 
 import './index.css';
