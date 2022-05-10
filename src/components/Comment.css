@@ -78,11 +78,6 @@
 	.Comment:last-child:after {
 		left: -23px;
 	}
-
-	.Comment .PostContent {
-		font-size: 0.9em;
-		line-height: 1.4;
-	}
 }
 
 @media ( min-width: 600px ) {
