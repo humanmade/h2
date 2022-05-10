@@ -4,12 +4,19 @@ export const posts = new handler( {
 	type: 'posts',
 	url: `${ window.wpApiSettings.root }wp/v2/posts`,
 	nonce: window.wpApiSettings.nonce,
+	query: {
+		// Dodges Yoast SEO data computation.
+		_fields: 'id,author,categories,content,date,date_gmt,excerpt,link,slug,status,tags,title',
+	},
 } );
 
 export const comments = new handler( {
 	type: 'comments',
 	url: `${ window.wpApiSettings.root }wp/v2/comments`,
 	nonce: window.wpApiSettings.nonce,
+	query: {
+		_fields: 'id,link,date_gmt,content,post,author,parent,author_name,user_can',
+	},
 } );
 
 export const reactions = new handler( {
@@ -22,6 +29,10 @@ export const users = new handler( {
 	type: 'users',
 	url: `${ window.wpApiSettings.root }wp/v2/users`,
 	nonce: window.wpApiSettings.nonce,
+	query: {
+		// Dodges Yoast SEO data computation.
+		_fields: 'id,name,link,slug,avatar_urls,meta',
+	},
 } );
 users.registerArchive( 'me', state => ( { include: state.users.current } ) );
 users.registerArchive( 'all', { per_page: 100 } );

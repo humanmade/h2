@@ -11,7 +11,7 @@ import reducers from './reducers';
 export const createStore = preload => {
 	const currentUser = preload['/wp/v2/users/me'] ? preload['/wp/v2/users/me'] : null;
 	const users = uniqBy( [
-		...preload['/wp/v2/users?per_page=200'],
+		...( preload['/wp/v2/users?per_page=200'] || [] ),
 		...( currentUser ? [ currentUser ] : [] ),
 	], user => user.id );
 
