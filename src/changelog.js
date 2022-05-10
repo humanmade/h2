@@ -109,6 +109,22 @@ export const changes = [
 			</React.Fragment>
 		),
 	},
+	{
+		date: '2022-05-10',
+		title: 'Mobile-Friendly',
+		content: () => (
+			<React.Fragment>
+				<p>H2 now sports tighter, more mobile-friendly styling
+					at small viewport sizes. Header elements have been
+					cleaned up or moved into menus, nav bars narrowed,
+					and comment indentation overhauled, to make it easier
+					to read and comment on posts from smaller devices.</p>
+				<p>Clicking on pagination links or opening a post from
+					a post list view now anchors the view to the top of
+					the page, just like a normal website.</p>
+			</React.Fragment>
+		),
+	},
 ];
 
 export function getChanges( lastView ) {
