@@ -28,6 +28,10 @@
 	color: #fff;
 }
 
+.SuperMenu .hm-logo:hover {
+	opacity: 1;
+}
+
 .SuperMenu--closer {
 	background: transparent;
 	border: none;
