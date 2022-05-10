@@ -17,6 +17,7 @@
 	padding-right: 1em;
 	border: none;
 	font: inherit;
+	font-size: 1rem;
 	cursor: pointer;
 }
 
@@ -24,6 +25,11 @@
 .Header-site-name:focus {
 	border: none;
 	color: rgba( 255, 255, 255, 0.6 );
+}
+
+.Header-site-name:hover .hm-logo,
+.Header-site-name:focus .hm-logo {
+	opacity: 0.6;
 }
 
 .Header .Header-CurrentUser {
