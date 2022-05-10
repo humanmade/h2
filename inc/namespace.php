@@ -71,7 +71,8 @@ function get_preload_key( string $url ) : string {
 	return array_reduce(
 		$url_params_to_remove,
 		function( $url, $param_to_remove ) {
-			return preg_replace( preg_quote( "/[\?&]$param_to_remove=[^&]+/" ), '', $url );
+			$regex = sprintf( '/[\?&]%s=[^&]+/', preg_quote( $param_to_remove, '/' ) );
+			return preg_replace( $regex, '', $url );
 		},
 		$url
 	);
