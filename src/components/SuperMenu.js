@@ -76,8 +76,8 @@ export class SuperMenu extends React.Component {
 
 					<h2 className="screen-reader-text">Navigation</h2>
 					<ul>
-						<li><Link href="/">All Posts</Link></li>
-						<li><a href="/wp-admin/">Dashboard</a></li>
+						<li><Link href={ window.H2Data.site.home }>All Posts</Link></li>
+						<li><a href={ `${ window.H2Data.site.home }/wp-admin/` }>Dashboard</a></li>
 					</ul>
 
 					{ categories.data && (
