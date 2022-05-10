@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Slot } from 'react-slot-fill';
 
-import { getChangesForUser } from '../../changelog';
 import { withCurrentUser } from '../../hocs';
 import SearchInput from '../SearchInput';
 
@@ -15,15 +14,6 @@ import './index.css';
 
 export class Header extends Component {
 	render() {
-		const newChanges = this.props.currentUser ? getChangesForUser( this.props.currentUser ) : [];
-
-		const newLabel = (
-			<span>
-				What's New?
-				{ ' ' }
-				{ newChanges.length > 0 ? <span className="label__count">{ newChanges.length }</span> : null }
-			</span>
-		);
 
 		return (
 			<div className="Header">
@@ -50,13 +40,6 @@ export class Header extends Component {
 					<SearchInput
 						value={ this.props.searchValue }
 						onSearch={ this.props.onSearch }
-					/>
-
-					<HeaderLabel
-						className="Header-changelog"
-						icon="mail"
-						title={ newLabel }
-						onClick={ this.props.onShowChanges }
 					/>
 
 					<Slot name="Header.secondary_buttons" />

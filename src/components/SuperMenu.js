@@ -1,7 +1,9 @@
 import React from 'react';
 
-import { withCategories, withSites } from '../hocs';
+import { getChangesForUser } from '../changelog';
+import { withCategories, withCurrentUser, withSites } from '../hocs';
 
+import HeaderLabel from './Header/HeaderLabel';
 import Logo from './Header/Logo';
 import Link from './Link';
 import Overlay from './Overlay';
@@ -50,6 +52,16 @@ export class SuperMenu extends React.Component {
 			visible && 'SuperMenu--visible',
 		];
 
+		const newChanges = this.props.currentUser ? getChangesForUser( this.props.currentUser ) : [];
+
+		const newLabel = (
+			<span>
+				What's New?
+				{ ' ' }
+				{ newChanges.length > 0 ? <span className="label__count">{ newChanges.length }</span> : null }
+			</span>
+		);
+
 		return (
 			<nav className={ classes.filter( Boolean ).join( ' ' ) }>
 				{ visible && (
@@ -75,6 +87,14 @@ export class SuperMenu extends React.Component {
 					/>
 
 					<h2 className="screen-reader-text">Navigation</h2>
+
+					<HeaderLabel
+						className="Header-changelog"
+						icon="mail"
+						title={ newLabel }
+						onClick={ this.props.onShowChanges }
+					/>
+
 					<ul>
 						<li><Link href={ window.H2Data.site.home }>All Posts</Link></li>
 						<li><a href={ `${ window.H2Data.site.home }/wp-admin/` }>Dashboard</a></li>
@@ -110,4 +130,4 @@ export class SuperMenu extends React.Component {
 	}
 }
 
-export default withSites( withCategories( SuperMenu ) );
+export default withSites( withCategories( withCurrentUser( SuperMenu ) ) );
