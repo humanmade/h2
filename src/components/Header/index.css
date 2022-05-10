@@ -43,8 +43,15 @@
 	padding-right: 20px;
 }
 
-@media ( max-width: 600px ) {
+@media ( max-width: 479px ) {
 	.Header .SearchInput {
 		display: none;
+	}
+}
+
+@media ( max-width: 782px ) {
+	/* Align header height increase with WP admin bar breakpoint */
+	.Header .Header-CurrentUser {
+		transform: scale( 0.9 );
 	}
 }
