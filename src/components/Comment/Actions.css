@@ -4,5 +4,5 @@
 
 .Comment-Actions > .btn:last-child {
 	flex-grow: 0;
-	margin-left: auto;
+	margin-left: 0;
 }

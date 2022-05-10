@@ -37,6 +37,7 @@
 	line-height: 1.555;
 	color: #847F7F;
 	padding-left: 15px;
+	line-height: 1.6;
 }
 
 .PostContent iframe {
@@ -126,4 +127,12 @@
 
 .Tasklist-Item > label > input[type="checkbox"] {
 	margin: 3px 3px 3px 4px;
+}
+
+@media (max-width: 600px) {
+	.PostContent blockquote {
+		padding-left: 10px;
+		margin: 0; /* The nested <p> has its own margins */
+		line-height: 1.5;
+	}
 }

@@ -58,6 +58,12 @@
 	border: none;
 }
 
+.App a:focus,
+.App a:hover {
+	border-bottom: none;
+	text-decoration: underline;
+}
+
 button em,
 a em {
 	color: inherit;

@@ -24,7 +24,7 @@
 	);
 }
 
-@media ( max-width: 600px ) {
+@media ( max-width: 960px ) {
 	.Message-Main {
 		margin-left: 0;
 	}

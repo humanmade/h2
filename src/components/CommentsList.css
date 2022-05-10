@@ -6,6 +6,12 @@
 .CommentsList .CommentsList {
 	margin-left: 60px;
 }
+.CommentsList .CommentsList .CommentsList {
+	margin-left: 50px;
+}
+.CommentsList .CommentsList .CommentsList .CommentsList {
+	margin-left: 40px;
+}
 
 .CommentsList .post-reply {
 	align-self: flex-end;
@@ -19,7 +25,19 @@
 	.CommentsList {
 		margin-left: 20px;
 	}
-	.CommentsList .CommentsList {
-		margin-left: 32px;
+	.CommentsList .CommentsList,
+	.CommentsList .CommentsList .CommentsList,
+	.CommentsList .CommentsList .CommentsList .CommentsList {
+		margin-left: 14px;
+	}
+	.CommentsList .CommentsList .CommentsList .CommentsList .CommentsList {
+		margin-left: 0;
+	}
+}
+
+/* Match behavior of .Message-Main in narrow two-column layouts */
+@media ( min-width: 800px ) and ( max-width: 960px ) {
+	.CommentsList {
+		margin-left: 69px; /* center under post author icon */
 	}
 }

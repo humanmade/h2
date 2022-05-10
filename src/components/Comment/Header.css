@@ -1,8 +1,7 @@
 .Comment-Header {
 	height: 50px;
-	line-height: 40px;
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
 	margin-left: -30px;
 	background: #fff;
 }
@@ -14,21 +13,19 @@
 
 .Comment-Header > strong {
 	flex-grow: 1;
+	line-height: 1.2;
 }
 
 .Comment-Header .actions-wrap {
-	display: none;
+	display: block;
 	align-items: center;
-}
-
-.Comment-Header:hover .actions-wrap {
-	display: flex;
 }
 
 .Comment-Header .Comment-date {
 	color: var( --hm-medium-grey );
 	font-size: 0.75em;
 	margin-right: 0.5em;
+	line-height: 1.1;
 }
 .Comment-Header a.Comment-date:hover {
 	border: none;
@@ -79,9 +76,14 @@
 	.Comment-Header .Avatar:after {
 		top: 8px;
 	}
+}
 
-	.Comment-Header .actions-wrap,
-	.Comment:hover > .Comment-Header .actions-wrap {
-		display: block;
+@media ( min-width: 600px ) {
+	.Comment-Header .actions-wrap {
+		display: none;
+	}
+
+	.Comment-Header:hover .actions-wrap {
+		display: flex;
 	}
 }

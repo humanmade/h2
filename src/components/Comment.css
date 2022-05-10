@@ -7,7 +7,7 @@
 	content: '';
 	background: #F1F2EE;
 	left: -41px;
-	top: 0;
+	top: 8px;
 	bottom: 0;
 	width: 3px;
 	z-index: -1;
@@ -52,10 +52,6 @@
 	padding-bottom: 1rem;
 }
 
-.Comment:hover > .Comment-Header .actions-wrap {
-	display: flex;
-}
-
 .Comment-footer-actions {
 	display: flex;
 	justify-content: space-between;
@@ -78,10 +74,18 @@
 	.Comment:before {
 		left: -20px;
 	}
+
+	.Comment:last-child:after {
+		left: -23px;
+	}
 }
 
 @media ( min-width: 600px ) {
 	.Comment-footer-actions .Comment-Actions {
 		display: none;
+	}
+
+	.Comment:hover > .Comment-Header .actions-wrap {
+		display: flex;
 	}
 }
