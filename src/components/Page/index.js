@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Slot } from 'react-slot-fill';
 
-import { withUser } from '../../hocs';
 import {
 	Post as PostShape,
 } from '../../shapes';
@@ -116,4 +115,4 @@ Page.propTypes = {
 	data: PostShape.isRequired,
 };
 
-export default withUser( props => props.post.author )( Page );
+export default Page;

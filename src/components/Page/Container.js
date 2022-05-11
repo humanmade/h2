@@ -1,13 +1,23 @@
-import { withArchive } from '@humanmade/repress';
+import { withArchive, withSingle } from '@humanmade/repress';
 import React, { Component } from 'react';
+import { compose } from 'redux';
 
-import { withUsers } from '../../hocs';
+import { withUser } from '../../hocs';
 import { pages } from '../../types';
 import { decodeEntities } from '../../util';
 import PageTitle from '../PageTitle';
 import Loader from '../Post/Loader';
 
 import Page from './index';
+
+const ConnectedPage = compose(
+	withSingle(
+		pages,
+		state => state.pages,
+		props => props.post.id
+	),
+	withUser( props => props.post.author )
+)( Page );
 
 class Container extends Component {
 	state = {
@@ -56,7 +66,7 @@ class Container extends Component {
 			<PageTitle title={ title }>
 				<div className="PostsList">
 					<div className="PostsList--settings" />
-					<Page
+					<ConnectedPage
 						post={ page }
 					/>
 				</div>
@@ -65,10 +75,8 @@ class Container extends Component {
 	}
 }
 
-const ConnectedPostsList = withArchive(
+export default withArchive(
 	pages,
 	state => state.pages,
 	props => pages.idForPath( props.match.params.pageName )
 )( Container );
-
-export default withUsers( ConnectedPostsList );
