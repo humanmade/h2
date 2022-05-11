@@ -3,7 +3,7 @@ import {
 } from '../actions';
 
 const DEFAULT_STATE = {
-	expired: false,
+	isExpired: false,
 };
 
 export default function ui( state = DEFAULT_STATE, action ) {
@@ -11,7 +11,7 @@ export default function ui( state = DEFAULT_STATE, action ) {
 		case SET_SESSION_EXPIRED:
 			return {
 				...state,
-				expired: true,
+				isExpired: true,
 				message: action.message,
 			};
 

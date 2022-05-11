@@ -58,7 +58,7 @@ export const setSessionExpired = message => ( {
  * @param {Function} getState Redux getState().
  */
 export const heartbeat = ( dispatch, getState ) => {
-	if ( getState().session.expired ) {
+	if ( getState().session.isExpired ) {
 		// Don't keep polling if we've determined we are offline.
 		return;
 	}

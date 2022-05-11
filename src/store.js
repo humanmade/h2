@@ -17,7 +17,7 @@ export const createStore = preload => {
 
 	const initialState = {
 		session: {
-			expired: false,
+			isExpired: false,
 		},
 		users: {
 			archives: {
