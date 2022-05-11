@@ -16,6 +16,7 @@ import PageContainer from './components/Page/Container';
 import PostsList from './components/Post/List';
 import WritePost from './components/Post/Write';
 import Profile from './components/Profile';
+import SessionExpiredWarning from './components/SessionExpiredWarning';
 import Sidebar from './components/Sidebar';
 import CommentsSidebar from './components/Sidebar/Comments';
 import SuperMenu from './components/SuperMenu';
@@ -134,6 +135,7 @@ class App extends Component {
 					onSearch={ search => this.onSearch( search ) }
 					onShowSuper={ this.props.onShowSuperSidebar }
 				/>
+				<SessionExpiredWarning />
 				<div className="Outer">
 					<div className="Inner">
 						{ this.state.isShowingWritePost ? (
