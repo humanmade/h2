@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
 
 import {
+	heartbeat,
 	hideSidebar,
 	hideSuperSidebar,
 	showSuperSidebar,
@@ -40,11 +41,13 @@ class App extends Component {
 		// Scroll back to top when navigating to a new page.
 		if ( prevProps.location && this.props.location && prevProps.location !== this.props.location ) {
 			window.scrollTo( { top: 0 } );
+			this.props.onHeartbeat();
 		}
 	}
 
 	componentDidMount() {
 		this.unsubscribeFromHistory = this.props.history.listen( this.handleLocationChange );
+		this.props.onHeartbeat();
 	}
 
 	componentWillUnmount() {
@@ -202,6 +205,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
+		onHeartbeat: () => dispatch( heartbeat ),
 		onDismissSidebar: () => dispatch( hideSidebar() ),
 		onHideSuperSidebar: () => dispatch( hideSuperSidebar() ),
 		onShowSuperSidebar: () => dispatch( showSuperSidebar() ),

@@ -16,6 +16,9 @@ export const createStore = preload => {
 	], user => user.id );
 
 	const initialState = {
+		session: {
+			expired: false,
+		},
 		users: {
 			archives: {
 				all: users.map( user => user.id ),
