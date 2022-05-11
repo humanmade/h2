@@ -7,6 +7,7 @@ import { setDefaultPostView } from '../../actions';
 import { withCategories, withUsers } from '../../hocs';
 import { posts } from '../../types';
 import { decodeEntities } from '../../util';
+import Error404 from '../Error404';
 import PageTitle from '../PageTitle';
 import Pagination from '../Pagination';
 
@@ -50,7 +51,9 @@ class PostsList extends Component {
 			return (
 				<PageTitle title="Not Found">
 					<div className="PostsList">
-						Error
+						<Error404>
+							<p>No post found at this address.</p>
+						</Error404>
 					</div>
 				</PageTitle>
 			);

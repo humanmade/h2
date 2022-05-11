@@ -16,7 +16,7 @@ class PostList extends React.Component {
 		}
 
 		if ( ! this.props.posts ) {
-			return <p>Error!</p>;
+			return <p>Error: No recent posts found!</p>;
 		}
 
 		const hasNext = this.props.hasMore;
