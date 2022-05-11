@@ -12,7 +12,7 @@ export default function ui( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				isExpired: true,
-				message: action.message,
+				status: action.status,
 			};
 
 		default:

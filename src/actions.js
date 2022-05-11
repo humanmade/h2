@@ -46,9 +46,9 @@ export const setDefaultPostView = view => ( {
 	view,
 } );
 
-export const setSessionExpired = message => ( {
+export const setSessionExpired = status => ( {
 	type: SET_SESSION_EXPIRED,
-	message,
+	status,
 } );
 
 /**
@@ -78,21 +78,9 @@ export const heartbeat = ( dispatch, getState ) => {
 		},
 	} ).then(
 		response => {
-			if ( response.status < 400 ) {
-				return;
+			if ( response.status > 400 ) {
+				dispatch( setSessionExpired( response.status ) );
 			}
-
-			if ( response.status === 401 ) {
-				dispatch( setSessionExpired( 'Not logged in' ) );
-				return;
-			}
-
-			if ( response.status === 403 ) {
-				dispatch( setSessionExpired( 'Session expired' ) );
-				return;
-			}
-
-			dispatch( setSessionExpired( `Error ${ response.status }` ) );
 		},
 		error => {
 			dispatch( setSessionExpired( error ) );
