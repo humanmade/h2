@@ -39,7 +39,7 @@ class SessionExpiredWarning extends Component {
 		}
 
 		let message = null;
-		switch ( this.props.status ) {
+		switch ( this.props.session.status ) {
 			case 401:
 				message = (
 					<p>You are signed out.</p>
