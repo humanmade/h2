@@ -14,10 +14,6 @@ export const comments = new handler( {
 	type: 'comments',
 	url: `${ window.wpApiSettings.root }wp/v2/comments`,
 	nonce: window.wpApiSettings.nonce,
-	query: {
-		_fields: 'id,link,date_gmt,content,post,author,parent,author_name,user_can',
-		order: 'asc',
-	},
 } );
 
 export const reactions = new handler( {
