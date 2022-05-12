@@ -1,0 +1,11 @@
+.SessionExpiredBanner p {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin: 0.25rem;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.SessionExpiredModal {
+    text-align: center;
+}

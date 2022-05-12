@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import { withUser } from '../../hocs';
 import { pages } from '../../types';
 import { decodeEntities } from '../../util';
+import Error404 from '../Error404';
 import PageTitle from '../PageTitle';
 import Loader from '../Post/Loader';
 
@@ -53,7 +54,9 @@ class Container extends Component {
 			return (
 				<PageTitle title="Not Found">
 					<div className="PostsList">
-						Error
+						<Error404>
+							<p>No page found at this address.</p>
+						</Error404>
 					</div>
 				</PageTitle>
 			);

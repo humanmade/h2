@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
 
 import {
+	heartbeat,
 	hideSidebar,
 	hideSuperSidebar,
 	showSuperSidebar,
@@ -15,6 +16,7 @@ import PageContainer from './components/Page/Container';
 import PostsList from './components/Post/List';
 import WritePost from './components/Post/Write';
 import Profile from './components/Profile';
+import SessionExpiredWarning from './components/SessionExpiredWarning';
 import Sidebar from './components/Sidebar';
 import CommentsSidebar from './components/Sidebar/Comments';
 import SuperMenu from './components/SuperMenu';
@@ -40,11 +42,13 @@ class App extends Component {
 		// Scroll back to top when navigating to a new page.
 		if ( prevProps.location && this.props.location && prevProps.location !== this.props.location ) {
 			window.scrollTo( { top: 0 } );
+			this.props.onHeartbeat();
 		}
 	}
 
 	componentDidMount() {
 		this.unsubscribeFromHistory = this.props.history.listen( this.handleLocationChange );
+		this.props.onHeartbeat();
 	}
 
 	componentWillUnmount() {
@@ -131,6 +135,7 @@ class App extends Component {
 					onSearch={ search => this.onSearch( search ) }
 					onShowSuper={ this.props.onShowSuperSidebar }
 				/>
+				<SessionExpiredWarning />
 				<div className="Outer">
 					<div className="Inner">
 						{ this.state.isShowingWritePost ? (
@@ -202,6 +207,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
+		onHeartbeat: () => dispatch( heartbeat ),
 		onDismissSidebar: () => dispatch( hideSidebar() ),
 		onHideSuperSidebar: () => dispatch( hideSuperSidebar() ),
 		onShowSuperSidebar: () => dispatch( showSuperSidebar() ),
