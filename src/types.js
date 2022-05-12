@@ -16,6 +16,7 @@ export const comments = new handler( {
 	nonce: window.wpApiSettings.nonce,
 	query: {
 		_fields: 'id,link,date_gmt,content,post,author,parent,author_name,user_can',
+		order: 'asc',
 	},
 } );
 
