@@ -30,7 +30,6 @@
     "@humanmade/react-tasklist": "^0.0.4",
     "@humanmade/repress": "^0.5.0",
     "@iarna/word-count": "^1.0.3",
-    "@sentry/browser": "^5.9.1",
     "@storybook/addon-actions": "^5.2.0",
     "emoji-mart": "^2.11.1",
     "interweave": "^11.1.0",

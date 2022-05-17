@@ -105,7 +105,6 @@ function get_script_data() {
 				'force_default' => true,
 			] ),
 			'mapbox_key'     => defined( 'MAPBOX_KEY' ) ? MAPBOX_KEY : null,
-			'sentry_key'     => defined( 'H2_SENTRY_KEY' ) ? H2_SENTRY_KEY : null,
 			'environment'    => defined( 'HM_ENV_TYPE' ) ? HM_ENV_TYPE : ( WP_DEBUG ? 'development' : 'production' ),
 			'emoji'          => apply_filters( 'h2.custom_emoji', [] ),
 		],
