@@ -8,7 +8,6 @@ addFilter( 'loader/postcss', () => null );
 addFilter( 'loader/sass', () => null );
 
 module.exports = presets.production( {
-	devtool: 'source-map',
 	optimization: {
 		usedExports: true,
 	},
@@ -19,5 +18,3 @@ module.exports = presets.production( {
         plugins.clean(),
     ],
 } );
-
-console.log( module.exports.optimization );
