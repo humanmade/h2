@@ -3,7 +3,6 @@ const { presets, helpers } = require( '@humanmade/webpack-helpers' );
 const { filePath, addFilter, choosePort, cleanOnExit } = helpers;
 
 // Do not compile sass, nor run eslint on build.
-addFilter( 'loader/eslint', () => null );
 addFilter( 'loader/postcss', () => null );
 addFilter( 'loader/sass', () => null );
 
