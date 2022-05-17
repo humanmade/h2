@@ -32,7 +32,7 @@ npm start
 
 H2 uses [humanmade/asset-loader](https://github.com/humanmade/asset-loader) to integrate with Webpack. If you are running H2 within Altis, the Asset Loader will be available already. If not, install and activate the asset-loader plugin (`humanmade/asset-loader` if installing with Composer) before trying to run H2.
 
-If you see a white screen after activating H2, run `npm run build` to generate a production-ready static file bundle.
+H2 will load the assets from the Webpack DevServer (`npm start`) if it is running. If the DevServer is not running, H2 will look for a production build and load those assets. If you see a white screen after activating H2, run `npm run build` to generate a production-ready static file bundle.
 
 
 ### Production Setup
