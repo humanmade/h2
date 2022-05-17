@@ -15,7 +15,6 @@ cleanOnExit( [
 module.exports = choosePort( 9090 ).then( port => presets.development( {
 	devServer: {
 		host: 'localhost',
-		server: 'https', // Needed for HMR socket connection.
 		port,
 	},
 	entry: {
