@@ -15,7 +15,7 @@ H2 is a standalone WordPress theme you can activate on any site, and is a drop-i
 
 ### Local Setup
 
-You'll need a WordPress set up already. If you don't have one, [set up a local Altis environment](https://www.altis-dxp.com/resources/docs/local-server/) or [get Chassis](http://docs.chassis.io/en/latest/).
+You'll need a WordPress development environment. If you don't have one, [set up a local Altis environment](https://www.altis-dxp.com/resources/docs/local-server/).
 
 Clone this repository into your themes directory:
 ```
@@ -30,7 +30,9 @@ npm install
 npm start
 ```
 
-H2 uses [react-wp-scripts](https://github.com/humanmade/react-wp-scripts) to integrate with Webpack's development server. This means that H2 will try to load files from localhost if `WP_DEBUG` is `true`, and will white-screen if that server is not running and a production build is not present. If you see a white screen after activating H2, check to make sure `WP_DEBUG` is defined (to use the hot-reloading dev server), or run `npm run build` to generate a production-ready static file bundle.
+H2 uses [humanmade/asset-loader](https://github.com/humanmade/asset-loader) to integrate with Webpack. If you are running H2 within Altis, the Asset Loader will be available already. If not, install and activate the asset-loader plugin (`humanmade/asset-loader` if installing with Composer) before trying to run H2.
+
+If you see a white screen after activating H2, run `npm run build` to generate a production-ready static file bundle.
 
 
 ### Production Setup
@@ -38,6 +40,8 @@ H2 uses [react-wp-scripts](https://github.com/humanmade/react-wp-scripts) to int
 For production, deploy H2 as a regular theme. You'll also need to build the assets for H2, as we don't release prebuilt versions.
 
 As part of your deployment process, run the `.build-script` shell script in the root directory. This will install the Node dependencies and build the static assets ready for deployment.
+
+The build expects to be run using Node version 12.
 
 
 ## Add-on Plugins
