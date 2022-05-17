@@ -52,8 +52,15 @@ function enqueue_assets() {
 	if ( ! function_exists( 'Asset_Loader\\enqueue_asset' ) ) {
 		wp_die( 'H2 requires a recent Altis environment or the Asset_Loader plugin' );
 	}
-	Asset_Loader\enqueue_asset(
+
+	// Load from the dev manifest whenever available.
+	$active_manifest = Asset_Loader\Manifest\get_active_manifest( [
+		get_stylesheet_directory() . '/build/development-asset-manifest.json',
 		get_stylesheet_directory() . '/build/production-asset-manifest.json',
+	] );
+
+	Asset_Loader\enqueue_asset(
+		$active_manifest,
 		'h2.js',
 		[
 			'handle' => 'h2',
@@ -66,8 +73,11 @@ function enqueue_assets() {
 	wp_localize_script( 'h2', 'H2Data', get_script_data() );
 
 	Asset_Loader\enqueue_asset(
-		get_stylesheet_directory() . '/build/production-asset-manifest.json',
-		'h2.css'
+		$active_manifest,
+		'h2.css',
+		[
+			'handle' => 'h2',
+		]
 	);
 
 	if ( defined( 'H2_TYPEKIT_URL' ) ) {
