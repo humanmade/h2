@@ -70,7 +70,7 @@
   },
   "bundlesize": [
     {
-      "path": "./build/static/js/main.js"
+      "path": "./build/h2.*.js"
     }
   ]
 }
