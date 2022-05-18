@@ -50,7 +50,7 @@ function set_up_theme() {
  */
 function enqueue_assets() {
 	if ( ! function_exists( 'Asset_Loader\\enqueue_asset' ) ) {
-		wp_die( 'H2 requires a recent Altis environment or the Asset_Loader plugin' );
+		wp_die( 'H2 requires an Altis environment (v7 or later) or the HM Asset_Loader plugin' );
 	}
 
 	// Load from the dev manifest whenever available.
