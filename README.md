@@ -34,6 +34,12 @@ H2 uses [humanmade/asset-loader](https://github.com/humanmade/asset-loader) to i
 
 H2 will load the assets from the Webpack DevServer (`npm start`) if it is running. If the DevServer is not running, H2 will look for a production build and load those assets. If you see a white screen after activating H2, run `npm run build` to generate a production-ready static file bundle.
 
+Editor styles require the editor CSS to be present on disk, which is complex to achieve when using the DevServer. If you are working on or testing block editor styles, run the production build in watch mode:
+
+```sh
+npm run build -- --watch
+```
+
 
 ### Production Setup
 
