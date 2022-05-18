@@ -8,7 +8,6 @@ namespace H2;
 require __DIR__ . '/inc/namespace.php';
 require __DIR__ . '/inc/compat/namespace.php';
 require __DIR__ . '/inc/emoji/namespace.php';
-require __DIR__ . '/inc/loader/namespace.php';
 require __DIR__ . '/inc/rest_api/class-widgets-controller.php';
 
 add_action( 'after_setup_theme', __NAMESPACE__ . '\\adjust_default_filters' );

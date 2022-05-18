@@ -15,7 +15,7 @@ export class MentionMatcher extends Matcher {
 		);
 	}
 
-	asTag(): string {
+	asTag() {
 		return 'span';
 	}
 

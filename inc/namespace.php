@@ -5,6 +5,7 @@
 
 namespace H2;
 
+use Asset_Loader;
 use WP_Error;
 use WP_REST_Request;
 
@@ -48,12 +49,36 @@ function set_up_theme() {
  * Enqueue frontend CSS and JS.
  */
 function enqueue_assets() {
-	Loader\enqueue_assets( get_stylesheet_directory() );
+	if ( ! function_exists( 'Asset_Loader\\enqueue_asset' ) ) {
+		wp_die( 'H2 requires an Altis environment (v7 or later) or the HM Asset_Loader plugin' );
+	}
+
+	// Load from the dev manifest whenever available.
+	$active_manifest = Asset_Loader\Manifest\get_active_manifest( [
+		get_stylesheet_directory() . '/build/development-asset-manifest.json',
+		get_stylesheet_directory() . '/build/production-asset-manifest.json',
+	] );
+
+	Asset_Loader\enqueue_asset(
+		$active_manifest,
+		'h2.js',
+		[
+			'handle' => 'h2',
+		]
+	);
 	wp_localize_script( 'h2', 'wpApiSettings', [
 		'root'          => esc_url_raw( get_rest_url() ),
 		'nonce'         => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 	] );
 	wp_localize_script( 'h2', 'H2Data', get_script_data() );
+
+	Asset_Loader\enqueue_asset(
+		$active_manifest,
+		'h2.css',
+		[
+			'handle' => 'h2',
+		]
+	);
 
 	if ( defined( 'H2_TYPEKIT_URL' ) ) {
 		wp_enqueue_style( 'h2-fonts', H2_TYPEKIT_URL );

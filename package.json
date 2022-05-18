@@ -3,19 +3,23 @@
   "version": "0.0.1",
   "private": true,
   "homepage": ".",
+  "browserslist": [
+    "last 2 versions",
+    ">5%",
+    "not IE < 12",
+    "not dead"
+  ],
   "devDependencies": {
-    "@babel/core": "^7.5.5",
     "@humanmade/eslint-config": "^1.1.3",
+    "@humanmade/webpack-helpers": "^1.0.0-beta.5",
     "@storybook/addon-backgrounds": "^5.2.0",
     "@storybook/addon-viewport": "^5.2.0",
     "@storybook/react": "^5.2.0",
     "addon-redux": "^1.0.0",
     "babel-eslint": "^10.1.0",
-    "babel-loader": "^8.1.0",
     "bundlesize": "^0.17.0",
     "eslint": "^6.8.0",
     "eslint-config-react-app": "^3.0.8",
-    "eslint-loader": "^4.0.2",
     "eslint-plugin-flowtype": "^3.13.0",
     "eslint-plugin-import": "^2.23.2",
     "eslint-plugin-jsdoc": "^29.2.0",
@@ -24,7 +28,9 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-sort-destructure-keys": "^1.3.5",
     "outdent": "^0.7.0",
-    "react-scripts": "^1.1.5"
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.9.0"
   },
   "dependencies": {
     "@humanmade/react-tasklist": "^0.0.4",
@@ -47,7 +53,6 @@
     "react-side-effect": "^1.1.5",
     "react-slot-fill": "^2.0.0",
     "react-transition-group": "^2.4.0",
-    "react-wp-scripts": "^0.2.0",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.2.0",
@@ -55,10 +60,9 @@
     "turndown": "^5.0.1"
   },
   "scripts": {
-    "start": "react-wp-scripts start",
-    "build": "react-scripts build && rm build/index.html",
+    "start": "webpack serve --config=.config/webpack.config.dev.js",
+    "build": "webpack --config=.config/webpack.config.prod.js",
     "lint": "eslint src/",
-    "test": "react-scripts test --env=jsdom",
     "storybook": "start-storybook -p 9009 -s public",
     "storybook:build": "build-storybook -s public",
     "storybook:deploy": "npm run storybook:build && aws s3 sync ./storybook-static s3://make.hmn.md/h2-storybook --acl public-read",
@@ -66,7 +70,7 @@
   },
   "bundlesize": [
     {
-      "path": "./build/static/js/main.js"
+      "path": "./build/h2.*.js"
     }
   ]
 }
