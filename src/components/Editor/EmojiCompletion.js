@@ -10,7 +10,6 @@ import './EmojiCompletion.css';
 export const Item = ( { item, selected, onSelect } ) => {
 	return (
 		<li
-			key={ item.colons }
 			className={ selected ? 'selected' : null }
 			onClick={ onSelect }
 		>
@@ -27,7 +26,7 @@ export const Item = ( { item, selected, onSelect } ) => {
 };
 
 const EmojiCompletion = props => {
-	const getItems = search => {
+	const getItems = async search => {
 		if ( ! search.length ) {
 			return null;
 		}

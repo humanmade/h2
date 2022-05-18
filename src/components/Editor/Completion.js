@@ -8,13 +8,24 @@ export default class Completion extends React.Component {
 		super( props );
 
 		this.state = {
+			items: [],
 			selected: 0,
 		};
 	}
 
 	componentDidMount() {
+		this.mounted = true;
 		this.keyHandler = e => {
-			const items = this.getItems();
+			// This is a bit of a hack, to migrate away from synchronous search
+			// to support bundle splitting and newer emoji-mart's async search.
+			this.getItems().then( items => {
+				if ( ! this.mounted ) {
+					// Do not update state after component unmounts.
+					return;
+				}
+				this.setState( { items } );
+			} );
+			const { items } = this.state;
 			if ( ! items || ! items.length ) {
 				return;
 			}
@@ -61,6 +72,7 @@ export default class Completion extends React.Component {
 	}
 
 	componentWillUnmount() {
+		this.mounted = false;
 		if ( ! this.keyHandler ) {
 			return;
 		}
@@ -80,7 +92,7 @@ export default class Completion extends React.Component {
 			onSelect,
 		} = this.props;
 
-		const items = this.getItems();
+		const { items } = this.state;
 
 		if ( ! items || ! items.length ) {
 			return null;
@@ -95,6 +107,7 @@ export default class Completion extends React.Component {
 				} }
 			>
 				{ items.map( ( item, idx ) => renderItem( {
+					key: item.colons,
 					item,
 					selected: idx === this.state.selected,
 					onHover: () => this.setState( { selected: idx } ),
@@ -125,7 +138,7 @@ Completion.defaultProps = {
 	renderItem: ( { item, selected, onSelect } ) => {
 		return (
 			<li
-				key={ item }
+				key={ item.colons }
 				className={ selected ? 'selected' : null }
 				onClick={ () => onSelect( item ) }
 			>{ item }</li>
