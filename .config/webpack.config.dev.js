@@ -9,6 +9,10 @@ cleanOnExit( [
 ] );
 
 module.exports = choosePort( 9090 ).then( port => presets.development( {
+	devServer: {
+		host: 'localhost',
+		port,
+	},
 	entry: {
 		h2: filePath( 'src/index.js' ),
 		// Editor styles require the production build.
@@ -16,9 +20,5 @@ module.exports = choosePort( 9090 ).then( port => presets.development( {
 	output: {
 		// Asset Loader understands filenames are already hashed in this format.
 		filename: '[name].[contenthash:16].js',
-	},
-	devServer: {
-		host: 'localhost',
-		port,
 	},
 } ) );
