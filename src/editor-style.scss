@@ -4,11 +4,9 @@
 @import './components/Message/Main';
 @import './components/Message/Header';
 
-// h1, h2, h3, h4, h5, h6 {
-//     line-height: 1.3;
-//     margin: 1rem 0;
-//     text-transform: none;
-// }
+body {
+    font-size: 18px;
+}
 
 a {
     border-bottom: none;
@@ -22,6 +20,11 @@ a {
         text-decoration: underline;
         color: var(--hm-red);
     }
+}
+
+button em,
+a em {
+	color: inherit;
 }
 
 .block-editor-block-list__layout {
