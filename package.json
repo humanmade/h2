@@ -11,7 +11,7 @@
   ],
   "devDependencies": {
     "@humanmade/eslint-config": "^1.1.3",
-    "@humanmade/webpack-helpers": "^1.0.0-beta.5",
+    "@humanmade/webpack-helpers": "^1.0.0-beta.6",
     "@storybook/addon-backgrounds": "^5.2.0",
     "@storybook/addon-viewport": "^5.2.0",
     "@storybook/react": "^5.2.0",
@@ -43,6 +43,7 @@
     "lodash": "^4.17.19",
     "marked": "0.3.19",
     "mousetrap": "^1.6.2",
+    "postcss": "^8.4.14",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-content-loader": "^2.0.2",
@@ -56,6 +57,7 @@
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.2.0",
+    "sass": "^1.51.0",
     "textarea-caret": "^3.0.2",
     "turndown": "^5.0.1"
   },
