@@ -8,7 +8,7 @@ module.exports = presets.production( {
 		'editor-style': filePath( 'src/editor-style.scss' ),
 	},
 	output: {
-		// Use 16-character hashes so Asset Loader recognizes filenames are already hashed.
+		// Asset Loader understands filenames are already hashed in this format.
 		filename: '[name].[contenthash:16].js',
 	},
 	optimization: {
