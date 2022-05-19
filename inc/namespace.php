@@ -43,6 +43,28 @@ function set_up_theme() {
 		'before_widget' => '',
 		'after_widget'  => '',
 	] );
+
+	register_editor_style();
+}
+
+/**
+ * Get the development manifest when available, or else load from production manifest.
+ *
+ * @return string Manifest path.
+ */
+function get_manifest() : string {
+	static $manifest;
+	if ( isset( $manifest ) ) {
+		return $manifest;
+	}
+	$manifest = Asset_Loader\Manifest\get_active_manifest( [
+		get_stylesheet_directory() . '/build/development-asset-manifest.json',
+		get_stylesheet_directory() . '/build/production-asset-manifest.json',
+	] );
+	if ( is_null( $manifest ) ) {
+		wp_die( 'Run a production build or start the development server to use H2.' );
+	}
+	return $manifest;
 }
 
 /**
@@ -53,14 +75,8 @@ function enqueue_assets() {
 		wp_die( 'H2 requires an Altis environment (v7 or later) or the HM Asset_Loader plugin' );
 	}
 
-	// Load from the dev manifest whenever available.
-	$active_manifest = Asset_Loader\Manifest\get_active_manifest( [
-		get_stylesheet_directory() . '/build/development-asset-manifest.json',
-		get_stylesheet_directory() . '/build/production-asset-manifest.json',
-	] );
-
 	Asset_Loader\enqueue_asset(
-		$active_manifest,
+		get_manifest(),
 		'h2.js',
 		[
 			'handle' => 'h2',
@@ -73,16 +89,35 @@ function enqueue_assets() {
 	wp_localize_script( 'h2', 'H2Data', get_script_data() );
 
 	Asset_Loader\enqueue_asset(
-		$active_manifest,
+		get_manifest(),
 		'h2.css',
 		[
 			'handle' => 'h2',
 		]
 	);
 
+	enqueue_typekit_fonts();
+}
+
+/**
+ * Load the typekit fonts when available.
+ */
+function enqueue_typekit_fonts() : void {
 	if ( defined( 'H2_TYPEKIT_URL' ) ) {
 		wp_enqueue_style( 'h2-fonts', H2_TYPEKIT_URL );
 	}
+}
+
+/**
+ * Register the editor stylesheet.
+ */
+function register_editor_style() : void {
+	add_theme_support( 'editor-styles' );
+	$stylesheet = Asset_Loader\Manifest\get_manifest_resource(
+		get_stylesheet_directory() . '/build/production-asset-manifest.json',
+		'editor-style.css'
+	);
+	add_editor_style( 'build/' . $stylesheet );
 }
 
 /**

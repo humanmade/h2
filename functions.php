@@ -13,6 +13,7 @@ require __DIR__ . '/inc/rest_api/class-widgets-controller.php';
 add_action( 'after_setup_theme', __NAMESPACE__ . '\\adjust_default_filters' );
 add_action( 'after_setup_theme', __NAMESPACE__ . '\\set_up_theme' );
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_assets' );
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\enqueue_typekit_fonts' );
 add_filter( 'pre_option_permalink_structure', __NAMESPACE__ . '\\get_permalink_structure' );
 add_action( 'init', __NAMESPACE__ . '\\update_wp_rewrite_permalink_structure' );
 add_action( 'init', __NAMESPACE__ . '\\register_custom_meta' );
