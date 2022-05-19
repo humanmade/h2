@@ -21,14 +21,14 @@ $hm-red-accessible: $hm-red !default;
  */
 
 :root {
-	--hm-red:         $hm-red;
-	--hm-blue:        $hm-blue;
-	--hm-warm-grey:   $hm-warm-grey;
-	--hm-dark-grey:   $hm-dark-grey;
-	--hm-beige:       $hm-beige;
-	--hm-medium-grey: $hm-medium-grey;
-	--hm-light-grey:  $hm-light-grey;
-	--hm-brown:       $hm-brown;
-	--hm-red-light:   $hm-red-light;
-	--hm-red-dark:    $hm-red-dark;
+	--hm-red:         #{ $hm-red };
+	--hm-blue:        #{ $hm-blue };
+	--hm-warm-grey:   #{ $hm-warm-grey };
+	--hm-dark-grey:   #{ $hm-dark-grey };
+	--hm-beige:       #{ $hm-beige };
+	--hm-medium-grey: #{ $hm-medium-grey };
+	--hm-light-grey:  #{ $hm-light-grey };
+	--hm-brown:       #{ $hm-brown };
+	--hm-red-light:   #{ $hm-red-light };
+	--hm-red-dark:    #{ $hm-red-dark };
 }
