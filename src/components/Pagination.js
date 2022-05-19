@@ -2,12 +2,35 @@ import React from 'react';
 import { generatePath, Link } from 'react-router-dom';
 
 export default function Pagination( props ) {
-	const { hasNext, params, path } = props;
+	let { path } = props;
+	const { hasNext, params } = props;
 	const page = Number( params.page || 1 );
+
+	if ( path.charAt( path.length - 1 ) === '+' ) {
+		// Paths ending in + match any number of nested sections, but do not
+		// have any pagination parameters in our app. Add route params.
+		path = `${ path }/:hasPage(page)/:page(\\d+)?`;
+	}
+
+	// Handle slashes in URL pieces. Without this nested/categories would
+	// become nested%2Fcategories, and 404.
+	const processedParams = Object.keys( params ).reduce(
+		( memo, key ) => {
+			const val = params[ key ];
+			if ( val && val.indexOf( '/' ) > -1 ) {
+				memo[ key ] = val.split( '/' );
+			} else {
+				memo[ key ] = val;
+			}
+			return memo;
+		},
+		{}
+	);
+
 	const olderPage = generatePath(
 		path,
 		{
-			...params,
+			...processedParams,
 			hasPage: 'page',
 			page: page + 1,
 		}
@@ -15,7 +38,7 @@ export default function Pagination( props ) {
 	const newerPage = generatePath(
 		path,
 		{
-			...params,
+			...processedParams,
 			hasPage: 'page',
 			page: page - 1,
 		}
