@@ -19,7 +19,7 @@ You'll need a WordPress development environment. If you don't have one, [set up 
 
 Clone this repository into your themes directory:
 ```sh
-git clone git@github.com:humanmade/H2.git h2
+git clone git@github.com:humanmade/h2.git h2
 ```
 
 Once the checkout is complete, `cd` into the cloned theme directory, install npm modules, and start the development server:
