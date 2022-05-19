@@ -119,6 +119,8 @@ function render_gravityform( int $id, array $options ) {
 /**
  * Force todo-list-block blocks to render on the frontend.
  *
+ * See also _compat.scss.
+ *
  * @param string $block_content The block content about to be appended.
  * @param array  $block         The full block, including name and attributes.
  * @return string Rendered block string.
