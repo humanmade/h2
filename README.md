@@ -77,6 +77,11 @@ Install and activate the [H2 Site Selector](https://github.com/humanmade/h2-site
 Once the plugin has been activated, access the Settings > H2 Sites page in your Network Admin to enable and disable sites.
 
 
+## Other compatible plugins
+
+H2 includes support for GitHub-style markdown checklists when writing posts from the frontend, but it also supports [the `todo-list-block` plugin](https://wordpress.org/plugins/todo-list-block/) for authoring todo lists within the block editor.
+
+
 ## Credits
 
 Created by Human Made. Licensed under the GPLv2+.

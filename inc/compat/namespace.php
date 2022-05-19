@@ -14,6 +14,7 @@ use GFFormsModel;
  */
 function bootstrap() {
 	bootstrap_gravityforms();
+	add_action( 'render_block', __NAMESPACE__ . '\\render_todo_list_block', 10, 2 );
 }
 
 /**
@@ -113,4 +114,34 @@ function render_gravityform( int $id, array $options ) {
 	wp_footer();
 
 	echo '</div></body></html>';
+}
+
+/**
+ * Force todo-list-block blocks to render on the frontend.
+ *
+ * See also _compat.scss.
+ *
+ * @param string $block_content The block content about to be appended.
+ * @param array  $block         The full block, including name and attributes.
+ * @return string Rendered block string.
+ */
+function render_todo_list_block( string $block_content, array $block ) : string {
+	if ( $block['blockName'] !== 'tabor/todo-list' || empty( $block['innerBlocks'] ) ) {
+		return $block_content;
+	}
+
+	ob_start();
+
+	echo '<ul class="Tasklist">';
+	foreach ( $block['innerBlocks'] as $list_item ) {
+		printf(
+			'<li class="Tasklist-Item" %s>%s</li>',
+			// phpcs:ignore -- The output is a static string.
+			( $list_item['attrs']['checked'] ?? false ) ? 'data-checked=""' : '',
+			wp_kses_post( $list_item['attrs']['content'] )
+		);
+	}
+	echo '</ul>';
+
+	return (string) ob_get_clean();
 }

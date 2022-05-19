@@ -1,0 +1,21 @@
+/* Compatibility with specific third-party blocks */
+
+/* https://wordpress.org/support/plugin/todo-list-block/ */
+/* (See also inc/compat/namespace.php) */
+
+.wp-block-tabor-todo-list {
+    color: inherit;
+}
+
+.wp-block-tabor-todo-item p {
+    margin: 0;
+    font-family: inherit;
+}
+
+.wp-block-tabor-todo-item.is-checked .block-editor-rich-text__editable {
+    text-decoration: none;
+}
+
+.wp-block-tabor-todo-item input[type="checkbox"] {
+    border-radius: 0;
+}
