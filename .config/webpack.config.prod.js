@@ -14,12 +14,12 @@ module.exports = presets.production( {
 		// Asset Loader understands filenames are already hashed in this format.
 		filename: '[name].[contenthash:16].js',
 	},
-    plugins: [
-        plugins.clean(),
-    ],
+	plugins: [
+		plugins.clean(),
+	],
 	resolve: {
-	  alias: {
-		'juniper-images': filePath( 'src/pattern-library/assets/images' ),
-	  },
+		alias: {
+			'juniper-images': filePath( 'src/pattern-library/assets/images' ),
+		},
 	},
 } );

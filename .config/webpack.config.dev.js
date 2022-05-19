@@ -21,4 +21,9 @@ module.exports = choosePort( 9090 ).then( port => presets.development( {
 		// Asset Loader understands filenames are already hashed in this format.
 		filename: '[name].[contenthash:16].js',
 	},
+	resolve: {
+		alias: {
+			'juniper-images': filePath( 'src/pattern-library/assets/images' ),
+		},
+	},
 } ) );
