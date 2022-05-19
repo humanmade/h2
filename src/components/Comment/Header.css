@@ -76,10 +76,14 @@
 
 @media ( min-width: 600px ) {
 	.Comment-Header .actions-wrap {
+		display: flex;
+	}
+
+	.Comment-Header .Comment-Actions {
 		display: none;
 	}
 
-	.Comment-Header:hover .actions-wrap {
+	.Comment-Header:hover .Comment-Actions {
 		display: flex;
 	}
 }
