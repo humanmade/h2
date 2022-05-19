@@ -12,6 +12,10 @@
     font-family: inherit;
 }
 
+.wp-block-tabor-todo-item.is-checked .block-editor-rich-text__editable {
+    text-decoration: none;
+}
+
 .wp-block-tabor-todo-item input[type="checkbox"] {
     border-radius: 0;
 }
