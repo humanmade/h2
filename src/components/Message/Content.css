@@ -40,6 +40,10 @@
 	line-height: 1.6;
 }
 
+.PostContent blockquote cite {
+	font-size: 0.9em;
+}
+
 .PostContent iframe {
 	max-width: 100%;
 }

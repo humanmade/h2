@@ -1,0 +1,47 @@
+@import './pattern-library/assets/styles/juniper.css';
+@import './components/Post/index';
+@import './components/Message/Content';
+@import './components/Message/Main';
+@import './components/Message/Header';
+
+body {
+    font-size: 18px;
+}
+
+a {
+    border-bottom: none;
+    text-decoration: none;
+
+    &:focus,
+    &:hover,
+    // Gutenberg CSS is horrid.
+    &:hover:not(:disabled):not([aria-disabled="true"]) {
+        border-bottom: none;
+        text-decoration: underline;
+        color: var(--hm-red);
+    }
+}
+
+button em,
+a em {
+	color: inherit;
+}
+
+.block-editor-block-list__layout {
+    @extend .PostContent;
+    max-width: 650px;
+    margin: auto;
+    line-height: 1.5555;
+	font-family: 'Proxima-Nova', sans-serif;
+}
+
+
+.wp-block-post-title {
+    @extend .Message-Header__title;
+    max-width: 650px;
+    margin: 0 auto 1.5rem;
+    padding-right: 120px;
+	font-family: 'Proxima-Nova', sans-serif;
+    font-size: 2rem;
+}
+

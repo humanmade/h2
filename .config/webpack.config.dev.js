@@ -1,13 +1,9 @@
 const { presets, helpers } = require( '@humanmade/webpack-helpers' );
 
-const { filePath, addFilter, choosePort, cleanOnExit } = helpers;
-
-// Do not compile sass, nor run eslint on build.
-addFilter( 'loader/postcss', () => null );
-addFilter( 'loader/sass', () => null );
+const { filePath, choosePort, cleanOnExit } = helpers;
 
 // Remove dev manifest when server closes so that theme will switch back to
-// load using the production manifest.
+// the production manifest, if available.
 cleanOnExit( [
 	filePath( 'build/development-asset-manifest.json' ),
 ] );
@@ -19,5 +15,10 @@ module.exports = choosePort( 9090 ).then( port => presets.development( {
 	},
 	entry: {
 		h2: filePath( 'src/index.js' ),
+		// Editor styles require the production build.
+	},
+	output: {
+		// Asset Loader understands filenames are already hashed in this format.
+		filename: '[name].[contenthash:16].js',
 	},
 } ) );

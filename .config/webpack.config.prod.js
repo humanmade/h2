@@ -1,10 +1,6 @@
-const { presets, helpers, plugins } = require( '@humanmade/webpack-helpers' );
+const { helpers, presets, plugins } = require( '@humanmade/webpack-helpers' );
 
-const { filePath, addFilter } = helpers;
-
-// Do not compile sass, nor run eslint on build.
-addFilter( 'loader/postcss', () => null );
-addFilter( 'loader/sass', () => null );
+const { filePath } = helpers;
 
 module.exports = presets.production( {
 	optimization: {
@@ -12,6 +8,11 @@ module.exports = presets.production( {
 	},
 	entry: {
 		h2: filePath( 'src/index.js' ),
+		'editor-style': filePath( 'src/editor-style.scss' ),
+	},
+	output: {
+		// Asset Loader understands filenames are already hashed in this format.
+		filename: '[name].[contenthash:16].js',
 	},
     plugins: [
         plugins.clean(),
