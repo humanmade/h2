@@ -14,18 +14,14 @@ export default function Pagination( props ) {
 
 	// Handle slashes in URL pieces. Without this nested/categories would
 	// become nested%2Fcategories, and 404.
-	const processedParams = Object.keys( params ).reduce(
-		( memo, key ) => {
-			const val = params[ key ];
-			if ( val && val.indexOf( '/' ) > -1 ) {
-				memo[ key ] = val.split( '/' );
-			} else {
-				memo[ key ] = val;
-			}
-			return memo;
-		},
-		{}
-	);
+	const processedParams = {};
+	Object.keys( params ).forEach( key => {
+		if ( typeof params[ key ] === 'string' && params[ key ].indexOf( '/' ) > -1 ) {
+			processedParams[ key ] = params[ key ].split( '/' );
+		} else {
+			processedParams[ key ] = params[ key ];
+		}
+	} );
 
 	const olderPage = generatePath(
 		path,
