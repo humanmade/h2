@@ -27,10 +27,6 @@
 	flex-direction: column;
 }
 
-.PostsList > .pagination {
-	border-top: none;
-}
-
 @media ( max-width: 600px ) {
 	.PostsList--settings {
 		margin-left: 15px;

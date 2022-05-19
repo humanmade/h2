@@ -10,58 +10,26 @@
 */
 
 .pagination {
-
-	@extend .util-clearfix;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
 
 	margin: $base-line-height auto;
-	border-top: 1px solid $border-color;
-	padding-top: $base-line-height;
-	text-align: center;
 
 	a,
 	&__item {
 		@extend .cta;
 		@extend .cta--small;
+		border-bottom: 0;
 	}
 
 	a:first-child {
 		@extend .cta--arrow-left;
-		float: left;
+		grid-column: 1;
 	}
 
 	a:last-child {
 		@extend .cta--arrow;
-		float: right;
+		grid-column: 2;
+		text-align: right;
 	}
-
-	&:empty {
-		display: none;
-	}
-}
-
-
-.pagination--numbers {
-
-	text-align: center;
-
-	> a,
-	> span,
-	&__item {
-		margin: 0 $gutter-width / 2;
-	}
-
-	a:first-child,
-	a:last-child {
-		@extend .cta;
-		@extend .cta--small;
-		float: none;
-
-		&:after {
-			display: none;
-		}
-	}
-}
-
-.wp-pagenavi {
-	@extend .pagination--numbers;
 }
