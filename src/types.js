@@ -6,7 +6,7 @@ export const posts = new handler( {
 	nonce: window.wpApiSettings.nonce,
 	query: {
 		// Dodges Yoast SEO data computation.
-		_fields: 'id,author,categories,content,date,date_gmt,excerpt,link,slug,status,tags,title',
+		_fields: 'id,author,categories,content,date,date_gmt,excerpt,link,slug,status,tags,title,unprocessed_content',
 	},
 } );
 
