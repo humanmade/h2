@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { Fragment, useState } from 'react';
-import { FormattedRelative } from 'react-intl';
 import { Slot } from 'react-slot-fill';
 
 import {
@@ -10,6 +9,7 @@ import {
 } from '../../shapes';
 import { decodeEntities } from '../../util';
 import Avatar from '../Avatar';
+import FormattedDate from '../FormattedDate';
 import Link from '../Link';
 
 import AuthorLink from './AuthorLink';
@@ -44,9 +44,6 @@ export class MessageHeader extends React.Component {
 			sticky && 'Message-Header--sticky',
 		];
 
-		const postDate = post.date_gmt + 'Z';
-		const hoursSincePublish = Math.floor( ( Date.now() - new Date( postDate ).getTime() ) / 1000 / 60 / 60 );
-
 		return (
 			<header
 				className={ classes.filter( Boolean ).join( ' ' ) }
@@ -70,17 +67,7 @@ export class MessageHeader extends React.Component {
 						{ author ? (
 							<AuthorLink user={ author }>{ author.name }</AuthorLink>
 						) : '' },&nbsp;
-						<time
-							dateTime={ postDate }
-							title={ postDate }
-						>
-							{ hoursSincePublish < 24 ? (
-								<FormattedRelative value={ postDate } />
-							) : (
-								// Absolute date if published earlier than 1 day ago.
-								new Date( postDate ).toLocaleDateString()
-							) }
-						</time>
+						<FormattedDate date={ post.date_gmt + 'Z' } />
 					</span>
 					{ categories.length > 0 && (
 						<ul className="Message-Header__categories">

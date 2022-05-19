@@ -1,7 +1,7 @@
 import React from 'react';
-import { FormattedRelative } from 'react-intl';
 
 import Avatar from '../Avatar';
+import FormattedDate from '../FormattedDate';
 import Link from '../Link';
 import AuthorLink from '../Message/AuthorLink';
 
@@ -14,9 +14,6 @@ export default function CommentHeader( props ) {
 		'Comment-Header',
 		mini && 'Comment-Header--mini',
 	];
-
-	const commentDate = comment.date_gmt + 'Z';
-	const hoursSinceComment = Math.floor( ( Date.now() - new Date( commentDate ).getTime() ) / 1000 / 60 / 60 );
 
 	return (
 		<header className={ classes.filter( Boolean ).join( ' ' ) }>
@@ -35,17 +32,7 @@ export default function CommentHeader( props ) {
 					className="Comment-date"
 					href={ comment.link }
 				>
-					<time
-						dateTime={ comment.date_gmt + 'Z' }
-						title={ comment.date_gmt + 'Z' }
-					>
-						{ hoursSinceComment < 24 ? (
-							<FormattedRelative value={ commentDate } />
-						) : (
-							// Absolute date if published earlier than 1 day ago.
-							new Date( commentDate ).toLocaleDateString()
-						) }
-					</time>
+					<FormattedDate date={ comment.date_gmt + 'Z' } />
 				</Link>
 
 				{ children }
