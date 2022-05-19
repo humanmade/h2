@@ -5,17 +5,15 @@ import { withWidgets } from '../hocs';
 
 import RecentPostsWidget from './Widgets/RecentPosts';
 import SearchWidget from './Widgets/Search';
-import TextWidget from './Widgets/Text';
 
 import './Sidebar.css';
 
 const widgetMap = {
 	default: ( { html } ) => (
-		<div dangerouslySetInnerHTML={ { __html: html } } />
+		<div className="Widget" dangerouslySetInnerHTML={ { __html: html } } />
 	),
 	'recent-posts': RecentPostsWidget,
 	search: SearchWidget,
-	text: TextWidget,
 };
 
 export class Sidebar extends Component {
