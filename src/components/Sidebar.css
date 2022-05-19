@@ -1,6 +1,6 @@
 .Sidebar {
 	font-size: 0.8em;
-	padding: 1rem 0;
+	padding: 1rem 0 0;
 	opacity: 0.1;
 
 	/* Slow fade out */
@@ -18,13 +18,17 @@
 /* Use relative units for headers/margins */
 .Sidebar h4 {
 	font-size: 1.222222222em;
-	margin: 1.35em 0;
 }
 
-.Sidebar p,
-.Sidebar ul,
-.Sidebar ol {
+.Widget {
 	margin: 1.66667em 0;
+}
+
+.Widget p,
+.Widget ul,
+.Widget ol,
+.Widget h4 {
+	margin: 0 0 0.5em;
 }
 
 @media ( max-width: 800px ) {
