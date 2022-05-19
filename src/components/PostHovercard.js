@@ -93,7 +93,7 @@ export function PostCard( { loading, post, AuthorComponent = ConnectedPostCardAu
 
 PostCard.propTypes = {
 	author: UserShape,
-	post: PostShape.isRequired,
+	post: PostShape,
 };
 
 export const ConnectedPostCard = withArchive(
