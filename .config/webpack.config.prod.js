@@ -17,4 +17,9 @@ module.exports = presets.production( {
     plugins: [
         plugins.clean(),
     ],
+	resolve: {
+	  alias: {
+		'juniper-images': filePath( 'src/pattern-library/assets/images' ),
+	  },
+	},
 } );
