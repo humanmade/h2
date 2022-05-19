@@ -14,6 +14,10 @@ export default function CommentHeader( props ) {
 		'Comment-Header',
 		mini && 'Comment-Header--mini',
 	];
+
+	const commentDate = comment.date_gmt + 'Z';
+	const hoursSinceComment = Math.floor( ( Date.now() - new Date( commentDate ).getTime() ) / 1000 / 60 / 60 );
+
 	return (
 		<header className={ classes.filter( Boolean ).join( ' ' ) }>
 			<Avatar
@@ -35,7 +39,12 @@ export default function CommentHeader( props ) {
 						dateTime={ comment.date_gmt + 'Z' }
 						title={ comment.date_gmt + 'Z' }
 					>
-						<FormattedRelative value={ comment.date_gmt + 'Z' } />
+						{ hoursSinceComment < 24 ? (
+							<FormattedRelative value={ commentDate } />
+						) : (
+							// Absolute date if published earlier than 1 day ago.
+							new Date( commentDate ).toLocaleDateString()
+						) }
 					</time>
 				</Link>
 

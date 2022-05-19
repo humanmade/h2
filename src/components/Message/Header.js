@@ -44,6 +44,9 @@ export class MessageHeader extends React.Component {
 			sticky && 'Message-Header--sticky',
 		];
 
+		const postDate = post.date_gmt + 'Z';
+		const hoursSincePublish = Math.floor( ( Date.now() - new Date( postDate ).getTime() ) / 1000 / 60 / 60 );
+
 		return (
 			<header
 				className={ classes.filter( Boolean ).join( ' ' ) }
@@ -68,10 +71,15 @@ export class MessageHeader extends React.Component {
 							<AuthorLink user={ author }>{ author.name }</AuthorLink>
 						) : '' },&nbsp;
 						<time
-							dateTime={ post.date_gmt + 'Z' }
-							title={ post.date_gmt + 'Z' }
+							dateTime={ postDate }
+							title={ postDate }
 						>
-							<FormattedRelative value={ post.date_gmt + 'Z' } />
+							{ hoursSincePublish < 24 ? (
+								<FormattedRelative value={ postDate } />
+							) : (
+								// Absolute date if published earlier than 1 day ago.
+								new Date( postDate ).toLocaleDateString()
+							) }
 						</time>
 					</span>
 					{ categories.length > 0 && (
