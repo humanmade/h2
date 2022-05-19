@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedRelative } from 'react-intl';
 import { connect } from 'react-redux';
+import { Prompt } from 'react-router-dom';
 import getCaretCoordinates from 'textarea-caret';
 import Turndown from 'turndown';
 
@@ -481,6 +482,10 @@ class Editor extends React.PureComponent {
 							/>
 						) }
 					</DropUpload>
+					<Prompt
+						when={ ! ( this.state.content === '' || ( this.props.initialValue && this.state.content === this.props.initialValue ) ) }
+						message='You have unsaved content. Are you sure you want to leave?'
+					/>
 
 					{ mode !== 'preview' ? this.getCompletion() : null }
 				</div>

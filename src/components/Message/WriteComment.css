@@ -18,6 +18,9 @@
 	margin-top: -1.36667rem;
 }
 
+.WriteComment .Editor-editor {
+	min-height: 12rem;
+}
 
 @media ( max-width: 600px ) {
 	.WriteComment > header {
