@@ -1,0 +1,24 @@
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file.
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+[*.{js,ts,jsx,tsx,css,scss,php,xml}]
+charset = utf-8
+# Avoid trailing whitespace.
+trim_trailing_whitespace = true
+# Tab indentation.
+indent_style = tab
+
+# 2-space indentation on .yml and .json files.
+[*.{yml,json}]
+indent_style = space
+indent_size = 2
+
+# Use 4-space indentation on composer.json.
+[{composer.json}]
+indent_style = space
+indent_size = 4
