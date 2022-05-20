@@ -8,6 +8,7 @@ if [ -d "$HOME/.nvm" ]; then
 
 	NODE_VERSION=`nvm current`
 
+	nvm install v12
 	nvm use v12
 fi
 
