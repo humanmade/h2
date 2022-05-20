@@ -59,6 +59,8 @@ const BUTTONS = {
 	},
 };
 
+const navigateWarning = 'You have unsaved content. Are you sure you want to leave? Your content will not be saved.';
+
 const completions = {
 	'@': MentionCompletion,
 	':': EmojiCompletion,
@@ -99,9 +101,8 @@ class Editor extends React.PureComponent {
 			return;
 		}
 
-		const warning = 'You have unsaved content. Are you sure you want to leave?';
-		e.returnValue = warning;
-		return warning;
+		e.returnValue = navigateWarning;
+		return navigateWarning;
 	}
 
 	componentDidUpdate() {
@@ -484,7 +485,7 @@ class Editor extends React.PureComponent {
 					</DropUpload>
 					<Prompt
 						when={ ! ( this.state.content === '' || ( this.props.initialValue && this.state.content === this.props.initialValue ) ) }
-						message='You have unsaved content. Are you sure you want to leave?'
+						message={ navigateWarning }
 					/>
 
 					{ mode !== 'preview' ? this.getCompletion() : null }
