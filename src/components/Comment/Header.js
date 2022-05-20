@@ -1,7 +1,7 @@
 import React from 'react';
-import { FormattedRelative } from 'react-intl';
 
 import Avatar from '../Avatar';
+import FormattedDate from '../FormattedDate';
 import Link from '../Link';
 import AuthorLink from '../Message/AuthorLink';
 
@@ -14,6 +14,7 @@ export default function CommentHeader( props ) {
 		'Comment-Header',
 		mini && 'Comment-Header--mini',
 	];
+
 	return (
 		<header className={ classes.filter( Boolean ).join( ' ' ) }>
 			<Avatar
@@ -31,12 +32,7 @@ export default function CommentHeader( props ) {
 					className="Comment-date"
 					href={ comment.link }
 				>
-					<time
-						dateTime={ comment.date_gmt + 'Z' }
-						title={ comment.date_gmt + 'Z' }
-					>
-						<FormattedRelative value={ comment.date_gmt + 'Z' } />
-					</time>
+					<FormattedDate date={ comment.date_gmt + 'Z' } />
 				</Link>
 
 				{ children }

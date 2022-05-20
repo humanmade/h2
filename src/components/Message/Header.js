@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { Fragment, useState } from 'react';
-import { FormattedRelative } from 'react-intl';
 import { Slot } from 'react-slot-fill';
 
 import {
@@ -10,6 +9,7 @@ import {
 } from '../../shapes';
 import { decodeEntities } from '../../util';
 import Avatar from '../Avatar';
+import FormattedDate from '../FormattedDate';
 import Link from '../Link';
 
 import AuthorLink from './AuthorLink';
@@ -67,12 +67,7 @@ export class MessageHeader extends React.Component {
 						{ author ? (
 							<AuthorLink user={ author }>{ author.name }</AuthorLink>
 						) : '' },&nbsp;
-						<time
-							dateTime={ post.date_gmt + 'Z' }
-							title={ post.date_gmt + 'Z' }
-						>
-							<FormattedRelative value={ post.date_gmt + 'Z' } />
-						</time>
+						<FormattedDate date={ post.date_gmt + 'Z' } />
 					</span>
 					{ categories.length > 0 && (
 						<ul className="Message-Header__categories">
