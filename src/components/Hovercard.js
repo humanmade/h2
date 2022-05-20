@@ -42,6 +42,11 @@ function getPosition( target, width ) {
 	const diff = originalLeft - style.left;
 	style.pointerOffset = diff;
 
+	// Move pointer back onscreen if small window breakpoint has constrained width.
+	if ( document.documentElement.clientWidth < width + style.left * 2 ) {
+		style.pointerOffset += ( width - document.documentElement.clientWidth ) / 2 + style.left;
+	}
+
 	return style;
 }
 
