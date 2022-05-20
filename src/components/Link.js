@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link as InternalLink, matchPath } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 
 import { POST_ROUTE } from '../App';
 
@@ -21,13 +22,15 @@ export default function Link( { children, disablePreviews, href, ...props } ) {
 
 	const relativeTo = href.replace( root, '' );
 
+	const LinkComponent = relativeTo.indexOf( '#' ) < 0 ? InternalLink : HashLink;
+
 	const link = (
-		<InternalLink
+		<LinkComponent
 			to={ relativeTo }
 			{ ...props }
 		>
 			{ children }
-		</InternalLink>
+		</LinkComponent>
 	);
 
 	if ( disablePreviews ) {
