@@ -29,7 +29,7 @@ export default class CommentLoader extends React.Component {
 		if ( this.state.isMobile ) {
 			contentOffset = 42;
 			return (
-				<div class="Loader-Wrapper">
+				<div className="Loader-Wrapper">
 					<ContentLoader
 						className="Comment-Loader Comment-Loader--mobile"
 						height={ contentOffset + 5 * textLineHeight }

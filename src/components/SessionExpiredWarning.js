@@ -32,7 +32,7 @@ class SessionExpiredWarning extends Component {
 
 		if ( this.state.dismissed ) {
 			return (
-				<div class="SessionExpiredBanner">
+				<div className="SessionExpiredBanner">
 					<p>Session Disconnected</p>
 				</div>
 			);

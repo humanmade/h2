@@ -13,6 +13,7 @@ import { createStore } from './store';
 import { Provider as RestApiProvider } from './with-api-data';
 
 import './pattern-library/assets/sass/juniper.scss';
+import './components/TableOfContents.css';
 
 let store = createStore( window.H2Data.preload );
 

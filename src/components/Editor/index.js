@@ -57,6 +57,11 @@ const BUTTONS = {
 		apply: text =>
 			( text.indexOf( '\n' ) > 0 ? apply( text, '```\n', '\n```\n' ) : apply( text, '`', '`' ) ),
 	},
+	toc: {
+		icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" style="enable-background:new 0 0 20 20" xml:space="preserve"><path d="m3.6 8.7.6-2H17l-.6 2"/><path d="m11.7 16.4 3.8-12.6H13L9.2 16.4"/><path d="m2.3 13.3.6-2h12.8l-.6 2"/><path d="m6.4 16.4 3.8-12.6H7.8L4 16.4"/></svg>',
+		title: 'Add Table of Contents',
+		apply: text => apply( text, '[toc]', '\n' ),
+	},
 };
 
 const navigateWarning = 'You have unsaved content. Are you sure you want to leave? Your content will not be saved.';

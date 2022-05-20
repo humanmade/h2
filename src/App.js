@@ -40,9 +40,11 @@ class App extends Component {
 
 	componentDidUpdate( prevProps ) {
 		// Scroll back to top when navigating to a new page.
-		if ( prevProps.location && this.props.location && prevProps.location !== this.props.location ) {
-			window.scrollTo( { top: 0 } );
-			this.props.onHeartbeat();
+		if ( prevProps.location && this.props.location ) {
+			if ( prevProps.location.pathname !== this.props.location.pathname ) {
+				window.scrollTo( { top: 0 } );
+				this.props.onHeartbeat();
+			}
 		}
 	}
 

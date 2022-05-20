@@ -20,6 +20,15 @@ class Page extends Component {
 		};
 	}
 
+	componentDidMount() {
+		// Manually work around issue where app ignores anchors within the post content.
+		if ( ! this.props.collapsed && window.location.hash ) {
+			const target = window.location.hash;
+			window.location.hash = '';
+			window.location.hash = target;
+		}
+	}
+
 	onClickEdit = () => {
 		this.setState( { isEditing: true } );
 		if ( ! ( 'raw' in this.props.post.content ) ) {

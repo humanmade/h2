@@ -69,6 +69,30 @@ a em {
 	color: inherit;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+div {
+	scroll-margin-top: 55px;
+}
+
+@media (min-width: 600px) {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	a,
+	div {
+		scroll-margin-top: 100px;
+	}
+}
+
 @media ( max-width: 800px ) {
 	.Outer {
 		flex-wrap: wrap;
