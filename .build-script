@@ -2,6 +2,21 @@
 
 set -e
 
-nvm use v12
-npm install
+if [ -d "$HOME/.nvm" ]; then
+	export NVM_DIR="$HOME/.nvm"
+	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+	NODE_VERSION=`nvm current`
+
+	nvm use v12
+fi
+
+npm ci
 npm run build
+
+# clean-up
+rm -rf node_modules
+
+if command -v nvm; then
+	nvm use $NODE_VERSION
+fi
