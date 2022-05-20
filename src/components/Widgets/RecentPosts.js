@@ -23,7 +23,7 @@ class PostList extends React.Component {
 		const hasPrevious = this.props.page > 1;
 
 		return (
-			<div>
+			<div className="Widget">
 				<ul>
 					{ this.props.posts.map( post => (
 						<li key={ post.id }>
