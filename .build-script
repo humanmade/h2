@@ -11,7 +11,7 @@ if [ -d "$HOME/.nvm" ]; then
 	nvm use v12
 fi
 
-npm install
+npm ci
 npm run build
 
 # clean-up
