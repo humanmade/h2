@@ -12,6 +12,11 @@
 		<?php wp_head(); ?>
 	</head>
 	<body <?php body_class(); ?>>
+		<?php if ( ! is_user_logged_in() ) : ?>
+		<div class="logged-out-warning">
+			<p>You are logged out! H2 is designed to be used only while logged in. Some functionality will not work.</p>
+		</div>
+		<?php endif; ?>
 		<div id="root"></div>
 		<?php wp_footer(); ?>
 	</body>

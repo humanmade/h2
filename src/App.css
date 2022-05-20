@@ -81,3 +81,14 @@ a em {
 		padding: 0 20px;
 	}
 }
+
+.logged-out-warning p {
+	background: black;
+	color: white;
+	margin: 0;
+	padding: 0.5em 1em;
+	font-size: 0.7rem;
+	font-weight: 700;
+	line-height: 1.2;
+	text-transform: uppercase;
+}
