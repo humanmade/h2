@@ -2,5 +2,6 @@
 
 set -e
 
+nvm use v12
 npm install
 npm run build
