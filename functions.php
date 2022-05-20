@@ -7,6 +7,8 @@ namespace H2;
 
 require __DIR__ . '/inc/namespace.php';
 require __DIR__ . '/inc/compat/namespace.php';
+require __DIR__ . '/inc/content/namespace.php';
+require __DIR__ . '/inc/content/class-table-of-contents.php';
 require __DIR__ . '/inc/emoji/namespace.php';
 require __DIR__ . '/inc/rest_api/class-widgets-controller.php';
 
@@ -21,4 +23,5 @@ add_action( 'rest_api_init', __NAMESPACE__ . '\\register_rest_routes' );
 add_filter( 'rest_user_collection_params', __NAMESPACE__ . '\\increase_api_user_limit' );
 
 Compat\bootstrap();
+Content\bootstrap();
 Emoji\bootstrap();

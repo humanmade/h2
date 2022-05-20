@@ -1,0 +1,17 @@
+/* H2 Table of Contents shortcode */
+/* (See also inc/content/class-table-of-contents.php) */
+.ToC__Item--Lv2 {
+	margin-left: 1em;
+}
+.ToC__Item--Lv3 {
+	margin-left: 2em;
+}
+.ToC__Item--Lv4 {
+	margin-left: 3em;
+}
+.ToC__Item--Lv5 {
+	margin-left: 4em;
+}
+.ToC__Item--Lv6 {
+	margin-left: 5em;
+}
