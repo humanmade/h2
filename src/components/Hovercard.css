@@ -56,3 +56,9 @@
 	border: 10px solid transparent;
 	border-bottom-color: var( --hm-red );
 }
+
+@media ( max-width: 475px ) {
+	.Hovercard-Card {
+		max-width: calc( 100vw - 52px );
+	}
+}
