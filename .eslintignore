@@ -1,3 +1,4 @@
 src/pattern-library/*
 src/with-api-data/*
+src/with-api-data.js
 node_modules/*

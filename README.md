@@ -18,11 +18,9 @@ H2 is a standalone WordPress theme you can activate on any site, and is a drop-i
 You'll need a WordPress development environment. If you don't have one, [set up a local Altis environment](https://www.altis-dxp.com/resources/docs/local-server/).
 
 Clone this repository into your themes directory:
+```sh
+git clone git@github.com:humanmade/h2.git h2
 ```
-git clone --recursive git@github.com:humanmade/H2.git h2
-```
-
-(If you forgot `--recursive`, initialize submodules by running `git submodule update --init` from the theme directory.)
 
 Once the checkout is complete, `cd` into the cloned theme directory, install npm modules, and start the development server:
 ```
