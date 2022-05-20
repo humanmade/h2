@@ -12,7 +12,7 @@ import loadPlugins from './plugins/load';
 import { createStore } from './store';
 import { Provider as RestApiProvider } from './with-api-data';
 
-import './pattern-library/assets/styles/juniper.css';
+import './pattern-library/assets/sass/juniper.scss';
 
 let store = createStore( window.H2Data.preload );
 

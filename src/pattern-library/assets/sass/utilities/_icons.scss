@@ -1,5 +1,5 @@
 @function iconSrc( $name, $color: "black" ) {
-	@return "#{ $images-path }/icons/icon-#{ $name }-#{ $color }.svg";
+	@return "juniper-images/icons/icon-#{ $name }-#{ $color }.svg";
 }
 
 @mixin icon( $name, $color: "black" ) {
