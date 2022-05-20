@@ -58,6 +58,15 @@ export class Post extends Component {
 		};
 	}
 
+	componentDidMount() {
+		// Manually work around issue where app ignores anchors within the post content.
+		if ( ! this.props.collapsed && window.location.hash ) {
+			const target = window.location.hash;
+			window.location.hash = '';
+			window.location.hash = target;
+		}
+	}
+
 	componentDidUpdate( prevProps ) {
 		// Permit a change in the user view mode to override current post-level state.
 		if ( this.props.viewMode !== prevProps.viewMode ) {
