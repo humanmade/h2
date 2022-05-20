@@ -28,7 +28,7 @@ export const users = new handler( {
 	nonce: window.wpApiSettings.nonce,
 	query: {
 		// Dodges Yoast SEO data computation.
-		_fields: 'id,name,link,slug,avatar_urls,meta',
+		_fields: 'id,name,facts,link,slug,avatar_urls,meta',
 	},
 } );
 users.registerArchive( 'me', state => ( { include: state.users.current } ) );

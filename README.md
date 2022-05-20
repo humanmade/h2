@@ -63,7 +63,9 @@ H2 supports hovercards to preview data for users on your network.
 
 <img src="https://hmn.md/uploads/sites/9/2019/04/Screen-Shot-2019-04-05-at-12.11.42.png" />
 
-To enable Hovercards, you'll also need the [Global Facts](https://github.com/humanmade/global-facts) plugin, along with the development code to map your local users to HM users.
+To enable Hovercards, you'll need to have a `MAPBOX_KEY` PHP constant defined in your environment. You will also need the [Global Facts](https://github.com/humanmade/global-facts) plugin.
+
+It is easiest to test Hovercards when using an H2 network database backup. If not, you may need to add development code to map your local users to Global Facts user profiles.
 
 
 ### Site Selector
