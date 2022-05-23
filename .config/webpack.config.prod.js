@@ -1,3 +1,4 @@
+const webpack = require( 'webpack' );
 const { helpers, presets, plugins } = require( '@humanmade/webpack-helpers' );
 
 const { filePath } = helpers;
@@ -18,6 +19,9 @@ module.exports = presets.production( {
 	plugins: [
 		plugins.clean(),
 		plugins.fixStyleOnlyEntries(),
+		new webpack.optimize.MinChunkSizePlugin( {
+			minChunkSize: 50000,
+		} ),
 	],
 	resolve: {
 		alias: {
