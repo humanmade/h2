@@ -1,3 +1,7 @@
+// Load asset paths from a variable instead in prod mode.
+// This has to be the first import to ensure correct loading order.
+import './webpack-assets-path';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { IntlProvider } from 'react-intl';
