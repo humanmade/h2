@@ -12,10 +12,12 @@ module.exports = presets.production( {
 	},
 	output: {
 		// Asset Loader understands filenames are already hashed in this format.
-		filename: '[name].[contenthash:16].js',
+		filename: '[name].[contenthash].js',
+		chunkFilename: 'h2.chunk-[id].[contenthash].js',
 	},
 	plugins: [
 		plugins.clean(),
+		plugins.fixStyleOnlyEntries(),
 	],
 	resolve: {
 		alias: {

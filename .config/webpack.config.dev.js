@@ -18,8 +18,8 @@ module.exports = choosePort( 9090 ).then( port => presets.development( {
 		// Editor styles require the production build.
 	},
 	output: {
-		// Asset Loader understands filenames are already hashed in this format.
-		filename: '[name].[contenthash:16].js',
+		filename: '[name].[hash].js',
+		chunkFilename: '[name].chunk.[hash].js',
 	},
 	resolve: {
 		alias: {
