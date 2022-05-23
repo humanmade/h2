@@ -7,7 +7,7 @@ import {
 	Post as PostShape,
 	User as UserShape,
 } from '../../shapes';
-import Editor from '../Editor';
+import Editor from '../Editor/LazyEditor';
 import Notification from '../Notification';
 
 import MessageContent from './Content';

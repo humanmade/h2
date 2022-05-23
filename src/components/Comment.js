@@ -10,7 +10,7 @@ import { comments } from '../types';
 import Actions from './Comment/Actions';
 import CommentHeader from './Comment/Header';
 import CommentsList from './CommentsList';
-import Editor from './Editor';
+import Editor from './Editor/LazyEditor';
 import MessageContent from './Message/Content';
 import WriteComment from './Message/WriteComment';
 import Notification from './Notification';

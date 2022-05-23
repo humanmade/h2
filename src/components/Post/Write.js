@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withCategories, withCurrentUser } from '../../hocs';
 import { posts } from '../../types';
 import Avatar from '../Avatar';
-import Editor from '../Editor';
+import Editor from '../Editor/LazyEditor';
 import Notification from '../Notification';
 import RemotePreview from '../RemotePreview';
 
