@@ -7,6 +7,10 @@
 	border-bottom: 5px solid #F1F2EE;
 }
 
+.Post--collapsed {
+	padding-bottom: 0;
+}
+
 .Post__actions {
 	min-width: 6rem;
 }
@@ -19,7 +23,7 @@
 	align-items: flex-start;
 }
 
-.Post--collapsed .reactions {
+.Post--collapsed .Post-footer-actions .reactions {
 	display: none;
 }
 

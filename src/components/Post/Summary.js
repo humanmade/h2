@@ -1,6 +1,7 @@
 import { withArchive } from '@humanmade/repress';
 import uniq from 'lodash/uniq';
 import React from 'react';
+import { Slot } from 'react-slot-fill';
 
 import { withUser } from '../../hocs';
 import { comments } from '../../types';
@@ -29,22 +30,9 @@ const Person = props => {
 const ConnectedPerson = withUser( props => props.id )( Person );
 
 function Summary( props ) {
-	const { comments, post, postVisible, onExpand } = props;
+	const { comments, loadingComments, post, postVisible, onExpand } = props;
 
 	const continueReadingMessage = `Continue reading (${ _n( 'word', 'words', post.content.count ) })`;
-
-	if ( props.loadingComments ) {
-		if ( postVisible ) {
-			return null;
-		}
-		return (
-			<div className="Post-Summary">
-				<Button onClick={ onExpand }>
-					{ continueReadingMessage }
-				</Button>
-			</div>
-		);
-	}
 
 	const people = comments ? uniq( comments.map( comment => comment.author ) ).filter( Boolean ) : [];
 
@@ -55,26 +43,31 @@ function Summary( props ) {
 
 	return (
 		<div className="Post-Summary">
-			<Button onClick={ onExpand }>
-				{ postVisible ? (
-					'Show comments'
-				 ) : (
-					continueReadingMessage
-				 ) }
-			</Button>
+			<div className="Post-Summary-actions">
+				<Button onClick={ onExpand }>
+					{ postVisible ? (
+						'Show comments'
+					) : (
+						continueReadingMessage
+					) }
+				</Button>
 
-			{ ( comments && comments.length > 0 ) && (
-				<div className="Post-Summary-comments">
-					<span>{ _n( 'comment', 'comments', comments.length ) }</span>
-					<ul className={ peopleClass }>
-						{ people.slice( 0, 8 ).map( person => (
-							<li key={ person }>
-								<ConnectedPerson id={ person } />
-							</li>
-						) ) }
-					</ul>
-				</div>
-			) }
+				{ ( ! loadingComments && comments && comments.length > 0 ) && (
+					<div className="Post-Summary-comments">
+						<span>{ _n( 'comment', 'comments', comments.length ) }</span>
+						<ul className={ peopleClass }>
+							{ people.slice( 0, 8 ).map( person => (
+								<li key={ person }>
+									<ConnectedPerson id={ person } />
+								</li>
+							) ) }
+						</ul>
+					</div>
+				) }
+			</div>
+			<div className="Post-Summary-actions align-right">
+				<Slot name="Post.summary_actions" fillChildProps={ { post } } />
+			</div>
 		</div>
 	);
 }
