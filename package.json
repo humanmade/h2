@@ -62,6 +62,7 @@
     "turndown": "^5.0.1"
   },
   "scripts": {
+    "postinstall": "rm -rf node_modules/.cache",
     "start": "webpack serve --config=.config/webpack.config.dev.js",
     "build": "webpack --config=.config/webpack.config.prod.js",
     "lint": "eslint src/",

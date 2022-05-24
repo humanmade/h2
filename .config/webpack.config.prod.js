@@ -28,4 +28,8 @@ module.exports = presets.production( {
 			'juniper-images': filePath( 'src/pattern-library/assets/images' ),
 		},
 	},
+	cache: {
+		// See https://webpack.js.org/guides/build-performance/#persistent-cache
+		type: 'filesystem',
+	},
 } );
