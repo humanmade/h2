@@ -31,8 +31,19 @@ const ConnectedPerson = withUser( props => props.id )( Person );
 function Summary( props ) {
 	const { comments, post, postVisible, onExpand } = props;
 
+	const continueReadingMessage = `Continue reading (${ _n( 'word', 'words', post.content.count ) })`;
+
 	if ( props.loadingComments ) {
-		return null;
+		if ( postVisible ) {
+			return null;
+		}
+		return (
+			<div className="Post-Summary">
+				<Button onClick={ onExpand }>
+					{ continueReadingMessage }
+				</Button>
+			</div>
+		);
 	}
 
 	const people = comments ? uniq( comments.map( comment => comment.author ) ).filter( Boolean ) : [];
@@ -48,7 +59,7 @@ function Summary( props ) {
 				{ postVisible ? (
 					'Show comments'
 				 ) : (
-					`Continue reading (${ _n( 'word', 'words', post.content.count ) })`
+					continueReadingMessage
 				 ) }
 			</Button>
 
