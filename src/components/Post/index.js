@@ -56,6 +56,8 @@ export class Post extends Component {
 			isEditing: false,
 			isSubmitting: false,
 		};
+		// Keep track of post position so we can scroll back to top on close.
+		this.postRef = React.createRef();
 	}
 
 	componentDidUpdate( prevProps ) {
@@ -79,6 +81,19 @@ export class Post extends Component {
 		this.setState( { isEditing: true } );
 		if ( ! ( 'raw' in this.props.post.content ) ) {
 			this.props.onLoad( 'edit' );
+		}
+	}
+
+	onExpand = () => {
+		this.setState( { expanded: true } );
+	}
+
+	onCollapse = () => {
+		this.setState( { expanded: false } );
+		if ( this.postRef.current ) {
+			window.scrollTo( {
+				top: this.postRef.current.getBoundingClientRect().top + window.scrollY,
+			} );
 		}
 	}
 
@@ -139,11 +154,13 @@ export class Post extends Component {
 		const hideComments = ! ( viewMode === 'full' || isShowingReply || expanded );
 
 		return (
-			<div className={ classes }>
+			<div className={ classes } ref={ this.postRef }>
 
 				<MessageHeader
 					author={ user }
 					categories={ categories }
+					collapsed={ viewMode === 'compact' && ! expanded }
+					onCollapse={ this.onCollapse }
 					post={ post }
 				>
 					{ Actions }
@@ -167,7 +184,7 @@ export class Post extends Component {
 					<Summary
 						post={ post }
 						postVisible={ viewMode !== 'compact' || isShowingReply }
-						onExpand={ () => this.setState( { expanded: true } ) }
+						onExpand={ this.onExpand }
 					/>
 				) : (
 					<PostComments
