@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/browser';
 import React from 'react';
 
 import { withCurrentUser } from '../../hocs';
@@ -9,15 +8,17 @@ class SentryPlugin extends React.Component {
 	}
 
 	configure() {
-		Sentry.configureScope( scope => {
-			const { currentUser } = this.props;
-			if ( ! currentUser ) {
-				return;
-			}
+		import( '@sentry/browser' ).then( Sentry => {
+			Sentry.configureScope( scope => {
+				const { currentUser } = this.props;
+				if ( ! currentUser ) {
+					return;
+				}
 
-			scope.setUser( {
-				id: currentUser.id,
-				username: currentUser.slug,
+				scope.setUser( {
+					id: currentUser.id,
+					username: currentUser.slug,
+				} );
 			} );
 		} );
 	}
@@ -34,10 +35,12 @@ export default function register() {
 		return;
 	}
 
-	Sentry.init( {
-		dsn: window.H2Data.site.sentry_key,
-		environment: window.H2Data.site.environment || 'unknown',
-	} );
+	import( '@sentry/browser' ).then( Sentry => {
+		Sentry.init( {
+			dsn: window.H2Data.site.sentry_key,
+			environment: window.H2Data.site.environment || 'unknown',
+		} );
 
-	window.H2.plugins.register( ConnectedSentryPlugin );
+		window.H2.plugins.register( ConnectedSentryPlugin );
+	} );
 }

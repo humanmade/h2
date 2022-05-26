@@ -1,3 +1,4 @@
+const webpack = require( 'webpack' );
 const { helpers, presets, plugins } = require( '@humanmade/webpack-helpers' );
 
 const { filePath } = helpers;
@@ -12,14 +13,23 @@ module.exports = presets.production( {
 	},
 	output: {
 		// Asset Loader understands filenames are already hashed in this format.
-		filename: '[name].[contenthash:16].js',
+		filename: '[name].[contenthash].js',
+		chunkFilename: 'h2.chunk-[id].[contenthash].js',
 	},
 	plugins: [
 		plugins.clean(),
+		plugins.fixStyleOnlyEntries(),
+		new webpack.optimize.MinChunkSizePlugin( {
+			minChunkSize: 50000,
+		} ),
 	],
 	resolve: {
 		alias: {
 			'juniper-images': filePath( 'src/pattern-library/assets/images' ),
 		},
+	},
+	cache: {
+		// See https://webpack.js.org/guides/build-performance/#persistent-cache
+		type: 'filesystem',
 	},
 } );

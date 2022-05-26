@@ -1,4 +1,3 @@
-import { emojiIndex } from 'emoji-mart';
 import React from 'react';
 
 import { customEmoji } from '../EmojiPicker';
@@ -10,7 +9,6 @@ import './EmojiCompletion.css';
 export const Item = ( { item, selected, onSelect } ) => {
 	return (
 		<li
-			key={ item.colons }
 			className={ selected ? 'selected' : null }
 			onClick={ onSelect }
 		>
@@ -27,7 +25,7 @@ export const Item = ( { item, selected, onSelect } ) => {
 };
 
 const EmojiCompletion = props => {
-	const getItems = search => {
+	const getItems = search => import( '../EmojiMart' ).then( ( { emojiIndex } ) => {
 		if ( ! search.length ) {
 			return null;
 		}
@@ -55,7 +53,7 @@ const EmojiCompletion = props => {
 			...withPrefixSearch,
 			...regularSearch,
 		].slice( 0, 5 );
-	};
+	} );
 
 	return (
 		<Completion

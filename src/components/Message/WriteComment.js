@@ -7,7 +7,7 @@ import { withCurrentUser } from '../../hocs';
 import { Post } from '../../shapes';
 import { comments } from '../../types';
 import Avatar from '../Avatar';
-import Editor from '../Editor';
+import Editor from '../Editor/LazyEditor';
 import Notification from '../Notification';
 import RemotePreview from '../RemotePreview';
 
