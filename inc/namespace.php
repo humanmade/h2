@@ -454,6 +454,6 @@ function render_preview( WP_REST_Request $request ) {
 function flush_preload_cache( $_filter_value = null ) {
 	wp_cache_delete( PRELOAD_CACHE_KEY, CACHE_GROUP );
 
-	// Permits use of this callback on hooks, not just actions.
+	// Permits use of this callback on filters as well as actions.
 	return $_filter_value;
 }
