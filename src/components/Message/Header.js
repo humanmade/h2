@@ -36,7 +36,7 @@ export class MessageHeader extends React.Component {
 
 	render() {
 		const { author, categories, post } = this.props;
-		const { children, constrainTitle, sticky, ...fillProps } = this.props;
+		const { children, constrainTitle, sticky, collapsed, onCollapse, ...fillProps } = this.props;
 
 		const classes = [
 			'Message-Header',
@@ -49,11 +49,22 @@ export class MessageHeader extends React.Component {
 				className={ classes.filter( Boolean ).join( ' ' ) }
 				ref={ this.onUpdateRef }
 			>
-				<Avatar
-					url={ author ? author.avatar_urls['96'] : '' }
-					user={ author }
-					size={ 60 }
-				/>
+				<div>
+					<Avatar
+						url={ author ? author.avatar_urls['96'] : '' }
+						user={ author }
+						size={ 60 }
+					/>
+					{ ! collapsed && onCollapse ? (
+						<button
+							className="Message-Header__Collapse-Button"
+							onClick={ onCollapse }
+						>
+							<i className="icon icon--close icon--black" />
+							<span className="screen-reader-text">Collapse post</span>
+						</button>
+					) : null }
+				</div>
 				<div className="Message-Header__byline">
 					<Link
 						disablePreviews
@@ -95,6 +106,7 @@ export class MessageHeader extends React.Component {
 }
 
 MessageHeader.defaultProps = {
+	collapsed: false,
 	constrainTitle: false,
 	sticky: true,
 };
@@ -102,6 +114,8 @@ MessageHeader.defaultProps = {
 MessageHeader.propTypes = {
 	author: UserShape.isRequired,
 	categories: PropTypes.arrayOf( CategoryShape ).isRequired,
+	collapsed: PropTypes.bool,
+	onCollapse: PropTypes.func,
 	constrainTitle: PropTypes.bool,
 	post: PostShape.isRequired,
 	sticky: PropTypes.bool,

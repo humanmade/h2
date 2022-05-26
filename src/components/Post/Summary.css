@@ -1,10 +1,14 @@
 .Post-Summary {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
 	margin: 1em 0 1em 90px;
 	font-size: 14px;
 	color: #aaa;
+}
+
+.Post-Summary-actions {
+	margin: 5px 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .Post-Summary .btn {
@@ -69,12 +73,23 @@
 }
 
 @media (max-width: 600px) {
-	.Post-Summary {
+	.Post-Summary-actions {
 		flex-direction: column;
 		align-items: flex-start;
 	}
 
 	.Post-Summary-comments {
 		margin-top: 1em;
+	}
+}
+
+@media (min-width: 601px) {
+	.Post-Summary-actions.align-right {
+		justify-content: flex-end;
+	}
+
+	.Post-Summary-actions.align-right .btn {
+		margin-right: 0;
+		margin-left: 7.5px;
 	}
 }

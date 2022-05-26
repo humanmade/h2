@@ -80,7 +80,7 @@ class PostsList extends Component {
 						<PostComponent
 							key={ post.id }
 							data={ post }
-							viewMode={ isSingular ? 'full' : this.props.viewMode }
+							viewMode={ isSingular || this.props.posts.length === 1 ? 'full' : this.props.viewMode }
 							onInvalidate={ () => this.props.invalidateData() }
 						/>
 					) ) }

@@ -16,6 +16,7 @@ export default function Plugin() {
 	return (
 		<React.Fragment>
 			<Fill name="Post.footer_actions"><ConnectReactions /></Fill>
+			<Fill name="Post.summary_actions"><ConnectReactions /></Fill>
 			<Fill name="Comment.footer_actions"><ConnectReactions /></Fill>
 		</React.Fragment>
 	);
