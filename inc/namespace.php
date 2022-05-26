@@ -9,6 +9,9 @@ use Asset_Loader;
 use WP_Error;
 use WP_REST_Request;
 
+const CACHE_GROUP = 'h2';
+const PRELOAD_CACHE_KEY = 'h2_preloaded_data';
+
 /**
  * Adjust default filters in WordPress.
  *
@@ -139,19 +142,28 @@ function get_preload_key( string $url ) : string {
 }
 
 /**
- * Gather data for H2.
+ * Return a list of URLs to preload.
+ *
+ * @return array Preload URL list.
  */
-function get_script_data() {
-	$preload = [
+function get_preload_urls() : array {
+	return [
 		// @TODO: This preloaded data is not used (the client makes the same requests),
 		// need to investigate why. For now, these only increase TTFB with no gain.
 		// '/wp/v2/posts',
 		// '/h2/v1/site-switcher/sites',
-		// '/h2/v1/widgets?sidebar=sidebar',
+		'/h2/v1/widgets?sidebar=sidebar',
 		// '/wp/v2/categories?per_page=100',
 		'/wp/v2/users/me?_fields=id,name,facts,link,slug,avatar_urls,meta',
 		'/wp/v2/users?per_page=200&_fields=id,name,facts,link,slug,avatar_urls,meta',
 	];
+}
+
+/**
+ * Gather data for H2.
+ */
+function get_script_data() {
+	$preload = get_preload_urls();
 
 	$data = [
 		'asset_url' => get_theme_file_uri( 'build/' ),
@@ -217,6 +229,11 @@ function increase_api_user_limit( $params ) {
  * @return array Array of returned data for each requested endpoint.
  */
 function prefetch_urls( $urls ) {
+	$cached_data = wp_cache_get( PRELOAD_CACHE_KEY, CACHE_GROUP );
+	if ( $cached_data ) {
+		return $cached_data;
+	}
+
 	$server = rest_get_server();
 	$data   = [];
 	foreach ( $urls as $url ) {
@@ -228,6 +245,8 @@ function prefetch_urls( $urls ) {
 
 		$data[ get_preload_key( $url ) ] = $server->response_to_data( $response, false );
 	}
+
+	wp_cache_set( PRELOAD_CACHE_KEY, $data, CACHE_GROUP, 60 * 60 );
 	return $data;
 }
 
@@ -422,4 +441,19 @@ function render_preview( WP_REST_Request $request ) {
 		'type' => $request['type'],
 		'html' => $content,
 	];
+}
+
+/**
+ * Flush the preloaded REST URL data cache.
+ *
+ * This method has no finesse whatsoever. That's probably OK.
+ *
+ * @param mixed $_filter_value Value passed to filter, if hooked to a filter.
+ * @return mixed The unchanged value of that filter argument.
+ */
+function flush_preload_cache( $_filter_value = null ) {
+	wp_cache_delete( PRELOAD_CACHE_KEY, CACHE_GROUP );
+
+	// Permits use of this callback on filters as well as actions.
+	return $_filter_value;
 }
