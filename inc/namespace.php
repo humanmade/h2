@@ -10,7 +10,7 @@ use WP_Error;
 use WP_REST_Request;
 
 const CACHE_GROUP = 'h2';
-const PRELOAD_CACHE_KEY = 'h2_preloaded_data';
+const CACHE_PREFIX_PRELOAD = 'h2_preload_';
 
 /**
  * Adjust default filters in WordPress.
@@ -150,12 +150,18 @@ function get_preload_urls() : array {
 	return [
 		// @TODO: This preloaded data is not used (the client makes the same requests),
 		// need to investigate why. For now, these only increase TTFB with no gain.
-		// '/wp/v2/posts',
-		// '/h2/v1/site-switcher/sites',
-		'/h2/v1/widgets?sidebar=sidebar',
-		// '/wp/v2/categories?per_page=100',
-		// '/wp/v2/users/me?_fields=id,name,facts,link,slug,avatar_urls,meta',
-		'/wp/v2/users?per_page=200&_fields=id,name,facts,link,slug,avatar_urls,meta',
+		// [ 'url' => '/wp/v2/posts' ],
+		// [ 'url' => '/h2/v1/site-switcher/sites' ],
+		// [ 'url' => '/wp/v2/categories?per_page=100' ],
+		[
+			'url'   => '/h2/v1/widgets?sidebar=sidebar',
+			'cache' => true,
+		],
+		[ 'url' => '/wp/v2/users/me?_fields=id,name,facts,link,slug,avatar_urls,meta' ],
+		[
+			'url'   => '/wp/v2/users?per_page=200&_fields=id,name,facts,link,slug,avatar_urls,meta',
+			'cache' => true,
+		],
 	];
 }
 
@@ -225,28 +231,34 @@ function increase_api_user_limit( $params ) {
 /**
  * Trigger anticipatory requests against the REST server for a list of URLs.
  *
- * @param string[] $urls List of REST endpoint URLs.
+ * @param array[] $endpoints List of REST endpoint URLs.
  * @return array Array of returned data for each requested endpoint.
  */
-function prefetch_urls( $urls ) {
-	$cached_data = wp_cache_get( PRELOAD_CACHE_KEY, CACHE_GROUP );
-	if ( $cached_data ) {
-		return $cached_data;
-	}
-
+function prefetch_urls( $endpoints ) {
 	$server = rest_get_server();
 	$data   = [];
-	foreach ( $urls as $url ) {
+	foreach ( $endpoints as $endpoint ) {
+		$url = $endpoint['url'];
+		$preload_key = get_preload_key( $url );
+		if ( $endpoint['cache'] ?? false ) {
+			$cached_data = wp_cache_get( CACHE_PREFIX_PRELOAD . $preload_key, CACHE_GROUP );
+			if ( $cached_data ) {
+				$data[ $preload_key ] = $cached_data;
+				continue;
+			}
+		}
 		$request  = WP_REST_Request::from_url( rest_url( $url ) );
 		$response = rest_do_request( $request );
 		if ( $response->is_error() ) {
 			continue;
 		}
 
-		$data[ get_preload_key( $url ) ] = $server->response_to_data( $response, false );
+		$data[ $preload_key ] = $server->response_to_data( $response, false );
+		if ( $endpoint['cache'] ?? false ) {
+			wp_cache_set( CACHE_PREFIX_PRELOAD . $preload_key, $data[ $preload_key ], CACHE_GROUP, 60 * 60 );
+		}
 	}
 
-	wp_cache_set( PRELOAD_CACHE_KEY, $data, CACHE_GROUP, 60 * 60 );
 	return $data;
 }
 
@@ -452,7 +464,14 @@ function render_preview( WP_REST_Request $request ) {
  * @return mixed The unchanged value of that filter argument.
  */
 function flush_preload_cache( $_filter_value = null ) {
-	wp_cache_delete( PRELOAD_CACHE_KEY, CACHE_GROUP );
+	$preload = get_preload_urls();
+
+	foreach ( $preload as $endpoint ) {
+		if ( $endpoint['cache'] ?? false ) {
+			$preload_key = get_preload_key( $endpoint['url'] );
+			wp_cache_delete( CACHE_PREFIX_PRELOAD . $preload_key, CACHE_GROUP );
+		}
+	}
 
 	// Permits use of this callback on filters as well as actions.
 	return $_filter_value;
