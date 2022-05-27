@@ -9,7 +9,7 @@ export default function FormattedDate( props ) {
 
 	return (
 		<time dateTime={ date } title={ date }>
-			{ hoursSinceComment < 24 ? (
+			{ hoursSinceComment < ( 24 * 7 ) ? (
 				<FormattedRelative value={ date } />
 			) : (
 				// Canada helpfully uses YYYY-MM-DD. We do not use the ISO
