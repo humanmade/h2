@@ -1,0 +1,105 @@
+@media print {
+	.logged-out-warning,
+	.Sidebar,
+	.Sidebar-Container,
+	.Header,
+	.Overlay,
+	.SuperMenu,
+	.Post__actions,
+	.Post-Summary-actions,
+	.Comment-Actions,
+	.Message-Header__Collapse-Button {
+		display: none;
+	}
+
+	.Message-Header--constrained {
+		display: none;
+	}
+
+	.Message-Header--sticky,
+	.Comment .Comment-Header {
+		position: relative;
+		top: auto;
+	}
+
+	.Message-Main--collapsed {
+		max-height: unset;
+		overflow: initial;
+
+		&::after {
+			display: none;
+		}
+	}
+
+	.PostsList {
+		padding: 0;
+	}
+
+	.Post {
+		border-bottom-width: 1px;
+		border-bottom-color: black;
+		padding-bottom: 0;
+	}
+
+	.PostContent > *:first-child:empty + * {
+		margin-top: 0;
+	}
+
+	.Post--collapsed .Post-footer-actions .reactions {
+		display: block;
+	}
+
+	.Comment:before {
+		background: transparent;
+		border-left: 1px;
+	}
+
+	.Comment-Header {
+		margin-left: auto;
+	}
+
+	.Comment .actions-wrap {
+		display: flex;
+	}
+
+	body {
+		color: black;
+		font-size: 12pt;
+		line-height: 1.3;
+	}
+
+	.App {
+		font-size: 1rem;
+	}
+
+	pre {
+		font-size: 11pt;
+	}
+
+	* {
+		background: transparent !important;
+	}
+
+	.Message-Header {
+		break-inside: avoid;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	.Message-Header {
+		break-after: avoid;
+
+		// Nifty hack to work around break-after not working like we want.
+		// https://stackoverflow.com/questions/9238868/how-do-i-avoid-a-page-break-immediately-after-a-heading
+		&::after {
+			content: "";
+			display: block;
+			height: 100px;
+			margin-bottom: -100px;
+		}
+	}
+}
