@@ -159,7 +159,7 @@ export class Post extends Component {
 				<MessageHeader
 					author={ user }
 					categories={ categories }
-					collapsed={ viewMode === 'compact' && ! expanded }
+					collapsed={ viewMode === 'full' || ( viewMode === 'compact' && ! expanded ) }
 					onCollapse={ this.onCollapse }
 					post={ post }
 				>
