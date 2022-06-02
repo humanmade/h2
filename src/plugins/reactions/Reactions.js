@@ -143,7 +143,7 @@ export class Reactions extends Component {
 					);
 				} ) }
 				<button
-					className={ 'btn btn--small btn--tertiary' + ( loading ? ' loading' : '' ) }
+					className={ 'reactions__add-reaction btn btn--small btn--tertiary' + ( loading ? ' loading' : '' ) }
 					onClick={ value => this.setState( { isOpen: ! this.state.isOpen  } ) }
 					key="button"
 					disabled={ loading }

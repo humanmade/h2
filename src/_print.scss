@@ -9,8 +9,15 @@
 	.Post-Summary-actions button,
 	.Post-Summary-people,
 	.Comment-Actions,
-	.Message-Header__Collapse-Button {
+	.ButtonGroup,
+	.Message-Header__Collapse-Button,
+	.reactions__add-reaction {
 		display: none;
+	}
+
+	.Inner {
+		width: unset;
+		max-width: unset;
 	}
 
 	.Message-Header--constrained {
