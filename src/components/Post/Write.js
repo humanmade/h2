@@ -28,6 +28,7 @@ export class WritePost extends Component {
 			isSaving: false,
 			lastSave: null,
 			didCopy: false,
+			shouldNotifyMarketing: false,
 		};
 	}
 
@@ -183,6 +184,15 @@ export class WritePost extends Component {
 								) ) }
 							</select>
 						) }
+						<label className="notify-marketing">
+							<input
+								type="checkbox"
+								value="1"
+								checked={ this.state.shouldNotifyMarketing }
+								onChange={ () => this.setState( { shouldNotifyMarketing: ! this.state.shouldNotifyMarketing } ) }
+							/>
+							Notify marketing
+						</label>
 					</div>
 					<div className="actions"></div>
 				</header>
