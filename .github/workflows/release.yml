@@ -28,5 +28,5 @@ jobs:
           release_branch: release
           built_asset_paths: build
           build_script: |
-            npm i --legacy-peer-deps
+            npm ci
             npm run build
