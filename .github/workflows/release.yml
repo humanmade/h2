@@ -13,13 +13,21 @@ jobs:
   release:
     name: "Update release branch"
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 12 ]
     steps:
       - name: Check out
         uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - name: Setup node
+        uses: ./.github/actions/setup-node
         with:
-          node-version: '12'
+          cache_version: ${{ secrets.GH_ACTIONS_CACHE_KEY }}
+
+      - name: Install dependencies
+        if: ${{ toJSON( steps.paths.outputs.changes ) != '"[]"' && steps.cache-node-dependencies.outputs.cache-hit != 'true' }}
+        run: npm ci --progress=false --audit=false --fund=false --legacy-peer-deps
 
       - name: Merge and build
         uses: ./.github/actions/build-to-release-branch
@@ -28,5 +36,4 @@ jobs:
           release_branch: release
           built_asset_paths: build
           build_script: |
-            npm ci
             npm run build
