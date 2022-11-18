@@ -1,0 +1,32 @@
+name: Production Release
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    name: "Update release branch"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '12'
+
+      - name: Merge and build
+        uses: ./.github/actions/build-to-release-branch
+        with:
+          source_branch: main
+          release_branch: release
+          built_asset_paths: build
+          build_script: |
+            npm i --legacy-peer-deps
+            npm run build
