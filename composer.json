@@ -1,0 +1,20 @@
+{
+    "name": "humanmade/h2",
+    "version": "1.0.0",
+    "description": "H2 is the internal communications tool for Human Made.",
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "stable",
+    "type": "wordpress-theme",
+    "repositories": [
+        {
+            "type": "github",
+            "url": "https://github.com/humanmade/h2.git"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

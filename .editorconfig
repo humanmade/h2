@@ -19,6 +19,6 @@ indent_style = space
 indent_size = 2
 
 # Use 4-space indentation on composer.json.
-[{composer.json}]
+[composer.json]
 indent_style = space
 indent_size = 4
