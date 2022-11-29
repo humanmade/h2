@@ -1,5 +1,5 @@
 .SuperMenu {
-	background: var( --hm-beige );
+	background: var( --hm-light-grey );
 	position: absolute;
 	transform: translate( -300px, 0 );
 	width: 300px;
@@ -58,6 +58,12 @@
 	text-transform: uppercase;
 	font-size: 1rem;
 	margin: 0 0 0.75em;
+}
+
+.SuperMenu a,
+.SuperMenu a:link,
+.SuperMenu a:visited {
+	color: black;
 }
 
 .SuperMenu p,

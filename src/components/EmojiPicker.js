@@ -85,7 +85,7 @@ export default function EmojiPicker( props ) {
 					onClick={ props.onSelect }
 					emoji="upside_down_face"
 					autoFocus={ props.autoFocus }
-					color="#D24632"
+					color="#FF424A"
 					custom={ customEmoji }
 					set="twitter"
 				/>
