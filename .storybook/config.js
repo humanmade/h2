@@ -27,7 +27,7 @@ addParameters( {
 		{ name: 'White', value: '#fff' },
 		{ name: 'Black', value: '#000' },
 
-		{ name: 'red', value: '#D24632' },
+		{ name: 'red', value: '#FF424A' },
 		{ name: 'blue', value: '#7DC9DA' },
 		{ name: 'warm-grey', value: '#504C4C' },
 		{ name: 'dark-grey', value: '#353535' },
