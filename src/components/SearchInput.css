@@ -8,7 +8,7 @@
 	display: flex;
 	align-items: center;
 	height: 100%;
-	background: var( --hm-beige );
+	background: var( --hm-light-grey );
 	position: relative;
 	z-index: 11;
 }
@@ -28,7 +28,7 @@
 
 	padding: 0.5rem 0;
 
-	background: var( --hm-beige );
+	background: var( --hm-light-grey );
 	box-shadow: 0 0 8px rgba( 0, 0, 0, 0.3 );
 }
 

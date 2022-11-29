@@ -98,5 +98,5 @@
 }
 
 .btn--tertiary .Dropdown__content > .btn:hover {
-	background: var( --hm-warm-grey );
+	background: var( --hm-light-blue );
 }
