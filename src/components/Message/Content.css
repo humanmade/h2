@@ -35,7 +35,7 @@
 	font-size: inherit;
 	border-left: 6px solid #f5f5f5;
 	line-height: 1.555;
-	color: #847F7F;
+	color: var( --hm-warm-grey );
 	padding-left: 15px;
 	line-height: 1.6;
 }
