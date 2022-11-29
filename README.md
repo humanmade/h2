@@ -13,6 +13,21 @@ H2 is a WordPress theme, inspired by the design and principles of [P2](https://p
 
 H2 is a standalone WordPress theme you can activate on any site, and is a drop-in replacement for P2. You can add additional functionality by activating the companion plugins, which H2 will automatically detect and use.
 
+## Deploy Process
+
+The release and release-develop versions of the H2 theme are built using [GitHub Actions](https://github.com/features/actions). Any time a pull request is merged into the `main` or `develop` branches, that code is built and pushed to the corresponding `release` and `release-develop` branches. **You should not commit to the release branches directly,** nor submit pull requests against them.
+
+Development workflow:
+
+- Implement a feature or bugfix in a feature branch created off of `main`
+- Submit a pull request from that feature branch back into `main`, and get code review
+- Merge the feature branch into `develop` manually.
+  - The `release-develop` branch will be automatically rebuilt
+- Update the [development environment](https://github.com/humanmade/hm-playbook-dev) to reference the newest built version of the `release-develop` branch, to deploy and test the theme PR.
+- Once approved, merge the pull request into `main`
+  - The `release` branch will be automatically rebuilt
+- Update the production branch `composer.json` in the [main network repository](https://github.com/humanmade/hmn.md) to reference the newest built version of the `release` branch, to deploy the change to production.
+
 ### Local Setup
 
 You'll need a WordPress development environment. If you don't have one, [set up a local Altis environment](https://www.altis-dxp.com/resources/docs/local-server/).
