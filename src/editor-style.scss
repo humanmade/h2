@@ -18,7 +18,7 @@ a {
     &:hover:not(:disabled):not([aria-disabled="true"]) {
         border-bottom: none;
         text-decoration: underline;
-        color: var(--hm-red);
+        color: var(--hm-vibrant-blue);
     }
 }
 

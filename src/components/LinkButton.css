@@ -8,13 +8,13 @@
 	padding: 0;
 	margin: 0;
 	overflow: visible;
-	color: var( --hm-red );
+	color: var( --hm-vibrant-blue );
 	transition: color .2s ease-in, background .2s ease-in;
 }
 
 .LinkButton:hover,
 .LinkButton:focus {
-	color: var( --hm-red );
+	color: var( --hm-vibrant-blue );
 	transition: color .2s ease-out, background .2s ease-out;
 	text-decoration: underline;
 	outline: none;
