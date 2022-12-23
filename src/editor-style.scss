@@ -18,7 +18,7 @@ a {
     &:hover:not(:disabled):not([aria-disabled="true"]) {
         border-bottom: none;
         text-decoration: underline;
-        color: var(--hm-red);
+        color: var(--hm-vibrant-blue);
     }
 }
 
@@ -32,7 +32,7 @@ a em {
     max-width: 650px;
     margin: auto;
     line-height: 1.5555;
-	font-family: 'Proxima-Nova', sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 
@@ -41,7 +41,7 @@ a em {
     max-width: 650px;
     margin: 0 auto 1.5rem;
     padding-right: 120px;
-	font-family: 'Proxima-Nova', sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     font-size: 2rem;
 }
 
