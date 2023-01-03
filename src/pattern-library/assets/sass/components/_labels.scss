@@ -43,14 +43,8 @@
 	line-height: $base-font-size;
 	font-family: $font-family-code;
 	font-size: .6 * $base-font-size;
-	background: $color-primary;
+	background: var( --hm-vibrant-blue );
 	color: $color-white;
 	margin-left: 0.1em;
 	margin-right: 0.1em;
-
-	.label:hover &,
-	.label:focus & {
-		background-color: $color-white;
-		color: $color-primary;
-	}
 }
