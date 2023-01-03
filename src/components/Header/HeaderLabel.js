@@ -7,7 +7,7 @@ export default function HeaderButton( props ) {
 	return (
 		<button onClick={ props.onClick } className={ `HeaderLabel label ${ props.className || '' }` }>
 			{ props.icon && <span
-				className={ 'icon icon--red icon--' + props.icon }
+				className={ 'icon icon--blue icon--' + props.icon }
 			></span> }
 			{ props.title }
 		</button>

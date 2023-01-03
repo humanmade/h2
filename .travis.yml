@@ -7,4 +7,6 @@ script:
   - npm run build
 
   # Move main JS file to a static name
-  - npm run check-size
+  # - npm run check-size
+  # Disabled 2022-12-23 because Travis started getting a 401 trying to post back
+  # the bundle size stats.
