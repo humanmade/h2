@@ -37,7 +37,7 @@
 .Editor-tabs label input:checked + span {
 	background: #fff;
 	border-color: #d9d9d9;
-	color: var(--hm-red-dark);
+	color: var( --hm-vibrant-blue );
 }
 
 .Editor-toolbar {

@@ -45,7 +45,7 @@ label.DropUpload-uploader {
 	margin-right: 0.3em;
 	cursor: pointer;
 	/* Style label text similar to an <a> */
-	color: var( --hm-red );
+	color: var( --hm-vibrant-blue );
 }
 .DropUpload-uploader:hover {
 	text-decoration: underline;
