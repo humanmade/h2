@@ -5,7 +5,7 @@
 	border-radius: 4px;
 	padding: 0 #{ $gutter-width * 0.5 };
 	background: $color-white;
-	color: $color-primary;
+	color: var( --hm-vibrant-blue );
 	margin-bottom: $margin-vertical-sm * 0.5;
 	margin-right: $gutter-width * 0.25;
 	display: inline-block;
@@ -27,7 +27,7 @@
 	&:hover,
 	&:focus {
 		color: $color-white;
-		background-color: $color-primary;
+		background-color: var( --hm-vibrant-blue );
 		text-decoration: none;
 		outline: none;
 		transition: color .1s ease-in-out, background .1s ease-in-out, border-color .1s ease-in-out;
