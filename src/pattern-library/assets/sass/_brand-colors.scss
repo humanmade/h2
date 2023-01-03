@@ -14,7 +14,6 @@ $hm-dark-red:     #CC343B;
 $hm-deep-blue:    #203657;
 $hm-light-blue:   #eff2ff;
 $hm-dark-vibrant-blue: #3853B2;
-$hm-white:        #ffffff;
 
 // Alternate versions of main colors. Used for borders, backgrounds etc.
 $hm-red-light: saturate( lighten( $hm-red, 10% ), 5 );
@@ -43,6 +42,5 @@ $hm-red-accessible: $hm-red !default;
 	--hm-deep-blue:    #{$hm-deep-blue};
 	--hm-mint:         #{$hm-mint};
 	--hm-ash-grey:     #{$hm-ash-grey};
-	--hm-light-blue:   #{$hm-light-blue};
-	--hm-white:        #{$hm-white}
+	--hm-light-blue:   #{$hm-light-blue}
 }

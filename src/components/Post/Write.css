@@ -32,7 +32,7 @@
 }
 
 .WritePost__title .btn:hover .label__count {
-	background-color: var( --hm-white );
+	background-color: white;
 	color: var( --hm-vibrant-blue );
 }
 
