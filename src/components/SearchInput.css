@@ -64,7 +64,7 @@
 .SearchInput__result:hover,
 .SearchInput__results .SearchInput__result--selected {
 	border: none;
-	background: var( --hm-red );
+	background: var( --hm-vibrant-blue );
 	color: #fff;
 }
 
