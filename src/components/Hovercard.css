@@ -54,7 +54,7 @@
 	top: -20px; /* -(2 * border) */
 	left: calc( 50% - 10px );
 	border: 10px solid transparent;
-	border-bottom-color: var( --hm-red );
+	border-bottom-color: var( --hm-vibrsant-blue );
 }
 
 @media ( max-width: 475px ) {
