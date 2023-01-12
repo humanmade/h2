@@ -18,7 +18,7 @@ export default class Completion extends React.Component {
 		this.keyHandler = e => {
 			// This is a bit of a hack, to migrate away from synchronous search
 			// to support bundle splitting and newer emoji-mart's async search.
-			this.getItems().then( items => {
+			Promise.resolve( this.getItems() ).then( items => {
 				if ( ! this.mounted ) {
 					// Do not update state after component unmounts.
 					return;
