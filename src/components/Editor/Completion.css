@@ -23,6 +23,6 @@
 }
 
 .Completion > li.selected {
-	background: var( --hm-red );
+	background: var( --hm-vibrant-blue );
 	color: var( --hm-light-grey );
 }
