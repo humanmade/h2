@@ -44,5 +44,6 @@ export const withUsers = withArchive(
 );
 
 export const withCategories = withApiData( () => ( { categories: '/wp/v2/categories?per_page=100&_fields=id,link,name,slug' } ) );
+export const withUtilityTerms = withApiData( () => ( { 'utilityTerms': '/wp/v2/hm-utility?per_page=100&_fields=id,name,slug,taxonomy' } ) );
 export const withSites = withApiData( () => ( { sites: '/h2/v1/site-switcher/sites' } ) );
 export const withWidgets = withApiData( () => ( { widgets: '/h2/v1/widgets?sidebar=sidebar' } ) );
