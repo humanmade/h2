@@ -8,6 +8,8 @@ H2 is a WordPress theme, inspired by the design and principles of [P2](https://p
 
 (Also check out the [contributing documentation](CONTRIBUTING.md).)
 
+**This repository is provided as-is as open source, and we do not provide support for running it yourself. We recommend forking the repository for your own usage.**
+
 
 ## Getting Started
 
