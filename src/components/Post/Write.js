@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 
-import { withCategories, withCurrentUser } from '../../hocs';
+import { withCategories, withCurrentUser, withUtilityTerms } from '../../hocs';
 import { posts } from '../../types';
 import Avatar from '../Avatar';
 import Editor from '../Editor/LazyEditor';
@@ -28,6 +28,7 @@ export class WritePost extends Component {
 			isSaving: false,
 			lastSave: null,
 			didCopy: false,
+			shouldNotifyMarketing: false,
 		};
 	}
 
@@ -42,17 +43,24 @@ export class WritePost extends Component {
 	}
 
 	getPostData( content, unprocessedContent ) {
+		const notifyTerm = this.getNotifyTerm();
+
 		return {
 			id: this.state.draftId || null,
 			content,
 			title: this.state.title,
 			categories: this.state.category ? [ this.state.category ] : undefined,
 			unprocessed_content: unprocessedContent,
+			'hm-utility': this.state.shouldNotifyMarketing && notifyTerm ? [ notifyTerm.id ] : [],
 		};
 	}
 
 	getDraftUrl() {
 		return `${ window.H2Data.site.url.replace( /([^/])$/, '$1/' ) }?p=${ this.state.draftId }&preview=true`;
+	}
+
+	getNotifyTerm() {
+		return this.props.utilityTerms.data?.find( t => t.slug === 'notify-marketing' );
 	}
 
 	onSave = ( content, unprocessedContent ) => {
@@ -142,6 +150,9 @@ export class WritePost extends Component {
 	render() {
 		const user = this.props.currentUser;
 		const categories = this.props.categories.data || [];
+		const { shouldNotifyMarketing } = this.state;
+		const notifyTerm = this.getNotifyTerm();
+
 		return (
 			<div className="WritePost" ref={ ref => this.container = ref }>
 				<div className="WritePost__title">
@@ -182,6 +193,17 @@ export class WritePost extends Component {
 									</option>
 								) ) }
 							</select>
+						) }
+						{ notifyTerm && (
+							<label className="notify-marketing">
+								<input
+									type="checkbox"
+									value="1"
+									checked={ shouldNotifyMarketing }
+									onChange={ () => this.setState( { shouldNotifyMarketing: ! shouldNotifyMarketing } ) }
+								/>
+								{ notifyTerm.name }
+							</label>
 						) }
 					</div>
 					<div className="actions"></div>
@@ -252,6 +274,8 @@ export default connect(
 	mapDispatchToProps
 )(
 	withCategories(
-		withCurrentUser( WritePost )
+		withUtilityTerms(
+			withCurrentUser( WritePost )
+		)
 	)
 );
