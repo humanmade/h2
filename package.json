@@ -59,7 +59,7 @@
     "redux-thunk": "^2.2.0",
     "sass": "^1.51.0",
     "textarea-caret": "^3.0.2",
-    "turndown": "^5.0.1"
+    "turndown": "^7.2.0"
   },
   "scripts": {
     "postinstall": "rm -rf node_modules/.cache",
