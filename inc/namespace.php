@@ -6,11 +6,13 @@
 namespace H2;
 
 use Asset_Loader;
+use WP_Customize_Color_Control;
 use WP_Error;
 use WP_REST_Request;
 
 const CACHE_GROUP = 'h2';
 const CACHE_PREFIX_PRELOAD = 'h2_preload_';
+const DEFAULT_BRAND_COLOR = '#FF424A';
 
 /**
  * Adjust default filters in WordPress.
@@ -48,6 +50,38 @@ function set_up_theme() {
 	] );
 
 	register_editor_style();
+}
+
+/**
+ * Register Customizer settings.
+ *
+ * @param WP_Customize_Manager $wp_customize Customizer manager instance.
+ */
+function register_customizer_settings( $wp_customize ) {
+	// Add H2 section.
+	$wp_customize->add_section( 'h2_settings', [
+		'title'    => __( 'H2 Settings', 'h2' ),
+		'priority' => 30,
+	] );
+
+	// Add brand color setting.
+	$wp_customize->add_setting( 'h2_brand_color', [
+		'default'           => '#FF424A',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'refresh',
+	] );
+
+	// Add brand color control.
+	if ( ! defined( 'H2_BRAND_COLOR' ) ) {
+		$brand_color = new WP_Customize_Color_Control( $wp_customize, 'h2_brand_color', [
+			'label'       => __( 'Brand Color', 'h2' ),
+			'description' => __( 'Choose a custom brand color for the H2 theme. This will replace the default red color throughout the theme.', 'h2' ),
+			'section'     => 'h2_settings',
+			'settings'    => 'h2_brand_color',
+			'default'     => '#FF424A',
+		] );
+		$wp_customize->add_control( $brand_color );
+	}
 }
 
 /**
@@ -100,6 +134,7 @@ function enqueue_assets() {
 	);
 
 	enqueue_typekit_fonts();
+	enqueue_brand_color();
 }
 
 /**
@@ -112,6 +147,99 @@ function enqueue_typekit_fonts() : void {
 }
 
 /**
+ * Get the brand color.
+ *
+ * Defaults to Human Made red (#FF424A). Can be customized via:
+ * - H2_BRAND_COLOR constant (highest priority)
+ * - Customizer setting (UI option)
+ * - 'h2_brand_color' filter (can override all)
+ *
+ * @return string Hex color code.
+ */
+function get_brand_color() : string {
+	// Priority 1: Check for constant first.
+	if ( defined( 'H2_BRAND_COLOR' ) ) {
+		$color = H2_BRAND_COLOR;
+	}
+	// Priority 2: Check for Customizer setting.
+	elseif ( get_theme_mod( 'h2_brand_color' ) ) {
+		$color = get_theme_mod( 'h2_brand_color', DEFAULT_BRAND_COLOR );
+	}
+	// Priority 3: Use default.
+	else {
+		$color = DEFAULT_BRAND_COLOR;
+	}
+
+	/**
+	 * Filter the H2 brand color.
+	 *
+	 * This filter runs last and can override constant and Customizer settings.
+	 *
+	 * @param string $color Hex color code.
+	 */
+	return apply_filters( 'h2_brand_color', $color );
+}
+
+/**
+ * Enqueue brand color customization.
+ *
+ * Outputs CSS variables to override the default brand color.
+ */
+function enqueue_brand_color() : void {
+	$brand_color = get_brand_color();
+
+	// Only output custom CSS if the color is different from the default.
+	if ( $brand_color === DEFAULT_BRAND_COLOR ) {
+		return;
+	}
+
+	// Calculate lighter and darker variations to match SCSS logic.
+	$color_light = adjust_color_brightness( $brand_color, 40 );
+	$color_dark = adjust_color_brightness( $brand_color, -20 );
+
+	$css = "
+		:root {
+			--hm-red: {$brand_color};
+			--hm-red-light: {$color_light};
+			--hm-red-dark: {$color_dark};
+		}
+	";
+
+	wp_add_inline_style( 'h2', $css );
+}
+
+/**
+ * Adjust the brightness of a hex color.
+ *
+ * @param string $hex    Hex color code.
+ * @param int    $steps  Steps to brighten (positive) or darken (negative).
+ * @return string Adjusted hex color code.
+ */
+function adjust_color_brightness( string $hex, int $steps ) : string {
+	// Remove # if present.
+	$hex = ltrim( $hex, '#' );
+
+	// Convert to RGB.
+	if ( strlen( $hex ) === 3 ) {
+		$hex = str_repeat( substr( $hex, 0, 1 ), 2 ) . str_repeat( substr( $hex, 1, 1 ), 2 ) . str_repeat( substr( $hex, 2, 1 ), 2 );
+	}
+
+	$r = hexdec( substr( $hex, 0, 2 ) );
+	$g = hexdec( substr( $hex, 2, 2 ) );
+	$b = hexdec( substr( $hex, 4, 2 ) );
+
+	// Adjust brightness.
+	$r = max( 0, min( 255, $r + $steps ) );
+	$g = max( 0, min( 255, $g + $steps ) );
+	$b = max( 0, min( 255, $b + $steps ) );
+
+	// Convert back to hex.
+	return '#' . str_pad( dechex( $r ), 2, '0', STR_PAD_LEFT )
+			. str_pad( dechex( $g ), 2, '0', STR_PAD_LEFT )
+			. str_pad( dechex( $b ), 2, '0', STR_PAD_LEFT );
+}
+
+/**
  * Register the editor stylesheet.
  */
 function register_editor_style() : void {
@@ -121,6 +249,35 @@ function register_editor_style() : void {
 		'editor-style.css'
 	);
 	add_editor_style( 'build/' . $stylesheet );
+
+	// Add brand color customization to block editor.
+	add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\\enqueue_editor_brand_color' );
+}
+
+/**
+ * Enqueue brand color customization for the block editor.
+ */
+function enqueue_editor_brand_color() : void {
+	$brand_color = get_brand_color();
+
+	// Only output custom CSS if the color is different from the default.
+	if ( $brand_color === '#FF424A' ) {
+		return;
+	}
+
+	// Calculate lighter and darker variations.
+	$color_light = adjust_color_brightness( $brand_color, 40 );
+	$color_dark = adjust_color_brightness( $brand_color, -20 );
+
+	$css = "
+		:root {
+			--hm-red: {$brand_color};
+			--hm-red-light: {$color_light};
+			--hm-red-dark: {$color_dark};
+		}
+	";
+
+	wp_add_inline_style( 'wp-block-editor', $css );
 }
 
 /**
