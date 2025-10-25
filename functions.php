@@ -19,6 +19,7 @@ add_action( 'init', __NAMESPACE__ . '\\update_wp_rewrite_permalink_structure' );
 add_action( 'init', __NAMESPACE__ . '\\register_custom_meta' );
 add_action( 'rest_api_init', __NAMESPACE__ . '\\register_rest_routes' );
 add_filter( 'rest_user_collection_params', __NAMESPACE__ . '\\increase_api_user_limit' );
+add_action( 'customize_register', __NAMESPACE__ . '\\register_customizer_settings' );
 
 add_action( 'clean_user_cache', __NAMESPACE__ . '\\flush_preload_cache' );
 add_filter( 'widget_update_callback', __NAMESPACE__ . '\\flush_preload_cache' );
