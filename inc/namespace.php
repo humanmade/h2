@@ -40,6 +40,15 @@ function adjust_default_filters() {
 function set_up_theme() {
 	add_theme_support( 'title-tag' );
 
+	// Add custom logo support.
+	add_theme_support( 'custom-logo', [
+		'height'      => 300,
+		'width'       => 300,
+		'flex-height' => true,
+		'flex-width'  => true,
+		'header-text' => [ 'site-title', 'site-description' ],
+	] );
+
 	register_sidebar( [
 		'id' => 'sidebar',
 		'name' => 'Sidebar',
@@ -281,6 +290,21 @@ function enqueue_editor_brand_color() : void {
 }
 
 /**
+ * Get the custom logo URL.
+ *
+ * @return string|null Custom logo URL or null if not set.
+ */
+function get_custom_logo_url() {
+	$custom_logo_id = get_theme_mod( 'custom_logo' );
+	if ( ! $custom_logo_id ) {
+		return null;
+	}
+
+	$logo = wp_get_attachment_image_src( $custom_logo_id, 'full' );
+	return $logo ? $logo[0] : null;
+}
+
+/**
  * Return a simplified version of the URL for use as the preload array key.
  *
  * @param string $url URL being fetched.
@@ -339,6 +363,7 @@ function get_script_data() {
 			'default_avatar' => get_avatar_url( 0, [
 				'force_default' => true,
 			] ),
+			'logo'           => get_custom_logo_url(),
 			'mapbox_key'     => defined( 'MAPBOX_KEY' ) ? MAPBOX_KEY : null,
 			'sentry_key'     => defined( 'H2_SENTRY_KEY' ) ? H2_SENTRY_KEY : null,
 			'environment'    => defined( 'HM_ENV_TYPE' ) ? HM_ENV_TYPE : ( WP_DEBUG ? 'development' : 'production' ),
