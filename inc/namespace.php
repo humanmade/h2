@@ -295,6 +295,10 @@ function enqueue_editor_brand_color() : void {
  * @return string|null Custom logo URL or null if not set.
  */
 function get_custom_logo_url() {
+	if ( defined( 'H2_CUSTOM_LOGO_URL' ) ) {
+		return H2_CUSTOM_LOGO_URL;
+	}
+
 	$custom_logo_id = get_theme_mod( 'custom_logo' );
 	if ( ! $custom_logo_id ) {
 		return null;
