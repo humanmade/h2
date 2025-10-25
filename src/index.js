@@ -16,6 +16,7 @@ import loadPlugins from './plugins/load';
 import { createStore } from './store';
 import { Provider as RestApiProvider } from './with-api-data';
 
+import './tailwind.css';
 import './styles/juniper.scss';
 import './_print.scss';
 
