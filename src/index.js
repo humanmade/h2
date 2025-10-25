@@ -16,7 +16,7 @@ import loadPlugins from './plugins/load';
 import { createStore } from './store';
 import { Provider as RestApiProvider } from './with-api-data';
 
-import './pattern-library/assets/sass/juniper.scss';
+import './styles/juniper.scss';
 import './_print.scss';
 
 let store = createStore( window.H2Data.preload );

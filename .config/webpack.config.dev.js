@@ -23,7 +23,7 @@ module.exports = choosePort( 9090 ).then( port => presets.development( {
 	},
 	resolve: {
 		alias: {
-			'juniper-images': filePath( 'src/pattern-library/assets/images' ),
+			'juniper-images': filePath( 'src/assets/images' ),
 		},
 	},
 } ) );

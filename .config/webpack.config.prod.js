@@ -25,7 +25,7 @@ module.exports = presets.production( {
 	],
 	resolve: {
 		alias: {
-			'juniper-images': filePath( 'src/pattern-library/assets/images' ),
+			'juniper-images': filePath( 'src/assets/images' ),
 		},
 	},
 	cache: {
