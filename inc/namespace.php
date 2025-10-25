@@ -166,16 +166,14 @@ function enqueue_typekit_fonts() : void {
  * @return string Hex color code.
  */
 function get_brand_color() : string {
-	// Priority 1: Check for constant first.
 	if ( defined( 'H2_BRAND_COLOR' ) ) {
+		// Priority 1: Check for constant first.
 		$color = H2_BRAND_COLOR;
-	}
-	// Priority 2: Check for Customizer setting.
-	elseif ( get_theme_mod( 'h2_brand_color' ) ) {
+	} elseif ( get_theme_mod( 'h2_brand_color' ) ) {
+		// Priority 2: Check for Customizer setting.
 		$color = get_theme_mod( 'h2_brand_color', DEFAULT_BRAND_COLOR );
-	}
-	// Priority 3: Use default.
-	else {
+	} else {
+		// Priority 3: Use default.
 		$color = DEFAULT_BRAND_COLOR;
 	}
 
