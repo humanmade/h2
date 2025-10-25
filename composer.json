@@ -16,5 +16,13 @@
             "composer/installers": true,
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
+    },
+    "require-dev": {
+        "humanmade/asset-loader": "^0.7"
+    },
+    "extra": {
+        "installer-paths": {
+            "vendor/{$vendor}/{$name}/": ["humanmade/asset-loader"]
+        }
     }
 }

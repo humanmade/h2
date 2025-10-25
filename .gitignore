@@ -30,3 +30,6 @@ yarn-error.log*
 
 # react-wp-scripts stuff
 asset-manifest.json
+
+# wp-env
+.wp-env
