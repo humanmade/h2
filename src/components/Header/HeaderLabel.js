@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import './HeaderLabel.css';
-
 export default function HeaderButton( props ) {
 	return (
-		<button onClick={ props.onClick } className={ `HeaderLabel label ${ props.className || '' }` }>
+		<button onClick={ props.onClick } className={ `label mr-4 self-center ${ props.className || '' }` }>
 			{ props.icon && <span
 				className={ 'icon icon--blue icon--' + props.icon }
 			></span> }

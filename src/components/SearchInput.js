@@ -9,8 +9,6 @@ import { decodeEntities } from '../util';
 
 import Link from './Link';
 
-import './SearchInput.css';
-
 export class Results extends React.Component {
 	state = {
 		selected: -1,
@@ -85,32 +83,36 @@ export class Results extends React.Component {
 
 	render() {
 		const { selected } = this.state;
-		const { loading, posts, term, visible } = this.props;
+		const { loading, posts, small, term, visible } = this.props;
 
 		const classes = [
 			'SearchInput__results',
-			visible && 'SearchInput__results--visible',
+			'absolute left-0 right-0 z-10 py-2 bg-hm-light-grey shadow-[0_0_8px_rgba(0,0,0,0.3)]',
+			visible ? 'SearchInput__results--visible block' : 'hidden',
+			small ? '' : 'px-5',
 		];
 		return (
 			<div className={ classes.filter( Boolean ).join( ' ' ) }>
 				{ term === '' ? (
-					<p>Start typing to search.</p>
+					<p className="m-0 p-0 px-5">Start typing to search.</p>
 				) : loading ? (
-					<p>Loading results for “{ term }”</p>
+					<p className="m-0 p-0 px-5">Loading results for "{ term }"</p>
 				) : ( posts && posts.length > 0 ) ? (
-					<ul>
+					<ul className="m-0 p-0 list-none">
 						{ posts.map( ( post, index ) => (
 							<li
 								key={ post.id }
+								className="m-0 p-0"
 							>
 								<Link
-									className={ `SearchInput__result ${ index === selected ? 'SearchInput__result--selected' : '' }` }
+									className={ `SearchInput__result flex justify-between py-1 max-[600px]:block max-[600px]:mb-2 hover:border-none hover:bg-hm-vibrant-blue hover:text-white ${ index === selected ? 'SearchInput__result--selected border-none bg-hm-vibrant-blue text-white' : '' }` }
 									href={ post.link }
 								>
-									<p>
+									<p className="m-0 max-[600px]:mb-1">
 										{ decodeEntities( post.title.rendered ) }
 									</p>
 									<time
+										className="flex-shrink-0 ml-4 max-[600px]:ml-0"
 										dateTime={ post.date + 'Z' }
 										title={ post.date + 'Z' }
 									>
@@ -119,18 +121,18 @@ export class Results extends React.Component {
 								</Link>
 							</li>
 						) ) }
-						<li>
+						<li className="m-0 p-0">
 							<a
 								href={ `/search/${ encodeURIComponent( term ) }` }
 								onClick={ this.props.onShowResults }
-								className={ `SearchInput__result ${ selected === posts.length ? 'SearchInput__result--selected' : '' }` }
+								className={ `SearchInput__result flex justify-between py-1 max-[600px]:block max-[600px]:mb-2 hover:border-none hover:bg-hm-vibrant-blue hover:text-white ${ selected === posts.length ? 'SearchInput__result--selected border-none bg-hm-vibrant-blue text-white' : '' }` }
 							>
 								Show all results →
 							</a>
 						</li>
 					</ul>
 				) : (
-					<p>No results found.</p>
+					<p className="m-0 p-0 px-5">No results found.</p>
 				) }
 			</div>
 		);
@@ -194,11 +196,18 @@ class SearchInput extends React.Component {
 
 		return (
 			<form
-				className="SearchInput"
+				className={ `SearchInput flex-1 relative self-stretch ${ this.props.className || '' }` }
 				onSubmit={ this.onSubmit }
 			>
-				<div className="SearchInput__wrap">
+				<div
+					className={ [
+						'SearchInput__wrap',
+						'flex items-center h-full bg-hm-light-grey relative z-[11]',
+						this.props.small ? '' : 'px-5',
+					].filter( Boolean ).join( ' ' ) }
+				>
 					<input
+						className="!m-0 !w-full max-[782px]:leading-[1.2] max-[782px]:pt-1 max-[782px]:pb-1"
 						type="search"
 						placeholder="Search..."
 						ref={ ref => this.inputEl = ref }
@@ -210,6 +219,7 @@ class SearchInput extends React.Component {
 				</div>
 
 				<Results
+					small={ this.props.small }
 					term={ term }
 					visible={ this.state.showSuggest }
 					onSelect={ this.onSelect }
@@ -221,7 +231,9 @@ class SearchInput extends React.Component {
 }
 
 SearchInput.propTypes = {
+	className: PropTypes.string,
 	resultsComponent: PropTypes.elementType,
+	small: PropTypes.bool,
 	onSearch: PropTypes.func.isRequired,
 };
 SearchInput.defaultProps = {
