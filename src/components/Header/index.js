@@ -16,7 +16,7 @@ export class Header extends Component {
 			<div className="bg-hm-light-grey flex-1">
 				<div className="flex flex-row pr-5 max-[600px]:pr-1.5">
 					<button
-						className="bg-brand text-white pr-5 flex items-center border-none font-inherit text-base cursor-pointer hover:border-none hover:text-white/60 focus:border-none focus:text-white/60 [&:hover_.hm-logo]:opacity-60 [&:focus_.hm-logo]:opacity-60"
+						className="bg-brand text-white p-0 pr-5 flex items-center border-none font-inherit text-base cursor-pointer hover:border-none hover:text-white/60 focus:border-none focus:text-white/60 [&:hover_.hm-logo]:opacity-60 [&:focus_.hm-logo]:opacity-60"
 						type="button"
 						onClick={ this.props.onShowSuper }
 					>
