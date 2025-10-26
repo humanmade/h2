@@ -105,7 +105,11 @@ export class Results extends React.Component {
 								className="m-0 p-0"
 							>
 								<Link
-									className={ `SearchInput__result flex justify-between py-1 max-[600px]:block max-[600px]:mb-2 hover:border-none hover:bg-hm-vibrant-blue hover:text-white ${ index === selected ? 'SearchInput__result--selected border-none bg-hm-vibrant-blue text-white' : '' }` }
+									className={ [
+										'flex justify-between py-1 max-[600px]:block max-[600px]:mb-2 hover:border-none hover:bg-hm-vibrant-blue hover:text-white',
+										index === selected && 'SearchInput__result--selected border-none bg-hm-vibrant-blue !text-white',
+										( ! small ) && '-mx-5 px-5',
+									].filter( Boolean ).join( ' ' ) }
 									href={ post.link }
 								>
 									<p className="m-0 max-[600px]:mb-1">
@@ -123,9 +127,13 @@ export class Results extends React.Component {
 						) ) }
 						<li className="m-0 p-0">
 							<a
+								className={ [
+									'flex justify-between py-1 max-[600px]:block max-[600px]:mb-2 hover:border-none hover:bg-hm-vibrant-blue hover:text-white',
+									posts.length === selected && 'SearchInput__result--selected border-none bg-hm-vibrant-blue !text-white',
+									( ! small ) && '-mx-5 px-5',
+								].filter( Boolean ).join( ' ' ) }
 								href={ `/search/${ encodeURIComponent( term ) }` }
 								onClick={ this.props.onShowResults }
-								className={ `SearchInput__result flex justify-between py-1 max-[600px]:block max-[600px]:mb-2 hover:border-none hover:bg-hm-vibrant-blue hover:text-white ${ selected === posts.length ? 'SearchInput__result--selected border-none bg-hm-vibrant-blue text-white' : '' }` }
 							>
 								Show all results →
 							</a>
