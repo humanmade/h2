@@ -128,6 +128,10 @@ function fetch_slack_emoji() {
 		);
 	}
 
+	if ( ! isset( $data->emoji ) ) {
+		return [];
+	}
+
 	return (array) $data->emoji;
 }
 
