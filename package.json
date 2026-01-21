@@ -40,7 +40,7 @@
     "@storybook/addon-actions": "^5.2.0",
     "emoji-mart": "^2.11.1",
     "interweave": "^11.1.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.23",
     "marked": "0.3.19",
     "mousetrap": "^1.6.2",
     "postcss": "^8.4.14",
