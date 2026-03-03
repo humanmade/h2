@@ -11,6 +11,9 @@
             "url": "https://github.com/humanmade/h2.git"
         }
     ],
+    "require-dev": {
+        "humanmade/coding-standards": "^2.0@dev"
+    },
     "config": {
         "allow-plugins": {
             "composer/installers": true,
