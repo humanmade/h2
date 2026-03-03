@@ -89,7 +89,7 @@ export class SuperMenu extends React.Component {
 
 					<h2 className="screen-reader-text text-base m-0 mb-4">Navigation</h2>
 
-					<ul className="list-none p-0 mb-6">
+					<ul className="list-none p-0 m-0 mb-6">
 						<li><Link href={ window.H2Data.site.home }>All Posts</Link></li>
 						<li><a href={ `${ window.H2Data.site.home }/wp-admin/` }>Dashboard</a></li>
 					</ul>

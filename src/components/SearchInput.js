@@ -94,9 +94,9 @@ export class Results extends React.Component {
 		return (
 			<div className={ classes.filter( Boolean ).join( ' ' ) }>
 				{ term === '' ? (
-					<p className="m-0 p-0 px-5">Start typing to search.</p>
+					<p className="m-0 p-0">Start typing to search.</p>
 				) : loading ? (
-					<p className="m-0 p-0 px-5">Loading results for "{ term }"</p>
+					<p className="m-0 p-0">Loading results for "{ term }"</p>
 				) : ( posts && posts.length > 0 ) ? (
 					<ul className="m-0 p-0 list-none">
 						{ posts.map( ( post, index ) => (
@@ -106,9 +106,9 @@ export class Results extends React.Component {
 							>
 								<Link
 									className={ [
-										'flex justify-between py-1 max-[600px]:block max-[600px]:mb-2 hover:border-none hover:bg-hm-vibrant-blue hover:text-white',
+										'flex justify-between py-1 max-[600px]:block max-[600px]:mb-2 hover:border-none hover:bg-hm-vibrant-blue hover:!text-white',
 										index === selected && 'SearchInput__result--selected border-none bg-hm-vibrant-blue !text-white',
-										( ! small ) && '-mx-5 px-5',
+										'-mx-5 px-5',
 									].filter( Boolean ).join( ' ' ) }
 									href={ post.link }
 								>
@@ -128,9 +128,9 @@ export class Results extends React.Component {
 						<li className="m-0 p-0">
 							<a
 								className={ [
-									'flex justify-between py-1 max-[600px]:block max-[600px]:mb-2 hover:border-none hover:bg-hm-vibrant-blue hover:text-white',
+									'flex justify-between py-1 max-[600px]:block max-[600px]:mb-2 hover:border-none hover:bg-hm-vibrant-blue hover:!text-white',
 									posts.length === selected && 'SearchInput__result--selected border-none bg-hm-vibrant-blue !text-white',
-									( ! small ) && '-mx-5 px-5',
+									'-mx-5 px-5',
 								].filter( Boolean ).join( ' ' ) }
 								href={ `/search/${ encodeURIComponent( term ) }` }
 								onClick={ this.props.onShowResults }
@@ -140,7 +140,7 @@ export class Results extends React.Component {
 						</li>
 					</ul>
 				) : (
-					<p className="m-0 p-0 px-5">No results found.</p>
+					<p className="m-0 p-0">No results found.</p>
 				) }
 			</div>
 		);

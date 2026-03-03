@@ -16,22 +16,21 @@ import Container from './Sidebar/Container';
 import UserBlock from './UserBlock';
 import UserSettings from './UserSettings';
 
-import './MetaSidebar.css';
-
 const FEATURES = {};
 
 const BetaFeature = props => (
-	<div className="MetaSidebar--feature">
-		<label>
+	<div className="m-0 mb-4">
+		<label className="font-bold cursor-pointer">
 			<input
 				checked={ props.enabled }
 				type="checkbox"
+				className="w-4 h-4 text-base mr-2"
 				onChange={ e => e.target.checked ? props.onEnable() : props.onDisable() }
 			/>
 			<span>{ props.name }</span>
 		</label>
 		{ props.description && (
-			<p className="MetaSidebar--feature-description">{ props.description }</p>
+			<p className="mt-1 mb-0 ml-6 mr-0">{ props.description }</p>
 		) }
 	</div>
 );
@@ -40,7 +39,6 @@ export class MetaSidebar extends React.Component {
 	render() {
 		const { currentUser, features, onDisableFeature, onEnableFeature } = this.props;
 		const containerProps = {
-			className: 'MetaSidebar',
 			title: 'All About You',
 			onClose: this.props.onClose,
 		};
@@ -77,7 +75,7 @@ export class MetaSidebar extends React.Component {
 
 				{ Object.keys( FEATURES ).length ? (
 					<Fragment>
-						<h3>Beta Features</h3>
+						<h3 className="normal-case">Beta Features</h3>
 						{ Object.keys( FEATURES ).map( key => (
 							<BetaFeature
 								key={ key }
