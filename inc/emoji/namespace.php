@@ -25,6 +25,8 @@ function bootstrap() {
 	add_filter( 'the_content', __NAMESPACE__ . '\\replace_custom_emoji', 20 );
 	add_filter( 'comment_text', __NAMESPACE__ . '\\replace_custom_emoji', 20 );
 	add_action( 'h2.emoji.update_slack', __NAMESPACE__ . '\\update_slack_emoji' );
+
+	schedule_updates();
 }
 
 /**
@@ -85,18 +87,38 @@ function get_custom_emoji( $emoji ) {
  * @return array|WP_Error List of emoji from Slack if available, error otherwise
  */
 function get_slack_emoji() {
-	$data = wp_cache_get( SLACK_CACHE_KEY, CACHE_GROUP );
+	$data = wp_cache_get( SLACK_CACHE_KEY, CACHE_GROUP, false, $found );
 
-	if ( empty( $data ) ) {
-		$data = fetch_slack_emoji();
-		if ( is_wp_error( $data ) ) {
-			return $data;
-		}
-
-		wp_cache_set( SLACK_CACHE_KEY, $data, CACHE_GROUP );
+	if ( $found ) {
+		return $data;
 	}
 
+	$data = fetch_slack_emoji();
+	if ( is_wp_error( $data ) ) {
+		// Cache failures for one hour (matching the cron interval) to avoid
+		// hammering the Slack API on every request when it is broken or slow.
+		wp_cache_set( SLACK_CACHE_KEY, [], CACHE_GROUP, HOUR_IN_SECONDS );
+		return $data;
+	}
+
+	// Emoji data changes rarely; cache for a full day.
+	wp_cache_set( SLACK_CACHE_KEY, $data, CACHE_GROUP, DAY_IN_SECONDS );
+
 	return $data;
+}
+
+/**
+ * Update the cached Slack emoji list
+ *
+ * Fetches fresh data from Slack and updates the cache.
+ */
+function update_slack_emoji() {
+	$data = fetch_slack_emoji();
+	if ( is_wp_error( $data ) ) {
+		return;
+	}
+
+	wp_cache_set( SLACK_CACHE_KEY, $data, CACHE_GROUP, HOUR_IN_SECONDS );
 }
 
 /**
@@ -166,7 +188,11 @@ function get_url_for_slack_emoji( string $type ) {
  * @return string Modified post content
  */
 function replace_custom_emoji( $content ) {
-	$emoji  = get_slack_emoji();
+	$emoji = get_slack_emoji();
+	if ( empty( $emoji ) || is_wp_error( $emoji ) ) {
+		return $content;
+	}
+
 	$search = '#:(' . join( '|', array_map( 'preg_quote', array_keys( $emoji ) ) ) . '):#';
 
 	// HTML loop taken from texturize function, could possible be consolidated.
