@@ -95,12 +95,14 @@ function get_slack_emoji() {
 
 	$data = fetch_slack_emoji();
 	if ( is_wp_error( $data ) ) {
-		// Cache failures briefly to avoid hammering the Slack API on every request.
-		wp_cache_set( SLACK_CACHE_KEY, [], CACHE_GROUP, 5 * MINUTE_IN_SECONDS );
+		// Cache failures for one hour (matching the cron interval) to avoid
+		// hammering the Slack API on every request when it is broken or slow.
+		wp_cache_set( SLACK_CACHE_KEY, [], CACHE_GROUP, HOUR_IN_SECONDS );
 		return $data;
 	}
 
-	wp_cache_set( SLACK_CACHE_KEY, $data, CACHE_GROUP, HOUR_IN_SECONDS );
+	// Emoji data changes rarely; cache for a full day.
+	wp_cache_set( SLACK_CACHE_KEY, $data, CACHE_GROUP, DAY_IN_SECONDS );
 
 	return $data;
 }
