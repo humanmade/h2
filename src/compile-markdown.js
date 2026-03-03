@@ -1,4 +1,4 @@
-import marked from 'marked';
+import { marked } from 'marked';
 
 const TASK_LIST_TOKEN = '<!-- H2_TASKLIST_ITEM -->';
 
