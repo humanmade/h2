@@ -49,7 +49,7 @@ export default class DropUpload extends React.PureComponent {
 
 		return (
 			<div
-				className={ `DropUpload ${ this.state.dropping ? 'dropping' : ''}` }
+				className={ `DropUpload ${ this.state.dropping ? 'dropping' : '' }` }
 				onDragOver={ e => this.onDragOver( e ) }
 				onDragLeave={ e => this.onDragLeave( e ) }
 				onDrop={ e => this.onDrop( e ) }
