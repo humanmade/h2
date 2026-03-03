@@ -493,7 +493,7 @@ class Editor extends React.PureComponent {
 
 				<p className="Editor-submit">
 					<small>
-						<span>{ count === 1 ? '1 word' : `${count.toLocaleString()} words` }</span>
+						<span>{ count === 1 ? '1 word' : `${ count.toLocaleString() } words` }</span>
 						<br />
 						<a
 							href="http://commonmark.org/help/"
