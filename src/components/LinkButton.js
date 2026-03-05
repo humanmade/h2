@@ -1,6 +1,13 @@
 import React from 'react';
 
-import './LinkButton.css';
+const CLASSES = [
+	'inline font-[inherit] leading-none cursor-pointer',
+	'bg-transparent border-none p-0 m-0 overflow-visible',
+	'text-hm-vibrant-blue',
+	'transition-[color,background] duration-200 ease-in',
+	'hover:text-hm-vibrant-blue hover:underline hover:ease-out',
+	'focus:text-hm-vibrant-blue focus:underline focus:outline-none focus:ease-out',
+].join( ' ' );
 
 export default class LinkButton extends React.Component {
 	render() {
@@ -10,7 +17,7 @@ export default class LinkButton extends React.Component {
 			<button
 				type="button"
 				{ ...props }
-				className={ `LinkButton ${ className || '' }` }
+				className={ [ CLASSES, className ].filter( Boolean ).join( ' ' ) }
 			/>
 		);
 	}
