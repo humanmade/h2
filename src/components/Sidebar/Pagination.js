@@ -2,14 +2,21 @@ import React from 'react';
 
 import LinkButton from '../LinkButton';
 
-import './Pagination.css';
+const CLASSES = [
+	// Back-compat:
+	'Sidebar-Pagination',
+
+	'flex items-baseline max-w-[20em]',
+	'[&>div]:w-1/2',
+	'[&_.cta]:text-[inherit] [&_.cta:after]:w-[1em]',
+].join( ' ' );
 
 export default function SidebarPagination( props ) {
 	const { hasNext, hasPrevious, onNext, onPrevious } = props;
 	return (
-		<div className="Sidebar-Pagination">
+		<div className={ CLASSES }>
 			{ hasNext && (
-				<div className="Sidebar-Pagination__older">
+				<div>
 					<LinkButton
 						className="cta cta--small cta--arrow-left"
 						onClick={ onNext }
@@ -17,7 +24,7 @@ export default function SidebarPagination( props ) {
 				</div>
 			) }
 			{ hasPrevious && (
-				<div className="Sidebar-Pagination__newer">
+				<div className={ hasNext ? '' : 'ml-[50%]' }>
 					<LinkButton
 						className="cta cta--small cta--arrow"
 						onClick={ onPrevious }

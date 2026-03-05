@@ -7,8 +7,6 @@ import { decodeEntities } from '../../util';
 import Link from '../Link';
 import Pagination from '../Sidebar/Pagination';
 
-import './RecentPosts.css';
-
 class PostList extends React.Component {
 	render() {
 		if ( this.props.loading || this.props.loadingMore ) {
@@ -24,7 +22,7 @@ class PostList extends React.Component {
 
 		return (
 			<div className="Widget">
-				<ul>
+				<ul className="mb-[0.83333335rem]">
 					{ this.props.posts.map( post => (
 						<li key={ post.id }>
 							<Link href={ post.link }>
