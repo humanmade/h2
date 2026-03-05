@@ -16,8 +16,6 @@ import MessageMain from '../Message/Main';
 import PostComments from './Comments';
 import Summary from './Summary';
 
-import './index.css';
-
 const SecondaryActions = props => {
 	const { fillProps, showEdit, onClickEdit } = props;
 
@@ -138,10 +136,20 @@ export class Post extends Component {
 			post,
 		};
 
-		const classes = expanded ? 'Post' : 'Post Post--collapsed';
+		const classes = [
+			// Back-compat:
+			'Post',
+
+			'flex-col relative',
+			'pb-[1.667rem] my-[1.667rem]',
+			'min-h-[144px]',
+			'border-b-[5px] border-[#F1F2EE]',
+
+			expanded && 'Post--collapsed pb-0 [&_.Post-footer-actions_.reactions]:hidden',
+		].filter( Boolean ).join( ' ' );
 
 		const Actions = (
-			<Dropdown className="Post__actions">
+			<Dropdown className="Post__actions min-w-[6rem]">
 				<Button onClick={ this.onClickReply }>Reply</Button>
 				<SecondaryActions
 					fillProps={ fillProps }

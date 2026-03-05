@@ -49,7 +49,7 @@ export default function MessageMain( props ) {
 				<MessageContent html={ post.content.rendered } />
 			) }
 			<Slot name="Post.after_content" fillChildProps={ fillProps } />
-			<div className="Post-footer-actions">
+			<div className="Post-footer-actions clear-both flex my-[1.666rem] mb-[1.248rem] justify-between items-start min-[600px]:[&_.Post__actions]:hidden">
 				{ children }
 				<Slot name="Post.footer_actions" fillChildProps={ fillProps } />
 			</div>

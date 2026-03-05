@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.font-weight-inherit {
+	font-weight: inherit;
+}
+.\!font-weight-inherit {
+	font-weight: inherit !important;
+}

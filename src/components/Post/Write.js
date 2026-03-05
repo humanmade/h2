@@ -12,7 +12,23 @@ import RemotePreview from '../RemotePreview';
 
 import SelectDraft from './SelectDraft';
 
-import './Write.css';
+const WRAP_CLASSES = [
+	// Back-compat:
+	'WritePost',
+
+	'flex-col relative pb-5 mb-[35px] min-h-[144px]',
+	'border-b-[5px] border-[#F1F2EE]',
+
+	// Notification child.
+	'[&>.Notification]:ml-[90px] [&>.Notification]:-mt-[1.36667rem]',
+
+	// Editor child.
+	'[&>.Editor]:ml-[90px]',
+
+	// Mobile.
+	'max-[600px]:[&>header>.Avatar]:hidden',
+	'max-[600px]:[&>.Editor]:ml-0',
+].join( ' ' );
 
 export class WritePost extends Component {
 	constructor( props ) {
@@ -143,22 +159,27 @@ export class WritePost extends Component {
 		const user = this.props.currentUser;
 		const categories = this.props.categories.data || [];
 		return (
-			<div className="WritePost" ref={ ref => this.container = ref }>
-				<div className="WritePost__title">
-					<h2>Write a New Post</h2>
+			<div className={ WRAP_CLASSES } ref={ ref => this.container = ref }>
+				<div
+					className="flex justify-between items-baseline border-solid border-0 border-b-2 border-hm-beige py-[0.5em] [&_.btn]:m-0 [&_.btn_.label\_\_count]:ml-[0.5em] [&_.btn_.label\_\_count]:-mt-[3px] [&_.btn:hover_.label\_\_count]:bg-white [&_.btn:hover_.label\_\_count]:text-hm-vibrant-blue"
+				>
+					<h2 className="text-[1.5em] leading-[1.4] normal-case m-0">
+						Write a New Post
+					</h2>
 					<SelectDraft
 						user={ user || null }
 						onSelect={ this.onSelect }
 					/>
 				</div>
-				<header>
+				<header className="sticky top-0 z-[3] py-[15px] bg-white flex items-center h-[110px] [&>.Avatar]:mr-[30px]">
 					<Avatar
 						url={ user ? user.avatar_urls['96'] : '' }
 						size={ 60 }
 					/>
-					<div className="byline">
-						<h2>
+					<div className="byline flex-col grow">
+						<h2 className="m-0">
 							<input
+								className="!p-[0.2em] !m-0 !text-inherit !text-[length:inherit] !font-[inherit] !font-weight-inherit !bg-inherit !rounded-[inherit] !w-full !border-2 !border-[rgba(217,217,217,0.6)] placeholder:!font-[length:inherit] placeholder:!not-italic placeholder:font-inherit"
 								ref={ title => this.titleInput = title }
 								type="text"
 								placeholder="Enter post title..."
@@ -167,11 +188,15 @@ export class WritePost extends Component {
 								onChange={ e => this.setState( { title: e.target.value } ) }
 							/>
 						</h2>
-						<span className="date">
+						<span className="date text-[#AAA] text-sm">
 							{ user ? user.name : '' }, now
 						</span>
 						{ categories.length > 0 && (
-							<select onChange={ e => this.setState( { category: e.target.value } ) } value={ this.state.cateogry } className="categories">
+							<select
+								className="categories list-none m-0 ml-[10px] p-0 inline text-sm"
+								onChange={ e => this.setState( { category: e.target.value } ) }
+								value={ this.state.category }
+							>
 								<option key="none" value={ null }>- Category-</option>
 								{ categories.map( category => (
 									<option
@@ -205,10 +230,10 @@ export class WritePost extends Component {
 				) }
 
 				{ this.state.draftId && (
-					<p className="WritePost__preview-link">
+					<p className="ml-[90px] -mt-5 mb-[1em] px-[5px] text-[0.777777778em]">
 						Preview URL:
 						<input
-							className="form__field--code"
+							className="form__field--code inline-block bg-hm-light-grey px-[5px] py-0 mx-[1em] my-0 border-none text-[inherit]"
 							type="text"
 							value={ this.getDraftUrl() }
 							onClick={ this.onClickPreview }
@@ -216,7 +241,7 @@ export class WritePost extends Component {
 						/>
 
 						<span
-							className={ `WritePost__preview-copied ${ this.state.didCopy ? 'active' : '' } ` }
+							className={ `transition-opacity duration-100 ${ this.state.didCopy ? 'opacity-100' : 'opacity-0' }` }
 						>
 							Copied!
 						</span>
