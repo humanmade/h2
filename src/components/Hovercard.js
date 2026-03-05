@@ -73,6 +73,21 @@ class CardPortal extends React.Component {
 	}
 }
 
+const CARD_CLASSES = [
+	'absolute z-20 bg-white text-black',
+	'shadow-[0px_0px_4px_rgba(0,0,0,0.4)]',
+	'p-[0.777778rem] mt-[10px]',
+	'text-base pointer-events-none',
+	'flex flex-col',
+	'max-[475px]:max-w-[calc(100vw-52px)]',
+].join( ' ' );
+
+const POINTER_CLASSES = [
+	'block absolute z-[11]',
+	'top-[-20px] left-[calc(50%-10px)]',
+	'border-solid border-[10px] border-transparent border-b-hm-vibrant-blue',
+].join( ' ' );
+
 export function Card( { children, positions, width } ) {
 	const cardStyle = {
 		left: positions.left,
@@ -84,11 +99,11 @@ export function Card( { children, positions, width } ) {
 
 	return (
 		<div
-			className="Hovercard-Card"
+			className={ CARD_CLASSES }
 			style={ cardStyle }
 		>
 			<div
-				className="Hovercard-Card-pointer"
+				className={ POINTER_CLASSES }
 				style={ pointerStyle }
 			/>
 
