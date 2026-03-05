@@ -3,20 +3,34 @@ import React from 'react';
 
 import AuthorLink from './Message/AuthorLink';
 
-import './Avatar.css';
+const CLASSES = [
+	// Back-compat:
+	'Avatar',
+
+	'relative',
+
+	// Circular border overlay (::after pseudo-element).
+	'after:content-[\'\']',
+	'after:block after:absolute after:inset-0',
+	'after:border-2 after:border-black/10 after:rounded-full',
+	'after:z-[1] after:pointer-events-none',
+
+	// Child img styles.
+	'[&_img]:max-w-none [&_img]:rounded-full [&_img]:bg-white',
+
+	// Remove AuthorLink hover border.
+	'[&_.AuthorLink:hover]:border-none',
+].join( ' ' );
 
 export default function Avatar( props ) {
-	const style = {
-		width: props.size,
-		height: props.size,
-	};
+	const size = props.size + 'px';
 
 	return (
 		<div
-			className="Avatar"
+			className={ CLASSES }
 			style={ {
-				width: props.size + 'px',
-				height: props.size + 'px',
+				width: size,
+				height: size,
 			} }
 		>
 			<AuthorLink
@@ -24,7 +38,10 @@ export default function Avatar( props ) {
 				withHovercard={ props.withHovercard }
 			>
 				<img
-					style={ style }
+					style={ {
+						width: props.size,
+						height: props.size,
+					} }
 					alt="User Avatar"
 					src={ props.url || window.H2Data.site.default_avatar }
 				/>
