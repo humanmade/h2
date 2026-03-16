@@ -21,13 +21,6 @@ const WRAP_CLASSES = [
 
 	// Notification child.
 	'[&>.Notification]:ml-[90px] [&>.Notification]:-mt-[1.36667rem]',
-
-	// Editor child.
-	'[&>.Editor]:ml-[90px]',
-
-	// Mobile.
-	'max-[600px]:[&>header>.Avatar]:hidden',
-	'max-[600px]:[&>.Editor]:ml-0',
 ].join( ' ' );
 
 export class WritePost extends Component {
@@ -171,15 +164,15 @@ export class WritePost extends Component {
 						onSelect={ this.onSelect }
 					/>
 				</div>
-				<header className="sticky top-0 z-[3] py-[15px] bg-white flex items-center h-[110px] [&>.Avatar]:mr-[30px]">
+				<header className="sticky top-0 z-[3] py-[15px] bg-white flex items-center h-[110px] [&>.Avatar]:mr-[30px] max-[600px]:[&>.Avatar]:hidden">
 					<Avatar
 						url={ user ? user.avatar_urls['96'] : '' }
 						size={ 60 }
 					/>
 					<div className="byline flex-col grow">
-						<h2 className="m-0">
+						<h2 className="m-0 leading-6">
 							<input
-								className="!p-[0.2em] !m-0 !text-inherit !text-[length:inherit] !font-[inherit] !font-weight-inherit !bg-inherit !rounded-[inherit] !w-full !border-2 !border-[rgba(217,217,217,0.6)] placeholder:!font-[length:inherit] placeholder:!not-italic placeholder:font-inherit"
+								className="p-[0.2em] w-full border-solid border-2 border-[rgba(217,217,217,0.6)] focus:outline-none focus:border-[#8d8d8d] placeholder:text-[rgba(80,76,76,.5)]"
 								ref={ title => this.titleInput = title }
 								type="text"
 								placeholder="Enter post title..."
@@ -213,6 +206,7 @@ export class WritePost extends Component {
 				</header>
 				<Editor
 					key={ this.state.draftId || '__none' }
+					className="ml-[90px] max-[600px]:ml-0"
 					initialValue={ this.state.initialContent }
 					lastSave={ this.state.lastSave }
 					previewComponent={ props => <RemotePreview type="post" { ...props } /> }

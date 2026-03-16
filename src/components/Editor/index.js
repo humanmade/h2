@@ -403,7 +403,10 @@ class Editor extends React.PureComponent {
 
 		return (
 			<form
-				className={ mode === 'preview' ? 'Editor previewing' : 'Editor' }
+				className={ [
+					mode === 'preview' ? 'Editor previewing' : 'Editor',
+					this.props.className,
+				].filter( Boolean ).join( ' ' ) }
 				onSubmit={ e => this.onSubmit( e ) }
 			>
 				<Shortcuts keys={ hasFocus ? shortcuts : null } />
@@ -470,7 +473,7 @@ class Editor extends React.PureComponent {
 						) : (
 							<textarea
 								ref={ el => this.updateTextarea( el ) }
-								className="Editor-editor"
+								className="Editor-editor block border-b-0 px-[15px] py-4 w-full focus:outline-none placeholder:italic"
 								placeholder="Write a comment..."
 								style={ { height } }
 								value={ content }
@@ -531,6 +534,7 @@ Editor.defaultProps = {
 };
 
 Editor.propTypes = {
+	className: PropTypes.string,
 	previewComponent: PropTypes.func,
 	saveText: PropTypes.string,
 	submitText: PropTypes.string,
