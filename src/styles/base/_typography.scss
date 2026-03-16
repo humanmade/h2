@@ -27,8 +27,7 @@ i {
 	font-style: italic;
 }
 
-h1,
-.text-xxl {
+h1 {
 	@include text-xxl;
 	@include font-heading;
 	text-transform: uppercase;
@@ -36,8 +35,7 @@ h1,
 	color: $color-text-heading;
 }
 
-h2,
-.text-xl {
+h2 {
 	@include text-xl;
 	@include font-heading;
 	margin: $margin-vertical-sm 0;
@@ -49,16 +47,14 @@ h2,
 	}
 }
 
-h3,
-.text-lg {
+h3 {
 	@include text-lg;
 	@include font-heading;
 	margin: $margin-vertical-sm 0;
 	color: $color-text-heading;
 }
 
-h4,
-.text-md {
+h4 {
 	@include text-md;
 	@include font-heading;
 	margin: $margin-vertical-sm 0;
@@ -80,13 +76,8 @@ ol,
 	margin: $margin-vertical-sm 0;
 }
 
-small,
-.text-sm {
+small {
 	@include text-sm;
-}
-
-.text-xs {
-	@include text-xs;
 }
 
 ul,
