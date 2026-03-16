@@ -1,8 +1,8 @@
 .form__field,
-input[type="text"],
-input[type="search"],
-input[type="password"],
-input[type="email"] {
+input[type="text"].__legacy,
+input[type="search"].__legacy,
+input[type="password"].__legacy,
+input[type="email"].__legacy {
 	@include font-body;
 	@include text-std;
 	border: 2px solid $border-color;
@@ -65,7 +65,7 @@ input[type="email"] {
 }
 
 .form__textarea,
-textarea {
+textarea.__legacy {
 	@extend .form__field;
 	width: 100%;
 	clear: both;
