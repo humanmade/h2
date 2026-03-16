@@ -7,6 +7,9 @@ body {
 	@include text-std;
 	@include font-body;
 	color: $color-text-default;
+	--font-family-body: #{$font-family-body};
+	--font-family-heading: #{$font-family-heading};
+	--font-family-accent: #{$font-family-accent};
 }
 
 strong,
