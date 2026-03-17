@@ -48,8 +48,4 @@ module.exports = {
 		},
 	},
 	plugins: [],
-	// Prevent Tailwind from conflicting with existing styles during migration
-	corePlugins: {
-		preflight: false,
-	},
 };
