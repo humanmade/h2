@@ -43,7 +43,7 @@ export class MessageHeader extends React.Component {
 			'top-0 py-[15px] bg-white flex items-start min-[600px]:min-h-[99px]',
 
 			// Mobile:
-			'max-[600px]:-mx-5 max-[600px]:px-5 max-[600px]:py-2 max-[600px]:flex-row-reverse max-[600px]:[&_.Post\\_\\_actions]:hidden',
+			'max-[600px]:-mx-5 max-[600px]:px-5 max-[600px]:py-2 max-[600px]:flex-row-reverse max-[600px]:[&_.Post\\\\_\\\\_actions]:hidden',
 
 			sticky ? 'Message-Header--sticky sticky z-[5]' : 'relative z-[6]',
 			constrainTitle && 'Message-Header--constrained h-[99px]',
