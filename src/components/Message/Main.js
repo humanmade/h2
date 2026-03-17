@@ -27,7 +27,7 @@ export default function MessageMain( props ) {
 	} = props;
 
 	const classes = [
-		'Message-Main',
+		'ml-[90px] max-[960px]:ml-0',
 		collapsed && 'Message-Main--collapsed',
 	];
 
