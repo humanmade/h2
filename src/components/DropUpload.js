@@ -50,6 +50,7 @@ export default class DropUpload extends React.PureComponent {
 		const wrapClasses = [
 			'DropUpload',
 			this.state.dropping && 'dropping',
+			this.props.className,
 		].filter( Boolean ).join( ' ' );
 
 		return (
@@ -61,7 +62,12 @@ export default class DropUpload extends React.PureComponent {
 			>
 				{ children }
 
-				<div className="DropUpload-status text-[0.8rem] text-hm-warm-grey justify-between">
+				<div
+					className={ [
+						'DropUpload-status text-[0.8rem] text-hm-warm-grey justify-between',
+						this.props.statusClassName,
+					].filter( Boolean ).join( ' ' ) }
+				>
 					{ files.length ? (
 						files.map( file => (
 							<p
@@ -97,6 +103,8 @@ DropUpload.defaultProps = { allowMultiple: false };
 
 DropUpload.propTypes = {
 	allowMultiple: PropTypes.bool,
+	className: PropTypes.string,
 	files: PropTypes.arrayOf( PropTypes.shape( { name: PropTypes.string.isRequired } ) ),
+	statusClassName: PropTypes.string,
 	onUpload: PropTypes.func.isRequired,
 };
