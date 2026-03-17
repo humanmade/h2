@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { CSSTransition } from 'react-transition-group';
 
-import './Hovercard.css';
-
 const HOVER_DELAY = 100;
 
 const transition = {
 	component: 'div',
-	classNames: 'Hovercard-Transition',
+	classNames: {
+		enter: 'opacity-0 translate-y-[20px] animate-hovercard-in',
+		exit: 'animate-hovercard-out',
+	},
 	timeout: {
 		enter: 100,
 		exit: 100,

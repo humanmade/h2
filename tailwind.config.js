@@ -7,6 +7,20 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			keyframes: {
+				'hovercard-fade-in-up': {
+					'0%': { opacity: '0', transform: 'translate(0, 20px)' },
+					'100%': { opacity: '1', transform: 'translate(0, 0)' },
+				},
+				'hovercard-fade-out-down': {
+					'0%': { opacity: '1', transform: 'translate(0, 0)' },
+					'100%': { opacity: '0', transform: 'translate(0, 20px)' },
+				},
+			},
+			animation: {
+				'hovercard-in': 'hovercard-fade-in-up 0.1s ease forwards',
+				'hovercard-out': 'hovercard-fade-out-down 0.1s ease forwards',
+			},
 			colors: {
 				// Map to existing H2 brand colors
 				'brand': {
