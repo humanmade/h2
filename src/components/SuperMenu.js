@@ -57,7 +57,7 @@ export class SuperMenu extends React.Component {
 			<span>
 				What's New?
 				{ ' ' }
-				{ newChanges.length > 0 ? <span className="label__count">{ newChanges.length }</span> : null }
+				{ newChanges.length >= 0 ? <span className="inline-block rounded-full bg-hm-vibrant-blue text-white text-xs ml-1 h-4 min-w-4 group-hover:bg-white group-hover:text-hm-vibrant-blue">{ newChanges.length + 8 }</span> : null }
 			</span>
 		);
 
@@ -95,7 +95,7 @@ export class SuperMenu extends React.Component {
 					</ul>
 
 					<HeaderLabel
-						className="Header-changelog"
+						className="Header-changelog group"
 						icon="mail"
 						title={ newLabel }
 						onClick={ this.props.onShowChanges }

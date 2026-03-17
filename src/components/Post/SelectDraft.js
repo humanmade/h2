@@ -26,12 +26,13 @@ class SelectDraft extends React.Component {
 		if ( ! this.state.showingSelector ) {
 			return (
 				<Button
+					className="group"
 					onClick={ () => this.setState( { showingSelector: true } ) }
 				>
 					Drafts
 
 					{ posts && (
-						<span className="label__count">{ posts.length }</span>
+						<span className="inline-block rounded-full bg-hm-vibrant-blue text-white text-xs ml-1 h-4 min-w-4 group-hover:bg-white group-hover:text-hm-vibrant-blue">{ posts.length }</span>
 					) }
 				</Button>
 			);
