@@ -1,8 +1,6 @@
 @import './styles/juniper';
 @import './components/Message/Content';
 @import './components/Message/Main';
-@import './components/Message/Header';
-
 body {
     font-size: 18px;
 }
@@ -36,7 +34,8 @@ a em {
 
 
 .wp-block-post-title {
-    @extend .Message-Header__title;
+    line-height: 1.2;
+    text-transform: inherit;
     max-width: 650px;
     margin: 0 auto 1.5rem;
     padding-right: 120px;

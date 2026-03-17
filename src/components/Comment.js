@@ -85,7 +85,7 @@ export class Comment extends Component {
 
 		return (
 			<div
-				className="Comment"
+				className="Comment relative"
 				id={ `comment-${ comment.id }` }
 				ref={ el => this.element = el }
 			>
@@ -102,7 +102,7 @@ export class Comment extends Component {
 					/>
 				</CommentHeader>
 
-				<div className="body">
+				<div className="flex-col pb-4">
 					<Slot name="Comment.before_content" fillChildProps={ fillProps } />
 					{ this.state.isEditing ? (
 						loading ? (
@@ -119,7 +119,7 @@ export class Comment extends Component {
 						<MessageContent html={ comment.content.rendered } />
 					) }
 					<Slot name="Comment.after_content" fillChildProps={ fillProps } />
-					<div className="Comment-footer-actions">
+					<div className="Comment-footer-actions flex justify-between items-start flex-wrap mt-[1.666rem] mb-[1.248rem]">
 						<Actions
 							fillProps={ fillProps }
 							isEditing={ this.state.isEditing }

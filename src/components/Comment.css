@@ -1,7 +1,4 @@
-.Comment {
-	position: relative;
-}
-
+/* Thread line */
 .Comment:before {
 	position: absolute;
 	content: '';
@@ -17,6 +14,7 @@
 	bottom: 1rem;
 }
 
+/* Dot at end of thread line */
 .Comment:last-child:after {
 	position: absolute;
 	content: '';
@@ -29,6 +27,7 @@
 	border-radius: 50%;
 }
 
+/* Sticky comment header with admin-bar offsets */
 .Comment .Comment-Header {
 	position: sticky;
 	top: 99px;
@@ -45,19 +44,6 @@
 	body.admin-bar .Comment .Comment-Header {
 		top: 131px; /* 32 + 99 */
 	}
-}
-
-.Comment > .body {
-	flex-direction: column;
-	padding-bottom: 1rem;
-}
-
-.Comment-footer-actions {
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-start;
-	flex-wrap: wrap;
-	margin: 1.666rem 0 1.248rem;
 }
 
 @media ( max-width: 600px ) {
