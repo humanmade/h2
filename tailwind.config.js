@@ -43,6 +43,7 @@ module.exports = {
 					'dark-red': 'var(--hm-dark-red)',
 					'deep-blue': 'var(--hm-deep-blue)',
 					'light-blue': 'var(--hm-light-blue)',
+					'border-color': '#d9d9d9',
 				},
 			},
 		},

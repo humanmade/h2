@@ -215,7 +215,7 @@ class SearchInput extends React.Component {
 					].filter( Boolean ).join( ' ' ) }
 				>
 					<input
-						className="!m-0 !w-full max-[782px]:leading-[1.2] max-[782px]:pt-1 max-[782px]:pb-1"
+						className="w-full text-lg border-2 border-hm-border-color rounded px-2 py-1 md:py-2 md:leading-5 placeholder:italic"
 						type="search"
 						placeholder="Search..."
 						ref={ ref => this.inputEl = ref }
