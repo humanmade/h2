@@ -164,8 +164,9 @@ export class WritePost extends Component {
 						onSelect={ this.onSelect }
 					/>
 				</div>
-				<header className="sticky top-0 z-[3] py-[15px] bg-white flex items-center h-[110px] [&>.Avatar]:mr-[30px] max-[600px]:[&>.Avatar]:hidden">
+				<header className="sticky top-0 z-[3] py-[15px] bg-white flex items-center h-[110px]">
 					<Avatar
+						className="mr-[30px] max-[600px]:hidden"
 						url={ user ? user.avatar_urls['96'] : '' }
 						size={ 60 }
 					/>

@@ -25,9 +25,11 @@ const CLASSES = [
 export default function Avatar( props ) {
 	const size = props.size + 'px';
 
+	const classes = props.className ? `${ CLASSES } ${ props.className }` : CLASSES;
+
 	return (
 		<div
-			className={ CLASSES }
+			className={ classes }
 			style={ {
 				width: size,
 				height: size,
@@ -38,6 +40,7 @@ export default function Avatar( props ) {
 				withHovercard={ props.withHovercard }
 			>
 				<img
+					className={ props.imgClassName }
 					style={ {
 						width: props.size,
 						height: props.size,
@@ -51,6 +54,8 @@ export default function Avatar( props ) {
 }
 
 Avatar.propTypes = {
+	className: PropTypes.string,
+	imgClassName: PropTypes.string,
 	size: PropTypes.number.isRequired,
 	url: PropTypes.string.isRequired,
 	user: PropTypes.object,

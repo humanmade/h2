@@ -20,15 +20,6 @@
 	margin-top: -99px;
 }
 
-/* Avatar sizing within header */
-.Message-Header .Avatar {
-	margin-right: 30px;
-	width: 3.333rem;
-	height: 3.333rem;
-	border-radius: 100%;
-	align-self: flex-start;
-}
-
 /* Category comma separators */
 .Message-Header__categories li {
 	display: inline;
@@ -42,16 +33,10 @@
 	content: "";
 }
 
-/* Mobile responsive */
+/* Mobile collapse button margin */
 @media ( max-width: 600px ) {
-	.Message-Header .Avatar,
 	.Message-Header__Collapse-Button {
 		margin-left: 8px;
 		margin-right: 0;
-	}
-	.Message-Header .Avatar,
-	.Message-Header .Avatar img {
-		width: 24px !important;
-		height: 24px !important;
 	}
 }

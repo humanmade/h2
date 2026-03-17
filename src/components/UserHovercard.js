@@ -8,7 +8,6 @@ import Map from './Map';
 
 const ASIDE_CLASSES = [
 	'flex text-[0.77778rem] items-center',
-	'[&_.Avatar]:grow-0 [&_.Avatar]:shrink-0 [&_.Avatar]:mr-[0.5em]',
 	'[&_.Map]:m-0 [&_.Map]:ml-[10px]',
 	'max-[475px]:flex-col max-[475px]:items-start',
 	'max-[475px]:[&_.Map]:mx-auto max-[475px]:[&_.Map]:mt-[1em] max-[475px]:[&_.Map]:ml-auto',
@@ -57,6 +56,7 @@ export function UserCard( { user } ) {
 			<div>
 				<header className="flex items-center m-0 mb-[1em] [&_p]:leading-[1.6] [&_p]:m-0">
 					<Avatar
+						className="grow-0 shrink-0 mr-[0.5em]"
 						url={ user.avatar_urls['96'] }
 						size={ 40 }
 						withHovercard={ false }

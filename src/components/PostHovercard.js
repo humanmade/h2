@@ -16,6 +16,7 @@ export const PostCardAuthor = ( { author } ) => (
 	author ? (
 		<React.Fragment>
 			<Avatar
+				className="inline-block align-middle mr-[0.5em]"
 				url={ author.avatar_urls['96'] }
 				size={ 24 }
 				withHovercard={ false }
@@ -47,10 +48,7 @@ export const ConnectedPostCardAuthor = withSingle(
 
 const ASIDE_CLASSES = 'text-[0.77778rem]';
 const DESCRIPTION_CLASSES = 'text-[0.9em] leading-[1.7] [&_p]:m-0 [&_p]:mb-[1em]';
-const META_CLASSES = [
-	'm-0 text-[0.9em] text-[#AAA]',
-	'[&_.Avatar]:inline-block [&_.Avatar]:align-middle [&_.Avatar]:mr-[0.5em]',
-].join( ' ' );
+const META_CLASSES = 'm-0 text-[0.9em] text-[#AAA]';
 
 export function PostCard( { loading, post, AuthorComponent = ConnectedPostCardAuthor } ) {
 	if ( loading ) {

@@ -61,6 +61,8 @@ export class MessageHeader extends React.Component {
 			>
 				<div className="grid grid-rows-2 items-end">
 					<Avatar
+						className="mr-[30px] w-[3.333rem] h-[3.333rem] rounded-full self-start max-[600px]:ml-2 max-[600px]:mr-0 max-[600px]:!w-[24px] max-[600px]:!h-[24px]"
+						imgClassName="max-[600px]:!w-[24px] max-[600px]:!h-[24px]"
 						url={ author ? author.avatar_urls['96'] : '' }
 						user={ author }
 						size={ 60 }
