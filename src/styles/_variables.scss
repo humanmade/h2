@@ -5,8 +5,12 @@
 $margin-vertical-sm:  1.666666667rem !default;
 $margin-vertical-lg:  4.666666667rem !default;
 
-$base-line-height:    1.555rem !default; // 28px
-$base-line-height-sm: 1.333rem !default; // 24px
+// Correction for old base font size of 18px.
+// This is multiplied by everything that used to use rems.
+$correction-factor: 18/16;
+
+$base-line-height:    $correction-factor * 1.555rem !default; // 28px
+$base-line-height-sm: $correction-factor * 1.333rem !default; // 24px
 $base-font-size:      18px !default;
 
 $gutter-width: 15px !default;

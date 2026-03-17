@@ -1,12 +1,4 @@
-html {
-	font-size: $base-font-size;
-	text-rendering: optimizeLegibility;
-}
-
 body {
-	@include text-std;
-	@include font-body;
-	color: $color-text-default;
 	--font-family-body: #{$font-family-body};
 	--font-family-heading: #{$font-family-heading};
 	--font-family-accent: #{$font-family-accent};
@@ -17,6 +9,8 @@ body {
 	@include text-std;
 	@include font-body;
 	color: $color-text-default;
+	text-rendering: optimizeLegibility;
+	font-weight: 400;
 
 	:where(strong, b) {
 		@include font-heading;
