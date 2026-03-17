@@ -12,27 +12,26 @@ body {
 	--font-family-accent: #{$font-family-accent};
 }
 
+/* todo: merge with PostContent */
 .h2-legacy-prose {
 	@include text-std;
 	@include font-body;
 	color: $color-text-default;
 
-	strong,
-	b {
+	:where(strong, b) {
 		@include font-heading;
 		color: $color-text-heading;
 		text-transform: none;
 		letter-spacing: normal;
 	}
 
-	em,
-	i {
+	:where(em, i){
 		@include font-body;
 		color: $color-text-heading;
 		font-style: italic;
 	}
 
-	h1 {
+	:where(h1) {
 		@include text-xxl;
 		@include font-heading;
 		text-transform: uppercase;
@@ -40,7 +39,7 @@ body {
 		color: $color-text-heading;
 	}
 
-	h2 {
+	:where(h2) {
 		@include text-xl;
 		@include font-heading;
 		margin: $margin-vertical-sm 0;
@@ -52,32 +51,28 @@ body {
 		}
 	}
 
-	h3 {
+	:where(h3) {
 		@include text-lg;
 		@include font-heading;
 		margin: $margin-vertical-sm 0;
 		color: $color-text-heading;
 	}
 
-	h4 {
+	:where(h4) {
 		@include text-md;
 		@include font-heading;
 		margin: $margin-vertical-sm 0;
 		color: $color-text-default;
 	}
 
-	h5,
-	h6 {
+	:where(h5, h6) {
 		@include text-std;
 		@include font-heading;
 		margin: $margin-vertical-sm 0;
 		color: $color-text-heading;
 	}
 
-	p,
-	ul,
-	ol,
-	.text-std {
+	:where(p, ul, ol) {
 		margin: $margin-vertical-sm 0;
 	}
 
@@ -85,19 +80,17 @@ body {
 		@include text-sm;
 	}
 
-	ul,
-	ol {
+	:where(ul, ol) {
 		list-style-position: outside;
 		padding: 0;
 		padding: 0 0 0 $gutter-width;
 
-		ul,
-		ol {
+		:where(ul, ol) {
 			margin: 0;
 		}
 	}
 
-	blockquote {
+	:where(blockquote) {
 		@include text-lg;
 		margin: $margin-vertical-sm 0;
 
@@ -106,14 +99,13 @@ body {
 		}
 	}
 
-	hr {
+	:where(hr) {
 		border: 1px solid $border-color;
 		border-width: 1px 0 0 0;
 		margin: $margin-vertical-lg 0;
 	}
 
-	code,
-	pre {
+	:where(code, pre) {
 		@include text-xs;
 		color: $color-text-pre;
 		background: $color-background-pre;
@@ -122,7 +114,7 @@ body {
 		border-radius: 4px;
 	}
 
-	pre {
+	:where(pre) {
 		padding: #{ $margin-vertical-sm * 0.5 } #{ $gutter-width * 0.5 };
 		display: block;
 		margin: $margin-vertical-sm 0;
@@ -131,7 +123,7 @@ body {
 		white-space: pre-wrap;
 	}
 
-	code {
+	:where(code) {
 		@include text-sm;
 		line-height: inherit;
 	}
@@ -147,7 +139,7 @@ body {
 		background: lighten( $color-accent, 20% );
 	}
 
-	a {
+	:where(a) {
 		@include text-link;
 	}
 }
