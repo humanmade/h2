@@ -18,14 +18,10 @@ $gutter-width: 15px !default;
 $font-family-body:    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !default;
 $font-family-heading: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !default;
 $font-family-code:    "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono", monospace !default;
-$font-family-accent:  "din-condensed", sans-serif !default;
 
 // Media queries.
 $mq-sm-up:   "screen and ( min-width: 30rem )" !default;
 $mq-sm-down: "screen and ( max-width: 30rem )" !default;
-$mq-md-up:   "screen and ( min-width: 55rem )" !default;
-$mq-md-down: "screen and ( max-width: 55rem )" !default;
-$mq-print:   "print" !default;
 
 /*
  * Color Mapping
@@ -33,8 +29,6 @@ $mq-print:   "print" !default;
 
 $color-primary: $hm-red !default;
 $color-accent:  $hm-blue !default;
-$color-white:   #FFF !default;
-$color-black:   $hm-dark-grey !default;
 
 // Alternate versions of main colors. Used for borders, backgrounds etc.
 $color-primary-light: saturate( lighten( $color-primary, 10% ), 5 ) !default;
@@ -45,38 +39,16 @@ $color-primary-dark:  desaturate( darken( $color-primary, 6% ), 8 ) !default;
  */
 
 $color-text-default: $hm-warm-grey !default;
-$color-text-dark:    $hm-dark-grey !default;
 $color-text-heading: $hm-dark-grey !default;
 $color-text-pre:     $hm-warm-grey !default;
 
 $color-link:         $hm-vibrant-blue !default;
 $color-link-hover:   $hm-vibrant-blue !default;
-$color-link-visited: darken( $hm-vibrant-blue, 3% ) !default;
 
 $color-background-pre: $hm-light-grey !default;
-
-/*
- * Component Color Mapping
- */
-
-// Footer
-$color-footer-text: $hm-medium-grey !default;
 
 // Forms
 $color-input-text: $hm-warm-grey !default;
 
-// NavAccordion
-$color-nav-toggle-background:                  $hm-warm-grey !default;
-$color-nav-accordion-primary-focus-background: $color-white !default;
-$color-nav-accordion-primary-text:             $color-white !default;
-$color-nav-accordion-grey-focus-background:   $hm-light-grey !default;
-$color-nav-accordion-grey-text:               $hm-warm-grey !default;
-
-// Labels.
-$label-background:       $hm-beige !default;
-$label-background-hover: darken( $hm-beige, 5% ) !default;
-
 // Borders
 $border-color:         lighten( $hm-medium-grey, 40% ) !default;
-$border-color-primary: $hm-red-light !default;
-$border-color-light:   desaturate( darken( $hm-beige, 15% ), 20 ) !default;
