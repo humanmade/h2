@@ -50,7 +50,7 @@ export class MessageHeader extends React.Component {
 		];
 
 		const titleClasses = [
-			'text-[1.333333333rem] leading-[1.2] mt-0 mr-[0.5em] mb-[10px] ml-0 [text-transform:inherit]',
+			'text-[1.333333333rem] leading-[1.2] font-bold mt-0 mr-[0.5em] mb-[10px] ml-0 [text-transform:inherit]',
 			constrainTitle && 'whitespace-nowrap text-ellipsis overflow-hidden',
 		].filter( Boolean ).join( ' ' );
 
@@ -84,8 +84,9 @@ export class MessageHeader extends React.Component {
 						</button>
 					) : null }
 				</div>
-				<div className="grow min-w-0 overflow-hidden leading-[1.1] [&>a:hover]:no-underline">
+				<div className="grow min-w-0 overflow-hidden leading-[1.1]">
 					<Link
+						className="text-inherit hover:no-underline"
 						disablePreviews
 						href={ post.link }
 					>
