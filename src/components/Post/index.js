@@ -145,7 +145,7 @@ export class Post extends Component {
 			'min-h-[144px]',
 			'border-b-[5px] border-[#F1F2EE]',
 
-			expanded && 'Post--collapsed pb-0 [&_.Post-footer-actions_.reactions]:hidden',
+			( ! expanded ) && 'Post--collapsed pb-0 [&_.Post-footer-actions_.reactions]:hidden',
 		].filter( Boolean ).join( ' ' );
 
 		const Actions = (

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Button from '../../components/Button';
 import EmojiPicker from '../../components/EmojiPicker';
 import { withCurrentUser } from '../../hocs';
 import { reactions } from '../../types';
@@ -117,10 +118,11 @@ export class Reactions extends Component {
 				{ Object.entries( reactions ).map( ( [ emoji, users ] ) => {
 					let isActive = reactions[ emoji ].indexOf( this.props.currentUser.id ) >= 0 ? true : false;
 					return (
-						<button
-							className={ 'btn btn--small btn--tertiary' + ( isActive ? ' btn--active' : '' ) }
-							onClick={ () => this.toggleReaction( emoji ) }
+						<Button
 							key={ emoji }
+							className={ ( isActive ? ' btn--active' : '' ) }
+							type="tertiary"
+							onClick={ () => this.toggleReaction( emoji ) }
 						>
 							<span className="reactions__emoji" key="emoji">
 								<Emoji type={ emoji } />
@@ -139,21 +141,21 @@ export class Reactions extends Component {
 									);
 								} ) }
 							</span>
-						</button>
+						</Button>
 					);
 				} ) }
-				<button
-					className={ 'reactions__add-reaction btn btn--small btn--tertiary' + ( loading ? ' loading' : '' ) }
-					onClick={ value => this.setState( { isOpen: ! this.state.isOpen  } ) }
-					key="button"
+				<Button
+					className={ 'reactions__add-reaction ' + ( loading ? ' loading' : '' ) }
 					disabled={ loading }
+					type="tertiary"
+					onClick={ value => this.setState( { isOpen: ! this.state.isOpen  } ) }
 				>
 					{ loading ? (
 						<span className="loading loading--active"></span>
 					) : (
 						<span className="icon icon--smiley-wink">Add reaction</span>
 					) }
-				</button>
+				</Button>
 				{ this.state.isOpen && (
 					<EmojiPicker
 						onClose={ () => this.setState( { isOpen: false } ) }
