@@ -68,7 +68,7 @@ export default class RecentPosts extends React.Component {
 		const { number, title } = this.props;
 
 		return (
-			<div className="RecentPosts">
+			<div className="RecentPosts h2-legacy-prose">
 				<h4>{ title || 'Recent Posts' }</h4>
 
 				<ConnectedPostList

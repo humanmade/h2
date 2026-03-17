@@ -9,7 +9,7 @@ import SearchWidget from './Widgets/Search';
 const widgetMap = {
 	default: ( { html } ) => (
 		<div
-			className="Widget my-[1.66667em] [&_p]:mb-[0.5em] [&_ul]:mb-[0.5em] [&_ol]:mb-[0.5em] [&_h4]:mb-[0.5em] [&_p]:mt-0 [&_ul]:mt-0 [&_ol]:mt-0 [&_h4]:mt-0"
+			className="Widget h2-legacy-prose my-[1.66667em] [&_p]:mb-[0.5em] [&_ul]:mb-[0.5em] [&_ol]:mb-[0.5em] [&_h4]:mb-[0.5em] [&_p]:mt-0 [&_ul]:mt-0 [&_ol]:mt-0 [&_h4]:mt-0"
 			dangerouslySetInnerHTML={ { __html: html } }
 		/>
 	),
