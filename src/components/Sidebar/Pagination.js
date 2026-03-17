@@ -2,33 +2,30 @@ import React from 'react';
 
 import LinkButton from '../LinkButton';
 
-const CLASSES = [
-	// Back-compat:
-	'Sidebar-Pagination',
-
-	'flex items-baseline max-w-[20em]',
-	'[&>div]:w-1/2',
-	'[&_.cta]:text-[inherit] [&_.cta:after]:w-[1em]',
-].join( ' ' );
-
 export default function SidebarPagination( props ) {
 	const { hasNext, hasPrevious, onNext, onPrevious } = props;
 	return (
-		<div className={ CLASSES }>
+		<div className="Sidebar-Pagination grid grid-cols-2">
 			{ hasNext && (
 				<div>
 					<LinkButton
-						className="cta cta--small cta--arrow-left"
+						className="group pl-2 flex items-center"
 						onClick={ onNext }
-					>Older</LinkButton>
+					>
+						<span className="icon icon--arrow-right icon--blue !w-4 mr-2 rotate-180 transition-transform group-hover:-translate-x-2">&larr;</span>
+						<span>Older</span>
+					</LinkButton>
 				</div>
 			) }
 			{ hasPrevious && (
-				<div className={ hasNext ? '' : 'ml-[50%]' }>
+				<div className="justify-self-end col-start-2">
 					<LinkButton
-						className="cta cta--small cta--arrow"
+						className="group pr-2 flex items-center"
 						onClick={ onPrevious }
-					>Newer</LinkButton>
+					>
+						<span>Newer</span>
+						<span className="icon icon--arrow-right icon--blue !w-4 ml-2 transition-transform group-hover:translate-x-2">&larr;</span>
+					</LinkButton>
 				</div>
 			) }
 		</div>
