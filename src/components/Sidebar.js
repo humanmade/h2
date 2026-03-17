@@ -9,7 +9,7 @@ import SearchWidget from './Widgets/Search';
 const widgetMap = {
 	default: ( { html } ) => (
 		<div
-			className="Widget h2-legacy-prose my-[1.66667em] [&_p]:mb-[0.5em] [&_ul]:mb-[0.5em] [&_ol]:mb-[0.5em] [&_h4]:mb-[0.5em] [&_p]:mt-0 [&_ul]:mt-0 [&_ol]:mt-0 [&_h4]:mt-0"
+			className="Widget text-[0.8em] my-[1.66667em] [&_p]:mb-[0.5em] [&_ul]:mb-[0.5em] [&_ol]:mb-[0.5em] [&_h4]:mb-[0.5em] [&_p]:mt-0 [&_ul]:mt-0 [&_ol]:mt-0 [&_h4]:mt-0"
 			dangerouslySetInnerHTML={ { __html: html } }
 		/>
 	),
@@ -34,7 +34,7 @@ export class Sidebar extends Component {
 
 		return (
 			<aside
-				className={ `Sidebar text-[0.8em] pt-4 pb-0 px-0 [&_h4]:text-[1.222222222em] hover:opacity-100 hover:transition-opacity hover:duration-[160ms] max-[800px]:opacity-100 ${ activeClasses }` }
+				className={ `Sidebar h2-legacy-prose pt-4 pb-0 px-0 [&_h4]:text-[1.222222222em] hover:opacity-100 hover:transition-opacity hover:duration-[160ms] max-[800px]:opacity-100 ${ activeClasses }` }
 				onMouseOver={ () => this.setState( { active: true } ) }
 				onMouseOut={ () => this.setState( { active: false } ) }
 			>
