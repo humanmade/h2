@@ -90,6 +90,14 @@ body {
 		}
 	}
 
+	:where(ul) {
+		list-style-type: disc;
+	}
+
+	:where(ol) {
+		list-style-type: decimal;
+	}
+
 	:where(blockquote) {
 		@include text-lg;
 		margin: $margin-vertical-sm 0;
