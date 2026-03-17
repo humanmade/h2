@@ -3,6 +3,7 @@ import React from 'react';
 
 import './DropUpload.css';
 
+const ENTRY_CLASS = 'mt-0 mb-0';
 const INITIAL_STATE = { dropping: false };
 
 export default class DropUpload extends React.PureComponent {
@@ -46,29 +47,37 @@ export default class DropUpload extends React.PureComponent {
 
 	render() {
 		const { allowMultiple, children, files } = this.props;
+		const wrapClasses = [
+			'DropUpload',
+			this.state.dropping && 'dropping',
+		].filter( Boolean ).join( ' ' );
 
 		return (
 			<div
-				className={ `DropUpload ${ this.state.dropping ? 'dropping' : ''}` }
+				className={ wrapClasses }
 				onDragOver={ e => this.onDragOver( e ) }
 				onDragLeave={ e => this.onDragLeave( e ) }
 				onDrop={ e => this.onDrop( e ) }
 			>
 				{ children }
 
-				<div className="DropUpload-status">
+				<div className="DropUpload-status text-[0.8rem] text-hm-warm-grey justify-between">
 					{ files.length ? (
 						files.map( file => (
-							<p key={ `${ file.name }-${ file.lastModified }` }>
-								<span className="Loading loading--active"></span>
+							<p
+								key={ `${ file.name }-${ file.lastModified }` }
+								className={ ENTRY_CLASS }
+							>
+								<span className="Loading loading--active ml-0 mr-[0.5em]"></span>
 
 								Uploading { file.name }…
 							</p>
 						) )
 					) : (
-						<p className="buttons">
-							<label className="DropUpload-uploader">
+						<p className={ `flex items-center ${ ENTRY_CLASS }` }>
+							<label className="mr-[0.3em] cursor-pointer text-hm-vibrant-blue hover:underline">
 								<input
+									className="hidden"
 									multiple={ allowMultiple }
 									type="file"
 									onChange={ e => this.onInputChange( e ) }

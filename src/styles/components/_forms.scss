@@ -72,8 +72,8 @@ textarea.__legacy {
 }
 
 .form__label,
-form label,
-form legend {
+form label.__legacy,
+form legend.__legacy {
 	@include font-heading;
 	@include text-sm;
 	display: block;
@@ -81,7 +81,7 @@ form legend {
 	margin-bottom: $margin-vertical-sm * 0.25;
 }
 
-fieldset {
+fieldset.__legacy {
 	border: none;
 	padding: 0;
 	margin: 0;
