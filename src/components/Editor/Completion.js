@@ -1,7 +1,28 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import './Completion.css';
+/*
+interface ItemProps {
+	className?: string,
+	children: React.Node,
+	selected?: boolean,
+	onSelect(): void,
+}
+*/
+export function Item( props ) {
+	return (
+		<li
+			className={ [
+				'px-2 py-1 m-0 border-b border-hm-beige cursor-pointer last-child:border-b-0',
+				props.selected && 'bg-hm-vibrant-blue text-hm-light-grey',
+				props.className,
+			].filter( Boolean ).join( ' ' ) }
+			onClick={ props.onSelect }
+		>
+			{ props.children }
+		</li>
+	);
+}
 
 export default class Completion extends React.Component {
 	constructor( props ) {
@@ -100,7 +121,7 @@ export default class Completion extends React.Component {
 
 		return (
 			<ol
-				className="Completion"
+				className="absolute text-base border border-gray-300 rounded bg-white mt-[1lh] shadow-[0_0_8px_rgba(0,0,0,0.1)] z-[1]"
 				style={ {
 					top: coords.top,
 					left: coords.left,

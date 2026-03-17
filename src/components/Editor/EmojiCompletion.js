@@ -2,25 +2,25 @@ import React from 'react';
 
 import { customEmoji } from '../EmojiPicker';
 
-import Completion from './Completion';
-
-import './EmojiCompletion.css';
+import Completion, { Item as BaseItem } from './Completion';
 
 export const Item = ( { item, selected, onSelect } ) => {
 	return (
-		<li
-			className={ selected ? 'selected' : null }
-			onClick={ onSelect }
+		<BaseItem
+			selected={ selected }
+			onSelect={ onSelect }
 		>
-			{ item.imageUrl ? (
-				<img
-					alt={ item.colons }
-					className="EmojiCompletion-custom"
-					src={ item.imageUrl }
-				/>
-			) : item.native }
+			<span className="inline-block w-6">
+				{ item.imageUrl ? (
+					<img
+						alt={ item.colons }
+						className="h-4 max-h-4 align-middle"
+						src={ item.imageUrl }
+					/>
+				) : item.native }
+			</span>
 			{ item.colons }
-		</li>
+		</BaseItem>
 	);
 };
 

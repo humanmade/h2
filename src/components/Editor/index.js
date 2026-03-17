@@ -462,7 +462,7 @@ class Editor extends React.PureComponent {
 					) : null }
 				</div>
 
-				<div className="Editor-editor-container">
+				<div className="Editor-editor-container text-lg">
 					<DropUpload
 						allowMultiple
 						files={ this.state.uploading }
@@ -473,7 +473,7 @@ class Editor extends React.PureComponent {
 						) : (
 							<textarea
 								ref={ el => this.updateTextarea( el ) }
-								className="Editor-editor block text-lg border-b-0 px-[15px] py-4 w-full focus:outline-none placeholder:italic"
+								className="Editor-editor block border-b-0 px-[15px] py-4 w-full focus:outline-none placeholder:italic"
 								placeholder="Write a comment..."
 								style={ { height } }
 								value={ content }
