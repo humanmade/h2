@@ -28,15 +28,15 @@ const TYPE_CLASSES = {
 };
 
 const SIZE_CLASSES = {
-	regular: 'text-lg py-[calc(0.417rem+1px)] px-[15px]',
-	small: 'btn--small text-base border px-[7.5px] py-0',
+	regular: 'px-2',
+	small: 'btn--small text-sm leading-6 border px-2 py-0',
 };
 
 const BASE_CLASSES = [
 	// Back-compat:
 	'btn',
 
-	'font-sans font-light',
+	'font-light',
 	'border border-solid rounded',
 	'inline-block text-center align-middle cursor-pointer',
 	'w-auto h-auto',
@@ -51,7 +51,7 @@ export default function Button( props ) {
 	const classes = [
 		BASE_CLASSES,
 		TYPE_CLASSES[ props.type ] || TYPE_CLASSES.secondary,
-		SIZE_CLASSES[ props.size ] || SIZE_CLASSES.small,
+		SIZE_CLASSES[ props.size || 'regular' ] || '',
 		props.className,
 	].filter( Boolean ).join( ' ' );
 
@@ -81,6 +81,6 @@ Button.defaultProps = {
 	className: null,
 	disabled: false,
 	type: 'secondary',
-	size: 'small',
+	size: 'regular',
 	submit: false,
 };

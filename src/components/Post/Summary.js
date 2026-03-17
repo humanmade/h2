@@ -51,7 +51,10 @@ function Summary( props ) {
 	return (
 		<div className="my-[1em] ml-[90px] text-sm text-[#aaa] [&_.btn]:font-[inherit] [&_.btn]:mb-0 max-[960px]:ml-0">
 			<div className="Post-Summary-actions my-[5px] flex items-center justify-between max-[600px]:flex-col max-[600px]:items-start">
-				<Button onClick={ onExpand }>
+				<Button
+					size="small"
+					onClick={ onExpand }
+				>
 					{ postVisible ? (
 						'Show comments'
 					) : (
