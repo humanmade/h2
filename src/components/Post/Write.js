@@ -171,7 +171,7 @@ export class WritePost extends Component {
 						size={ 60 }
 					/>
 					<div className="byline flex-col grow">
-						<h2 className="m-0 leading-6">
+						<h2 className="text-2xl leading-7 font-bold">
 							<input
 								className="p-[0.2em] w-full border-solid border-2 border-[rgba(217,217,217,0.6)] focus:outline-none focus:border-[#8d8d8d] placeholder:text-[rgba(80,76,76,.5)]"
 								ref={ title => this.titleInput = title }
@@ -187,7 +187,7 @@ export class WritePost extends Component {
 						</span>
 						{ categories.length > 0 && (
 							<select
-								className="categories list-none m-0 ml-[10px] p-0 inline text-sm"
+								className="categories text-sm ml-[10px] px-1 border border-hm-border-color rounded-sm"
 								onChange={ e => this.setState( { category: e.target.value } ) }
 								value={ this.state.category }
 							>

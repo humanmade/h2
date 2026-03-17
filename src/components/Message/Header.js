@@ -50,7 +50,7 @@ export class MessageHeader extends React.Component {
 		];
 
 		const titleClasses = [
-			'text-[1.333333333rem] leading-[1.2] font-bold mt-0 mr-[0.5em] mb-[10px] ml-0 [text-transform:inherit]',
+			'text-2xl leading-7 font-bold mt-0 mr-[0.5em] mb-[10px] ml-0 [text-transform:inherit]',
 			constrainTitle && 'whitespace-nowrap text-ellipsis overflow-hidden',
 		].filter( Boolean ).join( ' ' );
 

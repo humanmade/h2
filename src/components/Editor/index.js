@@ -473,7 +473,7 @@ class Editor extends React.PureComponent {
 						) : (
 							<textarea
 								ref={ el => this.updateTextarea( el ) }
-								className="Editor-editor block border-b-0 px-[15px] py-4 w-full focus:outline-none placeholder:italic"
+								className="Editor-editor block text-lg border-b-0 px-[15px] py-4 w-full focus:outline-none placeholder:italic"
 								placeholder="Write a comment..."
 								style={ { height } }
 								value={ content }
@@ -499,11 +499,12 @@ class Editor extends React.PureComponent {
 						<span>{ count === 1 ? '1 word' : `${count.toLocaleString()} words` }</span>
 						<br />
 						<a
+							className="text-hm-vibrant-blue hover:underline"
 							href="http://commonmark.org/help/"
 							rel="noopener noreferrer"
 							target="_blank"
 						>
-							Format with Markdown
+							Format with Markdown ↗
 						</a>
 						{ this.props.lastSave && (
 							<React.Fragment>
