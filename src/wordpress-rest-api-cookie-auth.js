@@ -68,7 +68,7 @@ export default class {
 		}
 
 		if ( method === 'GET' && data ) {
-			url += `?${decodeURIComponent( qs.stringify( data ) )}`;
+			url += `?${ decodeURIComponent( qs.stringify( data ) ) }`;
 			data = null;
 		}
 

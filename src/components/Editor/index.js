@@ -527,7 +527,7 @@ class Editor extends React.PureComponent {
 
 				<p className="pl-2 m-0 flex justify-between items-center">
 					<small>
-						<span>{ count === 1 ? '1 word' : `${count.toLocaleString()} words` }</span>
+						<span>{ count === 1 ? '1 word' : `${ count.toLocaleString() } words` }</span>
 						<br />
 						<a
 							className="text-hm-vibrant-blue hover:underline"

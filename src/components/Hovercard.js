@@ -96,7 +96,7 @@ export function Card( { children, positions, width } ) {
 		width,
 	};
 	const pointerStyle = {};
-	pointerStyle.transform = positions.pointerOffset ? `translate( ${ positions.pointerOffset}px, 0 )` : null;
+	pointerStyle.transform = positions.pointerOffset ? `translate( ${ positions.pointerOffset }px, 0 )` : null;
 
 	return (
 		<div
