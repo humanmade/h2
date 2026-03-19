@@ -29,12 +29,12 @@ export class Sidebar extends Component {
 	render() {
 		const { active } = this.state;
 		const activeClasses = active
-			? 'opacity-100 transition-opacity duration-[160ms]'
-			: 'opacity-10 transition-opacity duration-[800ms] delay-[400ms]';
+			? 'opacity-100 transition-opacity duration-160'
+			: 'opacity-10 transition-opacity duration-800 delay-400';
 
 		return (
 			<aside
-				className={ `Sidebar h2-legacy-prose pt-4 pb-0 px-0 [&_h4]:text-[1.222222222em] hover:opacity-100 hover:transition-opacity hover:duration-[160ms] max-[800px]:opacity-100 ${ activeClasses }` }
+				className={ `Sidebar h2-legacy-prose pt-4 pb-0 px-0 [&_h4]:text-[1.222222222em] hover:opacity-100 hover:transition-opacity hover:duration-160 max-[800px]:opacity-100 ${ activeClasses }` }
 				onMouseOver={ () => this.setState( { active: true } ) }
 				onMouseOut={ () => this.setState( { active: false } ) }
 			>

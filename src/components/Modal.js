@@ -12,7 +12,7 @@ export default function Modal( props ) {
 				onClick={ onDismiss }
 			/>
 			<div
-				className="relative bg-white w-[90vw] max-w-[600px] h-[80vh] max-h-[600px] px-4 py-0 shadow-sm rounded overflow-auto pointer-events-auto min-[480px]:w-[80vw]"
+				className="relative bg-white w-[90vw] max-w-[600px] h-[80vh] max-h-[600px] px-4 py-0 shadow-xs rounded-sm overflow-auto pointer-events-auto min-[480px]:w-[80vw]"
 				onClick={ e => e.stopPropagation() }
 			>
 				<TitleBar

@@ -131,7 +131,7 @@ export class Reactions extends Component {
 								<Emoji type={ emoji } />
 							</span>
 							<span className={ `ml-1 mr-[0.1em] text-sm ${ isActive ? 'text-hm-warm-grey' : 'text-[#AAA]' }` } key="count">{ users.length }</span>
-							<span className="hidden group-hover:block group-focus:block absolute top-[calc(100%+5px)] left-0 bg-black/60 px-2 py-1 rounded-sm text-sm z-10 text-left" key="users">
+							<span className="hidden group-hover:block group-focus:block absolute top-[calc(100%+5px)] left-0 bg-black/60 px-2 py-1 rounded-xs text-sm z-10 text-left" key="users">
 								{ users.map( reactionAuthorId => {
 									const user = this.props.users && this.props.users.filter( user => user.id === reactionAuthorId );
 									return (

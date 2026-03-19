@@ -69,7 +69,7 @@ export class SuperMenu extends React.Component {
 					/>
 				) }
 
-				<header className="-mx-5 -mt-4 mb-4 flex-shrink-0 flex items-center justify-between bg-brand pr-4 text-white [&_.hm-logo:hover]:opacity-100">
+				<header className="-mx-5 -mt-4 mb-4 shrink-0 flex items-center justify-between bg-brand pr-4 text-white [&_.hm-logo:hover]:opacity-100">
 					<Logo />
 					<button
 						className="SuperMenu--closer bg-transparent border-none p-0 m-0 cursor-pointer"

@@ -49,14 +49,14 @@ export const DropdownContent = props => {
 				const { expanded, size, type, onToggle } = context;
 
 				const triggerClasses = [
-					'!h-full !m-0 !-ml-px',
-					'!rounded-tl-none !rounded-bl-none',
-					expanded && '!rounded-br-none',
+					'h-full! m-0! -ml-px!',
+					'rounded-tl-none! rounded-bl-none!',
+					expanded && 'rounded-br-none!',
 				].filter( Boolean ).join( ' ' );
 
 				const contentClasses = [
 					CONTENT_CLASSES,
-					expanded && '!block',
+					expanded && 'block!',
 				].filter( Boolean ).join( ' ' );
 
 				return (

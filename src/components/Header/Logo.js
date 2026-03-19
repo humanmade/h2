@@ -12,7 +12,7 @@ export default function ( props ) {
 					className="max-w-full max-h-full w-auto h-auto object-contain p-1.5"
 				/>
 			) : (
-				<span className="hm-logo hm-logo--tiny hm-logo--white !w-6 !h-6 max-[600px]:!ml-1.5" />
+				<span className="hm-logo hm-logo--tiny hm-logo--white w-6! h-6! max-[600px]:ml-1.5!" />
 			) }
 		</div>
 	);

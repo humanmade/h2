@@ -164,7 +164,7 @@ export class WritePost extends Component {
 						onSelect={ this.onSelect }
 					/>
 				</div>
-				<header className="sticky top-0 z-[3] py-[15px] bg-white flex items-center h-[110px]">
+				<header className="sticky top-0 z-3 py-[15px] bg-white flex items-center h-[110px]">
 					<Avatar
 						className="mr-[30px] max-[600px]:hidden"
 						url={ user ? user.avatar_urls['96'] : '' }
@@ -173,7 +173,7 @@ export class WritePost extends Component {
 					<div className="byline flex-col grow">
 						<h2 className="text-2xl leading-7 font-bold">
 							<input
-								className="p-[0.2em] w-full border-solid border-2 border-[rgba(217,217,217,0.6)] focus:outline-none focus:border-[#8d8d8d] placeholder:text-[rgba(80,76,76,.5)]"
+								className="p-[0.2em] w-full border-solid border-2 border-[rgba(217,217,217,0.6)] focus:outline-hidden focus:border-[#8d8d8d] placeholder:text-[rgba(80,76,76,.5)]"
 								ref={ title => this.titleInput = title }
 								type="text"
 								placeholder="Enter post title..."
@@ -187,7 +187,7 @@ export class WritePost extends Component {
 						</span>
 						{ categories.length > 0 && (
 							<select
-								className="categories text-sm ml-[10px] px-1 border border-hm-border-color rounded-sm"
+								className="categories text-sm ml-[10px] px-1 border border-hm-border-color rounded-xs"
 								onChange={ e => this.setState( { category: e.target.value } ) }
 								value={ this.state.category }
 							>
@@ -228,7 +228,7 @@ export class WritePost extends Component {
 					<p className="ml-[90px] -mt-5 mb-[1em] px-[5px] text-[0.777777778em]">
 						Preview URL:
 						<input
-							className="form__field--code inline-block bg-hm-light-grey px-[5px] py-0 mx-[1em] my-0 border-none text-[inherit]"
+							className="form__field--code inline-block bg-hm-light-grey px-[5px] py-0 mx-[1em] my-0 border-none text-inherit"
 							type="text"
 							value={ this.getDraftUrl() }
 							onClick={ this.onClickPreview }

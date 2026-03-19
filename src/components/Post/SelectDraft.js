@@ -49,14 +49,14 @@ class SelectDraft extends React.Component {
 				) : posts.length === 0 ? (
 					<p>No drafts found!</p>
 				) : (
-					<ul className="flex flex-col list-none mx-[-1rem] my-0 p-0">
+					<ul className="flex flex-col list-none -mx-4 my-0 p-0">
 						{ posts.map( post => (
 							<li
 								key={ post.id }
 								className="flex justify-between items-center mb-[1em]"
 							>
 								<button
-									className="bg-transparent border-none cursor-pointer text-left grow py-[0.5rem] px-[0.5em] hover:bg-brand hover:text-white"
+									className="bg-transparent border-none cursor-pointer text-left grow py-2 px-[0.5em] hover:bg-brand hover:text-white"
 									title={ `Edit "${ post.title.rendered }"` }
 									type="button"
 									onClick={ () => this.onSelect( post ) }

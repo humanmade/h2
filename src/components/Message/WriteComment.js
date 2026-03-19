@@ -61,13 +61,13 @@ export class WriteComment extends React.Component {
 	render() {
 		return (
 			<div
-				className="WriteComment [&_.buttons]:mb-[10px] [&_.Editor-editor]:min-h-[12rem]"
+				className="WriteComment [&_.buttons]:mb-[10px] [&_.Editor-editor]:min-h-48"
 				ref={ ref => this.container = ref }
 			>
 				<header className="h-[50px] leading-[50px] flex mb-[10px] -ml-[60px] max-[600px]:ml-0 max-[600px]:static max-[600px]:h-auto max-[600px]:flex-wrap">
 					<Avatar
-						className="mr-5 max-[600px]:!w-6 max-[600px]:!h-6 max-[600px]:-ml-[30px] max-[600px]:mr-[6px] max-[600px]:py-2 max-[600px]:px-0 max-[600px]:bg-white max-[600px]:after:top-2"
-						imgClassName="max-[600px]:!w-6 max-[600px]:!h-6"
+						className="mr-5 max-[600px]:w-6! max-[600px]:h-6! max-[600px]:-ml-[30px] max-[600px]:mr-[6px] max-[600px]:py-2 max-[600px]:px-0 max-[600px]:bg-white max-[600px]:after:top-2"
+						imgClassName="max-[600px]:w-6! max-[600px]:h-6!"
 						url={ this.props.currentUser ? this.props.currentUser.avatar_urls['96'] : '' }
 						user={ this.props.currentUser }
 						size={ 40 }

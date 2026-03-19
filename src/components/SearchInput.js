@@ -106,8 +106,8 @@ export class Results extends React.Component {
 							>
 								<Link
 									className={ [
-										'flex justify-between py-1 max-[600px]:block max-[600px]:mb-2 hover:border-none hover:bg-hm-vibrant-blue hover:!text-white',
-										index === selected && 'SearchInput__result--selected border-none bg-hm-vibrant-blue !text-white',
+										'flex justify-between py-1 max-[600px]:block max-[600px]:mb-2 hover:border-none hover:bg-hm-vibrant-blue hover:text-white!',
+										index === selected && 'SearchInput__result--selected border-none bg-hm-vibrant-blue text-white!',
 										'-mx-5 px-5',
 									].filter( Boolean ).join( ' ' ) }
 									href={ post.link }
@@ -116,7 +116,7 @@ export class Results extends React.Component {
 										{ decodeEntities( post.title.rendered ) }
 									</p>
 									<time
-										className="flex-shrink-0 ml-4 max-[600px]:ml-0"
+										className="shrink-0 ml-4 max-[600px]:ml-0"
 										dateTime={ post.date + 'Z' }
 										title={ post.date + 'Z' }
 									>
@@ -128,8 +128,8 @@ export class Results extends React.Component {
 						<li className="m-0 p-0">
 							<a
 								className={ [
-									'flex justify-between py-1 max-[600px]:block max-[600px]:mb-2 hover:border-none hover:bg-hm-vibrant-blue hover:!text-white',
-									posts.length === selected && 'SearchInput__result--selected border-none bg-hm-vibrant-blue !text-white',
+									'flex justify-between py-1 max-[600px]:block max-[600px]:mb-2 hover:border-none hover:bg-hm-vibrant-blue hover:text-white!',
+									posts.length === selected && 'SearchInput__result--selected border-none bg-hm-vibrant-blue text-white!',
 									'-mx-5 px-5',
 								].filter( Boolean ).join( ' ' ) }
 								href={ `/search/${ encodeURIComponent( term ) }` }
@@ -210,12 +210,12 @@ class SearchInput extends React.Component {
 				<div
 					className={ [
 						'SearchInput__wrap',
-						'flex items-center h-full bg-hm-light-grey relative z-[11]',
+						'flex items-center h-full bg-hm-light-grey relative z-11',
 						this.props.small ? '' : 'px-5',
 					].filter( Boolean ).join( ' ' ) }
 				>
 					<input
-						className="w-full text-lg border-2 border-hm-border-color rounded px-2 py-1 md:py-2 md:leading-5 placeholder:italic"
+						className="w-full text-lg border-2 border-hm-border-color rounded-sm px-2 py-1 md:py-2 md:leading-5 placeholder:italic"
 						type="search"
 						placeholder="Search..."
 						ref={ ref => this.inputEl = ref }

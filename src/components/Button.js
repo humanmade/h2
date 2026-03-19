@@ -36,13 +36,13 @@ const BASE_CLASSES = [
 	'btn',
 
 	'font-light',
-	'border border-solid rounded',
+	'border border-solid rounded-sm',
 	'inline-block text-center align-middle cursor-pointer',
 	'w-auto h-auto',
 	'shadow-none no-underline',
 	'transition-[background,border-color] duration-200 ease-in-out',
 	'mb-[0.833rem] mr-[7.5px]',
-	'focus:outline-none',
+	'focus:outline-hidden',
 	'disabled:cursor-default disabled:opacity-30',
 ].join( ' ' );
 

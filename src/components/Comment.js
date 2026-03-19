@@ -91,7 +91,7 @@ export class Comment extends Component {
 			>
 				<CommentHeader
 					author={ user }
-					className="sticky top-[99px] z-[3] max-[600px]:static max-[600px]:h-auto max-[600px]:[&_.Comment-Actions]:hidden"
+					className="sticky top-[99px] z-3 max-[600px]:static max-[600px]:h-auto max-[600px]:[&_.Comment-Actions]:hidden"
 					comment={ comment }
 				>
 					<Actions

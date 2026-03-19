@@ -24,7 +24,7 @@ export default function Actions( props ) {
 	};
 
 	return (
-		<Dropdown className="Comment-Actions min-w-[6rem] [&>.btn:last-child]:grow-0 [&>.btn:last-child]:ml-0">
+		<Dropdown className="Comment-Actions min-w-24 [&>.btn:last-child]:grow-0 [&>.btn:last-child]:ml-0">
 			<Button onClick={ onReply }>Reply</Button>
 			<Slot
 				name="Comment.actions"

@@ -121,7 +121,7 @@ export default class Completion extends React.Component {
 
 		return (
 			<ol
-				className="absolute text-base border border-gray-300 rounded bg-white mt-[1lh] shadow-[0_0_8px_rgba(0,0,0,0.1)] z-[1]"
+				className="absolute text-base border border-gray-300 rounded-sm bg-white mt-[1lh] shadow-[0_0_8px_rgba(0,0,0,0.1)] z-1"
 				style={ {
 					top: coords.top,
 					left: coords.left,

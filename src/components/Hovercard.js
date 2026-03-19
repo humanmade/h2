@@ -84,9 +84,9 @@ const CARD_CLASSES = [
 ].join( ' ' );
 
 const POINTER_CLASSES = [
-	'block absolute z-[11]',
+	'block absolute z-11',
 	'top-[-20px] left-[calc(50%-10px)]',
-	'border-solid border-[10px] border-transparent border-b-hm-vibrant-blue',
+	'border-solid border-10 border-transparent border-b-hm-vibrant-blue',
 ].join( ' ' );
 
 export function Card( { children, positions, width } ) {

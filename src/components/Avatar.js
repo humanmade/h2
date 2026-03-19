@@ -13,7 +13,7 @@ const CLASSES = [
 	'after:content-[\'\']',
 	'after:block after:absolute after:inset-0',
 	'after:border-2 after:border-black/10 after:rounded-full',
-	'after:z-[1] after:pointer-events-none',
+	'after:z-1 after:pointer-events-none',
 
 	// Child img styles.
 	'[&_img]:max-w-none [&_img]:rounded-full [&_img]:bg-white',

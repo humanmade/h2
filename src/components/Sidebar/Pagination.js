@@ -12,7 +12,7 @@ export default function SidebarPagination( props ) {
 						className="group pl-2 flex items-center"
 						onClick={ onNext }
 					>
-						<span className="icon icon--arrow-right icon--blue !w-4 mr-2 rotate-180 transition-transform group-hover:-translate-x-2">&larr;</span>
+						<span className="icon icon--arrow-right icon--blue w-4! mr-2 rotate-180 transition-transform group-hover:-translate-x-2">&larr;</span>
 						<span>Older</span>
 					</LinkButton>
 				</div>
@@ -24,7 +24,7 @@ export default function SidebarPagination( props ) {
 						onClick={ onPrevious }
 					>
 						<span>Newer</span>
-						<span className="icon icon--arrow-right icon--blue !w-4 ml-2 transition-transform group-hover:translate-x-2">&larr;</span>
+						<span className="icon icon--arrow-right icon--blue w-4! ml-2 transition-transform group-hover:translate-x-2">&larr;</span>
 					</LinkButton>
 				</div>
 			) }

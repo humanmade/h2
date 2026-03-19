@@ -1,3 +1,49 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@source "../index.php";
+@source "../inc/**/*.php";
+
+@theme {
+	--color-brand: var(--hm-red);
+	--color-brand-light: var(--hm-red-light);
+	--color-brand-dark: var(--hm-red-dark);
+
+	--color-hm-red: var(--hm-red);
+	--color-hm-blue: var(--hm-blue);
+	--color-hm-warm-grey: var(--hm-warm-grey);
+	--color-hm-dark-grey: var(--hm-dark-grey);
+	--color-hm-beige: var(--hm-beige);
+	--color-hm-medium-grey: var(--hm-medium-grey);
+	--color-hm-light-grey: var(--hm-light-grey);
+	--color-hm-brown: var(--hm-brown);
+	--color-hm-vibrant-blue: var(--hm-vibrant-blue);
+	--color-hm-mint: var(--hm-mint);
+	--color-hm-ash-grey: var(--hm-ash-grey);
+	--color-hm-dark-red: var(--hm-dark-red);
+	--color-hm-deep-blue: var(--hm-deep-blue);
+	--color-hm-light-blue: var(--hm-light-blue);
+	--color-hm-border-color: #d9d9d9;
+
+	--animate-hovercard-in: hovercard-fade-in-up 0.1s ease forwards;
+	--animate-hovercard-out: hovercard-fade-out-down 0.1s ease forwards;
+	@keyframes hovercard-fade-in-up {
+		0% {
+			opacity: 0;
+			transform: translate(0, 20px);
+		}
+		100% {
+			opacity: 1;
+			transform: translate(0, 0);
+		}
+	}
+	@keyframes hovercard-fade-out-down {
+		0% {
+			opacity: 1;
+			transform: translate(0, 0);
+		}
+		100% {
+			opacity: 0;
+			transform: translate(0, 20px);
+		}
+	}
+}

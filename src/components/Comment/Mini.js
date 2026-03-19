@@ -16,7 +16,7 @@ const CARD_CLASSES = [
 	'Comment-Mini',
 
 	'border border-solid border-hm-beige p-[0.5em]',
-	'shadow-[0_0_4px_var(--hm-light-grey)] rounded',
+	'shadow-[0_0_4px_var(--hm-light-grey)] rounded-sm',
 ].join( ' ' );
 
 function MiniComment( props ) {

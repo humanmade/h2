@@ -6,7 +6,7 @@ const CLASSES = [
 	'text-hm-vibrant-blue',
 	'transition-[color,background] duration-200 ease-in',
 	'hover:text-hm-vibrant-blue hover:underline hover:ease-out',
-	'focus:text-hm-vibrant-blue focus:underline focus:outline-none focus:ease-out',
+	'focus:text-hm-vibrant-blue focus:underline focus:outline-hidden focus:ease-out',
 ].join( ' ' );
 
 export default class LinkButton extends React.Component {

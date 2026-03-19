@@ -11,7 +11,7 @@ const BASE_CLASSES = [
 	// Back-compat:
 	'Notification',
 
-	'rounded mt-0 p-[1.1em] text-[0.777777778em]',
+	'rounded-sm mt-0 p-[1.1em] text-[0.777777778em]',
 	'border border-solid border-current',
 ].join( ' ' );
 

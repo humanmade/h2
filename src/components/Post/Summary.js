@@ -42,8 +42,8 @@ function Summary( props ) {
 		people.length >= 8 && [
 			'before:block before:content-["_"]',
 			'before:absolute before:left-0 before:top-0 before:bottom-0',
-			'before:w-[63px] before:z-[2]',
-			'before:bg-gradient-to-r before:from-white before:to-transparent',
+			'before:w-[63px] before:z-2',
+			'before:bg-linear-to-r before:from-white before:to-transparent',
 			'before:pointer-events-none',
 		].join( ' ' ),
 	].filter( Boolean ).join( ' ' );
@@ -68,7 +68,7 @@ function Summary( props ) {
 						<ul className={ peopleClass }>
 							{ people.slice( 0, 8 ).map( person => (
 								<li
-									className="w-[30px] h-[30px] rounded-full inline-block border border-white bg-white relative shadow-[0px_1px_3px_0px_rgba(0,0,0,0.2)] transition-all duration-200 ease-linear z-[1] nth-child(n+2):-ml-3"
+									className="w-[30px] h-[30px] rounded-full inline-block border border-white bg-white relative shadow-[0px_1px_3px_0px_rgba(0,0,0,0.2)] transition-all duration-200 ease-linear z-1 nth-child(n+2):-ml-3"
 									key={ person }
 								>
 									<ConnectedPerson id={ person } />

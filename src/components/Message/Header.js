@@ -45,7 +45,7 @@ export class MessageHeader extends React.Component {
 			// Mobile:
 			'max-[600px]:-mx-5 max-[600px]:px-5 max-[600px]:py-2 max-[600px]:flex-row-reverse max-[600px]:[&_.Post\\\\_\\\\_actions]:hidden',
 
-			sticky ? 'Message-Header--sticky sticky z-[5]' : 'relative z-[6]',
+			sticky ? 'Message-Header--sticky sticky z-5' : 'relative z-6',
 			constrainTitle && 'Message-Header--constrained h-[99px]',
 		];
 
@@ -61,8 +61,8 @@ export class MessageHeader extends React.Component {
 			>
 				<div className="flex flex-col items-end">
 					<Avatar
-						className="mr-[30px] w-[3.333rem] h-[3.333rem] rounded-full self-start max-[600px]:ml-2 max-[600px]:mr-0 max-[600px]:!w-[24px] max-[600px]:!h-[24px]"
-						imgClassName="max-[600px]:!w-[24px] max-[600px]:!h-[24px]"
+						className="mr-[30px] w-[3.333rem] h-[3.333rem] rounded-full self-start max-[600px]:ml-2 max-[600px]:mr-0 max-[600px]:w-[24px]! max-[600px]:h-[24px]!"
+						imgClassName="max-[600px]:w-[24px]! max-[600px]:h-[24px]!"
 						url={ author ? author.avatar_urls['96'] : '' }
 						user={ author }
 						size={ 60 }
@@ -71,7 +71,7 @@ export class MessageHeader extends React.Component {
 						<button
 							className={ [
 								'Message-Header__Collapse-Button',
-								'group hidden items-center w-6 h-6 p-0 cursor-pointer bg-black/[0.02] border-2 border-solid border-black/10 rounded-full transition-[border-color] duration-100',
+								'group hidden items-center w-6 h-6 p-0 cursor-pointer bg-black/2 border-2 border-solid border-black/10 rounded-full transition-[border-color] duration-100',
 								'max-[600px]:flex',
 								'hover:border-black/40 hover:duration-200 focus:border-black/40 focus:duration-200',
 							].join( ' ' ) }

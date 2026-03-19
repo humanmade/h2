@@ -96,7 +96,7 @@ const Tab = ( { checked, title, value, onSelect } ) => (
 
 const EditorButton = ( { icon, title, onSelect } ) => (
 	<button
-		className="group bg-transparent border-none font-[inherit] cursor-pointer p-1 -my-1 outline-none hover:text-[#00a0d2] focus:text-[#00a0d2]"
+		className="group bg-transparent border-none font-[inherit] cursor-pointer p-1 -my-1 outline-hidden hover:text-[#00a0d2] focus:text-[#00a0d2]"
 		onClick={ onSelect }
 		title={ title }
 		type="button"
@@ -450,7 +450,7 @@ class Editor extends React.PureComponent {
 			>
 				<Shortcuts keys={ hasFocus ? shortcuts : null } />
 
-				<div className="flex justify-between -mb-[2px] z-[2] relative text-[#504C4C]">
+				<div className="flex justify-between -mb-[2px] z-2 relative text-[#504C4C]">
 					<ul className="flex tracking-[0.01em] text-xs">
 						<Tab
 							title="Write"
@@ -504,7 +504,7 @@ class Editor extends React.PureComponent {
 						) : (
 							<textarea
 								ref={ el => this.updateTextarea( el ) }
-								className="Editor-editor min-h-[18rem] max-h-[30rem] resize-y rounded-none rounded-tr border-2 border-b-0 border-[#d9d9d9] bg-white pt-4 pb-4 block px-[15px] w-full focus:outline-none placeholder:italic"
+								className="Editor-editor min-h-72 max-h-120 resize-y rounded-none rounded-tr border-2 border-b-0 border-[#d9d9d9] bg-white pt-4 pb-4 block px-[15px] w-full focus:outline-hidden placeholder:italic"
 								placeholder="Write a comment..."
 								style={ { height } }
 								value={ content }

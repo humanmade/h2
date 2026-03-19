@@ -149,7 +149,7 @@ export class Post extends Component {
 		].filter( Boolean ).join( ' ' );
 
 		const Actions = (
-			<Dropdown className="Post__actions min-w-[6rem]">
+			<Dropdown className="Post__actions min-w-24">
 				<Button onClick={ this.onClickReply }>Reply</Button>
 				<SecondaryActions
 					fillProps={ fillProps }
