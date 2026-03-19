@@ -10,7 +10,7 @@ import './CommentsList.css';
 export default class CommentsList extends Component {
 	render() {
 		return (
-			<div className="CommentsList">
+			<div className="CommentsList flex-col">
 				{ this.props.comments.slice().sort( ( a, b ) => a.date < b.date ? -1 : 1 ).map( comment => (
 					<Comment
 						key={ comment.id }
