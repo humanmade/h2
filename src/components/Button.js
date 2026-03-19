@@ -15,10 +15,9 @@ const TYPE_CLASSES = {
 		'disabled:hover:bg-hm-vibrant-blue disabled:hover:text-white',
 	].join( ' ' ),
 	tertiary: [
-		'border-hm-warm-grey bg-transparent text-hm-warm-grey',
-		'hover:bg-hm-warm-grey hover:text-white',
-		'focus:bg-hm-warm-grey focus:text-white',
-		'disabled:hover:bg-transparent disabled:hover:text-hm-warm-grey',
+		'border-[#a3a3a3] bg-transparent text-[#a3a3a3]',
+		'hover:border-hm-warm-grey hover:text-white',
+		'focus:border-hm-warm-grey focus:text-white',
 	].join( ' ' ),
 	inverted: [
 		'border-white bg-transparent text-white',
