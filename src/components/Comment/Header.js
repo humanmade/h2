@@ -6,7 +6,7 @@ import Link from '../Link';
 import AuthorLink from '../Message/AuthorLink';
 
 export default function CommentHeader( props ) {
-	const { author, children, comment, mini } = props;
+	const { author, children, className, comment, mini } = props;
 
 	const classes = [
 		// Back-compat:
@@ -28,6 +28,7 @@ export default function CommentHeader( props ) {
 		'max-[600px]:ml-0 max-[600px]:h-auto max-[600px]:flex-wrap',
 
 		mini && 'Comment-Header--mini ml-0 h-auto flex-wrap',
+		className,
 	];
 
 	return (

@@ -91,6 +91,7 @@ export class Comment extends Component {
 			>
 				<CommentHeader
 					author={ user }
+					className="sticky top-[99px] z-[3] max-[600px]:static max-[600px]:h-auto max-[600px]:[&_.Comment-Actions]:hidden"
 					comment={ comment }
 				>
 					<Actions
@@ -119,7 +120,7 @@ export class Comment extends Component {
 						<MessageContent html={ comment.content.rendered } />
 					) }
 					<Slot name="Comment.after_content" fillChildProps={ fillProps } />
-					<div className="Comment-footer-actions flex justify-between items-start flex-wrap mt-[1.666rem] mb-[1.248rem]">
+					<div className="Comment-footer-actions flex justify-between items-start flex-wrap mt-[1.666rem] mb-[1.248rem] min-[600px]:[&_.Comment-Actions]:hidden">
 						<Actions
 							fillProps={ fillProps }
 							isEditing={ this.state.isEditing }

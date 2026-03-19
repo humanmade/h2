@@ -27,13 +27,7 @@
 	border-radius: 50%;
 }
 
-/* Sticky comment header with admin-bar offsets */
-.Comment .Comment-Header {
-	position: sticky;
-	top: 99px;
-	z-index: 3;
-}
-
+/* Sticky comment header admin-bar offsets */
 @media screen and ( min-width: 600px ) and ( max-width: 782px ) {
 	body.admin-bar .Comment .Comment-Header {
 		top: 145px; /* 46 + 99 */
@@ -47,31 +41,11 @@
 }
 
 @media ( max-width: 600px ) {
-	.Comment .Comment-Header {
-		position: static;
-		height: auto;
-		flex-wrap: wrap;
-	}
-
-	.Comment-Header .Comment-Actions {
-		display: none;
-	}
-
 	.Comment:before {
 		left: -20px;
 	}
 
 	.Comment:last-child:after {
 		left: -23px;
-	}
-}
-
-@media ( min-width: 600px ) {
-	.Comment-footer-actions .Comment-Actions {
-		display: none;
-	}
-
-	.Comment:hover > .Comment-Header .actions-wrap {
-		display: flex;
 	}
 }

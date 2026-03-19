@@ -11,8 +11,6 @@ import Editor from '../Editor/LazyEditor';
 import Notification from '../Notification';
 import RemotePreview from '../RemotePreview';
 
-import './WriteComment.css';
-
 export class WriteComment extends React.Component {
 	constructor( props ) {
 		super( props );
