@@ -136,8 +136,9 @@ class App extends Component {
 					onShowSuper={ this.props.onShowSuperSidebar }
 				/>
 				<SessionExpiredWarning />
-				<div className="Outer">
-					<div className="Inner">
+				<div className="Outer grid grid-cols-[min(30%,360px)_auto] gap-12">
+					{ this.renderSidebar() }
+					<div className="Inner max-w-200">
 						{ this.state.isShowingWritePost ? (
 							<WritePost
 								onDidCreatePost={ post => this.onDidCreatePost( post ) }
@@ -183,7 +184,6 @@ class App extends Component {
 							/>
 						</Switch>
 					</div>
-					{ this.renderSidebar() }
 				</div>
 				{ this.state.showChanges ? (
 					<Changes

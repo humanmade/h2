@@ -17,40 +17,103 @@ const widgetMap = {
 	search: SearchWidget,
 };
 
-export class Sidebar extends Component {
-	constructor( props ) {
-		super( props );
-
-		this.state = {
-			active: false,
-		};
-	}
-
-	render() {
-		const { active } = this.state;
-		const activeClasses = active
-			? 'opacity-100 transition-opacity duration-160'
-			: 'opacity-10 transition-opacity duration-800 delay-400';
-
-		return (
-			<aside
-				className={ `Sidebar h2-legacy-prose pt-4 pb-0 px-0 [&_h4]:text-[1.222222222em] hover:opacity-100 hover:transition-opacity hover:duration-160 max-[800px]:opacity-100 ${ activeClasses }` }
-				onMouseOver={ () => this.setState( { active: true } ) }
-				onMouseOut={ () => this.setState( { active: false } ) }
+const NavLink = ( { children, icon, internal = true, to } ) => {
+	const Linker = internal ? Link : 'a';
+	const hrefProps = internal ? { to } : { href: to };
+	return (
+		<li>
+			<Linker
+				className={ [
+					'group grid items-baseline px-6 py-2 text-sm hover:bg-hm-beige/20 hover:no-underline!',
+					icon ? 'grid-cols-[max-content_auto_min-content]' : 'grid-cols-[auto_min-content]',
+				].join( ' ' ) }
+				{ ...hrefProps }
 			>
-				<Slot name="Sidebar.top" />
+				{ icon && (
+					<i className={ `icon ${ icon } size-4! self-center mr-2` } />
+				) }
+				{ children }
+				<span className="transition-transform group-hover:translate-x-2">
+					&rarr;
+				</span>
+			</Linker>
+		</li>
+	);
+};
+const NavButton = ( { children, icon, internal = true, onClick } ) => {
+	return (
+		<li>
+			<button
+				onClick={ onClick }
+			>
+				{ icon && (
+					<i className={ `icon ${ icon } size-4! self-center mr-2` } />
+				) }
+				{ children }
+				<span className="transition-transform group-hover:translate-x-2">
+					&hellip;
+				</span>
+			</button>
+		</li>
+	);
+};
 
-				{ ( this.props.widgets.data || [] ).map( widget => {
+export function Sidebar( props ) {
+	const { dispatch, widgets } = props;
+	const site = window.H2Data.site;
+
+	return (
+		<aside
+			className="Sidebar border-r border-solid border-hm-beige"
+		>
+			<div className="">
+				<div className="px-4 py-6 bg-hm-beige">
+					<h2 className="text-xl font-bold">{ site.name }</h2>
+				</div>
+				<div className="px-4 py-4 bg-hm-beige/50">
+					<p className="text-sm opacity-60 m-0">{ site.description || 'No description yet.' }</p>
+				</div>
+			</div>
+
+			<Slot name="Sidebar.top" />
+
+			<ul className="border-b border-b-hm-beige/50 divide-y divide-hm-beige/50 mb-6">
+				<NavLink
+					icon="icon--plus-alt"
+					to="/write"
+				>
+					New Post
+				</NavLink>
+				<NavLink
+					to="/"
+				>
+					All Posts
+				</NavLink>
+				<NavLink
+					internal={ false }
+					to={ `${ site.home }/wp-admin/` }
+				>
+					Dashboard
+				</NavLink>
+				<NavButton
+					onClick={ () => dispatch( showSidebarCategories() ) }
+				>
+					Categories
+				</NavButton>
+			</ul>
+
+			<div className="h2-legacy-prose px-4 divide-hm-beige [&_h4]:text-[1.222222222em]">
+				{ ( widgets.data || [] ).map( widget => {
 					const Widget = widgetMap[ widget.type ] || widgetMap['default'];
 					return (
 						<Widget key={ widget.id } { ...widget } />
 					);
 				} ) }
+			</div>
 
-				<Slot name="Sidebar.bottom" />
-			</aside>
-		);
-	}
+			<Slot name="Sidebar.bottom" />
+		</aside>
+	);
 }
 
-export default withWidgets( Sidebar );
+export default withWidgets( connect()( Sidebar ) );
