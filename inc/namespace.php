@@ -358,6 +358,7 @@ function get_script_data() {
 		'asset_url' => get_theme_file_uri( 'build/' ),
 		'site' => [
 			'name'           => get_bloginfo( 'name' ),
+			'description'    => get_bloginfo( 'description' ),
 			'url'            => site_url(),
 			'home'           => home_url(),
 			'api'            => rest_url(),
@@ -398,7 +399,7 @@ function get_script_data() {
 		}
 	}
 
-	return $data;
+	return apply_filters( 'h2.script_data', $data );
 }
 
 /**
