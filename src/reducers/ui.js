@@ -1,5 +1,6 @@
 import {
 	SHOW_META_SIDEBAR,
+	SHOW_SIDEBAR_CATEGORIES,
 	SHOW_SIDEBAR_COMMENTS,
 	SHOW_SIDEBAR_PROFILE,
 	HIDE_SIDEBAR,
@@ -27,6 +28,12 @@ export default function ui( state = DEFAULT_STATE, action ) {
 				...state,
 				sidebarView: 'comments',
 				sidebarProfile: action.id,
+			};
+
+		case SHOW_SIDEBAR_CATEGORIES:
+			return {
+				...state,
+				sidebarView: 'categories',
 			};
 
 		case SHOW_SIDEBAR_PROFILE:

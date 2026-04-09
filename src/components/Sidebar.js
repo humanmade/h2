@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Slot } from 'react-slot-fill';
 
+import { showSidebarCategories } from '../actions';
 import { withWidgets } from '../hocs';
 
 import RecentPostsWidget from './Widgets/RecentPosts';
@@ -44,6 +47,10 @@ const NavButton = ( { children, icon, internal = true, onClick } ) => {
 	return (
 		<li>
 			<button
+				className={ [
+					'w-full text-left cursor-pointer group grid items-baseline px-6 py-2 text-sm hover:bg-hm-beige/20 hover:no-underline!',
+					icon ? 'grid-cols-[max-content_auto_min-content]' : 'grid-cols-[auto_min-content]',
+				].join( ' ' ) }
 				onClick={ onClick }
 			>
 				{ icon && (
@@ -68,7 +75,14 @@ export function Sidebar( props ) {
 		>
 			<div className="">
 				<div className="px-4 py-6 bg-hm-beige">
-					<h2 className="text-xl font-bold">{ site.name }</h2>
+					<h2 className="text-xl font-bold">
+						<Link
+							className="block hover:underline"
+							to="/"
+						>
+							{ site.name }
+						</Link>
+					</h2>
 				</div>
 				<div className="px-4 py-4 bg-hm-beige/50">
 					<p className="text-sm opacity-60 m-0">{ site.description || 'No description yet.' }</p>
@@ -84,22 +98,27 @@ export function Sidebar( props ) {
 				>
 					New Post
 				</NavLink>
-				<NavLink
-					to="/"
+				<NavButton
+					onClick={ () => dispatch( showSidebarCategories() ) }
 				>
-					All Posts
-				</NavLink>
+					Categories
+				</NavButton>
+				<NavButton
+					onClick={ () => {} }
+				>
+					Posts
+				</NavButton>
+				<NavButton
+					onClick={ () => {} }
+				>
+					Pages
+				</NavButton>
 				<NavLink
 					internal={ false }
 					to={ `${ site.home }/wp-admin/` }
 				>
 					Dashboard
 				</NavLink>
-				<NavButton
-					onClick={ () => dispatch( showSidebarCategories() ) }
-				>
-					Categories
-				</NavButton>
 			</ul>
 
 			<div className="h2-legacy-prose px-4 divide-hm-beige [&_h4]:text-[1.222222222em]">

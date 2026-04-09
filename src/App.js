@@ -18,6 +18,7 @@ import WritePost from './components/Post/Write';
 import Profile from './components/Profile';
 import SessionExpiredWarning from './components/SessionExpiredWarning';
 import Sidebar from './components/Sidebar';
+import CategoriesSidebar from './components/Sidebar/Categories';
 import CommentsSidebar from './components/Sidebar/Comments';
 import SuperMenu from './components/SuperMenu';
 import { RenderPlugins } from './plugins';
@@ -107,6 +108,13 @@ class App extends Component {
 				return (
 					<CommentsSidebar
 						id={ this.props.sidebarProfile }
+						onClose={ this.props.onDismissSidebar }
+					/>
+				);
+
+			case 'categories':
+				return (
+					<CategoriesSidebar
 						onClose={ this.props.onDismissSidebar }
 					/>
 				);
