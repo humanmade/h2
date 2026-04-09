@@ -3,11 +3,24 @@ const { presets, helpers } = require( '@humanmade/webpack-helpers' );
 
 const { filePath, choosePort, cleanOnExit, addFilter } = helpers;
 
+// Split CSS and SCSS handling so plain CSS files skip sass-loader.
+// Tailwind v4 uses @import 'tailwindcss' which sass-loader cannot process.
+addFilter( 'presets/stylesheet-loaders', ( rule ) => {
+	const useWithoutSass = rule.use.slice( 0, -1 );
+	console.log( useWithoutSass );
+	return {
+		test: /\.s?css$/,
+		oneOf: [
+			{ test: /\.css$/, use: useWithoutSass },
+			{ test: /\.scss$/, use: rule.use },
+		],
+	};
+} );
+
 // Add Tailwind CSS to PostCSS plugins
 addFilter( 'loaders/postcss/plugins', plugins => {
 	return [
-		require( 'tailwindcss' ),
-		require( 'autoprefixer' ),
+		require( '@tailwindcss/postcss' ),
 		...plugins,
 	];
 } );

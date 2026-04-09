@@ -4,12 +4,26 @@ const { helpers, presets, plugins } = require( '@humanmade/webpack-helpers' );
 
 const { filePath, addFilter } = helpers;
 
+// Split CSS and SCSS handling so plain CSS files skip sass-loader.
+// Tailwind v4 uses @import 'tailwindcss' which sass-loader cannot process.
+addFilter( 'presets/stylesheet-loaders', ( rule ) => {
+	const useWithoutSass = rule.use.slice( 0, -1 );
+	console.log( rule.use, useWithoutSass );
+	return {
+		test: /\.s?css$/,
+		oneOf: [
+			{ test: /\.css$/, use: useWithoutSass },
+			{ test: /\.scss$/, use: rule.use },
+		],
+	};
+} );
+
 // Add Tailwind CSS to PostCSS plugins
 addFilter( 'loaders/postcss/plugins', plugins => {
 	return [
-		require( 'tailwindcss' ),
-		require( 'autoprefixer' ),
-		...plugins,
+		require( '@tailwindcss/postcss' ),
+		require( 'postcss-nesting' ),
+		// ...plugins,
 	];
 } );
 
@@ -64,4 +78,11 @@ module.exports = presets.production( {
 		// See https://webpack.js.org/guides/build-performance/#persistent-cache
 		type: 'filesystem',
 	},
+} );
+
+// Remove CSS minimizer, as cssnano conflicts with Tailwind since it doesn't
+// understand the nested syntax.
+// (Remove this once webpack-helpers is updated to latest.)
+module.exports.optimization.minimizer = module.exports.optimization.minimizer.filter( minimizer => {
+	return minimizer.constructor.name !== 'CssMinimizerPlugin';
 } );
