@@ -172,6 +172,15 @@ class App extends Component {
 
 						<Switch>
 							<Route
+								path="/write"
+								exact
+								render={ () => (
+									<WritePost
+										onDidCreatePost={ post => this.onDidCreatePost( post ) }
+									/>
+								) }
+							/>
+							<Route
 								path="/author/:authorSlug/:hasPage(page)?/:page(\d+)?"
 								exact
 								component={ PostsList }
