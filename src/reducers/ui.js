@@ -2,6 +2,8 @@ import {
 	SHOW_META_SIDEBAR,
 	SHOW_SIDEBAR_CATEGORIES,
 	SHOW_SIDEBAR_COMMENTS,
+	SHOW_SIDEBAR_PAGES,
+	SHOW_SIDEBAR_POSTS,
 	SHOW_SIDEBAR_PROFILE,
 	HIDE_SIDEBAR,
 	SHOW_SUPER_SIDEBAR,
@@ -34,6 +36,18 @@ export default function ui( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				sidebarView: 'categories',
+			};
+
+		case SHOW_SIDEBAR_PAGES:
+			return {
+				...state,
+				sidebarView: 'pages',
+			};
+
+		case SHOW_SIDEBAR_POSTS:
+			return {
+				...state,
+				sidebarView: 'posts',
 			};
 
 		case SHOW_SIDEBAR_PROFILE:

@@ -3,6 +3,8 @@ export const SHOW_META_SIDEBAR = 'SHOW_META_SIDEBAR';
 export const SHOW_SIDEBAR_PROFILE = 'SHOW_SIDEBAR_PROFILE';
 export const SHOW_SIDEBAR_COMMENTS = 'SHOW_SIDEBAR_COMMENTS';
 export const SHOW_SIDEBAR_CATEGORIES = 'SHOW_SIDEBAR_CATEGORIES';
+export const SHOW_SIDEBAR_PAGES = 'SHOW_SIDEBAR_PAGES';
+export const SHOW_SIDEBAR_POSTS = 'SHOW_SIDEBAR_POSTS';
 export const HIDE_SIDEBAR = 'HIDE_SIDEBAR';
 export const SHOW_SUPER_SIDEBAR = 'SHOW_SUPER_SIDEBAR';
 export const HIDE_SUPER_SIDEBAR = 'HIDE_SUPER_SIDEBAR';
@@ -27,6 +29,8 @@ export const showSidebarComments = id => {
 };
 
 export const showSidebarCategories = () => ( { type: SHOW_SIDEBAR_CATEGORIES } );
+export const showSidebarPages = () => ( { type: SHOW_SIDEBAR_PAGES } );
+export const showSidebarPosts = () => ( { type: SHOW_SIDEBAR_POSTS } );
 
 export const hideSidebar = () => ( { type: HIDE_SIDEBAR } );
 

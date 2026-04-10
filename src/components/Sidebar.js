@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Slot } from 'react-slot-fill';
 
-import { showSidebarCategories } from '../actions';
+import { showSidebarCategories, showSidebarPages, showSidebarPosts } from '../actions';
 import { withWidgets } from '../hocs';
 
 import RecentPostsWidget from './Widgets/RecentPosts';
@@ -104,12 +104,12 @@ export function Sidebar( props ) {
 					Categories
 				</NavButton>
 				<NavButton
-					onClick={ () => {} }
+					onClick={ () => dispatch( showSidebarPosts() ) }
 				>
 					Posts
 				</NavButton>
 				<NavButton
-					onClick={ () => {} }
+					onClick={ () => dispatch( showSidebarPages() ) }
 				>
 					Pages
 				</NavButton>
