@@ -55,7 +55,7 @@ You never touch `release` directly – no commits, no PRs against it. It is gene
 What that means in practice:
 
 - A source change only takes effect once it's on `main` and the Action has rebuilt `release`. Merging it straight into `release` does nothing useful – the build never runs, so the shipped bundle stays stale.
-- Projects consuming H2 (e.g. via Composer) pin a commit on `release`. To pick up a fix, bump that pin to a release commit the Action produced, not to a hand-made one.
+- Projects consuming H2 (e.g. via Composer) pin a commit on `release`. To pick up a fix, bump that pin to point to the latest [Action-generated] release branch commit.
 - The build runs on Node 12; see `.build-script`.
 
 
