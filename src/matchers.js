@@ -20,7 +20,7 @@ export class MentionMatcher extends Matcher {
 	}
 
 	match( string ) {
-		return this.doMatch( string, /@(\w+)/, matches => ( { username: matches[1] } ) );
+		return this.doMatch( string, /@([\w-]+)/, matches => ( { username: matches[1] } ) );
 	}
 }
 
