@@ -29,7 +29,7 @@ This will give you a component-level view of the project.
 
 ### Theme setup
 
-H2 is a regular WordPress theme, so add it into your Altis project's themes and activate it as desired.
+H2 is a regular WordPress theme, so add it into your WordPress project's themes and activate it as desired.
 
 To develop with live reloading, run:
 
