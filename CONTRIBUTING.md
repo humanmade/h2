@@ -46,7 +46,7 @@ You may also wish to install the various plugins as noted in the README for test
 
 ## Branching and releases
 
-H2 builds its own assets, and that build is automated – so there are branches you write to and a branch you leave alone.
+H2 builds its own assets into a releasable branch, and that build is automated. `main` should only be updated via pull request, and `release` should never be updated manually or used at the target for pull requests.
 
 Work happens on `main`. Branch off `main`, open a PR back into it, get it reviewed. That's the whole loop for a source change.
 
