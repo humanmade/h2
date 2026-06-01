@@ -50,7 +50,7 @@ H2 builds its own assets into a releasable branch, and that build is automated. 
 
 Work happens on `main`. Branch off `main`, open a PR back into it, get it reviewed. That's the whole loop for a source change.
 
-You never touch `release` directly – no commits, no PRs against it. It is generated. When something lands on `main`, a GitHub Action checks out `release`, resets its source to match `main`, runs `npm run build`, force-adds the compiled `build/` directory (which is otherwise gitignored), and force-pushes the result. So anything you commit to `release` by hand is gone the next time the Action runs.
+Never touch `release` directly – no commits, no PRs against it. It is generated. When something lands on `main`, a GitHub Action checks out `release`, resets its source to match `main`, runs `npm run build`, force-adds the compiled `build/` directory (which is otherwise gitignored), and force-pushes the result. So anything you commit to `release` by hand is gone the next time the Action runs.
 
 What that means in practice:
 
