@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import FormattedDate from '../FormattedDate';
+import AuthorLink from '../Message/AuthorLink';
 
 import './SlackMention.css';
 
@@ -66,24 +67,34 @@ export default function SlackMention( { comment } ) {
 		) )
 		: null;
 
-	// Build the row text around the (optional) channel element without a
-	// Fragment: prefix + channelEl + suffix render as inline span children.
-	let prefix = 'Shared in Slack';
-	let suffix = '';
+	// Public manual shares are attributed to the sharer as a linked @username
+	// (opening their H2 profile) when the H2 side resolved one.
+	const sharer = {
+		id: slack.shared_by_id,
+		name: slack.shared_by,
+	};
+	const authorEl = ( slack.shared_by_username && slack.shared_by_id ) ? (
+		<AuthorLink user={ sharer } withHovercard={ false }>
+			@{ slack.shared_by_username }
+		</AuthorLink>
+	) : null;
+
+	// Build the row text, interleaving the (optional) sharer and channel links.
+	let body;
 	if ( isAuto && channelEl ) {
-		prefix = 'Auto-posted to ';
-		suffix = ' on Slack';
+		body = <Fragment>Auto-posted to { channelEl } on Slack</Fragment>;
 	} else if ( visibility === 'public' && channelEl ) {
-		// Public manual shares are attributed to the sharer when the H2 side
-		// resolved one (shared_by); otherwise they're unattributed.
-		prefix = slack.shared_by ? `Shared by ${ slack.shared_by } in ` : 'Shared in ';
-		suffix = ' on Slack';
+		body = authorEl
+			? <Fragment>Shared by { authorEl } in { channelEl } on Slack</Fragment>
+			: <Fragment>Shared in { channelEl } on Slack</Fragment>;
 	} else if ( visibility === 'private' ) {
-		prefix = 'Shared in a private channel on Slack';
+		body = 'Shared in a private channel on Slack';
 	} else if ( visibility === 'im' ) {
-		prefix = 'Shared in a DM on Slack';
+		body = 'Shared in a DM on Slack';
 	} else if ( visibility === 'mpim' ) {
-		prefix = 'Shared in a group DM on Slack';
+		body = 'Shared in a group DM on Slack';
+	} else {
+		body = 'Shared in Slack';
 	}
 
 	return (
@@ -95,7 +106,7 @@ export default function SlackMention( { comment } ) {
 				<SlackLogo />
 			</span>
 			<span className="Comment-SlackMention__text">
-				{ prefix }{ channelEl }{ suffix }
+				{ body }
 			</span>
 			<span className="Comment-SlackMention__date">
 				<FormattedDate date={ comment.date_gmt + 'Z' } />
@@ -115,6 +126,8 @@ SlackMention.propTypes = {
 			source: PropTypes.string,
 			visibility: PropTypes.string,
 			shared_by: PropTypes.string,
+			shared_by_username: PropTypes.string,
+			shared_by_id: PropTypes.number,
 		} ),
 	} ).isRequired,
 };

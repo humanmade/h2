@@ -79,20 +79,21 @@ a.Comment-SlackMention__channel:focus {
 	margin-right: 0.5em;
 }
 
-/* If a marker is the last item in the thread, drop the trailing space and stop
- * the line short like a trailing comment does. */
+/* When a marker ends the thread, keep a short tail below the node — like a
+ * trailing comment — so the line stops short and the rounded dot below sits
+ * clear of the node's white mask (otherwise the cap is hidden behind it). */
 .Comment-SlackMention:last-child {
-	padding-bottom: 0;
+	padding-bottom: 1.5rem;
 }
 
 .Comment-SlackMention:last-child:before {
 	bottom: 1rem;
 }
 
-/* With the trailing padding gone on the last item, the node band must shrink
- * to the content row too, or the logo drifts out of alignment with the text. */
+/* The node stays in the content band above the tail, so the logo aligns with
+ * the text and leaves the tail (line-end + dot) below it visible. */
 .Comment-SlackMention:last-child .Comment-SlackMention__node {
-	bottom: 0;
+	bottom: 1.5rem;
 }
 
 /* Cap the line with the same rounded terminal dot a trailing comment gets
