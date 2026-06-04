@@ -74,7 +74,9 @@ export default function SlackMention( { comment } ) {
 		prefix = 'Auto-posted to ';
 		suffix = ' on Slack';
 	} else if ( visibility === 'public' && channelEl ) {
-		prefix = 'Shared in ';
+		// Public manual shares are attributed to the sharer when the H2 side
+		// resolved one (shared_by); otherwise they're unattributed.
+		prefix = slack.shared_by ? `Shared by ${ slack.shared_by } in ` : 'Shared in ';
 		suffix = ' on Slack';
 	} else if ( visibility === 'private' ) {
 		prefix = 'Shared in a private channel on Slack';
@@ -112,6 +114,7 @@ SlackMention.propTypes = {
 			permalink: PropTypes.string,
 			source: PropTypes.string,
 			visibility: PropTypes.string,
+			shared_by: PropTypes.string,
 		} ),
 	} ).isRequired,
 };
