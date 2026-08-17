@@ -32,7 +32,12 @@ function Summary( props ) {
 
 	const continueReadingMessage = `Continue reading (${ _n( 'word', 'words', post.content.count ) })`;
 
-	const people = comments ? uniq( comments.map( comment => comment.author ) ).filter( Boolean ) : [];
+	// The archive is shared with the comment stream and so includes
+	// `slack_mention` markers; exclude them from the count and avatar pile so
+	// they never read as human comments.
+	const realComments = comments ? comments.filter( comment => comment.type === 'comment' ) : [];
+
+	const people = uniq( realComments.map( comment => comment.author ) ).filter( Boolean );
 
 	const peopleClass = [
 		// Back-compat:
@@ -62,9 +67,9 @@ function Summary( props ) {
 					) }
 				</Button>
 
-				{ ( ! loadingComments && comments && comments.length > 0 ) && (
-					<div className="flex items-center max-[600px]:mt-[1em]">
-						<span>{ _n( 'comment', 'comments', comments.length ) }</span>
+				{ ( ! loadingComments && realComments.length > 0 ) && (
+					<div className="Post-Summary-comments">
+						<span>{ _n( 'comment', 'comments', realComments.length ) }</span>
 						<ul className={ peopleClass }>
 							{ people.slice( 0, 8 ).map( person => (
 								<li
@@ -91,11 +96,17 @@ export default withArchive(
 	props => {
 		const { post } = props;
 
-		comments.registerArchive( post.id, {
+		// Share the comment stream's widened archive (same id + slack_markers
+		// flag) so the count stays consistent with the stream after a reply and
+		// the post's comments are fetched once. Markers are filtered out of the
+		// count above.
+		const archiveId = `stream:${ post.id }`;
+		comments.registerArchive( archiveId, {
 			post: post.id,
 			per_page: 100,
+			slack_markers: 1,
 		} );
-		return post.id;
+		return archiveId;
 	},
 	{
 		mapDataToProps: data => ( {

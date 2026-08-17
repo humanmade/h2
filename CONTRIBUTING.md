@@ -5,7 +5,7 @@ Want to contribute to H2? Fantastic. Here's some guidelines and tips to contribu
 
 ## Local setup
 
-H2 is a React app as a WordPress theme. For full development, you'll need a WordPress development environment; [Chassis](https://chassis.io/) is a good choice.
+H2 is a React app delivered as a WordPress theme. For full development you need a WordPress environment running H2; we use [Altis Local Server](https://www.altis-dxp.com/local-server/), the Docker-backed environment the consuming sites (such as hmn.md) run on. Add H2 as a theme in an Altis project and activate it.
 
 H2 also comes with Storybook, which can be used for component design and development in isolation. This can be run locally without a WordPress install, and is recommended for design iteration.
 
@@ -29,7 +29,7 @@ This will give you a component-level view of the project.
 
 ### Theme setup
 
-H2 is a regular WordPress theme, so add it into a WordPress development environment as desired.
+H2 is a regular WordPress theme, so add it into your WordPress project's themes and activate it as desired.
 
 To develop with live reloading, run:
 
@@ -42,6 +42,21 @@ npm start
 ```
 
 You may also wish to install the various plugins as noted in the README for testing further functionality such as emoji reactions.
+
+
+## Branching and releases
+
+H2 builds its own assets into a releasable branch, and that build is automated. `main` should only be updated via pull request, and `release` should never be updated manually or used at the target for pull requests.
+
+Work happens on `main`. Branch off `main`, open a PR back into it, get it reviewed. That's the whole loop for a source change.
+
+Never touch `release` directly – no commits, no PRs against it. It is generated. When something lands on `main`, a GitHub Action checks out `release`, resets its source to match `main`, runs `npm run build`, force-adds the compiled `build/` directory (which is otherwise gitignored), and force-pushes the result. So anything you commit to `release` by hand is gone the next time the Action runs.
+
+What that means in practice:
+
+- A source change only takes effect once it's on `main` and the Action has rebuilt `release`. Merging it straight into `release` does nothing useful – the build never runs, so the shipped bundle stays stale.
+- Projects consuming H2 (e.g. via Composer) pin a commit on `release`. To pick up a fix, bump that pin to point to the latest [Action-generated] release branch commit.
+- The build runs on Node 12; see `.build-script`.
 
 
 ## Project structure
