@@ -75,6 +75,8 @@
     "storybook:build": "build-storybook -s public",
     "storybook:deploy": "npm run storybook:build && aws s3 sync ./storybook-static s3://make.hmn.md/h2-storybook --acl public-read",
     "check-size": "bundlesize",
+    "playground": "npx @wp-playground/cli@latest server --blueprint=.playground/blueprint-local.json --mount=.:/wordpress/wp-content/themes/h2",
+    "playground:demo": "npx @wp-playground/cli@latest server --blueprint=.playground/blueprint.json",
     "wp-env": "wp-env",
     "wp-env:start": "wp-env start",
     "wp-env:stop": "wp-env stop",

@@ -1,0 +1,128 @@
+name: Playground Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    name: "Build and publish Playground preview"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Fork PRs get a read-only token, so the preview branch can't be pushed for them.
+    if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      PREVIEW_BRANCH: playground-pr-${{ github.event.pull_request.number }}
+    steps:
+      - name: Check out PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Check for Playground blueprint
+        id: blueprint
+        run: |
+          if [ -f .playground/blueprint.json ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::No .playground/blueprint.json on this branch; skipping Playground preview."
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.blueprint.outputs.exists == 'true'
+        with:
+          # The release workflows still pin Node 12, but the current
+          # dependencies (Tailwind 4, @wordpress/*) need a modern runtime.
+          node-version: '24'
+
+      - name: Install dependencies and build
+        if: steps.blueprint.outputs.exists == 'true'
+        run: |
+          if [ -f pnpm-lock.yaml ]; then
+            npm install --global pnpm
+            pnpm install --frozen-lockfile
+          else
+            npm ci
+          fi
+          npm run build
+
+      - name: Point the blueprint at the preview branch
+        if: steps.blueprint.outputs.exists == 'true'
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          node -e '
+            const fs = require( "fs" );
+            const path = ".playground/blueprint.json";
+            const blueprint = JSON.parse( fs.readFileSync( path, "utf8" ) );
+            blueprint.meta.title = `H2 preview: PR #${ process.env.PR_NUMBER }`;
+            blueprint.meta.description = `Preview of ${ process.env.REPO } PR #${ process.env.PR_NUMBER } in WordPress Playground.`;
+            const theme = blueprint.steps.find( ( step ) => step.step === "installTheme" );
+            theme.themeData.url = `https://github.com/${ process.env.REPO }.git`;
+            theme.themeData.ref = process.env.PREVIEW_BRANCH;
+            fs.writeFileSync( path, JSON.stringify( blueprint, null, "\t" ) + "\n" );
+          '
+
+      - name: Push preview branch
+        if: steps.blueprint.outputs.exists == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f build
+          git add .playground/blueprint.json
+          git commit -m "Playground preview build for PR #${PR_NUMBER} (${HEAD_SHA})"
+          git push --force origin "HEAD:refs/heads/${PREVIEW_BRANCH}"
+
+      - name: Comment preview link on PR
+        if: steps.blueprint.outputs.exists == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          RAW_URL="https://raw.githubusercontent.com/${REPO}/${PREVIEW_BRANCH}/.playground/blueprint.json?v=${HEAD_SHA}"
+          PLAYGROUND_URL="https://playground.wordpress.net/?blueprint-url=$( printf '%s' "$RAW_URL" | jq -sRr @uri )"
+
+          MARKER="<!-- playground-preview -->"
+          BODY="$( printf '%s\n' \
+            "$MARKER" \
+            "### 🛝 Playground preview" \
+            "" \
+            "**[Open PR #${PR_NUMBER} in WordPress Playground](${PLAYGROUND_URL})**" \
+            "" \
+            "Spins up a fresh WordPress with this PR's build of the H2 theme and demo content, logged in as **admin**." \
+            "" \
+            "Built from ${HEAD_SHA} — the preview updates on every push to this PR." \
+          )"
+
+          COMMENT_ID="$( gh api "repos/${REPO}/issues/${PR_NUMBER}/comments" --paginate \
+            --jq ".[] | select( .body | startswith( \"${MARKER}\" ) ) | .id" | head -1 )"
+          if [ -n "$COMMENT_ID" ]; then
+            gh api --method PATCH "repos/${REPO}/issues/comments/${COMMENT_ID}" -f body="$BODY" > /dev/null
+          else
+            gh api --method POST "repos/${REPO}/issues/${PR_NUMBER}/comments" -f body="$BODY" > /dev/null
+          fi
+
+  cleanup:
+    name: "Delete Playground preview branch"
+    runs-on: ubuntu-latest
+    if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      contents: write
+    steps:
+      - name: Delete preview branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --method DELETE \
+            "repos/${{ github.repository }}/git/refs/heads/playground-pr-${{ github.event.pull_request.number }}" \
+            || echo "No preview branch to delete."
