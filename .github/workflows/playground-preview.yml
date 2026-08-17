@@ -52,7 +52,10 @@ jobs:
             npm install --global pnpm
             pnpm install --frozen-lockfile
           else
-            npm ci
+            # --ignore-scripts skips node-gyp builds for native deps (iltorb via
+            # bundlesize) which no longer compile on modern Node and aren't
+            # needed for the webpack build.
+            npm ci --ignore-scripts
           fi
           npm run build
 
