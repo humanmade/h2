@@ -35,8 +35,10 @@ export class MessageHeader extends React.Component {
 	}
 
 	render() {
-		const { author, categories, post } = this.props;
+		const { author, authors, categories, post } = this.props;
 		const { children, constrainTitle, sticky, collapsed, onCollapse, ...fillProps } = this.props;
+		const displayedAuthors = authors.length ? authors : [ author ].filter( Boolean );
+		const primaryAuthor = displayedAuthors[0];
 
 		const classes = [
 			'Message-Header',
@@ -51,8 +53,8 @@ export class MessageHeader extends React.Component {
 			>
 				<div>
 					<Avatar
-						url={ author ? author.avatar_urls['96'] : '' }
-						user={ author }
+						url={ primaryAuthor ? primaryAuthor.avatar_urls['96'] : '' }
+						user={ primaryAuthor }
 						size={ 60 }
 					/>
 					{ ! collapsed && onCollapse ? (
@@ -75,9 +77,12 @@ export class MessageHeader extends React.Component {
 						</h2>
 					</Link>
 					<span className="Message-Header__date">
-						{ author ? (
-							<AuthorLink user={ author }>{ author.name }</AuthorLink>
-						) : '' },&nbsp;
+						{ displayedAuthors.map( ( item, index ) => (
+							<Fragment key={ item.id }>
+								{ index > 0 ? ' with ' : '' }
+								<AuthorLink user={ item }>{ item.name }</AuthorLink>
+							</Fragment>
+						) ) },&nbsp;
 						<FormattedDate date={ post.date_gmt + 'Z' } />
 					</span>
 					{ categories.length > 0 && (
@@ -106,6 +111,7 @@ export class MessageHeader extends React.Component {
 }
 
 MessageHeader.defaultProps = {
+	authors: [],
 	collapsed: false,
 	constrainTitle: false,
 	sticky: true,
@@ -113,6 +119,7 @@ MessageHeader.defaultProps = {
 
 MessageHeader.propTypes = {
 	author: UserShape.isRequired,
+	authors: PropTypes.arrayOf( UserShape ),
 	categories: PropTypes.arrayOf( CategoryShape ).isRequired,
 	collapsed: PropTypes.bool,
 	onCollapse: PropTypes.func,

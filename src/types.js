@@ -6,7 +6,7 @@ export const posts = new handler( {
 	nonce: window.wpApiSettings.nonce,
 	query: {
 		// Dodges Yoast SEO data computation.
-		_fields: 'id,author,categories,content,date,date_gmt,excerpt,link,slug,status,tags,title,unprocessed_content',
+		_fields: 'id,author,authorship,categories,content,date,date_gmt,excerpt,link,slug,status,tags,title,unprocessed_content',
 	},
 } );
 
@@ -32,7 +32,7 @@ export const users = new handler( {
 	},
 } );
 users.registerArchive( 'me', state => ( { include: state.users.current } ) );
-users.registerArchive( 'all', { per_page: 100 } );
+users.registerArchive( 'all', { per_page: 200 } );
 users.updateCurrent = ( function ( data ) {
 	return ( dispatch, getState ) => {
 		return dispatch(

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Slot } from 'react-slot-fill';
 
-import { withCategories, withUser } from '../../hocs';
+import { withCategories, withUser, withUsers } from '../../hocs';
 import {
 	Post as PostShape,
 } from '../../shapes';
@@ -17,6 +17,22 @@ import PostComments from './Comments';
 import Summary from './Summary';
 
 import './index.css';
+
+export const resolvePostAuthors = ( post, user, users = [] ) => {
+	const authorIds = post.authorship && post.authorship.length ? post.authorship : [ post.author ];
+	const usersById = users.reduce( ( authors, item ) => ( {
+		...authors,
+		[ item.id ]: item,
+	} ), {} );
+	if ( user ) {
+		usersById[ user.id ] = user;
+	}
+
+	return authorIds
+		.filter( ( id, index ) => authorIds.indexOf( id ) === index )
+		.map( id => usersById[ id ] )
+		.filter( Boolean );
+};
 
 const SecondaryActions = props => {
 	const { fillProps, showEdit, onClickEdit } = props;
@@ -126,12 +142,15 @@ export class Post extends Component {
 	}
 
 	render() {
-		const { post, user, viewMode } = this.props;
+		const { post, user, users, viewMode } = this.props;
 		const { expanded, isShowingReply } = this.state;
 		const categories = this.props.categories.data ? this.props.categories.data.filter( category => post.categories.indexOf( category.id ) >= 0 ) : [];
+		const authors = resolvePostAuthors( post, user, users );
+		const primaryAuthor = authors[0] || user;
 
 		const fillProps = {
-			author: user,
+			author: primaryAuthor,
+			authors,
 			collapsed: ! expanded,
 			// comments,
 			categories,
@@ -157,7 +176,8 @@ export class Post extends Component {
 			<div className={ classes } ref={ this.postRef }>
 
 				<MessageHeader
-					author={ user }
+					author={ primaryAuthor }
+					authors={ authors }
 					categories={ categories }
 					collapsed={ viewMode === 'full' || ( viewMode === 'compact' && ! expanded ) }
 					onCollapse={ this.onCollapse }
@@ -167,7 +187,7 @@ export class Post extends Component {
 				</MessageHeader>
 
 				<MessageMain
-					author={ user }
+					author={ primaryAuthor }
 					categories={ categories }
 					collapsed={ viewMode === 'compact' && ! isShowingReply && ! expanded }
 					post={ post }
@@ -214,6 +234,6 @@ export default withCategories(
 		state => state.posts,
 		props => props.data.id
 	)(
-		withUser( props => props.post.author )( Post )
+		withUsers( withUser( props => props.post.author )( Post ) )
 	)
 );
