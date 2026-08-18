@@ -80,7 +80,16 @@ export class MessageHeader extends React.Component {
 						{ displayedAuthors.map( ( item, index ) => (
 							<Fragment key={ item.id }>
 								{ index > 0 ? ' with ' : '' }
-								<AuthorLink user={ item }>{ item.name }</AuthorLink>
+								<AuthorLink user={ item }>
+									{ index > 0 && (
+										<img
+											alt=""
+											className="Message-Header__author-avatar"
+											src={ item.avatar_urls['96'] }
+										/>
+									) }
+									{ item.name }
+								</AuthorLink>
 							</Fragment>
 						) ) },&nbsp;
 						<FormattedDate date={ post.date_gmt + 'Z' } />
