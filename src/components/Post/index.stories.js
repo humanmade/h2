@@ -1,13 +1,14 @@
 import React from 'react';
 
 import { withPadding, withStore } from '../../stories/decorators';
-import { comment, editablePost, post, user } from '../../stories/stubs';
+import { comment, editablePost, post, user, users } from '../../stories/stubs';
 import { apiResponse } from '../../stories/util';
 
 import { Post } from './index';
 
 const defaultProps = {
 	user: user,
+	users,
 	categories: apiResponse( [] ),
 	post,
 };
@@ -77,6 +78,16 @@ export const Editable = () => (
 	<Post
 		{ ...defaultProps }
 		editable={ apiResponse( editablePost ) }
+	/>
+);
+
+export const Coauthored = () => (
+	<Post
+		{ ...defaultProps }
+		post={ {
+			...post,
+			authorship: [ 3, 1 ],
+		} }
 	/>
 );
 
