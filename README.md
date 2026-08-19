@@ -30,6 +30,12 @@ Development workflow:
   - The `release` branch will be automatically rebuilt
 - Update the production branch `composer.json` in the [main network repository](https://github.com/humanmade/hmn.md) to reference the newest built version of the `release` branch, to deploy the change to production.
 
+### Try it in WordPress Playground
+
+The fastest way to see H2 in action is [WordPress Playground](https://wordpress.org/playground/) — no Docker or local setup required. [Launch the H2 demo](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/humanmade/h2/main/.playground/blueprint.json) to get a temporary site in your browser with the theme active and demo content seeded.
+
+You can also run Playground locally: `npm run playground:demo` runs the same demo, and `npm run playground` runs your working copy of the theme (run `npm run build` first). See [`.playground/README.md`](.playground/README.md) for details.
+
 ### Local Setup
 
 #### Quick Start with wp-env (Recommended)
