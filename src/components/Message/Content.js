@@ -112,7 +112,7 @@ export function Content( props ) {
 	const html = preparseEmoji( props.html );
 
 	return (
-		<div className="PostContent">
+		<div className="PostContent h2-legacy-prose">
 			<ErrorBoundary>
 				<Interweave
 					content={ html }

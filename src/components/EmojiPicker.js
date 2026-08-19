@@ -60,7 +60,7 @@ class PickerWrap extends Component {
 
 		return ReactDOM.createPortal(
 			<div
-				className="EmojiPicker EmojiPicker--mobile"
+				className="EmojiPicker fixed inset-0 z-10 flex justify-center items-center bg-[rgb(79,70,65,0.7)] backdrop-blur-[2px]"
 				onClick={ this.onClose }
 			>
 				<div

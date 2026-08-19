@@ -1,23 +1,4 @@
-.Message-Header {
-	position: relative;
-	top: 0;
-	z-index: 6;
-	padding: 15px 0;
-	background: #fff;
-	display: flex;
-	align-items: flex-start;
-	min-height: 99px;
-}
-
-.Message-Header--constrained {
-	height: 99px;
-}
-
-.Message-Header--sticky {
-	position: sticky;
-	z-index: 5;
-}
-
+/* Admin bar sticky offsets (depends on body.admin-bar) */
 @media screen and ( min-width: 601px ) and ( max-width: 782px ) {
 	body.admin-bar .Message-Header--sticky {
 		top: 46px;
@@ -30,6 +11,7 @@
 	}
 }
 
+/* Parent context styles */
 .PostsList .Message-Header {
 	margin-top: -15px;
 }
@@ -38,54 +20,7 @@
 	margin-top: -99px;
 }
 
-.Message-Header .Avatar {
-	margin-right: 30px;
-	width: 3.333rem;
-	height: 3.333rem;
-	border-radius: 100%;
-	align-self: flex-start;
-}
-
-.Message-Header__byline {
-	flex-direction: column;
-	flex-grow: 1;
-	min-width: 0;
-	overflow: hidden;
-	line-height: 1.1;
-}
-
-.App .Message-Header__byline > a:hover {
-	text-decoration: none;
-}
-
-.Message-Header__title {
-	font-size: 1.333333333rem;
-	line-height: 1.2;
-	margin: 0 0.5em 10px 0;
-	text-transform: inherit;
-}
-
-.Message-Header--constrained .Message-Header__title {
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	overflow: hidden;
-}
-
-.Message-Header__date {
-	display: inline-block;
-	margin-right: 10px;
-	color: #AAA;
-	font-size: 14px;
-}
-
-.Message-Header__categories {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	display: inline;
-	font-size: 14px;
-}
-
+/* Category comma separators */
 .Message-Header__categories li {
 	display: inline;
 }
@@ -98,65 +33,10 @@
 	content: "";
 }
 
-.Message-Header__status {
-	font-size: 14px;
-	margin-left: 10px;
-}
-
-.Message-Header__Collapse-Button {
-	display: none;
-	align-items: center;
-	width: 24px;
-	height: 24px;
-	margin: 10px 0 0;
-	padding: 0;
-	cursor: pointer;
-	background: rgba( 0, 0, 0, 0.02 );
-	border: 2px solid rgba(0, 0, 0, 0.1);
-	border-radius: 50%;
-	transition: border-color 100ms;
-}
-
-.Message-Header__Collapse-Button .icon {
-	width: 24px;
-	opacity: 0.3;
-	transition: opacity 100ms;
-}
-
-.Message-Header__Collapse-Button:hover,
-.Message-Header__Collapse-Button:focus {
-	border-color: rgba(0, 0, 0, 0.4);
-	transition: border-color 200ms;
-}
-
-.Message-Header__Collapse-Button:hover .icon,
-.Message-Header__Collapse-Button:focus .icon {
-	opacity: 0.8;
-	transition: opacity 200ms;
-}
-
+/* Mobile collapse button margin */
 @media ( max-width: 600px ) {
-	.Message-Header {
-		margin: 0 -20px;
-		padding: 0.5em 20px;
-		height: auto;
-		display: flex;
-		flex-direction: row-reverse;
-	}
-	.Message-Header .Avatar,
 	.Message-Header__Collapse-Button {
 		margin-left: 8px;
 		margin-right: 0;
-	}
-	.Message-Header .Avatar,
-	.Message-Header .Avatar img {
-		width: 24px !important;
-		height: 24px !important;
-	}
-	.Message-Header__Collapse-Button {
-		display: flex;
-	}
-	.Message-Header .Post__actions {
-		display: none;
 	}
 }

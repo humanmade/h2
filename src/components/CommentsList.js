@@ -11,7 +11,7 @@ import './CommentsList.css';
 export default class CommentsList extends Component {
 	render() {
 		return (
-			<div className="CommentsList">
+			<div className="CommentsList flex-col">
 				{ this.props.comments.slice().sort( ( a, b ) => a.date < b.date ? -1 : 1 ).map( comment => (
 					// "Shared in Slack" markers render as a quiet leaf row and
 					// must skip Comment's withUser/withSingle HOCs (they need

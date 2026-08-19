@@ -41,20 +41,28 @@ export default function Pagination( props ) {
 	);
 
 	return (
-		<div className="pagination">
-			{ hasNext ? (
-				<Link to={ olderPage }>Older</Link>
-			) : (
-				/* Hack to get pagination to float correctly */
-				/* eslint-disable-next-line jsx-a11y/anchor-is-valid */
-				<a style={ { display: 'none' } }>&nbsp;</a>
+		<div className="grid grid-cols-2">
+			{ hasNext && (
+				<div>
+					<Link
+						className="group"
+						to={ olderPage }
+					>
+						<span className="icon icon--arrow-right icon--blue h-6 w-6 mr-2 rotate-180 transition-transform group-hover:-translate-x-2">&larr;</span>
+						Older
+					</Link>
+				</div>
 			) }
-			{ page && page > 1 ? (
-				<Link to={ newerPage }>Newer</Link>
-			) : (
-				/* Hack to get pagination to float correctly */
-				/* eslint-disable-next-line jsx-a11y/anchor-is-valid */
-				<a style={ { display: 'none' } }>&nbsp;</a>
+			{ page && page > 1 && (
+				<div className="justify-self-end col-start-2">
+					<Link
+						className="group"
+						to={ newerPage }
+					>
+						Newer
+						<span className="icon icon--arrow-right icon--blue h-6 w-6 ml-2 transition-transform group-hover:translate-x-2">&larr;</span>
+					</Link>
+				</div>
 			) }
 		</div>
 	);

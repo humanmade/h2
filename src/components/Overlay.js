@@ -8,7 +8,7 @@ let clickHandlers = [];
 export function OverlayContainer() {
 	return (
 		<div
-			className="Overlay"
+			className="Overlay absolute block inset-0 content bg-black/25 z-15 opacity-0 transition-opacity pointer-events-none [body.--overlay-visible_&]:opacity-100 [body.--overlay-visible_&]:pointer-events-auto"
 			onClick={ () => clickHandlers.forEach( handler => handler() ) }
 		/>
 	);

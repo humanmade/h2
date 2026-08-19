@@ -9,16 +9,14 @@ import CurrentUser from './CurrentUser';
 import HeaderButton from './HeaderButton';
 import Logo from './Logo';
 
-import './index.css';
-
 export class Header extends Component {
 	render() {
 
 		return (
-			<div className="Header">
-				<div className="Header-inner">
+			<div className="bg-hm-light-grey flex-1">
+				<div className="flex flex-row pr-5 max-[600px]:pr-1.5">
 					<button
-						className="Header-site-name"
+						className="bg-brand text-white p-0 pr-5 flex items-center border-none font-inherit text-base cursor-pointer hover:border-none hover:text-white/60 focus:border-none focus:text-white/60 [&:hover_.hm-logo]:opacity-60 [&:focus_.hm-logo]:opacity-60"
 						type="button"
 						onClick={ this.props.onShowSuper }
 					>
@@ -37,6 +35,7 @@ export class Header extends Component {
 					<Slot name="Header.buttons" />
 
 					<SearchInput
+						className="hidden sm:block"
 						value={ this.props.searchValue }
 						onSearch={ this.props.onSearch }
 					/>
@@ -44,10 +43,12 @@ export class Header extends Component {
 					<Slot name="Header.secondary_buttons" />
 
 					{ this.props.currentUser ? (
-						<CurrentUser
-							user={ this.props.currentUser }
-							onLogOut={ this.props.onLogOut }
-						/>
+						<div className="ml-auto flex items-center self-center max-[782px]:scale-90">
+							<CurrentUser
+								user={ this.props.currentUser }
+								onLogOut={ this.props.onLogOut }
+							/>
+						</div>
 					) : null }
 
 					<Slot name="Header.meta" />

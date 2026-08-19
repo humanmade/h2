@@ -1,0 +1,54 @@
+/*
+ * Base Settings
+ */
+
+$margin-vertical-sm:  1.666666667rem !default;
+$margin-vertical-lg:  4.666666667rem !default;
+
+// Correction for old base font size of 18px.
+// This is multiplied by everything that used to use rems.
+$correction-factor: 18/16;
+
+$base-line-height:    $correction-factor * 1.555rem !default; // 28px
+$base-line-height-sm: $correction-factor * 1.333rem !default; // 24px
+$base-font-size:      18px !default;
+
+$gutter-width: 15px !default;
+
+$font-family-body:    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !default;
+$font-family-heading: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !default;
+$font-family-code:    "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono", monospace !default;
+
+// Media queries.
+$mq-sm-up:   "screen and ( min-width: 30rem )" !default;
+$mq-sm-down: "screen and ( max-width: 30rem )" !default;
+
+/*
+ * Color Mapping
+ */
+
+$color-primary: $hm-red !default;
+$color-accent:  $hm-blue !default;
+
+// Alternate versions of main colors. Used for borders, backgrounds etc.
+$color-primary-light: saturate( lighten( $color-primary, 10% ), 5 ) !default;
+$color-primary-dark:  desaturate( darken( $color-primary, 6% ), 8 ) !default;
+
+/*
+ * Base Color Mapping
+ */
+
+$color-text-default: $hm-warm-grey !default;
+$color-text-heading: $hm-dark-grey !default;
+$color-text-pre:     $hm-warm-grey !default;
+
+$color-link:         $hm-vibrant-blue !default;
+$color-link-hover:   $hm-vibrant-blue !default;
+
+$color-background-pre: $hm-light-grey !default;
+
+// Forms
+$color-input-text: $hm-warm-grey !default;
+
+// Borders
+$border-color:         lighten( $hm-medium-grey, 40% ) !default;
