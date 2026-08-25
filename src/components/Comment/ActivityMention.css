@@ -1,8 +1,8 @@
-.Comment-SlackMention {
+.Comment-ActivityMention {
 	/* Trailing space below the row. The node's height is bound to the same
 	 * value (it spans the content band above this padding), so they must match
 	 * — hence the shared custom property. */
-	--slack-mention-trailing: 2.5rem;
+	--activity-mention-trailing: 2.5rem;
 	position: relative;
 	display: flex;
 	align-items: center;
@@ -11,7 +11,7 @@
 	/* Trailing space as padding (not margin) so the thread line below keeps
 	 * running through it. Matches the ~40px rhythm between real comments,
 	 * which carry their spacing internally rather than as a box gap. */
-	padding: 0 0 var( --slack-mention-trailing );
+	padding: 0 0 var( --activity-mention-trailing );
 	font-size: 0.85em;
 	line-height: 1.4;
 	color: var( --hm-medium-grey );
@@ -20,7 +20,7 @@
 /* Keep the thread's vertical line running through the marker and its trailing
  * space so it isn't visually broken. Colour mirrors .Comment:before's line
  * (Comment.css hardcodes the same #F1F2EE; there is no token for it). */
-.Comment-SlackMention:before {
+.Comment-ActivityMention:before {
 	position: absolute;
 	content: '';
 	background: #F1F2EE;
@@ -31,14 +31,14 @@
 	z-index: -1;
 }
 
-/* The Slack glyph sits on the line as a timeline node, masking it with a white
+/* The activity glyph sits on the line as a timeline node, masking it with a white
  * background the way comment avatars do (matching Header.css). It spans the
  * content band (above the trailing padding) so it stays centred on the text. */
-.Comment-SlackMention__node {
+.Comment-ActivityMention__node {
 	position: absolute;
 	left: -47px;
 	top: 0;
-	bottom: var( --slack-mention-trailing );
+	bottom: var( --activity-mention-trailing );
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -48,6 +48,16 @@
 
 .Comment-SlackMention__logo {
 	display: block;
+}
+
+.Comment-HumanMention__logo {
+	display: block;
+	margin: 0;
+	opacity: 1;
+}
+
+.Comment-HumanMention__logo:hover {
+	opacity: 1;
 }
 
 .Comment-SlackMention__channel {
@@ -63,18 +73,18 @@ a.Comment-SlackMention__channel:focus {
 }
 
 /* Push the date to the right edge so it lines up with real comments' dates. */
-.Comment-SlackMention__text {
+.Comment-ActivityMention__text {
 	margin-right: auto;
 }
 
-.Comment-SlackMention__date,
-.Comment-SlackMention__date time {
+.Comment-ActivityMention__date,
+.Comment-ActivityMention__date time {
 	color: inherit;
 }
 
 /* Match real comment dates: same size (.Comment-date is 0.75em of the larger
  * header font ≈ 13.5px) and the same right-hand inset. */
-.Comment-SlackMention__date {
+.Comment-ActivityMention__date {
 	font-size: 0.88em;
 	margin-right: 0.5em;
 }
@@ -82,23 +92,23 @@ a.Comment-SlackMention__channel:focus {
 /* When a marker ends the thread, keep a short tail below the node — like a
  * trailing comment — so the line stops short and the rounded dot below sits
  * clear of the node's white mask (otherwise the cap is hidden behind it). */
-.Comment-SlackMention:last-child {
+.Comment-ActivityMention:last-child {
 	padding-bottom: 1.5rem;
 }
 
-.Comment-SlackMention:last-child:before {
+.Comment-ActivityMention:last-child:before {
 	bottom: 1rem;
 }
 
 /* The node stays in the content band above the tail, so the logo aligns with
  * the text and leaves the tail (line-end + dot) below it visible. */
-.Comment-SlackMention:last-child .Comment-SlackMention__node {
+.Comment-ActivityMention:last-child .Comment-ActivityMention__node {
 	bottom: 1.5rem;
 }
 
 /* Cap the line with the same rounded terminal dot a trailing comment gets
  * (mirrors .Comment:last-child:after). */
-.Comment-SlackMention:last-child:after {
+.Comment-ActivityMention:last-child:after {
 	position: absolute;
 	content: '';
 	background: #F1F2EE;
@@ -111,15 +121,15 @@ a.Comment-SlackMention__channel:focus {
 }
 
 @media ( max-width: 600px ) {
-	.Comment-SlackMention:last-child:after {
+	.Comment-ActivityMention:last-child:after {
 		left: -23px;
 	}
 
-	.Comment-SlackMention:before {
+	.Comment-ActivityMention:before {
 		left: -20px;
 	}
 
-	.Comment-SlackMention__node {
+	.Comment-ActivityMention__node {
 		left: -26px;
 	}
 }

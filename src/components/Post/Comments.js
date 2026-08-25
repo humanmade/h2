@@ -68,7 +68,7 @@ export default withArchive(
 		const { post } = props;
 
 		// Distinct archive id + opt-in flag so only this stream view is widened
-		// to include slack_mention markers. Post/Summary shares this same
+		// to include bot-authored activity markers. Post/Summary shares this same
 		// `stream:${post.id}` archive (so the count stays consistent after a
 		// reply) but filters markers out of its count client-side. The
 		// recent-comments sidebar uses a separate author-scoped query and never
