@@ -48,7 +48,7 @@ export default function HumanMention( { comment } ) {
 			</span>
 			<span className="Comment-ActivityMention__text">
 				<Fragment>
-					referenced by <strong>@human</strong> to answer { question } from { asker }
+					Referenced by <strong>@human</strong> to answer { question } from { asker }
 				</Fragment>
 			</span>
 			<span className="Comment-ActivityMention__date">
