@@ -50,7 +50,7 @@
 	display: block;
 }
 
-.Comment-HumanMention__logo {
+.Comment-ActivityMention__node .Comment-HumanMention__logo {
 	display: block;
 	width: 14px;
 	height: 14px;
@@ -59,7 +59,7 @@
 	background-size: contain;
 }
 
-.Comment-HumanMention__logo:hover {
+.Comment-ActivityMention__node .Comment-HumanMention__logo:hover {
 	opacity: 1;
 }
 
