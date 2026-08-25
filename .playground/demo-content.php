@@ -11,6 +11,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 	require_once '/wordpress/wp-load.php';
 }
 
+// The production activity-marker read filter lives in hmn.md. Playground does
+// not load that project, so install the smallest demo-only equivalent to make
+// seeded marker comments visible through H2's opted-in REST comment archive.
+wp_mkdir_p( WPMU_PLUGIN_DIR );
+file_put_contents(
+	WPMU_PLUGIN_DIR . '/h2-playground-activity-markers.php',
+	<<<'PHP'
+<?php
+add_filter( 'rest_comment_query', function( $args, $request ) {
+	if ( empty( $request['post'] ) || ! $request->get_param( 'slack_markers' ) ) {
+		return $args;
+	}
+
+	$types = isset( $args['type'] ) ? (array) $args['type'] : [ 'comment' ];
+	$args['type__in'] = array_values( array_unique( array_merge( $types, [ 'comment', 'slack_mention', 'human_mention' ] ) ) );
+	unset( $args['type'] );
+
+	return $args;
+}, 10, 2 );
+PHP
+);
+
 if ( get_option( 'h2_demo_seeded' ) ) {
 	return;
 }
@@ -140,6 +162,11 @@ $status = h2_demo_insert_post( [
 h2_demo_insert_comment( $status, $users['admin'], [
 	'hours_ago'       => 28,
 	'comment_content' => 'Sidebar feels much more natural on the left. Ship it.',
+] );
+h2_demo_insert_comment( $status, $users['admin'], [
+	'hours_ago'       => 26,
+	'comment_type'    => 'human_mention',
+	'comment_content' => 'Used by Human to answer a question',
 ] );
 
 // Watercooler question with a small comment thread.
