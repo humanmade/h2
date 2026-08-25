@@ -30,6 +30,33 @@ add_filter( 'rest_comment_query', function( $args, $request ) {
 
 	return $args;
 }, 10, 2 );
+
+add_filter( 'rest_prepare_comment', function( $response, $comment ) {
+	if ( 'slack_mention' !== $comment->comment_type ) {
+		return $response;
+	}
+
+	$data = $response->get_data();
+	$data['slack'] = [
+		'channel_name'      => (string) get_comment_meta( $comment->comment_ID, 'slack_channel_name', true ),
+		'permalink'         => (string) get_comment_meta( $comment->comment_ID, 'slack_permalink', true ),
+		'source'            => (string) get_comment_meta( $comment->comment_ID, 'slack_source', true ),
+		'visibility'        => (string) get_comment_meta( $comment->comment_ID, 'slack_visibility', true ),
+		'shared_by'         => (string) get_comment_meta( $comment->comment_ID, 'slack_shared_by', true ),
+		'shared_by_username' => (string) get_comment_meta( $comment->comment_ID, 'slack_shared_by_username', true ),
+		'shared_by_id'      => (int) $comment->user_id,
+	];
+	$response->set_data( $data );
+
+	return $response;
+}, 10, 2 );
+
+// Core's Recent Comments widget includes every comment type unless explicitly
+// narrowed. Activity records belong in the post stream, not in the sidebar.
+add_filter( 'widget_comments_args', function( $args ) {
+	$args['type'] = 'comment';
+	return $args;
+} );
 PHP
 );
 
@@ -163,6 +190,17 @@ h2_demo_insert_comment( $status, $users['admin'], [
 	'hours_ago'       => 28,
 	'comment_content' => 'Sidebar feels much more natural on the left. Ship it.',
 ] );
+$slack_mention = h2_demo_insert_comment( $status, $users['admin'], [
+	'hours_ago'       => 27,
+	'comment_type'    => 'slack_mention',
+	'comment_content' => 'Shared by @admin in #design on Slack',
+] );
+add_comment_meta( $slack_mention, 'slack_channel_name', 'design' );
+add_comment_meta( $slack_mention, 'slack_permalink', 'https://humanmade.slack.com/archives/CDEMO/p1234567890' );
+add_comment_meta( $slack_mention, 'slack_source', 'manual' );
+add_comment_meta( $slack_mention, 'slack_visibility', 'public' );
+add_comment_meta( $slack_mention, 'slack_shared_by', 'admin' );
+add_comment_meta( $slack_mention, 'slack_shared_by_username', 'admin' );
 h2_demo_insert_comment( $status, $users['admin'], [
 	'hours_ago'       => 26,
 	'comment_type'    => 'human_mention',
