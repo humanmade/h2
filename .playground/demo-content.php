@@ -51,6 +51,23 @@ add_filter( 'rest_prepare_comment', function( $response, $comment ) {
 	return $response;
 }, 10, 2 );
 
+add_filter( 'rest_prepare_comment', function( $response, $comment ) {
+	if ( 'human_mention' !== $comment->comment_type ) {
+		return $response;
+	}
+
+	$data = $response->get_data();
+	$data['human'] = [
+		'question_url'  => (string) get_comment_meta( $comment->comment_ID, 'human_question_url', true ),
+		'asker'         => (string) get_comment_meta( $comment->comment_ID, 'human_asker', true ),
+		'asker_username' => (string) get_comment_meta( $comment->comment_ID, 'human_asker_username', true ),
+		'asker_id'      => (int) get_comment_meta( $comment->comment_ID, 'human_asker_id', true ),
+	];
+	$response->set_data( $data );
+
+	return $response;
+}, 10, 2 );
+
 // Core's Recent Comments widget includes every comment type unless explicitly
 // narrowed. Activity records belong in the post stream, not in the sidebar.
 add_filter( 'widget_comments_args', function( $args ) {
@@ -201,11 +218,15 @@ add_comment_meta( $slack_mention, 'slack_source', 'manual' );
 add_comment_meta( $slack_mention, 'slack_visibility', 'public' );
 add_comment_meta( $slack_mention, 'slack_shared_by', 'admin' );
 add_comment_meta( $slack_mention, 'slack_shared_by_username', 'admin' );
-h2_demo_insert_comment( $status, $users['admin'], [
+$human_mention = h2_demo_insert_comment( $status, $users['admin'], [
 	'hours_ago'       => 26,
 	'comment_type'    => 'human_mention',
-	'comment_content' => 'Used by Human to answer a question',
+	'comment_content' => 'Referenced by @human to answer a question from @admin',
 ] );
+add_comment_meta( $human_mention, 'human_question_url', 'https://humanmade.slack.com/archives/CDEMO/p1234567891' );
+add_comment_meta( $human_mention, 'human_asker', 'admin' );
+add_comment_meta( $human_mention, 'human_asker_username', 'admin' );
+add_comment_meta( $human_mention, 'human_asker_id', $users['admin'] );
 
 // Watercooler question with a small comment thread.
 $question = h2_demo_insert_post( [

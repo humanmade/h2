@@ -52,12 +52,25 @@
 
 .Comment-HumanMention__logo {
 	display: block;
+	width: 14px;
+	height: 14px;
 	margin: 0;
 	opacity: 1;
+	background-size: contain;
 }
 
 .Comment-HumanMention__logo:hover {
 	opacity: 1;
+}
+
+.Comment-HumanMention__question {
+	color: inherit;
+	font-weight: 600;
+}
+
+.Comment-HumanMention__question:hover,
+.Comment-HumanMention__question:focus {
+	text-decoration: underline;
 }
 
 .Comment-SlackMention__channel {
