@@ -98,7 +98,7 @@ function handle_gravityform_request() {
 function render_gravityform( int $id, array $options ) {
 	add_filter( 'show_admin_bar', '__return_false', 100 );
 
-	require_once( GFCommon::get_base_path() . '/form_display.php' );
+	require_once GFCommon::get_base_path() . '/form_display.php';
 
 	$form = GFFormsModel::get_form_meta( $id );
 
@@ -125,7 +125,7 @@ function render_gravityform( int $id, array $options ) {
  * @param array  $block         The full block, including name and attributes.
  * @return string Rendered block string.
  */
-function render_todo_list_block( string $block_content, array $block ) : string {
+function render_todo_list_block( string $block_content, array $block ): string {
 	if ( $block['blockName'] !== 'tabor/todo-list' || empty( $block['innerBlocks'] ) ) {
 		return $block_content;
 	}
