@@ -9,6 +9,7 @@ import Avatar from '../Avatar';
 import Button from '../Button';
 
 const _n = ( single, plural, count ) => count === 1 ? `1 ${ single }` : `${ count } ${ plural }`;
+const COMMENT_SUMMARY_LIMIT = 100;
 
 const Person = props => {
 	if ( ! props.user ) {
@@ -28,7 +29,16 @@ const Person = props => {
 const ConnectedPerson = withUser( props => props.id )( Person );
 
 function Summary( props ) {
-	const { comments, loadingComments, post, postVisible, onExpand } = props;
+	const {
+		comments,
+		hasMoreComments,
+		loadingComments,
+		loadingMoreComments,
+		onExpand,
+		onLoadMoreComments,
+		post,
+		postVisible,
+	} = props;
 
 	const continueReadingMessage = `Continue reading (${ _n( 'word', 'words', post.content.count ) })`;
 
@@ -36,6 +46,28 @@ function Summary( props ) {
 	// `slack_mention` markers; exclude them from the count and avatar pile so
 	// they never read as human comments.
 	const realComments = comments ? comments.filter( comment => comment.type === 'comment' ) : [];
+	const hasSlackMarkers = comments ? comments.some( comment => comment.type === 'slack_mention' ) : false;
+
+	React.useEffect( () => {
+		if (
+			loadingComments
+			|| loadingMoreComments
+			|| ! hasMoreComments
+			|| ! hasSlackMarkers
+			|| realComments.length >= COMMENT_SUMMARY_LIMIT
+		) {
+			return;
+		}
+
+		onLoadMoreComments( null );
+	}, [
+		hasMoreComments,
+		hasSlackMarkers,
+		loadingComments,
+		loadingMoreComments,
+		onLoadMoreComments,
+		realComments.length,
+	] );
 
 	const people = uniq( realComments.map( comment => comment.author ) ).filter( Boolean );
 
@@ -103,7 +135,7 @@ export default withArchive(
 		const archiveId = `stream:${ post.id }`;
 		comments.registerArchive( archiveId, {
 			post: post.id,
-			per_page: 100,
+			per_page: COMMENT_SUMMARY_LIMIT,
 			slack_markers: 1,
 		} );
 		return archiveId;
@@ -111,7 +143,12 @@ export default withArchive(
 	{
 		mapDataToProps: data => ( {
 			comments: data.posts,
+			hasMoreComments: data.hasMore,
 			loadingComments: data.loading,
+			loadingMoreComments: data.loadingMore,
+		} ),
+		mapActionsToProps: actions => ( {
+			onLoadMoreComments: actions.onLoadMore,
 		} ),
 	}
 )( Summary );
