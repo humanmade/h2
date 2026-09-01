@@ -45,7 +45,9 @@ function Summary( props ) {
 	// The archive is shared with the comment stream and so includes
 	// `slack_mention` markers; exclude them from the count and avatar pile so
 	// they never read as human comments.
-	const realComments = comments ? comments.filter( comment => comment.type === 'comment' ) : [];
+	const realComments = comments
+		? comments.filter( comment => comment.type === 'comment' ).slice( 0, COMMENT_SUMMARY_LIMIT )
+		: [];
 	const hasSlackMarkers = comments ? comments.some( comment => comment.type === 'slack_mention' ) : false;
 
 	React.useEffect( () => {
