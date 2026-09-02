@@ -12,6 +12,12 @@ addFilter( 'presets/stylesheet-loaders', ( rule ) => {
 	return {
 		test: /\.s?css$/,
 		oneOf: [
+			{ resourceQuery: /raw/, type: 'asset/source' },
+			{
+				resourceQuery: /inline/,
+				type: 'asset/source',
+				use: rule.use.slice( 2 ), // postcss-loader + sass-loader
+			},
 			{ test: /\.css$/, use: useWithoutSass },
 			{ test: /\.scss$/, use: rule.use },
 		],
@@ -72,6 +78,9 @@ module.exports = presets.production( {
 	resolve: {
 		alias: {
 			'juniper-images': filePath( 'src/assets/images' ),
+
+			// format-library's package exports omit its stylesheet.
+			'@wordpress/format-library/build-style': filePath( 'node_modules/@wordpress/format-library/build-style' ),
 		},
 	},
 	cache: {
@@ -85,4 +94,11 @@ module.exports = presets.production( {
 // (Remove this once webpack-helpers is updated to latest.)
 module.exports.optimization.minimizer = module.exports.optimization.minimizer.filter( minimizer => {
 	return minimizer.constructor.name !== 'CssMinimizerPlugin';
+} );
+
+// Allow non-fully-specified imports from packages like `diff` used by
+// @wordpress/block-editor (webpack 5 strict ESM compatibility).
+module.exports.module.rules.unshift( {
+	test: /\.m?js/,
+	resolve: { fullySpecified: false },
 } );
