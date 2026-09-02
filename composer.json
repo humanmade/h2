@@ -12,7 +12,7 @@
         }
     ],
     "require-dev": {
-        "humanmade/coding-standards": "^2.0@dev",
+        "humanmade/coding-standards": "dev-main",
         "humanmade/asset-loader": "^0.7"
     },
     "config": {
