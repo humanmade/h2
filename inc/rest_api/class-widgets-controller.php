@@ -178,7 +178,7 @@ class Widgets_Controller extends WP_REST_Controller {
 
 		if ( empty( $this->instances ) ) {
 			return rest_ensure_response( [] );
-		};
+		}
 
 		$args            = [];
 		$args['sidebar'] = $request['sidebar'];
@@ -280,7 +280,6 @@ class Widgets_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Request object.
 	 */
 	public function get_item( $request ) {
-
 	}
 
 	/**
@@ -299,7 +298,6 @@ class Widgets_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Request object.
 	 */
 	public function delete_item( $request ) {
-
 	}
 
 	/**
@@ -360,7 +358,6 @@ class Widgets_Controller extends WP_REST_Controller {
 	 * Empty method. Why is it here? We may never know.
 	 */
 	public function get_item_schema() {
-
 	}
 
 	/**
