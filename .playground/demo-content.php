@@ -11,72 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	require_once '/wordpress/wp-load.php';
 }
 
-// The production activity-marker read filter lives in hmn.md. Playground does
-// not load that project, so install the smallest demo-only equivalent to make
-// seeded marker comments visible through H2's opted-in REST comment archive.
-wp_mkdir_p( WPMU_PLUGIN_DIR );
-file_put_contents(
-	WPMU_PLUGIN_DIR . '/h2-playground-activity-markers.php',
-	<<<'PHP'
-<?php
-add_filter( 'rest_comment_query', function( $args, $request ) {
-	if ( empty( $request['post'] ) || ! $request->get_param( 'slack_markers' ) ) {
-		return $args;
-	}
-
-	$types = isset( $args['type'] ) ? (array) $args['type'] : [ 'comment' ];
-	$args['type__in'] = array_values( array_unique( array_merge( $types, [ 'comment', 'slack_mention', 'human_mention' ] ) ) );
-	unset( $args['type'] );
-
-	return $args;
-}, 10, 2 );
-
-add_filter( 'rest_prepare_comment', function( $response, $comment ) {
-	if ( 'slack_mention' !== $comment->comment_type ) {
-		return $response;
-	}
-
-	$data = $response->get_data();
-	$data['slack'] = [
-		'channel_name'      => (string) get_comment_meta( $comment->comment_ID, 'slack_channel_name', true ),
-		'permalink'         => (string) get_comment_meta( $comment->comment_ID, 'slack_permalink', true ),
-		'source'            => (string) get_comment_meta( $comment->comment_ID, 'slack_source', true ),
-		'visibility'        => (string) get_comment_meta( $comment->comment_ID, 'slack_visibility', true ),
-		'shared_by'         => (string) get_comment_meta( $comment->comment_ID, 'slack_shared_by', true ),
-		'shared_by_username' => (string) get_comment_meta( $comment->comment_ID, 'slack_shared_by_username', true ),
-		'shared_by_id'      => (int) $comment->user_id,
-	];
-	$response->set_data( $data );
-
-	return $response;
-}, 10, 2 );
-
-add_filter( 'rest_prepare_comment', function( $response, $comment ) {
-	if ( 'human_mention' !== $comment->comment_type ) {
-		return $response;
-	}
-
-	$data = $response->get_data();
-	$data['human'] = [
-		'question_url'  => (string) get_comment_meta( $comment->comment_ID, 'human_question_url', true ),
-		'asker'         => (string) get_comment_meta( $comment->comment_ID, 'human_asker', true ),
-		'asker_username' => (string) get_comment_meta( $comment->comment_ID, 'human_asker_username', true ),
-		'asker_id'      => (int) get_comment_meta( $comment->comment_ID, 'human_asker_id', true ),
-	];
-	$response->set_data( $data );
-
-	return $response;
-}, 10, 2 );
-
-// Core's Recent Comments widget includes every comment type unless explicitly
-// narrowed. Activity records belong in the post stream, not in the sidebar.
-add_filter( 'widget_comments_args', function( $args ) {
-	$args['type'] = 'comment';
-	return $args;
-} );
-PHP
-);
-
 if ( get_option( 'h2_demo_seeded' ) ) {
 	return;
 }
@@ -207,26 +141,6 @@ h2_demo_insert_comment( $status, $users['admin'], [
 	'hours_ago'       => 28,
 	'comment_content' => 'Sidebar feels much more natural on the left. Ship it.',
 ] );
-$slack_mention = h2_demo_insert_comment( $status, $users['admin'], [
-	'hours_ago'       => 27,
-	'comment_type'    => 'slack_mention',
-	'comment_content' => 'Shared by @admin in #design on Slack',
-] );
-add_comment_meta( $slack_mention, 'slack_channel_name', 'design' );
-add_comment_meta( $slack_mention, 'slack_permalink', 'https://humanmade.slack.com/archives/CDEMO/p1234567890' );
-add_comment_meta( $slack_mention, 'slack_source', 'manual' );
-add_comment_meta( $slack_mention, 'slack_visibility', 'public' );
-add_comment_meta( $slack_mention, 'slack_shared_by', 'admin' );
-add_comment_meta( $slack_mention, 'slack_shared_by_username', 'admin' );
-$human_mention = h2_demo_insert_comment( $status, $users['admin'], [
-	'hours_ago'       => 26,
-	'comment_type'    => 'human_mention',
-	'comment_content' => 'Referenced by @human to answer a question from @admin',
-] );
-add_comment_meta( $human_mention, 'human_question_url', 'https://humanmade.slack.com/archives/CDEMO/p1234567891' );
-add_comment_meta( $human_mention, 'human_asker', 'admin' );
-add_comment_meta( $human_mention, 'human_asker_username', 'admin' );
-add_comment_meta( $human_mention, 'human_asker_id', $users['admin'] );
 
 // Watercooler question with a small comment thread.
 $question = h2_demo_insert_post( [
