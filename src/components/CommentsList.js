@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { Comment as CommentShape, Post } from '../shapes';
 
 import Comment from './Comment';
-import HumanMention from './Comment/HumanMention';
+import BotMention from './Comment/BotMention';
 import SlackMention from './Comment/SlackMention';
 
 import './CommentsList.css';
@@ -15,7 +15,7 @@ export default class CommentsList extends Component {
 			return <SlackMention key={ comment.id } comment={ comment } />;
 		}
 		if ( comment.type === 'human_mention' ) {
-			return <HumanMention key={ comment.id } comment={ comment } />;
+			return <BotMention key={ comment.id } comment={ comment } />;
 		}
 		return (
 			<Comment

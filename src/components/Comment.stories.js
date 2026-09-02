@@ -5,7 +5,7 @@ import { withPadding, withStore } from '../stories/decorators';
 import { comment, post, user } from '../stories/stubs';
 
 import { Comment as CommentComponent } from './Comment';
-import HumanMention from './Comment/HumanMention';
+import BotMention from './Comment/BotMention';
 import SlackMention from './Comment/SlackMention';
 import { WriteComment as WriteCommentComponent } from './Message/WriteComment';
 
@@ -60,9 +60,11 @@ export const ActivityMentions = () => (
 				},
 			} }
 		/>
-		<HumanMention
+		<BotMention
 			comment={ {
 				...comment,
+				author_avatar_urls: user.avatar_urls,
+				author_name: 'Helpful Bot',
 				id: 3,
 				type: 'human_mention',
 				human: {

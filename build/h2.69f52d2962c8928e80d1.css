@@ -353,26 +353,32 @@ body.--overlay-visible {
 	display: block;
 }
 
-.Comment-ActivityMention__node .Comment-HumanMention__logo {
+.Comment-ActivityMention__node .Comment-BotMention__logo {
 	display: block;
 	width: 14px;
 	height: 14px;
 	margin: 0;
-	opacity: 1;
-	background-size: contain;
+	border-radius: 50%;
 }
 
-.Comment-ActivityMention__node .Comment-HumanMention__logo:hover {
-	opacity: 1;
+.Comment-ActivityMention__node .Comment-BotMention__logo--fallback {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var( --hm-red );
+	color: #fff;
+	font-size: 9px;
+	font-weight: 600;
+	line-height: 1;
 }
 
-.Comment-HumanMention__question {
+.Comment-BotMention__question {
 	color: inherit;
 	font-weight: 600;
 }
 
-.Comment-HumanMention__question:hover,
-.Comment-HumanMention__question:focus {
+.Comment-BotMention__question:hover,
+.Comment-BotMention__question:focus {
 	text-decoration: underline;
 }
 
