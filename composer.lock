@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "785689efc0792bec193227c80d5c774d",
+    "content-hash": "1067e3381e6b0477568c341754f05623",
     "packages": [],
     "packages-dev": [
         {
@@ -374,7 +374,7 @@
         },
         {
             "name": "humanmade/coding-standards",
-            "version": "dev-main",
+            "version": "v2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/humanmade/coding-standards.git",
@@ -398,7 +398,6 @@
             "require-dev": {
                 "phpunit/phpunit": "^8.2"
             },
-            "default-branch": true,
             "type": "phpcodesniffer-standard",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -407,7 +406,7 @@
             "description": "Human Made Coding Standards",
             "support": {
                 "issues": "https://github.com/humanmade/coding-standards/issues",
-                "source": "https://github.com/humanmade/coding-standards/tree/main"
+                "source": "https://github.com/humanmade/coding-standards/tree/v2.5.0"
             },
             "time": "2026-07-10T15:56:53+00:00"
         },
@@ -1003,9 +1002,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "humanmade/coding-standards": 20
-    },
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {},
