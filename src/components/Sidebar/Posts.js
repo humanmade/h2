@@ -5,10 +5,11 @@ import { Link as InternalLink } from 'react-router-dom';
 
 import { posts } from '../../types';
 import { decodeEntities } from '../../util';
+import FormattedDate from '../FormattedDate';
 import Link from '../Link';
+
 import Container from './Container';
 import Pagination from './Pagination';
-import FormattedDate from "../FormattedDate";
 
 function PostList( props ) {
 	if ( props.loading || props.loadingMore ) {
@@ -33,7 +34,7 @@ function PostList( props ) {
 						>
 							<div>
 								<span className="block">{ decodeEntities( post.title.rendered ) }</span>
-								{ post.hasOwnProperty( 'date' ) && (
+								{ Object.prototype.hasOwnProperty.call( post, 'date' ) && (
 									<span className="block mt-1 opacity-60 text-xs text-gray-600">
 										<FormattedDate
 											date={ post.date + 'Z' }

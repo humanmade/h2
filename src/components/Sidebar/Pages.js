@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { pages } from '../../types';
 import { decodeEntities } from '../../util';
+
 import Container from './Container';
 
 const internalLink = link => link.replace( window.H2Data.site.home, '' );
@@ -49,6 +50,9 @@ const PageList = ( { all, pages: pageItems } ) => (
 /**
  * Receives per-page props from withPagedArchive. Automatically advances to the
  * next page when a page finishes loading, until hasMore is false.
+ *
+ * @param {object} props Props passed down from withPagedArchive.
+ * @returns {React.ReactNode} Loading indicator, or the full page list.
  */
 function PagesLoader( props ) {
 	const { loading, loadingMore, hasMore, posts, onNextPage } = props;

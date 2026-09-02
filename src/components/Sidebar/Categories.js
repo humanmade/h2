@@ -19,7 +19,7 @@ const Category = ( { all, category } ) => {
 				<span>
 					{ category.name }
 
-					{ category.hasOwnProperty( 'count' ) && (
+					{ Object.prototype.hasOwnProperty.call( category, 'count' ) && (
 						<span className="ml-1 opacity-60">
 							({ category.count })
 						</span>
@@ -41,7 +41,7 @@ const Category = ( { all, category } ) => {
 };
 
 const CategoryList = ( { all, categories } ) => (
-	<ul className={ `my-0 border-t border-hm-beige/50 divide-y divide-hm-beige/50 pl-4` }>
+	<ul className={ 'my-0 border-t border-hm-beige/50 divide-y divide-hm-beige/50 pl-4' }>
 		{ categories && categories.map( category => (
 			<Category
 				key={ category.id }
