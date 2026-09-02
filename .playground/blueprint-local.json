@@ -1,0 +1,49 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"meta": {
+		"title": "H2 (local development)",
+		"description": "Run your local H2 checkout in WordPress Playground. Expects the repository to be mounted at /wordpress/wp-content/themes/h2 — use `npm run playground`.",
+		"author": "humanmade"
+	},
+	"landingPage": "/",
+	"preferredVersions": {
+		"php": "8.2",
+		"wp": "latest"
+	},
+	"features": {
+		"networking": true
+	},
+	"steps": [
+		{
+			"step": "setSiteOptions",
+			"options": {
+				"blogname": "H2 Demo",
+				"blogdescription": "Team communication, P2-style, by Human Made"
+			}
+		},
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "git:directory",
+				"url": "https://github.com/humanmade/asset-loader.git",
+				"ref": "main"
+			},
+			"options": {
+				"activate": true,
+				"targetFolderName": "asset-loader"
+			}
+		},
+		{
+			"step": "activateTheme",
+			"themeFolderName": "h2"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require '/wordpress/wp-content/themes/h2/.playground/demo-content.php';"
+		},
+		{
+			"step": "login",
+			"username": "admin"
+		}
+	]
+}

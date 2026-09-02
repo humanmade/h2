@@ -12,12 +12,12 @@ class CustomRender extends marked.Renderer {
 		return super.link( href, title, text );
 	}
 
-	list( body, ordered ) {
+	list( body, ordered, start ) {
 		if ( body.indexOf( TASK_LIST_TOKEN ) >= 0 ) {
 			return '<ul class="Tasklist">' + body.replace( new RegExp( TASK_LIST_TOKEN, 'g' ), '' ) + '</ul>';
 		}
 
-		return super.list( body, ordered );
+		return super.list( body, ordered, start );
 	}
 
 	listitem( text ) {
