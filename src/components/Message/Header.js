@@ -40,48 +40,68 @@ export class MessageHeader extends React.Component {
 
 		const classes = [
 			'Message-Header',
-			constrainTitle && 'Message-Header--constrained',
-			sticky && 'Message-Header--sticky',
+			'top-0 py-[15px] bg-white flex items-start min-[600px]:min-h-[99px]',
+
+			// Mobile:
+			'max-[600px]:-mx-5 max-[600px]:px-5 max-[600px]:py-2 max-[600px]:flex-row-reverse max-[600px]:[&_.Post\\\\_\\\\_actions]:hidden',
+
+			sticky ? 'Message-Header--sticky sticky z-5' : 'relative z-6',
+			constrainTitle && 'Message-Header--constrained h-[99px]',
 		];
+
+		const titleClasses = [
+			'text-2xl leading-7 font-bold mt-0 mr-[0.5em] mb-[10px] ml-0 [text-transform:inherit]',
+			constrainTitle && 'whitespace-nowrap text-ellipsis overflow-hidden',
+		].filter( Boolean ).join( ' ' );
 
 		return (
 			<header
 				className={ classes.filter( Boolean ).join( ' ' ) }
 				ref={ this.onUpdateRef }
 			>
-				<div>
+				<div className="flex flex-col items-end">
 					<Avatar
+						className="mr-[30px] w-[3.333rem] h-[3.333rem] rounded-full self-start max-[600px]:ml-2 max-[600px]:mr-0 max-[600px]:w-[24px]! max-[600px]:h-[24px]!"
+						imgClassName="max-[600px]:w-[24px]! max-[600px]:h-[24px]!"
 						url={ author ? author.avatar_urls['96'] : '' }
 						user={ author }
 						size={ 60 }
 					/>
 					{ ! collapsed && onCollapse ? (
 						<button
-							className="Message-Header__Collapse-Button"
+							className={ [
+								'Message-Header__Collapse-Button',
+								'group hidden items-center w-6 h-6 p-0 cursor-pointer bg-black/2 border-2 border-solid border-black/10 rounded-full transition-[border-color] duration-100',
+								'max-[600px]:flex',
+								'hover:border-black/40 hover:duration-200 focus:border-black/40 focus:duration-200',
+							].join( ' ' ) }
 							onClick={ onCollapse }
 						>
-							<i className="icon icon--close icon--black" />
+							<i
+								className="icon icon--close icon--black w-6 opacity-30 transition-opacity duration-100 group-hover:opacity-80 group-hover:duration-200 group-focus:opacity-80 group-focus:duration-200"
+							/>
 							<span className="screen-reader-text">Collapse post</span>
 						</button>
 					) : null }
 				</div>
-				<div className="Message-Header__byline">
+				<div className="grow min-w-0 overflow-hidden leading-[1.1]">
 					<Link
+						className="text-inherit hover:no-underline"
 						disablePreviews
 						href={ post.link }
 					>
-						<h2 className="Message-Header__title">
+						<h2 className={ titleClasses }>
 							{ decodeEntities( post.title.rendered ) }
 						</h2>
 					</Link>
-					<span className="Message-Header__date">
+					<span className="inline-block mr-2 text-[#AAA] text-[14px]">
 						{ author ? (
 							<AuthorLink user={ author }>{ author.name }</AuthorLink>
 						) : '' },&nbsp;
 						<FormattedDate date={ post.date_gmt + 'Z' } />
 					</span>
 					{ categories.length > 0 && (
-						<ul className="Message-Header__categories">
+						<ul className="Message-Header__categories list-none m-0 p-0 inline text-[14px]">
 							{ categories.map( category => (
 								<li key={ category.id }>
 									<Link href={ category.link }>
@@ -92,7 +112,7 @@ export class MessageHeader extends React.Component {
 						</ul>
 					) }
 					{ post.status === 'draft' && (
-						<span className="Message-Header__status">
+						<span className="text-[14px] ml-2">
 							<span role="img" aria-label="">🔒</span>
 							Unpublished
 						</span>

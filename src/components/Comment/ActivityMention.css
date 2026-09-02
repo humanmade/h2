@@ -1,0 +1,148 @@
+.Comment-ActivityMention {
+	/* Trailing space below the row. The node's height is bound to the same
+	 * value (it spans the content band above this padding), so they must match
+	 * — hence the shared custom property. */
+	--activity-mention-trailing: 2.5rem;
+	position: relative;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 0.4em;
+	/* Trailing space as padding (not margin) so the thread line below keeps
+	 * running through it. Matches the ~40px rhythm between real comments,
+	 * which carry their spacing internally rather than as a box gap. */
+	padding: 0 0 var( --activity-mention-trailing );
+	font-size: 0.85em;
+	line-height: 1.4;
+	color: var( --hm-medium-grey );
+}
+
+/* Keep the thread's vertical line running through the marker and its trailing
+ * space so it isn't visually broken. Colour mirrors .Comment:before's line
+ * (Comment.css hardcodes the same #F1F2EE; there is no token for it). */
+.Comment-ActivityMention:before {
+	position: absolute;
+	content: '';
+	background: #F1F2EE;
+	left: -41px;
+	top: 0;
+	bottom: 0;
+	width: 3px;
+	z-index: -1;
+}
+
+/* The activity glyph sits on the line as a timeline node, masking it with a white
+ * background the way comment avatars do (matching Header.css). It spans the
+ * content band (above the trailing padding) so it stays centred on the text. */
+.Comment-ActivityMention__node {
+	position: absolute;
+	left: -47px;
+	top: 0;
+	bottom: var( --activity-mention-trailing );
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 1px;
+	background: #fff;
+}
+
+.Comment-SlackMention__logo {
+	display: block;
+}
+
+.Comment-ActivityMention__node .Comment-HumanMention__logo {
+	display: block;
+	width: 14px;
+	height: 14px;
+	margin: 0;
+	opacity: 1;
+	background-size: contain;
+}
+
+.Comment-ActivityMention__node .Comment-HumanMention__logo:hover {
+	opacity: 1;
+}
+
+.Comment-HumanMention__question {
+	color: inherit;
+	font-weight: 600;
+}
+
+.Comment-HumanMention__question:hover,
+.Comment-HumanMention__question:focus {
+	text-decoration: underline;
+}
+
+.Comment-SlackMention__channel {
+	color: inherit;
+	font-weight: 600;
+}
+
+/* Only the linked (manual-share) channel underlines on hover; the auto-share
+ * channel is plain text, so it must not. */
+a.Comment-SlackMention__channel:hover,
+a.Comment-SlackMention__channel:focus {
+	text-decoration: underline;
+}
+
+/* Push the date to the right edge so it lines up with real comments' dates. */
+.Comment-ActivityMention__text {
+	margin-right: auto;
+}
+
+.Comment-ActivityMention__date,
+.Comment-ActivityMention__date time {
+	color: inherit;
+}
+
+/* Match real comment dates: same size (.Comment-date is 0.75em of the larger
+ * header font ≈ 13.5px) and the same right-hand inset. */
+.Comment-ActivityMention__date {
+	font-size: 0.88em;
+	margin-right: 0.5em;
+}
+
+/* When a marker ends the thread, keep a short tail below the node — like a
+ * trailing comment — so the line stops short and the rounded dot below sits
+ * clear of the node's white mask (otherwise the cap is hidden behind it). */
+.Comment-ActivityMention:last-child {
+	padding-bottom: 1.5rem;
+}
+
+.Comment-ActivityMention:last-child:before {
+	bottom: 1rem;
+}
+
+/* The node stays in the content band above the tail, so the logo aligns with
+ * the text and leaves the tail (line-end + dot) below it visible. */
+.Comment-ActivityMention:last-child .Comment-ActivityMention__node {
+	bottom: 1.5rem;
+}
+
+/* Cap the line with the same rounded terminal dot a trailing comment gets
+ * (mirrors .Comment:last-child:after). */
+.Comment-ActivityMention:last-child:after {
+	position: absolute;
+	content: '';
+	background: #F1F2EE;
+	left: -43.5px;
+	bottom: calc( 1rem - 4.5px );
+	width: 9px;
+	height: 9px;
+	z-index: -1;
+	border-radius: 50%;
+}
+
+@media ( max-width: 600px ) {
+	.Comment-ActivityMention:last-child:after {
+		left: -23px;
+	}
+
+	.Comment-ActivityMention:before {
+		left: -20px;
+	}
+
+	.Comment-ActivityMention__node {
+		left: -26px;
+	}
+}

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Button from '../../components/Button';
 import EmojiPicker from '../../components/EmojiPicker';
 import { withCurrentUser } from '../../hocs';
 import { reactions } from '../../types';
@@ -15,7 +16,7 @@ function UserDisplayName( props ) {
 	}
 
 	return (
-		<span className={ 'user-display-name ' + props.className }>
+		<span className="block text-white">
 			{ props.userName }
 		</span>
 	);
@@ -27,7 +28,7 @@ const Emoji = props => {
 		return (
 			<img
 				alt={ custom.colons }
-				className="Reactions-custom"
+				className="h-[1em] max-h-[1em]"
 				src={ custom.imageUrl }
 			/>
 		);
@@ -113,25 +114,28 @@ export class Reactions extends Component {
 		const loading = this.props.loading || this.state.isLoading;
 
 		return (
-			<div className="reactions">
+			<div className="reactions flex flex-wrap relative">
 				{ Object.entries( reactions ).map( ( [ emoji, users ] ) => {
 					let isActive = reactions[ emoji ].indexOf( this.props.currentUser.id ) >= 0 ? true : false;
 					return (
-						<button
-							className={ 'btn btn--small btn--tertiary' + ( isActive ? ' btn--active' : '' ) }
-							onClick={ () => this.toggleReaction( emoji ) }
+						<Button
 							key={ emoji }
+							className={ [
+								'group whitespace-nowrap relative mb-2 h-[31px]',
+								isActive && 'bg-[rgba(125,201,218,0.1)] hover:bg-[rgba(125,201,218,0.1)]',
+							].filter( Boolean ).join( ' ' ) }
+							type="tertiary"
+							onClick={ () => this.toggleReaction( emoji ) }
 						>
-							<span className="reactions__emoji" key="emoji">
+							<span className="inline-block ml-[0.1em] mr-1 relative top-[2.5px]" key="emoji">
 								<Emoji type={ emoji } />
 							</span>
-							<span className="reactions__count" key="count">{ users.length }</span>
-							<span className="reactions__users" key="users">
+							<span className={ `ml-1 mr-[0.1em] text-sm ${ isActive ? 'text-hm-warm-grey' : 'text-[#AAA]' }` } key="count">{ users.length }</span>
+							<span className="hidden group-hover:block group-focus:block absolute top-[calc(100%+5px)] left-0 bg-black/60 px-2 py-1 rounded-xs text-sm z-10 text-left" key="users">
 								{ users.map( reactionAuthorId => {
 									const user = this.props.users && this.props.users.filter( user => user.id === reactionAuthorId );
 									return (
 										<UserDisplayName
-											className="reactions__user"
 											userId={ reactionAuthorId }
 											userName={ user && user.length > 0 ? user[0].name : 'Unknown' }
 											key={ this.props.postId + reactionAuthorId }
@@ -139,21 +143,21 @@ export class Reactions extends Component {
 									);
 								} ) }
 							</span>
-						</button>
+						</Button>
 					);
 				} ) }
-				<button
-					className={ 'reactions__add-reaction btn btn--small btn--tertiary' + ( loading ? ' loading' : '' ) }
-					onClick={ value => this.setState( { isOpen: ! this.state.isOpen  } ) }
-					key="button"
+				<Button
+					className={ 'reactions__add-reaction ' + ( loading ? ' loading' : '' ) }
 					disabled={ loading }
+					type="tertiary"
+					onClick={ () => this.setState( { isOpen: ! this.state.isOpen  } ) }
 				>
 					{ loading ? (
-						<span className="loading loading--active"></span>
+						<span className="loading loading--active m-0"></span>
 					) : (
 						<span className="icon icon--smiley-wink">Add reaction</span>
 					) }
-				</button>
+				</Button>
 				{ this.state.isOpen && (
 					<EmojiPicker
 						onClose={ () => this.setState( { isOpen: false } ) }

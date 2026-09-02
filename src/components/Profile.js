@@ -11,12 +11,10 @@ import Map from './Map';
 import Container from './Sidebar/Container';
 import UserBlock from './UserBlock';
 
-import './Profile.css';
-
 const Field = props => (
-	<p className="Profile-field">
-		<strong>{ props.name }:</strong>
-		<span className={ props.missing ? 'missing' : null }>{ props.children }</span>
+	<p className="m-0 mb-1 flex">
+		<strong className="w-1/4 grow-0 shrink-0">{ props.name }:</strong>
+		<span className={ props.missing ? 'missing italic' : null }>{ props.children }</span>
 	</p>
 );
 
@@ -63,7 +61,6 @@ const LocalTime = props => {
 export class Profile extends React.Component {
 	render() {
 		const containerProps = {
-			className: 'Profile',
 			title: 'Profile',
 			onClose: this.props.onClose,
 		};
@@ -98,7 +95,7 @@ export class Profile extends React.Component {
 					/>
 				) }
 
-				<ul className="Profile-navigation">
+				<ul className="Profile-navigation list-none my-4 mx-0 p-0">
 					<li>
 						<Link href={ user.link }>View all posts →</Link>
 					</li>
@@ -107,9 +104,7 @@ export class Profile extends React.Component {
 					</li>
 				</ul>
 
-				<div className="Profile-fields">
-					<LocalTime user={ user } />
-				</div>
+				<LocalTime user={ user } />
 
 				<div className="Profile-description">
 					{ user.facts && user.facts.long_description.split( '\n' ).map( ( text, idx ) =>

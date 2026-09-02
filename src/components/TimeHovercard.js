@@ -3,8 +3,6 @@ import { FormattedRelative, FormattedTime } from 'react-intl';
 
 import Hovercard from './Hovercard';
 
-import './TimeHovercard.css';
-
 const DATE_FORMAT = {
 	weekday: 'long',
 	day: 'numeric',
@@ -31,9 +29,9 @@ export const TimeCard = props => {
 	const tzShortName = getTimezone( date, 'short' );
 
 	return (
-		<div className="TimeHovercard">
+		<div className="text-[0.77778rem] [&_p]:leading-[1.6] [&_p]:m-0">
 			<p>Displayed in your local time ({ tzShortName } / { tzName })</p>
-			<dl className="TimeHovercard__times">
+			<dl className="grid grid-cols-[min-content_auto] [&_dt]:font-bold [&_dt]:text-right [&_dd]:ml-[1em]">
 				<dt>Original:</dt>
 				<dd><code>{ original }</code></dd>
 				<dt>UTC:</dt>
@@ -85,12 +83,12 @@ export default function TimeHovercard( props ) {
 			cardContent={ cardContent }
 		>
 			<time
-				className="TimeHovercard__time"
+				className="border-0 border-b border-dotted border-brand"
 				dateTime={ dateTime }
 			>
 				<span
 					aria-label="Time"
-					className="TimeHovercard__clock-indicator"
+					className="mr-[0.4em] text-[0.77778rem]"
 					role="img"
 				>
 					🕑

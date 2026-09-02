@@ -5,8 +5,6 @@ import { showMetaSidebar } from '../../actions';
 import { User } from '../../shapes';
 import Avatar from '../Avatar';
 
-import './CurrentUser.css';
-
 function CurrentUser( props ) {
 	const { user } = props;
 
@@ -16,7 +14,7 @@ function CurrentUser( props ) {
 
 	return (
 		<button
-			className="Header-CurrentUser"
+			className="p-0 bg-transparent border-transparent mb-0 cursor-pointer"
 			onClick={ props.onShowSidebar }
 		>
 			<Avatar

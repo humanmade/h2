@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import Button from './Button';
 import Modal from './Modal';
 
-import './SessionExpiredWarning.css';
-
 class SessionExpiredWarning extends Component {
 	constructor( props ) {
 		super( props );
@@ -32,8 +30,8 @@ class SessionExpiredWarning extends Component {
 
 		if ( this.state.dismissed ) {
 			return (
-				<div class="SessionExpiredBanner">
-					<p>Session Disconnected</p>
+				<div>
+					<p className="font-bold text-[0.9rem] m-1 leading-[1.2] text-center">Session Disconnected</p>
 				</div>
 			);
 		}
@@ -61,7 +59,7 @@ class SessionExpiredWarning extends Component {
 				title={ <span><i className="icon icon--link" /> Connection Error</span> }
 				onDismiss={ this.onDismiss }
 			>
-				<div className="SessionExpiredModal">
+				<div className="text-center">
 					{ message }
 
 					<Button onClick={ this.onReload }>

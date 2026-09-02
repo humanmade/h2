@@ -4,11 +4,28 @@ import React from 'react';
 import Button from './Button';
 import ButtonGroup from './ButtonGroup';
 
-import './Dropdown.css';
+const CONTENT_CLASSES = [
+	'hidden',
+	'absolute left-0 right-0 top-full z-10',
+	'm-0 -mt-px p-0 w-full',
+	'max-h-[50vh] overflow-x-hidden overflow-y-scroll',
+	'text-hm-warm-grey bg-white',
+	'border border-solid border-hm-vibrant-blue',
+	'rounded-bl rounded-br',
+	'cursor-auto text-left',
+
+	// Child buttons.
+	'[&>.btn]:block [&>.btn]:w-full [&>.btn]:py-[0.3em] [&>.btn]:px-[0.5em]',
+	'[&>.btn]:m-0 [&>.btn]:border-none [&>.btn]:rounded-none',
+	'[&>.btn]:leading-[1.4] [&>.btn]:text-left [&>.btn]:whitespace-normal',
+	'[&>.btn:hover]:border-none [&>.btn:hover]:bg-hm-vibrant-blue',
+].join( ' ' );
+
+const DropdownContext = React.createContext( null );
 
 export const Arrow = () => (
 	<svg
-		className="Dropdown__arrow"
+		className="w-[0.55em] align-middle"
 		viewBox="0 0 12 7"
 	>
 		<title>Select other actions…</title>
@@ -23,20 +40,29 @@ export const Arrow = () => (
 	</svg>
 );
 
-const DropdownContext = React.createContext( null );
-
 export const DropdownContent = props => {
 	const { children } = props;
 
 	return (
 		<DropdownContext.Consumer>
 			{ context => {
-				const { size, type, onToggle } = context;
+				const { expanded, size, type, onToggle } = context;
+
+				const triggerClasses = [
+					'h-full! m-0! -ml-px!',
+					'rounded-tl-none! rounded-bl-none!',
+					expanded && 'rounded-br-none!',
+				].filter( Boolean ).join( ' ' );
+
+				const contentClasses = [
+					CONTENT_CLASSES,
+					expanded && 'block!',
+				].filter( Boolean ).join( ' ' );
 
 				return (
-					<div className="Dropdown__trigger-container">
+					<div className="flex">
 						<Button
-							className="Dropdown__trigger"
+							className={ triggerClasses }
 							size={ size }
 							type={ type }
 							onClick={ onToggle }
@@ -44,7 +70,7 @@ export const DropdownContent = props => {
 							<Arrow />
 						</Button>
 
-						<div className="Dropdown__content">
+						<div className={ contentClasses }>
 							{ children }
 						</div>
 					</div>
@@ -93,13 +119,17 @@ export class Dropdown extends React.PureComponent {
 		const { expanded } = this.state;
 
 		const className = [
-			'Dropdown',
-			expanded && 'Dropdown--expanded',
+			'Dropdown relative flex min-w-[5em]',
+			'[&_.btn--small]:min-h-[31px]',
+			'[&>.btn:first-child]:text-left [&>.btn:first-child]:grow',
+			expanded && '[&>.btn:first-child]:rounded-bl-none',
+			expanded && '[&>.btn:last-child]:rounded-br-none',
 
 			this.props.className,
 		].filter( Boolean ).join( ' ' );
 
 		const context = {
+			expanded,
 			size,
 			type,
 			onToggle: this.onToggle,

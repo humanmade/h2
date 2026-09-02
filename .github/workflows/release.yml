@@ -19,7 +19,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '12'
+          node-version: '24'
 
       - name: Merge and build
         uses: ./.github/actions/build-to-release-branch
@@ -28,5 +28,6 @@ jobs:
           release_branch: release
           built_asset_paths: build
           build_script: |
-            npm ci
+            # Skip legacy native build scripts which are not needed by webpack.
+            npm ci --ignore-scripts
             npm run build
