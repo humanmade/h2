@@ -12,16 +12,14 @@
         }
     ],
     "require-dev": {
-        "humanmade/coding-standards": "^2.0@dev"
+        "humanmade/coding-standards": "^2.0@dev",
+        "humanmade/asset-loader": "^0.7"
     },
     "config": {
         "allow-plugins": {
             "composer/installers": true,
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
-    },
-    "require-dev": {
-        "humanmade/asset-loader": "^0.7"
     },
     "extra": {
         "installer-paths": {
