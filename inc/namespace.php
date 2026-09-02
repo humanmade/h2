@@ -98,7 +98,7 @@ function register_customizer_settings( $wp_customize ) {
  *
  * @return string Manifest path.
  */
-function get_manifest() : string {
+function get_manifest(): string {
 	static $manifest;
 	if ( isset( $manifest ) ) {
 		return $manifest;
@@ -149,7 +149,7 @@ function enqueue_assets() {
 /**
  * Load the typekit fonts when available.
  */
-function enqueue_typekit_fonts() : void {
+function enqueue_typekit_fonts(): void {
 	if ( defined( 'H2_TYPEKIT_URL' ) ) {
 		wp_enqueue_style( 'h2-fonts', H2_TYPEKIT_URL );
 	}
@@ -165,7 +165,7 @@ function enqueue_typekit_fonts() : void {
  *
  * @return string Hex color code.
  */
-function get_brand_color() : string {
+function get_brand_color(): string {
 	if ( defined( 'H2_BRAND_COLOR' ) ) {
 		// Priority 1: Check for constant first.
 		$color = H2_BRAND_COLOR;
@@ -192,7 +192,7 @@ function get_brand_color() : string {
  *
  * Outputs CSS variables to override the default brand color.
  */
-function enqueue_brand_color() : void {
+function enqueue_brand_color(): void {
 	$brand_color = get_brand_color();
 
 	// Only output custom CSS if the color is different from the default.
@@ -222,7 +222,7 @@ function enqueue_brand_color() : void {
  * @param int    $steps  Steps to brighten (positive) or darken (negative).
  * @return string Adjusted hex color code.
  */
-function adjust_color_brightness( string $hex, int $steps ) : string {
+function adjust_color_brightness( string $hex, int $steps ): string {
 	// Remove # if present.
 	$hex = ltrim( $hex, '#' );
 
@@ -249,7 +249,7 @@ function adjust_color_brightness( string $hex, int $steps ) : string {
 /**
  * Register the editor stylesheet.
  */
-function register_editor_style() : void {
+function register_editor_style(): void {
 	add_theme_support( 'editor-styles' );
 	$stylesheet = Asset_Loader\Manifest\get_manifest_resource(
 		get_stylesheet_directory() . '/build/production-asset-manifest.json',
@@ -264,7 +264,7 @@ function register_editor_style() : void {
 /**
  * Enqueue brand color customization for the block editor.
  */
-function enqueue_editor_brand_color() : void {
+function enqueue_editor_brand_color(): void {
 	$brand_color = get_brand_color();
 
 	// Only output custom CSS if the color is different from the default.
@@ -312,11 +312,11 @@ function get_custom_logo_url() {
  * @param string $url URL being fetched.
  * @return string Simplified URL with some params removed.
  */
-function get_preload_key( string $url ) : string {
+function get_preload_key( string $url ): string {
 	$url_params_to_remove = [ '_fields' ];
 	return array_reduce(
 		$url_params_to_remove,
-		function( $url, $param_to_remove ) {
+		function ( $url, $param_to_remove ) {
 			$regex = sprintf( '/[\?&]%s=[^&]+/', preg_quote( $param_to_remove, '/' ) );
 			return preg_replace( $regex, '', $url );
 		},
@@ -329,7 +329,7 @@ function get_preload_key( string $url ) : string {
  *
  * @return array Preload URL list.
  */
-function get_preload_urls() : array {
+function get_preload_urls(): array {
 	return [
 		// @TODO: This preloaded data is not used (the client makes the same requests),
 		// need to investigate why. For now, these only increase TTFB with no gain.
@@ -452,7 +452,7 @@ function prefetch_urls( $endpoints ) {
  * @param string $current_value Whatever permalink scheme is set (overridden).
  * @return string A permalink structure that matches the React router.
  */
-function get_permalink_structure( $current_value ) : string {
+function get_permalink_structure( $current_value ): string {
 	return '/%year%/%monthnum%/%day%/%postname%/';
 }
 
@@ -557,7 +557,7 @@ function register_custom_meta() {
 		'single'            => true,
 		'show_in_rest'      => true,
 		'default'           => 'full',
-		'sanitize_callback' => function ( string $value ) : string {
+		'sanitize_callback' => function ( string $value ): string {
 			$value = strtolower( $value );
 			if ( ! in_array( $value, [ 'compact', 'nocomments', 'full' ], true ) ) {
 				return 'full';
