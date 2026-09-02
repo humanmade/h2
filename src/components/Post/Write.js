@@ -5,11 +5,13 @@ import { connect } from 'react-redux';
 
 import { withCategories, withCurrentUser } from '../../hocs';
 import { posts } from '../../types';
+import { isBlockContent } from '../../util';
 import Avatar from '../Avatar';
 import Editor from '../Editor/LazyEditor';
 import Notification from '../Notification';
 import RemotePreview from '../RemotePreview';
 
+import LazyBlockEditor from './LazyBlockEditor';
 import SelectDraft from './SelectDraft';
 
 const WRAP_CLASSES = [
@@ -37,6 +39,12 @@ export class WritePost extends Component {
 			isSaving: false,
 			lastSave: null,
 			didCopy: false,
+
+			// Which editor is in use: 'markdown' or 'blocks'.
+			editor: 'markdown',
+
+			// Bumped whenever the editor should start afresh (e.g. loading a draft).
+			editorKey: 0,
 		};
 	}
 
@@ -74,11 +82,9 @@ export class WritePost extends Component {
 
 		const onDoSave = body.id ? this.props.onUpdate : this.props.onCreate;
 		onDoSave( body )
-			.then( id => {
-				// const data = posts.getSingle( this.props.posts, id );
-
+			.then( post => {
 				this.setState( {
-					draftId: id,
+					draftId: post.id,
 					initialContent: unprocessedContent,
 					isSaving: false,
 					lastSave: Date.now(),
@@ -110,9 +116,8 @@ export class WritePost extends Component {
 
 		const onDoSave = body.id ? this.props.onUpdate : this.props.onCreate;
 		onDoSave( body )
-			.then( id => {
-				const data = posts.getSingle( this.props.posts, id );
-				this.props.onDidCreatePost( data );
+			.then( post => {
+				this.props.onDidCreatePost( post );
 			} )
 			.catch( error => {
 				this.setState( {
@@ -130,11 +135,38 @@ export class WritePost extends Component {
 			}
 		}
 
-		this.setState( {
+		// Open the draft in whichever editor matches its content.
+		const content = draft.unprocessed_content || draft.content.raw;
+		this.setState( state => ( {
 			draftId: draft.id,
 			title: draft.title.raw,
-			initialContent: draft.unprocessed_content || draft.content.raw,
+			initialContent: content,
+			editor: isBlockContent( content ) ? 'blocks' : 'markdown',
+			editorKey: state.editorKey + 1,
+		} ) );
+	}
+
+	onSwitchToBlocks = content => {
+		this.setState(
+			{
+				editor: 'blocks',
+				initialContent: content,
+			},
+			this.scrollEditorIntoView
+		);
+	}
+
+	onSwitchToMarkdown = content => {
+		this.setState( {
+			editor: 'markdown',
+			initialContent: content,
 		} );
+	}
+
+	scrollEditorIntoView = () => {
+		if ( this.container && this.container.scrollIntoView ) {
+			this.container.scrollIntoView( true );
+		}
 	}
 
 	onClickPreview = e => {
@@ -151,6 +183,38 @@ export class WritePost extends Component {
 	render() {
 		const user = this.props.currentUser;
 		const categories = this.props.categories.data || [];
+
+		if ( this.state.editor === 'blocks' ) {
+			// The block editor takes over the whole main column; see App.css.
+			return (
+				<div
+					className="PostBlockEditor flex flex-col bg-white"
+					ref={ ref => this.container = ref }
+				>
+					<LazyBlockEditor
+						key={ this.state.editorKey }
+						categories={ categories }
+						category={ this.state.category }
+						draftUrl={ this.state.draftId ? this.getDraftUrl() : null }
+						error={ this.state.error }
+						initialContent={ this.state.initialContent }
+						isSaving={ this.state.isSaving }
+						isSubmitting={ this.state.isSubmitting }
+						lastSave={ this.state.lastSave }
+						title={ this.state.title }
+						user={ user || null }
+						onCancel={ this.props.onCancel }
+						onChangeCategory={ category => this.setState( { category } ) }
+						onChangeTitle={ title => this.setState( { title } ) }
+						onSave={ this.onSave }
+						onSelectDraft={ this.onSelect }
+						onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
+						onSwitchToMarkdown={ this.onSwitchToMarkdown }
+					/>
+				</div>
+			);
+		}
+
 		return (
 			<div className={ WRAP_CLASSES } ref={ ref => this.container = ref }>
 				<div
@@ -206,9 +270,10 @@ export class WritePost extends Component {
 					<div className="actions"></div>
 				</header>
 				<Editor
-					key={ this.state.draftId || '__none' }
+					key={ this.state.editorKey }
 					className="ml-[90px] max-[600px]:ml-0"
 					initialValue={ this.state.initialContent }
+					isSubmitting={ this.state.isSubmitting }
 					lastSave={ this.state.lastSave }
 					previewComponent={ props => <RemotePreview type="post" { ...props } /> }
 					saveText={ this.state.isSaving ? 'Saving…' : 'Save' }
@@ -216,6 +281,7 @@ export class WritePost extends Component {
 					onCancel={ this.props.onCancel }
 					onSave={ this.onSave }
 					onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
+					onSwitchToBlocks={ this.onSwitchToBlocks }
 				/>
 
 				{ this.state.error && (
@@ -254,21 +320,28 @@ WritePost.propTypes = {
 	onDidCreatePost: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => {
-	return {
-		posts: state.posts,
-	};
-};
+// Resolve with the saved post, read from the store as soon as the request
+// completes. Reading it back from props instead would race React's batched
+// re-render, which may not have happened yet when the promise resolves.
+const savePost = ( action, data ) => ( _, getState ) => (
+	action( data ).then( id => {
+		const post = posts.getSingle( getState().posts, id );
+		if ( ! post ) {
+			throw new Error( 'The post was saved, but could not be loaded.' );
+		}
+		return post;
+	} )
+);
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onCreate: data => dispatch( posts.createSingle( data ) ),
-		onUpdate: data => dispatch( posts.updateSingle( data ) ),
+		onCreate: data => dispatch( savePost( body => dispatch( posts.createSingle( body ) ), data ) ),
+		onUpdate: data => dispatch( savePost( body => dispatch( posts.updateSingle( body ) ), data ) ),
 	};
 };
 
 export default connect(
-	mapStateToProps,
+	null,
 	mapDispatchToProps
 )(
 	withCategories(

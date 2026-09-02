@@ -24,10 +24,20 @@ class SelectDraft extends React.Component {
 		const { loading, posts } = this.props;
 
 		if ( ! this.state.showingSelector ) {
+			const onOpen = () => this.setState( { showingSelector: true } );
+
+			// Let the parent supply its own button (e.g. a Gutenberg-styled one).
+			if ( this.props.renderToggle ) {
+				return this.props.renderToggle( {
+					count: posts ? posts.length : null,
+					onClick: onOpen,
+				} );
+			}
+
 			return (
 				<Button
 					className="group"
-					onClick={ () => this.setState( { showingSelector: true } ) }
+					onClick={ onOpen }
 				>
 					Drafts
 

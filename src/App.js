@@ -160,9 +160,9 @@ class App extends Component {
 					onShowSuper={ this.props.onShowSuperSidebar }
 				/>
 				<SessionExpiredWarning />
-				<div className="Outer grid grid-cols-[min(30%,360px)_auto] gap-12">
+				<div className="Outer grid grid-cols-[min(30%,360px)_auto] gap-12 has-[.PostBlockEditor]:gap-0">
 					{ this.renderSidebar() }
-					<div className="Inner max-w-200">
+					<div className="Inner max-w-200 min-w-0 has-[.PostBlockEditor]:max-w-none">
 						{ this.state.isShowingWritePost ? (
 							<WritePost
 								onDidCreatePost={ post => this.onDidCreatePost( post ) }

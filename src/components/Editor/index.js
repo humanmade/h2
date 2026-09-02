@@ -464,6 +464,18 @@ class Editor extends React.PureComponent {
 							checked={ mode === 'preview' }
 							onSelect={ value => this.setState( { mode: value } ) }
 						/>
+						{ this.props.onSwitchToBlocks && (
+							<li>
+								<button
+									className="inline-block font-bold uppercase py-[7.5px] px-3 border-2 border-transparent border-b-0 rounded-t bg-transparent cursor-pointer hover:text-hm-vibrant-blue"
+									title="Switch to the block editor"
+									type="button"
+									onClick={ () => this.props.onSwitchToBlocks( this.state.content ) }
+								>
+									Blocks
+								</button>
+							</li>
+						) }
 					</ul>
 
 					{ mode === 'edit' ? (
@@ -518,7 +530,7 @@ class Editor extends React.PureComponent {
 						) }
 					</DropUpload>
 					<Prompt
-						when={ ! ( this.state.content === '' || ( this.props.initialValue && this.state.content === this.props.initialValue ) ) }
+						when={ ! this.props.isSubmitting && ! ( this.state.content === '' || ( this.props.initialValue && this.state.content === this.props.initialValue ) ) }
 						message={ navigateWarning }
 					/>
 
@@ -582,11 +594,15 @@ Editor.defaultProps = {
 
 Editor.propTypes = {
 	className: PropTypes.string,
+	/** While true, navigating away (e.g. after publishing) won't prompt. */
+	isSubmitting: PropTypes.bool,
 	previewComponent: PropTypes.func,
 	saveText: PropTypes.string,
 	submitText: PropTypes.string,
 	onCancel: PropTypes.func,
 	onSubmit: PropTypes.func.isRequired,
+	/** When set, offers a switch to the block editor with the current content. */
+	onSwitchToBlocks: PropTypes.func,
 };
 
 const mapStateToProps = state => {
