@@ -1,8 +1,8 @@
 {
 	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
 	"meta": {
-		"title": "H2 demo",
-		"description": "Try H2, Human Made’s P2-inspired team communication theme, with demo content.",
+		"title": "H2 preview: PR #652",
+		"description": "Preview of humanmade/h2 PR #652 in WordPress Playground.",
 		"author": "humanmade"
 	},
 	"landingPage": "/",
@@ -38,7 +38,7 @@
 			"themeData": {
 				"resource": "git:directory",
 				"url": "https://github.com/humanmade/h2.git",
-				"ref": "release"
+				"ref": "playground-pr-652"
 			},
 			"options": {
 				"activate": true,
