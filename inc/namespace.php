@@ -532,6 +532,10 @@ function register_rest_routes() {
 	register_rest_route( 'h2', 'v1/preview', [
 		'methods' => 'POST',
 		'callback' => __NAMESPACE__ . '\\render_preview',
+		'permission_callback' => function () {
+			// Anyone who can comment or write can preview.
+			return is_user_logged_in();
+		},
 		'args' => [
 			'html' => [
 				'type' => 'text',
