@@ -14,6 +14,7 @@ import './ActivityMention.css';
 export default function BotMention( { comment } ) {
 	const activity = comment.human || {};
 	const botName = comment.author_name || 'a bot';
+	const botUsername = botName.replace( /^@/, '' );
 	const botAvatarUrls = comment.author_avatar_urls || {};
 	const botAvatar = botAvatarUrls['24'] || botAvatarUrls['48'] || botAvatarUrls['96'];
 	const bot = comment.author ? (
@@ -24,9 +25,9 @@ export default function BotMention( { comment } ) {
 			} }
 			withHovercard={ false }
 		>
-			{ botName }
+			@{ botUsername }
 		</AuthorLink>
-	) : botName;
+	) : `@${ botUsername }`;
 	const question = activity.question_url ? (
 		<a
 			className="Comment-BotMention__question"
@@ -72,7 +73,7 @@ export default function BotMention( { comment } ) {
 			</span>
 			<span className="Comment-ActivityMention__text">
 				<Fragment>
-					Referenced by <strong>{ bot }</strong> to answer { question } from { asker }
+					Referenced by { bot } to answer { question } from { asker }
 				</Fragment>
 			</span>
 			<span className="Comment-ActivityMention__date">
