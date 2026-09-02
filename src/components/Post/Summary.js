@@ -32,9 +32,9 @@ function Summary( props ) {
 
 	const continueReadingMessage = `Continue reading (${ _n( 'word', 'words', post.content.count ) })`;
 
-	// The archive is shared with the comment stream and so includes
-	// `slack_mention` markers; exclude them from the count and avatar pile so
-	// they never read as human comments.
+	// The archive is shared with the comment stream and so includes bot-authored
+	// activity markers; exclude them from the count and avatar pile so they
+	// never read as human comments.
 	const realComments = comments ? comments.filter( comment => comment.type === 'comment' ) : [];
 
 	const people = uniq( realComments.map( comment => comment.author ) ).filter( Boolean );
@@ -96,7 +96,7 @@ export default withArchive(
 	props => {
 		const { post } = props;
 
-		// Share the comment stream's widened archive (same id + slack_markers
+		// Share the comment stream's widened archive (same id + legacy slack_markers
 		// flag) so the count stays consistent with the stream after a reply and
 		// the post's comments are fetched once. Markers are filtered out of the
 		// count above.
