@@ -3,7 +3,7 @@
 import './webpack-assets-path';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -37,9 +37,10 @@ const routerBasename = window.H2Data.site.home.replace(
 // Load our default plugins.
 loadPlugins();
 
-const root = document.getElementById( 'root' );
+const rootEl = document.getElementById( 'root' );
+const root = createRoot( rootEl );
 const render = Main => {
-	ReactDOM.render(
+	root.render(
 		<Provider store={ store }>
 			<SlotFillProvider>
 				<IntlProvider locale="en">
@@ -53,8 +54,7 @@ const render = Main => {
 					</RestApiProvider>
 				</IntlProvider>
 			</SlotFillProvider>
-		</Provider>,
-		root
+		</Provider>
 	);
 };
 

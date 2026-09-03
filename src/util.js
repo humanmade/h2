@@ -85,3 +85,13 @@ export function cleanConvertedMarkdown( str ) {
 		.replace( /[ ]+$/gm, '' )
 		.replace( /^\s+|[\s\\]+$/g, '' );
 }
+
+/**
+ * Check whether content is block editor markup rather than Markdown.
+ *
+ * @param {string} content Post content.
+ * @returns {boolean} True if the content contains block delimiters.
+ */
+export function isBlockContent( content ) {
+	return typeof content === 'string' && content.indexOf( '<!-- wp:' ) !== -1;
+}

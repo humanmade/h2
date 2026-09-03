@@ -11,6 +11,12 @@ addFilter( 'presets/stylesheet-loaders', ( rule ) => {
 	return {
 		test: /\.s?css$/,
 		oneOf: [
+			{ resourceQuery: /raw/, type: 'asset/source' },
+			{
+				resourceQuery: /inline/,
+				type: 'asset/source',
+				use: rule.use.slice( 2 ), // postcss-loader + sass-loader
+			},
 			{ test: /\.css$/, use: useWithoutSass },
 			{ test: /\.scss$/, use: rule.use },
 		],
@@ -52,25 +58,39 @@ cleanOnExit( [
 	filePath( 'build/development-asset-manifest.json' ),
 ] );
 
-module.exports = choosePort( 9090 ).then( port => presets.development( {
-	devServer: {
-		host: 'localhost',
-		port,
-	},
-	entry: {
-		h2: filePath( 'src/index.js' ),
-		// Editor styles require the production build.
-	},
-	output: {
-		filename: '[name].[hash].js',
-		chunkFilename: '[name].chunk.[hash].js',
-	},
-	resolve: {
-		alias: {
-			'juniper-images': filePath( 'src/assets/images' ),
+module.exports = choosePort( 9090 ).then( port => {
+	const config = presets.development( {
+		devServer: {
+			host: 'localhost',
+			port,
 		},
-	},
-	plugins: [
-		new WatchContentFilesPlugin(),
-	],
-} ) );
+		entry: {
+			h2: filePath( 'src/index.js' ),
+			// Editor styles require the production build.
+		},
+		output: {
+			filename: '[name].[hash].js',
+			chunkFilename: '[name].chunk.[hash].js',
+		},
+		resolve: {
+			alias: {
+				'juniper-images': filePath( 'src/assets/images' ),
+
+				// format-library's package exports omit its stylesheet.
+				'@wordpress/format-library/build-style': filePath( 'node_modules/@wordpress/format-library/build-style' ),
+			},
+		},
+		plugins: [
+			new WatchContentFilesPlugin(),
+		],
+	} );
+
+	// Allow non-fully-specified imports from packages like `diff` used by
+	// @wordpress/block-editor (webpack 5 strict ESM compatibility).
+	config.module.rules.unshift( {
+		test: /\.m?js/,
+		resolve: { fullySpecified: false },
+	} );
+
+	return config;
+} );

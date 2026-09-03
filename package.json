@@ -38,11 +38,22 @@
     "webpack-dev-server": "^4.9.0"
   },
   "dependencies": {
+    "@babel/runtime": "^7.29.2",
     "@humanmade/react-tasklist": "^0.0.4",
     "@humanmade/repress": "^0.5.0",
     "@iarna/word-count": "^1.0.3",
     "@sentry/browser": "^5.9.1",
     "@storybook/addon-actions": "^5.2.0",
+    "@wordpress/api-fetch": "^7.44.0",
+    "@wordpress/block-editor": "^15.17.0",
+    "@wordpress/block-library": "^9.44.0",
+    "@wordpress/blocks": "^15.17.0",
+    "@wordpress/components": "^32.6.0",
+    "@wordpress/compose": "^7.44.0",
+    "@wordpress/data": "^10.44.0",
+    "@wordpress/format-library": "5.44.0",
+    "@wordpress/hooks": "4.44.0",
+    "@wordpress/icons": "^12.2.0",
     "emoji-mart": "^2.11.1",
     "interweave": "^11.1.0",
     "lodash": "^4.17.19",
@@ -50,9 +61,10 @@
     "mousetrap": "^1.6.2",
     "postcss": "^8.4.14",
     "prop-types": "^15.7.2",
-    "react": "^16.9.0",
+    "qs": "^6.15.0",
+    "react": "^18.3.1",
     "react-content-loader": "^2.0.2",
-    "react-dom": "^16.9.0",
+    "react-dom": "^18.3.1",
     "react-intl": "^2.4.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.3.1",
@@ -88,5 +100,11 @@
     {
       "path": "./build/h2.*.js"
     }
-  ]
+  ],
+  "pnpm": {
+    "overrides": {
+      "@wordpress/private-apis": "1.44.0",
+      "@wordpress/hooks": "4.44.0"
+    }
+  }
 }

@@ -76,6 +76,7 @@ export class WriteComment extends React.Component {
 				</header>
 				<div className="[&>.Notification]:-mt-[1.36667rem] max-[600px]:-ml-5">
 					<Editor
+						allowBlocks
 						previewComponent={ props => <RemotePreview type="comment" { ...props } /> }
 						ref={ editor => this.editor = editor }
 						submitText={ this.state.isSubmitting ? 'Commenting...' : 'Comment' }

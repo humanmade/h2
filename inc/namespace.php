@@ -24,6 +24,11 @@ function adjust_default_filters() {
 	// Add make_clickable to posts.
 	add_filter( 'the_content', 'make_clickable', 9 );
 
+	// Render comments written in the block editor. Users without unfiltered_html
+	// have the block delimiters stripped by kses anyway, so for them this is a
+	// no-op on plain HTML.
+	add_filter( 'comment_text', 'do_blocks', 7 );
+
 	// Normalize entities for easier decoding.
 	add_filter( 'the_title', 'ent2ncr', 11 );
 

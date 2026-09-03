@@ -26,9 +26,10 @@ export default class RemotePreview extends React.Component {
 			isLoading: true,
 		} );
 
-		const compiledMarkdown = compileMarkdown( this.props.children );
+		// Either ready-made HTML, or Markdown to compile.
+		const html = this.props.html !== undefined ? this.props.html : compileMarkdown( this.props.children );
 		const body = {
-			html: compiledMarkdown,
+			html,
 			type: this.props.type,
 		};
 
@@ -74,6 +75,8 @@ export default class RemotePreview extends React.Component {
 }
 
 RemotePreview.propTypes = {
+	children: PropTypes.string,
+	html: PropTypes.string,
 	type: PropTypes.oneOf( [
 		'comment',
 		'post',

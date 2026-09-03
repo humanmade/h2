@@ -49,6 +49,33 @@
 	}
 }
 
+/* The block editor takes over the main column at full height. */
+.App > .Outer > .Inner > .PostBlockEditor {
+	height: 100vh;
+	overflow: hidden;
+}
+
+@media ( min-width: 800px ) {
+	.App > .Outer > .Inner > .PostBlockEditor {
+		position: sticky;
+		top: 0;
+	}
+}
+
+@media screen and ( min-width: 600px ) and ( max-width: 782px ) {
+	body.admin-bar .App > .Outer > .Inner > .PostBlockEditor {
+		top: 46px;
+		height: calc( 100vh - 46px );
+	}
+}
+
+@media ( min-width: 783px ) {
+	body.admin-bar .App > .Outer > .Inner > .PostBlockEditor {
+		top: 32px;
+		height: calc( 100vh - 32px );
+	}
+}
+
 .App a {
 	border: none;
 }

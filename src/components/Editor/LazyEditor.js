@@ -14,11 +14,15 @@ const LazyEditor = props => (
 );
 
 LazyEditor.propTypes = {
+	allowBlocks: PropTypes.bool,
+	allowedBlocks: PropTypes.arrayOf( PropTypes.string ),
+	isSubmitting: PropTypes.bool,
 	previewComponent: PropTypes.func,
 	saveText: PropTypes.string,
 	submitText: PropTypes.string,
 	onCancel: PropTypes.func,
 	onSubmit: PropTypes.func.isRequired,
+	onSwitchToBlocks: PropTypes.func,
 };
 
 export default LazyEditor;

@@ -1,0 +1,49 @@
+// Styles for the block editor canvas. These are injected into the canvas
+// iframe alongside the theme's editor styles, so nothing here affects the
+// rest of the app.
+
+.h2-block-editor-canvas {
+	box-sizing: border-box;
+	min-height: 100%;
+	padding: 2.5rem 1.5rem 8rem;
+}
+
+.h2-block-editor-title {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 650px;
+	margin: 0 auto 1.5rem;
+	padding: 0;
+	border: none;
+	border-radius: 0;
+	background: transparent;
+	box-shadow: none;
+	color: inherit;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	font-size: 2rem;
+	font-weight: 700;
+	line-height: 1.2;
+	overflow: hidden;
+	resize: none;
+
+	&:focus {
+		outline: none;
+	}
+
+	&::placeholder {
+		color: rgba( 80, 76, 76, 0.5 );
+		opacity: 1;
+	}
+}
+
+// The inline (comment) editor sizes itself to its content and uses the full
+// width of the comment column.
+.h2-block-editor-canvas--inline {
+	min-height: 0;
+	padding: 1rem 1rem 2.5rem;
+
+	.block-editor-block-list__layout {
+		max-width: none;
+	}
+}

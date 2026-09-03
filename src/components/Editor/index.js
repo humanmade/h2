@@ -9,13 +9,14 @@ import Turndown from 'turndown';
 
 import compileMarkdown from '../../compile-markdown';
 import { media } from '../../types';
-import { cleanConvertedMarkdown, isWordContent } from '../../util';
+import { cleanConvertedMarkdown, isBlockContent, isWordContent } from '../../util';
 import Button from '../Button';
 import DropUpload from '../DropUpload';
 import MessageContent from '../Message/Content';
 import Shortcuts from '../Shortcuts';
 
 import EmojiCompletion from './EmojiCompletion';
+import LazyInlineBlockEditor from './LazyInlineBlockEditor';
 import MentionCompletion from './MentionCompletion';
 
 const apply = ( selection, start, end ) => {
@@ -58,6 +59,27 @@ const BUTTONS = {
 };
 
 const navigateWarning = 'You have unsaved content. Are you sure you want to leave? Your content will not be saved.';
+const convertWarning = 'Switching to the Markdown editor converts your blocks to Markdown, and some formatting may be lost. Continue?';
+
+const TURNDOWN_OPTIONS = {
+	headingStyle: 'atx',
+	hr: '---',
+	codeBlockStyle: 'fenced',
+};
+
+// Blocks offered in the inline (comment) editor. This mirrors what H2 allows
+// in comment HTML.
+const DEFAULT_ALLOWED_BLOCKS = [
+	'core/paragraph',
+	'core/heading',
+	'core/list',
+	'core/list-item',
+	'core/quote',
+	'core/code',
+	'core/preformatted',
+	'core/image',
+	'core/separator',
+];
 
 const completions = {
 	'@': MentionCompletion,
@@ -65,14 +87,18 @@ const completions = {
 };
 
 const Preview = props => {
-	const compiled = compileMarkdown( props.children );
+	const compiled = props.html !== undefined ? props.html : compileMarkdown( props.children );
 	return (
 		<div className="bg-white border-2 border-[#d9d9d9] p-4 mb-[1.66667rem]">
 			<MessageContent html={ compiled } />
 		</div>
 	);
 };
-Preview.propTypes = { children: PropTypes.string.isRequired };
+Preview.propTypes = {
+	children: PropTypes.string,
+	/** Ready-made HTML to show instead of compiling the Markdown children. */
+	html: PropTypes.string,
+};
 
 const Tab = ( { checked, title, value, onSelect } ) => (
 	<li>
@@ -113,14 +139,28 @@ class Editor extends React.PureComponent {
 	constructor( props ) {
 		super( props );
 
+		// Block content is stored as block markup; open that in the block editor.
+		const startInBlocks = !! props.allowBlocks && isBlockContent( props.initialValue );
+
 		this.state = {
-			content: props.initialValue,
+			content: startInBlocks ? '' : props.initialValue,
 			completion: null,
-			count: 0,
+			count: countWords( startInBlocks ? props.initialValue.replace( /<[^>]*>/g, ' ' ) : ( props.initialValue || '' ) ),
 			hasFocus: false,
 			height: null,
-			mode: 'edit',
+			mode: startInBlocks ? 'blocks' : 'edit',
 			uploading: [],
+
+			// Which editor currently holds the content ('edit' or 'blocks'),
+			// regardless of whether the preview is showing.
+			editMode: startInBlocks ? 'blocks' : 'edit',
+
+			// Block mode: what the block editor loads, its serialized output, and
+			// the output it started from (for change tracking).
+			blocksSource: startInBlocks ? props.initialValue : '',
+			blocksHtml: startInBlocks ? props.initialValue : '',
+			blocksInitialHtml: startInBlocks ? props.initialValue : '',
+			blocksKey: 0,
 		};
 		this.textarea = null;
 	}
@@ -134,7 +174,7 @@ class Editor extends React.PureComponent {
 	}
 
 	warnBeforeLeaving = e => {
-		if ( this.state.content === '' || ( this.props.initialValue && this.state.content === this.props.initialValue ) ) {
+		if ( ! this.isDirty() ) {
 			return;
 		}
 
@@ -143,6 +183,12 @@ class Editor extends React.PureComponent {
 	}
 
 	componentDidUpdate() {
+		this.setState( state => {
+			const text = state.editMode === 'blocks' ? state.blocksHtml.replace( /<[^>]*>/g, ' ' ) : state.content;
+
+			return { count: countWords( text ) };
+		} );
+
 		if ( ! this.textarea ) {
 			return;
 		}
@@ -154,11 +200,71 @@ class Editor extends React.PureComponent {
 		if ( desired > height ) {
 			this.setState( { height: desired } );
 		}
+	}
 
-		this.setState( state => {
-			const count = countWords( state.content );
+	/**
+	 * Whether there are changes which haven't been submitted.
+	 *
+	 * @returns {boolean} True if the content has changed.
+	 */
+	isDirty() {
+		if ( this.state.editMode === 'blocks' ) {
+			return this.state.blocksHtml !== this.state.blocksInitialHtml;
+		}
 
-			return { count };
+		return ! ( this.state.content === '' || ( this.props.initialValue && this.state.content === this.props.initialValue ) );
+	}
+
+	/**
+	 * Get the content to submit.
+	 *
+	 * Block content is stored as-is, with the block markup doubling as the
+	 * editable source (kses may strip the delimiters from the rendered copy).
+	 *
+	 * @returns {string[]} Content and unprocessed content.
+	 */
+	getOutput() {
+		if ( this.state.editMode === 'blocks' ) {
+			return [ this.state.blocksHtml, this.state.blocksHtml ];
+		}
+
+		return [ compileMarkdown( this.state.content ), this.state.content ];
+	}
+
+	onSelectMode = mode => {
+		const { editMode, mode: current } = this.state;
+		if ( mode === current ) {
+			return;
+		}
+
+		// Previewing, or returning from the preview, keeps the content where it is.
+		if ( mode === 'preview' || mode === editMode ) {
+			this.setState( { mode } );
+			return;
+		}
+
+		if ( mode === 'blocks' ) {
+			// Markdown to blocks; the block editor converts on load.
+			this.setState( state => ( {
+				mode,
+				editMode: 'blocks',
+				blocksSource: state.content,
+				blocksHtml: '',
+				blocksKey: state.blocksKey + 1,
+			} ) );
+			return;
+		}
+
+		// Blocks to Markdown, which is lossy.
+		const html = this.state.blocksHtml;
+		if ( html && ! window.confirm( convertWarning ) ) {
+			return;
+		}
+
+		this.setState( {
+			mode,
+			editMode: 'edit',
+			content: html ? cleanConvertedMarkdown( new Turndown( TURNDOWN_OPTIONS ).turndown( html ) ) : '',
 		} );
 	}
 
@@ -267,11 +373,11 @@ class Editor extends React.PureComponent {
 	onSubmit( e ) {
 		e.preventDefault();
 
-		this.props.onSubmit( compileMarkdown( this.state.content ), this.state.content );
+		this.props.onSubmit( ...this.getOutput() );
 	}
 
 	onSave = () => {
-		this.props.onSave( compileMarkdown( this.state.content ), this.state.content );
+		this.props.onSave( ...this.getOutput() );
 	}
 
 	onBlur() {
@@ -412,6 +518,10 @@ class Editor extends React.PureComponent {
 		return <Handler { ...completionProps } />;
 	}
 
+	onChangeBlocks = html => {
+		this.setState( { blocksHtml: html } );
+	}
+
 	focus() {
 		if ( ! this.textarea ) {
 			return;
@@ -421,7 +531,7 @@ class Editor extends React.PureComponent {
 	}
 
 	render() {
-		const { content, count, hasFocus, height, mode } = this.state;
+		const { content, count, editMode, hasFocus, height, mode } = this.state;
 
 		const shortcuts = {};
 		Object.keys( BUTTONS ).forEach( buttonType => {
@@ -456,14 +566,34 @@ class Editor extends React.PureComponent {
 							title="Write"
 							value="edit"
 							checked={ mode === 'edit' }
-							onSelect={ value => this.setState( { mode: value } ) }
+							onSelect={ this.onSelectMode }
 						/>
 						<Tab
 							title="Preview"
 							value="preview"
 							checked={ mode === 'preview' }
-							onSelect={ value => this.setState( { mode: value } ) }
+							onSelect={ this.onSelectMode }
 						/>
+						{ this.props.allowBlocks && (
+							<Tab
+								title="Blocks"
+								value="blocks"
+								checked={ mode === 'blocks' }
+								onSelect={ this.onSelectMode }
+							/>
+						) }
+						{ this.props.onSwitchToBlocks && (
+							<li>
+								<button
+									className="inline-block font-bold uppercase py-[7.5px] px-3 border-2 border-transparent border-b-0 rounded-t bg-transparent cursor-pointer hover:text-hm-vibrant-blue"
+									title="Switch to the block editor"
+									type="button"
+									onClick={ () => this.props.onSwitchToBlocks( this.state.content ) }
+								>
+									Blocks
+								</button>
+							</li>
+						) }
 					</ul>
 
 					{ mode === 'edit' ? (
@@ -492,37 +622,52 @@ class Editor extends React.PureComponent {
 				</div>
 
 				<div className="relative text-lg">
-					<DropUpload
-						allowMultiple
-						className="mb-4"
-						statusClassName={ isPreviewing ? 'hidden' : 'border-2 border-[#d9d9d9] [border-top-style:dashed] rounded-bl rounded-br py-[0.2em] px-[9px] bg-hm-light-grey' }
-						files={ this.state.uploading }
-						onUpload={ file => this.onUpload( file ) }
-					>
-						{ mode === 'preview' ? (
-							<PreviewComponent>{ content || '*Nothing to preview*' }</PreviewComponent>
-						) : (
-							<textarea
-								ref={ el => this.updateTextarea( el ) }
-								className="Editor-editor min-h-72 max-h-120 resize-y rounded-none rounded-tr border-2 border-b-0 border-[#d9d9d9] bg-white pt-4 pb-4 block px-[15px] w-full focus:outline-hidden placeholder:italic"
-								placeholder="Write a comment..."
-								style={ { height } }
-								value={ content }
-								onBlur={ () => this.onBlur() }
-								onFocus={ () => this.onFocus() }
-								onChange={ e => this.setState( { content: e.target.value } ) }
-								onKeyDown={ e => this.onKeyDown( e ) }
-								onKeyUp={ e => this.onKeyUp( e ) }
-								onPaste={ this.onPaste }
+					{ editMode === 'blocks' && (
+						// Stays mounted while previewing so edits and history survive.
+						<div className={ mode === 'preview' ? 'hidden' : undefined }>
+							<LazyInlineBlockEditor
+								key={ this.state.blocksKey }
+								allowedBlocks={ this.props.allowedBlocks || DEFAULT_ALLOWED_BLOCKS }
+								initialContent={ this.state.blocksSource }
+								onChange={ this.onChangeBlocks }
 							/>
-						) }
-					</DropUpload>
+						</div>
+					) }
+					{ mode !== 'blocks' && (
+						<DropUpload
+							allowMultiple
+							className="mb-4"
+							statusClassName={ isPreviewing ? 'hidden' : 'border-2 border-[#d9d9d9] [border-top-style:dashed] rounded-bl rounded-br py-[0.2em] px-[9px] bg-hm-light-grey' }
+							files={ this.state.uploading }
+							onUpload={ file => this.onUpload( file ) }
+						>
+							{ mode === 'preview' && editMode === 'blocks' ? (
+								<PreviewComponent html={ this.state.blocksHtml || '<p><em>Nothing to preview</em></p>' } />
+							) : mode === 'preview' ? (
+								<PreviewComponent>{ content || '*Nothing to preview*' }</PreviewComponent>
+							) : (
+								<textarea
+									ref={ el => this.updateTextarea( el ) }
+									className="Editor-editor min-h-72 max-h-120 resize-y rounded-none rounded-tr border-2 border-b-0 border-[#d9d9d9] bg-white pt-4 pb-4 block px-[15px] w-full focus:outline-hidden placeholder:italic"
+									placeholder="Write a comment..."
+									style={ { height } }
+									value={ content }
+									onBlur={ () => this.onBlur() }
+									onFocus={ () => this.onFocus() }
+									onChange={ e => this.setState( { content: e.target.value } ) }
+									onKeyDown={ e => this.onKeyDown( e ) }
+									onKeyUp={ e => this.onKeyUp( e ) }
+									onPaste={ this.onPaste }
+								/>
+							) }
+						</DropUpload>
+					) }
 					<Prompt
-						when={ ! ( this.state.content === '' || ( this.props.initialValue && this.state.content === this.props.initialValue ) ) }
+						when={ ! this.props.isSubmitting && this.isDirty() }
 						message={ navigateWarning }
 					/>
 
-					{ mode !== 'preview' ? this.getCompletion() : null }
+					{ mode === 'edit' ? this.getCompletion() : null }
 				</div>
 
 				<p className="pl-2 m-0 flex justify-between items-center">
@@ -581,12 +726,20 @@ Editor.defaultProps = {
 };
 
 Editor.propTypes = {
+	/** Offer a Blocks tab with the inline block editor (comments). */
+	allowBlocks: PropTypes.bool,
+	/** Blocks available in the inline block editor. */
+	allowedBlocks: PropTypes.arrayOf( PropTypes.string ),
 	className: PropTypes.string,
+	/** While true, navigating away (e.g. after publishing) won't prompt. */
+	isSubmitting: PropTypes.bool,
 	previewComponent: PropTypes.func,
 	saveText: PropTypes.string,
 	submitText: PropTypes.string,
 	onCancel: PropTypes.func,
 	onSubmit: PropTypes.func.isRequired,
+	/** When set, offers a switch to the block editor with the current content. */
+	onSwitchToBlocks: PropTypes.func,
 };
 
 const mapStateToProps = state => {
