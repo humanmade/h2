@@ -52,6 +52,7 @@
     "@wordpress/compose": "^7.44.0",
     "@wordpress/data": "^10.44.0",
     "@wordpress/format-library": "5.44.0",
+    "@wordpress/hooks": "4.44.0",
     "@wordpress/icons": "^12.2.0",
     "emoji-mart": "^2.11.1",
     "interweave": "^11.1.0",
@@ -102,7 +103,8 @@
   ],
   "pnpm": {
     "overrides": {
-      "@wordpress/private-apis": "1.44.0"
+      "@wordpress/private-apis": "1.44.0",
+      "@wordpress/hooks": "4.44.0"
     }
   }
 }

@@ -45,3 +45,13 @@
 .BlockEditor-sidebar .components-panel {
 	border: none;
 }
+
+/* The inline (comment) editor has no other header controls. */
+.BlockEditor--inline .BlockEditor-document-tools.components-accessible-toolbar {
+	border-right: none;
+}
+
+/* @-mention suggestions. */
+.BlockEditor-mention .components-autocomplete__result {
+	padding: 4px 8px;
+}

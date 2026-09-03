@@ -6,40 +6,19 @@ import { Prompt } from 'react-router-dom';
 import Turndown from 'turndown';
 
 import { store as blockEditorStore } from '@wordpress/block-editor';
-import { parse, rawHandler, serialize } from '@wordpress/blocks';
+import { serialize } from '@wordpress/blocks';
 import { Button, Panel, PanelBody, SelectControl } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 
-import compileMarkdown from '../../compile-markdown';
 import { cleanConvertedMarkdown, isBlockContent } from '../../util';
 import BlockEditor from '../Editor/BlockEditor';
+import { contentToBlocks } from '../Editor/BlockEditorCore';
 import Notification from '../Notification';
 
 import SelectDraft from './SelectDraft';
 
 const NAVIGATE_WARNING = 'You have unsaved content. Are you sure you want to leave? Your content will not be saved.';
 const CONVERT_WARNING = 'Switching to the Markdown editor converts your blocks to Markdown, and some formatting may be lost. Continue?';
-
-/**
- * Convert saved post content into blocks.
- *
- * Block posts are parsed directly; Markdown is compiled and converted the
- * same way Gutenberg converts classic content.
- *
- * @param {string} content Block markup or Markdown.
- * @returns {object[]} Blocks.
- */
-function contentToBlocks( content ) {
-	if ( ! content ) {
-		return [];
-	}
-
-	if ( isBlockContent( content ) ) {
-		return parse( content );
-	}
-
-	return rawHandler( { HTML: compileMarkdown( content ) } );
-}
 
 /**
  * Convert blocks to Markdown for the Markdown editor.

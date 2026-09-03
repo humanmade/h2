@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { connect } from 'react-redux';
 
-import apiFetch from '@wordpress/api-fetch';
 import {
 	BlockCanvas,
 	BlockEditorKeyboardShortcuts,
@@ -10,225 +8,33 @@ import {
 	BlockInspector,
 	BlockList,
 	BlockToolbar,
-	Inserter,
-	NavigableToolbar,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import blockEditorContentStyles from '@wordpress/block-editor/build-style/content.css?raw';
-import { registerCoreBlocks } from '@wordpress/block-library';
-import blockLibraryEditorStyles from '@wordpress/block-library/build-style/editor.css?raw';
-import blockLibraryStyles from '@wordpress/block-library/build-style/style.css?raw';
-import { getBlockType, setFreeformContentHandlerName, unregisterBlockType } from '@wordpress/blocks';
 import {
 	Button,
 	DropdownMenu,
 	MenuGroup,
 	MenuItem,
 	SlotFillProvider,
-	ToolbarButton,
-	ToolbarGroup,
 } from '@wordpress/components';
-import componentsStyles from '@wordpress/components/build-style/style.css?raw';
-import { useKeyboardShortcut, useStateWithHistory } from '@wordpress/compose';
+import { useStateWithHistory } from '@wordpress/compose';
 import { useSelect } from '@wordpress/data';
+import { check, drawerRight, moreVertical } from '@wordpress/icons';
+
 import {
-	check,
-	drawerRight,
-	moreVertical,
-	plus,
-	redo as redoIcon,
-	undo as undoIcon,
-} from '@wordpress/icons';
+	CANVAS_STYLES,
+	DEFAULT_SETTINGS,
+	DocumentTools,
+	EMPTY_ARRAY,
+	EMPTY_OBJECT,
+	HistoryShortcuts,
+	createMediaUpload,
+	fetchLinkSuggestions,
+	setMentionUsers,
+	withEditorData,
+} from './BlockEditorCore';
 
-import api from '../../api';
-import h2EditorStyle from '../../editor-style.scss?inline';
-import { media } from '../../types';
-import { decodeEntities } from '../../util';
-
-import canvasStyles from './BlockEditor.scss?inline';
-
-import '@wordpress/components/build-style/style.css';
-import '@wordpress/block-editor/build-style/style.css';
-import '@wordpress/format-library';
-import '@wordpress/format-library/build-style/style.css';
-import './BlockEditor.css';
-
-/**
- * Blocks which are never made available in H2.
- *
- * The Classic block needs TinyMCE from wp-admin, which isn't loaded here. Add
- * further blocks to this list to disable them globally.
- */
-const DISABLED_BLOCKS = [
-	'core/freeform',
-];
-
-/**
- * Register the core blocks (once) and apply H2's global tweaks.
- */
-function registerBlocks() {
-	if ( getBlockType( 'core/paragraph' ) ) {
-		return;
-	}
-
-	registerCoreBlocks();
-
-	DISABLED_BLOCKS.forEach( name => {
-		if ( getBlockType( name ) ) {
-			unregisterBlockType( name );
-		}
-	} );
-
-	// Content which isn't wrapped in block delimiters would normally be handed
-	// to the Classic block; use the Custom HTML block instead.
-	setFreeformContentHandlerName( 'core/html' );
-}
-
-/**
- * Point Gutenberg's own API client at this site.
- *
- * Embeds, server-rendered blocks, and other data-driven blocks fetch through
- * `@wordpress/api-fetch` rather than H2's API client.
- */
-function configureApiFetch() {
-	if ( window.__h2BlockEditorApiFetch ) {
-		return;
-	}
-	window.__h2BlockEditorApiFetch = true;
-
-	apiFetch.use( apiFetch.createRootURLMiddleware( window.wpApiSettings.root ) );
-	apiFetch.use( apiFetch.createNonceMiddleware( window.wpApiSettings.nonce ) );
-}
-
-registerBlocks();
-configureApiFetch();
-
-// Styles injected into the editor canvas (an iframe), in order.
-const CANVAS_STYLES = [
-	{ css: componentsStyles },
-	{ css: blockEditorContentStyles },
-	{ css: blockLibraryStyles },
-	{ css: blockLibraryEditorStyles },
-	{ css: h2EditorStyle },
-	{ css: canvasStyles },
-];
-
-const DEFAULT_SETTINGS = {
-	bodyPlaceholder: 'Start writing…',
-
-	// H2 has no theme.json, so don't offer layout controls we can't render.
-	supportsLayout: false,
-
-	__experimentalFeatures: {
-		typography: {
-			dropCap: false,
-		},
-	},
-};
-
-const EMPTY_ARRAY = [];
-const EMPTY_OBJECT = {};
-const UNDO_KEYS = [ 'mod+z' ];
-const REDO_KEYS = [ 'mod+shift+z', 'ctrl+y' ];
 const PREFERENCE_PREFIX = 'h2-block-editor:';
-
-const isAllowedType = ( allowedTypes, file ) => {
-	if ( ! allowedTypes || ! allowedTypes.length ) {
-		return true;
-	}
-
-	return allowedTypes.some( type => (
-		type.includes( '/' ) ? type === file.type : file.type.startsWith( `${ type }/` )
-	) );
-};
-
-/**
- * Convert a REST API attachment into the shape blocks expect from uploads.
- *
- * @param {object} data Attachment from the REST API.
- * @returns {object} Media object.
- */
-const transformAttachment = data => ( {
-	...data,
-	alt: data.alt_text,
-	caption: data.caption ? data.caption.raw : '',
-	title: data.title ? data.title.raw : '',
-	url: data.source_url,
-} );
-
-/**
- * Build the `mediaUpload` editor setting on top of H2's media uploads.
- *
- * @param {Function} upload Uploads a File, resolving with the attachment data.
- * @returns {Function} Upload handler for the block editor.
- */
-const createMediaUpload = upload => ( { allowedTypes, filesList, onError = () => {}, onFileChange } ) => {
-	const files = Array.from( filesList ).filter( file => {
-		if ( isAllowedType( allowedTypes, file ) ) {
-			return true;
-		}
-
-		onError( {
-			code: 'MIME_TYPE_NOT_ALLOWED',
-			message: `${ file.name }: this file type isn't supported here.`,
-			file,
-		} );
-		return false;
-	} );
-
-	if ( ! files.length ) {
-		return;
-	}
-
-	// Show temporary previews while the uploads are in progress.
-	const results = files.map( file => ( { url: URL.createObjectURL( file ) } ) );
-	onFileChange( [ ...results ] );
-
-	files.forEach( ( file, index ) => {
-		upload( file )
-			.then( data => {
-				if ( ! data ) {
-					throw new Error( `Could not upload ${ file.name }.` );
-				}
-
-				URL.revokeObjectURL( results[ index ].url );
-				results[ index ] = transformAttachment( data );
-				onFileChange( results.filter( Boolean ) );
-			} )
-			.catch( error => {
-				URL.revokeObjectURL( results[ index ].url );
-				results[ index ] = null;
-				onError( {
-					code: 'GENERAL',
-					message: error.message,
-					file,
-				} );
-				onFileChange( results.filter( Boolean ) );
-			} );
-	} );
-};
-
-/**
- * Search the site for content to link to, for the link UI.
- *
- * @param {string} search Search term.
- * @param {object} options Options.
- * @param {number} options.perPage Number of results.
- * @returns {Promise<object[]>} Link suggestions.
- */
-const fetchLinkSuggestions = ( search, { perPage = 20 } = {} ) => {
-	return api.get( '/wp/v2/search', {
-		search,
-		per_page: perPage,
-		_fields: 'id,title,type,subtype,url',
-	} ).then( results => results.map( result => ( {
-		id: result.id,
-		kind: 'post-type',
-		title: decodeEntities( result.title ) || '(no title)',
-		type: result.subtype || result.type,
-		url: result.url,
-	} ) ) );
-};
 
 /**
  * A boolean editor preference remembered in the browser, like wp-admin's
@@ -259,65 +65,6 @@ function useStoredPreference( name, defaultValue ) {
 	}, [ key ] );
 
 	return [ value, update ];
-}
-
-function HistoryShortcuts( { canRedo, canUndo, onRedo, onUndo } ) {
-	useKeyboardShortcut( UNDO_KEYS, event => {
-		event.preventDefault();
-		if ( canUndo ) {
-			onUndo();
-		}
-	}, { bindGlobal: true } );
-	useKeyboardShortcut( REDO_KEYS, event => {
-		event.preventDefault();
-		if ( canRedo ) {
-			onRedo();
-		}
-	}, { bindGlobal: true } );
-
-	return null;
-}
-
-function DocumentTools( { canRedo, canUndo, onRedo, onUndo } ) {
-	return (
-		<NavigableToolbar
-			className="BlockEditor-document-tools"
-			aria-label="Document tools"
-			variant="unstyled"
-		>
-			<ToolbarGroup>
-				<Inserter
-					position="bottom right"
-					renderToggle={ ( { disabled, isOpen, onToggle } ) => (
-						<ToolbarButton
-							disabled={ disabled }
-							icon={ plus }
-							isPressed={ isOpen }
-							label="Add block"
-							size="compact"
-							variant="primary"
-							onClick={ onToggle }
-						/>
-					) }
-					showInserterHelpPanel
-				/>
-				<ToolbarButton
-					disabled={ ! canUndo }
-					icon={ undoIcon }
-					label="Undo"
-					size="compact"
-					onClick={ onUndo }
-				/>
-				<ToolbarButton
-					disabled={ ! canRedo }
-					icon={ redoIcon }
-					label="Redo"
-					size="compact"
-					onClick={ onRedo }
-				/>
-			</ToolbarGroup>
-		</NavigableToolbar>
-	);
 }
 
 /**
@@ -436,6 +183,7 @@ export function BlockEditor( props ) {
 		onUpload,
 		panels = EMPTY_ARRAY,
 		settings = EMPTY_OBJECT,
+		users,
 	} = props;
 
 	const { hasRedo, hasUndo, redo, setValue, undo, value } = useStateWithHistory( { blocks: initialBlocks } );
@@ -443,6 +191,10 @@ export function BlockEditor( props ) {
 
 	// Toolbar mode: floating over the block (wp-admin's default) or in the header.
 	const [ hasFixedToolbar, setFixedToolbar ] = useStoredPreference( 'fixed-toolbar', false );
+
+	useEffect( () => {
+		setMentionUsers( users );
+	}, [ users ] );
 
 	// Keep the owner up to date, including after undo/redo.
 	useEffect( () => {
@@ -560,13 +312,8 @@ BlockEditor.propTypes = {
 	} ) ),
 	/** Overrides for the block editor settings. */
 	settings: PropTypes.object,
+	/** Users offered for @-mentions. */
+	users: PropTypes.array,
 };
 
-const mapDispatchToProps = dispatch => ( {
-	onUpload: file => dispatch( ( _, getState ) => (
-		dispatch( media.uploadSingle( file ) )
-			.then( id => ( id ? media.getSingle( getState().media, id ) : null ) )
-	) ),
-} );
-
-export default connect( null, mapDispatchToProps )( BlockEditor );
+export default withEditorData( BlockEditor );

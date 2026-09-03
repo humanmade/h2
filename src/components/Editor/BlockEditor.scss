@@ -36,3 +36,14 @@
 		opacity: 1;
 	}
 }
+
+// The inline (comment) editor sizes itself to its content and uses the full
+// width of the comment column.
+.h2-block-editor-canvas--inline {
+	min-height: 0;
+	padding: 1rem 1rem 2.5rem;
+
+	.block-editor-block-list__layout {
+		max-width: none;
+	}
+}

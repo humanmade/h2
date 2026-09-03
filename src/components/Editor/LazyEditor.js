@@ -14,6 +14,8 @@ const LazyEditor = props => (
 );
 
 LazyEditor.propTypes = {
+	allowBlocks: PropTypes.bool,
+	allowedBlocks: PropTypes.arrayOf( PropTypes.string ),
 	isSubmitting: PropTypes.bool,
 	previewComponent: PropTypes.func,
 	saveText: PropTypes.string,
