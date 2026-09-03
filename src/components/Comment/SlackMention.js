@@ -4,7 +4,7 @@ import React, { Fragment } from 'react';
 import FormattedDate from '../FormattedDate';
 import AuthorLink from '../Message/AuthorLink';
 
-import './SlackMention.css';
+import './ActivityMention.css';
 
 /*
  * A de-emphasised marker in the comment stream noting that the post was
@@ -99,16 +99,16 @@ export default function SlackMention( { comment } ) {
 
 	return (
 		<div
-			className="Comment-SlackMention"
+			className="Comment-ActivityMention"
 			id={ `comment-${ comment.id }` }
 		>
-			<span className="Comment-SlackMention__node">
+			<span className="Comment-ActivityMention__node">
 				<SlackLogo />
 			</span>
-			<span className="Comment-SlackMention__text">
+			<span className="Comment-ActivityMention__text">
 				{ body }
 			</span>
-			<span className="Comment-SlackMention__date">
+			<span className="Comment-ActivityMention__date">
 				<FormattedDate date={ comment.date_gmt + 'Z' } />
 			</span>
 		</div>
