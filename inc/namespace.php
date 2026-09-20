@@ -117,11 +117,15 @@ function get_manifest(): string {
  * Enqueue frontend CSS and JS.
  */
 function enqueue_assets() {
-	if ( ! function_exists( 'Asset_Loader\\enqueue_asset' ) ) {
+	$enqueue_asset = function_exists( 'Asset_Loader\\enqueue_manifest_asset' )
+		? 'Asset_Loader\\enqueue_manifest_asset'
+		: 'Asset_Loader\\enqueue_asset';
+
+	if ( ! function_exists( $enqueue_asset ) ) {
 		wp_die( 'H2 requires an Altis environment (v7 or later) or the HM Asset_Loader plugin' );
 	}
 
-	Asset_Loader\enqueue_asset(
+	$enqueue_asset(
 		get_manifest(),
 		'h2.js',
 		[
@@ -134,7 +138,7 @@ function enqueue_assets() {
 	] );
 	wp_localize_script( 'h2', 'H2Data', get_script_data() );
 
-	Asset_Loader\enqueue_asset(
+	$enqueue_asset(
 		get_manifest(),
 		'h2.css',
 		[
@@ -531,6 +535,9 @@ function register_rest_routes() {
 	register_rest_route( 'h2', 'v1/preview', [
 		'methods' => 'POST',
 		'callback' => __NAMESPACE__ . '\\render_preview',
+		'permission_callback' => function () {
+			return is_user_logged_in();
+		},
 		'args' => [
 			'html' => [
 				'type' => 'text',
