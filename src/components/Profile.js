@@ -19,7 +19,7 @@ const Field = props => (
 );
 
 const LocalTime = props => {
-	const timeZone = props.user.meta.hm_time_timezone;
+	const timeZone = props.user.meta.hm_time_timezone || ( props.user.facts && props.user.facts.timezone );
 	if ( ! timeZone ) {
 		const profileUrl = `${ window.H2Data.site.url }/wp-admin/profile.php?user_id=${ props.user.id }`;
 		return (
@@ -86,7 +86,7 @@ export class Profile extends React.Component {
 			<Container { ...containerProps }>
 				<UserBlock user={ user } />
 
-				{ user.facts && (
+				{ user.facts && user.facts.location && window.H2Data.site.mapbox_key && (
 					<Map
 						height="200"
 						location={ user.facts.location }
@@ -105,9 +105,11 @@ export class Profile extends React.Component {
 				</ul>
 
 				<LocalTime user={ user } />
+				{ user.facts && user.facts.work_site && <Field name="Work site">{ user.facts.work_site }</Field> }
+				{ user.facts && user.facts.pronouns && <Field name="Pronouns">{ user.facts.pronouns }</Field> }
 
 				<div className="Profile-description">
-					{ user.facts && user.facts.long_description.split( '\n' ).map( ( text, idx ) =>
+					{ user.facts && user.facts.long_description && user.facts.long_description.split( '\n' ).map( ( text, idx ) =>
 						<p key={ idx }>{ text }</p>
 					) }
 				</div>
