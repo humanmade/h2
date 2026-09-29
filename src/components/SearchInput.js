@@ -9,6 +9,21 @@ import { decodeEntities } from '../util';
 
 import Link from './Link';
 
+export const FORM_CLASSES = 'SearchInput flex-1 relative self-stretch';
+export const INPUT_CLASSES = 'w-full text-lg border-2 border-hm-border-color rounded-sm px-2 py-1 md:py-2 md:leading-5 placeholder:italic';
+
+/**
+ * Get the classes for the wrapper around the search input.
+ *
+ * @param {boolean} small Whether the input is in a small (unpadded) context.
+ * @returns {string} Class names.
+ */
+export const getWrapClasses = small => [
+	'SearchInput__wrap',
+	'flex items-center h-full bg-hm-light-grey relative z-11',
+	small ? '' : 'px-5',
+].filter( Boolean ).join( ' ' );
+
 export class Results extends React.Component {
 	state = {
 		selected: -1,
@@ -204,18 +219,12 @@ class SearchInput extends React.Component {
 
 		return (
 			<form
-				className={ `SearchInput flex-1 relative self-stretch ${ this.props.className || '' }` }
+				className={ `${ FORM_CLASSES } ${ this.props.className || '' }` }
 				onSubmit={ this.onSubmit }
 			>
-				<div
-					className={ [
-						'SearchInput__wrap',
-						'flex items-center h-full bg-hm-light-grey relative z-11',
-						this.props.small ? '' : 'px-5',
-					].filter( Boolean ).join( ' ' ) }
-				>
+				<div className={ getWrapClasses( this.props.small ) }>
 					<input
-						className="w-full text-lg border-2 border-hm-border-color rounded-sm px-2 py-1 md:py-2 md:leading-5 placeholder:italic"
+						className={ INPUT_CLASSES }
 						type="search"
 						placeholder="Search..."
 						ref={ ref => this.inputEl = ref }
