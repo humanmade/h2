@@ -19,7 +19,7 @@ const DESCRIPTION_CLASSES = [
 ].join( ' ' );
 
 const LocalTime = props => {
-	const timeZone = props.user.meta.hm_time_timezone;
+	const timeZone = props.user.meta.hm_time_timezone || props.user.facts.timezone;
 	if ( ! timeZone ) {
 		return (
 			<p className="m-0">
@@ -47,10 +47,6 @@ const LocalTime = props => {
 };
 
 export function UserCard( { user } ) {
-	const titleClasses = user.facts.job_title
-		? 'text-hm-medium-grey'
-		: 'text-hm-medium-grey italic';
-
 	return (
 		<aside className={ ASIDE_CLASSES }>
 			<div>
@@ -68,22 +64,24 @@ export function UserCard( { user } ) {
 						<p className="text-hm-medium-grey text-[0.9em] font-normal">
 							@{ user.slug }
 						</p>
-						<p className={ titleClasses }>
-							{ user.facts.job_title || 'Unknown Role' }
-						</p>
+						{ user.facts.job_title && <p className="text-hm-medium-grey">{ user.facts.job_title }</p> }
 					</div>
 				</header>
 
 				<div className={ DESCRIPTION_CLASSES }>
 					<LocalTime user={ user } />
-					<p>{ user.facts.short_bio }</p>
+					{ user.facts.location_name && <p><strong>Location:</strong> { user.facts.location_name }</p> }
+					{ user.facts.pronouns && <p><strong>Pronouns:</strong> { user.facts.pronouns }</p> }
+					{ user.facts.short_bio && <p>{ user.facts.short_bio }</p> }
 				</div>
 			</div>
-			<Map
-				height="150"
-				location={ user.facts.location }
-				width="150"
-			/>
+			{ user.facts.location && window.H2Data.site.mapbox_key && (
+				<Map
+					height="150"
+					location={ user.facts.location }
+					width="150"
+				/>
+			) }
 		</aside>
 	);
 }
@@ -92,7 +90,7 @@ export default class UserHovercard extends React.Component {
 	render() {
 		const { children, user } = this.props;
 
-		if ( ! user.facts || ! window.H2Data.site.mapbox_key ) {
+		if ( ! user.facts ) {
 			return children;
 		}
 
