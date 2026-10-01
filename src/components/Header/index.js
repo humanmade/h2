@@ -21,9 +21,23 @@ export class Header extends Component {
 		const { superActive } = this.props;
 		const network = getNetwork();
 
+		// Tint the header with the brand colour while the search is network-wide.
+		// The tint sits on white, as the header needs to stay opaque over the overlay.
+		const networkSearch = superActive && !! network;
+
 		return (
-			<div className="Header bg-hm-light-grey flex-1">
-				<div className="flex flex-row pr-5 max-[600px]:pr-1.5">
+			<div
+				className={ [
+					'Header flex-1 transition-colors duration-150',
+					networkSearch ? 'bg-white' : 'bg-hm-light-grey',
+				].join( ' ' ) }
+			>
+				<div
+					className={ [
+						'flex flex-row pr-5 max-[600px]:pr-1.5 transition-colors duration-150',
+						networkSearch ? 'bg-brand/10' : '',
+					].filter( Boolean ).join( ' ' ) }
+				>
 					<button
 						aria-expanded={ superActive }
 						className={ [
@@ -41,7 +55,7 @@ export class Header extends Component {
 
 					<Slot name="Header.buttons" />
 
-					{ superActive && network ? (
+					{ networkSearch ? (
 						<NetworkSearchInput
 							autoFocus
 							className="hidden sm:block"

@@ -15,12 +15,15 @@ export const INPUT_CLASSES = 'w-full text-lg border-2 border-hm-border-color rou
 /**
  * Get the classes for the wrapper around the search input.
  *
+ * The background is left to the caller: the site search needs an opaque one
+ * to cover its results dropdown, while the network search shows the header's.
+ *
  * @param {boolean} small Whether the input is in a small (unpadded) context.
  * @returns {string} Class names.
  */
 export const getWrapClasses = small => [
 	'SearchInput__wrap',
-	'flex items-center h-full bg-hm-light-grey relative z-11',
+	'flex items-center h-full relative z-11',
 	small ? '' : 'px-5',
 ].filter( Boolean ).join( ' ' );
 
@@ -222,7 +225,7 @@ class SearchInput extends React.Component {
 				className={ `${ FORM_CLASSES } ${ this.props.className || '' }` }
 				onSubmit={ this.onSubmit }
 			>
-				<div className={ getWrapClasses( this.props.small ) }>
+				<div className={ `${ getWrapClasses( this.props.small ) } bg-hm-light-grey` }>
 					<input
 						className={ INPUT_CLASSES }
 						type="search"
