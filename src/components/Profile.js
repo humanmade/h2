@@ -105,7 +105,7 @@ export class Profile extends React.Component {
 				</ul>
 
 				<LocalTime user={ user } />
-				{ user.facts && user.facts.work_site && <Field name="Location">{ user.facts.work_site }</Field> }
+				{ user.facts && user.facts.location_name && <Field name="Location">{ user.facts.location_name }</Field> }
 				{ user.facts && user.facts.pronouns && <Field name="Pronouns">{ user.facts.pronouns }</Field> }
 
 				<div className="Profile-description">

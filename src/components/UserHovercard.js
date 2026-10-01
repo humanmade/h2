@@ -70,7 +70,7 @@ export function UserCard( { user } ) {
 
 				<div className={ DESCRIPTION_CLASSES }>
 					<LocalTime user={ user } />
-					{ user.facts.work_site && <p><strong>Location:</strong> { user.facts.work_site }</p> }
+					{ user.facts.location_name && <p><strong>Location:</strong> { user.facts.location_name }</p> }
 					{ user.facts.pronouns && <p><strong>Pronouns:</strong> { user.facts.pronouns }</p> }
 					{ user.facts.short_bio && <p>{ user.facts.short_bio }</p> }
 				</div>
