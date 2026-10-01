@@ -35,7 +35,7 @@ export class Header extends Component {
 				<div
 					className={ [
 						'flex flex-row pr-5 max-[600px]:pr-1.5 transition-colors duration-150',
-						networkSearch ? 'bg-brand/10' : '',
+						networkSearch ? 'bg-brand/5' : '',
 					].filter( Boolean ).join( ' ' ) }
 				>
 					<button

@@ -30,7 +30,7 @@ export function NetworkSearchInput( props ) {
 				<input
 					aria-label={ network ? `Search ${ network.name }` : 'Search all sites' }
 					autoFocus={ autoFocus }
-					className={ INPUT_CLASSES }
+					className={ `${ INPUT_CLASSES } bg-white` }
 					placeholder={ network ? `Search across ${ network.name }…` : 'Search all sites…' }
 					type="search"
 					value={ value }
