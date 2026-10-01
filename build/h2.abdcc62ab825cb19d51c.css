@@ -1870,6 +1870,10 @@ a em {
   .justify-center {
     justify-content: center;
   }
+  .gap-x-2 {
+    -moz-column-gap: calc(var(--spacing) * 2);
+         column-gap: calc(var(--spacing) * 2);
+  }
   .self-baseline {
     align-self: baseline;
   }

@@ -18,11 +18,7 @@ export default function UserBlock( props ) {
 			<div>
 				<h2>{ user.name }</h2>
 				<p>@{ user.slug }</p>
-				{ user.facts && (
-					<p className={ user.facts.job_title ? 'text-hm-medium-grey' : 'text-hm-medium-grey italic' }>
-						{ user.facts.job_title || 'Unknown Role' }
-					</p>
-				) }
+				{ user.facts && user.facts.job_title && <p className="text-hm-medium-grey">{ user.facts.job_title }</p> }
 			</div>
 		</div>
 	);
