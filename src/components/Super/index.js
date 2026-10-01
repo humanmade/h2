@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { hideSuperSidebar } from '../../actions';
 import { getChangesForUser } from '../../changelog';
 import { withCurrentUser } from '../../hocs';
+import Button from '../Button';
 import Notification from '../Notification';
 import Overlay from '../Overlay';
 import Shortcuts from '../Shortcuts';
@@ -14,11 +15,13 @@ import NetworkSearchInput from './SearchInput';
 import SiteSwitcher, { SiteCard } from './SiteSwitcher';
 import { getNetwork } from './util';
 
-const TOOL_BUTTON_CLASSES = [
-	'flex items-center gap-2 shrink-0',
-	'bg-transparent border border-solid border-hm-beige rounded-sm',
-	'px-3 py-1.5 text-sm text-black cursor-pointer',
-	'hover:bg-hm-beige/50 focus:bg-hm-beige/50 focus:outline-hidden',
+// Invert along with the button, so the count stays readable on hover.
+const BADGE_CLASSES = [
+	'inline-block ml-2 rounded-full h-4 min-w-4 px-1 align-middle',
+	'text-xs leading-4 text-center font-normal',
+	'bg-hm-vibrant-blue text-white transition-colors duration-200 ease-in-out',
+	'group-hover:bg-white group-hover:text-hm-vibrant-blue',
+	'group-focus:bg-white group-focus:text-hm-vibrant-blue',
 ].join( ' ' );
 
 /**
@@ -104,29 +107,24 @@ export class SuperOverlay extends Component {
 							{ network ? network.name : window.H2Data.site.name }
 						</h2>
 
-						<button
-							className={ TOOL_BUTTON_CLASSES }
-							type="button"
+						<Button
+							className="group shrink-0 m-0!"
 							onClick={ this.props.onShowChanges }
 						>
-							<i className="icon icon--mail size-4!" />
-							<span>What's New?</span>
+							What's New?
 							{ newChanges.length > 0 && (
-								<span className="inline-block rounded-full bg-hm-vibrant-blue text-white text-xs leading-4 h-4 min-w-4 px-1 text-center">
+								<span className={ BADGE_CLASSES }>
 									{ newChanges.length }
 								</span>
 							) }
-						</button>
+						</Button>
 
-						<button
-							aria-label="Close"
-							className={ TOOL_BUTTON_CLASSES }
-							title="Close (Esc)"
-							type="button"
+						<Button
+							className="shrink-0 m-0!"
 							onClick={ onClose }
 						>
-							<i className="icon icon--close size-4!" />
-						</button>
+							Close
+						</Button>
 
 						{ network && (
 							<NetworkSearchInput
