@@ -12,8 +12,8 @@ import Container from './Sidebar/Container';
 import UserBlock from './UserBlock';
 
 const Field = props => (
-	<p className="m-0 mb-1 flex">
-		<strong className="w-1/4 grow-0 shrink-0">{ props.name }:</strong>
+	<p className="m-0 mb-1 flex gap-x-2">
+		<strong className="w-1/4 grow-0 shrink-0">{ props.name }:{ ' ' }</strong>
 		<span className={ props.missing ? 'missing italic' : null }>{ props.children }</span>
 	</p>
 );
@@ -105,7 +105,7 @@ export class Profile extends React.Component {
 				</ul>
 
 				<LocalTime user={ user } />
-				{ user.facts && user.facts.work_site && <Field name="Work site">{ user.facts.work_site }</Field> }
+				{ user.facts && user.facts.work_site && <Field name="Location">{ user.facts.work_site }</Field> }
 				{ user.facts && user.facts.pronouns && <Field name="Pronouns">{ user.facts.pronouns }</Field> }
 
 				<div className="Profile-description">
