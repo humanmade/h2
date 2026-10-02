@@ -29,16 +29,20 @@ export function SiteCard( props ) {
 					<h3 className="m-0 text-lg font-bold leading-tight">
 						{ site.name }
 					</h3>
-					{ current && (
+					{ current ? (
 						<span className="shrink-0 text-xs uppercase tracking-wide font-semibold text-hm-vibrant-blue">
 							Current
+						</span>
+					) : (
+						<span className="hidden group-hover:block group-active:block shrink-0 text-xs uppercase tracking-wide font-semibold text-hm-warm-grey">
+							View &rarr;
 						</span>
 					) }
 				</div>
 				<p className="m-0 mt-2 text-sm text-black/60">
 					{ site.description || <em>No description yet.</em> }
 				</p>
-				<p className="m-0 mt-3 text-xs text-black/40 truncate">
+				<p className="m-0 mt-3 text-xs text-black/40 group-hover:text-blue-400 truncate">
 					{ displayUrl( site.url ) }
 				</p>
 			</a>
