@@ -101,7 +101,7 @@ export class SuperOverlay extends Component {
 					} }
 				/>
 
-				<div className="max-w-[1200px] mx-auto px-5 py-6 max-[600px]:px-4">
+				<div className="max-w-300 mx-auto px-5 py-6 max-[600px]:px-4">
 					<header className="flex flex-wrap items-center gap-3 mb-6">
 						<h2 className="m-0 mr-auto text-2xl font-bold leading-tight">
 							{ network ? network.name : window.H2Data.site.name }
