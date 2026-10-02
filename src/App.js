@@ -22,7 +22,7 @@ import CategoriesSidebar from './components/Sidebar/Categories';
 import CommentsSidebar from './components/Sidebar/Comments';
 import PagesSidebar from './components/Sidebar/Pages';
 import PostsSidebar from './components/Sidebar/Posts';
-import SuperMenu from './components/SuperMenu';
+import SuperOverlay from './components/Super';
 import { RenderPlugins } from './plugins';
 
 import './App.css';
@@ -36,6 +36,7 @@ class App extends Component {
 			isShowingWritePost: false,
 			showChanges: false,
 		};
+		this.headerRef = React.createRef();
 	}
 	onLogOut() {
 		window.location.href = '/wp-login.php?action=logout';
@@ -69,6 +70,19 @@ class App extends Component {
 		if ( this.props.showingSuper ) {
 			this.props.onHideSuperSidebar();
 		}
+	}
+
+	onToggleSuper = () => {
+		if ( this.props.showingSuper ) {
+			this.props.onHideSuperSidebar();
+		} else {
+			this.props.onShowSuperSidebar();
+		}
+	}
+
+	onShowChanges = () => {
+		this.setState( { showChanges: true } );
+		this.props.onHideSuperSidebar();
 	}
 
 	onClickWritePost() {
@@ -144,21 +158,25 @@ class App extends Component {
 		return (
 			<div className="App">
 				<OverlayContainer />
-				<SuperMenu
-					visible={ this.props.showingSuper }
-					onClose={ this.props.onHideSuperSidebar }
-					onSearch={ search => this.onSearch( search ) }
-					onShowChanges={ () => {
-						this.setState( { showChanges: true } );
-						this.props.onHideSuperSidebar();
-					} }
-				/>
-				<Header
-					onLogOut={ () => this.onLogOut() }
-					onWritePost={ () => this.onClickWritePost() }
-					onSearch={ search => this.onSearch( search ) }
-					onShowSuper={ this.props.onShowSuperSidebar }
-				/>
+				{ /* Keep the header above the overlay, so its search input stays usable. */ }
+				<div
+					ref={ this.headerRef }
+					className={ this.props.showingSuper ? 'relative z-30' : undefined }
+				>
+					<Header
+						superActive={ this.props.showingSuper }
+						onLogOut={ () => this.onLogOut() }
+						onWritePost={ () => this.onClickWritePost() }
+						onSearch={ search => this.onSearch( search ) }
+						onShowSuper={ this.onToggleSuper }
+					/>
+				</div>
+				{ this.props.showingSuper && (
+					<SuperOverlay
+						headerRef={ this.headerRef }
+						onShowChanges={ this.onShowChanges }
+					/>
+				) }
 				<SessionExpiredWarning />
 				<div className="Outer grid grid-cols-[min(30%,360px)_auto] gap-12">
 					{ this.renderSidebar() }

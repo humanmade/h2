@@ -28,3 +28,23 @@ export const Default = () => (
 		{ ...defaultProps }
 	/>
 );
+
+export const SuperActive = () => (
+	<Header
+		{ ...defaultProps }
+		superActive
+	/>
+);
+
+export const OnNetwork = () => {
+	window.H2Data.network = {
+		name: 'Storybook Network',
+	};
+
+	return (
+		<Header
+			{ ...defaultProps }
+			superActive
+		/>
+	);
+};

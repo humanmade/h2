@@ -125,6 +125,21 @@ export const changes = [
 			</React.Fragment>
 		),
 	},
+	{
+		date: '2026-09-03',
+		title: 'Switch Sites & Search the Network',
+		content: () => (
+			<React.Fragment>
+				<p>The button in the top left now opens an overview of
+					every site on your network, so you can jump between
+					them with a single click.</p>
+				<p>While it's open, the search bar searches posts and
+					comments across all of your sites at once. Narrow the
+					results down by site, type or date, and sort them by
+					relevance or by date.</p>
+			</React.Fragment>
+		),
+	},
 ];
 
 export function getChanges( lastView ) {
