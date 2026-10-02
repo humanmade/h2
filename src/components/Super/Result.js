@@ -17,6 +17,29 @@ const SNIPPET_CLASSES = [
 
 const TITLE_LINK_CLASSES = 'text-black! hover:text-hm-vibrant-blue! [&_mark]:bg-transparent [&_mark]:text-inherit [&_mark]:underline [&_mark]:decoration-hm-vibrant-blue [&_mark]:decoration-2';
 
+const POST_TYPE_LABELS = {
+	post: 'Post',
+	page: 'Page',
+};
+
+/**
+ * Get the label for a post type.
+ *
+ * @param {string} postType Post type slug.
+ * @returns {string} Known label, or a readable version of the slug.
+ */
+function getPostTypeLabel( postType ) {
+	if ( ! postType ) {
+		return POST_TYPE_LABELS.post;
+	}
+	if ( POST_TYPE_LABELS[ postType ] ) {
+		return POST_TYPE_LABELS[ postType ];
+	}
+
+	const words = postType.replace( /[-_]+/g, ' ' );
+	return words.charAt( 0 ).toUpperCase() + words.slice( 1 );
+}
+
 /**
  * Get the details to show for a post or comment.
  *
@@ -25,7 +48,7 @@ const TITLE_LINK_CLASSES = 'text-black! hover:text-hm-vibrant-blue! [&_mark]:bg-
  *
  * @param {string} type Type of result, `post` or `comment`.
  * @param {object} object Post or comment from the search API.
- * @returns {object} Title, author and fallback excerpt for the result.
+ * @returns {object} Label, title, author and fallback excerpt for the result.
  */
 function getDetails( type, object ) {
 	const embedded = object._embedded || {};
@@ -39,6 +62,7 @@ function getDetails( type, object ) {
 			avatarUrls: object.author_avatar_urls,
 			// Comments have no excerpt, so fall back to the text of the comment.
 			excerptText: getPlainText( object.content.rendered ),
+			label: 'Comment',
 			title: post ? post.title.rendered : '',
 		};
 	}
@@ -47,6 +71,8 @@ function getDetails( type, object ) {
 		authorName: author && author.name,
 		avatarUrls: author && author.avatar_urls,
 		excerptHtml: object.excerpt.rendered,
+		// `post` results cover every post type, so label by the post's own type.
+		label: getPostTypeLabel( object.type ),
 		title: object.title.rendered,
 	};
 }
@@ -66,7 +92,7 @@ export default function Result( props ) {
 	const highlightedTitle = highlight.title && highlight.title[0];
 	const snippets = highlight.content;
 	const details = getDetails( type, object );
-	const { authorName, excerptHtml, excerptText, title } = details;
+	const { authorName, excerptHtml, excerptText, label, title } = details;
 	const avatarUrls = details.avatarUrls || {};
 	const avatarUrl = avatarUrls['48'] || avatarUrls['96'] || window.H2Data.site.default_avatar;
 
@@ -80,7 +106,7 @@ export default function Result( props ) {
 				<span className="inline-block px-2 py-0.5 rounded-full bg-hm-beige text-black/80 font-semibold">
 					{ site.name }
 				</span>
-				<span>{ isComment ? 'Comment' : 'Post' }</span>
+				<span>{ label }</span>
 				<span className="ml-auto">
 					<FormattedDate date={ object.date_gmt + 'Z' } />
 				</span>
@@ -154,6 +180,7 @@ Result.propTypes = {
 		result: PropTypes.shape( {
 			id: PropTypes.number.isRequired,
 			date_gmt: PropTypes.string.isRequired,
+			type: PropTypes.string,
 			link: PropTypes.string.isRequired,
 			title: Rendered,
 			excerpt: Rendered,

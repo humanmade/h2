@@ -65,6 +65,7 @@ const results = [
 			id: 123,
 			date: '2026-09-01T10:00:00',
 			date_gmt: '2026-09-01T09:00:00',
+			type: 'post',
 			link: 'https://example.com/eng/2026/09/01/deploy-checklist/',
 			title: {
 				rendered: 'Deploy checklist',
@@ -120,7 +121,8 @@ const results = [
 			id: 789,
 			date: '2026-07-12T09:00:00',
 			date_gmt: '2026-07-12T08:00:00',
-			link: 'https://example.com/design/2026/07/12/component-review-checklist/',
+			type: 'page',
+			link: 'https://example.com/design/component-review-checklist/',
 			title: {
 				rendered: 'Component review checklist',
 			},
