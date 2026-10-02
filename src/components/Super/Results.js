@@ -102,7 +102,7 @@ export default function Results( props ) {
 				>
 					{ results.map( result => (
 						<Result
-							key={ `${ result.type }-${ result.site.id }-${ result.id }` }
+							key={ `${ result.type }-${ result.site.id }-${ result.result.id }` }
 							result={ result }
 						/>
 					) ) }

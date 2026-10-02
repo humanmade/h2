@@ -42,25 +42,18 @@ const sites = [
 	},
 ];
 
-const author = site => ( {
-	id: user.id,
-	name: user.name,
-	slug: user.slug,
-	link: `${ site.url }/author/${ user.slug }/`,
-	avatar_urls: user.avatar_urls,
+const author = ( site, data = user ) => ( {
+	id: data.id,
+	name: data.name,
+	slug: data.slug,
+	link: `${ site.url }/author/${ data.slug }/`,
+	avatar_urls: data.avatar_urls,
 } );
 
 const results = [
 	{
-		id: 123,
 		type: 'post',
 		site: sites[1],
-		title: 'Deploy checklist',
-		excerpt: '<p>Before every deploy, run through the checklist.</p>',
-		link: 'https://example.com/eng/2026/09/01/deploy-checklist/',
-		date: '2026-09-01T10:00:00',
-		date_gmt: '2026-09-01T09:00:00',
-		author: author( sites[1] ),
 		score: 4.2,
 		highlight: {
 			title: [ 'Deploy <mark>checklist</mark>' ],
@@ -68,44 +61,77 @@ const results = [
 				'Run through the <mark>checklist</mark> before pushing the button. If anything on the <mark>checklist</mark> fails, stop',
 			],
 		},
+		result: {
+			id: 123,
+			date: '2026-09-01T10:00:00',
+			date_gmt: '2026-09-01T09:00:00',
+			link: 'https://example.com/eng/2026/09/01/deploy-checklist/',
+			title: {
+				rendered: 'Deploy checklist',
+			},
+			excerpt: {
+				rendered: '<p>Before every deploy, run through the checklist.</p>',
+			},
+			author: user.id,
+			_embedded: {
+				author: [ author( sites[1] ) ],
+			},
+		},
 	},
 	{
-		id: 456,
 		type: 'comment',
 		site: sites[0],
-		title: 'Tecum optime, deinde etiam cum mediocri amico.',
-		excerpt: '<p>Have we added the new service to the checklist yet?</p>',
-		link: 'http://example.com/2018/01/01/tecum-optime/#comment-456',
-		date: '2026-08-30T15:20:00',
-		date_gmt: '2026-08-30T14:20:00',
-		author: {
-			...author( sites[0] ),
-			id: users[1].id,
-			name: users[1].name,
-			avatar_urls: users[1].avatar_urls,
-		},
-		post: {
-			id: 1,
-			title: 'Tecum optime, deinde etiam cum mediocri amico.',
-			link: 'http://example.com/2018/01/01/tecum-optime/',
-		},
 		score: 2.1,
 		highlight: {
 			content: [ 'Have we added the new service to the <mark>checklist</mark> yet?' ],
 		},
+		result: {
+			id: 456,
+			post: 1,
+			author: users[1].id,
+			author_name: users[1].name,
+			date: '2026-08-30T15:20:00',
+			date_gmt: '2026-08-30T14:20:00',
+			content: {
+				rendered: '<p>Have we added the new service to the checklist yet?</p>',
+			},
+			link: 'http://example.com/2018/01/01/tecum-optime/#comment-456',
+			author_avatar_urls: users[1].avatar_urls,
+			_embedded: {
+				author: [ author( sites[0], users[1] ) ],
+				up: [
+					{
+						id: 1,
+						link: 'http://example.com/2018/01/01/tecum-optime/',
+						title: {
+							rendered: 'Tecum optime, deinde etiam cum mediocri amico.',
+						},
+					},
+				],
+			},
+		},
 	},
 	{
-		id: 789,
 		type: 'post',
 		site: sites[3],
-		title: 'Component review checklist',
-		excerpt: '<p>Everything a component needs before it ships in the design system.</p>',
-		link: 'https://example.com/design/2026/07/12/component-review-checklist/',
-		date: '2026-07-12T09:00:00',
-		date_gmt: '2026-07-12T08:00:00',
-		author: author( sites[3] ),
 		score: 1.4,
 		highlight: {},
+		result: {
+			id: 789,
+			date: '2026-07-12T09:00:00',
+			date_gmt: '2026-07-12T08:00:00',
+			link: 'https://example.com/design/2026/07/12/component-review-checklist/',
+			title: {
+				rendered: 'Component review checklist',
+			},
+			excerpt: {
+				rendered: '<p>Everything a component needs before it ships in the design system.</p>',
+			},
+			author: user.id,
+			_embedded: {
+				author: [ author( sites[3] ) ],
+			},
+		},
 	},
 ];
 

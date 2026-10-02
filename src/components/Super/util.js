@@ -40,6 +40,19 @@ export function displayUrl( url ) {
 }
 
 /**
+ * Get the text of an HTML string.
+ *
+ * The HTML is parsed into an inert document, so nothing in it is run or loaded.
+ *
+ * @param {string} html HTML to get the text of.
+ * @returns {string} Text content.
+ */
+export function getPlainText( html ) {
+	const doc = new DOMParser().parseFromString( html || '', 'text/html' );
+	return ( doc.body.textContent || '' ).trim();
+}
+
+/**
  * Format a count of results.
  *
  * Elasticsearch stops counting at 10,000 results.
