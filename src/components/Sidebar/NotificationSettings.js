@@ -31,13 +31,22 @@ const MODES = [
 			comment: 'all',
 		},
 	},
+	{
+		id: 'none',
+		label: 'None',
+		description: 'Unsubscribe from all email notifications.',
+		value: {
+			post: '',
+			comment: '',
+		},
+	},
 ];
 
 /**
  * Find the mode matching the user's current preferences.
  *
  * @param {object} prefs Falcon preferences for the connector.
- * @returns {string} Mode ID, "none", or "custom".
+ * @returns {string} Mode ID, or "custom".
  */
 const getMode = prefs => {
 	const mode = MODES.find( mode => (
@@ -47,25 +56,16 @@ const getMode = prefs => {
 		return mode.id;
 	}
 
-	if ( ! prefs.post && ! prefs.comment ) {
-		return 'none';
-	}
-
 	// Set to a combination we don't offer (e.g. via the profile screen).
 	return 'custom';
 };
 
 const getModeLabel = mode => {
-	switch ( mode ) {
-		case 'none':
-			return 'Off';
-
-		case 'custom':
-			return 'Custom';
-
-		default:
-			return MODES.find( m => m.id === mode ).label;
+	if ( mode === 'custom' ) {
+		return 'Custom';
 	}
+
+	return MODES.find( m => m.id === mode ).label;
 };
 
 /**
