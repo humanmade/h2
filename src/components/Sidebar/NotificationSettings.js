@@ -5,6 +5,15 @@ const CONNECTOR = 'wordpress';
 
 const MODES = [
 	{
+		id: 'none',
+		label: 'None',
+		description: 'Unsubscribe from all email notifications.',
+		value: {
+			post: '',
+			comment: '',
+		},
+	},
+	{
 		id: 'posts',
 		label: 'Just posts',
 		description: 'Get an email for every new post.',
@@ -29,15 +38,6 @@ const MODES = [
 		value: {
 			post: 'all',
 			comment: 'all',
-		},
-	},
-	{
-		id: 'none',
-		label: 'None',
-		description: 'Unsubscribe from all email notifications.',
-		value: {
-			post: '',
-			comment: '',
 		},
 	},
 ];
