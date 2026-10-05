@@ -373,6 +373,9 @@ function get_script_data() {
 			'emoji'          => apply_filters( 'h2.custom_emoji', [] ),
 		],
 		'features' => [],
+		'has' => [
+			'notifications' => defined( 'FALCON_PATH' ),
+		],
 		'plugins' => [
 			'reactions' => \class_exists( 'H2\\Reactions\\Reaction' ),
 		],
