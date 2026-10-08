@@ -134,6 +134,10 @@ class Editor extends React.PureComponent {
 	}
 
 	warnBeforeLeaving = e => {
+		if ( this.props.isSubmitting ) {
+			return;
+		}
+
 		if ( this.state.content === '' || ( this.props.initialValue && this.state.content === this.props.initialValue ) ) {
 			return;
 		}
@@ -584,6 +588,7 @@ Editor.propTypes = {
 	className: PropTypes.string,
 	previewComponent: PropTypes.func,
 	saveText: PropTypes.string,
+	isSubmitting: PropTypes.bool,
 	submitText: PropTypes.string,
 	onCancel: PropTypes.func,
 	onSubmit: PropTypes.func.isRequired,

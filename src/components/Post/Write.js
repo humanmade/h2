@@ -211,6 +211,7 @@ export class WritePost extends Component {
 					lastSave={ this.state.lastSave }
 					previewComponent={ props => <RemotePreview type="post" { ...props } /> }
 					saveText={ this.state.isSaving ? 'Saving…' : 'Save' }
+					isSubmitting={ this.state.isSubmitting }
 					submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
 					onCancel={ this.props.onCancel }
 					onSave={ this.onSave }
