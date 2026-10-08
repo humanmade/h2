@@ -9,6 +9,7 @@ export const posts = new handler( {
 		_fields: 'id,author,categories,content,date,date_gmt,excerpt,link,slug,status,tags,title,unprocessed_content',
 	},
 } );
+posts.registerArchive( '', {} );
 
 export const comments = new handler( {
 	type: 'comments',

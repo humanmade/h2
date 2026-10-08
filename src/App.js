@@ -24,6 +24,7 @@ import PagesSidebar from './components/Sidebar/Pages';
 import PostsSidebar from './components/Sidebar/Posts';
 import SuperMenu from './components/SuperMenu';
 import { RenderPlugins } from './plugins';
+import { posts } from './types';
 
 import './App.css';
 
@@ -86,6 +87,7 @@ class App extends Component {
 	onDidCreatePost() {
 		this.setState( { isShowingWritePost: false } );
 		this.props.history.push( '/' );
+		this.props.onRefreshPostStream();
 	}
 
 	renderSidebar() {
@@ -244,6 +246,7 @@ const mapDispatchToProps = dispatch => {
 		onDismissSidebar: () => dispatch( hideSidebar() ),
 		onHideSuperSidebar: () => dispatch( hideSuperSidebar() ),
 		onShowSuperSidebar: () => dispatch( showSuperSidebar() ),
+		onRefreshPostStream: () => dispatch( posts.fetchArchive( '' ) ),
 	};
 };
 
