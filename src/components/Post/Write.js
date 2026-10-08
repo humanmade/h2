@@ -110,9 +110,8 @@ export class WritePost extends Component {
 
 		const onDoSave = body.id ? this.props.onUpdate : this.props.onCreate;
 		onDoSave( body )
-			.then( id => {
-				const data = posts.getSingle( this.props.posts, id );
-				this.props.onDidCreatePost( data );
+			.then( () => {
+				this.props.onDidCreatePost();
 			} )
 			.catch( error => {
 				this.setState( {

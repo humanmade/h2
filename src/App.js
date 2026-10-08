@@ -83,9 +83,9 @@ class App extends Component {
 		this.props.history.push( string ? `/search/${ encodeURIComponent( string ) }` : '/' );
 	}
 
-	onDidCreatePost( post ) {
+	onDidCreatePost() {
 		this.setState( { isShowingWritePost: false } );
-		this.props.history.push( post.link.replace( /^(?:\/\/|[^/]+)*\//, '/' ) );
+		this.props.history.push( '/' );
 	}
 
 	renderSidebar() {
