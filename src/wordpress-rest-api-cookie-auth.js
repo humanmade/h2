@@ -14,7 +14,7 @@ export const parseResponse = resp => resp.json().then( data => {
 	throw err;
 } );
 
-export default class {
+export default class WordPressRestApiCookieAuth {
 	constructor( config ) {
 		this.url = config.rest_url ? config.rest_url : config.url + 'wp-json';
 		this.url = this.url.replace( /\/$/, '' );

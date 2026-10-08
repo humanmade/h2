@@ -119,6 +119,7 @@ class Editor extends React.PureComponent {
 			count: 0,
 			hasFocus: false,
 			height: null,
+			isPublishing: false,
 			mode: 'edit',
 			uploading: [],
 		};
@@ -134,7 +135,7 @@ class Editor extends React.PureComponent {
 	}
 
 	warnBeforeLeaving = e => {
-		if ( this.props.isSubmitting ) {
+		if ( this.state.isPublishing || this.props.isSubmitting ) {
 			return;
 		}
 
@@ -146,7 +147,12 @@ class Editor extends React.PureComponent {
 		return navigateWarning;
 	}
 
-	componentDidUpdate() {
+	componentDidUpdate( prevProps ) {
+		if ( this.state.isPublishing && prevProps.isSubmitting && ! this.props.isSubmitting ) {
+			window.addEventListener( 'beforeunload', this.warnBeforeLeaving );
+			this.setState( { isPublishing: false } );
+		}
+
 		if ( ! this.textarea ) {
 			return;
 		}
@@ -270,6 +276,10 @@ class Editor extends React.PureComponent {
 
 	onSubmit( e ) {
 		e.preventDefault();
+		// Removing this synchronously is important: React state updates do not
+		// necessarily flush before the successful submit navigates away.
+		window.removeEventListener( 'beforeunload', this.warnBeforeLeaving );
+		this.setState( { isPublishing: true } );
 
 		this.props.onSubmit( compileMarkdown( this.state.content ), this.state.content );
 	}
@@ -522,7 +532,7 @@ class Editor extends React.PureComponent {
 						) }
 					</DropUpload>
 					<Prompt
-						when={ ! ( this.state.content === '' || ( this.props.initialValue && this.state.content === this.props.initialValue ) ) }
+						when={ ! this.state.isPublishing && ! this.props.isSubmitting && ! ( this.state.content === '' || ( this.props.initialValue && this.state.content === this.props.initialValue ) ) }
 						message={ navigateWarning }
 					/>
 
