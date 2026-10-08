@@ -79,11 +79,13 @@ export function UserCard( { user } ) {
 					<p>{ user.facts.short_bio }</p>
 				</div>
 			</div>
-			<Map
-				height="150"
-				location={ user.facts.location }
-				width="150"
-			/>
+			{ user.facts.location && window.H2Data.site.mapbox_key && (
+				<Map
+					height="150"
+					location={ user.facts.location }
+					width="150"
+				/>
+			) }
 		</aside>
 	);
 }
@@ -92,7 +94,7 @@ export default class UserHovercard extends React.Component {
 	render() {
 		const { children, user } = this.props;
 
-		if ( ! user.facts || ! window.H2Data.site.mapbox_key ) {
+		if ( ! user.facts ) {
 			return children;
 		}
 

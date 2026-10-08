@@ -86,7 +86,7 @@ export class Profile extends React.Component {
 			<Container { ...containerProps }>
 				<UserBlock user={ user } />
 
-				{ user.facts && (
+				{ user.facts && user.facts.location && window.H2Data.site.mapbox_key && (
 					<Map
 						height="200"
 						location={ user.facts.location }
