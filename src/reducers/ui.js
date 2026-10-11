@@ -8,6 +8,7 @@ import {
 	HIDE_SIDEBAR,
 	SHOW_SUPER_SIDEBAR,
 	HIDE_SUPER_SIDEBAR,
+	SET_SUPER_SEARCH,
 	SET_DEFAULT_POST_VIEW,
 } from '../actions';
 
@@ -15,6 +16,7 @@ const DEFAULT_STATE = {
 	defaultPostView: 'expanded',
 	showingSuper: false,
 	sidebarProfile: null,
+	superSearch: '',
 };
 
 export default function ui( state = DEFAULT_STATE, action ) {
@@ -74,6 +76,13 @@ export default function ui( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				showingSuper: false,
+				superSearch: '',
+			};
+
+		case SET_SUPER_SEARCH:
+			return {
+				...state,
+				superSearch: action.search,
 			};
 
 		case SET_DEFAULT_POST_VIEW:

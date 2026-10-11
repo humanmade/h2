@@ -26,6 +26,15 @@
 
 	--animate-hovercard-in: hovercard-fade-in-up 0.1s ease forwards;
 	--animate-hovercard-out: hovercard-fade-out-down 0.1s ease forwards;
+	--animate-super-in: super-fade-in 0.15s ease-out;
+	@keyframes super-fade-in {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
 	@keyframes hovercard-fade-in-up {
 		0% {
 			opacity: 0;
