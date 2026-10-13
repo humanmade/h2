@@ -119,7 +119,7 @@ export class Dropdown extends React.PureComponent {
 		const { expanded } = this.state;
 
 		const className = [
-			'Dropdown relative flex min-w-[5em]',
+			'Dropdown relative flex shrink-0 min-w-[5em]',
 			'[&_.btn--small]:min-h-[31px]',
 			'[&>.btn:first-child]:text-left [&>.btn:first-child]:grow',
 			expanded && '[&>.btn:first-child]:rounded-bl-none',
