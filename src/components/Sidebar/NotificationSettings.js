@@ -1,4 +1,8 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
+
+import { withCurrentUser } from '../../hocs';
+import { User } from '../../shapes';
 
 // Falcon stores preferences per-connector; H2 uses the WordPress connector.
 const CONNECTOR = 'wordpress';
@@ -68,41 +72,6 @@ const getModeLabel = mode => {
 	return MODES.find( m => m.id === mode ).label;
 };
 
-/**
- * Make a request for the current user's preferences.
- *
- * @param {object|null} data Preferences to update, or null to fetch.
- * @returns {Promise<object>} Falcon preferences for the user.
- */
-const request = ( data = null ) => {
-	const url = new URL( `${ window.wpApiSettings.root }wp/v2/users/me`, window.location.href );
-	url.searchParams.set( 'context', 'edit' );
-	url.searchParams.set( '_fields', 'falcon_preferences' );
-
-	const options = {
-		credentials: 'same-origin',
-		headers: {
-			Accept: 'application/json',
-			'X-WP-Nonce': window.wpApiSettings.nonce,
-		},
-	};
-	if ( data ) {
-		options.method = 'POST';
-		options.headers['Content-Type'] = 'application/json';
-		options.body = JSON.stringify( {
-			falcon_preferences: data,
-		} );
-	}
-
-	return fetch( url, options )
-		.then( response => response.json().then( body => {
-			if ( ! response.ok ) {
-				throw new Error( body.message || 'Could not load notification settings.' );
-			}
-			return body.falcon_preferences;
-		} ) );
-};
-
 const BellIcon = ( { mode } ) => {
 	const strokeProps = {
 		fill: 'none',
@@ -138,23 +107,21 @@ const BellIcon = ( { mode } ) => {
 	);
 };
 
-export default function NotificationSettings() {
-	const [ prefs, setPrefs ] = useState( null );
-	const [ error, setError ] = useState( null );
-	const [ saving, setSaving ] = useState( false );
+export function NotificationSettings( props ) {
+	const { currentUser, loadingCurrentUser, savingCurrentUser } = props;
 	const [ open, setOpen ] = useState( false );
 	const container = useRef( null );
 
+	// Preferences are only exposed in the edit context, which the preloaded
+	// user doesn't use, so load them if we don't have them yet.
+	const needsPreferences = currentUser && currentUser.falcon_preferences === undefined;
 	useEffect( () => {
-		let cancelled = false;
-		request().then(
-			data => ! cancelled && setPrefs( data[ CONNECTOR ] || null ),
-			err => ! cancelled && setError( err.message )
-		);
-		return () => {
-			cancelled = true;
-		};
-	}, [] );
+		if ( needsPreferences && ! loadingCurrentUser ) {
+			props.onLoadCurrentUser( 'edit' );
+		}
+	// Only attempt this once per user, to avoid looping on failure.
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [ currentUser && currentUser.id ] );
 
 	// Close when clicking outside, or pressing Escape.
 	useEffect( () => {
@@ -180,6 +147,7 @@ export default function NotificationSettings() {
 		};
 	}, [ open ] );
 
+	const prefs = currentUser && currentUser.falcon_preferences && currentUser.falcon_preferences[ CONNECTOR ];
 	if ( ! prefs ) {
 		// Still loading, or Falcon isn't exposing preferences for this site.
 		return null;
@@ -189,25 +157,11 @@ export default function NotificationSettings() {
 	const label = `Email notifications: ${ getModeLabel( mode ) }`;
 
 	const onSelect = next => {
-		const previous = prefs;
-		setPrefs( {
-			...prefs,
-			...next.value,
-		} );
-		setError( null );
-		setSaving( true );
-
-		request( { [ CONNECTOR ]: next.value } ).then(
-			data => {
-				setSaving( false );
-				setPrefs( data[ CONNECTOR ] || null );
+		props.onUpdateCurrentUser( {
+			falcon_preferences: {
+				[ CONNECTOR ]: next.value,
 			},
-			err => {
-				setSaving( false );
-				setPrefs( previous );
-				setError( err.message );
-			}
-		);
+		} );
 	};
 
 	return (
@@ -241,7 +195,7 @@ export default function NotificationSettings() {
 								<button
 									aria-checked={ mode === option.id }
 									className="w-full grid grid-cols-[1.25rem_auto] gap-x-2 px-4 py-2 m-0 text-left bg-transparent border-0 cursor-pointer hover:bg-hm-beige/20 disabled:cursor-wait"
-									disabled={ saving }
+									disabled={ savingCurrentUser }
 									role="menuitemradio"
 									type="button"
 									onClick={ () => onSelect( option ) }
@@ -257,13 +211,18 @@ export default function NotificationSettings() {
 							</li>
 						) ) }
 					</ul>
-					{ error && (
-						<p className="m-0 px-4 py-2 text-xs text-hm-red">
-							{ error }
-						</p>
-					) }
 				</div>
 			) }
 		</div>
 	);
 }
+
+NotificationSettings.propTypes = {
+	currentUser: User,
+	loadingCurrentUser: PropTypes.bool,
+	savingCurrentUser: PropTypes.bool,
+	onLoadCurrentUser: PropTypes.func.isRequired,
+	onUpdateCurrentUser: PropTypes.func.isRequired,
+};
+
+export default withCurrentUser( NotificationSettings );

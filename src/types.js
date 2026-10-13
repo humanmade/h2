@@ -28,11 +28,17 @@ export const users = new handler( {
 	nonce: window.wpApiSettings.nonce,
 	query: {
 		// Dodges Yoast SEO data computation.
-		_fields: 'id,name,facts,link,slug,avatar_urls,meta',
+		// (falcon_preferences is only returned for the current user in the edit context.)
+		_fields: 'id,name,facts,link,slug,avatar_urls,meta,falcon_preferences',
 	},
 } );
 users.registerArchive( 'me', state => ( { include: state.users.current } ) );
 users.registerArchive( 'all', { per_page: 100 } );
+users.fetchCurrent = ( function ( context = 'view' ) {
+	return ( dispatch, getState ) => {
+		return dispatch( this.fetchSingle( getState().users.current, context ) );
+	};
+} ).bind( users );
 users.updateCurrent = ( function ( data ) {
 	return ( dispatch, getState ) => {
 		return dispatch(
