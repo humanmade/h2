@@ -8,8 +8,10 @@ export const withCurrentUser = connect(
 	state => ( {
 		currentUser: users.getSingle( state.users, state.users.current ),
 		loadingCurrentUser: users.isPostLoading( state.users, state.users.current ),
+		savingCurrentUser: users.isPostSaving( state.users, state.users.current ),
 	} ),
 	dispatch => ( {
+		onLoadCurrentUser: context => dispatch( users.fetchCurrent( context ) ),
 		onUpdateCurrentUser: data => dispatch( users.updateCurrent( data ) ),
 	} )
 );

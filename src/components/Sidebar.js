@@ -6,6 +6,7 @@ import { Slot } from 'react-slot-fill';
 import { showSidebarCategories, showSidebarPages, showSidebarPosts } from '../actions';
 import { withWidgets } from '../hocs';
 
+import NotificationSettings from './Sidebar/NotificationSettings';
 import RecentPostsWidget from './Widgets/RecentPosts';
 import SearchWidget from './Widgets/Search';
 
@@ -74,8 +75,8 @@ export function Sidebar( props ) {
 			className="Sidebar border-r border-solid border-hm-beige"
 		>
 			<div className="">
-				<div className="px-4 py-6 bg-hm-beige">
-					<h2 className="text-xl font-bold">
+				<div className="px-4 py-6 bg-hm-beige flex items-center justify-between gap-2">
+					<h2 className="text-xl font-bold m-0">
 						<Link
 							className="block hover:underline"
 							to="/"
@@ -83,6 +84,9 @@ export function Sidebar( props ) {
 							{ site.name }
 						</Link>
 					</h2>
+					{ window.H2Data.has && window.H2Data.has.notifications && (
+						<NotificationSettings />
+					) }
 				</div>
 				<div className="px-4 py-4 bg-hm-beige/50">
 					<p className="text-sm opacity-60 m-0">{ site.description || 'No description yet.' }</p>
