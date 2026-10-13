@@ -110,9 +110,8 @@ export class WritePost extends Component {
 
 		const onDoSave = body.id ? this.props.onUpdate : this.props.onCreate;
 		onDoSave( body )
-			.then( id => {
-				const data = posts.getSingle( this.props.posts, id );
-				this.props.onDidCreatePost( data );
+			.then( () => {
+				this.props.onDidCreatePost();
 			} )
 			.catch( error => {
 				this.setState( {
@@ -212,6 +211,7 @@ export class WritePost extends Component {
 					lastSave={ this.state.lastSave }
 					previewComponent={ props => <RemotePreview type="post" { ...props } /> }
 					saveText={ this.state.isSaving ? 'Saving…' : 'Save' }
+					isSubmitting={ this.state.isSubmitting }
 					submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
 					onCancel={ this.props.onCancel }
 					onSave={ this.onSave }
@@ -250,7 +250,7 @@ export class WritePost extends Component {
 }
 
 WritePost.propTypes = {
-	onCancel: PropTypes.func.isRequired,
+	onCancel: PropTypes.func,
 	onDidCreatePost: PropTypes.func.isRequired,
 };
 

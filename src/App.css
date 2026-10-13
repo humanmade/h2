@@ -11,15 +11,12 @@
 }
 
 .Outer {
-	margin: 0 auto;
-	display: flex;
-	max-width: 1200px;
+	/* display: flex; */
 }
 
 .Inner {
 	flex-direction: column;
-	width: 65%;
-	max-width: 800px;
+	/* width: 65%; */
 }
 
 @media ( min-width: 800px ) {
@@ -27,10 +24,8 @@
 		position: sticky;
 		top: 0;
 		height: 100vh;
-		margin-left: 5%;
 		overflow: hidden;
 		overflow-y: scroll;
-		width: 30%;
 		flex-shrink: 0;
 	}
 }

@@ -362,6 +362,7 @@ function get_script_data() {
 		'asset_url' => get_theme_file_uri( 'build/' ),
 		'site' => [
 			'name'           => get_bloginfo( 'name' ),
+			'description'    => get_bloginfo( 'description' ),
 			'url'            => site_url(),
 			'home'           => home_url(),
 			'api'            => rest_url(),
@@ -376,6 +377,9 @@ function get_script_data() {
 			'emoji'          => apply_filters( 'h2.custom_emoji', [] ),
 		],
 		'features' => [],
+		'has' => [
+			'notifications' => defined( 'FALCON_PATH' ),
+		],
 		'plugins' => [
 			'reactions' => \class_exists( 'H2\\Reactions\\Reaction' ),
 		],
@@ -402,7 +406,7 @@ function get_script_data() {
 		}
 	}
 
-	return $data;
+	return apply_filters( 'h2.script_data', $data );
 }
 
 /**
@@ -536,6 +540,7 @@ function register_rest_routes() {
 		'methods' => 'POST',
 		'callback' => __NAMESPACE__ . '\\render_preview',
 		'permission_callback' => function () {
+			// Anyone who can comment or write can preview.
 			return is_user_logged_in();
 		},
 		'args' => [
