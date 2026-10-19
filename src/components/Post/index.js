@@ -8,6 +8,7 @@ import {
 	Post as PostShape,
 } from '../../shapes';
 import { posts } from '../../types';
+import { getUpdateBody } from '../../util';
 import Button from '../Button';
 import { Dropdown, DropdownContent } from '../Dropdown';
 import MessageHeader from '../Message/Header';
@@ -102,11 +103,7 @@ export class Post extends Component {
 	onSubmitEditing = ( content, unprocessedContent ) => {
 		this.setState( { isSubmitting: true } );
 
-		const body = {
-			content,
-			status: 'publish',
-			unprocessed_content: unprocessedContent,
-		};
+		const body = getUpdateBody( content, unprocessedContent );
 
 		this.props.onUpdatePost( body )
 			.then( () => {
