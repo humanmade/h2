@@ -85,17 +85,3 @@ export function cleanConvertedMarkdown( str ) {
 		.replace( /[ ]+$/gm, '' )
 		.replace( /^\s+|[\s\\]+$/g, '' );
 }
-
-/**
- * Build the REST API body for updating a post or page from its single view.
- *
- * @param {string} content Rendered content.
- * @param {string} unprocessedContent Unprocessed (Markdown) content.
- * @returns {object} Update body.
- */
-export function getUpdateBody( content, unprocessedContent ) {
-	return {
-		content,
-		unprocessed_content: unprocessedContent,
-	};
-}

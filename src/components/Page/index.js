@@ -5,7 +5,6 @@ import { Slot } from 'react-slot-fill';
 import {
 	Post as PostShape,
 } from '../../shapes';
-import { getUpdateBody } from '../../util';
 import Button from '../Button';
 import MessageHeader from '../Message/Header';
 import MessageMain from '../Message/Main';
@@ -35,7 +34,10 @@ class Page extends Component {
 	onSubmitEditing = ( content, unprocessedContent ) => {
 		this.setState( { isSubmitting: true } );
 
-		const body = getUpdateBody( content, unprocessedContent );
+		const body = {
+			content,
+			unprocessed_content: unprocessedContent,
+		};
 
 		this.props.onUpdatePost( body )
 			.then( () => {
