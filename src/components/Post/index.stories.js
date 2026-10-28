@@ -8,7 +8,6 @@ import { Post } from './index';
 
 const defaultProps = {
 	user: user,
-	users,
 	categories: apiResponse( [] ),
 	post,
 };
@@ -44,9 +43,7 @@ const state = {
 		saving: [],
 	},
 	users: {
-		posts: [
-			user,
-		],
+		posts: users,
 		loadingArchive: [],
 		loadingPost: [],
 		saving: [],
@@ -84,6 +81,7 @@ export const Editable = () => (
 export const Coauthored = () => (
 	<Post
 		{ ...defaultProps }
+		user={ users.find( author => author.id === 3 ) }
 		post={ {
 			...post,
 			authorship: [ 3, 1 ],

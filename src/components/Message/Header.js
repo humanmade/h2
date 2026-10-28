@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Fragment, useState } from 'react';
 import { Slot } from 'react-slot-fill';
 
+import { withUser } from '../../hocs';
 import {
 	Category as CategoryShape,
 	Post as PostShape,
@@ -15,6 +16,33 @@ import Link from '../Link';
 import AuthorLink from './AuthorLink';
 
 import './Header.css';
+
+function CoauthorName( { user } ) {
+	if ( ! user ) {
+		return null;
+	}
+
+	return (
+		<Fragment>
+			{ ' with ' }
+			<AuthorLink user={ user }>
+				<img
+					alt=""
+					className="inline-block w-4 h-4 mr-1 rounded-full align-text-bottom"
+					src={ user.avatar_urls['96'] }
+				/>
+				{ user.name }
+			</AuthorLink>
+		</Fragment>
+	);
+}
+
+CoauthorName.propTypes = {
+	user: UserShape,
+};
+
+// Load each named author through the shared user cache, even outside the directory's first page.
+const Coauthor = withUser( props => props.id )( CoauthorName );
 
 export class MessageHeader extends React.Component {
 	componentDidUpdate() {
@@ -35,10 +63,8 @@ export class MessageHeader extends React.Component {
 	}
 
 	render() {
-		const { author, authors, categories, post } = this.props;
+		const { author, authorIds, categories, post } = this.props;
 		const { children, constrainTitle, sticky, collapsed, onCollapse, ...fillProps } = this.props;
-		const displayedAuthors = authors.length ? authors : [ author ].filter( Boolean );
-		const primaryAuthor = displayedAuthors[0];
 
 		const classes = [
 			'Message-Header',
@@ -65,8 +91,8 @@ export class MessageHeader extends React.Component {
 					<Avatar
 						className="mr-[30px] w-[3.333rem] h-[3.333rem] rounded-full self-start max-[600px]:ml-2 max-[600px]:mr-0 max-[600px]:w-[24px]! max-[600px]:h-[24px]!"
 						imgClassName="max-[600px]:w-[24px]! max-[600px]:h-[24px]!"
-						url={ primaryAuthor ? primaryAuthor.avatar_urls['96'] : '' }
-						user={ primaryAuthor }
+						url={ author ? author.avatar_urls['96'] : '' }
+						user={ author }
 						size={ 60 }
 					/>
 					{ ! collapsed && onCollapse ? (
@@ -97,21 +123,8 @@ export class MessageHeader extends React.Component {
 						</h2>
 					</Link>
 					<span className="inline-block mr-2 text-[#AAA] text-[14px]">
-						{ displayedAuthors.map( ( item, index ) => (
-							<Fragment key={ item.id }>
-								{ index > 0 ? ' with ' : '' }
-								<AuthorLink user={ item }>
-									{ index > 0 && (
-										<img
-											alt=""
-											className="inline-block w-4 h-4 mr-1 rounded-full align-text-bottom"
-											src={ item.avatar_urls['96'] }
-										/>
-									) }
-									{ item.name }
-								</AuthorLink>
-							</Fragment>
-						) ) },&nbsp;
+						{ author && <AuthorLink user={ author }>{ author.name }</AuthorLink> }
+						{ authorIds.slice( 1 ).map( id => <Coauthor key={ id } id={ id } /> ) },&nbsp;
 						<FormattedDate date={ post.date_gmt + 'Z' } />
 					</span>
 					{ categories.length > 0 && (
@@ -140,7 +153,7 @@ export class MessageHeader extends React.Component {
 }
 
 MessageHeader.defaultProps = {
-	authors: [],
+	authorIds: [],
 	collapsed: false,
 	constrainTitle: false,
 	sticky: true,
@@ -148,7 +161,7 @@ MessageHeader.defaultProps = {
 
 MessageHeader.propTypes = {
 	author: UserShape.isRequired,
-	authors: PropTypes.arrayOf( UserShape ),
+	authorIds: PropTypes.arrayOf( PropTypes.number ),
 	categories: PropTypes.arrayOf( CategoryShape ).isRequired,
 	collapsed: PropTypes.bool,
 	onCollapse: PropTypes.func,

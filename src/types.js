@@ -32,7 +32,7 @@ export const users = new handler( {
 	},
 } );
 users.registerArchive( 'me', state => ( { include: state.users.current } ) );
-users.registerArchive( 'all', { per_page: 200 } );
+users.registerArchive( 'all', { per_page: 100 } );
 users.updateCurrent = ( function ( data ) {
 	return ( dispatch, getState ) => {
 		return dispatch(
