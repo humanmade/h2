@@ -6,8 +6,6 @@ import { showSidebarProfile } from '../../actions';
 import LinkButton from '../LinkButton';
 import UserHovercard from '../UserHovercard';
 
-import './AuthorLink.css';
-
 function AuthorLink( props ) {
 	const { children, user, withHovercard } = props;
 
@@ -17,7 +15,7 @@ function AuthorLink( props ) {
 
 	const button = (
 		<LinkButton
-			className="AuthorLink"
+			className="select-auto"
 			onClick={ props.onSelect }
 		>
 			{ children }

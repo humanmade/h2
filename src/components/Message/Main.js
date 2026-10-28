@@ -27,8 +27,8 @@ export default function MessageMain( props ) {
 	} = props;
 
 	const classes = [
-		'Message-Main',
-		collapsed && 'Message-Main--collapsed',
+		'ml-[90px] max-[960px]:ml-0',
+		collapsed && 'Message-Main--collapsed min-h-[70px] max-h-[190px] overflow-hidden relative after:block after:content-[""] after:absolute after:inset-0 after:top-auto after:h-[70px]',
 	];
 
 	return (
@@ -49,7 +49,7 @@ export default function MessageMain( props ) {
 				<MessageContent html={ post.content.rendered } />
 			) }
 			<Slot name="Post.after_content" fillChildProps={ fillProps } />
-			<div className="Post-footer-actions">
+			<div className="Post-footer-actions clear-both flex my-[1.666rem] mb-[1.248rem] justify-between items-start min-[600px]:[&_.Post\_\_actions]:hidden">
 				{ children }
 				<Slot name="Post.footer_actions" fillChildProps={ fillProps } />
 			</div>

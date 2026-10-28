@@ -18,8 +18,6 @@ import Shortcuts from '../Shortcuts';
 import EmojiCompletion from './EmojiCompletion';
 import MentionCompletion from './MentionCompletion';
 
-import './index.css';
-
 const apply = ( selection, start, end ) => {
 	return selection.length ? start + selection + end : start;
 };
@@ -68,9 +66,48 @@ const completions = {
 
 const Preview = props => {
 	const compiled = compileMarkdown( props.children );
-	return <div className="Editor-preview"><MessageContent html={ compiled } /></div>;
+	return (
+		<div className="bg-white border-2 border-[#d9d9d9] p-4 mb-[1.66667rem]">
+			<MessageContent html={ compiled } />
+		</div>
+	);
 };
 Preview.propTypes = { children: PropTypes.string.isRequired };
+
+const Tab = ( { checked, title, value, onSelect } ) => (
+	<li>
+		<label className="cursor-pointer">
+			<input
+				className="hidden peer"
+				checked={ checked }
+				name="Editor-mode"
+				type="radio"
+				value={ value }
+				onChange={ e => onSelect( e.target.value ) }
+			/>
+			<span
+				className="inline-block font-bold uppercase py-[7.5px] px-3 border-2 border-transparent border-b-0 rounded-t peer-checked:bg-white peer-checked:border-[#d9d9d9] peer-checked:text-hm-vibrant-blue"
+			>
+				{ title }
+			</span>
+		</label>
+	</li>
+);
+
+const EditorButton = ( { icon, title, onSelect } ) => (
+	<button
+		className="group bg-transparent border-none font-[inherit] cursor-pointer p-1 -my-1 outline-hidden hover:text-[#00a0d2] focus:text-[#00a0d2]"
+		onClick={ onSelect }
+		title={ title }
+		type="button"
+	>
+		<span
+			className="block w-4 h-4 opacity-50 group-hover:opacity-100 group-focus:opacity-100"
+			dangerouslySetInnerHTML={ { __html: icon } }
+		/>
+		<span className="screen-reader-text">{ title }</span>
+	</button>
+);
 
 class Editor extends React.PureComponent {
 	constructor( props ) {
@@ -401,67 +438,64 @@ class Editor extends React.PureComponent {
 
 		const PreviewComponent = this.props.previewComponent || Preview;
 
+		const isPreviewing = mode === 'preview';
+
 		return (
 			<form
-				className={ mode === 'preview' ? 'Editor previewing' : 'Editor' }
+				className={ [
+					'pb-7',
+					this.props.className,
+				].filter( Boolean ).join( ' ' ) }
 				onSubmit={ e => this.onSubmit( e ) }
 			>
 				<Shortcuts keys={ hasFocus ? shortcuts : null } />
 
-				<div className="Editor-header">
-					<ul className="Editor-tabs">
-						<li>
-							<label>
-								<input
-									checked={ mode === 'edit' }
-									name="Editor-mode"
-									type="radio"
-									value="edit"
-									onChange={ e => this.setState( { mode: e.target.value } ) }
-								/>
-								<span>Write</span>
-							</label>
-						</li>
-						<li>
-							<label>
-								<input
-									checked={ mode === 'preview' }
-									name="Editor-mode"
-									type="radio"
-									value="preview"
-									onChange={ e => this.setState( { mode: e.target.value } ) }
-								/>
-								<span>Preview</span>
-							</label>
-						</li>
+				<div className="flex justify-between -mb-[2px] z-2 relative text-[#504C4C]">
+					<ul className="flex tracking-[0.01em] text-xs">
+						<Tab
+							title="Write"
+							value="edit"
+							checked={ mode === 'edit' }
+							onSelect={ value => this.setState( { mode: value } ) }
+						/>
+						<Tab
+							title="Preview"
+							value="preview"
+							checked={ mode === 'preview' }
+							onSelect={ value => this.setState( { mode: value } ) }
+						/>
 					</ul>
 
 					{ mode === 'edit' ? (
-						<ul className="Editor-toolbar">
+						<ul className="flex list-none p-0 m-0 text-xs">
 							{ Object.keys( BUTTONS ).map( type => {
 								if ( BUTTONS[ type ].separator ) {
-									return <span key={ type } className="separator" />;
+									return (
+										<span
+											key={ type }
+											className="hidden ml-2"
+										/>
+									);
 								}
 
 								return (
-									<button
+									<EditorButton
 										key={ type }
-										onClick={ e => this.onButton( e, BUTTONS[type].apply ) }
+										icon={ BUTTONS[ type ].icon }
 										title={ BUTTONS[ type ].title }
-										type="button"
-									>
-										<span className="svg-icon" dangerouslySetInnerHTML={ { __html: BUTTONS[ type ].icon } }></span>
-										<span className="screen-reader-text">{ type }</span>
-									</button>
+										onSelect={ e => this.onButton( e, BUTTONS[type].apply ) }
+									/>
 								);
 							} ) }
 						</ul>
 					) : null }
 				</div>
 
-				<div className="Editor-editor-container">
+				<div className="relative text-lg">
 					<DropUpload
 						allowMultiple
+						className="mb-4"
+						statusClassName={ isPreviewing ? 'hidden' : 'border-2 border-[#d9d9d9] [border-top-style:dashed] rounded-bl rounded-br py-[0.2em] px-[9px] bg-hm-light-grey' }
 						files={ this.state.uploading }
 						onUpload={ file => this.onUpload( file ) }
 					>
@@ -470,7 +504,7 @@ class Editor extends React.PureComponent {
 						) : (
 							<textarea
 								ref={ el => this.updateTextarea( el ) }
-								className="Editor-editor"
+								className="Editor-editor min-h-72 max-h-120 resize-y rounded-none rounded-tr border-2 border-b-0 border-[#d9d9d9] bg-white pt-4 pb-4 block px-[15px] w-full focus:outline-hidden placeholder:italic"
 								placeholder="Write a comment..."
 								style={ { height } }
 								value={ content }
@@ -491,16 +525,17 @@ class Editor extends React.PureComponent {
 					{ mode !== 'preview' ? this.getCompletion() : null }
 				</div>
 
-				<p className="Editor-submit">
+				<p className="pl-2 m-0 flex justify-between items-center">
 					<small>
 						<span>{ count === 1 ? '1 word' : `${ count.toLocaleString() } words` }</span>
 						<br />
 						<a
+							className="text-hm-vibrant-blue hover:underline"
 							href="http://commonmark.org/help/"
 							rel="noopener noreferrer"
 							target="_blank"
 						>
-							Format with Markdown
+							Format with Markdown ↗
 						</a>
 						{ this.props.lastSave && (
 							<React.Fragment>
@@ -510,14 +545,29 @@ class Editor extends React.PureComponent {
 							</React.Fragment>
 						) }
 					</small>
-					<span className="Editor-submit-buttons">
+					<span>
 						{ this.props.onCancel ? (
-							<Button onClick={ this.props.onCancel }>Cancel</Button>
+							<Button
+								className="mb-0"
+								onClick={ this.props.onCancel }
+							>
+								Cancel
+							</Button>
 						) : null }
 						{ this.props.onSave && (
-							<Button onClick={ this.onSave }>{ this.props.saveText || 'Save' }</Button>
+							<Button
+								className="mb-0"
+								onClick={ this.onSave }
+							>
+								{ this.props.saveText || 'Save' }
+							</Button>
 						) }
-						<Button submit type="primary">{ this.props.submitText }</Button>
+						<Button
+							className="mb-0"
+							submit type="primary"
+						>
+							{ this.props.submitText }
+						</Button>
 					</span>
 				</p>
 			</form>
@@ -531,6 +581,7 @@ Editor.defaultProps = {
 };
 
 Editor.propTypes = {
+	className: PropTypes.string,
 	previewComponent: PropTypes.func,
 	saveText: PropTypes.string,
 	submitText: PropTypes.string,

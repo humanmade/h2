@@ -1,8 +1,6 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-import './Loader.css';
-
 export default class CommentLoader extends React.Component {
 	static defaultProps = {
 		width: 740,
@@ -29,9 +27,9 @@ export default class CommentLoader extends React.Component {
 		if ( this.state.isMobile ) {
 			contentOffset = 42;
 			return (
-				<div class="Loader-Wrapper">
+				<div className="max-w-[100vw] overflow-hidden">
 					<ContentLoader
-						className="Comment-Loader Comment-Loader--mobile"
+						className="Comment-Loader -ml-5"
 						height={ contentOffset + 5 * textLineHeight }
 						width={ width }
 						style={ { width } }

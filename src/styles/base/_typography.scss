@@ -1,0 +1,171 @@
+body {
+	--font-family-body: #{$font-family-body};
+	--font-family-heading: #{$font-family-heading};
+}
+
+/* todo: merge with PostContent */
+.h2-legacy-prose {
+	@include text-std;
+	@include font-body;
+	color: $color-text-default;
+	text-rendering: optimizeLegibility;
+	font-weight: 400;
+
+	:where(strong, b) {
+		@include font-heading;
+		color: $color-text-heading;
+		text-transform: none;
+		letter-spacing: normal;
+	}
+
+	:where(em, i){
+		@include font-body;
+		color: $color-text-heading;
+		font-style: italic;
+	}
+
+	:where(h1) {
+		@include text-xxl;
+		@include font-heading;
+		text-transform: uppercase;
+		margin: $margin-vertical-sm 0;
+		color: $color-text-heading;
+	}
+
+	:where(h2) {
+		@include text-xl;
+		@include font-heading;
+		margin: $margin-vertical-sm 0;
+		color: $color-text-heading;
+
+
+		@media #{ $mq-sm-down } {
+			text-transform: uppercase;
+		}
+	}
+
+	:where(h3) {
+		@include text-lg;
+		@include font-heading;
+		margin: $margin-vertical-sm 0;
+		color: $color-text-heading;
+	}
+
+	:where(h4) {
+		@include text-md;
+		@include font-heading;
+		margin: $margin-vertical-sm 0;
+		color: $color-text-default;
+	}
+
+	:where(h5, h6) {
+		@include text-std;
+		@include font-heading;
+		margin: $margin-vertical-sm 0;
+		color: $color-text-heading;
+	}
+
+	:where(p, ul, ol) {
+		margin: $margin-vertical-sm 0;
+	}
+
+	small {
+		@include text-sm;
+	}
+
+	:where(ul, ol) {
+		list-style-position: outside;
+		padding: 0;
+		padding: 0 0 0 $gutter-width;
+
+		:where(ul, ol) {
+			margin: 0;
+		}
+	}
+
+	:where(ul) {
+		list-style-type: disc;
+	}
+
+	:where(ol) {
+		list-style-type: decimal;
+	}
+
+	:where(blockquote) {
+		@include text-lg;
+		margin: $margin-vertical-sm 0;
+
+		@media #{ $mq-sm-up } {
+			margin: $margin-vertical-lg 0;
+		}
+	}
+
+	:where(hr) {
+		border: 1px solid $border-color;
+		border-width: 1px 0 0 0;
+		margin: $margin-vertical-lg 0;
+	}
+
+	:where(code, pre) {
+		@include text-xs;
+		color: $color-text-pre;
+		background: $color-background-pre;
+		padding: 0px 5px;
+		display: inline-block;
+		border-radius: 4px;
+	}
+
+	:where(pre) {
+		padding: #{ $margin-vertical-sm * 0.5 } #{ $gutter-width * 0.5 };
+		display: block;
+		margin: $margin-vertical-sm 0;
+		max-width: 100%;
+		overflow: auto;
+		white-space: pre-wrap;
+	}
+
+	:where(code) {
+		@include text-sm;
+		line-height: inherit;
+	}
+
+	// Override the background from prism.js.
+	:not( pre ) > code[ class*="language-" ],
+	pre[ class*="language-" ] {
+		background: $color-background-pre;
+		border-radius: 4px;
+	}
+
+	::selection {
+		background: lighten( $color-accent, 20% );
+	}
+
+	:where(a) {
+		@include text-link;
+	}
+}
+
+// Text for screen readers only.
+.screen-reader-text {
+	border: 0;
+	clip: rect( 1px, 1px, 1px, 1px );
+	clip-path: inset( 50% );
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	word-wrap: normal;
+}
+
+// Display text on focus (for skip links).
+.screen-reader-text:focus {
+	clip: auto;
+	clip-path: none;
+	display: block;
+	left: 0.5em;
+	top: 0.5em;
+	width: auto;
+	z-index: 100000; /* Above WP toolbar. */
+}

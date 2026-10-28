@@ -11,14 +11,20 @@ import MessageContent from '../Message/Content';
 
 import Header from './Header';
 
-import './Mini.css';
+const CARD_CLASSES = [
+	// Back-compat:
+	'Comment-Mini',
+
+	'border border-solid border-hm-beige p-[0.5em]',
+	'shadow-[0_0_4px_var(--hm-light-grey)] rounded-sm',
+].join( ' ' );
 
 function MiniComment( props ) {
 	const { comment, parentPost, user } = props;
 
 	if ( props.loadingParent || props.loadingUser ) {
 		return (
-			<div className="Comment-Mini">
+			<div className={ CARD_CLASSES }>
 				Loading…
 			</div>
 		);
@@ -26,19 +32,19 @@ function MiniComment( props ) {
 
 	if ( ! parentPost || ! user ) {
 		return (
-			<div className="Comment-Mini">
+			<div className={ CARD_CLASSES }>
 				Unable to load comment
 			</div>
 		);
 	}
 
 	return (
-		<div className="Comment-Mini">
-			<p className="Comment-Mini__context">
+		<div className={ CARD_CLASSES }>
+			<p className="m-0 text-[0.9em] text-hm-medium-grey [&_a]:text-inherit">
 				<Link
 					href={ comment.link }
 				>
-					<span className="Comment-Mini__context-post">
+					<span className="font-bold">
 						{ decodeEntities( parentPost.title.rendered ) }
 					</span>
 					{ ' ' }&mdash;{ ' ' }
@@ -54,7 +60,7 @@ function MiniComment( props ) {
 					</time>
 				</Link>
 			</p>
-			<div className="Comment-Mini__comment">
+			<div className="ml-[30px]">
 				<Header
 					author={ user }
 					comment={ comment }

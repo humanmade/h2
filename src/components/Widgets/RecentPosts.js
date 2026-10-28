@@ -7,8 +7,6 @@ import { decodeEntities } from '../../util';
 import Link from '../Link';
 import Pagination from '../Sidebar/Pagination';
 
-import './RecentPosts.css';
-
 class PostList extends React.Component {
 	render() {
 		if ( this.props.loading || this.props.loadingMore ) {
@@ -24,7 +22,7 @@ class PostList extends React.Component {
 
 		return (
 			<div className="Widget">
-				<ul>
+				<ul className="mb-[0.83333335rem]">
 					{ this.props.posts.map( post => (
 						<li key={ post.id }>
 							<Link href={ post.link }>
@@ -70,7 +68,7 @@ export default class RecentPosts extends React.Component {
 		const { number, title } = this.props;
 
 		return (
-			<div className="RecentPosts">
+			<div className="RecentPosts text-[0.8em]">
 				<h4>{ title || 'Recent Posts' }</h4>
 
 				<ConnectedPostList

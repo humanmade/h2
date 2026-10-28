@@ -5,8 +5,6 @@ import { withCurrentUser } from '../hocs';
 
 import Modal from './Modal';
 
-import './Changes.css';
-
 export function Changes( props ) {
 	if ( ! props.currentUser ) {
 		return null;
@@ -37,13 +35,13 @@ export function Changes( props ) {
 					key={ change.title }
 					className="Changes-change"
 				>
-					<h3>{ change.title }</h3>
+					<h3 className="normal-case text-lg mt-4 mb-2 mx-0">{ change.title }</h3>
 					<change.content />
 				</div>
 			) ) }
 
 			{ newChanges.length > 0 && oldChanges.length > 0 ? (
-				<h2 className="Changes-previous">Previous Changes</h2>
+				<h2 className="Changes-previous normal-case text-xl my-5 mx-0">Previous Changes</h2>
 			) : null }
 
 			{ oldChanges.map( change => (
@@ -51,7 +49,7 @@ export function Changes( props ) {
 					key={ change.title }
 					className="Changes-change"
 				>
-					<h3>{ change.title }</h3>
+					<h3 className="normal-case text-lg mt-4 mb-2 mx-0">{ change.title }</h3>
 					<change.content />
 				</div>
 			) ) }

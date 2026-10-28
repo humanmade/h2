@@ -15,7 +15,14 @@ import Loader from './Loader';
 
 import PostComponent from './index';
 
-import './List.css';
+const LIST_CLASSES = [
+	// Back-compat:
+	'PostsList',
+
+	'relative px-5',
+	'[&>div]:flex-1',
+	'[&_.infinite-scroll-component]:flex-col',
+].join( ' ' );
 
 class PostsList extends Component {
 	state = {
@@ -36,7 +43,7 @@ class PostsList extends Component {
 		if ( this.props.loading || this.props.loadingMore ) {
 			return (
 				<PageTitle title="Loading…">
-					<div className="PostsList">
+					<div className={ LIST_CLASSES }>
 						{ /* Dummy div to measure width */ }
 						<div ref={ this.onUpdateWidth } />
 
@@ -50,7 +57,7 @@ class PostsList extends Component {
 		if ( ! this.props.posts || ! this.props.posts[0] ) {
 			return (
 				<PageTitle title="Not Found">
-					<div className="PostsList">
+					<div className={ LIST_CLASSES }>
 						<Error404>
 							<p>No post found at this address.</p>
 						</Error404>
@@ -75,7 +82,7 @@ class PostsList extends Component {
 
 		return (
 			<PageTitle title={ getTitle() }>
-				<div className="PostsList">
+				<div className={ LIST_CLASSES }>
 					{ this.props.posts && this.props.posts.map( post => (
 						<PostComponent
 							key={ post.id }

@@ -2,15 +2,14 @@ import React from 'react';
 
 import Avatar from './Avatar';
 
-import './UserBlock.css';
-
 export default function UserBlock( props ) {
 	const { user } = props;
 
 	return (
-		<div className="UserBlock">
+		<div className="flex items-center mx-[-1em] mb-[1em] pt-[0.2em] px-[1em] overflow-hidden [&_h2]:normal-case [&_h2]:text-base [&_h2]:leading-[1.4] [&_h2]:m-0 [&_p]:m-0">
 			<div>
 				<Avatar
+					className="mr-[0.5em]"
 					url={ user.avatar_urls[96] }
 					user={ user }
 					size={ 60 }
@@ -19,11 +18,7 @@ export default function UserBlock( props ) {
 			<div>
 				<h2>{ user.name }</h2>
 				<p>@{ user.slug }</p>
-				{ user.facts && (
-					<p className={ user.facts.job_title ? 'UserBlock-title' : 'UserBlock-title missing' }>
-						{ user.facts.job_title || 'Unknown Role' }
-					</p>
-				) }
+				{ user.facts && user.facts.job_title && <p className="text-hm-medium-grey">{ user.facts.job_title }</p> }
 			</div>
 		</div>
 	);

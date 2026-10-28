@@ -1,7 +1,4 @@
-.Comment {
-	position: relative;
-}
-
+/* Thread line */
 .Comment:before {
 	position: absolute;
 	content: '';
@@ -17,6 +14,7 @@
 	bottom: 1rem;
 }
 
+/* Dot at end of thread line */
 .Comment:last-child:after {
 	position: absolute;
 	content: '';
@@ -29,12 +27,7 @@
 	border-radius: 50%;
 }
 
-.Comment .Comment-Header {
-	position: sticky;
-	top: 99px;
-	z-index: 3;
-}
-
+/* Sticky comment header admin-bar offsets */
 @media screen and ( min-width: 600px ) and ( max-width: 782px ) {
 	body.admin-bar .Comment .Comment-Header {
 		top: 145px; /* 46 + 99 */
@@ -47,45 +40,12 @@
 	}
 }
 
-.Comment > .body {
-	flex-direction: column;
-	padding-bottom: 1rem;
-}
-
-.Comment-footer-actions {
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-start;
-	flex-wrap: wrap;
-	margin: 1.666rem 0 1.248rem;
-}
-
 @media ( max-width: 600px ) {
-	.Comment .Comment-Header {
-		position: static;
-		height: auto;
-		flex-wrap: wrap;
-	}
-
-	.Comment-Header .Comment-Actions {
-		display: none;
-	}
-
 	.Comment:before {
 		left: -20px;
 	}
 
 	.Comment:last-child:after {
 		left: -23px;
-	}
-}
-
-@media ( min-width: 600px ) {
-	.Comment-footer-actions .Comment-Actions {
-		display: none;
-	}
-
-	.Comment:hover > .Comment-Header .actions-wrap {
-		display: flex;
 	}
 }

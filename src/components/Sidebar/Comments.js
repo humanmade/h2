@@ -12,12 +12,15 @@ import LinkButton from '../LinkButton';
 import Container from './Container';
 import Pagination from './Pagination';
 
-import './Comments.css';
+const CONTAINER_CLASSES = [
+	'[&>.Sidebar-Pagination]:mb-8',
+	'[&_.Comment-Mini]:m-0 [&_.Comment-Mini]:mb-4',
+].join( ' ' );
 
 class SidebarComments extends React.Component {
 	render() {
 		const containerProps = {
-			className: 'Sidebar-Comments',
+			className: CONTAINER_CLASSES,
 			onClose: this.props.onClose,
 		};
 
@@ -60,13 +63,13 @@ class SidebarComments extends React.Component {
 
 		return (
 			<Container { ...containerProps }>
-				<p className="Sidebar-Comments__navigation">
+				<p className="m-0 mb-4">
 					<LinkButton onClick={ () => this.props.onShowProfile( user.id ) }>
 						← Back to { user.name }’s profile
 					</LinkButton>
 				</p>
 
-				<div className="Sidebar-Comments__wrap">
+				<div className="mx-[-10px]">
 					{ comments && comments.map( comment => (
 						<MiniComment
 							key={ comment.id }

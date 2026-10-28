@@ -6,23 +6,33 @@ import Avatar from './Avatar';
 import Hovercard from './Hovercard';
 import Map from './Map';
 
-import './UserHovercard.css';
+const ASIDE_CLASSES = [
+	'flex text-[0.77778rem] items-center',
+	'[&_.Map]:m-0 [&_.Map]:ml-[10px]',
+	'max-[475px]:flex-col max-[475px]:items-start',
+	'max-[475px]:[&_.Map]:mx-auto max-[475px]:[&_.Map]:mt-[1em] max-[475px]:[&_.Map]:ml-auto',
+].join( ' ' );
+
+const DESCRIPTION_CLASSES = [
+	'text-[0.9em] leading-[1.7]',
+	'[&_p]:m-0 [&_p]:mb-[1em] [&_p:last-child]:mb-0',
+].join( ' ' );
 
 const LocalTime = props => {
-	const timeZone = props.user.meta.hm_time_timezone;
+	const timeZone = props.user.meta.hm_time_timezone || props.user.facts.timezone;
 	if ( ! timeZone ) {
 		return (
-			<p className="UserHovercard-local-time missing">
+			<p className="m-0">
 				<strong>Local time:</strong>
 				{ ' ' }
-				<span>Unknown timezone</span>
+				<span className="italic">Unknown timezone</span>
 			</p>
 		);
 	}
 
 	const now = new Date();
 	return (
-		<p className="UserHovercard-local-time">
+		<p className="m-0">
 			<strong>Local time:</strong>
 
 			{ ' ' }
@@ -38,33 +48,40 @@ const LocalTime = props => {
 
 export function UserCard( { user } ) {
 	return (
-		<aside className="UserHovercard">
-			<div className="UserHovercard-details">
-				<header>
+		<aside className={ ASIDE_CLASSES }>
+			<div>
+				<header className="flex items-center m-0 mb-[1em] [&_p]:leading-[1.6] [&_p]:m-0">
 					<Avatar
+						className="grow-0 shrink-0 mr-[0.5em]"
 						url={ user.avatar_urls['96'] }
 						size={ 40 }
 						withHovercard={ false }
 					/>
 					<div>
-						<h3>{ user.name }</h3>
-						<p className="UserHovercard-slug">@{ user.slug }</p>
-						<p className={ user.facts.job_title ? 'UserHovercard-title' : 'UserHovercard-title missing' }>
-							{ user.facts.job_title || 'Unknown Role' }
+						<h3 className="text-[1em] leading-[1.6] normal-case m-0">
+							{ user.name }
+						</h3>
+						<p className="text-hm-medium-grey text-[0.9em] font-normal">
+							@{ user.slug }
 						</p>
+						{ user.facts.job_title && <p className="text-hm-medium-grey">{ user.facts.job_title }</p> }
 					</div>
 				</header>
 
-				<div className="UserHovercard-description">
+				<div className={ DESCRIPTION_CLASSES }>
 					<LocalTime user={ user } />
-					<p>{ user.facts.short_bio }</p>
+					{ user.facts.location_name && <p><strong>Location:</strong> { user.facts.location_name }</p> }
+					{ user.facts.pronouns && <p><strong>Pronouns:</strong> { user.facts.pronouns }</p> }
+					{ user.facts.short_bio && <p>{ user.facts.short_bio }</p> }
 				</div>
 			</div>
-			<Map
-				height="150"
-				location={ user.facts.location }
-				width="150"
-			/>
+			{ user.facts.location && window.H2Data.site.mapbox_key && (
+				<Map
+					height="150"
+					location={ user.facts.location }
+					width="150"
+				/>
+			) }
 		</aside>
 	);
 }
@@ -73,7 +90,7 @@ export default class UserHovercard extends React.Component {
 	render() {
 		const { children, user } = this.props;
 
-		if ( ! user.facts || ! window.H2Data.site.mapbox_key ) {
+		if ( ! user.facts ) {
 			return children;
 		}
 

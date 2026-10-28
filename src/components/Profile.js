@@ -11,17 +11,15 @@ import Map from './Map';
 import Container from './Sidebar/Container';
 import UserBlock from './UserBlock';
 
-import './Profile.css';
-
 const Field = props => (
-	<p className="Profile-field">
-		<strong>{ props.name }:</strong>
-		<span className={ props.missing ? 'missing' : null }>{ props.children }</span>
+	<p className="m-0 mb-1 flex gap-x-2">
+		<strong className="w-1/4 grow-0 shrink-0">{ props.name }:{ ' ' }</strong>
+		<span className={ props.missing ? 'missing italic' : null }>{ props.children }</span>
 	</p>
 );
 
 const LocalTime = props => {
-	const timeZone = props.user.meta.hm_time_timezone;
+	const timeZone = props.user.meta.hm_time_timezone || ( props.user.facts && props.user.facts.timezone );
 	if ( ! timeZone ) {
 		const profileUrl = `${ window.H2Data.site.url }/wp-admin/profile.php?user_id=${ props.user.id }`;
 		return (
@@ -63,7 +61,6 @@ const LocalTime = props => {
 export class Profile extends React.Component {
 	render() {
 		const containerProps = {
-			className: 'Profile',
 			title: 'Profile',
 			onClose: this.props.onClose,
 		};
@@ -89,7 +86,7 @@ export class Profile extends React.Component {
 			<Container { ...containerProps }>
 				<UserBlock user={ user } />
 
-				{ user.facts && (
+				{ user.facts && user.facts.location && window.H2Data.site.mapbox_key && (
 					<Map
 						height="200"
 						location={ user.facts.location }
@@ -98,7 +95,7 @@ export class Profile extends React.Component {
 					/>
 				) }
 
-				<ul className="Profile-navigation">
+				<ul className="Profile-navigation list-none my-4 mx-0 p-0">
 					<li>
 						<Link href={ user.link }>View all posts →</Link>
 					</li>
@@ -107,12 +104,12 @@ export class Profile extends React.Component {
 					</li>
 				</ul>
 
-				<div className="Profile-fields">
-					<LocalTime user={ user } />
-				</div>
+				<LocalTime user={ user } />
+				{ user.facts && user.facts.location_name && <Field name="Location">{ user.facts.location_name }</Field> }
+				{ user.facts && user.facts.pronouns && <Field name="Pronouns">{ user.facts.pronouns }</Field> }
 
 				<div className="Profile-description">
-					{ user.facts && user.facts.long_description.split( '\n' ).map( ( text, idx ) =>
+					{ user.facts && user.facts.long_description && user.facts.long_description.split( '\n' ).map( ( text, idx ) =>
 						<p key={ idx }>{ text }</p>
 					) }
 				</div>

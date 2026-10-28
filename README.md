@@ -30,7 +30,78 @@ Development workflow:
   - The `release` branch will be automatically rebuilt
 - Update the production branch `composer.json` in the [main network repository](https://github.com/humanmade/hmn.md) to reference the newest built version of the `release` branch, to deploy the change to production.
 
+### Try it in WordPress Playground
+
+The fastest way to see H2 in action is [WordPress Playground](https://wordpress.org/playground/) — no Docker or local setup required. [Launch the H2 demo](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/humanmade/h2/main/.playground/blueprint.json) to get a temporary site in your browser with the theme active and demo content seeded.
+
+You can also run Playground locally: `npm run playground:demo` runs the same demo, and `npm run playground` runs your working copy of the theme (run `npm run build` first). See [`.playground/README.md`](.playground/README.md) for details.
+
 ### Local Setup
+
+#### Quick Start with wp-env (Recommended)
+
+The easiest way to try out H2 is using `wp-env`, which sets up a local WordPress environment with Docker.
+
+**Prerequisites:**
+- Docker Desktop installed and running
+- Node.js 14 or higher
+
+**Setup:**
+
+1. Clone this repository:
+```sh
+git clone git@github.com:humanmade/h2.git h2
+cd h2
+```
+
+2. Install dependencies:
+```sh
+npm install
+```
+
+3. Start the WordPress environment:
+```sh
+npm run wp-env:start
+```
+
+This will:
+- Download and set up WordPress 6.4
+- Install the required Asset Loader plugin
+- Map the H2 theme to the WordPress installation
+- Start the environment at http://localhost:8888
+
+4. Build the theme assets (in a new terminal):
+```sh
+npm run build
+```
+
+5. Log in to WordPress:
+- URL: http://localhost:8888/wp-admin
+- Username: `admin`
+- Password: `password`
+
+6. Activate the H2 theme:
+- Go to Appearance > Themes
+- Activate "H2"
+
+7. Start the development server for live reloading:
+```sh
+npm start
+```
+
+**Useful wp-env Commands:**
+
+```sh
+npm run wp-env:stop      # Stop the environment
+npm run wp-env:start     # Start the environment
+npm run wp-env:destroy   # Remove the environment completely
+npm run wp-env:logs      # View WordPress logs
+npm run wp-env:cli       # Run WP-CLI commands (e.g., npm run wp-env:cli -- theme activate h2)
+```
+
+#### Manual Setup
+
+If you prefer to use your own WordPress development environment:
 
 You'll need a WordPress development environment. If you don't have one, [set up a local Altis environment](https://www.altis-dxp.com/resources/docs/local-server/).
 

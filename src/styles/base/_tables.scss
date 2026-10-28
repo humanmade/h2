@@ -1,0 +1,37 @@
+.h2-legacy-prose {
+	:where(table) {
+		border-collapse: collapse;
+		width: 100%;
+		margin: $margin-vertical-sm 0;
+	}
+
+	:where(th, td) {
+		@include text-sm;
+		padding: 0.611rem #{ $gutter-width * 0.5 };
+		border: none;
+		vertical-align: top;
+	}
+
+	:where(thead) {
+		border-bottom: 1px solid $border-color;
+	}
+
+	:where(tfoot) {
+		border-top: 1px solid $border-color;
+	}
+
+	:where(tbody tr:nth-child( odd ) td, tbody tr:nth-child( odd ) th) {
+		background: $hm-light-grey;
+	}
+
+	:where(th) {
+		color: $color-text-heading;
+		text-align: left;
+		@include font-heading;
+	}
+
+	:where(table caption) {
+		@include text-sm;
+		margin-bottom: $margin-vertical-sm * 0.5;
+	}
+}

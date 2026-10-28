@@ -5,12 +5,18 @@ import { POST_ROUTE } from '../App';
 
 import PostHovercard from './PostHovercard';
 
-export default function Link( { children, disablePreviews, href, ...props } ) {
+const DEFAULT_STYLE = 'text-hm-vibrant-blue hover:underline';
+
+export default function Link( { children, className, disablePreviews, href, ...props } ) {
 	const root = window.H2Data.site.home;
 
 	if ( ! href.startsWith( root ) ) {
 		return (
 			<a
+				className={ [
+					DEFAULT_STYLE,
+					className,
+				].filter( Boolean ).join( ' ' ) }
 				href={ href }
 				{ ...props }
 			>
@@ -23,6 +29,10 @@ export default function Link( { children, disablePreviews, href, ...props } ) {
 
 	const link = (
 		<InternalLink
+			className={ [
+				DEFAULT_STYLE,
+				className,
+			].filter( Boolean ).join( ' ' ) }
 			to={ relativeTo }
 			{ ...props }
 		>

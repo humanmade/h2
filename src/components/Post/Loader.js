@@ -1,8 +1,6 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-import './Loader.css';
-
 export default class Loader extends React.Component {
 	static defaultProps = {
 		width: 740,
@@ -30,7 +28,7 @@ export default class Loader extends React.Component {
 		if ( this.state.isMobile ) {
 			return (
 				<ContentLoader
-					className="Post-Loader"
+					className="Post-Loader mt-[15px]"
 					height={ contentOffset + 5 * textLineHeight }
 					width={ width }
 					style={ { width } }
@@ -53,7 +51,7 @@ export default class Loader extends React.Component {
 
 		return (
 			<ContentLoader
-				className="Post-Loader"
+				className="Post-Loader mt-[15px]"
 				height={ contentOffset + 5 * textLineHeight }
 				width={ width }
 				style={ { width } }

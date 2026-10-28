@@ -1,9 +1,0 @@
-.Comment-Loader--mobile {
-	margin-left: -20px;
-}
-
-/* Prevent fixed-aspect loader SVGs from breaking page width */
-.Loader-Wrapper {
-	max-width: 100vw;
-	overflow: hidden;
-}

@@ -65,7 +65,7 @@ export default class RemotePreview extends React.Component {
 		}
 
 		return (
-			<div className="Editor-preview">
+			<div className="Editor-preview bg-white border-2 border-[#d9d9d9] p-4 mb-[1.66667rem]">
 				<MessageContent html={ this.state.compiledPreview } />
 			</div>
 		);

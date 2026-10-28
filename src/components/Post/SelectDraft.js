@@ -6,8 +6,6 @@ import { posts } from '../../types';
 import Button from '../Button';
 import Modal from '../Modal';
 
-import './SelectDraft.css';
-
 class SelectDraft extends React.Component {
 	state = {
 		showingSelector: false,
@@ -28,12 +26,13 @@ class SelectDraft extends React.Component {
 		if ( ! this.state.showingSelector ) {
 			return (
 				<Button
+					className="group"
 					onClick={ () => this.setState( { showingSelector: true } ) }
 				>
 					Drafts
 
 					{ posts && (
-						<span className="label__count">{ posts.length }</span>
+						<span className="inline-block rounded-full bg-hm-vibrant-blue text-white text-xs ml-1 h-4 min-w-4 group-hover:bg-white group-hover:text-hm-vibrant-blue">{ posts.length }</span>
 					) }
 				</Button>
 			);
@@ -50,23 +49,23 @@ class SelectDraft extends React.Component {
 				) : posts.length === 0 ? (
 					<p>No drafts found!</p>
 				) : (
-					<ul className="Post-SelectDraft__list">
+					<ul className="flex flex-col list-none -mx-4 my-0 p-0">
 						{ posts.map( post => (
 							<li
 								key={ post.id }
-								className="Post-SelectDraft__draft"
+								className="flex justify-between items-center mb-[1em]"
 							>
 								<button
-									className="Post-SelectDraft__draft-main"
+									className="bg-transparent border-none cursor-pointer text-left grow py-2 px-[0.5em] hover:bg-brand hover:text-white"
 									title={ `Edit "${ post.title.rendered }"` }
 									type="button"
 									onClick={ () => this.onSelect( post ) }
 								>
 									<span
-										className="Post-SelectDraft__draft-title"
+										className="block"
 										dangerouslySetInnerHTML={ { __html: post.title.rendered } }
 									/>
-									<span className="Post-SelectDraft__draft-meta">
+									<span className="opacity-70 text-[0.75em]">
 										{ 'Last edited ' }
 										<FormattedRelative value={ post.date_gmt + 'Z' } />
 									</span>

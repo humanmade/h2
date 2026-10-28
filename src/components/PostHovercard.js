@@ -12,18 +12,17 @@ import { decodeEntities } from '../util';
 import Avatar from './Avatar';
 import Hovercard from './Hovercard';
 
-import './PostHovercard.css';
-
 export const PostCardAuthor = ( { author } ) => (
 	author ? (
 		<React.Fragment>
 			<Avatar
+				className="inline-block align-middle mr-[0.5em]"
 				url={ author.avatar_urls['96'] }
 				size={ 24 }
 				withHovercard={ false }
 			/>
 
-			<span className="PostHovercard__author">
+			<span className="text-hm-vibrant-blue">
 				{ author.name }
 			</span>
 
@@ -47,35 +46,41 @@ export const ConnectedPostCardAuthor = withSingle(
 	}
 )( PostCardAuthor );
 
+const ASIDE_CLASSES = 'text-[0.77778rem]';
+const DESCRIPTION_CLASSES = 'text-[0.9em] leading-[1.7] [&_p]:m-0 [&_p]:mb-[1em]';
+const META_CLASSES = 'm-0 text-[0.9em] text-[#AAA]';
+
 export function PostCard( { loading, post, AuthorComponent = ConnectedPostCardAuthor } ) {
 	if ( loading ) {
 		return (
-			<aside className="PostHovercard">
-				<p className="PostHovercard__loading">Loading…</p>
+			<aside className={ ASIDE_CLASSES }>
+				<p className="m-0 italic">Loading…</p>
 			</aside>
 		);
 	}
 
 	if ( ! post ) {
 		return (
-			<aside className="PostHovercard">
-				<p className="PostHovercard__error">Could not load post.</p>
+			<aside className={ ASIDE_CLASSES }>
+				<p className="m-0 italic">Could not load post.</p>
 			</aside>
 		);
 	}
 
 	return (
-		<aside className="PostHovercard">
-			<h3>{ decodeEntities( post.title.rendered ) }</h3>
+		<aside className={ ASIDE_CLASSES }>
+			<h3 className="text-[1em] leading-[1.6] normal-case m-0 mb-[1em]">
+				{ decodeEntities( post.title.rendered ) }
+			</h3>
 
-			<div className="PostHovercard__description">
+			<div className={ DESCRIPTION_CLASSES }>
 				<Interweave
 					content={ post.excerpt.rendered }
 					tagName="fragment"
 				/>
 			</div>
 
-			<div className="PostHovercard__meta">
+			<div className={ META_CLASSES }>
 				<AuthorComponent
 					id={ post.author }
 				/>
