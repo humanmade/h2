@@ -16,6 +16,10 @@ import MessageMain from '../Message/Main';
 import PostComments from './Comments';
 import Summary from './Summary';
 
+export const getPostAuthorIds = post => [ ...new Set(
+	post.authorship && post.authorship.length ? post.authorship : [ post.author ]
+) ];
+
 const SecondaryActions = props => {
 	const { fillProps, showEdit, onClickEdit } = props;
 
@@ -127,9 +131,11 @@ export class Post extends Component {
 		const { post, user, viewMode } = this.props;
 		const { expanded, isShowingReply } = this.state;
 		const categories = this.props.categories.data ? this.props.categories.data.filter( category => post.categories.indexOf( category.id ) >= 0 ) : [];
+		const authorIds = getPostAuthorIds( post );
 
 		const fillProps = {
 			author: user,
+			authorIds,
 			collapsed: ! expanded,
 			// comments,
 			categories,
@@ -166,6 +172,7 @@ export class Post extends Component {
 
 				<MessageHeader
 					author={ user }
+					authorIds={ authorIds }
 					categories={ categories }
 					collapsed={ viewMode === 'full' || ( viewMode === 'compact' && ! expanded ) }
 					onCollapse={ this.onCollapse }
@@ -222,6 +229,6 @@ export default withCategories(
 		state => state.posts,
 		props => props.data.id
 	)(
-		withUser( props => props.post.author )( Post )
+		withUser( props => getPostAuthorIds( props.post )[0] )( Post )
 	)
 );
