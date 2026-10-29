@@ -19,37 +19,20 @@ const LIST_CLASSES = [
 	// Back-compat:
 	'PostsList',
 
-	'relative px-5',
+	'relative',
 	'[&>div]:flex-1',
 	'[&_.infinite-scroll-component]:flex-col',
 ].join( ' ' );
 
 class PostsList extends Component {
-	state = {
-		containerWidth: 740,
-	}
-
-	onUpdateWidth = ref => {
-		if ( ! ref ) {
-			return;
-		}
-
-		this.setState( {
-			containerWidth: ref.clientWidth,
-		} );
-	}
-
 	render() {
 		if ( this.props.loading || this.props.loadingMore ) {
 			return (
 				<PageTitle title="Loading…">
 					<div className={ LIST_CLASSES }>
-						{ /* Dummy div to measure width */ }
-						<div ref={ this.onUpdateWidth } />
-
 						{ /* Show two faux posts loading */ }
-						<Loader width={ this.state.containerWidth } />
-						<Loader width={ this.state.containerWidth } />
+						<Loader />
+						<Loader />
 					</div>
 				</PageTitle>
 			);

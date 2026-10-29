@@ -673,3 +673,17 @@ function flush_preload_cache( $_filter_value = null ) {
 	// Permits use of this callback on filters as well as actions.
 	return $_filter_value;
 }
+
+/**
+ * Invalidate rendered widgets after their settings or sidebar assignments change.
+ *
+ * @param string $option Name of the changed option.
+ */
+function flush_widget_preload_cache( string $option ) {
+	if ( $option !== 'sidebars_widgets' && strpos( $option, 'widget_' ) !== 0 ) {
+		return;
+	}
+
+	$key = get_preload_key( '/h2/v1/widgets?sidebar=sidebar' );
+	wp_cache_delete( CACHE_PREFIX_PRELOAD . $key, CACHE_GROUP );
+}

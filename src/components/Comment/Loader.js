@@ -1,82 +1,23 @@
 import React from 'react';
-import ContentLoader from 'react-content-loader';
 
-export default class CommentLoader extends React.Component {
-	static defaultProps = {
-		width: 740,
-	}
-
-	constructor( props ) {
-		super( props );
-		this.mediaQuery = window.matchMedia( '(max-width: 600px)' );
-		this.state = {
-			isMobile: this.mediaQuery.matches,
-		};
-		this.mediaQuery.addListener( this.onQueryChange );
-	}
-
-	onQueryChange = e => {
-		this.setState( { isMobile: e.matches } );
-	}
-
-	render() {
-		let contentOffset = 56;
-		const textLineHeight = 28;
-
-		const { width } = this.props;
-		if ( this.state.isMobile ) {
-			contentOffset = 42;
-			return (
-				<div className="max-w-[100vw] overflow-hidden">
-					<ContentLoader
-						className="Comment-Loader -ml-5"
-						height={ contentOffset + 5 * textLineHeight }
-						width={ width }
-						style={ { width } }
-					>
-						{ /* Avatar */ }
-						<circle cx="21" cy="12" r="12" />
-
-						{ /* Timeline */ }
-						<rect x="20" width="3" height={ contentOffset + 5 * textLineHeight } />
-
-						{ /* Title */ }
-						<rect x="40" y="4" rx="4" ry="4" width="240" height="16" />
-
-						{ /* Text */ }
-						<rect x="40" y={ contentOffset } rx="3" ry="3" width="325" height="13" />
-						<rect x="40" y={ contentOffset + textLineHeight } rx="3" ry="3" width="313" height="13" />
-						<rect x="40" y={ contentOffset + 2 * textLineHeight } rx="3" ry="3" width="280" height="13" />
-						<rect x="40" y={ contentOffset + 3 * textLineHeight } rx="3" ry="3" width="310" height="13" />
-					</ContentLoader>
+export default function CommentLoader() {
+	return (
+		<div className="Comment-Loader ml-16 max-[600px]:ml-8 pb-4" role="status" aria-label="Loading comments">
+			<div className="relative motion-safe:animate-pulse" aria-hidden="true">
+				<div className="absolute w-0.5 bg-hm-beige -left-[33px] max-[600px]:-left-5 top-2 bottom-0" />
+				<div className="relative min-h-10 flex items-center -ml-12 max-[600px]:-ml-8">
+					<div className="shrink-0 rounded-full bg-gray-200 w-8 h-8 mr-4 max-[600px]:w-6 max-[600px]:h-6 max-[600px]:mr-2" />
+					<div className="grow min-w-0">
+						<div className="bg-gray-200 rounded h-3.5 w-24 max-w-full" />
+					</div>
+					<div className="bg-gray-200 rounded h-2.5 w-20 ml-3" />
 				</div>
-			);
-		}
-
-		return (
-			<ContentLoader
-				className="Comment-Loader"
-				height={ contentOffset + 5 * textLineHeight }
-				width={ width }
-				style={ { width } }
-			>
-				{ /* Avatar */ }
-				<circle x="130" cx="110" cy="20" r="20" />
-
-				{ /* Timeline */ }
-				<rect x="109" width="3" height={ contentOffset + 5 * textLineHeight } />
-
-				{ /* Title */ }
-				{ /* 150+ */ }
-				<rect x="150" y="7" rx="4" ry="4" width="315" height="23.5" />
-				{ /* <rect x="170" y="46" rx="3" ry="3" width="160" height="10.5" /> */ }
-
-				{ /* Text */ }
-				<rect x="150" y={ contentOffset } rx="3" ry="3" width="525" height="13" />
-				<rect x="150" y={ contentOffset + textLineHeight } rx="3" ry="3" width="513" height="13" />
-				<rect x="150" y={ contentOffset + 2 * textLineHeight } rx="3" ry="3" width="480" height="13" />
-				<rect x="150" y={ contentOffset + 3 * textLineHeight } rx="3" ry="3" width="510" height="13" />
-			</ContentLoader>
-		);
-	}
+				{ [ 'w-full', 'w-11/12', 'w-3/4' ].map( width => (
+					<div className="h-7 flex items-center" key={ width }>
+						<div className={ `bg-gray-200 rounded h-3 ${ width }` } />
+					</div>
+				) ) }
+			</div>
+		</div>
+	);
 }

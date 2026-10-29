@@ -7,13 +7,16 @@ import { showSidebarCategories, showSidebarPages, showSidebarPosts } from '../ac
 import { withWidgets } from '../hocs';
 
 import NotificationSettings from './Sidebar/NotificationSettings';
+import SiteHeader from './Sidebar/SiteHeader';
 import RecentPostsWidget from './Widgets/RecentPosts';
 import SearchWidget from './Widgets/Search';
+
+import './Sidebar.css';
 
 const widgetMap = {
 	default: ( { html } ) => (
 		<div
-			className="Widget text-[0.8em] my-[1.66667em] [&_p]:mb-[0.5em] [&_ul]:mb-[0.5em] [&_ol]:mb-[0.5em] [&_h4]:mb-[0.5em] [&_p]:mt-0 [&_ul]:mt-0 [&_ol]:mt-0 [&_h4]:mt-0"
+			className="Widget"
 			dangerouslySetInnerHTML={ { __html: html } }
 		/>
 	),
@@ -75,19 +78,11 @@ export function Sidebar( props ) {
 			className="Sidebar border-r border-solid border-hm-beige"
 		>
 			<div className="">
-				<div className="px-4 py-6 bg-hm-beige flex items-center justify-between gap-2">
-					<h2 className="text-xl font-bold m-0">
-						<Link
-							className="block hover:underline"
-							to="/"
-						>
-							{ site.name }
-						</Link>
-					</h2>
+				<SiteHeader>
 					{ window.H2Data.has && window.H2Data.has.notifications && (
 						<NotificationSettings />
 					) }
-				</div>
+				</SiteHeader>
 				<div className="px-4 py-4 bg-hm-beige/50">
 					<p className="text-sm opacity-60 m-0">{ site.description || 'No description yet.' }</p>
 				</div>
@@ -125,7 +120,7 @@ export function Sidebar( props ) {
 				</NavLink>
 			</ul>
 
-			<div className="h2-legacy-prose px-4 divide-hm-beige [&_h4]:text-[1.222222222em]">
+			<div className="Sidebar-widgets h2-legacy-prose px-4 divide-hm-beige">
 				{ ( widgets.data || [] ).map( widget => {
 					const Widget = widgetMap[ widget.type ] || widgetMap['default'];
 					return (

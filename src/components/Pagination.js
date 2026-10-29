@@ -1,6 +1,8 @@
 import React from 'react';
 import { generatePath, Link } from 'react-router-dom';
 
+import NavigationButton from './Sidebar/NavigationButton';
+
 export default function Pagination( props ) {
 	let { path } = props;
 	const { hasNext, params } = props;
@@ -40,30 +42,24 @@ export default function Pagination( props ) {
 		}
 	);
 
+	if ( ! hasNext && page <= 1 ) {
+		return null;
+	}
+
 	return (
-		<div className="grid grid-cols-2">
-			{ hasNext && (
-				<div>
-					<Link
-						className="group"
-						to={ olderPage }
-					>
-						<span className="icon icon--arrow-right icon--blue h-6 w-6 mr-2 rotate-180 transition-transform group-hover:-translate-x-2">&larr;</span>
+		<nav className="flex items-center justify-between gap-4 pt-4 pb-10 -mx-2" aria-label="Post pages">
+			<div>
+				{ hasNext && (
+					<NavigationButton as={ Link } iconOnly={ false } to={ olderPage }>
 						Older
-					</Link>
-				</div>
+					</NavigationButton>
+				) }
+			</div>
+			{ page > 1 && (
+				<NavigationButton as={ Link } direction="right" iconOnly={ false } to={ newerPage }>
+					Newer
+				</NavigationButton>
 			) }
-			{ page && page > 1 && (
-				<div className="justify-self-end col-start-2">
-					<Link
-						className="group"
-						to={ newerPage }
-					>
-						Newer
-						<span className="icon icon--arrow-right icon--blue h-6 w-6 ml-2 transition-transform group-hover:translate-x-2">&larr;</span>
-					</Link>
-				</div>
-			) }
-		</div>
+		</nav>
 	);
 }

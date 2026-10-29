@@ -6,17 +6,18 @@ import { showSidebarComments } from '../actions';
 import { withUser } from '../hocs';
 
 import Link from './Link';
-import LinkButton from './LinkButton';
 import Map from './Map';
 import Container from './Sidebar/Container';
 import UserBlock from './UserBlock';
 
 const Field = props => (
-	<p className="m-0 mb-1 flex gap-x-2">
-		<strong className="w-1/4 grow-0 shrink-0">{ props.name }:{ ' ' }</strong>
-		<span className={ props.missing ? 'missing italic' : null }>{ props.children }</span>
-	</p>
+	<div className="mb-4 last:mb-0">
+		<dt className="text-xs font-semibold text-gray-500 mb-1">{ props.name }</dt>
+		<dd className={ `m-0 text-sm leading-6 break-words ${ props.missing ? 'text-gray-500' : 'text-hm-dark-grey' }` }>{ props.children }</dd>
+	</div>
 );
+
+const NAV_CLASSES = 'flex items-center justify-between w-full px-6 py-2.5 text-sm leading-5 text-hm-dark-grey! bg-transparent border-0 text-left cursor-pointer hover:bg-hm-beige/40 hover:no-underline! focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-hm-vibrant-blue';
 
 const LocalTime = props => {
 	const timeZone = props.user.meta.hm_time_timezone || ( props.user.facts && props.user.facts.timezone );
@@ -27,8 +28,7 @@ const LocalTime = props => {
 				name="Local time"
 				missing
 			>
-				Unknown timezone,
-				set in <a href={ profileUrl }>your profile</a>
+				Timezone not set. <a className="underline underline-offset-2" href={ profileUrl }>Set timezone</a>
 			</Field>
 		);
 	}
@@ -95,24 +95,32 @@ export class Profile extends React.Component {
 					/>
 				) }
 
-				<ul className="Profile-navigation list-none my-4 mx-0 p-0">
+				<ul className="Profile-navigation list-none my-5 -mx-6 p-0 border-y border-hm-beige divide-y divide-hm-beige">
 					<li>
-						<Link href={ user.link }>View all posts →</Link>
+						<Link className={ NAV_CLASSES } href={ user.link }>
+							<span>View all posts</span><span aria-hidden="true">→</span>
+						</Link>
 					</li>
 					<li>
-						<LinkButton onClick={ () => this.props.onViewComments( user.id ) }>View all comments →</LinkButton>
+						<button className={ NAV_CLASSES } type="button" onClick={ () => this.props.onViewComments( user.id ) }>
+							<span>View all comments</span><span aria-hidden="true">→</span>
+						</button>
 					</li>
 				</ul>
 
-				<LocalTime user={ user } />
-				{ user.facts && user.facts.location_name && <Field name="Location">{ user.facts.location_name }</Field> }
-				{ user.facts && user.facts.pronouns && <Field name="Pronouns">{ user.facts.pronouns }</Field> }
+				<dl className="m-0">
+					<LocalTime user={ user } />
+					{ user.facts && user.facts.location_name && <Field name="Location">{ user.facts.location_name }</Field> }
+					{ user.facts && user.facts.pronouns && <Field name="Pronouns">{ user.facts.pronouns }</Field> }
+				</dl>
 
-				<div className="Profile-description">
-					{ user.facts && user.facts.long_description && user.facts.long_description.split( '\n' ).map( ( text, idx ) =>
-						<p key={ idx }>{ text }</p>
-					) }
-				</div>
+				{ user.facts && user.facts.long_description && (
+					<div className="Profile-description mt-5 pt-4 border-t border-hm-beige text-sm leading-6 text-gray-600">
+						{ user.facts.long_description.split( '\n' ).filter( text => text.trim() ).map( ( text, idx ) =>
+							<p className="m-0 mb-3 last:mb-0" key={ idx }>{ text }</p>
+						) }
+					</div>
+				) }
 			</Container>
 		);
 	}

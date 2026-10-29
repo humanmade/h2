@@ -128,6 +128,7 @@ export function SearchView( props ) {
 				loading={ props.loading }
 				page={ props.page }
 				results={ props.results }
+				showSite={ selectedSites.length !== 1 }
 				term={ props.term }
 				total={ props.total }
 				totalPages={ props.totalPages }

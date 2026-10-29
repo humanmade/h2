@@ -1,23 +1,24 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import Button from '../Button';
+
 export default function HeaderButton( props ) {
 	return (
-		<button
+		<Button
 			className={ [
-				'group text-sm leading-6 border border-hm-vibrant-blue bg-white text-hm-vibrant-blue rounded-sm mr-4 px-2 self-center',
-				'cursor-pointer hover:bg-hm-vibrant-blue hover:text-white',
+				'group mb-0 mr-4 self-center',
 				props.className,
 			].filter( Boolean ).join( ' ' ) }
 			onClick={ props.onClick }
 		>
 			{ props.icon && (
 				<span
-					className={ `icon icon--blue icon--${ props.icon } group-hover:text-white` }
+					className={ `icon icon--blue icon--${ props.icon }` }
 				/>
 			) }
 			{ props.title }
-		</button>
+		</Button>
 	);
 }
 

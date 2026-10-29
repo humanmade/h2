@@ -104,6 +104,7 @@ export default function Results( props ) {
 						<Result
 							key={ `${ result.type }-${ result.site.id }-${ result.result.id }` }
 							result={ result }
+							showSite={ props.showSite }
 						/>
 					) ) }
 				</ol>
@@ -121,6 +122,7 @@ export default function Results( props ) {
 }
 
 Results.propTypes = {
+	showSite: PropTypes.bool,
 	error: PropTypes.object,
 	loading: PropTypes.bool.isRequired,
 	page: PropTypes.number.isRequired,

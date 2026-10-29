@@ -120,16 +120,22 @@ export class Comment extends Component {
 						<MessageContent html={ comment.content.rendered } />
 					) }
 					<Slot name="Comment.after_content" fillChildProps={ fillProps } />
-					<div className="Comment-footer-actions flex justify-between items-start flex-wrap mt-[1.666rem] mb-[1.248rem] min-[600px]:[&_.Comment-Actions]:hidden">
-						<Actions
-							fillProps={ fillProps }
-							isEditing={ this.state.isEditing }
-							onEdit={ this.onClickEdit }
-							onReply={ () => this.setState( { isShowingReply: true } ) }
-						/>
-
-						<Slot name="Comment.footer_actions" fillChildProps={ fillProps } />
-					</div>
+					<Slot name="Comment.footer_actions" fillChildProps={ fillProps }>
+						{ items => (
+							<div className={ [
+								'Comment-footer-actions flex justify-between items-start flex-wrap mt-3 min-[600px]:[&_.Comment-Actions]:hidden',
+								! items.length && 'min-[600px]:hidden',
+							].filter( Boolean ).join( ' ' ) }>
+								<Actions
+									fillProps={ fillProps }
+									isEditing={ this.state.isEditing }
+									onEdit={ this.onClickEdit }
+									onReply={ () => this.setState( { isShowingReply: true } ) }
+								/>
+								{ items }
+							</div>
+						) }
+					</Slot>
 				</div>
 				<CommentsList
 					allComments={ this.props.comments }
