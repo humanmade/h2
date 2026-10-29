@@ -5,6 +5,7 @@ import { Slot } from 'react-slot-fill';
 import {
 	Post as PostShape,
 } from '../../shapes';
+import { decodeEntities } from '../../util';
 import Button from '../Button';
 import MessageHeader from '../Message/Header';
 import MessageMain from '../Message/Main';
@@ -21,7 +22,10 @@ class Page extends Component {
 	}
 
 	onClickEdit = () => {
-		this.setState( { isEditing: true } );
+		this.setState( {
+			isEditing: true,
+			editingTitle: this.props.post.title.raw !== undefined ? this.props.post.title.raw : decodeEntities( this.props.post.title.rendered ),
+		} );
 		if ( ! ( 'raw' in this.props.post.content ) ) {
 			this.props.onLoad( 'edit' );
 		}
@@ -31,11 +35,12 @@ class Page extends Component {
 		this.setState( { isShowingReply: false } );
 	}
 
-	onSubmitEditing = ( content, unprocessedContent ) => {
+	onSubmitEditing = ( content, unprocessedContent, title ) => {
 		this.setState( { isSubmitting: true } );
 
 		const body = {
 			content,
+			title,
 			status: 'publish',
 			unprocessed_content: unprocessedContent,
 		};
@@ -68,7 +73,7 @@ class Page extends Component {
 		};
 
 		const classes = [
-			'Page',
+			'Page relative py-6 m-0',
 			collapsed && 'Page--collapsed',
 		];
 
@@ -84,6 +89,10 @@ class Page extends Component {
 		return (
 			<div className={ classes.filter( Boolean ).join( ' ' ) }>
 				<MessageHeader
+					editableTitle={ this.state.isEditing ? this.state.editingTitle : undefined }
+					isSubmitting={ this.state.isSubmitting }
+					onTitleChange={ editingTitle => this.setState( { editingTitle } ) }
+					sticky={ ! this.state.isEditing }
 					author={ user }
 					categories={ categories }
 					collapsed={ collapsed }
@@ -93,6 +102,7 @@ class Page extends Component {
 				</MessageHeader>
 
 				<MessageMain
+					editedTitle={ this.state.editingTitle }
 					author={ user }
 					categories={ categories }
 					collapsed={ collapsed }
@@ -100,7 +110,7 @@ class Page extends Component {
 					isEditing={ this.state.isEditing }
 					isLoading={ this.props.loading }
 					isSubmitting={ this.state.isSubmitting }
-					onCancel={ () => this.setState( { isEditing: false } ) }
+					onCancelEdit={ () => this.setState( { isEditing: false } ) }
 					onSubmitEditing={ this.onSubmitEditing }
 				>
 					{ Actions }

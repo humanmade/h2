@@ -361,7 +361,9 @@ function get_script_data() {
 	$data = [
 		'asset_url' => get_theme_file_uri( 'build/' ),
 		'site' => [
+			'id'             => get_current_blog_id(),
 			'name'           => get_bloginfo( 'name' ),
+			'description'    => get_bloginfo( 'description' ),
 			'url'            => site_url(),
 			'home'           => home_url(),
 			'api'            => rest_url(),
@@ -376,6 +378,9 @@ function get_script_data() {
 			'emoji'          => apply_filters( 'h2.custom_emoji', [] ),
 		],
 		'features' => [],
+		'has' => [
+			'notifications' => defined( 'FALCON_PATH' ),
+		],
 		'plugins' => [
 			'reactions' => \class_exists( 'H2\\Reactions\\Reaction' ),
 		],
@@ -402,7 +407,7 @@ function get_script_data() {
 		}
 	}
 
-	return $data;
+	return apply_filters( 'h2.script_data', $data );
 }
 
 /**
@@ -536,6 +541,7 @@ function register_rest_routes() {
 		'methods' => 'POST',
 		'callback' => __NAMESPACE__ . '\\render_preview',
 		'permission_callback' => function () {
+			// Anyone who can comment or write can preview.
 			return is_user_logged_in();
 		},
 		'args' => [
@@ -666,4 +672,18 @@ function flush_preload_cache( $_filter_value = null ) {
 
 	// Permits use of this callback on filters as well as actions.
 	return $_filter_value;
+}
+
+/**
+ * Invalidate rendered widgets after their settings or sidebar assignments change.
+ *
+ * @param string $option Name of the changed option.
+ */
+function flush_widget_preload_cache( string $option ) {
+	if ( $option !== 'sidebars_widgets' && strpos( $option, 'widget_' ) !== 0 ) {
+		return;
+	}
+
+	$key = get_preload_key( '/h2/v1/widgets?sidebar=sidebar' );
+	wp_cache_delete( CACHE_PREFIX_PRELOAD . $key, CACHE_GROUP );
 }

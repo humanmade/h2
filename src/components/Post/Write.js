@@ -16,11 +16,11 @@ const WRAP_CLASSES = [
 	// Back-compat:
 	'WritePost',
 
-	'flex-col relative pb-5 mb-[35px] min-h-[144px]',
-	'border-b-[5px] border-[#F1F2EE]',
+	'flex-col relative py-6 m-0',
+	'border-b border-hm-beige',
 
 	// Notification child.
-	'[&>.Notification]:ml-[90px] [&>.Notification]:-mt-[1.36667rem]',
+	'[&>.Notification]:ml-16 [&>.Notification]:-mt-[1.36667rem]',
 ].join( ' ' );
 
 export class WritePost extends Component {
@@ -29,6 +29,7 @@ export class WritePost extends Component {
 
 		this.state = {
 			draftId: null,
+			deletingDraftId: null,
 			title: '',
 			initialContent: '',
 			error: null,
@@ -36,7 +37,6 @@ export class WritePost extends Component {
 			isSubmitting: false,
 			isSaving: false,
 			lastSave: null,
-			didCopy: false,
 		};
 	}
 
@@ -110,9 +110,8 @@ export class WritePost extends Component {
 
 		const onDoSave = body.id ? this.props.onUpdate : this.props.onCreate;
 		onDoSave( body )
-			.then( id => {
-				const data = posts.getSingle( this.props.posts, id );
-				this.props.onDidCreatePost( data );
+			.then( () => {
+				this.props.onDidCreatePost();
 			} )
 			.catch( error => {
 				this.setState( {
@@ -137,15 +136,39 @@ export class WritePost extends Component {
 		} );
 	}
 
-	onClickPreview = e => {
-		e.preventDefault();
-		const input = e.target;
-		input.select();
-		document.execCommand( 'copy' );
+	onTrashDraft = async id => {
+		if ( this.state.deletingDraftId || this.state.isSaving || this.state.isSubmitting ) {
+			return false;
+		}
+		if ( ! window.confirm( 'Move this draft to Trash? Any unsaved changes to this draft will be discarded.' ) ) {
+			return false;
+		}
 
-		// Show copy indicator, and hide after 1 second.
-		this.setState( { didCopy: true } );
-		window.setTimeout( () => this.setState( { didCopy: false } ), 1000 );
+		this.setState( {
+			deletingDraftId: id,
+			error: null,
+		} );
+		try {
+			const deletedId = await this.props.onDelete( id );
+			if ( ! deletedId ) {
+				throw new Error( 'Could not move the draft to Trash. Please try again.' );
+			}
+			if ( this.state.draftId === id ) {
+				this.setState( {
+					draftId: null,
+					title: '',
+					initialContent: '',
+					category: null,
+					lastSave: null,
+				} );
+			}
+			return true;
+		} catch ( error ) {
+			this.setState( { error } );
+			return false;
+		} finally {
+			this.setState( { deletingDraftId: null } );
+		}
 	}
 
 	render() {
@@ -154,44 +177,49 @@ export class WritePost extends Component {
 		return (
 			<div className={ WRAP_CLASSES } ref={ ref => this.container = ref }>
 				<div
-					className="flex justify-between items-baseline border-solid border-0 border-b-2 border-hm-beige py-[0.5em] [&_.btn]:m-0 [&_.btn_.label\_\_count]:ml-[0.5em] [&_.btn_.label\_\_count]:-mt-[3px] [&_.btn:hover_.label\_\_count]:bg-white [&_.btn:hover_.label\_\_count]:text-hm-vibrant-blue"
+					className="flex flex-wrap justify-between items-center gap-x-3 border-b border-hm-beige pb-4 [&_.btn]:m-0"
 				>
-					<h2 className="text-[1.5em] leading-[1.4] normal-case m-0">
-						Write a New Post
+					<h2 className="text-xl leading-7 font-semibold normal-case m-0">
+						New post
 					</h2>
 					<SelectDraft
+						deletingDraftId={ this.state.deletingDraftId }
+						isBusy={ this.state.isSaving || this.state.isSubmitting || this.state.deletingDraftId !== null }
+						onTrash={ this.onTrashDraft }
 						user={ user || null }
 						onSelect={ this.onSelect }
 					/>
 				</div>
-				<header className="sticky top-0 z-3 py-[15px] bg-white flex items-center h-[110px]">
+				<header className="relative py-6 bg-white flex items-start">
 					<Avatar
-						className="mr-[30px] max-[600px]:hidden"
+						className="mr-4 shrink-0 max-[600px]:hidden"
 						url={ user ? user.avatar_urls['96'] : '' }
-						size={ 60 }
+						size={ 48 }
 					/>
-					<div className="byline flex-col grow">
-						<h2 className="text-2xl leading-7 font-bold">
+					<div className="byline flex-col grow min-w-0">
+						<h2 className="text-2xl leading-7 font-semibold m-0 mb-2">
 							<input
-								className="p-[0.2em] w-full border-solid border-2 border-[rgba(217,217,217,0.6)] focus:outline-hidden focus:border-[#8d8d8d] placeholder:text-[rgba(80,76,76,.5)]"
+								className="block w-full px-3 py-2 border border-hm-border-color rounded-md bg-white text-2xl leading-7 font-semibold placeholder:font-normal placeholder:text-gray-400 focus:outline-hidden focus:border-hm-vibrant-blue"
 								ref={ title => this.titleInput = title }
 								type="text"
-								placeholder="Enter post title..."
+								aria-label="Post title"
+								placeholder="Post title"
 								required
 								value={ this.state.title }
 								onChange={ e => this.setState( { title: e.target.value } ) }
 							/>
 						</h2>
-						<span className="date text-[#AAA] text-sm">
+						<span className="date text-gray-500 text-sm">
 							{ user ? user.name : '' }, now
 						</span>
 						{ categories.length > 0 && (
 							<select
-								className="categories text-sm ml-[10px] px-1 border border-hm-border-color rounded-xs"
+								aria-label="Category"
+								className="categories text-sm text-gray-600 ml-3 px-2 py-1 border border-hm-border-color rounded-md bg-white"
 								onChange={ e => this.setState( { category: e.target.value } ) }
 								value={ this.state.category }
 							>
-								<option key="none" value={ null }>- Category-</option>
+								<option key="none" value={ null }>Category</option>
 								{ categories.map( category => (
 									<option
 										key={ category.id }
@@ -207,40 +235,35 @@ export class WritePost extends Component {
 				</header>
 				<Editor
 					key={ this.state.draftId || '__none' }
-					className="ml-[90px] max-[600px]:ml-0"
+					className="ml-16 max-[600px]:ml-0 pb-0!"
 					initialValue={ this.state.initialContent }
+					placeholder="Write your post…"
 					lastSave={ this.state.lastSave }
+					footerDetails={ this.state.draftId ? (
+						<a
+							className="text-hm-vibrant-blue hover:underline"
+							href={ this.getDraftUrl() }
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							Preview draft ↗
+						</a>
+					) : null }
 					previewComponent={ props => <RemotePreview type="post" { ...props } /> }
 					saveText={ this.state.isSaving ? 'Saving…' : 'Save' }
+					isSubmitting={ this.state.isSubmitting || this.state.isSaving || this.state.deletingDraftId !== null }
 					submitText={ this.state.isSubmitting ? 'Publishing...' : 'Publish' }
 					onCancel={ this.props.onCancel }
+					onDelete={ this.state.draftId ? () => this.onTrashDraft( this.state.draftId ) : undefined }
+					deleteText={ this.state.deletingDraftId ? 'Moving to Trash…' : 'Move to Trash' }
 					onSave={ this.onSave }
 					onSubmit={ ( ...args ) => this.onSubmit( ...args ) }
 				/>
 
 				{ this.state.error && (
 					<Notification type="error">
-						Could not submit: { this.state.error.message }
+						{ this.state.error.message }
 					</Notification>
-				) }
-
-				{ this.state.draftId && (
-					<p className="ml-[90px] -mt-5 mb-[1em] px-[5px] text-[0.777777778em]">
-						Preview URL:
-						<input
-							className="form__field--code inline-block bg-hm-light-grey px-[5px] py-0 mx-[1em] my-0 border-none text-inherit"
-							type="text"
-							value={ this.getDraftUrl() }
-							onClick={ this.onClickPreview }
-							onMouseOver={ e => e.target.select() }
-						/>
-
-						<span
-							className={ `transition-opacity duration-100 ${ this.state.didCopy ? 'opacity-100' : 'opacity-0' }` }
-						>
-							Copied!
-						</span>
-					</p>
 				) }
 
 				{ this.props.children }
@@ -250,7 +273,7 @@ export class WritePost extends Component {
 }
 
 WritePost.propTypes = {
-	onCancel: PropTypes.func.isRequired,
+	onCancel: PropTypes.func,
 	onDidCreatePost: PropTypes.func.isRequired,
 };
 
@@ -264,6 +287,7 @@ const mapDispatchToProps = dispatch => {
 	return {
 		onCreate: data => dispatch( posts.createSingle( data ) ),
 		onUpdate: data => dispatch( posts.updateSingle( data ) ),
+		onDelete: id => dispatch( posts.deleteSingle( id ) ),
 	};
 };
 

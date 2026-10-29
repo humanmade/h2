@@ -1,0 +1,66 @@
+.Sidebar-widgets :is(h1, h2, h3, h4, h5, h6) {
+	font-family: inherit;
+	font-size: 1rem;
+	font-weight: 600;
+	line-height: 1.4;
+	letter-spacing: normal;
+	text-transform: none;
+	margin: 0 0 0.5rem;
+}
+
+.Sidebar-widgets .Widget {
+	margin: 1.5rem 0;
+	font-size: 0.875rem;
+	line-height: 1.5;
+}
+
+.Sidebar-widgets .Widget :is(p, ul, ol) {
+	margin: 0 0 0.5rem;
+}
+
+.Sidebar-widgets .Widget :is(ul, ol) {
+	padding-left: 1.125rem;
+}
+
+.Sidebar-widgets .Widget li + li {
+	margin-top: 0.375rem;
+}
+
+.Sidebar-widgets .wp-block-search__inside-wrapper {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.Sidebar-widgets .wp-block-search__input {
+	flex: 1;
+	min-width: 0;
+	width: 100%;
+	border: 1px solid var(--hm-beige);
+	border-radius: 3px;
+	padding: 0.375rem 0.5rem;
+	font: inherit;
+}
+
+.Sidebar-widgets .wp-block-search__button {
+	margin: 0;
+	border: 1px solid #dfe1e5;
+	border-radius: 6px;
+	min-height: 36px;
+	padding: 0.375rem 0.75rem;
+	background: white;
+	color: var(--hm-dark-grey);
+	font: inherit;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 150ms, border-color 150ms;
+}
+
+.Sidebar-widgets .wp-block-search__button:hover {
+	background: #f5f6f8;
+	border-color: #c8ccd3;
+}
+
+.Sidebar-widgets .wp-block-search__button:focus-visible {
+	outline: 2px solid var(--hm-vibrant-blue);
+	outline-offset: 2px;
+}

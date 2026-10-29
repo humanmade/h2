@@ -18,9 +18,13 @@ import WritePost from './components/Post/Write';
 import Profile from './components/Profile';
 import SessionExpiredWarning from './components/SessionExpiredWarning';
 import Sidebar from './components/Sidebar';
+import CategoriesSidebar from './components/Sidebar/Categories';
 import CommentsSidebar from './components/Sidebar/Comments';
-import SuperMenu from './components/SuperMenu';
+import PagesSidebar from './components/Sidebar/Pages';
+import PostsSidebar from './components/Sidebar/Posts';
+import SuperOverlay from './components/Super';
 import { RenderPlugins } from './plugins';
+import { posts } from './types';
 
 import './App.css';
 
@@ -33,6 +37,7 @@ class App extends Component {
 			isShowingWritePost: false,
 			showChanges: false,
 		};
+		this.headerRef = React.createRef();
 	}
 	onLogOut() {
 		window.location.href = '/wp-login.php?action=logout';
@@ -68,6 +73,19 @@ class App extends Component {
 		}
 	}
 
+	onToggleSuper = () => {
+		if ( this.props.showingSuper ) {
+			this.props.onHideSuperSidebar();
+		} else {
+			this.props.onShowSuperSidebar();
+		}
+	}
+
+	onShowChanges = () => {
+		this.setState( { showChanges: true } );
+		this.props.onHideSuperSidebar();
+	}
+
 	onClickWritePost() {
 		this.setState( { isShowingWritePost: true } );
 	}
@@ -76,13 +94,10 @@ class App extends Component {
 		this.setState( { isShowingWritePost: false } );
 	}
 
-	onSearch( string ) {
-		this.props.history.push( string ? `/search/${ encodeURIComponent( string ) }` : '/' );
-	}
-
-	onDidCreatePost( post ) {
+	onDidCreatePost() {
 		this.setState( { isShowingWritePost: false } );
-		this.props.history.push( post.link.replace( /^(?:\/\/|[^/]+)*\//, '/' ) );
+		this.props.history.push( '/' );
+		this.props.onRefreshPostStream();
 	}
 
 	renderSidebar() {
@@ -111,6 +126,27 @@ class App extends Component {
 					/>
 				);
 
+			case 'categories':
+				return (
+					<CategoriesSidebar
+						onClose={ this.props.onDismissSidebar }
+					/>
+				);
+
+			case 'pages':
+				return (
+					<PagesSidebar
+						onClose={ this.props.onDismissSidebar }
+					/>
+				);
+
+			case 'posts':
+				return (
+					<PostsSidebar
+						onClose={ this.props.onDismissSidebar }
+					/>
+				);
+
 			default:
 				return <Sidebar />;
 		}
@@ -120,24 +156,28 @@ class App extends Component {
 		return (
 			<div className="App">
 				<OverlayContainer />
-				<SuperMenu
-					visible={ this.props.showingSuper }
-					onClose={ this.props.onHideSuperSidebar }
-					onSearch={ search => this.onSearch( search ) }
-					onShowChanges={ () => {
-						this.setState( { showChanges: true } );
-						this.props.onHideSuperSidebar();
-					} }
-				/>
-				<Header
-					onLogOut={ () => this.onLogOut() }
-					onWritePost={ () => this.onClickWritePost() }
-					onSearch={ search => this.onSearch( search ) }
-					onShowSuper={ this.props.onShowSuperSidebar }
-				/>
+				{ /* Keep the header above the overlay, so its search input stays usable. */ }
+				<div
+					ref={ this.headerRef }
+					className={ this.props.showingSuper ? 'relative z-30' : undefined }
+				>
+					<Header
+						superActive={ this.props.showingSuper }
+						onLogOut={ () => this.onLogOut() }
+						onWritePost={ () => this.onClickWritePost() }
+						onShowSuper={ this.onToggleSuper }
+					/>
+				</div>
+				{ this.props.showingSuper && (
+					<SuperOverlay
+						headerRef={ this.headerRef }
+						onShowChanges={ this.onShowChanges }
+					/>
+				) }
 				<SessionExpiredWarning />
-				<div className="Outer">
-					<div className="Inner">
+				<div className="Outer grid grid-cols-[min(30%,360px)_auto] gap-0">
+					{ this.renderSidebar() }
+					<div className="Inner min-w-0 max-w-200 px-8 max-[600px]:px-4">
 						{ this.state.isShowingWritePost ? (
 							<WritePost
 								onDidCreatePost={ post => this.onDidCreatePost( post ) }
@@ -146,6 +186,15 @@ class App extends Component {
 						) : null }
 
 						<Switch>
+							<Route
+								path="/write"
+								exact
+								render={ () => (
+									<WritePost
+										onDidCreatePost={ post => this.onDidCreatePost( post ) }
+									/>
+								) }
+							/>
 							<Route
 								path="/author/:authorSlug/:hasPage(page)?/:page(\d+)?"
 								exact
@@ -158,11 +207,6 @@ class App extends Component {
 							/>
 							<Route
 								path="/category/:categorySlug+"
-								exact
-								component={ PostsList }
-							/>
-							<Route
-								path="/search/:search/:hasPage(page)?/:page(\d+)?"
 								exact
 								component={ PostsList }
 							/>
@@ -183,7 +227,6 @@ class App extends Component {
 							/>
 						</Switch>
 					</div>
-					{ this.renderSidebar() }
 				</div>
 				{ this.state.showChanges ? (
 					<Changes
@@ -211,6 +254,7 @@ const mapDispatchToProps = dispatch => {
 		onDismissSidebar: () => dispatch( hideSidebar() ),
 		onHideSuperSidebar: () => dispatch( hideSuperSidebar() ),
 		onShowSuperSidebar: () => dispatch( showSuperSidebar() ),
+		onRefreshPostStream: () => dispatch( posts.fetchArchive( '' ) ),
 	};
 };
 

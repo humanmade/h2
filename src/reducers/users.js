@@ -5,7 +5,7 @@ const DEFAULT_STATE = {
 	current: null,
 };
 
-export default function ( state, action ) {
+export default function reduceUsers( state, action ) {
 	switch ( action.type ) {
 		case SET_CURRENT_USER:
 			return {

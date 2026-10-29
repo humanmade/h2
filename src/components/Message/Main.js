@@ -7,6 +7,7 @@ import {
 	Post as PostShape,
 	User as UserShape,
 } from '../../shapes';
+import { decodeEntities } from '../../util';
 import Editor from '../Editor/LazyEditor';
 import Notification from '../Notification';
 
@@ -19,6 +20,7 @@ export default function MessageMain( props ) {
 	const {
 		children,
 		isEditing,
+		editedTitle,
 		isLoading,
 		isSubmitting,
 		onCancelEdit,
@@ -27,7 +29,7 @@ export default function MessageMain( props ) {
 	} = props;
 
 	const classes = [
-		'ml-[90px] max-[960px]:ml-0',
+		'ml-16 max-[600px]:ml-0',
 		collapsed && 'Message-Main--collapsed min-h-[70px] max-h-[190px] overflow-hidden relative after:block after:content-[""] after:absolute after:inset-0 after:top-auto after:h-[70px]',
 	];
 
@@ -40,6 +42,10 @@ export default function MessageMain( props ) {
 				) : (
 					<Editor
 						initialValue={ post.unprocessed_content || post.content.raw }
+						placeholder="Write your post…"
+						initialTitle={ post.title.raw !== undefined ? post.title.raw : decodeEntities( post.title.rendered ) }
+						title={ editedTitle }
+						isSubmitting={ isSubmitting }
 						submitText={ isSubmitting ? 'Updating…' : 'Update' }
 						onCancel={ onCancelEdit }
 						onSubmit={ onSubmitEditing }
@@ -49,10 +55,17 @@ export default function MessageMain( props ) {
 				<MessageContent html={ post.content.rendered } />
 			) }
 			<Slot name="Post.after_content" fillChildProps={ fillProps } />
-			<div className="Post-footer-actions clear-both flex my-[1.666rem] mb-[1.248rem] justify-between items-start min-[600px]:[&_.Post\_\_actions]:hidden">
-				{ children }
-				<Slot name="Post.footer_actions" fillChildProps={ fillProps } />
-			</div>
+			<Slot name="Post.footer_actions" fillChildProps={ fillProps }>
+				{ items => (
+					<div className={ [
+						'Post-footer-actions clear-both flex mt-4 justify-between items-start min-[600px]:[&_.Post\\_\\_actions]:hidden',
+						! items.length && 'min-[600px]:hidden',
+					].filter( Boolean ).join( ' ' ) }>
+						{ children }
+						{ items }
+					</div>
+				) }
+			</Slot>
 		</div>
 	);
 }

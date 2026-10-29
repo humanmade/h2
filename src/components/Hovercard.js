@@ -7,7 +7,7 @@ const HOVER_DELAY = 100;
 const transition = {
 	component: 'div',
 	classNames: {
-		enter: 'opacity-0 translate-y-[20px] animate-hovercard-in',
+		enter: 'animate-hovercard-in',
 		exit: 'animate-hovercard-out',
 	},
 	timeout: {
@@ -75,18 +75,18 @@ class CardPortal extends React.Component {
 }
 
 const CARD_CLASSES = [
-	'absolute z-20 bg-white text-black',
-	'shadow-[0px_0px_4px_rgba(0,0,0,0.4)]',
-	'p-[0.777778rem] mt-[10px]',
+	'Hovercard absolute z-20 rounded-lg border border-hm-beige bg-white text-hm-dark-grey',
+	'shadow-[0_8px_24px_rgba(0,0,0,0.12)]',
+	'p-4 mt-3',
 	'text-base pointer-events-none',
 	'flex flex-col',
-	'max-[475px]:max-w-[calc(100vw-52px)]',
+	'max-w-[calc(100vw-32px)]',
 ].join( ' ' );
 
 const POINTER_CLASSES = [
-	'block absolute z-11',
-	'top-[-20px] left-[calc(50%-10px)]',
-	'border-solid border-10 border-transparent border-b-hm-vibrant-blue',
+	'block absolute size-2.5 rotate-45 bg-white',
+	'top-[-6px] left-[calc(50%-5px)]',
+	'border-l border-t border-hm-beige',
 ].join( ' ' );
 
 export function Card( { children, positions, width } ) {

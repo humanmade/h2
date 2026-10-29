@@ -36,11 +36,11 @@ export class MessageHeader extends React.Component {
 
 	render() {
 		const { author, categories, post } = this.props;
-		const { children, constrainTitle, sticky, collapsed, onCollapse, ...fillProps } = this.props;
+		const { children, constrainTitle, sticky, collapsed, onCollapse, editableTitle, isSubmitting, onTitleChange, ...fillProps } = this.props;
 
 		const classes = [
 			'Message-Header',
-			'top-0 py-[15px] bg-white flex items-start min-[600px]:min-h-[99px]',
+			'top-0 pb-4 bg-white flex items-start',
 
 			// Mobile:
 			'max-[600px]:-mx-5 max-[600px]:px-5 max-[600px]:py-2 max-[600px]:flex-row-reverse max-[600px]:[&_.Post\\\\_\\\\_actions]:hidden',
@@ -50,7 +50,7 @@ export class MessageHeader extends React.Component {
 		];
 
 		const titleClasses = [
-			'text-2xl leading-7 font-bold mt-0 mr-[0.5em] mb-[10px] ml-0 [text-transform:inherit]',
+			'text-2xl leading-7 font-bold mt-0 mr-[0.5em] mb-1.5 ml-0 [text-transform:inherit]',
 			constrainTitle && 'whitespace-nowrap text-ellipsis overflow-hidden',
 		].filter( Boolean ).join( ' ' );
 
@@ -61,11 +61,11 @@ export class MessageHeader extends React.Component {
 			>
 				<div className="flex flex-col items-end">
 					<Avatar
-						className="mr-[30px] w-[3.333rem] h-[3.333rem] rounded-full self-start max-[600px]:ml-2 max-[600px]:mr-0 max-[600px]:w-[24px]! max-[600px]:h-[24px]!"
+						className="mr-4 w-12 h-12 rounded-full self-start max-[600px]:ml-2 max-[600px]:mr-0 max-[600px]:w-[24px]! max-[600px]:h-[24px]!"
 						imgClassName="max-[600px]:w-[24px]! max-[600px]:h-[24px]!"
 						url={ author ? author.avatar_urls['96'] : '' }
 						user={ author }
-						size={ 60 }
+						size={ 48 }
 					/>
 					{ ! collapsed && onCollapse ? (
 						<button
@@ -85,15 +85,28 @@ export class MessageHeader extends React.Component {
 					) : null }
 				</div>
 				<div className="grow min-w-0 overflow-hidden leading-[1.1]">
-					<Link
-						className="text-inherit hover:no-underline"
-						disablePreviews
-						href={ post.link }
-					>
+					{ editableTitle !== undefined ? (
 						<h2 className={ titleClasses }>
-							{ decodeEntities( post.title.rendered ) }
+							<input
+								aria-label="Title"
+								className="block w-full h-7 m-0 p-0 border-0 border-b border-hm-border-color rounded-none bg-transparent [font:inherit] text-inherit focus:outline-hidden focus:border-hm-vibrant-blue"
+								disabled={ isSubmitting }
+								type="text"
+								value={ editableTitle }
+								onChange={ e => onTitleChange( e.target.value ) }
+							/>
 						</h2>
-					</Link>
+					) : (
+						<Link
+							className="text-inherit hover:no-underline"
+							disablePreviews
+							href={ post.link }
+						>
+							<h2 className={ titleClasses }>
+								{ decodeEntities( post.title.rendered ) }
+							</h2>
+						</Link>
+					) }
 					<span className="inline-block mr-2 text-[#AAA] text-[14px]">
 						{ author ? (
 							<AuthorLink user={ author }>{ author.name }</AuthorLink>
@@ -133,6 +146,9 @@ MessageHeader.defaultProps = {
 
 MessageHeader.propTypes = {
 	author: UserShape.isRequired,
+	editableTitle: PropTypes.string,
+	isSubmitting: PropTypes.bool,
+	onTitleChange: PropTypes.func,
 	categories: PropTypes.arrayOf( CategoryShape ).isRequired,
 	collapsed: PropTypes.bool,
 	onCollapse: PropTypes.func,

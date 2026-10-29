@@ -24,10 +24,10 @@
 	position: absolute;
 	content: '';
 	background: #F1F2EE;
-	left: -41px;
+	left: var(--thread-line-left, -33px);
 	top: 0;
 	bottom: 0;
-	width: 3px;
+	width: 2px;
 	z-index: -1;
 }
 
@@ -36,7 +36,7 @@
  * content band (above the trailing padding) so it stays centred on the text. */
 .Comment-ActivityMention__node {
 	position: absolute;
-	left: -47px;
+	left: calc(var(--thread-line-left, -33px) - 6px);
 	top: 0;
 	bottom: var( --activity-mention-trailing );
 	display: flex;

@@ -19,37 +19,20 @@ const LIST_CLASSES = [
 	// Back-compat:
 	'PostsList',
 
-	'relative px-5',
+	'relative',
 	'[&>div]:flex-1',
 	'[&_.infinite-scroll-component]:flex-col',
 ].join( ' ' );
 
 class PostsList extends Component {
-	state = {
-		containerWidth: 740,
-	}
-
-	onUpdateWidth = ref => {
-		if ( ! ref ) {
-			return;
-		}
-
-		this.setState( {
-			containerWidth: ref.clientWidth,
-		} );
-	}
-
 	render() {
 		if ( this.props.loading || this.props.loadingMore ) {
 			return (
 				<PageTitle title="Loading…">
 					<div className={ LIST_CLASSES }>
-						{ /* Dummy div to measure width */ }
-						<div ref={ this.onUpdateWidth } />
-
 						{ /* Show two faux posts loading */ }
-						<Loader width={ this.state.containerWidth } />
-						<Loader width={ this.state.containerWidth } />
+						<Loader />
+						<Loader />
 					</div>
 				</PageTitle>
 			);
@@ -68,10 +51,6 @@ class PostsList extends Component {
 
 		const isSingular = !! this.props.match.params.slug;
 		const getTitle = () => {
-			if ( this.props.match.params.search ) {
-				return `Search Results for “${ this.props.match.params.search }”`;
-			}
-
 			if ( ! isSingular ) {
 				// Use default title.
 				return null;
@@ -119,9 +98,6 @@ const ConnectedPostsList = withPagedArchive(
 
 		if ( props.match.params.slug ) {
 			filters.slug = props.match.params.slug;
-		}
-		if ( props.match.params.search ) {
-			filters.search = props.match.params.search;
 		}
 		if ( props.match.params.categorySlug && props.categories.data ) {
 			const matchingCategories = props.categories.data.filter( category => {

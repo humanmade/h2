@@ -7,9 +7,9 @@ import { showSidebarProfile } from '../../actions';
 import { withUser } from '../../hocs';
 import { comments } from '../../types';
 import MiniComment from '../Comment/Mini';
-import LinkButton from '../LinkButton';
 
 import Container from './Container';
+import NavigationButton from './NavigationButton';
 import Pagination from './Pagination';
 
 const CONTAINER_CLASSES = [
@@ -64,9 +64,9 @@ class SidebarComments extends React.Component {
 		return (
 			<Container { ...containerProps }>
 				<p className="m-0 mb-4">
-					<LinkButton onClick={ () => this.props.onShowProfile( user.id ) }>
+					<NavigationButton onClick={ () => this.props.onShowProfile( user.id ) }>
 						← Back to { user.name }’s profile
-					</LinkButton>
+					</NavigationButton>
 				</p>
 
 				<div className="mx-[-10px]">

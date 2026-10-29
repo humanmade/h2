@@ -8,6 +8,7 @@ import {
 	Post as PostShape,
 } from '../../shapes';
 import { posts } from '../../types';
+import { decodeEntities } from '../../util';
 import Button from '../Button';
 import { Dropdown, DropdownContent } from '../Dropdown';
 import MessageHeader from '../Message/Header';
@@ -76,7 +77,10 @@ export class Post extends Component {
 	}
 
 	onClickEdit = () => {
-		this.setState( { isEditing: true } );
+		this.setState( {
+			isEditing: true,
+			editingTitle: this.props.post.title.raw !== undefined ? this.props.post.title.raw : decodeEntities( this.props.post.title.rendered ),
+		} );
 		if ( ! ( 'raw' in this.props.post.content ) ) {
 			this.props.onLoad( 'edit' );
 		}
@@ -99,11 +103,12 @@ export class Post extends Component {
 		this.setState( { isShowingReply: false } );
 	}
 
-	onSubmitEditing = ( content, unprocessedContent ) => {
+	onSubmitEditing = ( content, unprocessedContent, title ) => {
 		this.setState( { isSubmitting: true } );
 
 		const body = {
 			content,
+			title,
 			status: 'publish',
 			unprocessed_content: unprocessedContent,
 		};
@@ -141,14 +146,13 @@ export class Post extends Component {
 			'Post',
 
 			'flex-col relative',
-			'pb-[1.667rem] my-[1.667rem]',
-			'min-h-[144px]',
-			'border-b-[5px] border-[#F1F2EE]',
+			'py-6 m-0',
+			'border-b border-hm-beige',
 
-			( ! expanded ) && 'Post--collapsed pb-0 [&_.Post-footer-actions_.reactions]:hidden',
+			( ! expanded ) && 'Post--collapsed [&_.Post-footer-actions_.reactions]:hidden',
 		].filter( Boolean ).join( ' ' );
 
-		const Actions = (
+		const Actions = this.state.isEditing ? null : (
 			<Dropdown className="Post__actions min-w-24">
 				<Button onClick={ this.onClickReply }>Reply</Button>
 				<SecondaryActions
@@ -165,6 +169,10 @@ export class Post extends Component {
 			<div className={ classes } ref={ this.postRef }>
 
 				<MessageHeader
+					editableTitle={ this.state.isEditing ? this.state.editingTitle : undefined }
+					isSubmitting={ this.state.isSubmitting }
+					onTitleChange={ editingTitle => this.setState( { editingTitle } ) }
+					sticky={ ! this.state.isEditing }
 					author={ user }
 					categories={ categories }
 					collapsed={ viewMode === 'full' || ( viewMode === 'compact' && ! expanded ) }
@@ -175,6 +183,7 @@ export class Post extends Component {
 				</MessageHeader>
 
 				<MessageMain
+					editedTitle={ this.state.editingTitle }
 					author={ user }
 					categories={ categories }
 					collapsed={ viewMode === 'compact' && ! isShowingReply && ! expanded }
@@ -182,7 +191,7 @@ export class Post extends Component {
 					isEditing={ this.state.isEditing }
 					isLoading={ this.props.loading }
 					isSubmitting={ this.state.isSubmitting }
-					onCancel={ () => this.setState( { isEditing: false } ) }
+					onCancelEdit={ () => this.setState( { isEditing: false } ) }
 					onSubmitEditing={ this.onSubmitEditing }
 				>
 					{ Actions }
