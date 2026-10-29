@@ -103,9 +103,11 @@ export default function Result( props ) {
 	return (
 		<li className="Super-result m-0 py-4 first:pt-0">
 			<div className="flex items-center gap-2 text-xs text-black/60">
-				<span className="inline-block px-2 py-0.5 rounded-full bg-hm-beige text-black/80 font-semibold">
-					{ site.name }
-				</span>
+				{ props.showSite !== false && (
+					<span className="inline-block px-2 py-0.5 rounded-full bg-hm-beige text-black/80 font-semibold">
+						{ site.name }
+					</span>
+				) }
 				<span>{ label }</span>
 				<span className="ml-auto">
 					<FormattedDate date={ object.date_gmt + 'Z' } />
@@ -168,6 +170,7 @@ const Rendered = PropTypes.shape( {
 } );
 
 Result.propTypes = {
+	showSite: PropTypes.bool,
 	result: PropTypes.shape( {
 		type: PropTypes.string.isRequired,
 		site: PropTypes.shape( {

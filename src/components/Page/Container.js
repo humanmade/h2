@@ -21,31 +21,13 @@ const ConnectedPage = compose(
 )( Page );
 
 class Container extends Component {
-	state = {
-		containerWidth: 740,
-	}
-
-	onUpdateWidth = ref => {
-		if ( ! ref ) {
-			return;
-		}
-
-		this.setState( {
-			containerWidth: ref.clientWidth,
-		} );
-	}
-
 	render() {
 		if ( this.props.loading ) {
 			return (
 				<PageTitle title="Loading…">
 					<div className="PostsList">
-						{ /* Dummy div to measure width */ }
-						<div ref={ this.onUpdateWidth } />
-
-						{ /* Show two faux posts loading */ }
-						<Loader width={ this.state.containerWidth } />
-						<Loader width={ this.state.containerWidth } />
+						{ /* Show the page header and content loading */ }
+						<Loader showActions={ false } />
 					</div>
 				</PageTitle>
 			);

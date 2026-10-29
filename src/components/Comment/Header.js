@@ -12,7 +12,7 @@ export default function CommentHeader( props ) {
 		// Back-compat:
 		'Comment-Header',
 
-		'group h-[50px] flex items-center -ml-[30px] bg-white',
+		'group min-h-10 flex items-center -ml-12 bg-white',
 
 		// Strong child.
 		'[&>strong]:grow [&>strong]:leading-[1.2]',
@@ -20,12 +20,8 @@ export default function CommentHeader( props ) {
 		// Button.
 		'[&_button]:mb-0',
 
-		// Desktop (min-width: 601px).
-		'min-[601px]:[&_.Dropdown_.btn--small]:min-h-[24px]',
-		'min-[601px]:[&_.btn--small]:text-[0.8rem] min-[601px]:[&_.btn--small]:leading-[1.5555]',
-
 		// Mobile (max-width: 600px).
-		'max-[600px]:ml-0 max-[600px]:h-auto max-[600px]:flex-wrap',
+		'max-[600px]:-ml-8 max-[600px]:h-auto max-[600px]:flex-wrap',
 
 		mini && 'Comment-Header--mini ml-0 h-auto flex-wrap',
 		className,
@@ -37,7 +33,7 @@ export default function CommentHeader( props ) {
 				className={ mini ? (
 					'w-[24px]! h-[24px]! -ml-[30px] mr-[6px] py-2 bg-white after:top-2'
 				) : (
-					'-ml-[30px] mr-5 max-[600px]:w-[24px]! max-[600px]:h-[24px]! max-[600px]:mr-[6px] max-[600px]:bg-white'
+					'mr-4 max-[600px]:w-[24px]! max-[600px]:h-[24px]! max-[600px]:mr-2 max-[600px]:bg-white'
 				) }
 				imgClassName={ mini ? (
 					'w-[24px]! h-[24px]!'
@@ -46,7 +42,7 @@ export default function CommentHeader( props ) {
 				) }
 				url={ author ? author.avatar_urls['96'] : '' }
 				user={ author }
-				size={ 40 }
+				size={ mini ? 24 : 32 }
 			/>
 			<strong>
 				{ author ? (

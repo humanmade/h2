@@ -6,19 +6,17 @@ export default function UserBlock( props ) {
 	const { user } = props;
 
 	return (
-		<div className="flex items-center mx-[-1em] mb-[1em] pt-[0.2em] px-[1em] overflow-hidden [&_h2]:normal-case [&_h2]:text-base [&_h2]:leading-[1.4] [&_h2]:m-0 [&_p]:m-0">
-			<div>
-				<Avatar
-					className="mr-[0.5em]"
-					url={ user.avatar_urls[96] }
-					user={ user }
-					size={ 60 }
-				/>
-			</div>
-			<div>
-				<h2>{ user.name }</h2>
-				<p>@{ user.slug }</p>
-				{ user.facts && user.facts.job_title && <p className="text-hm-medium-grey">{ user.facts.job_title }</p> }
+		<div className="flex items-center gap-3 mb-5 min-w-0">
+			<Avatar
+				className="shrink-0"
+				url={ user.avatar_urls[96] }
+				user={ user }
+				size={ 48 }
+			/>
+			<div className="min-w-0">
+				<h2 className="text-lg leading-6 font-semibold normal-case m-0 break-words">{ user.name }</h2>
+				<p className="text-xs leading-5 text-gray-500 m-0 break-words">@{ user.slug }</p>
+				{ user.facts && user.facts.job_title && <p className="text-sm leading-5 text-gray-600 mt-1 mb-0">{ user.facts.job_title }</p> }
 			</div>
 		</div>
 	);

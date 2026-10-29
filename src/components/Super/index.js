@@ -15,13 +15,10 @@ import NetworkSearchInput from './SearchInput';
 import SiteSwitcher, { SiteCard } from './SiteSwitcher';
 import { getNetwork } from './util';
 
-// Invert along with the button, so the count stays readable on hover.
 const BADGE_CLASSES = [
 	'inline-block ml-2 rounded-full h-4 min-w-4 px-1 align-middle',
 	'text-xs leading-4 text-center font-normal',
 	'bg-hm-vibrant-blue text-white transition-colors duration-200 ease-in-out',
-	'group-hover:bg-white group-hover:text-hm-vibrant-blue',
-	'group-focus:bg-white group-focus:text-hm-vibrant-blue',
 ].join( ' ' );
 
 /**

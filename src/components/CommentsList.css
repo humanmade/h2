@@ -1,31 +1,23 @@
 .CommentsList {
-	margin-left: 20px;
+	--thread-line-left: -20px;
+	margin-left: 32px;
 }
 
 .CommentsList .CommentsList {
-	margin-left: 14px;
+	margin-left: 24px;
 }
 
 .CommentsList .CommentsList .CommentsList .CommentsList {
 	margin-left: 0;
 }
 
-@media ( min-width: 600px ) {
+@media ( min-width: 601px ) {
 	.CommentsList {
-		margin-left: 69px; /* center under post author icon */
+		--thread-line-left: -33px;
+		margin-left: 64px;
 	}
 
 	.CommentsList .CommentsList {
-		margin-left: 43px;
-	}
-
-	.CommentsList .CommentsList .CommentsList .CommentsList {
-		margin-left: 10px; /* Start overlapping icons: legibility over aesthetics */
-	}
-}
-
-@media ( min-width: 960px ) {
-	.CommentsList {
-		margin-left: calc( 30px + 3.333rem + 60px ); /* align with content column */
+		margin-left: 32px;
 	}
 }

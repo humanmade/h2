@@ -175,9 +175,9 @@ class App extends Component {
 					/>
 				) }
 				<SessionExpiredWarning />
-				<div className="Outer grid grid-cols-[min(30%,360px)_auto] gap-12">
+				<div className="Outer grid grid-cols-[min(30%,360px)_auto] gap-0">
 					{ this.renderSidebar() }
-					<div className="Inner max-w-200">
+					<div className="Inner min-w-0 max-w-200 px-8 max-[600px]:px-4">
 						{ this.state.isShowingWritePost ? (
 							<WritePost
 								onDidCreatePost={ post => this.onDidCreatePost( post ) }

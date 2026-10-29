@@ -3,10 +3,10 @@
 	position: absolute;
 	content: '';
 	background: #F1F2EE;
-	left: -41px;
+	left: var(--thread-line-left, -33px);
 	top: 8px;
 	bottom: 0;
-	width: 3px;
+	width: 2px;
 	z-index: -1;
 }
 
@@ -19,10 +19,10 @@
 	position: absolute;
 	content: '';
 	background: #F1F2EE;
-	left: -43.5px;
+	left: calc(var(--thread-line-left, -33px) - 3px);
 	bottom: calc( 1rem - 4.5px );
-	width: 9px;
-	height: 9px;
+	width: 8px;
+	height: 8px;
 	z-index: -1;
 	border-radius: 50%;
 }
@@ -37,15 +37,5 @@
 @media screen and ( min-width: 783px ) {
 	body.admin-bar .Comment .Comment-Header {
 		top: 131px; /* 32 + 99 */
-	}
-}
-
-@media ( max-width: 600px ) {
-	.Comment:before {
-		left: -20px;
-	}
-
-	.Comment:last-child:after {
-		left: -23px;
 	}
 }

@@ -6,7 +6,7 @@ const BASE_CLASSES = [
 	// Back-compat:
 	'Sidebar-Container',
 
-	'border-l border-r border-solid border-hm-beige',
+	'border-r border-solid border-hm-beige',
 ].join( ' ' );
 
 export default function Container( props ) {
