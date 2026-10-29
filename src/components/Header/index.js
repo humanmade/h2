@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Slot } from 'react-slot-fill';
 
 import { withCurrentUser } from '../../hocs';
-import SearchInput from '../SearchInput';
 import NetworkSearchInput from '../Super/SearchInput';
 import { getNetwork } from '../Super/util';
 
@@ -55,18 +54,11 @@ export class Header extends Component {
 
 					<Slot name="Header.buttons" />
 
-					{ networkSearch ? (
-						<NetworkSearchInput
-							autoFocus
-							className="hidden sm:block"
-						/>
-					) : (
-						<SearchInput
-							className="hidden sm:block"
-							value={ this.props.searchValue }
-							onSearch={ this.props.onSearch }
-						/>
-					) }
+					<NetworkSearchInput
+						key={ superActive ? 'open' : 'closed' }
+						autoFocus={ superActive }
+						className="hidden sm:block"
+					/>
 
 					<Slot name="Header.secondary_buttons" />
 
@@ -87,16 +79,13 @@ export class Header extends Component {
 }
 
 Header.defaultProps = {
-	searchValue: '',
 	superActive: false,
 };
 
 Header.propTypes = {
-	searchValue: PropTypes.string,
 	superActive: PropTypes.bool,
 	onLogOut: PropTypes.func.isRequired,
 	onWritePost: PropTypes.func.isRequired,
-	onSearch: PropTypes.func.isRequired,
 	onShowSuper: PropTypes.func.isRequired,
 };
 

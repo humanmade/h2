@@ -175,7 +175,7 @@ export class Search extends Component {
 			page: 1,
 			period: 'any',
 			results: null,
-			selectedSites: [],
+			selectedSites: props.initialSites || [],
 			term: props.term,
 			total: 0,
 			totalPages: 0,
@@ -296,6 +296,7 @@ export class Search extends Component {
 }
 
 Search.propTypes = {
+	initialSites: PropTypes.arrayOf( PropTypes.number ),
 	sites: PropTypes.object.isRequired,
 	term: PropTypes.string.isRequired,
 };

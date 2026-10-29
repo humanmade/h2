@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 
 import SearchInput from '../SearchInput';
 
@@ -8,12 +7,9 @@ function Search( props ) {
 		<div className="Widget">
 			{ props.title && <h4>{ props.title }</h4> }
 
-			<SearchInput
-				onSearch={ s => props.history.push( s ? `/search/${ s }` : '/' ) }
-				value={ null }
-			/>
+			<SearchInput small />
 		</div>
 	);
 }
 
-export default withRouter( Search );
+export default Search;

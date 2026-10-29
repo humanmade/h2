@@ -17,6 +17,7 @@ const DEFAULT_STATE = {
 	showingSuper: false,
 	sidebarProfile: null,
 	superSearch: '',
+	superSearchSites: [],
 };
 
 export default function ui( state = DEFAULT_STATE, action ) {
@@ -70,6 +71,7 @@ export default function ui( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				showingSuper: true,
+				superSearchSites: action.sites || [],
 			};
 
 		case HIDE_SUPER_SIDEBAR:

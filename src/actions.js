@@ -37,7 +37,10 @@ export const hideSidebar = () => ( { type: HIDE_SIDEBAR } );
 
 export const showMetaSidebar = () => ( { type: SHOW_META_SIDEBAR } );
 
-export const showSuperSidebar = () => ( { type: SHOW_SUPER_SIDEBAR } );
+export const showSuperSidebar = ( sites = [] ) => ( {
+	type: SHOW_SUPER_SIDEBAR,
+	sites,
+} );
 export const hideSuperSidebar = () => ( { type: HIDE_SUPER_SIDEBAR } );
 
 /**
