@@ -2,8 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { setSuperSearch } from '../../actions';
-import { FORM_CLASSES, getWrapClasses, INPUT_CLASSES } from '../SearchInput';
+import { setSuperSearch, showSuperSidebar } from '../../actions';
 
 import { getNetwork } from './util';
 
@@ -17,21 +16,21 @@ import { getNetwork } from './util';
  * @returns {React.ReactNode} Search form.
  */
 export function NetworkSearchInput( props ) {
-	const { autoFocus, className, small, value, onChange } = props;
+	const { autoFocus, className, small, value, siteScoped, onChange } = props;
 	const network = getNetwork();
 
 	return (
 		<form
-			className={ [ FORM_CLASSES, 'SearchInput--network', className ].filter( Boolean ).join( ' ' ) }
+			className={ [ 'SearchInput flex-1 relative self-stretch', 'SearchInput--network', className ].filter( Boolean ).join( ' ' ) }
 			role="search"
 			onSubmit={ e => e.preventDefault() }
 		>
-			<div className={ getWrapClasses( small ) }>
+			<div className={ `flex items-center h-full relative z-11 ${ small ? '' : 'px-5' }` }>
 				<input
-					aria-label={ network ? `Search ${ network.name }` : 'Search all sites' }
+					aria-label={ siteScoped ? 'Search this site' : network ? `Search ${ network.name }` : 'Search all sites' }
 					autoFocus={ autoFocus }
-					className={ `${ INPUT_CLASSES } bg-white` }
-					placeholder={ network ? `Search across ${ network.name }…` : 'Search all sites…' }
+					className="w-full text-lg border-2 border-hm-border-color rounded-sm px-2 py-1 md:py-2 md:leading-5 placeholder:italic bg-white"
+					placeholder={ siteScoped ? 'Search this site…' : network ? `Search across ${ network.name }…` : 'Search all sites…' }
 					type="search"
 					value={ value }
 					onChange={ e => onChange( e.target.value ) }
@@ -45,6 +44,7 @@ NetworkSearchInput.propTypes = {
 	autoFocus: PropTypes.bool,
 	className: PropTypes.string,
 	small: PropTypes.bool,
+	siteScoped: PropTypes.bool,
 	value: PropTypes.string.isRequired,
 	onChange: PropTypes.func.isRequired,
 };
@@ -57,8 +57,21 @@ NetworkSearchInput.defaultProps = {
 export default connect(
 	state => ( {
 		value: state.ui.superSearch,
+		siteScoped: ! state.ui.showingSuper || ( state.ui.superSearchSites || [] ).length > 0,
+		showingSuper: state.ui.showingSuper,
 	} ),
 	dispatch => ( {
 		onChange: value => dispatch( setSuperSearch( value ) ),
+		openSiteSearch: () => dispatch( showSuperSidebar( [ window.H2Data.site.id ] ) ),
+	} ),
+	( state, dispatch, props ) => ( {
+		...props,
+		...state,
+		onChange: value => {
+			if ( ! state.showingSuper && value.trim() ) {
+				dispatch.openSiteSearch();
+			}
+			dispatch.onChange( value );
+		},
 	} )
 )( NetworkSearchInput );

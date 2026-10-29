@@ -9,7 +9,6 @@ import { Header } from './index';
 const defaultProps = {
 	currentUser: user,
 	onLogOut: action( 'onLogOut' ),
-	onSearch: action( 'onSearch' ),
 	onShowChanges: action( 'onShowChanges' ),
 	onShowSuper: action( 'onShowSuper' ),
 	onWritePost: action( 'onWritePost' ),

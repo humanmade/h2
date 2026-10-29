@@ -94,10 +94,6 @@ class App extends Component {
 		this.setState( { isShowingWritePost: false } );
 	}
 
-	onSearch( string ) {
-		this.props.history.push( string ? `/search/${ encodeURIComponent( string ) }` : '/' );
-	}
-
 	onDidCreatePost() {
 		this.setState( { isShowingWritePost: false } );
 		this.props.history.push( '/' );
@@ -169,7 +165,6 @@ class App extends Component {
 						superActive={ this.props.showingSuper }
 						onLogOut={ () => this.onLogOut() }
 						onWritePost={ () => this.onClickWritePost() }
-						onSearch={ search => this.onSearch( search ) }
 						onShowSuper={ this.onToggleSuper }
 					/>
 				</div>
@@ -212,11 +207,6 @@ class App extends Component {
 							/>
 							<Route
 								path="/category/:categorySlug+"
-								exact
-								component={ PostsList }
-							/>
-							<Route
-								path="/search/:search/:hasPage(page)?/:page(\d+)?"
 								exact
 								component={ PostsList }
 							/>

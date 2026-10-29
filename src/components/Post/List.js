@@ -68,10 +68,6 @@ class PostsList extends Component {
 
 		const isSingular = !! this.props.match.params.slug;
 		const getTitle = () => {
-			if ( this.props.match.params.search ) {
-				return `Search Results for “${ this.props.match.params.search }”`;
-			}
-
 			if ( ! isSingular ) {
 				// Use default title.
 				return null;
@@ -119,9 +115,6 @@ const ConnectedPostsList = withPagedArchive(
 
 		if ( props.match.params.slug ) {
 			filters.slug = props.match.params.slug;
-		}
-		if ( props.match.params.search ) {
-			filters.search = props.match.params.search;
 		}
 		if ( props.match.params.categorySlug && props.categories.data ) {
 			const matchingCategories = props.categories.data.filter( category => {

@@ -138,7 +138,7 @@ export class SuperOverlay extends Component {
 					{ ! network ? (
 						this.renderSingleSite()
 					) : term ? (
-						<Search term={ term } />
+						<Search initialSites={ this.props.searchSites } term={ term } />
 					) : (
 						<SiteSwitcher />
 					) }
@@ -161,6 +161,7 @@ SuperOverlay.propTypes = {
 export default connect(
 	state => ( {
 		search: state.ui.superSearch,
+		searchSites: state.ui.superSearchSites,
 	} ),
 	dispatch => ( {
 		onClose: () => dispatch( hideSuperSidebar() ),

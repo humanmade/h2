@@ -361,6 +361,7 @@ function get_script_data() {
 	$data = [
 		'asset_url' => get_theme_file_uri( 'build/' ),
 		'site' => [
+			'id'             => get_current_blog_id(),
 			'name'           => get_bloginfo( 'name' ),
 			'description'    => get_bloginfo( 'description' ),
 			'url'            => site_url(),
