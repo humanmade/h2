@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import qs from 'qs';
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 
 import api from '../../api';
 import { withSites } from '../../hocs';
@@ -109,20 +109,49 @@ export function fetchResults( params, options = {} ) {
  */
 export function SearchView( props ) {
 	const { orderby, period, selectedSites, sites, type } = props;
+	const [ showFilters, setShowFilters ] = useState( false );
+	const activeFilters = [
+		selectedSites.length > 0,
+		type !== 'all',
+		period !== 'any',
+		orderby !== 'relevance',
+	].filter( Boolean ).length;
 
 	return (
-		<div className="Super-search grid grid-cols-1 gap-8 md:grid-cols-[14rem_minmax(0,1fr)]">
-			<Facets
-				orderby={ orderby }
-				period={ period }
-				selectedSites={ selectedSites }
-				sites={ sites }
-				type={ type }
-				onChangeOrderby={ props.onChangeOrderby }
-				onChangePeriod={ props.onChangePeriod }
-				onChangeSites={ props.onChangeSites }
-				onChangeType={ props.onChangeType }
-			/>
+		<div className="Super-search grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-[14rem_minmax(0,1fr)]">
+			<button
+				aria-controls="super-search-filters"
+				aria-expanded={ showFilters }
+				className="md:hidden flex items-center justify-between w-full m-0 px-3 py-2 text-sm font-medium text-hm-dark-grey bg-white border border-[#dfe1e5] rounded-md cursor-pointer"
+				type="button"
+				onClick={ () => setShowFilters( ! showFilters ) }
+			>
+				<span>
+					Filters
+					{ activeFilters > 0 && (
+						<span className="ml-2 rounded-full bg-gray-100 text-gray-600 text-xs px-1.5 leading-5">{ activeFilters }</span>
+					) }
+				</span>
+				<svg aria-hidden="true" className={ 'w-3 h-3 transition-transform ' + ( showFilters ? 'rotate-180' : '' ) } viewBox="0 0 12 7">
+					<path d="M1 1 6 6 11 1" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+				</svg>
+			</button>
+			<div
+				className={ showFilters ? 'block' : 'hidden md:block' }
+				id="super-search-filters"
+			>
+				<Facets
+					orderby={ orderby }
+					period={ period }
+					selectedSites={ selectedSites }
+					sites={ sites }
+					type={ type }
+					onChangeOrderby={ props.onChangeOrderby }
+					onChangePeriod={ props.onChangePeriod }
+					onChangeSites={ props.onChangeSites }
+					onChangeType={ props.onChangeType }
+				/>
+			</div>
 			<Results
 				error={ props.error }
 				loading={ props.loading }
