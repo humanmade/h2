@@ -36,7 +36,6 @@ class Page extends Component {
 
 		const body = {
 			content,
-			status: 'publish',
 			unprocessed_content: unprocessedContent,
 		};
 
