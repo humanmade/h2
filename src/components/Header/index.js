@@ -47,7 +47,7 @@ export class Header extends Component {
 						aria-controls="h2-sidebar"
 						aria-expanded={ this.props.sidebarOpen }
 						aria-label="Menu"
-						className={ ICON_BUTTON_CLASSES + ' bg-brand text-white hover:bg-brand-dark min-[800px]:hidden' }
+						className={ ICON_BUTTON_CLASSES + ( superActive ? ' bg-brand-dark' : ' bg-brand hover:bg-brand-dark' ) + ' text-white min-[800px]:hidden' }
 						type="button"
 						onClick={ this.props.onToggleSidebar }
 					>
