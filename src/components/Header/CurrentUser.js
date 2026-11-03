@@ -6,7 +6,8 @@ import { showSidebarComments, showSidebarProfile } from '../../actions';
 import { User } from '../../shapes';
 import Avatar from '../Avatar';
 import Link from '../Link';
-import UserSettings from '../UserSettings';
+
+import TimezoneSetting from './TimezoneSetting';
 
 const ITEM_CLASSES = [
 	'flex items-center w-full m-0 px-4 py-2 border-0 bg-transparent text-left text-sm text-hm-dark-grey! cursor-pointer',
@@ -107,7 +108,7 @@ export function CurrentUser( props ) {
 					</ul>
 
 					<div className="px-4 py-3 border-t border-hm-beige">
-						<UserSettings />
+						<TimezoneSetting />
 					</div>
 
 					<div className="py-1 border-t border-hm-beige">
