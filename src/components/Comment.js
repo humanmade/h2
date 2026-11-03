@@ -127,6 +127,7 @@ export class Comment extends Component {
 								! items.length && 'min-[600px]:hidden',
 							].filter( Boolean ).join( ' ' ) }>
 								<Actions
+									canEdit={ comment.user_can.edit }
 									fillProps={ fillProps }
 									isEditing={ this.state.isEditing }
 									onEdit={ this.onClickEdit }
