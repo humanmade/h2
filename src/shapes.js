@@ -11,6 +11,7 @@ export const Post = PropTypes.shape( {
 		edited: PropTypes.string,
 	} ).isRequired,
 	author: PropTypes.number.isRequired,
+	authorship: PropTypes.arrayOf( PropTypes.number ),
 	id: PropTypes.number.isRequired,
 	date_gmt: PropTypes.string.isRequired,
 	related: PropTypes.shape( {

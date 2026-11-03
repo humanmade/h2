@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { withPadding, withStore } from '../../stories/decorators';
-import { comment, editablePost, post, user } from '../../stories/stubs';
+import { comment, editablePost, post, user, users } from '../../stories/stubs';
 import { apiResponse } from '../../stories/util';
 
 import { Post } from './index';
@@ -43,9 +43,7 @@ const state = {
 		saving: [],
 	},
 	users: {
-		posts: [
-			user,
-		],
+		posts: users,
 		loadingArchive: [],
 		loadingPost: [],
 		saving: [],
@@ -77,6 +75,17 @@ export const Editable = () => (
 	<Post
 		{ ...defaultProps }
 		editable={ apiResponse( editablePost ) }
+	/>
+);
+
+export const Coauthored = () => (
+	<Post
+		{ ...defaultProps }
+		user={ users.find( author => author.id === 3 ) }
+		post={ {
+			...post,
+			authorship: [ 3, 1 ],
+		} }
 	/>
 );
 

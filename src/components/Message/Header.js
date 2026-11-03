@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Fragment, useState } from 'react';
 import { Slot } from 'react-slot-fill';
 
+import { withUser } from '../../hocs';
 import {
 	Category as CategoryShape,
 	Post as PostShape,
@@ -15,6 +16,33 @@ import Link from '../Link';
 import AuthorLink from './AuthorLink';
 
 import './Header.css';
+
+function CoauthorName( { user } ) {
+	if ( ! user ) {
+		return null;
+	}
+
+	return (
+		<Fragment>
+			{ ' with ' }
+			<AuthorLink user={ user }>
+				<img
+					alt=""
+					className="inline-block w-4 h-4 mr-1 rounded-full align-text-bottom"
+					src={ user.avatar_urls['96'] }
+				/>
+				{ user.name }
+			</AuthorLink>
+		</Fragment>
+	);
+}
+
+CoauthorName.propTypes = {
+	user: UserShape,
+};
+
+// Load each named author through the shared user cache, even outside the directory's first page.
+const Coauthor = withUser( props => props.id )( CoauthorName );
 
 export class MessageHeader extends React.Component {
 	componentDidUpdate() {
@@ -35,7 +63,7 @@ export class MessageHeader extends React.Component {
 	}
 
 	render() {
-		const { author, categories, post } = this.props;
+		const { author, authorIds, categories, post } = this.props;
 		const { children, constrainTitle, sticky, collapsed, onCollapse, ...fillProps } = this.props;
 
 		const classes = [
@@ -95,9 +123,8 @@ export class MessageHeader extends React.Component {
 						</h2>
 					</Link>
 					<span className="inline-block mr-2 text-[#AAA] text-[14px]">
-						{ author ? (
-							<AuthorLink user={ author }>{ author.name }</AuthorLink>
-						) : '' },&nbsp;
+						{ author && <AuthorLink user={ author }>{ author.name }</AuthorLink> }
+						{ authorIds.slice( 1 ).map( id => <Coauthor key={ id } id={ id } /> ) },&nbsp;
 						<FormattedDate date={ post.date_gmt + 'Z' } />
 					</span>
 					{ categories.length > 0 && (
@@ -126,6 +153,7 @@ export class MessageHeader extends React.Component {
 }
 
 MessageHeader.defaultProps = {
+	authorIds: [],
 	collapsed: false,
 	constrainTitle: false,
 	sticky: true,
@@ -133,6 +161,7 @@ MessageHeader.defaultProps = {
 
 MessageHeader.propTypes = {
 	author: UserShape.isRequired,
+	authorIds: PropTypes.arrayOf( PropTypes.number ),
 	categories: PropTypes.arrayOf( CategoryShape ).isRequired,
 	collapsed: PropTypes.bool,
 	onCollapse: PropTypes.func,
