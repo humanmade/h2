@@ -8,8 +8,10 @@ export const withCurrentUser = connect(
 	state => ( {
 		currentUser: users.getSingle( state.users, state.users.current ),
 		loadingCurrentUser: users.isPostLoading( state.users, state.users.current ),
+		savingCurrentUser: users.isPostSaving( state.users, state.users.current ),
 	} ),
 	dispatch => ( {
+		onLoadCurrentUser: context => dispatch( users.fetchCurrent( context ) ),
 		onUpdateCurrentUser: data => dispatch( users.updateCurrent( data ) ),
 	} )
 );
@@ -43,6 +45,6 @@ export const withUsers = withArchive(
 	}
 );
 
-export const withCategories = withApiData( () => ( { categories: '/wp/v2/categories?per_page=100&_fields=id,link,name,slug' } ) );
+export const withCategories = withApiData( () => ( { categories: '/wp/v2/categories?per_page=100&_fields=id,count,link,name,slug,parent' } ) );
 export const withSites = withApiData( () => ( { sites: '/h2/v1/site-switcher/sites' } ) );
 export const withWidgets = withApiData( () => ( { widgets: '/h2/v1/widgets?sidebar=sidebar' } ) );

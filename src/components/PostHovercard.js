@@ -16,17 +16,17 @@ export const PostCardAuthor = ( { author } ) => (
 	author ? (
 		<React.Fragment>
 			<Avatar
-				className="inline-block align-middle mr-[0.5em]"
+				className="shrink-0"
 				url={ author.avatar_urls['96'] }
-				size={ 24 }
+				size={ 20 }
 				withHovercard={ false }
 			/>
 
-			<span className="text-hm-vibrant-blue">
+			<span className="font-medium text-hm-dark-grey">
 				{ author.name }
 			</span>
 
-			{ ' posted ' }
+			{ ' · ' }
 		</React.Fragment>
 	) : (
 		'Posted '
@@ -46,9 +46,9 @@ export const ConnectedPostCardAuthor = withSingle(
 	}
 )( PostCardAuthor );
 
-const ASIDE_CLASSES = 'text-[0.77778rem]';
-const DESCRIPTION_CLASSES = 'text-[0.9em] leading-[1.7] [&_p]:m-0 [&_p]:mb-[1em]';
-const META_CLASSES = 'm-0 text-[0.9em] text-[#AAA]';
+const ASIDE_CLASSES = 'text-sm';
+const DESCRIPTION_CLASSES = 'text-sm leading-relaxed text-gray-600 line-clamp-4 [&_p]:m-0 [&_p+p]:mt-2';
+const META_CLASSES = 'flex items-center gap-1.5 mt-3 pt-3 border-t border-hm-beige text-xs leading-5 text-gray-500';
 
 export function PostCard( { loading, post, AuthorComponent = ConnectedPostCardAuthor } ) {
 	if ( loading ) {
@@ -69,7 +69,7 @@ export function PostCard( { loading, post, AuthorComponent = ConnectedPostCardAu
 
 	return (
 		<aside className={ ASIDE_CLASSES }>
-			<h3 className="text-[1em] leading-[1.6] normal-case m-0 mb-[1em]">
+			<h3 className="text-sm font-semibold leading-snug normal-case m-0 mb-2 text-hm-dark-grey">
 				{ decodeEntities( post.title.rendered ) }
 			</h3>
 
@@ -135,6 +135,7 @@ export default class PostHovercard extends React.Component {
 		return (
 			<Hovercard
 				cardContent={ content }
+				width={ 360 }
 			>
 				{ children }
 			</Hovercard>

@@ -1,23 +1,25 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 if [ -d "$HOME/.nvm" ]; then
 	export NVM_DIR="$HOME/.nvm"
 	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-	NODE_VERSION=`nvm current`
+	NODE_VERSION="$( nvm current )"
 
-	nvm install v12
-	nvm use v12
+	nvm install
+	nvm use
 fi
 
-npm ci
+# iltorb is not compatible with current Node releases and is not required for
+# the webpack build.
+npm ci --ignore-scripts
 npm run build
 
 # clean-up
 rm -rf node_modules
 
-if command -v nvm; then
-	nvm use $NODE_VERSION
+if command -v nvm && [[ "$NODE_VERSION" != "none" && "$NODE_VERSION" != "N/A" ]]; then
+	nvm use "$NODE_VERSION"
 fi

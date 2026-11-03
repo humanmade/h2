@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function ( props ) {
+export default function Logo( props ) {
 	const customLogo = window.H2Data?.site?.logo;
 
 	return (
-		<div className="bg-brand py-1.5 h-[45px] w-[45px] flex items-center justify-center min-[601px]:w-[60px] min-[783px]:py-2 min-[783px]:h-[60px]">
+		<div className="bg-transparent py-1.5 h-[45px] w-[45px] flex items-center justify-center min-[601px]:w-[60px] min-[783px]:py-2 min-[783px]:h-[60px]">
 			{ customLogo ? (
 				<img
 					src={ customLogo }

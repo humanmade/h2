@@ -5,7 +5,7 @@ const CLASSES = [
 	// Back-compat:
 	'ButtonGroup',
 
-	'whitespace-nowrap',
+	'inline-flex items-stretch whitespace-nowrap',
 
 	// Reset margin on child buttons.
 	'[&>.btn]:m-0',

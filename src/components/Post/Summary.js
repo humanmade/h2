@@ -88,7 +88,7 @@ function Summary( props ) {
 	].filter( Boolean ).join( ' ' );
 
 	return (
-		<div className="my-[1em] ml-[90px] text-sm text-[#aaa] [&_.btn]:font-[inherit] [&_.btn]:mb-0 max-[960px]:ml-0">
+		<div className="my-[1em] ml-16 text-sm text-[#aaa] [&_.btn]:font-[inherit] [&_.btn]:mb-0 max-[600px]:ml-0">
 			<div className="Post-Summary-actions my-[5px] flex items-center justify-between max-[600px]:flex-col max-[600px]:items-start">
 				<Button
 					size="small"

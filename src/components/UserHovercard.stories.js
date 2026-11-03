@@ -31,3 +31,19 @@ export const Basic = () => (
 		/>
 	</Card>
 );
+
+export const WithoutLocation = () => (
+	<Card
+		{ ...commonProps }
+	>
+		<UserCard
+			user={ {
+				...user,
+				facts: {
+					...user.facts,
+					location: '',
+				},
+			} }
+		/>
+	</Card>
+);

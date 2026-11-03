@@ -2,66 +2,47 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const TYPE_CLASSES = {
-	primary: [
-		'border-hm-vibrant-blue bg-hm-vibrant-blue text-white',
-		'hover:bg-white hover:text-hm-vibrant-blue',
-		'focus:bg-white focus:text-hm-vibrant-blue',
-		'disabled:hover:bg-hm-vibrant-blue disabled:hover:text-white',
-	].join( ' ' ),
-	secondary: [
-		'border-hm-vibrant-blue bg-white text-hm-vibrant-blue',
-		'hover:bg-hm-vibrant-blue hover:text-white',
-		'focus:bg-hm-vibrant-blue focus:text-white',
-		'disabled:hover:bg-hm-vibrant-blue disabled:hover:text-white',
-	].join( ' ' ),
-	tertiary: [
-		'border-[#a3a3a3] bg-transparent text-[#a3a3a3]',
-		'hover:border-hm-warm-grey hover:text-white',
-		'focus:border-hm-warm-grey focus:text-white',
-	].join( ' ' ),
-	inverted: [
-		'border-white bg-transparent text-white',
-		'hover:bg-white hover:text-hm-vibrant-blue hover:border-hm-vibrant-blue',
-		'focus:bg-white focus:text-hm-vibrant-blue focus:border-hm-vibrant-blue',
-	].join( ' ' ),
+	primary: 'border-hm-vibrant-blue bg-hm-vibrant-blue text-white enabled:hover:bg-[#3b53d1] enabled:hover:border-[#3b53d1] enabled:active:bg-[#3045b8]',
+	secondary: 'border-[#dfe1e5] bg-white text-[#41454d] enabled:hover:bg-[#f5f6f8] enabled:hover:border-[#c8ccd3] enabled:active:bg-[#eceef2]',
+	tertiary: 'border-transparent bg-transparent text-[#626873] enabled:hover:bg-[#f0f1f4] enabled:hover:text-[#30343b] enabled:active:bg-[#e5e7eb]',
+	inverted: 'border-white/30 bg-white/10 text-white enabled:hover:bg-white/20 enabled:hover:border-white/50 enabled:active:bg-white/30',
 };
 
 const SIZE_CLASSES = {
-	regular: 'px-2',
-	small: 'btn--small text-sm leading-6 border px-2 py-0',
+	regular: 'min-h-9 px-3 py-1.5 text-sm leading-5',
+	small: 'btn--small min-h-8 px-2.5 py-1 text-sm leading-5',
 };
 
 const BASE_CLASSES = [
 	// Back-compat:
 	'btn',
 
-	'font-light',
-	'border border-solid rounded-sm',
-	'inline-block text-center align-middle cursor-pointer',
-	'w-auto h-auto',
-	'shadow-none no-underline',
-	'transition-[background,border-color] duration-200 ease-in-out',
-	'mb-[0.833rem] mr-[7.5px]',
-	'focus:outline-hidden',
-	'disabled:cursor-default disabled:opacity-30',
+	'inline-flex items-center justify-center gap-1.5 align-middle',
+	'font-medium border border-solid rounded-md',
+	'w-auto cursor-pointer whitespace-nowrap no-underline shadow-none',
+	'transition-colors duration-150 ease-out',
+	'mb-3 mr-2',
+	'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-hm-vibrant-blue',
+	'disabled:cursor-not-allowed disabled:opacity-45',
 ].join( ' ' );
 
-export default function Button( props ) {
+export default function Button( { children, className, disabled, submit, onClick, type, size, ...buttonProps } ) {
 	const classes = [
 		BASE_CLASSES,
-		TYPE_CLASSES[ props.type ] || TYPE_CLASSES.secondary,
-		SIZE_CLASSES[ props.size || 'regular' ] || '',
-		props.className,
+		TYPE_CLASSES[ type ] || TYPE_CLASSES.secondary,
+		SIZE_CLASSES[ size || 'regular' ] || '',
+		className,
 	].filter( Boolean ).join( ' ' );
 
 	return (
 		<button
+			{ ...buttonProps }
 			className={ classes }
-			disabled={ props.disabled }
-			type={ props.submit ? 'submit' : 'button' }
-			onClick={ props.onClick || undefined }
+			disabled={ disabled }
+			type={ submit ? 'submit' : 'button' }
+			onClick={ onClick || undefined }
 		>
-			{ props.children }
+			{ children }
 		</button>
 	);
 }

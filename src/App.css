@@ -6,53 +6,118 @@
 }
 
 .App .WritePost {
-	margin: 20px;
+	margin: 0;
 	max-width: 800px;
 }
 
 .Outer {
-	margin: 0 auto;
-	display: flex;
-	max-width: 1200px;
+	/* display: flex; */
 }
 
 .Inner {
 	flex-direction: column;
-	width: 65%;
-	max-width: 800px;
+	/* width: 65%; */
 }
 
 @media ( min-width: 800px ) {
-	.App > .Outer > aside {
+	.App-sidebar {
 		position: sticky;
 		top: 0;
 		height: 100vh;
-		margin-left: 5%;
-		overflow: hidden;
-		overflow-y: scroll;
-		width: 30%;
-		flex-shrink: 0;
+		overflow-y: auto;
 	}
-}
 
-@media screen and ( min-width: 600px ) and ( max-width: 782px ) {
-	body.admin-bar .App > .Outer > aside {
-		top: 46px;
-		height: calc( 100vh - 46px );
-	}
-}
-
-@media ( min-width: 783px ) {
-	body.admin-bar .App > .Outer > aside {
+	body.admin-bar .App-sidebar {
 		top: 32px;
-	}
-}
-
-@media ( min-width: 800px ) {
-	body.admin-bar .App > .Outer > aside {
 		height: calc( 100vh - 32px );
 	}
+
+	.App-sidebar > aside {
+		min-height: 100%;
+	}
+
+	.App-sidebar__close,
+	.App-sidebar-backdrop {
+		display: none;
+	}
 }
+
+/* Small screens: single column, with the sidebar as a slide-in drawer. */
+@media ( max-width: 799px ) {
+	.App .Outer {
+		display: block;
+	}
+
+	.App-sidebar {
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 100001;
+		width: min( 85vw, 360px );
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		background: #fff;
+		box-shadow: 0 0 24px rgba( 0, 0, 0, 0.18 );
+		transform: translateX( -100% );
+		visibility: hidden;
+		transition: transform 200ms ease, visibility 0s linear 200ms;
+	}
+
+	.App-sidebar--open {
+		transform: none;
+		visibility: visible;
+		transition: transform 200ms ease;
+	}
+
+	.App-sidebar > aside {
+		border-right: 0;
+	}
+
+	.App-sidebar .SiteHeader {
+		padding-right: 3.5rem;
+	}
+
+	.App-sidebar__close {
+		position: absolute;
+		top: 1.25rem;
+		right: 0.75rem;
+		z-index: 3;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		border-radius: 6px;
+		background: transparent;
+		color: var( --hm-dark-grey );
+		cursor: pointer;
+	}
+
+	.App-sidebar__close:hover,
+	.App-sidebar__close:focus-visible {
+		background: rgba( 0, 0, 0, 0.06 );
+	}
+
+	.App-sidebar-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 100000;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: rgba( 0, 0, 0, 0.4 );
+		cursor: default;
+	}
+
+	body.h2-sidebar-open {
+		overflow: hidden;
+	}
+}
+
 
 .App a {
 	border: none;
@@ -67,19 +132,6 @@
 button em,
 a em {
 	color: inherit;
-}
-
-@media ( max-width: 800px ) {
-	.Outer {
-		flex-wrap: wrap;
-	}
-	.Inner {
-		width: 100%;
-	}
-	.Sidebar {
-		width: 100%;
-		padding: 0 20px;
-	}
 }
 
 .logged-out-warning p {

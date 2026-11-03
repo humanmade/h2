@@ -86,7 +86,7 @@ const Tab = ( { checked, title, value, onSelect } ) => (
 				onChange={ e => onSelect( e.target.value ) }
 			/>
 			<span
-				className="inline-block font-bold uppercase py-[7.5px] px-3 border-2 border-transparent border-b-0 rounded-t peer-checked:bg-white peer-checked:border-[#d9d9d9] peer-checked:text-hm-vibrant-blue"
+				className="inline-block text-sm font-medium normal-case py-2 px-3 border border-transparent border-b-0 rounded-t peer-checked:bg-white peer-checked:border-[#d9d9d9] peer-checked:text-hm-vibrant-blue"
 			>
 				{ title }
 			</span>
@@ -116,9 +116,10 @@ class Editor extends React.PureComponent {
 		this.state = {
 			content: props.initialValue,
 			completion: null,
-			count: 0,
+			count: countWords( props.initialValue ),
 			hasFocus: false,
 			height: null,
+			isPublishing: false,
 			mode: 'edit',
 			uploading: [],
 		};
@@ -133,8 +134,17 @@ class Editor extends React.PureComponent {
 		window.removeEventListener( 'beforeunload', this.warnBeforeLeaving );
 	}
 
+	hasChanges = () => (
+		this.state.content !== this.props.initialValue ||
+		this.props.title !== this.props.initialTitle
+	);
+
 	warnBeforeLeaving = e => {
-		if ( this.state.content === '' || ( this.props.initialValue && this.state.content === this.props.initialValue ) ) {
+		if ( this.state.isPublishing || this.props.isSubmitting ) {
+			return;
+		}
+
+		if ( ! this.hasChanges() ) {
 			return;
 		}
 
@@ -142,7 +152,12 @@ class Editor extends React.PureComponent {
 		return navigateWarning;
 	}
 
-	componentDidUpdate() {
+	componentDidUpdate( prevProps ) {
+		if ( this.state.isPublishing && prevProps.isSubmitting && ! this.props.isSubmitting ) {
+			window.addEventListener( 'beforeunload', this.warnBeforeLeaving );
+			this.setState( { isPublishing: false } );
+		}
+
 		if ( ! this.textarea ) {
 			return;
 		}
@@ -266,8 +281,12 @@ class Editor extends React.PureComponent {
 
 	onSubmit( e ) {
 		e.preventDefault();
+		// Removing this synchronously is important: React state updates do not
+		// necessarily flush before the successful submit navigates away.
+		window.removeEventListener( 'beforeunload', this.warnBeforeLeaving );
+		this.setState( { isPublishing: true } );
 
-		this.props.onSubmit( compileMarkdown( this.state.content ), this.state.content );
+		this.props.onSubmit( compileMarkdown( this.state.content ), this.state.content, this.props.title );
 	}
 
 	onSave = () => {
@@ -450,8 +469,8 @@ class Editor extends React.PureComponent {
 			>
 				<Shortcuts keys={ hasFocus ? shortcuts : null } />
 
-				<div className="flex justify-between -mb-[2px] z-2 relative text-[#504C4C]">
-					<ul className="flex tracking-[0.01em] text-xs">
+				<div className="flex justify-between -mb-px z-2 relative text-[#504C4C]">
+					<ul className="flex list-none p-0 m-0 text-sm">
 						<Tab
 							title="Write"
 							value="edit"
@@ -491,11 +510,11 @@ class Editor extends React.PureComponent {
 					) : null }
 				</div>
 
-				<div className="relative text-lg">
+				<div className="relative text-base leading-7">
 					<DropUpload
 						allowMultiple
 						className="mb-4"
-						statusClassName={ isPreviewing ? 'hidden' : 'border-2 border-[#d9d9d9] [border-top-style:dashed] rounded-bl rounded-br py-[0.2em] px-[9px] bg-hm-light-grey' }
+						statusClassName={ isPreviewing ? 'hidden' : 'border border-[#d9d9d9] [border-top-style:dashed] rounded-bl rounded-br py-[0.2em] px-[9px] bg-hm-light-grey' }
 						files={ this.state.uploading }
 						onUpload={ file => this.onUpload( file ) }
 					>
@@ -504,8 +523,9 @@ class Editor extends React.PureComponent {
 						) : (
 							<textarea
 								ref={ el => this.updateTextarea( el ) }
-								className="Editor-editor min-h-72 max-h-120 resize-y rounded-none rounded-tr border-2 border-b-0 border-[#d9d9d9] bg-white pt-4 pb-4 block px-[15px] w-full focus:outline-hidden placeholder:italic"
-								placeholder="Write a comment..."
+								className="Editor-editor min-h-72 max-h-120 resize-y rounded-none rounded-tr border border-b-0 border-[#d9d9d9] bg-white pt-4 pb-4 block px-[15px] w-full focus:outline-hidden placeholder:font-normal placeholder:text-gray-400"
+								aria-label={ this.props.placeholder }
+								placeholder={ this.props.placeholder }
 								style={ { height } }
 								value={ content }
 								onBlur={ () => this.onBlur() }
@@ -518,37 +538,44 @@ class Editor extends React.PureComponent {
 						) }
 					</DropUpload>
 					<Prompt
-						when={ ! ( this.state.content === '' || ( this.props.initialValue && this.state.content === this.props.initialValue ) ) }
+						when={ ! this.state.isPublishing && ! this.props.isSubmitting && this.hasChanges() }
 						message={ navigateWarning }
 					/>
 
 					{ mode !== 'preview' ? this.getCompletion() : null }
 				</div>
 
-				<p className="pl-2 m-0 flex justify-between items-center">
-					<small>
+				<div className="Editor-footer flex flex-wrap justify-between items-start gap-3">
+					<div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs leading-5 text-gray-500">
 						<span>{ count === 1 ? '1 word' : `${ count.toLocaleString() } words` }</span>
-						<br />
 						<a
-							className="text-hm-vibrant-blue hover:underline"
-							href="http://commonmark.org/help/"
+							className="text-gray-500 hover:text-hm-vibrant-blue hover:underline"
+							href="https://commonmark.org/help/"
 							rel="noopener noreferrer"
 							target="_blank"
 						>
-							Format with Markdown ↗
+							Markdown help ↗
 						</a>
 						{ this.props.lastSave && (
-							<React.Fragment>
-								<br />
-								{ 'Last saved ' }
-								<FormattedRelative value={ this.props.lastSave } />
-							</React.Fragment>
+							<span>Last saved <FormattedRelative value={ this.props.lastSave } /></span>
 						) }
-					</small>
-					<span>
+						{ this.props.footerDetails }
+					</div>
+					<span className="flex flex-wrap justify-end items-center gap-2 ml-auto [&>.btn]:m-0">
+						{ this.props.onDelete && (
+							<Button
+								className="text-[#b42318]! enabled:hover:bg-[#fef3f2]!"
+								disabled={ this.props.isSubmitting }
+								type="tertiary"
+								onClick={ this.props.onDelete }
+							>
+								{ this.props.deleteText || 'Move to Trash' }
+							</Button>
+						) }
 						{ this.props.onCancel ? (
 							<Button
 								className="mb-0"
+								disabled={ this.props.isSubmitting }
 								onClick={ this.props.onCancel }
 							>
 								Cancel
@@ -557,6 +584,7 @@ class Editor extends React.PureComponent {
 						{ this.props.onSave && (
 							<Button
 								className="mb-0"
+								disabled={ this.props.isSubmitting }
 								onClick={ this.onSave }
 							>
 								{ this.props.saveText || 'Save' }
@@ -564,12 +592,13 @@ class Editor extends React.PureComponent {
 						) }
 						<Button
 							className="mb-0"
+							disabled={ this.props.isSubmitting }
 							submit type="primary"
 						>
 							{ this.props.submitText }
 						</Button>
 					</span>
-				</p>
+				</div>
 			</form>
 		);
 	}
@@ -577,15 +606,23 @@ class Editor extends React.PureComponent {
 
 Editor.defaultProps = {
 	initialValue: '',
+	placeholder: 'Write a comment…',
 	submitText: 'Comment',
 };
 
 Editor.propTypes = {
 	className: PropTypes.string,
+	initialTitle: PropTypes.string,
+	title: PropTypes.string,
+	placeholder: PropTypes.string,
 	previewComponent: PropTypes.func,
+	footerDetails: PropTypes.node,
 	saveText: PropTypes.string,
+	isSubmitting: PropTypes.bool,
 	submitText: PropTypes.string,
 	onCancel: PropTypes.func,
+	onDelete: PropTypes.func,
+	deleteText: PropTypes.string,
 	onSubmit: PropTypes.func.isRequired,
 };
 

@@ -29,6 +29,9 @@ add_action( 'customize_register', __NAMESPACE__ . '\\register_customizer_setting
 
 add_action( 'clean_user_cache', __NAMESPACE__ . '\\flush_preload_cache' );
 add_filter( 'widget_update_callback', __NAMESPACE__ . '\\flush_preload_cache' );
+add_action( 'updated_option', __NAMESPACE__ . '\\flush_widget_preload_cache' );
+add_action( 'added_option', __NAMESPACE__ . '\\flush_widget_preload_cache' );
+add_action( 'deleted_option', __NAMESPACE__ . '\\flush_widget_preload_cache' );
 
 Compat\bootstrap();
 Emoji\bootstrap();

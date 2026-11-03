@@ -37,6 +37,7 @@ export default class RemotePreview extends React.Component {
 			credentials: 'same-origin',
 			headers: {
 			  'Content-Type': 'application/json',
+			  'X-WP-Nonce': window.wpApiSettings.nonce || undefined,
 			},
 			body: JSON.stringify( body ),
 		} )

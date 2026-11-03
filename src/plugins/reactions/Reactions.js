@@ -3,24 +3,17 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Button from '../../components/Button';
 import EmojiPicker from '../../components/EmojiPicker';
 import { withCurrentUser } from '../../hocs';
 import { reactions } from '../../types';
 
 import './Reactions.css';
 
-function UserDisplayName( props ) {
-	if ( props.userId === 0 ) {
-		return null;
-	}
-
-	return (
-		<span className="block text-white">
-			{ props.userName }
-		</span>
-	);
-}
+const CHIP_CLASSES = [
+	'relative inline-flex items-center h-7 m-0 border border-solid rounded-full cursor-pointer',
+	'transition-colors duration-150',
+	'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-hm-vibrant-blue',
+].join( ' ' );
 
 const Emoji = props => {
 	const custom = window.H2Data.site.emoji[ props.type ];
@@ -28,7 +21,7 @@ const Emoji = props => {
 		return (
 			<img
 				alt={ custom.colons }
-				className="h-[1em] max-h-[1em]"
+				className="inline-block h-[1em] max-h-[1em] align-[-0.125em]"
 				src={ custom.imageUrl }
 			/>
 		);
@@ -114,50 +107,65 @@ export class Reactions extends Component {
 		const loading = this.props.loading || this.state.isLoading;
 
 		return (
-			<div className="reactions flex flex-wrap relative">
+			<div className="reactions relative flex flex-wrap items-center gap-1.5">
 				{ Object.entries( reactions ).map( ( [ emoji, users ] ) => {
-					let isActive = reactions[ emoji ].indexOf( this.props.currentUser.id ) >= 0 ? true : false;
+					const isActive = users.indexOf( this.props.currentUser.id ) >= 0;
+					const names = users
+						.filter( id => id !== 0 )
+						.map( id => {
+							const user = this.props.users && this.props.users.find( user => user.id === id );
+							return user ? user.name : 'Unknown';
+						} );
+
 					return (
-						<Button
+						<button
 							key={ emoji }
+							aria-label={ emoji + ' ' + users.length + ( names.length ? ': ' + names.join( ', ' ) : '' ) }
+							aria-pressed={ isActive }
 							className={ [
-								'group whitespace-nowrap relative mb-2 h-[31px]',
-								isActive && 'bg-[rgba(125,201,218,0.1)] hover:bg-[rgba(125,201,218,0.1)]',
-							].filter( Boolean ).join( ' ' ) }
-							type="tertiary"
+								CHIP_CLASSES,
+								'group gap-1.5 pl-2 pr-2.5',
+								isActive
+									? 'border-hm-vibrant-blue/40 bg-hm-vibrant-blue/8 text-hm-vibrant-blue hover:bg-hm-vibrant-blue/12'
+									: 'border-[#dfe1e5] bg-white text-gray-600 hover:bg-[#f5f6f8]',
+							].join( ' ' ) }
+							type="button"
 							onClick={ () => this.toggleReaction( emoji ) }
 						>
-							<span className="inline-block ml-[0.1em] mr-1 relative top-[2.5px]" key="emoji">
+							<span className="text-base leading-none">
 								<Emoji type={ emoji } />
 							</span>
-							<span className={ `ml-1 mr-[0.1em] text-sm ${ isActive ? 'text-hm-warm-grey' : 'text-[#AAA]' }` } key="count">{ users.length }</span>
-							<span className="hidden group-hover:block group-focus:block absolute top-[calc(100%+5px)] left-0 bg-black/60 px-2 py-1 rounded-xs text-sm z-10 text-left" key="users">
-								{ users.map( reactionAuthorId => {
-									const user = this.props.users && this.props.users.filter( user => user.id === reactionAuthorId );
-									return (
-										<UserDisplayName
-											userId={ reactionAuthorId }
-											userName={ user && user.length > 0 ? user[0].name : 'Unknown' }
-											key={ this.props.postId + reactionAuthorId }
-										/>
-									);
-								} ) }
-							</span>
-						</Button>
+							<span className="text-xs font-medium tabular-nums">{ users.length }</span>
+							{ names.length > 0 && (
+								<span
+									aria-hidden="true"
+									className="pointer-events-none absolute left-0 top-full z-10 mt-1.5 hidden whitespace-nowrap rounded-md bg-[#1f2328] px-2 py-1 text-left text-xs font-normal text-white shadow-sm group-hover:block group-focus-visible:block"
+								>
+									{ names.join( ', ' ) }
+								</span>
+							) }
+						</button>
 					);
 				} ) }
-				<Button
-					className={ 'reactions__add-reaction ' + ( loading ? ' loading' : '' ) }
+				<button
+					aria-label="Add reaction"
+					className={ CHIP_CLASSES + ' w-7 justify-center border-transparent bg-transparent text-gray-500 hover:bg-[#f0f1f4] hover:text-hm-dark-grey disabled:cursor-wait' }
 					disabled={ loading }
-					type="tertiary"
-					onClick={ () => this.setState( { isOpen: ! this.state.isOpen  } ) }
+					title="Add reaction"
+					type="button"
+					onClick={ () => this.setState( { isOpen: ! this.state.isOpen } ) }
 				>
 					{ loading ? (
 						<span className="loading loading--active m-0"></span>
 					) : (
-						<span className="icon icon--smiley-wink">Add reaction</span>
+						<svg aria-hidden="true" viewBox="0 0 20 20" width="18" height="18">
+							<circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" strokeWidth="1.5" />
+							<path d="M7 11.75c.75 1 1.8 1.5 3 1.5s2.25-.5 3-1.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+							<circle cx="7.6" cy="8.4" r="1" fill="currentColor" />
+							<circle cx="12.4" cy="8.4" r="1" fill="currentColor" />
+						</svg>
 					) }
-				</Button>
+				</button>
 				{ this.state.isOpen && (
 					<EmojiPicker
 						onClose={ () => this.setState( { isOpen: false } ) }

@@ -8,24 +8,24 @@ const CONTENT_CLASSES = [
 	'hidden',
 	'absolute left-0 right-0 top-full z-10',
 	'm-0 -mt-px p-0 w-full',
-	'max-h-[50vh] overflow-x-hidden overflow-y-scroll',
-	'text-hm-warm-grey bg-white',
-	'border border-solid border-hm-vibrant-blue',
-	'rounded-bl rounded-br',
+	'max-h-[50vh] overflow-x-hidden overflow-y-auto',
+	'text-[#41454d] bg-white shadow-[0_4px_16px_rgba(0,0,0,0.08)]',
+	'border border-solid border-[#dfe1e5]',
+	'rounded-b-md',
 	'cursor-auto text-left',
 
 	// Child buttons.
 	'[&>.btn]:block [&>.btn]:w-full [&>.btn]:py-[0.3em] [&>.btn]:px-[0.5em]',
 	'[&>.btn]:m-0 [&>.btn]:border-none [&>.btn]:rounded-none',
 	'[&>.btn]:leading-[1.4] [&>.btn]:text-left [&>.btn]:whitespace-normal',
-	'[&>.btn:hover]:border-none [&>.btn:hover]:bg-hm-vibrant-blue',
+	'[&>.btn:hover]:border-none [&>.btn:hover]:bg-[#f5f6f8] [&>.btn:hover]:text-[#30343b]',
 ].join( ' ' );
 
 const DropdownContext = React.createContext( null );
 
 export const Arrow = () => (
 	<svg
-		className="w-[0.55em] align-middle"
+		className="w-3 h-3 align-middle"
 		viewBox="0 0 12 7"
 	>
 		<title>Select other actions…</title>
@@ -119,9 +119,10 @@ export class Dropdown extends React.PureComponent {
 		const { expanded } = this.state;
 
 		const className = [
-			'Dropdown relative flex shrink-0 min-w-[5em]',
-			'[&_.btn--small]:min-h-[31px]',
-			'[&>.btn:first-child]:text-left [&>.btn:first-child]:grow',
+			'Dropdown relative flex items-stretch shrink-0 min-w-[5em]',
+			'[&>.btn]:min-h-8 [&>.btn]:py-1',
+			'[&_.btn--small]:min-h-8',
+			'[&>.btn:first-child]:grow',
 			expanded && '[&>.btn:first-child]:rounded-bl-none',
 			expanded && '[&>.btn:last-child]:rounded-br-none',
 

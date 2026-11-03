@@ -1,33 +1,27 @@
 import React from 'react';
 
-import LinkButton from '../LinkButton';
+import NavigationButton from './NavigationButton';
 
 export default function SidebarPagination( props ) {
 	const { hasNext, hasPrevious, onNext, onPrevious } = props;
+	if ( ! hasNext && ! hasPrevious ) {
+		return null;
+	}
+
 	return (
-		<div className="Sidebar-Pagination grid grid-cols-2">
-			{ hasNext && (
-				<div>
-					<LinkButton
-						className="group pl-2 flex items-center"
-						onClick={ onNext }
-					>
-						<span className="icon icon--arrow-right icon--blue w-4! mr-2 rotate-180 transition-transform group-hover:-translate-x-2">&larr;</span>
-						<span>Older</span>
-					</LinkButton>
-				</div>
-			) }
+		<nav className="Sidebar-Pagination flex items-center justify-between gap-2 border-t border-hm-beige px-2 py-3" aria-label="Sidebar pagination">
+			<div>
+				{ hasNext && (
+					<NavigationButton iconOnly={ false } onClick={ onNext }>
+						Older
+					</NavigationButton>
+				) }
+			</div>
 			{ hasPrevious && (
-				<div className="justify-self-end col-start-2">
-					<LinkButton
-						className="group pr-2 flex items-center"
-						onClick={ onPrevious }
-					>
-						<span>Newer</span>
-						<span className="icon icon--arrow-right icon--blue w-4! ml-2 transition-transform group-hover:translate-x-2">&larr;</span>
-					</LinkButton>
-				</div>
+				<NavigationButton direction="right" iconOnly={ false } onClick={ onPrevious }>
+					Newer
+				</NavigationButton>
 			) }
-		</div>
+		</nav>
 	);
 }
