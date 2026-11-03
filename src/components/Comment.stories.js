@@ -75,5 +75,15 @@ export const ActivityMentions = () => (
 				},
 			} }
 		/>
+		<BotMention
+			comment={ {
+				...comment,
+				author_avatar_urls: user.avatar_urls,
+				author_name: 'human',
+				id: 4,
+				type: 'human_mention',
+				human: {},
+			} }
+		/>
 	</div>
 );
