@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { withCurrentUser } from '../../hocs';
 
@@ -9,6 +9,17 @@ const getBrowserTimezone = () => {
 	} catch ( e ) {
 		return null;
 	}
+};
+
+const getTimezones = ( ...extra ) => {
+	let zones = [];
+	try {
+		zones = Intl.supportedValuesOf( 'timeZone' );
+	} catch ( e ) {
+		// Older browsers can't list zones; fall back to the ones we know about.
+	}
+
+	return Array.from( new Set( [ ...zones, 'UTC', ...extra.filter( Boolean ) ] ) ).sort();
 };
 
 const formatName = timeZone => timeZone.replace( /_/g, ' ' );
@@ -25,6 +36,12 @@ const formatTime = ( timeZone, date ) => {
 	}
 };
 
+const BUTTON_CLASSES = [
+	'w-full m-0 px-3 py-1.5 border border-[#dfe1e5] rounded-md bg-white text-sm font-medium text-hm-dark-grey cursor-pointer',
+	'enabled:hover:bg-[#f5f6f8] disabled:opacity-50 disabled:cursor-not-allowed',
+	'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-hm-vibrant-blue',
+].join( ' ' );
+
 export function TimezoneSetting( props ) {
 	const { currentUser, onUpdateCurrentUser } = props;
 	const [ isSaving, setSaving ] = useState( false );
@@ -37,33 +54,52 @@ export function TimezoneSetting( props ) {
 		return () => window.clearInterval( timer );
 	}, [] );
 
+	const saved = ( currentUser && currentUser.meta && currentUser.meta.hm_time_timezone ) || '';
+	const browser = getBrowserTimezone();
+	const zones = useMemo( () => getTimezones( saved, browser ), [ saved, browser ] );
+
 	if ( ! currentUser ) {
 		return null;
 	}
 
-	const saved = ( currentUser.meta && currentUser.meta.hm_time_timezone ) || null;
-	const browser = getBrowserTimezone();
-	const savedTime = saved ? formatTime( saved, now ) : null;
-
-	const onUseBrowser = () => {
+	const save = value => {
 		setSaving( true );
 		setError( null );
-		Promise.resolve( onUpdateCurrentUser( { meta: { hm_time_timezone: browser } } ) )
+		Promise.resolve( onUpdateCurrentUser( { meta: { hm_time_timezone: value } } ) )
 			.catch( () => setError( 'Could not update your timezone. Please try again.' ) )
 			.then( () => setSaving( false ) );
 	};
 
+	const savedTime = saved ? formatTime( saved, now ) : null;
+
 	return (
 		<div className="TimezoneSetting text-sm">
-			<p className="m-0 mb-1 text-xs font-medium text-gray-500">Timezone</p>
-			{ saved ? (
-				<p className="m-0 flex items-baseline justify-between gap-2">
-					<span className="min-w-0 truncate text-hm-dark-grey">{ formatName( saved ) }</span>
-					{ savedTime && <span className="shrink-0 text-xs text-gray-500">{ savedTime }</span> }
-				</p>
-			) : (
-				<p className="m-0 text-gray-500">Not set</p>
-			) }
+			<div className="flex items-baseline justify-between gap-2 mb-1">
+				<label
+					className="text-xs font-medium text-gray-500"
+					htmlFor="h2-timezone"
+				>
+					Timezone
+				</label>
+				{ isSaving ? (
+					<span className="text-xs text-gray-500" role="status">Saving…</span>
+				) : savedTime && (
+					<span className="text-xs text-gray-500">{ savedTime }</span>
+				) }
+			</div>
+
+			<select
+				className="block w-full m-0 px-2 py-1.5 border border-[#dfe1e5] rounded-md bg-white text-sm text-hm-dark-grey disabled:opacity-50"
+				disabled={ isSaving }
+				id="h2-timezone"
+				value={ saved }
+				onChange={ e => save( e.target.value ) }
+			>
+				{ ! saved && <option value="">Not set</option> }
+				{ zones.map( zone => (
+					<option key={ zone } value={ zone }>{ formatName( zone ) }</option>
+				) ) }
+			</select>
 
 			{ browser && browser !== saved && (
 				<div className="mt-2">
@@ -71,18 +107,14 @@ export function TimezoneSetting( props ) {
 						Your browser is set to { formatName( browser ) }.
 					</p>
 					<button
-						className="w-full m-0 px-3 py-1.5 border border-[#dfe1e5] rounded-md bg-white text-sm font-medium text-hm-dark-grey cursor-pointer enabled:hover:bg-[#f5f6f8] disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-hm-vibrant-blue"
+						className={ BUTTON_CLASSES }
 						disabled={ isSaving }
 						type="button"
-						onClick={ onUseBrowser }
+						onClick={ () => save( browser ) }
 					>
-						{ isSaving ? 'Saving…' : 'Use ' + formatName( browser ) }
+						Use browser timezone
 					</button>
 				</div>
-			) }
-
-			{ browser && browser === saved && (
-				<p className="m-0 mt-1 text-xs text-gray-500">Matches your browser</p>
 			) }
 
 			{ error && (
