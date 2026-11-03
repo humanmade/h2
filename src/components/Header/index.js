@@ -96,7 +96,7 @@ export class Header extends Component {
 					<Slot name="Header.secondary_buttons" />
 
 					{ this.props.currentUser ? (
-						<div className="ml-auto max-sm:ml-1 flex items-center self-center shrink-0 max-[782px]:scale-90">
+						<div className="ml-auto max-sm:ml-1 flex items-center self-center shrink-0">
 							<CurrentUser
 								user={ this.props.currentUser }
 								onLogOut={ this.props.onLogOut }

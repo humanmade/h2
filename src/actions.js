@@ -1,5 +1,4 @@
 export const REGISTER_PLUGIN = 'REGISTER_PLUGIN';
-export const SHOW_META_SIDEBAR = 'SHOW_META_SIDEBAR';
 export const SHOW_SIDEBAR_PROFILE = 'SHOW_SIDEBAR_PROFILE';
 export const SHOW_SIDEBAR_COMMENTS = 'SHOW_SIDEBAR_COMMENTS';
 export const SHOW_SIDEBAR_CATEGORIES = 'SHOW_SIDEBAR_CATEGORIES';
@@ -34,8 +33,6 @@ export const showSidebarPages = () => ( { type: SHOW_SIDEBAR_PAGES } );
 export const showSidebarPosts = () => ( { type: SHOW_SIDEBAR_POSTS } );
 
 export const hideSidebar = () => ( { type: HIDE_SIDEBAR } );
-
-export const showMetaSidebar = () => ( { type: SHOW_META_SIDEBAR } );
 
 export const showSuperSidebar = ( sites = [] ) => ( {
 	type: SHOW_SUPER_SIDEBAR,

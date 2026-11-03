@@ -1,5 +1,4 @@
 import {
-	SHOW_META_SIDEBAR,
 	SHOW_SIDEBAR_CATEGORIES,
 	SHOW_SIDEBAR_COMMENTS,
 	SHOW_SIDEBAR_PAGES,
@@ -22,12 +21,6 @@ const DEFAULT_STATE = {
 
 export default function ui( state = DEFAULT_STATE, action ) {
 	switch ( action.type ) {
-		case SHOW_META_SIDEBAR:
-			return {
-				...state,
-				sidebarView: 'meta',
-			};
-
 		case SHOW_SIDEBAR_COMMENTS:
 			return {
 				...state,

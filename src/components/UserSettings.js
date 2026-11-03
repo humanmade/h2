@@ -38,23 +38,27 @@ export class UserSettings extends PureComponent {
 
 		return (
 			<div className="UserSettings">
-				<h3>Settings</h3>
-				<label>
-					I prefer archive pages to display
-					<select
-						value={ viewPreference }
-						onChange={ this.onUpdateViewPreference }
-					>
-						{ viewOptions.map( ( { value, label } ) => (
-							<option
-								key={ value }
-								value={ value }
-							>
-								{ label }
-							</option>
-						) ) }
-					</select>
+				<label
+					className="block mb-1 text-xs font-medium text-gray-500"
+					htmlFor="h2-view-preference"
+				>
+					Archive pages show
 				</label>
+				<select
+					className="block w-full m-0 px-2 py-1.5 border border-[#dfe1e5] rounded-md bg-white text-sm text-hm-dark-grey"
+					id="h2-view-preference"
+					value={ viewPreference }
+					onChange={ this.onUpdateViewPreference }
+				>
+					{ viewOptions.map( ( { value, label } ) => (
+						<option
+							key={ value }
+							value={ value }
+						>
+							{ label }
+						</option>
+					) ) }
+				</select>
 			</div>
 		);
 	}

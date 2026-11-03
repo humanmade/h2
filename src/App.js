@@ -10,7 +10,6 @@ import {
 } from './actions';
 import Changes from './components/Changes';
 import Header from './components/Header';
-import MetaSidebar from './components/MetaSidebar';
 import { OverlayContainer } from './components/Overlay';
 import PageContainer from './components/Page/Container';
 import PostsList from './components/Post/List';
@@ -146,14 +145,6 @@ class App extends Component {
 
 	renderSidebar() {
 		switch ( this.props.sidebarView ) {
-			case 'meta':
-				return (
-					<MetaSidebar
-						onClose={ this.props.onDismissSidebar }
-						onLogOut={ () => this.onLogOut() }
-					/>
-				);
-
 			case 'profile':
 				return (
 					<Profile
