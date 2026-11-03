@@ -43,14 +43,14 @@ export class MessageHeader extends React.Component {
 			'top-0 pb-4 bg-white flex items-start',
 
 			// Mobile:
-			'max-[600px]:-mx-5 max-[600px]:px-5 max-[600px]:py-2 max-[600px]:flex-row-reverse max-[600px]:[&_.Post\\\\_\\\\_actions]:hidden',
+			'max-[600px]:pb-3',
 
 			sticky ? 'Message-Header--sticky sticky z-5' : 'relative z-6',
 			constrainTitle && 'Message-Header--constrained h-[99px]',
 		];
 
 		const titleClasses = [
-			'text-2xl leading-7 font-bold mt-0 mr-[0.5em] mb-1.5 ml-0 [text-transform:inherit]',
+			'text-2xl leading-7 max-[600px]:text-xl max-[600px]:leading-6 font-bold mt-0 mr-[0.5em] mb-1.5 ml-0 [text-transform:inherit]',
 			constrainTitle && 'whitespace-nowrap text-ellipsis overflow-hidden',
 		].filter( Boolean ).join( ' ' );
 
@@ -61,8 +61,8 @@ export class MessageHeader extends React.Component {
 			>
 				<div className="flex flex-col items-end">
 					<Avatar
-						className="mr-4 w-12 h-12 rounded-full self-start max-[600px]:ml-2 max-[600px]:mr-0 max-[600px]:w-[24px]! max-[600px]:h-[24px]!"
-						imgClassName="max-[600px]:w-[24px]! max-[600px]:h-[24px]!"
+						className="mr-4 w-12 h-12 rounded-full self-start max-[600px]:mr-3 max-[600px]:w-8! max-[600px]:h-8!"
+						imgClassName="max-[600px]:w-8! max-[600px]:h-8!"
 						url={ author ? author.avatar_urls['96'] : '' }
 						user={ author }
 						size={ 48 }
@@ -132,7 +132,11 @@ export class MessageHeader extends React.Component {
 					) }
 					<Slot name="Post.byline" fillChildProps={ fillProps } />
 				</div>
-				{ children }
+				{ children && (
+					<div className="shrink-0 max-[600px]:hidden">
+						{ children }
+					</div>
+				) }
 			</header>
 		);
 	}

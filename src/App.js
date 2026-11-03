@@ -28,6 +28,9 @@ import { posts } from './types';
 
 import './App.css';
 
+// Matches the breakpoint in App.css where the sidebar becomes a drawer.
+const isDrawerLayout = () => window.matchMedia( '(max-width: 799px)' ).matches;
+
 export const POST_ROUTE = '/:year(\\d{4})/:month(\\d{2})/:day(\\d{2})/:slug/:comment_page(comment-page-\\d+)?';
 
 class App extends Component {
@@ -35,6 +38,7 @@ class App extends Component {
 		super( props );
 		this.state = {
 			isShowingWritePost: false,
+			isSidebarOpen: false,
 			showChanges: false,
 		};
 		this.headerRef = React.createRef();
@@ -43,7 +47,16 @@ class App extends Component {
 		window.location.href = '/wp-login.php?action=logout';
 	}
 
-	componentDidUpdate( prevProps ) {
+	componentDidUpdate( prevProps, prevState ) {
+		// On small screens the sidebar is a drawer; reveal it when a section is requested.
+		if ( this.props.sidebarView && this.props.sidebarView !== prevProps.sidebarView && ! this.state.isSidebarOpen && isDrawerLayout() ) {
+			this.setState( { isSidebarOpen: true } );
+		}
+
+		if ( prevState.isSidebarOpen !== this.state.isSidebarOpen ) {
+			document.body.classList.toggle( 'h2-sidebar-open', this.state.isSidebarOpen );
+		}
+
 		// Scroll back to top when navigating to a new page.
 		if ( prevProps.location && this.props.location && prevProps.location !== this.props.location ) {
 			window.scrollTo( { top: 0 } );
@@ -52,11 +65,15 @@ class App extends Component {
 	}
 
 	componentDidMount() {
+		document.addEventListener( 'keydown', this.onKeyDown );
 		this.unsubscribeFromHistory = this.props.history.listen( this.handleLocationChange );
 		this.props.onHeartbeat();
 	}
 
 	componentWillUnmount() {
+		document.removeEventListener( 'keydown', this.onKeyDown );
+		document.body.classList.remove( 'h2-sidebar-open' );
+		window.clearTimeout( this.sidebarResetTimer );
 		if ( this.unsubscribeFromHistory ) {
 			this.unsubscribeFromHistory();
 		}
@@ -71,6 +88,33 @@ class App extends Component {
 		if ( this.props.showingSuper ) {
 			this.props.onHideSuperSidebar();
 		}
+
+		if ( this.state.isSidebarOpen ) {
+			this.onCloseSidebar();
+		}
+	}
+
+	onKeyDown = e => {
+		if ( e.key === 'Escape' && this.state.isSidebarOpen ) {
+			this.onCloseSidebar();
+		}
+	}
+
+	onToggleSidebar = () => {
+		this.setState( state => ( { isSidebarOpen: ! state.isSidebarOpen } ) );
+	}
+
+	onCloseSidebar = () => {
+		this.setState( { isSidebarOpen: false } );
+
+		// Return the drawer to the main menu once it has slid away, so the
+		// next section request (e.g. the same profile again) reopens it.
+		window.clearTimeout( this.sidebarResetTimer );
+		this.sidebarResetTimer = window.setTimeout( () => {
+			if ( ! this.state.isSidebarOpen && this.props.sidebarView ) {
+				this.props.onDismissSidebar();
+			}
+		}, 250 );
 	}
 
 	onToggleSuper = () => {
@@ -165,7 +209,9 @@ class App extends Component {
 						superActive={ this.props.showingSuper }
 						onLogOut={ () => this.onLogOut() }
 						onWritePost={ () => this.onClickWritePost() }
+						sidebarOpen={ this.state.isSidebarOpen }
 						onShowSuper={ this.onToggleSuper }
+						onToggleSidebar={ this.onToggleSidebar }
 					/>
 				</div>
 				{ this.props.showingSuper && (
@@ -176,7 +222,31 @@ class App extends Component {
 				) }
 				<SessionExpiredWarning />
 				<div className="Outer grid grid-cols-[min(30%,360px)_auto] gap-0">
-					{ this.renderSidebar() }
+					<div
+						className={ this.state.isSidebarOpen ? 'App-sidebar App-sidebar--open' : 'App-sidebar' }
+						id="h2-sidebar"
+					>
+						<button
+							aria-label="Close menu"
+							className="App-sidebar__close"
+							type="button"
+							onClick={ this.onCloseSidebar }
+						>
+							<svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16">
+								<path d="M3 3l10 10M13 3 3 13" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+							</svg>
+						</button>
+						{ this.renderSidebar() }
+					</div>
+					{ this.state.isSidebarOpen && (
+						<button
+							aria-label="Close menu"
+							className="App-sidebar-backdrop"
+							tabIndex="-1"
+							type="button"
+							onClick={ this.onCloseSidebar }
+						/>
+					) }
 					<div className="Inner min-w-0 max-w-200 px-8 max-[600px]:px-4">
 						{ this.state.isShowingWritePost ? (
 							<WritePost
