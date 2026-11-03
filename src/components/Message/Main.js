@@ -58,11 +58,15 @@ export default function MessageMain( props ) {
 			<Slot name="Post.footer_actions" fillChildProps={ fillProps }>
 				{ items => (
 					<div className={ [
-						'Post-footer-actions clear-both flex mt-4 max-[600px]:mb-4 justify-between items-start min-[600px]:[&_.Post\\_\\_actions]:hidden',
+						'Post-footer-actions clear-both flex flex-wrap gap-2 mt-4 max-[600px]:mb-4 justify-between items-start',
 						! items.length && 'min-[600px]:hidden',
 						collapsed && 'hidden',
 					].filter( Boolean ).join( ' ' ) }>
-						{ children }
+						{ children && (
+							<div className="min-[600px]:hidden">
+								{ children }
+							</div>
+						) }
 						{ items }
 					</div>
 				) }
