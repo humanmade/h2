@@ -6,6 +6,7 @@
 namespace H2;
 
 use Asset_Loader;
+use DateTimeZone;
 use WP_Customize_Color_Control;
 use WP_Error;
 use WP_REST_Request;
@@ -701,5 +702,5 @@ function sanitize_timezone( $value ): string {
 		return '';
 	}
 
-	return in_array( $value, timezone_identifiers_list( \DateTimeZone::ALL_WITH_BC ), true ) ? $value : '';
+	return in_array( $value, timezone_identifiers_list( DateTimeZone::ALL_WITH_BC ), true ) ? $value : '';
 }

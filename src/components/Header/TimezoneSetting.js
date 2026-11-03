@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { withCurrentUser } from '../../hocs';
+import Button from '../Button';
 
 const getBrowserTimezone = () => {
 	try {
@@ -36,15 +37,9 @@ const formatTime = ( timeZone, date ) => {
 	}
 };
 
-const BUTTON_CLASSES = [
-	'w-full m-0 px-3 py-1.5 border border-[#dfe1e5] rounded-md bg-white text-sm font-medium text-hm-dark-grey cursor-pointer',
-	'enabled:hover:bg-[#f5f6f8] disabled:opacity-50 disabled:cursor-not-allowed',
-	'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-hm-vibrant-blue',
-].join( ' ' );
-
 export function TimezoneSetting( props ) {
-	const { currentUser, onUpdateCurrentUser } = props;
-	const [ isSaving, setSaving ] = useState( false );
+	const { currentUser, savingCurrentUser, onUpdateCurrentUser } = props;
+	const isSaving = !! savingCurrentUser;
 	const [ error, setError ] = useState( null );
 	const [ now, setNow ] = useState( () => new Date() );
 
@@ -63,11 +58,12 @@ export function TimezoneSetting( props ) {
 	}
 
 	const save = value => {
-		setSaving( true );
+		if ( isSaving ) {
+			return;
+		}
 		setError( null );
 		Promise.resolve( onUpdateCurrentUser( { meta: { hm_time_timezone: value } } ) )
-			.catch( () => setError( 'Could not update your timezone. Please try again.' ) )
-			.then( () => setSaving( false ) );
+			.catch( () => setError( 'Could not update your timezone. Please try again.' ) );
 	};
 
 	const savedTime = saved ? formatTime( saved, now ) : null;
@@ -106,14 +102,14 @@ export function TimezoneSetting( props ) {
 					<p className="m-0 mb-1.5 text-xs text-gray-500">
 						Your browser is set to { formatName( browser ) }.
 					</p>
-					<button
-						className={ BUTTON_CLASSES }
+					<Button
+						className="w-full m-0"
 						disabled={ isSaving }
-						type="button"
+						size="small"
 						onClick={ () => save( browser ) }
 					>
 						Use browser timezone
-					</button>
+					</Button>
 				</div>
 			) }
 
@@ -125,6 +121,7 @@ export function TimezoneSetting( props ) {
 }
 
 TimezoneSetting.propTypes = {
+	savingCurrentUser: PropTypes.bool,
 	onUpdateCurrentUser: PropTypes.func.isRequired,
 };
 
