@@ -49,7 +49,7 @@ export default function BotMention( { comment } ) {
 		>
 			@{ activity.asker_username }
 		</AuthorLink>
-	) : '@user';
+	) : null;
 
 	return (
 		<div
@@ -74,7 +74,11 @@ export default function BotMention( { comment } ) {
 			</span>
 			<span className="Comment-ActivityMention__text">
 				<Fragment>
-					Referenced by { bot } to answer { question } from { asker }
+					Referenced by { bot }
+					{ ( activity.question_url || asker ) && (
+						<Fragment> to answer { question }</Fragment>
+					) }
+					{ asker && <Fragment> from { asker }</Fragment> }
 				</Fragment>
 			</span>
 			<span className="Comment-ActivityMention__date">
