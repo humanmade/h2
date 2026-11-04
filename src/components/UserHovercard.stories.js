@@ -47,3 +47,20 @@ export const WithoutLocation = () => (
 		/>
 	</Card>
 );
+
+export const WithoutFacts = () => (
+	<Card
+		{ ...commonProps }
+	>
+		<UserCard
+			user={ {
+				...user,
+				facts: null,
+				meta: {
+					...user.meta,
+					hm_time_timezone: '',
+				},
+			} }
+		/>
+	</Card>
+);
