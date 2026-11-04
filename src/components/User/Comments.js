@@ -2,9 +2,9 @@ import { withPagedArchive } from '@humanmade/repress';
 import React from 'react';
 
 import { comments } from '../../types';
-import CommentLoader from '../Comment/Loader';
-import MiniComment from '../Comment/Mini';
 import Pagination from '../Pagination';
+
+import UserComment, { UserCommentLoader } from './Comment';
 
 const getEmptyMessage = ( { comments, match, user } ) => {
 	if ( ! comments ) {
@@ -16,14 +16,14 @@ const getEmptyMessage = ( { comments, match, user } ) => {
 };
 
 function UserComments( props ) {
-	const { hasMore, match } = props;
+	const { hasMore, match, user } = props;
 
 	if ( props.loading || props.loadingMore ) {
 		return (
-			<div className="pt-6">
-				<CommentLoader />
-				<CommentLoader />
-			</div>
+			<React.Fragment>
+				<UserCommentLoader />
+				<UserCommentLoader />
+			</React.Fragment>
 		);
 	}
 
@@ -45,14 +45,13 @@ function UserComments( props ) {
 
 	return (
 		<React.Fragment>
-			<div className="pt-6 flex flex-col gap-4">
-				{ props.comments.map( comment => (
-					<MiniComment
-						key={ comment.id }
-						comment={ comment }
-					/>
-				) ) }
-			</div>
+			{ props.comments.map( comment => (
+				<UserComment
+					key={ comment.id }
+					comment={ comment }
+					user={ user }
+				/>
+			) ) }
 			<Pagination
 				hasNext={ hasMore }
 				label="Comment pages"

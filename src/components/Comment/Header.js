@@ -6,7 +6,7 @@ import Link from '../Link';
 import AuthorLink from '../Message/AuthorLink';
 
 export default function CommentHeader( props ) {
-	const { author, children, className, comment, mini } = props;
+	const { author, children, className, comment } = props;
 
 	const classes = [
 		// Back-compat:
@@ -23,26 +23,17 @@ export default function CommentHeader( props ) {
 		// Mobile (max-width: 600px).
 		'max-[600px]:-ml-8 max-[600px]:h-auto max-[600px]:flex-wrap',
 
-		mini && 'Comment-Header--mini ml-0 h-auto flex-wrap',
 		className,
 	];
 
 	return (
 		<header className={ classes.filter( Boolean ).join( ' ' ) }>
 			<Avatar
-				className={ mini ? (
-					'w-[24px]! h-[24px]! -ml-[30px] mr-[6px] py-2 bg-white after:top-2'
-				) : (
-					'mr-4 max-[600px]:w-[24px]! max-[600px]:h-[24px]! max-[600px]:mr-2 max-[600px]:bg-white'
-				) }
-				imgClassName={ mini ? (
-					'w-[24px]! h-[24px]!'
-				) : (
-					'max-[600px]:w-[24px]! max-[600px]:h-[24px]!'
-				) }
+				className="mr-4 max-[600px]:w-[24px]! max-[600px]:h-[24px]! max-[600px]:mr-2 max-[600px]:bg-white"
+				imgClassName="max-[600px]:w-[24px]! max-[600px]:h-[24px]!"
 				url={ author ? author.avatar_urls['96'] : '' }
 				user={ author }
-				size={ mini ? 24 : 32 }
+				size={ 32 }
 			/>
 			<strong>
 				{ author ? (
@@ -64,6 +55,5 @@ export default function CommentHeader( props ) {
 }
 
 CommentHeader.defaultProps = {
-	mini: false,
 	withAvatar: true,
 };
