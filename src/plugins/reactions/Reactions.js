@@ -149,7 +149,7 @@ export class Reactions extends Component {
 				} ) }
 				<button
 					aria-label="Add reaction"
-					className={ CHIP_CLASSES + ' w-7 justify-center border-transparent bg-transparent text-gray-500 hover:bg-[#f0f1f4] hover:text-hm-dark-grey disabled:cursor-wait' }
+					className={ CHIP_CLASSES + ' w-7 justify-center border-[#dfe1e5] bg-transparent text-gray-500 hover:bg-[#f0f1f4] hover:text-hm-dark-grey disabled:cursor-wait' }
 					disabled={ loading }
 					title="Add reaction"
 					type="button"
