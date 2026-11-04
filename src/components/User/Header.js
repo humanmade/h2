@@ -6,6 +6,8 @@ import Avatar from '../Avatar';
 import Link from '../Link';
 import Map from '../Map';
 
+import UserDescription from './Description';
+
 const TOGGLE_ITEM_CLASSES = [
 	'block px-4 py-1.5 rounded text-sm leading-5 text-hm-dark-grey! hover:no-underline!',
 	'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-hm-vibrant-blue',
@@ -98,13 +100,7 @@ export default function UserHeader( { user, view } ) {
 						{ user.facts && user.facts.pronouns && <Field name="Pronouns">{ user.facts.pronouns }</Field> }
 					</dl>
 
-					{ user.facts && user.facts.long_description && (
-						<div className="mt-4 text-sm leading-6 text-gray-600">
-							{ user.facts.long_description.split( '\n' ).filter( text => text.trim() ).map( ( text, idx ) =>
-								<p className="m-0 mb-3 last:mb-0" key={ idx }>{ text }</p>
-							) }
-						</div>
-					) }
+					<UserDescription user={ user } />
 				</div>
 
 				{ user.facts && user.facts.location && window.H2Data.site.mapbox_key && (
