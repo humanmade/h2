@@ -156,7 +156,10 @@ export class Reactions extends Component {
 					onClick={ () => this.setState( { isOpen: ! this.state.isOpen } ) }
 				>
 					{ loading ? (
-						<span className="loading loading--active m-0"></span>
+						<svg aria-hidden="true" className="motion-safe:animate-spin" viewBox="0 0 20 20" width="18" height="18">
+							<circle cx="10" cy="10" r="7.25" fill="none" opacity=".25" stroke="currentColor" strokeWidth="1.5" />
+							<path d="M10 2.75a7.25 7.25 0 0 1 7.25 7.25" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+						</svg>
 					) : (
 						<svg aria-hidden="true" viewBox="0 0 20 20" width="18" height="18">
 							<circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" strokeWidth="1.5" />
