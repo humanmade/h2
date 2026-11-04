@@ -6,16 +6,12 @@ import SiteHeader from './SiteHeader';
 
 export default function TitleBar( props ) {
 	return (
-		<header>
+		<header className="Sidebar-site">
 			<SiteHeader />
-			<div className="px-4 py-2 bg-hm-beige/50 sticky top-0 z-2 flex items-center gap-2">
-				<NavigationButton
-					onClick={ props.onClose }
-				>
-					Close
-				</NavigationButton>
-				<h2 className="font-bold">{ props.title }</h2>
-			</div>
+			<NavigationButton className="Sidebar-back" iconOnly={ false } onClick={ props.onClose }>
+				Back to navigation
+			</NavigationButton>
+			<h3 className="Sidebar-browser-title">{ props.title }</h3>
 		</header>
 	);
 }

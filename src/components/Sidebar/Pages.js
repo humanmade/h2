@@ -1,12 +1,12 @@
 import { withPagedArchive } from '@humanmade/repress';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { NavLink as Link } from 'react-router-dom';
 
 import { pages } from '../../types';
 import { decodeEntities } from '../../util';
 
-import Container from './Container';
+import Chevron from './Chevron';
 
 const internalLink = link => link.replace( window.H2Data.site.home, '' );
 
@@ -16,13 +16,13 @@ const Page = ( { all, page } ) => {
 	return (
 		<li>
 			<Link
-				className="group grid grid-cols-[auto_min-content] -ml-4 px-4 py-2 text-sm hover:bg-hm-beige/20 hover:no-underline!"
+				exact
+				activeClassName="is-active"
+				className="Sidebar-link"
 				to={ internalLink( page.link ) }
 			>
 				<span>{ decodeEntities( page.title.rendered ) }</span>
-				<span className="transition-transform group-hover:translate-x-2">
-					&rarr;
-				</span>
+				<Chevron />
 			</Link>
 
 			{ childPages.length > 0 && (
@@ -36,7 +36,7 @@ const Page = ( { all, page } ) => {
 };
 
 const PageList = ( { all, pages: pageItems } ) => (
-	<ul className="my-0 border-t border-hm-beige/50 divide-y divide-hm-beige/50 pl-4">
+	<ul className="Sidebar-navigation Sidebar-navigation-tree">
 		{ pageItems.map( page => (
 			<Page
 				key={ page.id }
@@ -69,6 +69,9 @@ function PagesLoader( props ) {
 	}
 
 	const topLevel = ( props.all || [] ).filter( p => p.parent === 0 );
+	if ( topLevel.length === 0 ) {
+		return <p className="px-4 py-2 text-sm">No pages found.</p>;
+	}
 	return (
 		<PageList
 			all={ props.all || [] }
@@ -93,20 +96,15 @@ const mapPropsToArchive = () => {
 
 const ConnectedLoader = withPagedArchive( pages, state => state.pages, mapPropsToArchive )( ConnectedPagesLoader );
 
-export default function Pages( props ) {
+export default function Pages() {
 	const [ page, setPage ] = useState( 1 );
 
 	return (
-		<Container
-			title="Pages"
-			onClose={ props.onClose }
-		>
-			<div className="-mx-6 -mt-4">
-				<ConnectedLoader
-					page={ page }
-					onNextPage={ () => setPage( p => p + 1 ) }
-				/>
-			</div>
-		</Container>
+		<div className="Sidebar-inline-content">
+			<ConnectedLoader
+				page={ page }
+				onNextPage={ () => setPage( p => p + 1 ) }
+			/>
+		</div>
 	);
 }

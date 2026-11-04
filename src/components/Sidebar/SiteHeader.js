@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom';
 
 export default function SiteHeader( { children } ) {
 	return (
-		<div className="SiteHeader px-4 py-6 bg-hm-beige flex items-center justify-between gap-2">
-			<h2 className="text-xl font-bold m-0">
-				<Link className="block hover:underline" to="/">
-					{ window.H2Data.site.name }
-				</Link>
-			</h2>
-			{ children }
+		<div className="SiteHeader Sidebar-title">
+			<h2><Link to="/">{ window.H2Data.site.name }</Link></h2>
+			<a className="Sidebar-admin" href={ `${ window.H2Data.site.home }/wp-admin/` } aria-label="Site dashboard" title="Site dashboard">
+				{ /* WordPress Dashicons dashboard glyph. */ }
+				<svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+					<path d="M3.76 16h12.48c1.1-1.37 1.76-3.11 1.76-5 0-4.42-3.58-8-8-8s-8 3.58-8 8c0 1.89.66 3.63 1.76 5zM10 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 6c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm8 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-5.37 5.55L12 7v6c0 1.1-.9 2-2 2s-2-.9-2-2c0-.57.24-1.08.63-1.45zM4 10c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm12 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-5 3c0-.55-.45-1-1-1s-1 .45-1 1 .45 1 1 1 1-.45 1-1z" />
+				</svg>
+			</a>
+			<div className="Sidebar-site-actions">{ children }</div>
 		</div>
 	);
 }

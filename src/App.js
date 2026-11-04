@@ -17,11 +17,9 @@ import WritePost from './components/Post/Write';
 import Profile from './components/Profile';
 import SessionExpiredWarning from './components/SessionExpiredWarning';
 import Sidebar from './components/Sidebar';
-import CategoriesSidebar from './components/Sidebar/Categories';
 import CommentsSidebar from './components/Sidebar/Comments';
-import PagesSidebar from './components/Sidebar/Pages';
-import PostsSidebar from './components/Sidebar/Posts';
 import SuperOverlay from './components/Super';
+import { focusSidebarView, trapFocus } from './focus';
 import { RenderPlugins } from './plugins';
 import { posts } from './types';
 
@@ -41,6 +39,7 @@ class App extends Component {
 			showChanges: false,
 		};
 		this.headerRef = React.createRef();
+		this.sidebarRef = React.createRef();
 	}
 	onLogOut() {
 		window.location.href = '/wp-login.php?action=logout';
@@ -54,6 +53,19 @@ class App extends Component {
 
 		if ( prevState.isSidebarOpen !== this.state.isSidebarOpen ) {
 			document.body.classList.toggle( 'h2-sidebar-open', this.state.isSidebarOpen );
+			if ( isDrawerLayout() ) {
+				const target = this.state.isSidebarOpen
+					? this.sidebarRef.current.querySelector( '.App-sidebar__close' )
+					: this.headerRef.current.querySelector( '[aria-controls="h2-sidebar"]' );
+				target.focus();
+			}
+		}
+
+		if ( prevProps.sidebarView !== this.props.sidebarView ) {
+			this.sidebarRef.current.scrollTop = 0;
+			if ( ! isDrawerLayout() || this.state.isSidebarOpen ) {
+				focusSidebarView( this.sidebarRef.current, prevProps.sidebarView );
+			}
 		}
 
 		// Scroll back to top when navigating to a new page.
@@ -94,6 +106,10 @@ class App extends Component {
 	}
 
 	onKeyDown = e => {
+		if ( e.key === 'Tab' && this.state.isSidebarOpen && isDrawerLayout() ) {
+			trapFocus( e, this.sidebarRef.current );
+		}
+
 		if ( e.key === 'Escape' && this.state.isSidebarOpen ) {
 			this.onCloseSidebar();
 		}
@@ -161,27 +177,6 @@ class App extends Component {
 					/>
 				);
 
-			case 'categories':
-				return (
-					<CategoriesSidebar
-						onClose={ this.props.onDismissSidebar }
-					/>
-				);
-
-			case 'pages':
-				return (
-					<PagesSidebar
-						onClose={ this.props.onDismissSidebar }
-					/>
-				);
-
-			case 'posts':
-				return (
-					<PostsSidebar
-						onClose={ this.props.onDismissSidebar }
-					/>
-				);
-
 			default:
 				return <Sidebar />;
 		}
@@ -194,7 +189,7 @@ class App extends Component {
 				{ /* Keep the header above the overlay, so its search input stays usable. */ }
 				<div
 					ref={ this.headerRef }
-					className={ this.props.showingSuper ? 'relative z-30' : undefined }
+					className={ this.props.showingSuper ? 'App-header relative z-30' : 'App-header' }
 				>
 					<Header
 						superActive={ this.props.showingSuper }
@@ -216,6 +211,7 @@ class App extends Component {
 					<div
 						className={ this.state.isSidebarOpen ? 'App-sidebar App-sidebar--open' : 'App-sidebar' }
 						id="h2-sidebar"
+						ref={ this.sidebarRef }
 					>
 						<button
 							aria-label="Close menu"

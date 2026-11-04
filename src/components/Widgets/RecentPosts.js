@@ -25,7 +25,7 @@ class PostList extends React.Component {
 				<ul className="mb-[0.83333335rem]">
 					{ this.props.posts.map( post => (
 						<li key={ post.id }>
-							<Link href={ post.link }>
+							<Link disablePreviews href={ post.link }>
 								{ decodeEntities( post.title.rendered ) }
 							</Link>
 						</li>

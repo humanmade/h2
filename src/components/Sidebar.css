@@ -64,3 +64,367 @@
 	outline: 2px solid var(--hm-vibrant-blue);
 	outline-offset: 2px;
 }
+
+.App,
+.Sidebar {
+	--sidebar-ink: #242824;
+	--sidebar-muted: #62675f;
+	--sidebar-line: #e4e6df;
+	--sidebar-surface: #f6f7f3;
+	--sidebar-hover: #eaede6;
+}
+
+.Sidebar {
+	padding: 28px 24px 24px;
+	background: var(--sidebar-surface);
+	color: var(--sidebar-ink);
+	border-right: 1px solid var(--sidebar-line);
+	min-height: 100%;
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+.Sidebar-site {
+	margin-bottom: 24px;
+}
+
+.Sidebar-site p {
+	margin: 0;
+	color: var(--sidebar-muted);
+	font-size: 13px;
+	line-height: 1.6;
+}
+
+.Sidebar-navigation {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.Sidebar .Sidebar-link {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	width: 100%;
+	min-height: 40px;
+	padding: 9px 12px;
+	border: 0;
+	border-radius: 6px;
+	background: transparent;
+	color: var(--sidebar-ink);
+	font: inherit;
+	text-align: left;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.Sidebar .Sidebar-link:hover,
+.Sidebar .Sidebar-link.is-active {
+	background: var(--sidebar-hover);
+	text-decoration: none;
+}
+
+.Sidebar-link > :first-child {
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+.Sidebar .Sidebar-link--primary {
+	display: inline-flex;
+	justify-content: center;
+	width: auto;
+	padding-inline: 12px;
+	flex-shrink: 0;
+	gap: 6px;
+	color: var(--hm-vibrant-blue);
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.Sidebar-post-navigation {
+	display: flex;
+	align-items: center;
+	border-radius: 6px;
+}
+
+.Sidebar-post-navigation:has(> .Sidebar-link.is-active),
+.Sidebar-post-navigation:has(> .Sidebar-link:hover) {
+	background: var(--sidebar-hover);
+}
+
+.Sidebar .Sidebar-post-navigation > .Sidebar-link:first-child {
+	flex: 1;
+	width: auto;
+	background: transparent;
+}
+
+.Sidebar-post-navigation > .Sidebar-link--primary {
+	border-radius: 0 6px 6px 0;
+}
+
+.Sidebar .Sidebar-link--primary:hover,
+.Sidebar .Sidebar-link--primary.is-active {
+	background: var(--hm-light-blue);
+}
+
+.Sidebar-chevron {
+	flex-shrink: 0;
+}
+
+.Sidebar-chevron--left {
+	transform: rotate(180deg);
+}
+
+.Sidebar-link svg {
+	color: var(--sidebar-muted);
+	flex-shrink: 0;
+}
+
+.Sidebar-link--primary svg {
+	color: inherit;
+}
+
+.Sidebar-navigation-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	min-height: 40px;
+	margin-bottom: 8px;
+	padding: 0 12px;
+	border-radius: 6px;
+	background: var(--sidebar-hover);
+}
+
+.Sidebar-navigation-header .Sidebar-back {
+	margin: 0;
+}
+
+.Sidebar-navigation-header .Sidebar-browser-title {
+	font: inherit;
+	font-weight: 600;
+}
+
+.Sidebar-navigation-tree .Sidebar-navigation-tree {
+	padding-left: 16px;
+}
+
+.Sidebar-inline-content {
+	margin: 0;
+}
+
+.Sidebar-inline-content > div {
+	margin: 0;
+}
+
+.Sidebar-inline-content ul {
+	border-top: 0;
+}
+
+.Sidebar .Sidebar-widgets {
+	font: inherit;
+	color: inherit;
+	margin-top: 24px;
+	border-top: 1px solid var(--sidebar-line);
+}
+
+.Sidebar-section {
+	border-bottom: 1px solid var(--sidebar-line);
+}
+
+.Sidebar-section > summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	min-height: 48px;
+	padding: 12px 0;
+	font-weight: 600;
+	cursor: pointer;
+	list-style: none;
+}
+
+.Sidebar-section > summary::-webkit-details-marker {
+	display: none;
+}
+
+.Sidebar-section > summary::after {
+	content: '';
+	width: 7px;
+	height: 7px;
+	margin-right: 4px;
+	border-right: 1.5px solid currentColor;
+	border-bottom: 1.5px solid currentColor;
+	transform: rotate(45deg);
+}
+
+.Sidebar-section[open] > summary::after {
+	transform: rotate(225deg);
+}
+
+.Sidebar-section > summary:hover {
+	color: var(--sidebar-muted);
+}
+
+.Sidebar-section-content {
+	padding-bottom: 16px;
+}
+
+.Sidebar-section-content > .Widget,
+.Sidebar-section-content > .RecentPosts {
+	margin: 0;
+	font-size: 14px;
+}
+
+/* The disclosure already names the widget. Preserve its remaining HTML. */
+.Sidebar-section-content > .Widget > .widgettitle,
+.Sidebar-section-content .RecentPosts > h4 {
+	display: none;
+}
+
+/* Only navigation widgets use unbulleted, full-row links. Text widgets retain
+ * their own list semantics, inline links and nested disclosure controls. */
+.Sidebar :is(.Widget--nav_menu, .Widget--categories, .RecentPosts) ul,
+.Sidebar .display-posts-listing {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.Sidebar :is(.Widget--nav_menu, .Widget--categories) ul ul {
+	padding-left: 14px;
+	margin-left: 8px;
+	border-left: 1px solid var(--sidebar-line);
+}
+
+.Sidebar :is(.Widget--nav_menu, .Widget--categories, .RecentPosts, .display-posts-listing) li {
+	margin: 0;
+}
+
+.Sidebar :is(.Widget--nav_menu, .Widget--categories, .RecentPosts, .display-posts-listing) li a {
+	display: block;
+	padding: 6px 8px;
+	margin: 0 -8px;
+	border-radius: 4px;
+	color: var(--sidebar-muted);
+	line-height: 1.45;
+	overflow-wrap: anywhere;
+}
+
+.Sidebar :is(.Widget--nav_menu, .Widget--categories, .RecentPosts, .display-posts-listing) li a:hover {
+	color: var(--sidebar-ink);
+	background: var(--sidebar-hover);
+	text-decoration: none;
+}
+
+.Sidebar a[data-sidebar-external]::after {
+	content: "";
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	margin-left: 6px;
+	vertical-align: -.1em;
+	background: currentColor;
+	opacity: .65;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M9 2h5v5M14 2 7 9M6 3H3v10h10v-3' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.Sidebar :is(a, button, summary):focus-visible {
+	outline: 2px solid var(--hm-vibrant-blue, #1f63c8);
+	outline-offset: 3px;
+}
+
+.Sidebar-back {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-height: 44px;
+	margin: 0 0 16px;
+	padding: 4px 0;
+	border: 0;
+	background: transparent;
+	color: var(--sidebar-muted);
+	font: inherit;
+	cursor: pointer;
+}
+
+.Sidebar-back:hover {
+	color: var(--sidebar-ink);
+}
+
+.Sidebar-browser-title {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.Sidebar-browser-content > div {
+	margin: 0;
+}
+
+.Sidebar-browser-content a {
+	color: var(--sidebar-ink);
+}
+
+.Sidebar-browser-content ul {
+	border: 0;
+}
+
+.Sidebar-browser-content li {
+	border-color: var(--sidebar-line);
+}
+
+.Sidebar-title {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 8px;
+}
+
+.Sidebar-title h2 {
+	margin: 0;
+	font-size: 22px;
+	font-weight: 700;
+	min-width: 0;
+	overflow-wrap: anywhere;
+	line-height: 1.3;
+	letter-spacing: -.02em;
+}
+
+.Sidebar .Sidebar-admin {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	flex-shrink: 0;
+	color: var(--sidebar-muted);
+	border-radius: 4px;
+}
+
+.Sidebar-admin:hover {
+	background: var(--sidebar-hover);
+}
+
+.Sidebar-site-actions {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	margin-left: auto;
+}
+
+
+body.admin-bar .Sidebar-admin {
+	display: none;
+}
+
+/* Anchor the popover to the full title row, rather than the narrow bell button. */
+.Sidebar-title .NotificationSettings {
+	position: static;
+}
+
+.Sidebar-title .NotificationSettings-menu {
+	max-width: 100%;
+}

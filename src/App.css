@@ -20,16 +20,32 @@
 }
 
 @media ( min-width: 800px ) {
+	.App {
+		--toolbar-height: 0px;
+	}
+
+	body.admin-bar .App {
+		--toolbar-height: 32px;
+	}
+
+	.App-header {
+		position: sticky;
+		top: var(--toolbar-height);
+		z-index: 30;
+	}
+
 	.App-sidebar {
 		position: sticky;
-		top: 0;
-		height: 100vh;
+		top: calc(var(--toolbar-height) + 60px);
+		height: calc(100dvh - var(--toolbar-height) - 60px);
+		scrollbar-width: thin;
+		scrollbar-color: transparent transparent;
 		overflow-y: auto;
 	}
 
-	body.admin-bar .App-sidebar {
-		top: 32px;
-		height: calc( 100vh - 32px );
+	.App-sidebar:hover,
+	.App-sidebar:focus-within {
+		scrollbar-color: var(--sidebar-line) transparent;
 	}
 
 	.App-sidebar > aside {

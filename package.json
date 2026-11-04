@@ -35,7 +35,9 @@
     "tailwindcss": "^4.2.2",
     "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.9.0"
+    "webpack-dev-server": "^4.9.0",
+    "@babel/register": "^7.29.7",
+    "jsdom": "^26.1.0"
   },
   "dependencies": {
     "@humanmade/react-tasklist": "^0.0.4",
@@ -64,7 +66,8 @@
     "redux-thunk": "^2.2.0",
     "sass": "^1.51.0",
     "textarea-caret": "^3.0.2",
-    "turndown": "^5.0.1"
+    "turndown": "^5.0.1",
+    "tabbable": "^6.5.1"
   },
   "scripts": {
     "postinstall": "rm -rf node_modules/.cache",
@@ -82,7 +85,8 @@
     "wp-env:stop": "wp-env stop",
     "wp-env:destroy": "wp-env destroy",
     "wp-env:logs": "wp-env logs",
-    "wp-env:cli": "wp-env run cli wp"
+    "wp-env:cli": "wp-env run cli wp",
+    "test": "node --require @babel/register --test tests/*.test.cjs"
   },
   "bundlesize": [
     {

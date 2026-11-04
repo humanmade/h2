@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Chevron from './Chevron';
+
 const CLASSES = [
 	'inline-flex items-center justify-center shrink-0 rounded-md border-0 bg-transparent m-0',
 	'font-inherit text-sm font-normal leading-5 text-hm-dark-grey cursor-pointer',
@@ -17,9 +19,7 @@ export default function NavigationButton( { as: Component = 'button', children, 
 			type={ Component === 'button' ? 'button' : undefined }
 		>
 			{ ! iconOnly && direction === 'right' && <span>{ children }</span> }
-			<svg aria-hidden="true" className={ `size-4 shrink-0 ${ direction === 'right' ? 'rotate-180' : '' }` } fill="none" viewBox="0 0 16 16">
-				<path d="M10 3 5 8l5 5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-			</svg>
+			<Chevron direction={ direction } />
 			{ iconOnly ? <span className="sr-only">{ children }</span> : direction === 'left' && <span>{ children }</span> }
 		</Component>
 	);

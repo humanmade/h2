@@ -167,7 +167,7 @@ export function NotificationSettings( props ) {
 	return (
 		<div
 			ref={ container }
-			className="relative shrink-0"
+			className="NotificationSettings relative shrink-0"
 		>
 			<button
 				aria-expanded={ open }
@@ -183,7 +183,7 @@ export function NotificationSettings( props ) {
 
 			{ open && (
 				<div
-					className="absolute right-0 top-full z-10 mt-2 w-72 bg-white border border-solid border-hm-beige rounded-sm shadow-lg text-sm"
+					className="NotificationSettings-menu absolute right-0 top-full z-10 mt-2 w-72 bg-white border border-solid border-hm-beige rounded-sm shadow-lg text-sm"
 					role="menu"
 				>
 					<p className="m-0 px-4 pt-3 pb-2 font-bold">

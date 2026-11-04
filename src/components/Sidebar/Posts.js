@@ -1,14 +1,13 @@
 import { withPagedArchive } from '@humanmade/repress';
 import qs from 'qs';
 import React, { useState } from 'react';
-import { Link as InternalLink } from 'react-router-dom';
+import { NavLink as InternalLink } from 'react-router-dom';
 
 import { posts } from '../../types';
 import { decodeEntities } from '../../util';
 import FormattedDate from '../FormattedDate';
-import Link from '../Link';
 
-import Container from './Container';
+import Chevron from './Chevron';
 import Pagination from './Pagination';
 
 function PostList( props ) {
@@ -25,12 +24,14 @@ function PostList( props ) {
 
 	return (
 		<div className="">
-			<ul className="border-hm-beige/50 divide-y divide-hm-beige/50">
+			<ul className="Sidebar-navigation">
 				{ props.posts.map( post => (
 					<li key={ post.id }>
-						<Link
-							className="group grid grid-cols-[auto_min-content] px-4 py-2 text-sm hover:bg-hm-beige/20 hover:no-underline!"
-							href={ post.link }
+						<InternalLink
+							exact
+							activeClassName="is-active"
+							className="Sidebar-link"
+							to={ post.link.replace( window.H2Data.site.home, '' ) }
 						>
 							<div>
 								<span className="block">{ decodeEntities( post.title.rendered ) }</span>
@@ -42,10 +43,8 @@ function PostList( props ) {
 									</span>
 								) }
 							</div>
-							<span className="transition-transform group-hover:translate-x-2">
-								&rarr;
-							</span>
-						</Link>
+							<Chevron />
+						</InternalLink>
 					</li>
 				) ) }
 			</ul>
@@ -77,29 +76,24 @@ export default function RecentPosts( props ) {
 	const [ page, setPage ] = useState( 1 );
 
 	return (
-		<Container
-			title="Posts"
-			onClose={ props.onClose }
-		>
-			<div className="-mx-6 -mt-4">
-				<div className="border-b-2 border-hm-beige/50 mb-2">
-					<InternalLink
-						className="group grid grid-cols-[auto_min-content] px-4 py-2 text-sm hover:bg-hm-beige/20 hover:no-underline!"
-						to="/"
-					>
+		<div className="Sidebar-inline-content">
+			<div>
+				<InternalLink
+					exact
+					activeClassName="is-active"
+					className="Sidebar-link"
+					to="/"
+				>
 						View all
-						<span className="transition-transform group-hover:translate-x-2">
-							&rarr;
-						</span>
-					</InternalLink>
-				</div>
-				<ConnectedPostList
-					page={ page }
-					per_page={ number }
-					onNext={ () => setPage( page + 1 ) }
-					onPrevious={ () => setPage( page - 1 ) }
-				/>
+					<Chevron />
+				</InternalLink>
 			</div>
-		</Container>
+			<ConnectedPostList
+				page={ page }
+				per_page={ number }
+				onNext={ () => setPage( page + 1 ) }
+				onPrevious={ () => setPage( page - 1 ) }
+			/>
+		</div>
 	);
 }

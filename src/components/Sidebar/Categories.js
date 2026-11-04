@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink as Link } from 'react-router-dom';
 
-import { withCategories } from '../../hocs';
+import { withApiData } from '../../with-api-data';
 
-import Container from './Container';
+import Chevron from './Chevron';
 
 const internalLink = link => link.replace( window.H2Data.site.home, '' );
 
@@ -13,7 +13,9 @@ const Category = ( { all, category } ) => {
 	return (
 		<li>
 			<Link
-				className="group grid grid-cols-[auto_min-content] -ml-4 px-4 py-2 text-sm hover:bg-hm-beige/20 hover:no-underline!"
+				exact
+				activeClassName="is-active"
+				className="Sidebar-link"
 				to={ internalLink( category.link ) }
 			>
 				<span>
@@ -25,9 +27,7 @@ const Category = ( { all, category } ) => {
 						</span>
 					) }
 				</span>
-				<span className="transition-transform group-hover:translate-x-2">
-					&rarr;
-				</span>
+				<Chevron />
 			</Link>
 
 			{ childCategories && childCategories.length > 0 && (
@@ -41,7 +41,7 @@ const Category = ( { all, category } ) => {
 };
 
 const CategoryList = ( { all, categories } ) => (
-	<ul className={ 'my-0 border-t border-hm-beige/50 divide-y divide-hm-beige/50 pl-4' }>
+	<ul className="Sidebar-navigation Sidebar-navigation-tree">
 		{ categories && categories.map( category => (
 			<Category
 				key={ category.id }
@@ -54,17 +54,14 @@ const CategoryList = ( { all, categories } ) => (
 
 export function Categories( props ) {
 	return (
-		<Container
-			title="Categories"
-			onClose={ props.onClose }
-		>
-			<div className="-mx-6 -mt-4">
-				<CategoryList
-					all={ props.categories.data }
-					categories={ props.categories.data ? props.categories.data.filter( cat => cat.parent === 0 ) : [] }
-				/>
-			</div>
-		</Container>
+		<div className="Sidebar-inline-content">
+			<CategoryList
+				all={ props.categories.data }
+				categories={ props.categories.data ? props.categories.data.filter( cat => cat.parent === 0 ) : [] }
+			/>
+		</div>
 	);
 }
-export default withCategories( Categories );
+export default withApiData( () => ( {
+	categories: '/wp/v2/categories?per_page=100&hide_empty=true&_fields=id,count,link,name,slug,parent',
+} ) )( Categories );
