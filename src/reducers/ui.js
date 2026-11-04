@@ -1,6 +1,5 @@
 import {
 	SHOW_SIDEBAR_CATEGORIES,
-	SHOW_SIDEBAR_COMMENTS,
 	SHOW_SIDEBAR_PAGES,
 	SHOW_SIDEBAR_POSTS,
 	SHOW_SIDEBAR_PROFILE,
@@ -21,13 +20,6 @@ const DEFAULT_STATE = {
 
 export default function ui( state = DEFAULT_STATE, action ) {
 	switch ( action.type ) {
-		case SHOW_SIDEBAR_COMMENTS:
-			return {
-				...state,
-				sidebarView: 'comments',
-				sidebarProfile: action.id,
-			};
-
 		case SHOW_SIDEBAR_CATEGORIES:
 			return {
 				...state,

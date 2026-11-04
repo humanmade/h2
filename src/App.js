@@ -18,7 +18,6 @@ import Profile from './components/Profile';
 import SessionExpiredWarning from './components/SessionExpiredWarning';
 import Sidebar from './components/Sidebar';
 import CategoriesSidebar from './components/Sidebar/Categories';
-import CommentsSidebar from './components/Sidebar/Comments';
 import PagesSidebar from './components/Sidebar/Pages';
 import PostsSidebar from './components/Sidebar/Posts';
 import SuperOverlay from './components/Super';
@@ -149,14 +148,6 @@ class App extends Component {
 			case 'profile':
 				return (
 					<Profile
-						id={ this.props.sidebarProfile }
-						onClose={ this.props.onDismissSidebar }
-					/>
-				);
-
-			case 'comments':
-				return (
-					<CommentsSidebar
 						id={ this.props.sidebarProfile }
 						onClose={ this.props.onDismissSidebar }
 					/>

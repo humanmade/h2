@@ -21,7 +21,6 @@ const commonProps = {
 	loadingUser: false,
 	user,
 	onClose: action( 'onClose' ),
-	onViewComments: action( 'onViewComments' ),
 };
 
 export const Basic = () => (

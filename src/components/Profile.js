@@ -1,9 +1,8 @@
 import React from 'react';
 import { FormattedDate, FormattedTime } from 'react-intl';
-import { connect } from 'react-redux';
 
-import { showSidebarComments } from '../actions';
 import { withUser } from '../hocs';
+import { getUserCommentsUrl } from '../util';
 
 import Link from './Link';
 import Map from './Map';
@@ -124,9 +123,9 @@ export class Profile extends React.Component {
 						</Link>
 					</li>
 					<li>
-						<button className={ NAV_CLASSES } type="button" onClick={ () => this.props.onViewComments( user.id ) }>
+						<Link className={ NAV_CLASSES } href={ getUserCommentsUrl( user ) }>
 							<span>View all comments</span><span aria-hidden="true">→</span>
-						</button>
+						</Link>
 					</li>
 				</ul>
 
@@ -137,19 +136,4 @@ export class Profile extends React.Component {
 	}
 }
 
-const ConnectedProfile = withUser( props => props.id )( Profile );
-
-const mapStateToProps = () => ( {} );
-
-const mapDispatchToProps = dispatch => {
-	return {
-		onViewComments: id => dispatch( showSidebarComments( id ) ),
-	};
-};
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(
-	ConnectedProfile
-);
+export default withUser( props => props.id )( Profile );

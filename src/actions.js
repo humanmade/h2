@@ -1,6 +1,5 @@
 export const REGISTER_PLUGIN = 'REGISTER_PLUGIN';
 export const SHOW_SIDEBAR_PROFILE = 'SHOW_SIDEBAR_PROFILE';
-export const SHOW_SIDEBAR_COMMENTS = 'SHOW_SIDEBAR_COMMENTS';
 export const SHOW_SIDEBAR_CATEGORIES = 'SHOW_SIDEBAR_CATEGORIES';
 export const SHOW_SIDEBAR_PAGES = 'SHOW_SIDEBAR_PAGES';
 export const SHOW_SIDEBAR_POSTS = 'SHOW_SIDEBAR_POSTS';
@@ -17,13 +16,6 @@ export const SET_SESSION_EXPIRED = 'SET_SESSION_EXPIRED';
 export const showSidebarProfile = id => {
 	return {
 		type: SHOW_SIDEBAR_PROFILE,
-		id,
-	};
-};
-
-export const showSidebarComments = id => {
-	return {
-		type: SHOW_SIDEBAR_COMMENTS,
 		id,
 	};
 };
