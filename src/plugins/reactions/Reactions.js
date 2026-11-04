@@ -149,7 +149,7 @@ export class Reactions extends Component {
 				} ) }
 				<button
 					aria-label="Add reaction"
-					className={ CHIP_CLASSES + ' w-7 justify-center border-[#dfe1e5] bg-transparent text-gray-500 hover:bg-[#f0f1f4] hover:text-hm-dark-grey disabled:cursor-wait' }
+					className={ CHIP_CLASSES + ' group/add w-7 justify-center border-[#dfe1e5] bg-transparent text-gray-500 hover:bg-[#f0f1f4] hover:text-hm-dark-grey disabled:cursor-wait' }
 					disabled={ loading }
 					title="Add reaction"
 					type="button"
@@ -160,7 +160,19 @@ export class Reactions extends Component {
 					) : (
 						<svg aria-hidden="true" viewBox="0 0 20 20" width="18" height="18">
 							<circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" strokeWidth="1.5" />
-							<path d="M7 11.75c.75 1 1.8 1.5 3 1.5s2.25-.5 3-1.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+							<path
+								className="duration-150 motion-safe:transition-opacity group-hover/add:opacity-0 group-focus-visible/add:opacity-0"
+								d="M7 11.75c.75 1 1.8 1.5 3 1.5s2.25-.5 3-1.5"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="1.5"
+								strokeLinecap="round"
+							/>
+							<path
+								className="origin-[10px_11px] scale-y-50 opacity-0 duration-200 ease-[cubic-bezier(.34,1.56,.64,1)] motion-safe:transition-[opacity,scale] group-hover/add:scale-y-100 group-hover/add:opacity-100 group-focus-visible/add:scale-y-100 group-focus-visible/add:opacity-100"
+								d="M6.75 11h6.5a.5.5 0 0 1 .5.5a3.75 3.75 0 0 1-7.5 0a.5.5 0 0 1 .5-.5z"
+								fill="currentColor"
+							/>
 							<circle cx="7.6" cy="8.4" r="1" fill="currentColor" />
 							<circle cx="12.4" cy="8.4" r="1" fill="currentColor" />
 						</svg>
