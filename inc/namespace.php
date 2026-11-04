@@ -364,7 +364,7 @@ function get_script_data() {
 		'site' => [
 			'id'             => get_current_blog_id(),
 			'name'           => get_bloginfo( 'name' ),
-			'description'    => get_bloginfo( 'description' ),
+			'description'    => html_entity_decode( get_bloginfo( 'description' ), ENT_QUOTES, get_bloginfo( 'charset' ) ),
 			'url'            => site_url(),
 			'home'           => home_url(),
 			'api'            => rest_url(),
@@ -377,6 +377,10 @@ function get_script_data() {
 			'sentry_key'     => defined( 'H2_SENTRY_KEY' ) ? H2_SENTRY_KEY : null,
 			'environment'    => defined( 'HM_ENV_TYPE' ) ? HM_ENV_TYPE : ( WP_DEBUG ? 'development' : 'production' ),
 			'emoji'          => apply_filters( 'h2.custom_emoji', [] ),
+			'user_can'       => [
+				// Matches the capability required by the REST API's settings endpoint.
+				'edit' => current_user_can( 'manage_options' ),
+			],
 		],
 		'features' => [],
 		'has' => [
