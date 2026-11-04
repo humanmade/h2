@@ -22,6 +22,7 @@ import CommentsSidebar from './components/Sidebar/Comments';
 import PagesSidebar from './components/Sidebar/Pages';
 import PostsSidebar from './components/Sidebar/Posts';
 import SuperOverlay from './components/Super';
+import UserPage from './components/User';
 import { RenderPlugins } from './plugins';
 import { posts } from './types';
 
@@ -257,9 +258,9 @@ class App extends Component {
 								) }
 							/>
 							<Route
-								path="/author/:authorSlug/:hasPage(page)?/:page(\d+)?"
+								path="/author/:authorSlug/:view(comments)?/:hasPage(page)?/:page(\d+)?"
 								exact
-								component={ PostsList }
+								component={ UserPage }
 							/>
 							<Route
 								path="/category/:categorySlug+/:hasPage(page)/:page(\d+)?"

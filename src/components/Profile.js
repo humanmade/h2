@@ -58,6 +58,28 @@ const LocalTime = props => {
 	);
 };
 
+export const ProfileFields = ( { className, user } ) => (
+	<dl className={ className }>
+		<LocalTime user={ user } />
+		{ user.facts && user.facts.location_name && <Field name="Location">{ user.facts.location_name }</Field> }
+		{ user.facts && user.facts.pronouns && <Field name="Pronouns">{ user.facts.pronouns }</Field> }
+	</dl>
+);
+
+export const ProfileDescription = ( { className, user } ) => {
+	if ( ! user.facts || ! user.facts.long_description ) {
+		return null;
+	}
+
+	return (
+		<div className={ `Profile-description text-sm leading-6 text-gray-600 ${ className }` }>
+			{ user.facts.long_description.split( '\n' ).filter( text => text.trim() ).map( ( text, idx ) =>
+				<p className="m-0 mb-3 last:mb-0" key={ idx }>{ text }</p>
+			) }
+		</div>
+	);
+};
+
 export class Profile extends React.Component {
 	render() {
 		const containerProps = {
@@ -108,19 +130,8 @@ export class Profile extends React.Component {
 					</li>
 				</ul>
 
-				<dl className="m-0">
-					<LocalTime user={ user } />
-					{ user.facts && user.facts.location_name && <Field name="Location">{ user.facts.location_name }</Field> }
-					{ user.facts && user.facts.pronouns && <Field name="Pronouns">{ user.facts.pronouns }</Field> }
-				</dl>
-
-				{ user.facts && user.facts.long_description && (
-					<div className="Profile-description mt-5 pt-4 border-t border-hm-beige text-sm leading-6 text-gray-600">
-						{ user.facts.long_description.split( '\n' ).filter( text => text.trim() ).map( ( text, idx ) =>
-							<p className="m-0 mb-3 last:mb-0" key={ idx }>{ text }</p>
-						) }
-					</div>
-				) }
+				<ProfileFields className="m-0" user={ user } />
+				<ProfileDescription className="mt-5 pt-4 border-t border-hm-beige" user={ user } />
 			</Container>
 		);
 	}

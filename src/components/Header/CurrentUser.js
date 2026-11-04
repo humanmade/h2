@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import { connect } from 'react-redux';
 
-import { showSidebarComments, showSidebarProfile } from '../../actions';
 import { User } from '../../shapes';
+import { getUserCommentsUrl } from '../../util';
 import Avatar from '../Avatar';
 import Link from '../Link';
 
@@ -14,8 +13,8 @@ const ITEM_CLASSES = [
 	'hover:bg-hm-light-grey hover:no-underline! focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-hm-vibrant-blue',
 ].join( ' ' );
 
-export function CurrentUser( props ) {
-	const { user, onLogOut, onViewComments, onViewProfile } = props;
+export default function CurrentUser( props ) {
+	const { user, onLogOut } = props;
 	const [ open, setOpen ] = useState( false );
 	const containerRef = useRef( null );
 	const buttonRef = useRef( null );
@@ -91,9 +90,9 @@ export function CurrentUser( props ) {
 
 					<ul className="list-none m-0 py-1 px-0" onClick={ close }>
 						<li>
-							<button className={ ITEM_CLASSES } type="button" onClick={ () => onViewProfile( user.id ) }>
+							<Link className={ ITEM_CLASSES } href={ user.link }>
 								Your profile
-							</button>
+							</Link>
 						</li>
 						<li>
 							<Link className={ ITEM_CLASSES } href={ user.link }>
@@ -101,9 +100,9 @@ export function CurrentUser( props ) {
 							</Link>
 						</li>
 						<li>
-							<button className={ ITEM_CLASSES } type="button" onClick={ () => onViewComments( user.id ) }>
+							<Link className={ ITEM_CLASSES } href={ getUserCommentsUrl( user ) }>
 								Your comments
-							</button>
+							</Link>
 						</li>
 					</ul>
 
@@ -125,13 +124,4 @@ export function CurrentUser( props ) {
 CurrentUser.propTypes = {
 	user: User.isRequired,
 	onLogOut: PropTypes.func.isRequired,
-	onViewComments: PropTypes.func.isRequired,
-	onViewProfile: PropTypes.func.isRequired,
 };
-
-const mapDispatchToProps = dispatch => ( {
-	onViewComments: id => dispatch( showSidebarComments( id ) ),
-	onViewProfile: id => dispatch( showSidebarProfile( id ) ),
-} );
-
-export default connect( () => ( {} ), mapDispatchToProps )( CurrentUser );
