@@ -102,7 +102,7 @@ function Summary( props ) {
 				</Button>
 
 				{ ( ! loadingComments && realComments.length > 0 ) && (
-					<div className="Post-Summary-comments">
+					<div className="flex items-center">
 						<span>{ _n( 'comment', 'comments', realComments.length ) }</span>
 						<ul className={ peopleClass }>
 							{ people.slice( 0, 8 ).map( person => (
