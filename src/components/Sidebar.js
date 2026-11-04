@@ -7,6 +7,7 @@ import { showSidebarCategories, showSidebarPages, showSidebarPosts } from '../ac
 import { withWidgets } from '../hocs';
 
 import NotificationSettings from './Sidebar/NotificationSettings';
+import SiteDescription from './Sidebar/SiteDescription';
 import SiteHeader from './Sidebar/SiteHeader';
 import RecentPostsWidget from './Widgets/RecentPosts';
 import SearchWidget from './Widgets/Search';
@@ -83,9 +84,7 @@ export function Sidebar( props ) {
 						<NotificationSettings />
 					) }
 				</SiteHeader>
-				<div className="px-4 py-4 bg-hm-beige/50">
-					<p className="text-sm opacity-60 m-0">{ site.description || 'No description yet.' }</p>
-				</div>
+				<SiteDescription />
 			</div>
 
 			<Slot name="Sidebar.top" />
