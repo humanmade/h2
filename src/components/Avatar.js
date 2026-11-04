@@ -20,6 +20,9 @@ const CLASSES = [
 
 	// Remove AuthorLink hover border.
 	'[&_.AuthorLink:hover]:border-none',
+
+	// Fill the avatar with the AuthorLink, so its hovercard lines up with it.
+	'[&>a]:block',
 ].join( ' ' );
 
 export default function Avatar( props ) {

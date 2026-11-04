@@ -1,24 +1,62 @@
 import React from 'react';
+import { FormattedDate, FormattedTime } from 'react-intl';
 
 import { getUserCommentsUrl } from '../../util';
 import Avatar from '../Avatar';
 import Link from '../Link';
 import Map from '../Map';
-import { ProfileDescription, ProfileFields } from '../Profile';
-
-const FIELDS_CLASSES = [
-	'mx-0 mt-4 mb-0',
-	'grid grid-cols-[repeat(auto-fit,minmax(9rem,1fr))] gap-x-6 gap-y-3',
-
-	// The grid handles spacing between fields.
-	'[&>div]:m-0',
-].join( ' ' );
 
 const TOGGLE_ITEM_CLASSES = [
 	'block px-4 py-1.5 rounded text-sm leading-5 text-hm-dark-grey! hover:no-underline!',
 	'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-hm-vibrant-blue',
 	'transition-colors duration-150',
 ].join( ' ' );
+
+const Field = props => (
+	<div>
+		<dt className="text-xs font-semibold text-gray-500 mb-1">{ props.name }</dt>
+		<dd className={ `m-0 text-sm leading-6 break-words ${ props.missing ? 'text-gray-500' : 'text-hm-dark-grey' }` }>{ props.children }</dd>
+	</div>
+);
+
+const LocalTime = props => {
+	const timeZone = props.user.meta.hm_time_timezone || ( props.user.facts && props.user.facts.timezone );
+	if ( ! timeZone ) {
+		const profileUrl = `${ window.H2Data.site.url }/wp-admin/profile.php?user_id=${ props.user.id }`;
+		return (
+			<Field
+				name="Local time"
+				missing
+			>
+				Timezone not set. <a className="underline underline-offset-2" href={ profileUrl }>Set timezone</a>
+			</Field>
+		);
+	}
+
+	const now = new Date();
+	return (
+		<React.Fragment>
+			<Field name="Local time">
+				<FormattedTime
+					value={ now }
+					timeZone={ timeZone }
+				/>
+
+				{ ', ' }
+
+				<FormattedDate
+					day="numeric"
+					month="long"
+					value={ now }
+					timeZone={ timeZone }
+				/>
+			</Field>
+			<Field name="Timezone">
+				{ timeZone }
+			</Field>
+		</React.Fragment>
+	);
+};
 
 const ToggleItem = ( { active, children, href } ) => (
 	<li className="m-0">
@@ -54,8 +92,19 @@ export default function UserHeader( { user, view } ) {
 						</div>
 					</div>
 
-					<ProfileFields className={ FIELDS_CLASSES } user={ user } />
-					<ProfileDescription className="mt-4" user={ user } />
+					<dl className="mx-0 mt-4 mb-0 grid grid-cols-[repeat(auto-fit,minmax(9rem,1fr))] gap-x-6 gap-y-3">
+						<LocalTime user={ user } />
+						{ user.facts && user.facts.location_name && <Field name="Location">{ user.facts.location_name }</Field> }
+						{ user.facts && user.facts.pronouns && <Field name="Pronouns">{ user.facts.pronouns }</Field> }
+					</dl>
+
+					{ user.facts && user.facts.long_description && (
+						<div className="mt-4 text-sm leading-6 text-gray-600">
+							{ user.facts.long_description.split( '\n' ).filter( text => text.trim() ).map( ( text, idx ) =>
+								<p className="m-0 mb-3 last:mb-0" key={ idx }>{ text }</p>
+							) }
+						</div>
+					) }
 				</div>
 
 				{ user.facts && user.facts.location && window.H2Data.site.mapbox_key && (

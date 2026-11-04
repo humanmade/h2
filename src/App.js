@@ -14,7 +14,6 @@ import { OverlayContainer } from './components/Overlay';
 import PageContainer from './components/Page/Container';
 import PostsList from './components/Post/List';
 import WritePost from './components/Post/Write';
-import Profile from './components/Profile';
 import SessionExpiredWarning from './components/SessionExpiredWarning';
 import Sidebar from './components/Sidebar';
 import CategoriesSidebar from './components/Sidebar/Categories';
@@ -107,7 +106,7 @@ class App extends Component {
 		this.setState( { isSidebarOpen: false } );
 
 		// Return the drawer to the main menu once it has slid away, so the
-		// next section request (e.g. the same profile again) reopens it.
+		// next section request (e.g. the same section again) reopens it.
 		window.clearTimeout( this.sidebarResetTimer );
 		this.sidebarResetTimer = window.setTimeout( () => {
 			if ( ! this.state.isSidebarOpen && this.props.sidebarView ) {
@@ -145,14 +144,6 @@ class App extends Component {
 
 	renderSidebar() {
 		switch ( this.props.sidebarView ) {
-			case 'profile':
-				return (
-					<Profile
-						id={ this.props.sidebarProfile }
-						onClose={ this.props.onDismissSidebar }
-					/>
-				);
-
 			case 'categories':
 				return (
 					<CategoriesSidebar
@@ -296,7 +287,6 @@ class App extends Component {
 const mapStateToProps = state => {
 	return {
 		showingSuper: state.ui.showingSuper,
-		sidebarProfile: state.ui.sidebarProfile,
 		sidebarView: state.ui.sidebarView,
 	};
 };
