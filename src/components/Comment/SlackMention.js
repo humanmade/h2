@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 
 import FormattedDate from '../FormattedDate';
-import AuthorLink from '../Message/AuthorLink';
+import { AuthorLinkById } from '../Message/AuthorLink';
 
 import './ActivityMention.css';
 
@@ -69,14 +69,10 @@ export default function SlackMention( { comment } ) {
 
 	// Public manual shares are attributed to the sharer as a linked @username
 	// (opening their H2 profile) when the H2 side resolved one.
-	const sharer = {
-		id: slack.shared_by_id,
-		name: slack.shared_by,
-	};
 	const authorEl = ( slack.shared_by_username && slack.shared_by_id ) ? (
-		<AuthorLink user={ sharer } withHovercard={ false }>
+		<AuthorLinkById id={ slack.shared_by_id }>
 			@{ slack.shared_by_username }
-		</AuthorLink>
+		</AuthorLinkById>
 	) : null;
 
 	// Build the row text, interleaving the (optional) sharer and channel links.

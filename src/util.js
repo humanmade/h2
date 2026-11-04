@@ -48,6 +48,18 @@ export function codePointToSymbol( codePoint ) {
 }
 
 /**
+ * Get the URL for a user's comments page.
+ *
+ * Whether user.link has a trailing slash depends on the site's rewrite setup.
+ *
+ * @param {object} user User data.
+ * @returns {string} URL of the user's comments page.
+ */
+export function getUserCommentsUrl( user ) {
+	return `${ user.link.replace( /\/$/, '' ) }/comments`;
+}
+
+/**
  * From TinyMCE: https://github.com/tinymce/tinymce/blob/master/src/plugins/paste/main/ts/core/WordFilter.ts
  *
  * @param {string} content String of content.

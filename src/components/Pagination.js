@@ -5,7 +5,7 @@ import NavigationButton from './Sidebar/NavigationButton';
 
 export default function Pagination( props ) {
 	let { path } = props;
-	const { hasNext, params } = props;
+	const { hasNext, label = 'Post pages', params } = props;
 	const page = Number( params.page || 1 );
 
 	if ( path.charAt( path.length - 1 ) === '+' ) {
@@ -47,7 +47,7 @@ export default function Pagination( props ) {
 	}
 
 	return (
-		<nav className="flex items-center justify-between gap-4 pt-4 pb-10 -mx-2" aria-label="Post pages">
+		<nav className="flex items-center justify-between gap-4 pt-4 pb-10 -mx-2" aria-label={ label }>
 			<div>
 				{ hasNext && (
 					<NavigationButton as={ Link } iconOnly={ false } to={ olderPage }>

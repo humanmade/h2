@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 
 import FormattedDate from '../FormattedDate';
-import AuthorLink from '../Message/AuthorLink';
+import { AuthorLinkById } from '../Message/AuthorLink';
 
 import './ActivityMention.css';
 
@@ -19,15 +19,9 @@ export default function BotMention( { comment } ) {
 	const botAvatarUrls = comment.author_avatar_urls || {};
 	const botAvatar = botAvatarUrls['24'] || botAvatarUrls['48'] || botAvatarUrls['96'];
 	const bot = ( comment.author && botUsername ) ? (
-		<AuthorLink
-			user={ {
-				id: comment.author,
-				name: botName,
-			} }
-			withHovercard={ false }
-		>
+		<AuthorLinkById id={ comment.author }>
 			{ botLabel }
-		</AuthorLink>
+		</AuthorLinkById>
 	) : botLabel;
 	const question = activity.question_url ? (
 		<a
@@ -40,15 +34,9 @@ export default function BotMention( { comment } ) {
 		</a>
 	) : 'a question';
 	const asker = ( activity.asker_username && activity.asker_id ) ? (
-		<AuthorLink
-			user={ {
-				id: activity.asker_id,
-				name: activity.asker,
-			} }
-			withHovercard={ false }
-		>
+		<AuthorLinkById id={ activity.asker_id }>
 			@{ activity.asker_username }
-		</AuthorLink>
+		</AuthorLinkById>
 	) : '@user';
 
 	return (

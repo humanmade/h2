@@ -18,8 +18,7 @@ const DESCRIPTION_CLASSES = [
 	'[&_p]:m-0 [&_p]:mb-[1em] [&_p:last-child]:mb-0',
 ].join( ' ' );
 
-const LocalTime = props => {
-	const timeZone = props.user.meta.hm_time_timezone || props.user.facts.timezone;
+const LocalTime = ( { timeZone } ) => {
 	if ( ! timeZone ) {
 		return (
 			<p className="m-0">
@@ -47,10 +46,16 @@ const LocalTime = props => {
 };
 
 export function UserCard( { user } ) {
+	const facts = user.facts || {};
+	const timeZone = user.meta.hm_time_timezone || facts.timezone;
+
+	// With no facts or timezone, only the basics in the header are shown.
+	const hasDetails = !! ( user.facts || timeZone );
+
 	return (
 		<aside className={ ASIDE_CLASSES }>
 			<div>
-				<header className="flex items-center m-0 mb-[1em] [&_p]:leading-[1.6] [&_p]:m-0">
+				<header className={ `flex items-center m-0 ${ hasDetails ? 'mb-[1em]' : '' } [&_p]:leading-[1.6] [&_p]:m-0` }>
 					<Avatar
 						className="grow-0 shrink-0 mr-[0.5em]"
 						url={ user.avatar_urls['96'] }
@@ -64,21 +69,23 @@ export function UserCard( { user } ) {
 						<p className="text-hm-medium-grey text-[0.9em] font-normal">
 							@{ user.slug }
 						</p>
-						{ user.facts.job_title && <p className="text-hm-medium-grey">{ user.facts.job_title }</p> }
+						{ facts.job_title && <p className="text-hm-medium-grey">{ facts.job_title }</p> }
 					</div>
 				</header>
 
-				<div className={ DESCRIPTION_CLASSES }>
-					<LocalTime user={ user } />
-					{ user.facts.location_name && <p><strong>Location:</strong> { user.facts.location_name }</p> }
-					{ user.facts.pronouns && <p><strong>Pronouns:</strong> { user.facts.pronouns }</p> }
-					{ user.facts.short_bio && <p>{ user.facts.short_bio }</p> }
-				</div>
+				{ hasDetails && (
+					<div className={ DESCRIPTION_CLASSES }>
+						<LocalTime timeZone={ timeZone } />
+						{ facts.location_name && <p><strong>Location:</strong> { facts.location_name }</p> }
+						{ facts.pronouns && <p><strong>Pronouns:</strong> { facts.pronouns }</p> }
+						{ facts.short_bio && <p>{ facts.short_bio }</p> }
+					</div>
+				) }
 			</div>
-			{ user.facts.location && window.H2Data.site.mapbox_key && (
+			{ facts.location && window.H2Data.site.mapbox_key && (
 				<Map
 					height="150"
-					location={ user.facts.location }
+					location={ facts.location }
 					width="150"
 				/>
 			) }
@@ -89,10 +96,6 @@ export function UserCard( { user } ) {
 export default class UserHovercard extends React.Component {
 	render() {
 		const { children, user } = this.props;
-
-		if ( ! user.facts ) {
-			return children;
-		}
 
 		return (
 			<Hovercard

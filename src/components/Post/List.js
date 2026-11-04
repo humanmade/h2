@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { setDefaultPostView } from '../../actions';
-import { withCategories, withUsers } from '../../hocs';
+import { withCategories } from '../../hocs';
 import { posts } from '../../types';
 import { decodeEntities } from '../../util';
 import Error404 from '../Error404';
@@ -112,11 +112,6 @@ const ConnectedPostsList = withPagedArchive(
 			}
 		}
 
-		if ( props.match.params.authorSlug && props.users ) {
-			const user = props.users.filter( user => user.slug === props.match.params.authorSlug )[0];
-			filters.author = user.id;
-		}
-
 		const id = qs.stringify( filters );
 		posts.registerArchive( id, filters );
 		return id;
@@ -126,9 +121,7 @@ const ConnectedPostsList = withPagedArchive(
 	}
 )( PostsList );
 
-const MoreConnectedPostsList = withUsers( ConnectedPostsList );
-
-const mapStateToProps = state => {
+export const mapViewModeToProps = state => {
 	const currentUser = state.users.posts.find( user => state.users.current === user.id );
 
 	return {
@@ -140,4 +133,4 @@ const mapDispatchToProps = dispatch => ( {
 	setDefaultPostView: view => dispatch( setDefaultPostView( view ) ),
 } );
 
-export default connect( mapStateToProps, mapDispatchToProps )( withCategories( MoreConnectedPostsList ) );
+export default connect( mapViewModeToProps, mapDispatchToProps )( withCategories( ConnectedPostsList ) );
