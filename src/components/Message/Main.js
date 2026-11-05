@@ -29,7 +29,7 @@ export default function MessageMain( props ) {
 	} = props;
 
 	const classes = [
-		'ml-16 max-[600px]:ml-0',
+		'ml-16 max-[600px]:ml-0 mb-2',
 		collapsed && 'Message-Main--collapsed min-h-[70px] max-h-[190px] overflow-hidden relative after:block after:content-[""] after:absolute after:inset-0 after:top-auto after:h-[70px]',
 	];
 
@@ -58,7 +58,7 @@ export default function MessageMain( props ) {
 			<Slot name="Post.footer_actions" fillChildProps={ fillProps }>
 				{ items => (
 					<div className={ [
-						'Post-footer-actions clear-both flex flex-wrap gap-2 mt-4 max-[600px]:mb-4 justify-between items-start',
+						'Post-footer-actions clear-both flex flex-wrap gap-2 mt-4 max-[600px]:mb-4 justify-between min-[600px]:justify-end items-start',
 						! items.length && 'min-[600px]:hidden',
 						collapsed && 'hidden',
 					].filter( Boolean ).join( ' ' ) }>
