@@ -1,5 +1,5 @@
-import { action } from '@storybook/addon-actions';
 import React, { useState } from 'react';
+import { action } from 'storybook/actions';
 
 import { withCentering } from '../../stories/decorators';
 import { emoji } from '../../stories/stubs';
@@ -7,7 +7,7 @@ import { emoji } from '../../stories/stubs';
 import EmojiCompletion, { Item } from './EmojiCompletion';
 
 export default {
-	title: 'Interface|Editor/Completion/Emoji',
+	title: 'Interface/Editor/Completion/Emoji',
 	decorators: [
 		withCentering(),
 	],

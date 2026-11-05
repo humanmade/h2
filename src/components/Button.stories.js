@@ -1,5 +1,5 @@
-import { action } from '@storybook/addon-actions';
 import React, { Fragment } from 'react';
+import { action } from 'storybook/actions';
 
 import { withCentering } from '../stories/decorators';
 
@@ -17,7 +17,7 @@ const buttonSizes = [
 ];
 
 export default {
-	title: 'Components|Form/Button',
+	title: 'Components/Form/Button',
 	decorators: [
 		withCentering(),
 	],

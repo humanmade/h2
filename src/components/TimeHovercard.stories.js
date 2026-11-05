@@ -14,7 +14,7 @@ const commonProps = {
 };
 
 export default {
-	title: 'Components|Hovercard/Time',
+	title: 'Components/Hovercard/Time',
 	decorators: [
 		withStore(),
 		withCentering(),

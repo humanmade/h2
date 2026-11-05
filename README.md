@@ -44,7 +44,7 @@ The easiest way to try out H2 is using `wp-env`, which sets up a local WordPress
 
 **Prerequisites:**
 - Docker Desktop installed and running
-- Node.js 14 or higher
+- Node.js 24 (`nvm install && nvm use`)
 
 **Setup:**
 
@@ -56,7 +56,7 @@ cd h2
 
 2. Install dependencies:
 ```sh
-npm install
+npm ci
 ```
 
 3. Start the WordPress environment:
@@ -112,7 +112,7 @@ git clone git@github.com:humanmade/h2.git h2
 
 Once the checkout is complete, `cd` into the cloned theme directory, install npm modules, and start the development server:
 ```
-npm install
+npm ci
 npm start
 ```
 

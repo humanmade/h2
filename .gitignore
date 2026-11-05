@@ -33,3 +33,6 @@ asset-manifest.json
 
 # wp-env
 .wp-env
+
+# Storybook build
+storybook-static/

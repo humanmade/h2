@@ -1,11 +1,11 @@
-import { action } from '@storybook/addon-actions';
 import React, { Fragment } from 'react';
+import { action } from 'storybook/actions';
 
 import Modal from './Modal';
 import { OverlayContainer } from './Overlay';
 
 export default {
-	title: 'Components|Modal',
+	title: 'Components/Modal',
 };
 
 export const Basic = () => (

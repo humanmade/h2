@@ -1,5 +1,5 @@
-import { action } from '@storybook/addon-actions';
 import React from 'react';
+import { action } from 'storybook/actions';
 
 import { withPadding, withStore } from '../../stories/decorators';
 import { user } from '../../stories/stubs';
@@ -15,7 +15,7 @@ const defaultProps = {
 };
 
 export default {
-	title: 'Interface|Header',
+	title: 'Interface/Header',
 	decorators: [
 		withStore(),
 		withPadding(),
