@@ -19,7 +19,77 @@
 	/* width: 65%; */
 }
 
+.App-sidebar-edge {
+	display: none;
+}
+
 @media ( min-width: 800px ) {
+	.App .Outer {
+		grid-template-columns: min( 30%, 360px ) 0 minmax( 0, 1fr );
+	}
+
+	.App-sidebar-edge {
+		grid-column: 2;
+		grid-row: 1;
+		display: block;
+		width: 0;
+		z-index: 1;
+	}
+
+	.App-sidebar-toggle {
+		position: sticky;
+		top: calc( 50vh - 20px );
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 24px;
+		height: 40px;
+		transform: translateX( -50% );
+		margin: 0;
+		padding: 0;
+		border: 1px solid var( --hm-beige );
+		border-radius: 5px;
+		background: white;
+		color: var( --hm-dark-grey );
+		cursor: pointer;
+	}
+
+	.App-sidebar-toggle svg {
+		width: 12px;
+		height: 12px;
+	}
+
+	.App--sidebar-collapsed .App-sidebar-toggle {
+		transform: translateX( 4px );
+	}
+
+	.App-sidebar-toggle:hover {
+		background: var( --hm-light-grey );
+	}
+
+	.App-sidebar-toggle:focus-visible {
+		outline: 2px solid var( --hm-vibrant-blue );
+		outline-offset: -2px;
+	}
+
+	.App .Inner {
+		grid-column: 3;
+		grid-row: 1;
+	}
+
+	.App--sidebar-collapsed .Outer {
+		grid-template-columns: 0 0 minmax( 0, 1fr );
+	}
+
+	.App--sidebar-collapsed .App-sidebar {
+		display: none;
+	}
+
+	.App--sidebar-collapsed .Inner {
+		width: 100%;
+		margin-inline: auto;
+	}
+
 	.App-sidebar {
 		position: sticky;
 		top: 0;
