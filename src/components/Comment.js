@@ -123,7 +123,7 @@ export class Comment extends Component {
 					<Slot name="Comment.footer_actions" fillChildProps={ fillProps }>
 						{ items => (
 							<div className={ [
-								'Comment-footer-actions flex justify-between items-start flex-wrap mt-3 min-[600px]:[&_.Comment-Actions]:hidden',
+								'Comment-footer-actions flex justify-between min-[600px]:justify-end items-start flex-wrap mt-3 min-[600px]:[&_.Comment-Actions]:hidden',
 								! items.length && 'min-[600px]:hidden',
 							].filter( Boolean ).join( ' ' ) }>
 								<Actions
