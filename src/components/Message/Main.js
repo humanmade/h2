@@ -29,7 +29,7 @@ export default function MessageMain( props ) {
 	} = props;
 
 	const classes = [
-		'ml-16 max-[600px]:ml-0',
+		'ml-16 max-[600px]:ml-0 mb-2',
 		collapsed && 'Message-Main--collapsed min-h-[70px] max-h-[190px] overflow-hidden relative after:block after:content-[""] after:absolute after:inset-0 after:top-auto after:h-[70px]',
 	];
 
