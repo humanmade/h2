@@ -28,6 +28,16 @@ import './App.css';
 
 // Matches the breakpoint in App.css where the sidebar becomes a drawer.
 const isDrawerLayout = () => window.matchMedia( '(max-width: 799px)' ).matches;
+const SIDEBAR_COLLAPSED_KEY = 'h2-sidebar-collapsed';
+
+function isSidebarCollapsed() {
+	try {
+		return window.localStorage.getItem( SIDEBAR_COLLAPSED_KEY ) === 'true';
+	} catch ( error ) {
+		// The sidebar remains usable when browser storage is unavailable.
+		return false;
+	}
+}
 
 export const POST_ROUTE = '/:year(\\d{4})/:month(\\d{2})/:day(\\d{2})/:slug/:comment_page(comment-page-\\d+)?';
 
@@ -37,6 +47,7 @@ class App extends Component {
 		this.state = {
 			isShowingWritePost: false,
 			isSidebarOpen: false,
+			isSidebarCollapsed: isSidebarCollapsed(),
 			showChanges: false,
 		};
 		this.headerRef = React.createRef();
@@ -100,6 +111,18 @@ class App extends Component {
 
 	onToggleSidebar = () => {
 		this.setState( state => ( { isSidebarOpen: ! state.isSidebarOpen } ) );
+	}
+
+	onToggleSidebarCollapsed = () => {
+		this.setState( state => {
+			const isSidebarCollapsed = ! state.isSidebarCollapsed;
+			try {
+				window.localStorage.setItem( SIDEBAR_COLLAPSED_KEY, String( isSidebarCollapsed ) );
+			} catch ( error ) {
+				// Storage is optional; keep the preference for this visit.
+			}
+			return { isSidebarCollapsed };
+		} );
 	}
 
 	onCloseSidebar = () => {
@@ -172,7 +195,7 @@ class App extends Component {
 
 	render() {
 		return (
-			<div className="App">
+			<div className={ this.state.isSidebarCollapsed ? 'App App--sidebar-collapsed' : 'App' }>
 				<OverlayContainer />
 				{ /* Keep the header above the overlay, so its search input stays usable. */ }
 				<div
@@ -195,7 +218,7 @@ class App extends Component {
 					/>
 				) }
 				<SessionExpiredWarning />
-				<div className="Outer grid grid-cols-[min(30%,360px)_auto] gap-0">
+				<div className="Outer grid gap-0">
 					<div
 						className={ this.state.isSidebarOpen ? 'App-sidebar App-sidebar--open' : 'App-sidebar' }
 						id="h2-sidebar"
@@ -211,6 +234,21 @@ class App extends Component {
 							</svg>
 						</button>
 						{ this.renderSidebar() }
+					</div>
+					<div className="App-sidebar-edge">
+						<button
+							aria-controls="h2-sidebar"
+							aria-expanded={ ! this.state.isSidebarCollapsed }
+							aria-label={ this.state.isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar' }
+							title={ this.state.isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar' }
+							className="App-sidebar-toggle"
+							type="button"
+							onClick={ this.onToggleSidebarCollapsed }
+						>
+							<svg aria-hidden="true" viewBox="0 0 20 20" width="20" height="20">
+								<path d={ this.state.isSidebarCollapsed ? 'm7 4 6 6-6 6' : 'm13 4-6 6 6 6' } fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+							</svg>
+						</button>
 					</div>
 					{ this.state.isSidebarOpen && (
 						<button
