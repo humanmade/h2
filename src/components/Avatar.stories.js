@@ -5,7 +5,7 @@ import { withCentering, withStore } from '../stories/decorators';
 import Avatar from './Avatar';
 
 export default {
-	title: 'Components|Avatar',
+	title: 'Components/Avatar',
 	decorators: [
 		withStore(),
 		withCentering(),

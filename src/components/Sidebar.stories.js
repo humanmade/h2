@@ -6,7 +6,7 @@ import { apiResponse } from '../stories/util';
 import { Sidebar } from './Sidebar';
 
 export default {
-	title: 'Interface|Sidebar',
+	title: 'Interface/Sidebar',
 	decorators: [
 		withCentering( { width: '30vw' } ),
 	],

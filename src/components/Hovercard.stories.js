@@ -13,7 +13,7 @@ const commonProps = {
 };
 
 export default {
-	title: 'Components|Hovercard',
+	title: 'Components/Hovercard',
 	decorators: [
 		withStore(),
 		// withCentering( { position: 'static' } ),

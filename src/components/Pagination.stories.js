@@ -5,7 +5,7 @@ import { withCentering } from '../stories/decorators';
 import Pagination from './Pagination';
 
 export default {
-	title: 'Components|Pagination',
+	title: 'Components/Pagination',
 	decorators: [
 		withCentering( {
 			minWidth: '30vw',

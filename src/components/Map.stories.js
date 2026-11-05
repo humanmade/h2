@@ -5,7 +5,7 @@ import { withCentering } from '../stories/decorators';
 import Map from './Map';
 
 export default {
-	title: 'Components|Map',
+	title: 'Components/Map',
 	decorators: [
 		withCentering(),
 	],

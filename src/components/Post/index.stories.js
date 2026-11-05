@@ -26,12 +26,12 @@ const state = {
 			comment,
 		],
 		archives: {
-			[ post.id ]: [
+			[ `stream:${ post.id }` ]: [
 				comment.id,
 			],
 		},
 		archivePages: {
-			[ post.id ]: {
+			[ `stream:${ post.id }` ]: {
 				total: 1,
 				current: 1,
 				// comment.id,
@@ -53,7 +53,7 @@ const state = {
 };
 
 export default {
-	title: 'Content|Post',
+	title: 'Content/Post',
 	decorators: [
 		withStore( state ),
 		withPadding(),
