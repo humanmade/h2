@@ -345,9 +345,9 @@ function get_preload_urls(): array {
 			'url'   => '/h2/v1/widgets?sidebar=sidebar',
 			'cache' => true,
 		],
-		[ 'url' => '/wp/v2/users/me?_fields=id,name,facts,link,slug,avatar_urls,meta' ],
+		[ 'url' => '/wp/v2/users/me?_fields=id,name,description,facts,link,slug,avatar_urls,meta' ],
 		[
-			'url'   => '/wp/v2/users?per_page=200&_fields=id,name,facts,link,slug,avatar_urls,meta',
+			'url'   => '/wp/v2/users?per_page=200&_fields=id,name,description,facts,link,slug,avatar_urls,meta',
 			'cache' => true,
 		],
 	];

@@ -49,13 +49,10 @@ export function UserCard( { user } ) {
 	const facts = user.facts || {};
 	const timeZone = user.meta.hm_time_timezone || facts.timezone;
 
-	// With no facts or timezone, only the basics in the header are shown.
-	const hasDetails = !! ( user.facts || timeZone );
-
 	return (
 		<aside className={ ASIDE_CLASSES }>
 			<div>
-				<header className={ `flex items-center m-0 ${ hasDetails ? 'mb-[1em]' : '' } [&_p]:leading-[1.6] [&_p]:m-0` }>
+				<header className={ `flex items-center m-0 mb-[1em] [&_p]:leading-[1.6] [&_p]:m-0` }>
 					<Avatar
 						className="grow-0 shrink-0 mr-[0.5em]"
 						url={ user.avatar_urls['96'] }
@@ -73,14 +70,20 @@ export function UserCard( { user } ) {
 					</div>
 				</header>
 
-				{ hasDetails && (
-					<div className={ DESCRIPTION_CLASSES }>
+				<div className={ DESCRIPTION_CLASSES }>
+					{ timeZone && (
 						<LocalTime timeZone={ timeZone } />
-						{ facts.location_name && <p><strong>Location:</strong> { facts.location_name }</p> }
-						{ facts.pronouns && <p><strong>Pronouns:</strong> { facts.pronouns }</p> }
-						{ facts.short_bio && <p>{ facts.short_bio }</p> }
-					</div>
-				) }
+					) }
+					{ facts.location_name && <p><strong>Location:</strong> { facts.location_name }</p> }
+					{ facts.pronouns && <p><strong>Pronouns:</strong> { facts.pronouns }</p> }
+					{ facts.short_bio ? (
+						<p>{ facts.short_bio }</p>
+					) : user.description ? (
+						<p>{ user.description.substring( 0, 200 ) }</p>
+					) : (
+						<p className="italic">This person is mysterious…</p>
+					) }
+				</div>
 			</div>
 			{ facts.location && window.H2Data.site.mapbox_key && (
 				<Map
