@@ -100,6 +100,10 @@ export default function UserHeader( { user, view } ) {
 						{ user.facts && user.facts.pronouns && <Field name="Pronouns">{ user.facts.pronouns }</Field> }
 					</dl>
 
+					{ user.facts && user.facts.short_bio && (
+						<p className="mt-4 mb-0 text-sm leading-6 italic text-gray-600 break-words">{ user.facts.short_bio }</p>
+					) }
+
 					<UserDescription user={ user } />
 				</div>
 
