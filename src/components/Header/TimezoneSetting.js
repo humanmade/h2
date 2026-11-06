@@ -40,6 +40,8 @@ const formatTime = ( timeZone, date ) => {
 export function TimezoneSetting( props ) {
 	const { currentUser, savingCurrentUser, onUpdateCurrentUser } = props;
 	const isSaving = !! savingCurrentUser;
+	// savingCurrentUser covers every user save, so track this setting's own save for the status.
+	const [ isSavingTimezone, setIsSavingTimezone ] = useState( false );
 	const [ error, setError ] = useState( null );
 	const [ now, setNow ] = useState( () => new Date() );
 
@@ -62,8 +64,10 @@ export function TimezoneSetting( props ) {
 			return;
 		}
 		setError( null );
+		setIsSavingTimezone( true );
 		Promise.resolve( onUpdateCurrentUser( { meta: { hm_time_timezone: value } } ) )
-			.catch( () => setError( 'Could not update your timezone. Please try again.' ) );
+			.catch( () => setError( 'Could not update your timezone. Please try again.' ) )
+			.finally( () => setIsSavingTimezone( false ) );
 	};
 
 	const savedTime = saved ? formatTime( saved, now ) : null;
@@ -77,7 +81,7 @@ export function TimezoneSetting( props ) {
 				>
 					Timezone
 				</label>
-				{ isSaving ? (
+				{ isSavingTimezone ? (
 					<span className="text-xs text-gray-500" role="status">Saving…</span>
 				) : savedTime && (
 					<span className="text-xs text-gray-500">{ savedTime }</span>
