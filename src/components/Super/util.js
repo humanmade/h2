@@ -30,6 +30,32 @@ export function isCurrentSite( site ) {
 }
 
 /**
+ * Check whether a URL is on the network.
+ *
+ * This only compares hosts, so a match doesn't mean that the site exists or
+ * that the user can access it.
+ *
+ * @param {string} url URL to check.
+ * @returns {boolean} True if the URL's host is the network's domain or a subdomain of it.
+ */
+export function isNetworkUrl( url ) {
+	const network = getNetwork();
+	if ( ! network || ! network.domain ) {
+		return false;
+	}
+
+	let hostname;
+	try {
+		( { hostname } = new URL( url ) );
+	} catch ( error ) {
+		// Relative URLs can't be parsed, and aren't for another site anyway.
+		return false;
+	}
+
+	return hostname === network.domain || hostname.endsWith( `.${ network.domain }` );
+}
+
+/**
  * Format a URL for display.
  *
  * @param {string} url Full URL.
