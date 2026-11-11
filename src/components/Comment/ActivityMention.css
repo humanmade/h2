@@ -69,6 +69,11 @@
 	line-height: 1;
 }
 
+.Comment-BotMention__meetingIcon {
+	display: block;
+	object-fit: contain;
+}
+
 .Comment-BotMention__question {
 	color: inherit;
 	font-weight: 600;

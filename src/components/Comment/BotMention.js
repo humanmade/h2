@@ -23,6 +23,8 @@ export default function BotMention( { comment } ) {
 			{ botLabel }
 		</AuthorLinkById>
 	) : botLabel;
+	const meeting = activity.meeting;
+	const meetingBot = meeting?.profile_url ? <a href={ meeting.profile_url }>{ botLabel }</a> : botLabel;
 	const question = activity.question_url ? (
 		<a
 			className="Comment-BotMention__question"
@@ -45,7 +47,15 @@ export default function BotMention( { comment } ) {
 			id={ `comment-${ comment.id }` }
 		>
 			<span className="Comment-ActivityMention__node">
-				{ botAvatar ? (
+				{ meeting?.icon_url ? (
+					<img
+						alt={ meeting.icon_label || '' }
+						className="Comment-BotMention__meetingIcon"
+						src={ meeting.icon_url }
+						width={ 14 }
+						height={ 14 }
+					/>
+				) : botAvatar ? (
 					<img
 						alt=""
 						className="Comment-BotMention__logo"
@@ -61,9 +71,22 @@ export default function BotMention( { comment } ) {
 				) }
 			</span>
 			<span className="Comment-ActivityMention__text">
-				<Fragment>
-					Referenced by { bot } to answer { question } from { asker }
-				</Fragment>
+				{ meeting ? (
+					<>
+						Referenced by { meetingBot }{ ' ' }
+						{ meeting.url ? (
+							<>
+								in the { meeting.provider === 'slack_huddle' && 'huddle ' }
+								<a href={ meeting.url }>{ meeting.kind }</a> for <strong>{ meeting.title }</strong>{ ' ' }
+								in <strong>#{ meeting.channel }</strong>
+							</>
+						) : `in a meeting ${ meeting.kind }` }
+					</>
+				) : (
+					<Fragment>
+						Referenced by { bot } to answer { question } from { asker }
+					</Fragment>
+				) }
 			</span>
 			<span className="Comment-ActivityMention__date">
 				<FormattedDate date={ comment.date_gmt + 'Z' } />
@@ -73,6 +96,16 @@ export default function BotMention( { comment } ) {
 }
 
 const activityShape = PropTypes.shape( {
+	meeting: PropTypes.shape( {
+		kind: PropTypes.oneOf( [ 'briefing', 'recap' ] ).isRequired,
+		title: PropTypes.string,
+		channel: PropTypes.string,
+		url: PropTypes.string,
+		profile_url: PropTypes.string,
+		provider: PropTypes.string,
+		icon_url: PropTypes.string,
+		icon_label: PropTypes.string,
+	} ),
 	question_url: PropTypes.string,
 	asker: PropTypes.string,
 	asker_username: PropTypes.string,
