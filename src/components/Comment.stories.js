@@ -58,7 +58,10 @@ export const ActivityMentions = () => (
 				id: 3,
 				type: 'mention',
 				content: { rendered: 'Referenced by <a href="/author/human/">@human</a> to answer a question' },
-				mention: { source: 'human', icon_url: user.avatar_urls['24'] },
+				mention: {
+					source: 'human',
+					icon_url: user.avatar_urls['24'],
+				},
 			} }
 		/>
 	</div>
