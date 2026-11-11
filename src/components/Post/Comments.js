@@ -77,7 +77,7 @@ export default withArchive(
 		comments.registerArchive( archiveId, {
 			post: post.id,
 			per_page: 100,
-			slack_markers: 1,
+			mention_markers: 1,
 		} );
 		return archiveId;
 	}
