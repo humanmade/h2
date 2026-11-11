@@ -35,6 +35,15 @@ function adjust_default_filters() {
 }
 
 /**
+ * Opt discussion post types into mentions while comments are open.
+ */
+function register_mention_support(): void {
+	foreach ( get_post_types_by_support( 'comments' ) as $post_type ) {
+		add_post_type_support( $post_type, 'hm-human-activity', [ 'requires_open_comments' => true ] );
+	}
+}
+
+/**
  * Set up theme global settings.
  */
 function set_up_theme() {

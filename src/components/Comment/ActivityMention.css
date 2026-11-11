@@ -46,48 +46,18 @@
 	background: #fff;
 }
 
-.Comment-SlackMention__logo {
+.Comment-ActivityMention__icon {
 	display: block;
+	object-fit: contain;
 }
 
-.Comment-ActivityMention__node .Comment-BotMention__logo {
-	display: block;
-	width: 14px;
-	height: 14px;
-	margin: 0;
-	border-radius: 50%;
-}
-
-.Comment-ActivityMention__node .Comment-BotMention__logo--fallback {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: var( --hm-red );
-	color: #fff;
-	font-size: 9px;
-	font-weight: 600;
-	line-height: 1;
-}
-
-.Comment-BotMention__question {
+.Comment-ActivityMention__text a {
 	color: inherit;
 	font-weight: 600;
 }
 
-.Comment-BotMention__question:hover,
-.Comment-BotMention__question:focus {
-	text-decoration: underline;
-}
-
-.Comment-SlackMention__channel {
-	color: inherit;
-	font-weight: 600;
-}
-
-/* Only the linked (manual-share) channel underlines on hover; the auto-share
- * channel is plain text, so it must not. */
-a.Comment-SlackMention__channel:hover,
-a.Comment-SlackMention__channel:focus {
+.Comment-ActivityMention__text a:hover,
+.Comment-ActivityMention__text a:focus {
 	text-decoration: underline;
 }
 
