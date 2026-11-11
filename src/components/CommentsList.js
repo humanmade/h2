@@ -4,18 +4,14 @@ import React, { Component } from 'react';
 import { Comment as CommentShape, Post } from '../shapes';
 
 import Comment from './Comment';
-import BotMention from './Comment/BotMention';
-import SlackMention from './Comment/SlackMention';
+import ActivityMention from './Comment/ActivityMention';
 
 import './CommentsList.css';
 
 export default class CommentsList extends Component {
 	renderComment = comment => {
-		if ( comment.type === 'slack_mention' ) {
-			return <SlackMention key={ comment.id } comment={ comment } />;
-		}
-		if ( comment.type === 'human_mention' ) {
-			return <BotMention key={ comment.id } comment={ comment } />;
+		if ( comment.type === 'mention' ) {
+			return <ActivityMention key={ comment.id } comment={ comment } />;
 		}
 		return (
 			<Comment
