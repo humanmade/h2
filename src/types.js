@@ -30,7 +30,7 @@ export const users = new handler( {
 	query: {
 		// Dodges Yoast SEO data computation.
 		// (falcon_preferences is only returned for the current user in the edit context.)
-		_fields: 'id,name,facts,link,slug,avatar_urls,meta,falcon_preferences',
+		_fields: 'id,name,description,facts,link,slug,avatar_urls,meta,falcon_preferences',
 	},
 } );
 users.registerArchive( 'me', state => ( { include: state.users.current } ) );

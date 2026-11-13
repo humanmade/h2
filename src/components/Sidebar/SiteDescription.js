@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import api from '../../api';
 import { parseResponse } from '../../wordpress-rest-api-cookie-auth';
 import Button from '../Button';
+import PencilIcon from '../PencilIcon';
 
 /**
  * Decode the description returned by the settings endpoint.
@@ -19,22 +20,6 @@ const decodeDescription = text => {
 	textarea.innerHTML = text;
 	return textarea.value;
 };
-
-const PencilIcon = () => (
-	<svg
-		aria-hidden="true"
-		className="size-3.5"
-		fill="none"
-		stroke="currentColor"
-		strokeLinecap="round"
-		strokeLinejoin="round"
-		strokeWidth={ 2 }
-		viewBox="0 0 24 24"
-	>
-		<path d="M12 20h9" />
-		<path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-	</svg>
-);
 
 export default function SiteDescription() {
 	const site = window.H2Data.site;
