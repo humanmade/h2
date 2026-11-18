@@ -50,6 +50,11 @@ export const Comment = PropTypes.shape( {
 	} ).isRequired,
 	author: PropTypes.number.isRequired,
 	post: PropTypes.number.isRequired,
+	mention: PropTypes.shape( {
+		source: PropTypes.string.isRequired,
+		icon_url: PropTypes.string,
+		icon_label: PropTypes.string,
+	} ),
 } );
 
 export const Action = PropTypes.shape( {
