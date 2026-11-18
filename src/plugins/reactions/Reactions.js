@@ -415,9 +415,9 @@ export class Reactions extends Component {
 	}
 
 	addReaction( emoji ) {
-		// The server limits distinct emoji, counting each skin tone separately.
-		const types = new Set( ( this.props.reactions || [] ).map( reaction => reaction.type ) );
-		if ( ! types.has( emoji ) && types.size >= 10 ) {
+		// Skin tone variants of the same emoji count once, matching the server.
+		const groups = this.getGroupedReactions();
+		if ( ! groups[ getBaseEmoji( emoji ) ] && Object.keys( groups ).length >= 10 ) {
 			alert( 'Sorry! You are only allowed 10 reactions per post!' );
 			return;
 		}
