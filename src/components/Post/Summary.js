@@ -130,15 +130,13 @@ export default withArchive(
 	props => {
 		const { post } = props;
 
-		// Share the comment stream's widened archive (same id + legacy slack_markers
-		// flag) so the count stays consistent with the stream after a reply and
-		// the post's comments are fetched once. Markers are filtered out of the
-		// count above.
+		// Share the comment stream archive so the count stays in sync after a
+		// reply. Mentions are excluded from the count above.
 		const archiveId = `stream:${ post.id }`;
 		comments.registerArchive( archiveId, {
 			post: post.id,
 			per_page: COMMENT_SUMMARY_LIMIT,
-			slack_markers: 1,
+			mention_markers: 1,
 		} );
 		return archiveId;
 	},
