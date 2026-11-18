@@ -40,7 +40,7 @@ function adjust_default_filters() {
  */
 function register_mention_support(): void {
 	foreach ( get_post_types_by_support( 'comments' ) as $post_type ) {
-		add_post_type_support( $post_type, 'hm-human-activity', [ 'requires_open_comments' => true ] );
+		add_post_type_support( $post_type, 'h2-activity', [ 'requires_open_comments' => true ] );
 	}
 }
 
