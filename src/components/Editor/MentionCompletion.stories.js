@@ -1,5 +1,5 @@
-import { action } from '@storybook/addon-actions';
 import React, { useState } from 'react';
+import { action } from 'storybook/actions';
 
 import { withCentering } from '../../stories/decorators';
 import { users } from '../../stories/stubs';
@@ -7,7 +7,7 @@ import { users } from '../../stories/stubs';
 import { MentionCompletion, Item } from './MentionCompletion';
 
 export default {
-	title: 'Interface|Editor/Completion/Mention',
+	title: 'Interface/Editor/Completion/Mention',
 	decorators: [
 		withCentering(),
 	],

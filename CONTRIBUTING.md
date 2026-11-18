@@ -5,6 +5,8 @@ Want to contribute to H2? Fantastic. Here's some guidelines and tips to contribu
 
 ## Local setup
 
+Use Node.js 24 (`nvm install && nvm use`) and install the locked dependencies with `npm ci`.
+
 H2 is a React app delivered as a WordPress theme. For full development you need a WordPress environment running H2; we use [Altis Local Server](https://www.altis-dxp.com/local-server/), the Docker-backed environment the consuming sites (such as hmn.md) run on. Add H2 as a theme in an Altis project and activate it.
 
 H2 also comes with Storybook, which can be used for component design and development in isolation. This can be run locally without a WordPress install, and is recommended for design iteration.
@@ -18,7 +20,7 @@ Storybook can be run without a WordPress setup. To run it:
 
 ```sh
 # Install dependencies
-npm install
+npm ci
 
 # Run Storybook
 npm run storybook
@@ -35,7 +37,7 @@ To develop with live reloading, run:
 
 ```sh
 # Install dependencies
-npm install
+npm ci
 
 # Run the server
 npm start
@@ -56,7 +58,7 @@ What that means in practice:
 
 - A source change only takes effect once it's on `main` and the Action has rebuilt `release`. Merging it straight into `release` does nothing useful – the build never runs, so the shipped bundle stays stale.
 - Projects consuming H2 (e.g. via Composer) pin a commit on `release`. To pick up a fix, bump that pin to point to the latest [Action-generated] release branch commit.
-- The build runs on Node 12; see `.build-script`.
+- Local and CI builds use Node.js 24, selected by `.nvmrc`; see `.build-script`.
 
 
 ## Project structure

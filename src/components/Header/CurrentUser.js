@@ -6,6 +6,7 @@ import { getUserCommentsUrl } from '../../util';
 import Avatar from '../Avatar';
 import Link from '../Link';
 
+import PostDisplaySetting from './PostDisplaySetting';
 import TimezoneSetting from './TimezoneSetting';
 
 const ITEM_CLASSES = [
@@ -106,7 +107,8 @@ export default function CurrentUser( props ) {
 						</li>
 					</ul>
 
-					<div className="px-4 py-3 border-t border-hm-beige">
+					<div className="flex flex-col gap-3 px-4 py-3 border-t border-hm-beige">
+						<PostDisplaySetting />
 						<TimezoneSetting />
 					</div>
 

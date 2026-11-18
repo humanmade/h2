@@ -1,5 +1,5 @@
-import { action } from '@storybook/addon-actions';
 import React from 'react';
+import { action } from 'storybook/actions';
 
 import { withPadding, withStore } from '../stories/decorators';
 import { comment, post, user } from '../stories/stubs';
@@ -10,9 +10,9 @@ import SlackMention from './Comment/SlackMention';
 import { WriteComment as WriteCommentComponent } from './Message/WriteComment';
 
 export default {
-	title: 'Content|Comments',
+	title: 'Content/Comments',
 	decorators: [
-		withStore( {} ),
+		withStore( { users: { posts: [ user ] } } ),
 		withPadding( {
 			paddingLeft: 60,
 			marginTop: 99,

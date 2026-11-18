@@ -1,5 +1,5 @@
-import { action } from '@storybook/addon-actions';
 import React from 'react';
+import { action } from 'storybook/actions';
 
 import { withPadding, withStore } from '../../stories/decorators';
 import { user, users } from '../../stories/stubs';
@@ -8,7 +8,7 @@ import { SearchView } from './Search';
 import { SiteSwitcher } from './SiteSwitcher';
 
 export default {
-	title: 'Interface|Super Overlay',
+	title: 'Interface/Super Overlay',
 	decorators: [
 		withStore(),
 		withPadding(),

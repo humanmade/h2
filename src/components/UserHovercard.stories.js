@@ -15,7 +15,7 @@ const commonProps = {
 };
 
 export default {
-	title: 'Components|Hovercard/User',
+	title: 'Components/Hovercard/User',
 	decorators: [
 		withStore(),
 		withCentering(),

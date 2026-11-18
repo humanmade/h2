@@ -5,7 +5,7 @@ import { withCentering } from '../stories/decorators';
 import Notification from './Notification';
 
 export default {
-	title: 'Components|Notification',
+	title: 'Components/Notification',
 	decorators: [
 		withCentering( { minWidth: '40vw' } ),
 	],

@@ -41,9 +41,7 @@ jobs:
       - uses: actions/setup-node@v4
         if: steps.blueprint.outputs.exists == 'true'
         with:
-          # The release workflows still pin Node 12, but the current
-          # dependencies (Tailwind 4, @wordpress/*) need a modern runtime.
-          node-version: '24'
+          node-version-file: '.nvmrc'
 
       - name: Install dependencies and build
         if: steps.blueprint.outputs.exists == 'true'
@@ -52,10 +50,7 @@ jobs:
             npm install --global pnpm
             pnpm install --frozen-lockfile
           else
-            # --ignore-scripts skips node-gyp builds for native deps (iltorb via
-            # bundlesize) which no longer compile on modern Node and aren't
-            # needed for the webpack build.
-            npm ci --ignore-scripts
+            npm ci
           fi
           npm run build
 

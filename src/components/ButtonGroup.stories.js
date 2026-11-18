@@ -6,7 +6,7 @@ import Button from './Button';
 import ButtonGroup from './ButtonGroup';
 
 export default {
-	title: 'Components|Form/Button/Group',
+	title: 'Components/Form/Button/Group',
 	decorators: [
 		withCentering(),
 	],

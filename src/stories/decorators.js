@@ -1,30 +1,16 @@
-import addons from '@storybook/addons';
-import withReduxEnhancer from 'addon-redux/enhancer';
-import withRedux from 'addon-redux/withRedux';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { applyMiddleware, compose, createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
 import reducers from '../reducers';
 
-const store = createStore(
-	reducers,
-	compose(
-		withReduxEnhancer,
-		applyMiddleware( thunk )
-	)
-);
-
-export function withStore( state, actions = [] ) {
-	const settings = {
-		Provider,
-		store,
-		state,
-		actions,
+export function withStore( state ) {
+	return story => {
+		// Reset the fixture when Storybook renders a story instead of sharing edits.
+		const store = createStore( reducers, state, applyMiddleware( thunk ) );
+		return <Provider store={ store }>{ story() }</Provider>;
 	};
-
-	return withRedux( addons )( settings );
 }
 
 export const withPadding = ( innerStyle = {} ) => story => {

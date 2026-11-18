@@ -243,6 +243,8 @@ United States</address>
 
 export const comment = {
 	id: 1,
+	link: 'http://example.com/2018/01/01/tecum-optime/#comment-1',
+	user_can: { edit: false },
 	post: 1,
 	date_gmt: now,
 	author: 1,
