@@ -38,17 +38,17 @@
 
 	.App-sidebar-toggle {
 		position: sticky;
-		top: calc( 50vh - 20px );
+		top: calc( 100vh - 40px );
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		width: 24px;
 		height: 40px;
-		transform: translateX( -50% );
+		transform: translateX( -100% );
 		margin: 0;
 		padding: 0;
 		border: 1px solid var( --hm-beige );
-		border-radius: 5px;
+		border-radius-top-left: 5px;
 		background: white;
 		color: var( --hm-dark-grey );
 		cursor: pointer;
@@ -60,7 +60,9 @@
 	}
 
 	.App--sidebar-collapsed .App-sidebar-toggle {
-		transform: translateX( 4px );
+		transform: translateX( 0px );
+		border-radius-top-left: 0;
+		border-radius-top-right: 5px;
 	}
 
 	.App-sidebar-toggle:hover {
