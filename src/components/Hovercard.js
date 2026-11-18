@@ -163,6 +163,7 @@ export default class Hovercard extends React.Component {
 	render() {
 		const {
 			cardContent: CardContent,
+			disabled,
 			width,
 		} = this.props;
 		const { active } = this.state;
@@ -173,7 +174,8 @@ export default class Hovercard extends React.Component {
 			<React.Fragment>
 				<CSSTransition
 					{ ...transition }
-					in={ !! ( active && this.target ) }
+					// The card shows if it becomes enabled while hovered.
+					in={ !! ( active && this.target && ! disabled ) }
 					mountOnEnter
 					unmountOnExit
 				>
@@ -203,5 +205,6 @@ export default class Hovercard extends React.Component {
 }
 
 Hovercard.defaultProps = {
+	disabled: false,
 	width: 425,
 };

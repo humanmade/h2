@@ -3,16 +3,36 @@ import { Link as InternalLink, matchPath } from 'react-router-dom';
 
 import { POST_ROUTE } from '../App';
 
-import PostHovercard from './PostHovercard';
+import PostHovercard, { NetworkPostHovercard } from './PostHovercard';
+import { isNetworkUrl } from './Super/util';
 
 const DEFAULT_STYLE = 'text-hm-vibrant-blue hover:underline';
+
+/**
+ * Check whether a link may be to a post on another site on the network.
+ *
+ * Only the linked site knows whether it is, as it may use different permalinks.
+ * This rules out home pages, which could be a page set as the front page, and
+ * WordPress's own files, like uploads.
+ *
+ * @param {string} url URL to check.
+ * @returns {boolean} True if the URL could be to a post on the network.
+ */
+function isNetworkPostCandidate( url ) {
+	if ( ! isNetworkUrl( url ) ) {
+		return false;
+	}
+
+	const { pathname } = new URL( url );
+	return pathname !== '/' && ! pathname.startsWith( '/wp-' );
+}
 
 // Forwards the ref so that links can be used as the target of a Hovercard.
 export default React.forwardRef( function Link( { children, className, disablePreviews, href, ...props }, ref ) {
 	const root = window.H2Data.site.home;
 
 	if ( ! href.startsWith( root ) ) {
-		return (
+		const anchor = (
 			<a
 				className={ [
 					DEFAULT_STYLE,
@@ -25,6 +45,19 @@ export default React.forwardRef( function Link( { children, className, disablePr
 				{ children }
 			</a>
 		);
+
+		// Is this a link to a post on another site on the network?
+		if ( ! disablePreviews && isNetworkPostCandidate( href ) ) {
+			return (
+				<NetworkPostHovercard
+					url={ href }
+				>
+					{ anchor }
+				</NetworkPostHovercard>
+			);
+		}
+
+		return anchor;
 	}
 
 	const relativeTo = href.replace( root, '' );

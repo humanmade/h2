@@ -38,6 +38,26 @@ export const Basic = () => (
 	</Card>
 );
 
+export const OtherSite = () => (
+	<Card
+		{ ...commonProps }
+	>
+		<PostCard
+			loading={ false }
+			post={ post }
+			site={ {
+				name: 'Updates',
+				url: 'http://updates.example.com/',
+			} }
+			AuthorComponent={ () => (
+				<PostCardAuthor
+					author={ user }
+				/>
+			) }
+		/>
+	</Card>
+);
+
 export const Loading = () => (
 	<Card
 		{ ...commonProps }
