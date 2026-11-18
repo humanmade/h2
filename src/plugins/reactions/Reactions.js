@@ -75,6 +75,27 @@ const getEmojiName = emoji => {
 	return ( emojiNames && emojiNames[ normalizeEmoji( emoji ) ] ) || emoji;
 };
 
+// Skin tone modifiers (U+1F3FB to U+1F3FF), lightest first.
+const SKIN_TONE_PATTERN = /\uD83C[\uDFFB-\uDFFF]/g;
+const SKIN_TONES = [ '🏻', '🏼', '🏽', '🏾', '🏿' ];
+
+const getBaseEmoji = emoji => emoji.replace( SKIN_TONE_PATTERN, '' );
+
+/**
+ * Get the skin tone modifier chosen in the emoji picker.
+ *
+ * @returns {string|null} Modifier character, or null for the default tone.
+ */
+const getPreferredSkinTone = () => {
+	try {
+		// emoji-mart stores 1 (default) to 6 (darkest).
+		const skin = JSON.parse( window.localStorage.getItem( 'emoji-mart.skin' ) );
+		return SKIN_TONES[ skin - 2 ] || null;
+	} catch ( e ) {
+		return null;
+	}
+};
+
 export class Reactions extends Component {
 	constructor( props ) {
 		super( props );
@@ -121,43 +142,103 @@ export class Reactions extends Component {
 
 	}
 
-	onRemoveReaction( emoji ) {
-		const reactions = this.props.reactions;
-
-		let matches = reactions.filter( reaction => {
-			return (
-				reaction.author === this.props.currentUser.id &&
-				reaction.type === emoji
-			);
-		} );
+	/**
+	 * Remove the current user's reactions with any of the given emoji.
+	 *
+	 * @param {string[]} types Emoji to remove.
+	 */
+	onRemoveReactions( types ) {
+		const matches = ( this.props.reactions || [] ).filter( reaction => (
+			reaction.author === this.props.currentUser.id &&
+			types.includes( reaction.type )
+		) );
 
 		if ( matches.length < 1 ) {
 			return;
 		}
-		this.props.onDelete( matches[0].id ).then( () => {
+
+		Promise.all( matches.map( reaction => this.props.onDelete( reaction.id ) ) ).then( () => {
 			this.props.onLoad();
 		} );
 	}
 
 	/**
-	 * Return the raw reactions grouped by emoji.
+	 * Return the raw reactions grouped by emoji, merging skin tone variants.
 	 *
-	 * @returns {object} Reaction emoji : array of user IDs. eg 🌭:[ 1, 2 ].
+	 * @returns {object} Base emoji : { variants, users, usersByVariant }.
+	 *                   eg 👍:{ variants: [ 👍, 👍🏽 ], users: [ 1, 2 ], usersByVariant: { 👍: [ 1 ], 👍🏽: [ 2 ] } }.
 	 */
 	getGroupedReactions() {
-		let reactions = {};
-		if ( ! this.props.reactions ) {
-			return reactions;
-		}
-		this.props.reactions.forEach( reaction => {
-			if ( ! ( reaction.type in reactions ) || reactions[ reaction.type ].includes( reaction.author ) ) {
-				reactions[ reaction.type ] = [ reaction.author ];
-			} else {
-				reactions[ reaction.type ].push( reaction.author );
+		const groups = {};
+		( this.props.reactions || [] ).forEach( reaction => {
+			const base = getBaseEmoji( reaction.type );
+			if ( ! groups[ base ] ) {
+				groups[ base ] = {
+					variants: [],
+					users: [],
+					usersByVariant: {},
+				};
+			}
+
+			const group = groups[ base ];
+			if ( ! group.usersByVariant[ reaction.type ] ) {
+				group.variants.push( reaction.type );
+				group.usersByVariant[ reaction.type ] = [];
+			}
+			if ( ! group.usersByVariant[ reaction.type ].includes( reaction.author ) ) {
+				group.usersByVariant[ reaction.type ].push( reaction.author );
+			}
+			if ( ! group.users.includes( reaction.author ) ) {
+				group.users.push( reaction.author );
 			}
 		} );
 
-		return reactions;
+		// Default tone first, then lightest to darkest.
+		Object.values( groups ).forEach( group => group.variants.sort() );
+
+		return groups;
+	}
+
+	/**
+	 * Get display details for a user who reacted.
+	 *
+	 * @param {number} id User ID.
+	 * @returns {object} Person with id, name, username, and avatar.
+	 */
+	getPerson( id ) {
+		const user = this.props.users && this.props.users.find( user => user.id === id );
+		return {
+			id,
+			name: user ? user.name : 'Unknown',
+			username: user ? user.slug : null,
+			avatar: ( user && user.avatar_urls && user.avatar_urls['96'] ) || window.H2Data.site.default_avatar,
+		};
+	}
+
+	/**
+	 * Pick the variant to add when clicking a merged reaction.
+	 *
+	 * Uses the skin tone chosen in the emoji picker, where the emoji supports it.
+	 *
+	 * @param {string} base Base emoji (without skin tone).
+	 * @param {object} group Group from getGroupedReactions().
+	 * @returns {string} Emoji to add.
+	 */
+	getVariantToAdd( base, group ) {
+		const tone = getPreferredSkinTone();
+		if ( ! tone ) {
+			return base;
+		}
+
+		// Re-tone an existing variant, so multi-person sequences keep their structure.
+		const toned = group.variants.find( variant => variant !== base );
+		if ( toned ) {
+			return toned.replace( SKIN_TONE_PATTERN, tone );
+		}
+
+		// Otherwise, only apply the tone if emoji-mart knows the toned version.
+		const candidate = normalizeEmoji( base ) + tone;
+		return emojiNames && emojiNames[ candidate ] ? candidate : base;
 	}
 
 	render() {
@@ -170,25 +251,17 @@ export class Reactions extends Component {
 
 		return (
 			<div className="reactions relative flex flex-wrap items-center gap-1.5">
-				{ Object.entries( reactions ).map( ( [ emoji, users ] ) => {
+				{ Object.entries( reactions ).map( ( [ base, { variants, users, usersByVariant } ] ) => {
 					const isActive = users.indexOf( this.props.currentUser.id ) >= 0;
-					const people = users
-						.filter( id => id !== 0 )
-						.map( id => {
-							const user = this.props.users && this.props.users.find( user => user.id === id );
-							return {
-								id,
-								name: user ? user.name : 'Unknown',
-								username: user ? user.slug : null,
-								avatar: ( user && user.avatar_urls && user.avatar_urls['96'] ) || window.H2Data.site.default_avatar,
-							};
-						} );
+					const getPeople = ids => ids.filter( id => id !== 0 ).map( id => this.getPerson( id ) );
+					const people = getPeople( users );
 					const names = people.map( person => person.name );
+					const isDetailed = people.length < MAX_DETAILED_REACTORS;
 
 					return (
 						<button
-							key={ emoji }
-							aria-label={ emoji + ' ' + users.length + ( names.length ? ': ' + names.join( ', ' ) : '' ) }
+							key={ base }
+							aria-label={ variants.join( '' ) + ' ' + users.length + ( names.length ? ': ' + names.join( ', ' ) : '' ) }
 							aria-pressed={ isActive }
 							className={ [
 								CHIP_CLASSES,
@@ -198,46 +271,66 @@ export class Reactions extends Component {
 									: 'border-[#dfe1e5] bg-white text-gray-600 hover:bg-[#f5f6f8]',
 							].join( ' ' ) }
 							type="button"
-							onClick={ () => this.toggleReaction( emoji ) }
+							onClick={ () => this.toggleGroup( base ) }
 							onFocus={ this.onPreviewReaction }
 							onMouseEnter={ this.onPreviewReaction }
 						>
 							<span className="text-base leading-none">
-								<Emoji type={ emoji } />
+								{ variants.map( variant => (
+									<Emoji key={ variant } type={ variant } />
+								) ) }
 							</span>
 							<span className="text-xs font-medium tabular-nums">{ users.length }</span>
 							<span
 								aria-hidden="true"
 								className="pointer-events-none absolute left-0 top-full z-10 mt-1.5 hidden w-max max-w-xs rounded-md bg-[#1f2328] px-2 py-1.5 text-left text-xs font-normal text-white shadow-sm group-hover:block group-focus-visible:block"
 							>
-								<span className="block font-semibold">{ getEmojiName( emoji ) }</span>
-								{ people.length > 0 && people.length < MAX_DETAILED_REACTORS && (
-									<span className="mt-1.5 flex flex-col gap-1">
-										{ people.map( person => (
-											<span
-												key={ person.id }
-												className="flex items-center gap-1.5 whitespace-nowrap"
-											>
-												<img
-													alt=""
-													className="size-4 max-w-none shrink-0 rounded-full bg-white"
-													src={ person.avatar }
-												/>
-												<span>
-													{ person.name }
-													{ person.username && (
-														<span className="text-white/60"> (@{ person.username })</span>
-													) }
+								<span className="flex flex-col gap-1.5">
+									{ variants.map( variant => {
+										const variantPeople = getPeople( usersByVariant[ variant ] );
+										const label = (
+											<span className="font-semibold">{ getEmojiName( variant ) }</span>
+										);
+
+										if ( ! isDetailed ) {
+											return (
+												<span key={ variant } className="block">
+													{ label }
+													{ ' ' }
+													{ variantPeople.map( person => person.name ).join( ', ' ) }
 												</span>
+											);
+										}
+
+										return (
+											<span key={ variant } className="block">
+												<span className="block">{ label }</span>
+												{ variantPeople.length > 0 && (
+													<span className="mt-1 flex flex-col gap-1">
+														{ variantPeople.map( person => (
+															<span
+																key={ person.id }
+																className="flex items-center gap-1.5 whitespace-nowrap"
+															>
+																<img
+																	alt=""
+																	className="size-4 max-w-none shrink-0 rounded-full bg-white"
+																	src={ person.avatar }
+																/>
+																<span>
+																	{ person.name }
+																	{ person.username && (
+																		<span className="text-white/60"> (@{ person.username })</span>
+																	) }
+																</span>
+															</span>
+														) ) }
+													</span>
+												) }
 											</span>
-										) ) }
-									</span>
-								) }
-								{ people.length >= MAX_DETAILED_REACTORS && (
-									<span className="mt-1 block">
-										{ names.join( ', ' ) }
-									</span>
-								) }
+										);
+									} ) }
+								</span>
 							</span>
 						</button>
 					);
@@ -289,21 +382,47 @@ export class Reactions extends Component {
 		);
 	}
 
-	toggleReaction( emoji, reactionUserId ) {
-		const reactions = this.getGroupedReactions();
-		if (
-			! ( emoji in reactions ) ||
-			reactions[ emoji ].indexOf( this.props.currentUser.id ) < 0
-		) {
-			if ( Object.keys( reactions ).length >= 10 ) {
-				alert( 'Sorry! You are only allowed 10 reactions per post!' );
-				return;
-			}
+	/**
+	 * Toggle the current user's reaction with an exact emoji (eg from the picker).
+	 *
+	 * @param {string} emoji Emoji, including any skin tone.
+	 */
+	toggleReaction( emoji ) {
+		const hasReacted = ( this.props.reactions || [] ).some( reaction => (
+			reaction.author === this.props.currentUser.id &&
+			reaction.type === emoji
+		) );
 
-			this.onAddReaction( emoji );
+		if ( hasReacted ) {
+			this.onRemoveReactions( [ emoji ] );
 		} else {
-			this.onRemoveReaction( emoji );
+			this.addReaction( emoji );
 		}
+	}
+
+	/**
+	 * Toggle the current user's reaction on a merged reaction bubble.
+	 *
+	 * @param {string} base Base emoji (without skin tone).
+	 */
+	toggleGroup( base ) {
+		const group = this.getGroupedReactions()[ base ];
+		if ( group.users.includes( this.props.currentUser.id ) ) {
+			this.onRemoveReactions( group.variants );
+		} else {
+			this.addReaction( this.getVariantToAdd( base, group ) );
+		}
+	}
+
+	addReaction( emoji ) {
+		// Skin tone variants of the same emoji count once, matching the server.
+		const groups = this.getGroupedReactions();
+		if ( ! groups[ getBaseEmoji( emoji ) ] && Object.keys( groups ).length >= 10 ) {
+			alert( 'Sorry! You are only allowed 10 reactions per post!' );
+			return;
+		}
+
+		this.onAddReaction( emoji );
 	}
 }
 
