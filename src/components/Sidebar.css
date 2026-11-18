@@ -64,3 +64,30 @@
 	outline: 2px solid var(--hm-vibrant-blue);
 	outline-offset: 2px;
 }
+
+body.admin-bar .Sidebar-dashboard {
+	display: none;
+}
+
+.Sidebar-widget-disclosure {
+	margin-block: 1.5rem;
+}
+
+.Sidebar-widget-disclosure > summary {
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.Sidebar-widget-disclosure > .Widget {
+	margin-block: 0.5rem 0;
+}
+
+.Sidebar-widgets a[data-sidebar-external]::after {
+	content: "";
+	display: inline-block;
+	width: 0.75em;
+	height: 0.75em;
+	margin-inline-start: 0.375em;
+	background: currentColor;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M9 2h5v5M14 2 7 9M6 3H3v10h10v-3' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}

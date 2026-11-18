@@ -8,7 +8,7 @@ import PostHovercard from './PostHovercard';
 const DEFAULT_STYLE = 'text-hm-vibrant-blue hover:underline';
 
 // Forwards the ref so that links can be used as the target of a Hovercard.
-export default React.forwardRef( function Link( { children, className, disablePreviews, href, ...props }, ref ) {
+export default React.forwardRef( function Link( { children, className, disablePreviews, href, preferRightPreview, ...props }, ref ) {
 	const root = window.H2Data.site.home;
 
 	if ( ! href.startsWith( root ) ) {
@@ -58,6 +58,7 @@ export default React.forwardRef( function Link( { children, className, disablePr
 			<PostHovercard
 				{ ...props }
 				match={ postMatch }
+				preferRight={ preferRightPreview }
 			>
 				{ link }
 			</PostHovercard>

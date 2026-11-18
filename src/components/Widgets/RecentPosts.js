@@ -25,7 +25,7 @@ class PostList extends React.Component {
 				<ul className="mb-[0.83333335rem]">
 					{ this.props.posts.map( post => (
 						<li key={ post.id }>
-							<Link href={ post.link }>
+							<Link className="block" href={ post.link } preferRightPreview>
 								{ decodeEntities( post.title.rendered ) }
 							</Link>
 						</li>
@@ -65,12 +65,10 @@ export default class RecentPosts extends React.Component {
 	}
 
 	render() {
-		const { number, title } = this.props;
+		const { number } = this.props;
 
 		return (
 			<div className="RecentPosts text-[0.8em]">
-				<h4>{ title || 'Recent Posts' }</h4>
-
 				<ConnectedPostList
 					page={ this.state.page }
 					per_page={ number }

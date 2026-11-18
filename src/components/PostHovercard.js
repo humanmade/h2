@@ -124,7 +124,7 @@ export const ConnectedPostCard = withArchive(
 
 export default class PostHovercard extends React.Component {
 	render() {
-		const { children, match } = this.props;
+		const { children, match, preferRight } = this.props;
 
 		const content = () => (
 			<ConnectedPostCard
@@ -135,6 +135,7 @@ export default class PostHovercard extends React.Component {
 		return (
 			<Hovercard
 				cardContent={ content }
+				preferRight={ preferRight }
 				width={ 360 }
 			>
 				{ children }
@@ -149,4 +150,5 @@ PostHovercard.propTypes = {
 			slug: PropTypes.string.isRequired,
 		} ).isRequired,
 	} ).isRequired,
+	preferRight: PropTypes.bool,
 };
