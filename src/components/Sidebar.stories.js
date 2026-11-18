@@ -17,8 +17,15 @@ const commonProps = {
 };
 
 const htmlWidget = {
+	id: 'custom-html-1',
 	type: 'html',
 	html: '<p>Raw HTML widget.</p>',
+};
+
+const titledWidget = {
+	id: 'custom-html-2',
+	type: 'custom_html',
+	html: '<h4 class="widgettitle">Useful links</h4><p><a href="https://humanmade.com/">Human Made</a></p>',
 };
 
 export const Empty = () => (
@@ -29,6 +36,6 @@ export const Empty = () => (
 
 export const Basic = () => (
 	<Sidebar
-		widgets={ apiResponse( [ htmlWidget ] ) }
+		widgets={ apiResponse( [ htmlWidget, titledWidget ] ) }
 	/>
 );

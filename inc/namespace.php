@@ -368,6 +368,7 @@ function get_script_data() {
 			'url'            => site_url(),
 			'home'           => home_url(),
 			'api'            => rest_url(),
+			'admin_url'      => admin_url(),
 			'nonce'          => wp_create_nonce( 'wp_rest' ),
 			'default_avatar' => get_avatar_url( 0, [
 				'force_default' => true,

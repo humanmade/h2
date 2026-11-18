@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom';
 import { pages } from '../../types';
 import { decodeEntities } from '../../util';
 
-import Container from './Container';
-
 const internalLink = link => link.replace( window.H2Data.site.home, '' );
 
 const Page = ( { all, page } ) => {
@@ -93,20 +91,9 @@ const mapPropsToArchive = () => {
 
 const ConnectedLoader = withPagedArchive( pages, state => state.pages, mapPropsToArchive )( ConnectedPagesLoader );
 
-export default function Pages( props ) {
+export default function Pages() {
 	const [ page, setPage ] = useState( 1 );
-
 	return (
-		<Container
-			title="Pages"
-			onClose={ props.onClose }
-		>
-			<div className="-mx-6 -mt-4">
-				<ConnectedLoader
-					page={ page }
-					onNextPage={ () => setPage( p => p + 1 ) }
-				/>
-			</div>
-		</Container>
+		<ConnectedLoader page={ page } onNextPage={ () => setPage( p => p + 1 ) } />
 	);
 }

@@ -16,9 +16,6 @@ import PostsList from './components/Post/List';
 import WritePost from './components/Post/Write';
 import SessionExpiredWarning from './components/SessionExpiredWarning';
 import Sidebar from './components/Sidebar';
-import CategoriesSidebar from './components/Sidebar/Categories';
-import PagesSidebar from './components/Sidebar/Pages';
-import PostsSidebar from './components/Sidebar/Posts';
 import SuperOverlay from './components/Super';
 import UserPage from './components/User';
 import { RenderPlugins } from './plugins';
@@ -27,7 +24,7 @@ import { posts } from './types';
 import './App.css';
 
 // Matches the breakpoint in App.css where the sidebar becomes a drawer.
-const isDrawerLayout = () => window.matchMedia( '(max-width: 799px)' ).matches;
+const DRAWER_LAYOUT = '(max-width: 799px)';
 const SIDEBAR_COLLAPSED_KEY = 'h2-sidebar-collapsed';
 
 function isSidebarCollapsed() {
@@ -51,6 +48,9 @@ class App extends Component {
 			showChanges: false,
 		};
 		this.headerRef = React.createRef();
+		this.sidebarMenuRef = React.createRef();
+		this.sidebarCloseRef = React.createRef();
+		this.drawerLayout = window.matchMedia( DRAWER_LAYOUT );
 	}
 	onLogOut() {
 		window.location.href = '/wp-login.php?action=logout';
@@ -58,12 +58,16 @@ class App extends Component {
 
 	componentDidUpdate( prevProps, prevState ) {
 		// On small screens the sidebar is a drawer; reveal it when a section is requested.
-		if ( this.props.sidebarView && this.props.sidebarView !== prevProps.sidebarView && ! this.state.isSidebarOpen && isDrawerLayout() ) {
+		if ( this.props.sidebarView && this.props.sidebarView !== prevProps.sidebarView && ! this.state.isSidebarOpen && this.drawerLayout.matches ) {
 			this.setState( { isSidebarOpen: true } );
 		}
 
 		if ( prevState.isSidebarOpen !== this.state.isSidebarOpen ) {
 			document.body.classList.toggle( 'h2-sidebar-open', this.state.isSidebarOpen );
+			if ( this.drawerLayout.matches ) {
+				const button = this.state.isSidebarOpen ? this.sidebarCloseRef.current : this.sidebarMenuRef.current;
+				button.focus();
+			}
 		}
 
 		// Scroll back to top when navigating to a new page.
@@ -75,6 +79,7 @@ class App extends Component {
 
 	componentDidMount() {
 		document.addEventListener( 'keydown', this.onKeyDown );
+		this.drawerLayout.addEventListener( 'change', this.onDrawerLayoutChange );
 		this.unsubscribeFromHistory = this.props.history.listen( this.handleLocationChange );
 		this.props.onHeartbeat();
 	}
@@ -82,7 +87,7 @@ class App extends Component {
 	componentWillUnmount() {
 		document.removeEventListener( 'keydown', this.onKeyDown );
 		document.body.classList.remove( 'h2-sidebar-open' );
-		window.clearTimeout( this.sidebarResetTimer );
+		this.drawerLayout.removeEventListener( 'change', this.onDrawerLayoutChange );
 		if ( this.unsubscribeFromHistory ) {
 			this.unsubscribeFromHistory();
 		}
@@ -104,13 +109,23 @@ class App extends Component {
 	}
 
 	onKeyDown = e => {
-		if ( e.key === 'Escape' && this.state.isSidebarOpen ) {
+		if ( ! e.defaultPrevented && e.key === 'Escape' && this.state.isSidebarOpen ) {
+			this.onCloseSidebar();
+		}
+	}
+
+	onDrawerLayoutChange = event => {
+		if ( ! event.matches && this.state.isSidebarOpen ) {
 			this.onCloseSidebar();
 		}
 	}
 
 	onToggleSidebar = () => {
-		this.setState( state => ( { isSidebarOpen: ! state.isSidebarOpen } ) );
+		if ( this.state.isSidebarOpen ) {
+			this.onCloseSidebar();
+		} else {
+			this.setState( { isSidebarOpen: true } );
+		}
 	}
 
 	onToggleSidebarCollapsed = () => {
@@ -126,16 +141,11 @@ class App extends Component {
 	}
 
 	onCloseSidebar = () => {
-		this.setState( { isSidebarOpen: false } );
-
-		// Return the drawer to the main menu once it has slid away, so the
-		// next section request (e.g. the same section again) reopens it.
-		window.clearTimeout( this.sidebarResetTimer );
-		this.sidebarResetTimer = window.setTimeout( () => {
+		this.setState( { isSidebarOpen: false }, () => {
 			if ( ! this.state.isSidebarOpen && this.props.sidebarView ) {
 				this.props.onDismissSidebar();
 			}
-		}, 250 );
+		} );
 	}
 
 	onToggleSuper = () => {
@@ -165,34 +175,6 @@ class App extends Component {
 		this.props.onRefreshPostStream();
 	}
 
-	renderSidebar() {
-		switch ( this.props.sidebarView ) {
-			case 'categories':
-				return (
-					<CategoriesSidebar
-						onClose={ this.props.onDismissSidebar }
-					/>
-				);
-
-			case 'pages':
-				return (
-					<PagesSidebar
-						onClose={ this.props.onDismissSidebar }
-					/>
-				);
-
-			case 'posts':
-				return (
-					<PostsSidebar
-						onClose={ this.props.onDismissSidebar }
-					/>
-				);
-
-			default:
-				return <Sidebar />;
-		}
-	}
-
 	render() {
 		return (
 			<div className={ this.state.isSidebarCollapsed ? 'App App--sidebar-collapsed' : 'App' }>
@@ -206,6 +188,7 @@ class App extends Component {
 						superActive={ this.props.showingSuper }
 						onLogOut={ () => this.onLogOut() }
 						onWritePost={ () => this.onClickWritePost() }
+						sidebarMenuRef={ this.sidebarMenuRef }
 						sidebarOpen={ this.state.isSidebarOpen }
 						onShowSuper={ this.onToggleSuper }
 						onToggleSidebar={ this.onToggleSidebar }
@@ -226,6 +209,7 @@ class App extends Component {
 						<button
 							aria-label="Close menu"
 							className="App-sidebar__close"
+							ref={ this.sidebarCloseRef }
 							type="button"
 							onClick={ this.onCloseSidebar }
 						>
@@ -233,7 +217,7 @@ class App extends Component {
 								<path d="M3 3l10 10M13 3 3 13" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
 							</svg>
 						</button>
-						{ this.renderSidebar() }
+						<Sidebar />
 					</div>
 					<div className="App-sidebar-edge">
 						<button

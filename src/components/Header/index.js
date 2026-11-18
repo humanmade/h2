@@ -49,6 +49,7 @@ export class Header extends Component {
 						aria-label="Menu"
 						className={ ICON_BUTTON_CLASSES + ( superActive ? ' bg-brand-dark' : ' bg-brand hover:bg-brand-dark' ) + ' text-white min-[800px]:hidden' }
 						type="button"
+						ref={ this.props.sidebarMenuRef }
 						onClick={ this.props.onToggleSidebar }
 					>
 						<svg aria-hidden="true" viewBox="0 0 20 20" width="20" height="20">
@@ -118,6 +119,7 @@ Header.defaultProps = {
 };
 
 Header.propTypes = {
+	sidebarMenuRef: PropTypes.shape( { current: PropTypes.instanceOf( Element ) } ),
 	sidebarOpen: PropTypes.bool,
 	superActive: PropTypes.bool,
 	onLogOut: PropTypes.func.isRequired,

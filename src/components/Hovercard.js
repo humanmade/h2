@@ -16,12 +16,19 @@ const transition = {
 	},
 };
 
-function getPosition( target, width ) {
+function getPosition( target, width, preferRight ) {
 	if ( ! target ) {
 		return {};
 	}
 
-	let rect = target.getBoundingClientRect();
+	const rect = target.getBoundingClientRect();
+	if ( preferRight && rect.right + 12 + width + 16 <= document.documentElement.clientWidth ) {
+		return {
+			left: rect.right + window.pageXOffset - document.documentElement.clientLeft + 12,
+			top: Math.max( 0, rect.top + rect.height / 2 - 20 ) + window.pageYOffset - document.documentElement.clientTop,
+			rightOfTarget: true,
+		};
+	}
 
 	let style = {
 		top: rect.top + window.pageYOffset - document.documentElement.clientTop,
@@ -77,17 +84,13 @@ class CardPortal extends React.Component {
 const CARD_CLASSES = [
 	'Hovercard absolute z-20 rounded-lg border border-hm-beige bg-white text-hm-dark-grey',
 	'shadow-[0_8px_24px_rgba(0,0,0,0.12)]',
-	'p-4 mt-3',
+	'p-4',
 	'text-base pointer-events-none',
 	'flex flex-col',
 	'max-w-[calc(100vw-32px)]',
 ].join( ' ' );
 
-const POINTER_CLASSES = [
-	'block absolute size-2.5 rotate-45 bg-white',
-	'top-[-6px] left-[calc(50%-5px)]',
-	'border-l border-t border-hm-beige',
-].join( ' ' );
+const POINTER_CLASSES = 'block absolute size-2.5 rotate-45 bg-white border-l border-hm-beige';
 
 export function Card( { children, positions, width } ) {
 	const cardStyle = {
@@ -100,11 +103,13 @@ export function Card( { children, positions, width } ) {
 
 	return (
 		<div
-			className={ CARD_CLASSES }
+			className={ `${ CARD_CLASSES }${ positions.rightOfTarget ? '' : ' mt-3' }` }
 			style={ cardStyle }
 		>
 			<div
-				className={ POINTER_CLASSES }
+				className={ `${ POINTER_CLASSES } ${ positions.rightOfTarget
+					? 'top-[15px] -left-1.5 border-b'
+					: 'top-[-6px] left-[calc(50%-5px)] border-t' }` }
 				style={ pointerStyle }
 			/>
 
@@ -132,8 +137,8 @@ export default class Hovercard extends React.Component {
 		}
 	}
 
-	onMouseOver = () => {
-		if ( this.state.active ) {
+	onMouseEnter = () => {
+		if ( this.state.active || this.showTimer ) {
 			return;
 		}
 
@@ -143,10 +148,9 @@ export default class Hovercard extends React.Component {
 		}, HOVER_DELAY );
 	}
 
-	onMouseOut = () => {
-		if ( this.showTimer ) {
-			clearTimeout( this.showTimer );
-		}
+	onMouseLeave = () => {
+		clearTimeout( this.showTimer );
+		this.showTimer = null;
 		this.setState( { active: false } );
 	}
 
@@ -163,11 +167,12 @@ export default class Hovercard extends React.Component {
 	render() {
 		const {
 			cardContent: CardContent,
+			preferRight,
 			width,
 		} = this.props;
 		const { active } = this.state;
 
-		const positions = getPosition( this.target, width );
+		const positions = getPosition( this.target, width, preferRight );
 
 		return (
 			<React.Fragment>
@@ -193,8 +198,8 @@ export default class Hovercard extends React.Component {
 					React.Children.only( this.props.children ),
 					{
 						ref: this.onUpdateRef,
-						onMouseOver: this.onMouseOver,
-						onMouseOut: this.onMouseOut,
+						onMouseEnter: this.onMouseEnter,
+						onMouseLeave: this.onMouseLeave,
 					}
 				) }
 			</React.Fragment>
